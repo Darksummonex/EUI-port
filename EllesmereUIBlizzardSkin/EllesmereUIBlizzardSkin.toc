@@ -1,0 +1,21 @@
+## Interface: 30300
+## Title: |cff0cd29fEllesmereUI|r Blizz UI Enhanced
+## Notes: Native Wrath window, tooltip, menu and popup skins.
+## Author: Ellesmere / 3.3.5 backport
+## Version: 9.3.4-335-0.17
+## Dependencies: EllesmereUI
+## SavedVariablesPerCharacter: EllesmereUIBlizzardSkinCharDB
+## IconTexture: Interface\AddOns\EllesmereUI\media\eg-logo.tga
+
+# Retail engines remain reference only. Settings use the Core account keys.
+EUI_BlizzardSkin_335.lua
+EUI_Items_335.lua
+EUI_CharacterSheet_335.lua
+EUI_SocketPanel_335.lua
+EUI_Tooltips_335.lua
+EUI_Inspect_335.lua
+EUI_Merchant_335.lua
+EUI_Popups_335.lua
+EUI_WorldMap_335_Data.lua
+EUI_WorldMap_335_Points.lua
+EUI_WorldMap_335.lua

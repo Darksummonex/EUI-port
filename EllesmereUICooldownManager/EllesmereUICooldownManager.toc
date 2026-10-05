@@ -1,0 +1,18 @@
+## Interface: 30300
+## Title: |cff0cd29fEllesmereUI|r Cooldown Manager
+## Category: |cff0cd29fEllesmere|rUI
+## Group: EllesmereUI
+## Notes: A CDM replacement focused on performance, customizations and alerts.
+## Author: Ellesmere
+## Version: 9.3.4-335-0.1
+## Dependencies: EllesmereUI
+## OptionalDeps: EllesmereUIActionBars
+## SavedVariables: EllesmereUICooldownManagerDB
+## IconTexture: Interface\AddOns\EllesmereUI\media\eg-logo.tga
+
+# Native Wrath implementation; Retail Lua retained as unloaded references.
+EUI_CooldownManager_335_Catalog.lua
+EUI_CooldownManager_335.lua
+EUI_CooldownManager_335_Display.lua
+
+# Options

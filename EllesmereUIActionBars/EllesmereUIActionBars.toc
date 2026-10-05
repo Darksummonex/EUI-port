@@ -1,0 +1,25 @@
+## Interface: 30300
+## Title: |cff0cd29fEllesmereUI|r Action Bars
+## Category: |cff0cd29fEllesmere|rUI
+## Group: EllesmereUI
+## Notes: Secure action bars, native pet/stance controls and Wrath paging.
+## Author: Ellesmere
+## Version: 9.3.4-335-0.12
+## Dependencies: EllesmereUI
+## SavedVariables: EllesmereUIActionBarsDB
+## IconTexture: Interface\AddOns\EllesmereUI\media\eg-logo.tga
+
+# Main Luas
+# Retail reference preserved, not loaded.
+#EllesmereUIActionBars.lua
+#EUI_ActionBars_Flyout.lua
+Libs\LibActionButton-1.0-335.lua
+EUI_ActionBars_335.lua
+EUI_NativeHUD_335.lua
+
+# Options
+
+# Note: Bindings.xml (Wrath Bar6 keybind commands) is intentionally NOT
+# listed here -- WoW auto-loads a file named Bindings.xml from the addon root.
+# Listing it would load it a second time through the UI-XML parser ("Unrecognized
+# XML: Binding").

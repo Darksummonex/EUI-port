@@ -1,0 +1,216 @@
+{
+  "verified_at_utc": "2026-10-01T16:16:50.366294+00:00",
+  "workspace": "D:/Jogo/Whitemane/Games/FrostmourneRebuffed/Interface/AddOns",
+  "versions": {
+    "EllesmereUI": "3.3.5-core-0.28",
+    "EllesmereUIOptions": "9.3.4-335-0.43",
+    "EllesmereUIUnitFrames": "9.3.4-335-0.8",
+    "EllesmereUIMinimap": "9.3.4-335-0.3",
+    "EllesmereUIActionBars": "9.3.4-335-0.12",
+    "EllesmereUIChat": "9.3.4-335-0.3",
+    "EllesmereUINameplates": "9.3.4-335-0.6",
+    "EllesmereUIBlizzardSkin": "9.3.4-335-0.7",
+    "EllesmereUIBags": "9.3.4-335-0.7",
+    "EllesmereUIResourceBars": "9.3.4-335-0.2",
+    "EllesmereUIQoL": "9.3.4-335-0.2",
+    "EllesmereUIRaidFrames": "9.3.4-335-0.4",
+    "EllesmereUIDataBars": "9.3.4-335-0.2",
+    "EllesmereUIDamageMeters": "9.3.4-335-0.3",
+    "EllesmereUICooldownManager": "9.3.4-335-0.1",
+    "EllesmereUIAuraBuffReminders": "9.3.4-335-0.1",
+    "EllesmereUIQuickdraw": "9.3.4-335-0.1",
+    "EllesmereUIFriends": "9.3.4-335-0.1",
+    "EllesmereUIQuestTracker": "9.3.4-335-0.1"
+  },
+  "archives": [
+    {
+      "file": "EllesmereUI-3.3.5-core-0.28.zip",
+      "bytes": 25392296,
+      "sha256": "d43f2e6b6eb5a5ce4e20d2ba5263199e19e7ed483518ac534094fb09f0fa1a5b",
+      "addons": [
+        "EllesmereUI"
+      ]
+    },
+    {
+      "file": "EllesmereUIUnitFrames-3.3.5-0.8.zip",
+      "bytes": 462343,
+      "sha256": "f0b9c3e2ba0eeead9f1c8ffc4588efff34fb6dd840fea4b299847df4f3bf0b89",
+      "addons": [
+        "EllesmereUIUnitFrames"
+      ]
+    },
+    {
+      "file": "EllesmereUIOptions-3.3.5-0.43.zip",
+      "bytes": 1507490,
+      "sha256": "daeb5121daa6935d367b801dbe90e28df3aaeb9912c6948cd8c2bb613d675721",
+      "addons": [
+        "EllesmereUIOptions"
+      ]
+    },
+    {
+      "file": "EllesmereUIMinimap-3.3.5-0.3.zip",
+      "bytes": 191938,
+      "sha256": "156ea58d7f8331db2b60ecd4c48d68c9baa7b22b28c60b20b43c72d660d26977",
+      "addons": [
+        "EllesmereUIMinimap"
+      ]
+    },
+    {
+      "file": "EllesmereUIActionBars-3.3.5-0.12.zip",
+      "bytes": 290031,
+      "sha256": "6b72ff821476b324f9b0ab8bdfe023d1966346fbd8c87ce9f3cd792c1f42e226",
+      "addons": [
+        "EllesmereUIActionBars"
+      ]
+    },
+    {
+      "file": "EllesmereUIChat-3.3.5-0.3.zip",
+      "bytes": 176049,
+      "sha256": "dcaf4c820793c6d97e12d9f4e69019d0bddc739990400bbaae7f02f8233fac7e",
+      "addons": [
+        "EllesmereUIChat"
+      ]
+    },
+    {
+      "file": "EllesmereUINameplates-3.3.5-0.6.zip",
+      "bytes": 363159,
+      "sha256": "27a9f95f8374a49e6542850f611e1f6f3bc547e76afbb031e533fbe1ce95b6eb",
+      "addons": [
+        "EllesmereUINameplates"
+      ]
+    },
+    {
+      "file": "EllesmereUIBlizzardSkin-3.3.5-0.7.zip",
+      "bytes": 718080,
+      "sha256": "6b0dc0434137161b482fab88370dd523d18447a7fe0496775129174ec017233b",
+      "addons": [
+        "EllesmereUIBlizzardSkin"
+      ]
+    },
+    {
+      "file": "EllesmereUIBags-3.3.5-0.7.zip",
+      "bytes": 157008,
+      "sha256": "581d97363597be84b8a1bf920342f8436a0bfc869d4f45074316413d7ee89261",
+      "addons": [
+        "EllesmereUIBags"
+      ]
+    },
+    {
+      "file": "EllesmereUIResourceBars-3.3.5-0.2.zip",
+      "bytes": 262962,
+      "sha256": "d9bbbdaadec2b11182ee03af656f7fb328db844367a42670d86f230af89b1298",
+      "addons": [
+        "EllesmereUIResourceBars"
+      ]
+    },
+    {
+      "file": "EllesmereUIQoL-3.3.5-0.2.zip",
+      "bytes": 259397,
+      "sha256": "1ab42315800fa14d10dc79072b95346b846e8e5336b9f68a0d05a4946b78ca5b",
+      "addons": [
+        "EllesmereUIQoL"
+      ]
+    },
+    {
+      "file": "EllesmereUIRaidFrames-3.3.5-0.4.zip",
+      "bytes": 567781,
+      "sha256": "859de3b651a2cee0990a69e68899059ba9ee2703bd2e9678b6e605f794f503b7",
+      "addons": [
+        "EllesmereUIRaidFrames"
+      ]
+    },
+    {
+      "file": "EllesmereUIDataBars-3.3.5-0.2.zip",
+      "bytes": 349267,
+      "sha256": "ec214dcff8c5f6f195c75314bf3c86203dd882f42b7c4c0e495e6442c5ba8959",
+      "addons": [
+        "EllesmereUIDataBars"
+      ]
+    },
+    {
+      "file": "EllesmereUIDamageMeters-3.3.5-0.3.zip",
+      "bytes": 155815,
+      "sha256": "d94b319a3460a06a563ef9ed66b2c187d19bfeae825af153f77dae92a0ed0058",
+      "addons": [
+        "EllesmereUIDamageMeters"
+      ]
+    },
+    {
+      "file": "EllesmereUICooldownManager-3.3.5-0.1.zip",
+      "bytes": 500707,
+      "sha256": "c785901317aa791a81cae48fcbaf616f3b64bb1013e420c8a1327d77c676e206",
+      "addons": [
+        "EllesmereUICooldownManager"
+      ]
+    },
+    {
+      "file": "EllesmereUIAuraBuffReminders-3.3.5-0.1.zip",
+      "bytes": 132997,
+      "sha256": "24489ccf53f3fda7249a8c2a9858e4acd79cceb3501dd799d7bfe042fe9d2914",
+      "addons": [
+        "EllesmereUIAuraBuffReminders"
+      ]
+    },
+    {
+      "file": "EllesmereUIQuickdraw-3.3.5-0.1.zip",
+      "bytes": 159837,
+      "sha256": "3239d6ba85abb126d4e7fc0634c5f2e34ab520d7b635a1969999043613ed5a5f",
+      "addons": [
+        "EllesmereUIQuickdraw"
+      ]
+    },
+    {
+      "file": "EllesmereUIFriends-3.3.5-0.1.zip",
+      "bytes": 213198,
+      "sha256": "bf2b46b896f4c1310a1e8ad48240bf7f818922a9c34c3298cc93bbb597763ce3",
+      "addons": [
+        "EllesmereUIFriends"
+      ]
+    },
+    {
+      "file": "EllesmereUIQuestTracker-3.3.5-0.1.zip",
+      "bytes": 45669,
+      "sha256": "a51922767361be2d55e445868db988818e24b458385b523e945be6ec12e64f9b",
+      "addons": [
+        "EllesmereUIQuestTracker"
+      ]
+    },
+    {
+      "file": "EllesmereUI-3.3.5-HUD-test-0.38.zip",
+      "bytes": 31905628,
+      "sha256": "6094fb5fc56c9ff644b24047ccf94689bc5bded1bccbcdf5ba5a480df87e8d7f",
+      "addons": [
+        "EllesmereUI",
+        "EllesmereUIOptions",
+        "EllesmereUIUnitFrames",
+        "EllesmereUIMinimap",
+        "EllesmereUIActionBars",
+        "EllesmereUIChat",
+        "EllesmereUINameplates",
+        "EllesmereUIBlizzardSkin",
+        "EllesmereUIBags",
+        "EllesmereUIResourceBars",
+        "EllesmereUIQoL",
+        "EllesmereUIRaidFrames",
+        "EllesmereUIDataBars",
+        "EllesmereUIDamageMeters",
+        "EllesmereUICooldownManager",
+        "EllesmereUIAuraBuffReminders",
+        "EllesmereUIQuickdraw",
+        "EllesmereUIFriends",
+        "EllesmereUIQuestTracker"
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "file": "ELLESMEREUI_335_BACKPORT_STATUS.md",
+      "sha256": "35064b2e7c5381d0d5be335052d00b0d16cba1a788cd4acdec8c04c4fe688a3a"
+    },
+    {
+      "file": "CODEX_HANDOFF_EllesmereUI_335_CURRENT.md",
+      "sha256": "1284c205c7c7195e91fe2a42a12081230e443ae8d758a5483094e868f10477c4"
+    }
+  ],
+  "verification": "Every archive member matches the installed addon source byte for byte; ZIP CRCs passed."
+}

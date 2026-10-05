@@ -1,0 +1,170 @@
+"""Real module/Core on Lua 5.1 with native controls and deferred skin writes."""
+from pathlib import Path
+import sys
+root=Path(__file__).resolve().parents[1]
+retail=Path('D:/World of Warcraft/_retail_/Interface/AddOns/EllesmereUIBlizzardSkin')
+for original in retail.rglob('*'):
+    if original.is_file() and original.suffix.lower()!='.toc':
+        assert original.read_bytes()==(root/'EllesmereUIBlizzardSkin'/original.relative_to(retail)).read_bytes(),original
+sys.path.insert(0,str(root/'.codex-tools'))
+from lupa.lua51 import LuaRuntime
+lua=LuaRuntime()
+lua.execute((root/'backport-tools/wrath_mock.lua').read_text())
+lua.execute((root/'backport-tools/blizzardskin_mock.lua').read_text())
+lua.execute((root/'backport-tools/character_mock.lua').read_text())
+core=(root/'EllesmereUI/EllesmereUI_Lite.lua').read_text(encoding='utf-8-sig'); lua.execute(core)
+lua.execute('lifecycleErrors={}; function geterrorhandler() return function(err) lifecycleErrors[#lifecycleErrors+1]=err end end')
+safe_source='local function errorhandler('+core.split('local function errorhandler(',1)[1].split('\n-------------------------------------------------------------------------------',1)[0]
+safe=lua.execute(safe_source+'\nreturn safecall')
+loader=lua.eval('function(s,n) return assert(loadstring(s,n)) end')
+ns=lua.table(); loader((root/'EllesmereUIBlizzardSkin/EUI_BlizzardSkin_335.lua').read_text(),'EUI_BlizzardSkin_335.lua')('EllesmereUIBlizzardSkin',ns)
+loader((root/'EllesmereUIBlizzardSkin/EUI_CharacterSheet_335.lua').read_text(),'EUI_CharacterSheet_335.lua')('EllesmereUIBlizzardSkin',ns)
+lua.globals().BS=ns
+# Respect an existing off choice on the very first installation.
+lua.execute('EllesmereUIDB={reskinMerchant=false,enhancedCharacterSheet=false}')
+safe(ns.addon.OnInitialize,ns.addon); safe(ns.addon.OnEnable,ns.addon)
+lua.execute('assert(#lifecycleErrors==0,lifecycleErrors[1])')
+lua.execute('''
+assert(not C_Item and not C_Timer and not C_Spell)
+local c,m,t=BS.states[CharacterFrame],BS.states[MerchantFrame],BS.states[GameTooltip]
+assert(c.active and c.panel:IsShown() and c.panel.mouse==false and CharacterFrame.art:GetAlpha()==0)
+assert(not m.active and not m.panel:IsShown() and not m.accent:IsShown() and MerchantFrame.art:GetAlpha()==.8)
+BS.SetValue('reskinMerchant',true); assert(m.panel:IsShown())
+assert(CharacterFrame:GetWidth()==384 and CharacterFrame:GetHeight()==512 and CharacterFrame.parent==UIParent)
+assert(CharacterFrame.point[4]==20 and CharacterFrame.pointWrites==1 and CharacterFrame.button.pointWrites==1)
+assert(CharacterFrame.icon:GetTexture()=='Interface\\\\Icons\\\\Spell_Fire_Fireball' and CharacterFrame.icon:GetAlpha()==1)
+assert(CharacterFrame.model.parent==CharacterFrame.body and CharacterFrame.text:GetText()=='Native content')
+assert(CharacterFrame.text.textColor[1]==.9 and CharacterFrame.text.font[1]==skinFont and CharacterFrame.text.font[3]=='OUTLINE')
+CharacterFrame.button:RunScript('OnClick'); CharacterFrame.close:RunScript('OnClick')
+assert(CharacterFrame.button.nativeClicks==1 and CharacterFrame.close.nativeClicks==1 and c.buttons[CharacterFrame.close].label:GetText()=='x')
+CharacterFrame.edit:RunScript('OnEnterPressed'); assert(sent==1 and not CharacterFrame.edit.autoFocus)
+assert(c.icons[CharacterHeadSlotIconTexture].border.borderColor[1]==.7 and CharacterHeadSlotIconTexture.texcoords[1]==.08)
+-- Regression: outer-frame-only skin left these exact native child families.
+assert(PaperDollFrame.art:GetTexture()==nil and CharacterModelFrame.art:GetTexture()==nil)
+assert(PaperDollFrame.backdrop==nil and c.insets[PaperDollFrame].panel:IsShown())
+assert(c.insets[PaperDollFrame].panel.point[2]==c.panel and c.insets[PaperDollFrame].panel.point[4]==-3)
+assert(c.buttons[CharacterDialogButton] and CharacterDialogButton.normal:GetTexture()==nil)
+CharacterDialogButton:RunScript('OnClick'); assert(CharacterDialogButton.nativeClicks==1)
+assert(CharacterFrame.edit.art:GetTexture()==nil and CharacterFrame.edit.backdrop==nil and c.insets[CharacterFrame.edit].panel:IsShown())
+assert(CharacterFrameTab1.normal:GetTexture()==nil and CharacterFrameTab1.highlight:GetTexture()==nil)
+assert(c.buttons[CharacterFrameTab1].panel.borderColor[2]>.5)
+CharacterFrameTab2:RunScript('OnClick'); BS.events:RunScript('OnUpdate',.3)
+assert(CharacterFrame.selectedTab==2 and CharacterFrameTab2.nativeClicks==1)
+assert(c.buttons[CharacterFrameTab2].panel.borderColor[2]>.5 and c.buttons[CharacterFrameTab1].panel.borderColor[2]==.25)
+CharacterFrameTab2:RunScript('OnEnter'); CharacterFrameTab2:RunScript('OnLeave'); BS.events:RunScript('OnUpdate',.3)
+assert(c.buttons[CharacterFrameTab2].panel.borderColor[2]>.5,'Selected tab border lost on mouse leave')
+CharacterTestScrollBarScrollDownButton:RunScript('OnClick')
+assert(CharacterTestScrollBar.value==300 and CharacterTestScrollBar.minimum==0 and CharacterTestScrollBar.maximum==800)
+assert(CharacterTestScrollBar.thumb:GetTexture()=='Interface\\\\Buttons\\\\WHITE8X8')
+assert(c.buttons[CharacterTestScrollBarScrollDownButton].label:GetText()=='v')
+CharacterTestCheck:RunScript('OnClick'); assert(CharacterTestCheck:GetChecked())
+assert(CharacterTestCheck.checkedTexture:GetTexture()=='Interface\\\\Buttons\\\\WHITE8X8')
+PlayerStatFrameLeftDropDownButton:RunScript('OnClick'); assert(dropdownOpened)
+assert(PlayerStatFrameLeftDropDown.art:GetTexture()==nil and c.insets[PlayerStatFrameLeftDropDown].panel:IsShown())
+assert(SpellButton1.normal:GetTexture()==nil and SpellButton1IconTexture.texcoords[1]==.08)
+assert(SpellButton1Cooldown.start==10 and SpellButton1Cooldown.duration==20)
+assert(SpellBookSkillLineTab1.normal:GetTexture()=='Interface\\\\Icons\\\\Spell_Fire_Fire' and SpellBookSkillLineTab1.normal.texcoords[1]==.08)
+assert(QuestFrameDetailPanel.art:GetTexture()==nil)
+assert(WorldMapFrame.map:GetTexture()=='Interface\\\\WorldMap\\\\Elwynn\\\\Elwynn1')
+assert(TaxiMap:GetTexture()=='Interface\\\\TaxiFrame\\\\TAXIMAP3' and TaxiMap:GetAlpha()==1 and TaxiMap.drawLayer=='ARTWORK')
+assert(TaxiFrame.art:GetTexture()==nil)
+assert(PlayerTalentFrame.tree:GetTexture()=='Interface\\\\TalentFrame\\\\MageFire-TopLeft')
+assert(TradeFrame.accept:GetTexture()=='Interface\\\\TradeFrame\\\\UI-TradeFrame-Highlight')
+-- Native animations cannot revive emptied chrome; native refresh is repaired.
+PaperDollFrame.art:SetAlpha(1); assert(PaperDollFrame.art:GetTexture()==nil)
+PaperDollFrame.art:SetTexture('Interface\\\\CharacterFrame\\\\UI-Character-General-Middle')
+BS.RequestRefresh(); BS.events:RunScript('OnUpdate',.3); assert(PaperDollFrame.art:GetTexture()==nil)
+quality=3; BS.events:RunScript('OnEvent','PLAYER_EQUIPMENT_CHANGED'); BS.events:RunScript('OnUpdate',.3)
+assert(c.icons[CharacterHeadSlotIconTexture].border.borderColor[1]==.1)
+assert(QuestInfo_Display()=='quest-native-result'); assert(QuestFrame.text.textColor[1]==.1)
+BS.events:RunScript('OnUpdate',.3); assert(QuestFrame.text.textColor[1]>=.75)
+assert(StaticPopup_Show()=='popup-native-result')
+-- Tooltip text scales from its original size, never compounding.
+BS.SetValue('tooltipFontScale',1.25); assert(GameTooltip.title.font[2]==17.5)
+BS.Apply(); assert(GameTooltip.title.font[2]==17.5)
+BS.SetValue('customTooltips',false); assert(GameTooltip.title.font[2]==14 and GameTooltip.backdrop.bgFile=='native-bg')
+BS.SetValue('customTooltips',true); assert(GameTooltip.backdrop.bgFile=='Interface\\\\Buttons\\\\WHITE8X8')
+skinFont='Fonts\\MORPHEUS.TTF'; EllesmereUI.RefreshAllAddons(); BS.events:RunScript('OnUpdate',.3)
+assert(CharacterFrame.title.font[1]==skinFont and c.buttons[CharacterFrame.close].label.font[1]==skinFont)
+-- Native show callbacks and ADDON_LOADED discover real late frames/controls.
+AuctionFrame=NativeWindow('AuctionFrame'); BS.events:RunScript('OnEvent','ADDON_LOADED','Blizzard_AuctionUI'); BS.events:RunScript('OnUpdate',.3)
+assert(BS.states[AuctionFrame].active)
+TalentFrame=NativeWindow('TalentFrame'); TalentFrame:SetBackdrop(nil); TalentFrame.noBackdropColor=true
+BS.events:RunScript('OnEvent','ADDON_LOADED'); BS.events:RunScript('OnUpdate',.3)
+BS.SetValue('reskinPlayerSpells',false); assert(not BS.states[TalentFrame].active and not TalentFrame.backdrop)
+BS.SetValue('reskinPlayerSpells',true); assert(BS.states[TalentFrame].active)
+local late=NativeButton('GameMenuButtonRebuffed',GameMenuFrame)
+GameMenuFrame:Hide(); GameMenuFrame:Show(); BS.events:RunScript('OnUpdate',.3)
+assert(BS.states[GameMenuFrame].buttons[late]); late:RunScript('OnClick'); assert(late.nativeClicks==1)
+-- No mutation while combat is active; queued disable restores after regen.
+combat=true; BS.SetValue('themedCharacterSheet',false); BS.Apply(); CharacterFrame:RunScript('OnShow'); BS.events:RunScript('OnUpdate',.3)
+assert(c.active and c.panel:IsShown()); CharacterFrame.button:RunScript('OnEnter')
+combat=false; BS.events:RunScript('OnEvent','PLAYER_REGEN_ENABLED')
+assert(not c.active and not c.panel:IsShown() and CharacterFrame.art:GetAlpha()==.8)
+assert(CharacterFrame.text.font[1]=='Fonts\\\\FRIZQT__.TTF' and CharacterFrame.text.textColor[1]==.1)
+assert(CharacterHeadSlotIconTexture.texcoords[1]==0 and not c.icons[CharacterHeadSlotIconTexture].border:IsShown())
+assert(CharacterFrame.backdrop.bgFile=='native-bg' and CharacterFrame.bgColor[1]==.4 and CharacterFrame.borderColor[1]==.8)
+assert(CharacterFrame.button.normal:GetAlpha()==1 and not c.buttons[CharacterFrame.close].label:IsShown())
+assert(PaperDollFrame.art:GetTexture()=='Interface\\\\CharacterFrame\\\\UI-Character-General-Middle' and PaperDollFrame.art:GetAlpha()==1)
+assert(PaperDollFrame.backdrop.bgFile=='native-inner' and not c.insets[PaperDollFrame].panel:IsShown())
+assert(CharacterFrame.edit.art:GetTexture()=='Interface\\\\Common\\\\Common-Input-Border' and CharacterFrame.edit.backdrop.bgFile=='native-edit')
+assert(CharacterFrameTab1.normal:GetTexture()=='Interface\\\\CharacterFrame\\\\UI-Character-Tab-Left')
+assert(CharacterTestScrollBar.thumb:GetTexture()=='Interface\\\\Buttons\\\\UI-ScrollBar-Knob')
+assert(CharacterTestScrollBar.thumb.texcoords[1]==.1 and CharacterTestScrollBar.thumb.color[1]==.6 and CharacterTestScrollBar.value==300)
+assert(CharacterTestCheck.checkedTexture:GetTexture()=='Interface\\\\Buttons\\\\UI-CheckBox-Check' and CharacterTestCheck:GetChecked())
+BS.SetValue('themedCharacterSheet',true); assert(c.panel:IsShown() and CharacterFrame.art:GetAlpha()==0)
+local frames=#allFrames; BS.Apply(); assert(#allFrames==frames,'Repeated skinning duplicated frames')
+BS.SetWindowsEnabled(false); assert(not c.active and BS.states[GameMenuFrame].active and t.active)
+assert(SpellButton1.normal:GetTexture()=='Interface\\\\Buttons\\\\UI-Quickslot2' and SpellButton1IconTexture.texcoords[1]==0)
+assert(SpellBookSkillLineTab1.normal:GetTexture()=='Interface\\\\Icons\\\\Spell_Fire_Fire' and SpellBookSkillLineTab1.normal.texcoords[1]==0)
+assert(QuestFrameDetailPanel.art:GetTexture()=='Interface\\\\QuestFrame\\\\QuestBG')
+assert(TaxiMap:GetTexture()=='Interface\\\\TaxiFrame\\\\TAXIMAP3' and TaxiMap.drawLayer=='BACKGROUND' and TaxiMap:GetAlpha()==1)
+assert(EllesmereUI.GetBlizzWindowStyle('charsheet')=='off')
+BS.SetWindowsEnabled(true); assert(c.active and EllesmereUI.GetBlizzWindowStyle('charsheet')=='eui')
+BS.SetValue('reskinPopupsMenus',false); assert(not BS.states[StaticPopup1].active and not BS.states[DropDownList1].active)
+BS.SetValue('reskinPopupsMenus',true); assert(BS.states[StaticPopup1].active)
+SlashCmdList.EUI335BLIZZARDSKIN(); assert(optionsLoaded and shownModule=='EllesmereUIBlizzardSkin')
+''')
+loader((root/'EllesmereUIOptions/EUI_BlizzardSkin_335_Options.lua').read_text(),'EUI_BlizzardSkin_335_Options.lua')()
+lua.execute('''
+assert(#testModule.pages==2)
+for _,page in ipairs(testModule.pages) do rows={}; assert(testModule.buildPage(page,UIParent,0)>0) end
+rows={}; testModule.buildPage('Blizzard Window Skins',UIParent,0)
+rows[1][1].setValue(false); assert(not BS.states[CharacterFrame].active)
+rows[1][1].setValue(true); rows[1][2].setValue(false); assert(not BS.states[CharacterFrame].accent:IsShown())
+rows[1][2].setValue(true); assert(BS.states[CharacterFrame].accent:IsShown())
+rows[2][1].setValue(false); assert(not BS.states[CharacterFrame].active)
+rows[2][1].setValue(true)
+rows={}; testModule.buildPage('Tooltips, Menus & Popups',UIParent,0)
+rows[1][2].setValue(1.4); assert(math.abs(GameTooltip.title.font[2]-19.6)<1e-9)
+testModule.onReset(); assert(GameTooltip.title.font[2]==14 and BS.states[CharacterFrame].active)
+rows={}; testModule.buildPage('Blizzard Window Skins',UIParent,0)
+local enhanced
+for _,row in ipairs(rows) do if row[1].text=='Enhanced Character Layout' then enhanced=row end end
+assert(enhanced)
+enhanced[1].setValue(false); assert(CharacterFrame:GetWidth()==384)
+enhanced[1].setValue(true); assert(CharacterFrame:GetWidth()==660)
+enhanced[2].setValue(false); assert(not BS.states[CharacterFrame].character.itemLabels.Head:IsShown())
+enhanced[2].setValue(true); assert(BS.states[CharacterFrame].character.itemLabels.Head:IsShown())
+''')
+for file,next_card in [('EUI_Fonts_Options.lua','TileDataBars'),('EUI_Textures_Options.lua','TileMinimap')]:
+    source=(root/'EllesmereUIOptions'/file).read_text(encoding='utf-8-sig')
+    body=source.split('local function TileBlizzardSkin(',1)[1].split('local function '+next_card+'(',1)[0]
+    card=lua.execute('''local NS=function(folder) return EllesmereUI._ModuleNS[folder] end
+local ModuleOutlineCfg=function() return {type='dropdown'} end
+local LinkRow=function(_,y,_,_,page) assert(page=='Blizzard Window Skins' or page=='Tooltips, Menus & Popups'); return y-30 end
+local function TileBlizzardSkin('''+body+'\nreturn TileBlizzardSkin')
+    lua.globals().cardBuilder=card
+    lua.execute("rows={}; assert(cardBuilder(UIParent,0,EllesmereUI.Widgets,{folder='EllesmereUIBlizzardSkin',display='Blizz UI Enhanced'})<0)")
+    if file=='EUI_Fonts_Options.lua':
+        lua.execute("rows[1][2].setValue(1.2); assert(math.abs(GameTooltip.title.font[2]-16.8)<1e-9)")
+lua.execute('''
+FriendsFrame=NativeWindow('FriendsFrame'); BS.SetValue('reskinSocialUI',true); BS.Apply()
+local friendsState=BS.states[FriendsFrame]; assert(friendsState and friendsState.active)
+local enabled=true
+EllesmereUI._ModuleNS.EllesmereUIFriends={IsWrath=true,Config=function() return {enabled=enabled} end}
+BS.Apply(); assert(not friendsState.active and BS.states[CharacterFrame].active,'Friends module must own its window without suppressing other skins')
+enabled=false; BS.Apply(); assert(friendsState.active,'Blizzard Skin did not resume when Friends was disabled')
+BS.ReleaseWindow(FriendsFrame); assert(not friendsState.active)
+''')
+print('PASS: real Core/Lua 5.1 lifecycle; inner chrome/backdrops, selected tabs, native scrolling/check/dropdown/input, square spell/gear icons with cooldowns, map/talent/trade content, animation/refresh repair, exact restoration and reuse, Friends-window ownership handoff, combat deferral, tooltip/fonts/profile/options/LOD. Retail references preserved. Rendering and taint require in-game confirmation.')

@@ -1,0 +1,13 @@
+## Interface: 30300
+## Title: |cff0cd29fEllesmereUI|r Bags
+## Notes: Unified Wrath inventory and bank with native item actions.
+## Author: Ellesmere / 3.3.5 backport
+## Version: 9.3.4-335-0.7
+## Dependencies: EllesmereUI
+## SavedVariables: EllesmereUIInventoryDB
+# Layout settings use Core profiles; inventory has its own account save file.
+
+# Retail source remains available as an unloaded reference.
+EUI_Bags_335.lua
+EUI_Bags_335_Cache.lua
+EUI_Bags_335_Broker.lua

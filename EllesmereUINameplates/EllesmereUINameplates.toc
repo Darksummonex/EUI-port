@@ -1,0 +1,13 @@
+## Interface: 30300
+## Title: |cff0cd29fEllesmereUI|r Nameplates
+## Notes: Native Wrath nameplate overlays with GUID-tracked auras and filters.
+## Author: Ellesmere / 3.3.5 backport
+## Version: 9.3.4-335-0.7
+## Dependencies: EllesmereUI
+## SavedVariables: EllesmereUINameplatesDB
+## IconTexture: Interface\AddOns\EllesmereUI\media\eg-logo.tga
+
+# Retail engines remain reference only.
+Libs\LibAuraInfo-1.0\LibAuraInfo-1.0.lua
+Libs\LibAuraInfo-1.0\spellIdData.lua
+EUI_Nameplates_335.lua

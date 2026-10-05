@@ -1,0 +1,15 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <Button name="EUI335RaidUnitTemplate" inherits="SecureUnitButtonTemplate,SecureHandlerEnterLeaveTemplate" virtual="true" hidden="true">
+        <Size x="125" y="52"/>
+        <Attributes>
+            <Attribute name="toggleForVehicle" type="boolean" value="true"/>
+            <Attribute name="checkselfcast" type="boolean" value="false"/>
+            <Attribute name="checkfocuscast" type="boolean" value="false"/>
+            <Attribute name="_onenter" type="string" value="local snippet = self:GetAttribute('clickcast_onenter'); if snippet then self:Run(snippet) end"/>
+            <Attribute name="_onleave" type="string" value="local snippet = self:GetAttribute('clickcast_onleave'); if snippet then self:Run(snippet) end"/>
+        </Attributes>
+        <Scripts>
+            <OnLoad>EUI335RaidFrames_OnLoad(self)</OnLoad>
+        </Scripts>
+    </Button>
+</Ui>

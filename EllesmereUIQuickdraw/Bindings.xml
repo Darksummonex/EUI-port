@@ -1,0 +1,18 @@
+<Bindings>
+    <Binding name="EUI_RADIAL1" header="EUI_RADIAL" />
+    <Binding name="EUI_RADIAL2" />
+    <Binding name="EUI_RADIAL3" />
+    <Binding name="EUI_RADIAL4" />
+    <Binding name="EUI_RADIAL5" />
+    <Binding name="EUI_RADIAL6" />
+    <Binding name="EUI_RADIAL7" />
+    <Binding name="EUI_RADIAL8" />
+    <Binding name="EUI_RADIAL9" />
+    <Binding name="EUI_RADIAL10" />
+    <Binding name="EUI_RADIAL11" />
+    <Binding name="EUI_RADIAL12" />
+    <Binding name="EUI_RADIAL13" />
+    <Binding name="EUI_RADIAL14" />
+    <Binding name="EUI_RADIAL15" />
+    <Binding name="EUI_RADIAL16" />
+</Bindings>

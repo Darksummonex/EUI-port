@@ -1,0 +1,51 @@
+## Interface: 30300
+## Title: |cff0cd29fEllesmereUI|r - 3.3.5 Core
+## Notes: Core UI backport for World of Warcraft 3.3.5
+## Author: Ellesmere / 3.3.5 backport
+## Version: 3.3.5-core-0.32
+## SavedVariables: EllesmereUIDB
+## IconTexture: Interface\AddOns\EllesmereUI\media\eg-logo.tga
+EllesmereUI_3.3.5_Compat.lua
+Libs\LibStub\LibStub.lua
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
+Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
+Libs\LibSharedMedia-3.0\LibSharedMedia-3.0.lua
+EllesmereUI_Lite.lua
+EllesmereUI_Locale.lua
+EllesmereUI_NumberFormat.lua
+EllesmereUI_Migration.lua
+EllesmereUI_Startup.lua
+EllesmereUI_PixelPerfect.lua
+EllesmereUI.lua
+EllesmereUI_Panel.lua
+EllesmereUI_VisibilityRules.lua
+EllesmereUI_SharedHelpers.lua
+EllesmereUI_Popups.lua
+EllesmereUI_Colors.lua
+EllesmereUI_Fonts.lua
+EllesmereUI_ProfileSync.lua
+EllesmereUI_UICore.lua
+EllesmereUI_Ticker.lua
+EllesmereUI_Mouse.lua
+EllesmereUI_MenuFallbacks.lua
+EllesmereUI_GlobalSearch.lua
+EllesmereUI_Visibility.lua
+EllesmereUI_Presets.lua
+EllesmereUI_Profiles.lua
+EUI_UnlockMode.lua
+EllesmereUI_Glows.lua
+EllesmereUI_ClassicArt.lua
+EllesmereUI_BuffPresets.lua
+EllesmereUI_FirstInstall.lua
+EllesmereUI_StyleCards.lua
+EllesmereUI_StyleChoicePopup.lua
+EllesmereUI_StyleLaunchPopup.lua
+EllesmereUI_WindowSkinsPopup.lua
+EllesmereUI_RaidFramesPopup.lua
+EllesmereUI_PatchNotesPopup.lua
+EllesmereUI_SpecOverridesPopup.lua
+EUI_OptionsAccess_335.lua
+EUI_TooltipIDs_335.lua
+EUI_ChannelTicks_335.lua
+EUI_AuraFilters_335.lua
+EUI_AuraIndicators_335.lua

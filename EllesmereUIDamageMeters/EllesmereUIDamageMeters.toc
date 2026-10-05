@@ -1,0 +1,22 @@
+## Interface: 30300
+## Title: |cff0cd29fEllesmereUI|r Damage Meters
+## Category: |cff0cd29fEllesmere|rUI
+## Group: EllesmereUI
+## Notes: Independent Wrath combat statistics, history and spell/target breakdowns.
+## Author: Ellesmere
+## Version: 9.3.4-335-0.5
+## Dependencies: EllesmereUI
+## SavedVariables: EllesmereUIDamageMetersDB
+## SavedVariablesPerCharacter: EllesmereUIDamageMetersHistory
+## IconTexture: Interface\AddOns\EllesmereUI\media\eg-logo.tga
+
+# Main Luas
+# Retail files are retained as unloaded references.
+EUI_DamageMeters_335.lua
+EUI_DamageMeters_335_Parser.lua
+EUI_DamageMeters_335_Specs.lua
+EUI_DamageMeters_335_Display.lua
+EUI_DamageMeters_335_Breakdown.lua
+EUI_DamageMeters_335_Home.lua
+
+# Options

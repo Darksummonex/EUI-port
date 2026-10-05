@@ -1,0 +1,17 @@
+## Interface: 30300
+## Title: |cff0cd29fEllesmereUI|r Raid Frames
+## Category: |cff0cd29fEllesmere|rUI
+## Group: EllesmereUI
+## Notes: Native Wrath secure raid and party frames, aura filters and click casting.
+## Author: Ellesmere
+## Version: 9.3.4-335-0.6
+## Dependencies: EllesmereUI
+# Module settings are stored in the Core's EllesmereUIDB profiles.
+## IconTexture: Interface\AddOns\EllesmereUI\media\eg-logo.tga
+
+# Native runtime and secure child template. Retail originals stay unloaded.
+EUI_RaidFrames_335_Indicators.lua
+EUI_RaidFrames_335.lua
+EUI_RaidFrames_335_Display.lua
+EUI_RaidFrames_335_ClickCast.lua
+EUI_RaidFrames_335.xml

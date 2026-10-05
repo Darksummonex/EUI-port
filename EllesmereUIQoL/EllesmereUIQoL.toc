@@ -1,0 +1,17 @@
+## Interface: 30300
+## Title: |cff0cd29fEllesmereUI|r Quality of Life
+## Category: |cff0cd29fEllesmere|rUI
+## Group: EllesmereUI
+## Notes: Native Wrath conveniences, cursor, displays, window dragging and raid tools.
+## Author: Ellesmere
+## Version: 9.3.4-335-0.2
+## Dependencies: EllesmereUI
+# Core Lite owns module profile storage in EllesmereUIDB.
+## IconTexture: Interface\AddOns\EllesmereUI\media\eg-logo.tga
+
+# Native runtime; Retail originals are unloaded references.
+EUI_QoL_335.lua
+EUI_QoL_335_Displays.lua
+EUI_QoL_335_Panels.lua
+
+# Options

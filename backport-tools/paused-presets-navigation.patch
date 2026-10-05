@@ -1,0 +1,65 @@
+--- a/EllesmereUIOptions/EUI__General_Options.lua
++++ b/EllesmereUIOptions/EUI__General_Options.lua
+@@ -5522,13 +5522,16 @@
+                     ShowPastePage()
+                 end)
+ 
+-            -- Popular Presets: the in-game browser is retired; presets live on
+-            -- the EllesmereUI website. The card opens the announcement-style
+-            -- popup with the copyable link (same one the Presets tab shows).
++            -- Wrath uses the in-game look picker; Retail links community presets.
+             cardX = cardX + CARD_W + CARD_GAP
+             MakeActionCard(rowFrame, cardX, MEDIA .. "icons\\dark-overlay.png",
+-                EllesmereUI.L("Popular Presets"), EllesmereUI.L("Browse community presets."), function()
+-                    if EllesmereUI.VideoGuides then EllesmereUI.VideoGuides.Show("presets_website") end
++                EllesmereUI.L(_G.EUI_WOW_335 and "UI Style Presets" or "Popular Presets"),
++                EllesmereUI.L(_G.EUI_WOW_335 and "Choose EllesmereUI, Blizzard or Classic." or "Browse community presets."), function()
++                    if _G.EUI_WOW_335 then
++                        EllesmereUI:NavigateToElementSettings(PROFILES_KEY, PAGE_PRESETS)
++                    elseif EllesmereUI.VideoGuides then
++                        EllesmereUI.VideoGuides.Show("presets_website")
++                    end
+                 end)
+ 
+             y = y - CARD_H
+@@ -6802,6 +6805,9 @@
+             -- current spec -- it can call SwitchProfile/RefreshAllAddons and pop a "Reload Required" confirmation. None of that is safe from a
+             -- hidden indexing pass, so skip PAGE_PROFILES; it indexes on the player's first visit.
+             if EllesmereUI._prebuilding then
++                if pageName == PAGE_PRESETS and _G.EUI_WOW_335 then
++                    return _G._EUI_BuildStylePage and _G._EUI_BuildStylePage(pageName, parent, yOffset)
++                end
+                 if pageName == PAGE_OVERRIDES then
+                     -- Index the spec list only: the conditional builder is not part of the hidden pre-build pass, and the toggle is chrome.
+                     if EllesmereUI.SpecOverrides_BuildListPage then
+@@ -6820,6 +6826,10 @@
+                 return BuildFullExportPage(parent, yOffset)
+             end
+             if pageName == PAGE_PRESETS then
++                if _G.EUI_WOW_335 then
++                    CleanupProfilesRoot()
++                    return _G._EUI_BuildStylePage and _G._EUI_BuildStylePage(pageName, parent, yOffset)
++                end
+                 -- The in-game presets browser is retired: the tab opens the
+                 -- website popup (copyable link) over the normal Profiles page.
+                 if EllesmereUI.VideoGuides then EllesmereUI.VideoGuides.Show("presets_website") end
+@@ -6842,6 +6852,10 @@
+                     end
+                 end)
+             elseif pageName == PAGE_PRESETS then
++                if _G.EUI_WOW_335 then
++                    CleanupProfilesRoot()
++                    return
++                end
+                 -- Retired browser: the tab shows the website popup over the
+                 -- normal Profiles view. An active API import session wins --
+                 -- re-enter it instead of hiding its import page.
+@@ -6892,7 +6906,7 @@
+     do
+         local origSelectPage = EllesmereUI.SelectPage
+         function EllesmereUI:SelectPage(pageName, ...)
+-            if pageName == PAGE_PRESETS and self.GetActiveModule
++            if not _G.EUI_WOW_335 and pageName == PAGE_PRESETS and self.GetActiveModule
+                and self:GetActiveModule() == PROFILES_KEY then
+                 if EllesmereUI.VideoGuides then EllesmereUI.VideoGuides.Show("presets_website") end
+                 return

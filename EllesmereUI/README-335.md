@@ -1,0 +1,110 @@
+# EllesmereUI Wrath Core — 0.28
+
+0.28 replaces the Options sidebar CPU readout with combined loaded EUI addon
+memory, including Options. Native KB accounting is shown as MB every 5 seconds
+while the panel is visible.
+
+0.27 separates the Wrath theme image from the opaque base using native
+BORDER/BACKGROUND layers. Pixels/collapse decoration sits above the art;
+Retail retains its sublevels. This fixes the base occlusion left in 0.26.
+
+0.26 applies theme background and registered menu colors together.
+Wrath switches both art layers and the collapse box immediately, clears
+outgoing Pixels overlays and keeps the live texture handle current even
+when the panel is hidden. Theme matching and independent profile accents
+remain selectable; Retail keeps its animated crossfade.
+
+0.25 adds EUI_AuraIndicators_335.lua: shared native aura indicator geometry,
+Wrath healer/defensive/external spell catalogues, local-name rank matching,
+assignment selection, icon/text/cooldown display and reusable unit-frame
+pools. No other addon data or runtime dependency is consulted. Exclusions
+and timed/stealable constraints override explicit assignments; assigned
+externals can come from another caster despite the global Own filter.
+Cooldown indicators display active aura duration, not other players'
+unobservable spell cooldown availability.
+
+0.24 routes options-panel and global-search frame creation through the
+private EUI options factory when available, retaining the native factory
+before options loads. EUI search/EditBox focus behavior remains scoped to
+its controls. Blizzard's global CreateFrame is preserved.
+
+0.23: QoL receives its own full profile-refresh step for native overlays, automation, logging, window dragging and secure raid tools. Existing Core behavior is preserved.
+
+Earlier notes:
+
+0.18 inclui enhancedCharacterSheet/characterItemLevels no bundle opcional de
+Window Skins de export/import. Ausência das chaves continua representando o
+default do módulo. Tooltip Unlock e confirmação Edit Mode de 0.17 preservados.
+
+0.17 troca o tutorial automático do sidebar Wrath por tooltip no mouseover
+do botão Unlock Mode, à direita da linha. Fecha imediatamente ao sair,
+clicar ou esconder o botão/painel; não cobre as linhas inferiores ao abrir.
+O tutorial dentro de Edit Mode mantém a confirmação: botão Okay com fonte,
+limites, alpha e ordem de desenho explícitos no Wrath. Clique fecha a mensagem,
+cancela o fade e grava unlockTipSeen. Fluxos de hover/dismiss foram executados
+localmente com funções reais; aparência final ainda precisa de teste no cliente.
+Presets continua pausado; proposta em backport-tools/paused-presets-navigation.patch.
+
+0.16 adiciona EUI_OptionsAccess_335.lua: botão EllesmereUI no menu Esc do Wrath
+e categoria Interface > AddOns > EllesmereUI com Open EllesmereUI. Abrem o
+painel existente, carregando Options sob demanda somente ao clicar. Combat
+guard impede load/open em combate; falha de load mantém a tela nativa aberta.
+Registro/layout são idempotentes, preservam outras entradas de addons e não
+duplicam o botão do menu pooled Retail. Layout acompanha a cadeia de Logout e
+expande a altura conforme Continue, evitando anchors circulares entre addons.
+Categoria não cria bindings nem captura teclado. validate_options_access.py
+cobre entradas/cliques, lazy load, guards, re-layout/coexistência, eventos
+repetidos e menu moderno; sintaxe dos 138 Lua/UnitFrames passou.
+
+0.15 elimina overlays de edição duplicados de Buffs/Debuffs quando os movers
+Player Buffs/Player Debuffs do ActionBars Wrath estão registrados, inicializados
+e habilitados. Auras nativas já seguem esses movers; o overlay somente leitura
+agora cede sua superfície de edição ao mesmo grupo. Nenhuma aura é escondida,
+copiada ou recriada, e as posições salvas permanecem no perfil ActionBars.
+
+Sem o módulo/mover inicializado ou com a opção desligada, o overlay nativo
+volta a ser elegível. Overlays criados em sessões anteriores são escondidos
+quando o mover assume o grupo. Não altera o movimento ou os dados dos addons.
+
+Validado por validate_actionbars.py com catálogo/show reais do Unlock Mode:
+overlay inicial, ativação/desativação de cada grupo e do módulo, mover ainda
+ausente, re-enable, refresh sem frames duplicados e ícones nativos preservados.
+Também passaram os 137 Lua e a regressão UnitFrames. Aparência/taint aguardam
+confirmação detalhada no cliente. Usuário confirmou "Great so far so good";
+os ZIPs anteriores foram excluídos por solicitação dele. Core 0.14 é a base
+histórica, e a versão atual está registrada no manifesto do diretório AddOns.
+Use o combinado EllesmereUI-3.3.5-HUD-test-0.14.zip para a base atual.
+
+Core 0.21: refresh de perfis das novas janelas Bags/Bank pelo hook
+_EBAGS_RefreshAll. A combinação inclui Bags 0.1 e ResourceBars 0.1 nativos,
+Options 0.22 e mantém todas as correções anteriores. Teste no cliente pendente.
+
+Core 0.19 / Options 0.21: Presets retomado por solicitação explícita do usuário.
+Profiles > Presets e UI Style Presets abrem o seletor de estilo em jogo, com
+cards EllesmereUI / Blizzard / Classic e escolhas por módulo compatível.
+As gravações permanecem dentro da confirmação de reload; cancelar preserva o perfil.
+Os temas agora usam cópias TGA RGBA 1024x1024 de backgrounds em media;
+preservam o canvas completo/UV, transparência e todos os PNGs originais.
+Também converte base/sombra, overlay Pixels e ícone collapse/expand.
+Lich King usa eui-bg-lichking.png fornecido pelo usuário, com paleta azul-gelo.
+Global Settings > General > DISPLAY > Match Accent to Theme segue a paleta
+do tema (padrão ligado no Wrath). Desligar recupera o accent salvo; escolher
+swatch custom/class também desliga, sem perder o accent anterior do perfil.
+validate_themes_presets.py testa os callbacks reais de tema/matching, preload,
+crossfade, navegação, cards/setters/reload, cache e prebuild. Validação gráfica
+no WoW continua necessária após o reinício.
+EUI_TooltipIDs_335.lua ativa a opção existente General > DEVELOPER > Show
+Spell ID on Tooltip no Wrath (padrão off), sem TooltipDataProcessor/CVar Retail.
+Hook nativo para spells/actions/macros/auras/links, ID de aura na posição 11,
+suporte a spellIDModifier e dedup por tooltip/convivência com outros addons.
+validate_tooltip_ids.py testa estes contratos e registro idempotente.
+
+Core 0.20: corrigido teclado dos dois campos Search Features / Search Module
+Settings. ReleaseWrathPanelKeyboard desligava EnableKeyboard nos EditBoxes ao
+abrir/fechar o painel, deixando impossível digitar mesmo após SetFocus.
+EditBoxes agora mantêm teclado habilitado e liberam foco na limpeza; frames
+de captura de keybind continuam desativados até serem armados por click.
+validate_search.py reproduziu o defeito anterior e valida cleanup/reopen/foco,
+handlers reais de digitação/debounce/Escape/Enter, filtro/restauração de módulo,
+popup de features, indexação de página não visitada e navegação do resultado.
+Mantém autofocus off e ausência de OnKeyDown/propagação fictícia.

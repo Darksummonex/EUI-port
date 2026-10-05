@@ -1,0 +1,11 @@
+## Interface: 30300
+## Title: |cff0cd29fEllesmereUI|r Chat
+## Notes: Native Wrath chat styling, fonts, timestamps, URL selection and copy.
+## Author: Ellesmere / 3.3.5 backport
+## Version: 9.3.4-335-0.3
+## Dependencies: EllesmereUI
+## SavedVariables: EllesmereUIChatDB
+## IconTexture: Interface\AddOns\EllesmereUI\media\eg-logo.tga
+
+# Retail engines stay in the folder as reference only.
+EUI_Chat_335.lua

@@ -1,0 +1,9 @@
+## Interface: 30300
+## Title: |cff0cd29fEllesmereUI|r DataBars - 3.3.5
+## Notes: Configurable information bars for Wrath with native game data.
+## Author: Ellesmere / 3.3.5 backport
+## Version: 9.3.4-335-0.2
+## Dependencies: EllesmereUI
+
+EUI_DataBars_335.lua
+EUI_DataBars_335_Blocks.lua

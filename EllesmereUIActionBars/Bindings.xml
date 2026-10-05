@@ -1,0 +1,14 @@
+<Bindings>
+    <Binding name="EUI335_BAR6_BUTTON1" header="EUI335_ACTIONBARS">EllesmereUIActionBars_bar6Button1:Click("LeftButton");</Binding>
+    <Binding name="EUI335_BAR6_BUTTON2">EllesmereUIActionBars_bar6Button2:Click("LeftButton");</Binding>
+    <Binding name="EUI335_BAR6_BUTTON3">EllesmereUIActionBars_bar6Button3:Click("LeftButton");</Binding>
+    <Binding name="EUI335_BAR6_BUTTON4">EllesmereUIActionBars_bar6Button4:Click("LeftButton");</Binding>
+    <Binding name="EUI335_BAR6_BUTTON5">EllesmereUIActionBars_bar6Button5:Click("LeftButton");</Binding>
+    <Binding name="EUI335_BAR6_BUTTON6">EllesmereUIActionBars_bar6Button6:Click("LeftButton");</Binding>
+    <Binding name="EUI335_BAR6_BUTTON7">EllesmereUIActionBars_bar6Button7:Click("LeftButton");</Binding>
+    <Binding name="EUI335_BAR6_BUTTON8">EllesmereUIActionBars_bar6Button8:Click("LeftButton");</Binding>
+    <Binding name="EUI335_BAR6_BUTTON9">EllesmereUIActionBars_bar6Button9:Click("LeftButton");</Binding>
+    <Binding name="EUI335_BAR6_BUTTON10">EllesmereUIActionBars_bar6Button10:Click("LeftButton");</Binding>
+    <Binding name="EUI335_BAR6_BUTTON11">EllesmereUIActionBars_bar6Button11:Click("LeftButton");</Binding>
+    <Binding name="EUI335_BAR6_BUTTON12">EllesmereUIActionBars_bar6Button12:Click("LeftButton");</Binding>
+</Bindings>

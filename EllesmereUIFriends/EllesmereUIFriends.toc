@@ -1,0 +1,11 @@
+## Interface: 30300
+## Title: |cff0cd29fEllesmereUI|r Friends
+## Notes: A native Wrath friends and social-window skin.
+## Author: Ellesmere / 3.3.5 backport
+## Version: 9.3.4-335-0.2
+## Dependencies: EllesmereUI
+## SavedVariables: EllesmereUIFriendsDB
+## IconTexture: Interface\AddOns\EllesmereUI\media\eg-logo.tga
+
+# Native 3.3.5 implementation; Retail sources are unloaded references.
+EUI_Friends_335.lua

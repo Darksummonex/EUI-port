@@ -1,0 +1,96 @@
+"""Exercise Wrath menu/category entry points without building the settings UI."""
+from pathlib import Path
+import sys
+root=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(root/'.codex-tools'))
+from lupa.lua51 import LuaRuntime
+
+def fixture():
+    lua=LuaRuntime()
+    lua.execute((root/'backport-tools/wrath_mock.lua').read_text())
+    lua.execute('''
+EUI335={IsWrath=true}; combat=false; loadOK=true; loads=0; opens=0; categories={}
+function InCombatLockdown() return combat end
+function IsLoggedIn() return true end
+local m=getmetatable(UIParent).__index
+function m:GetPoint(i) return unpack((self.points or {})[i or 1] or {}) end
+function m:ClearAllPoints() self.points={} end
+function m:SetPoint(...) assert(not combat,'Menu layout changed in combat'); self.points=self.points or {}; self.points[#self.points+1]={...} end
+function m:HookScript(event,fn) self.hooks[event]=self.hooks[event] or {}; table.insert(self.hooks[event],fn) end
+function m:RunScript(event,...) if self.scripts[event] then self.scripts[event](self,...) end; for _,fn in ipairs(self.hooks[event] or {}) do fn(self,...) end end
+function m:Show() self.shown=true; self:RunScript('OnShow') end
+function m:GetTop() return self.top end
+function m:GetBottom() return self.bottom end
+function InterfaceOptions_AddCategory(panel) assert(panel.name=='EllesmereUI'); categories[#categories+1]=panel end
+function HideUIPanel(frame) frame:Hide() end
+function EllesmereUI.EnsureOptionsLoaded() loads=loads+1; return loadOK end
+function EllesmereUI:Show() assert(self==EllesmereUI and not combat); opens=opens+1 end
+function EllesmereUI.PrintError(message) lastError=message end
+GameMenuFrame=CreateFrame('Frame','GameMenuFrame',UIParent); GameMenuFrame:SetHeight(200); GameMenuFrame.top=300; GameMenuFrame:Hide()
+GameMenuButtonMacros=CreateFrame('Button','GameMenuButtonMacros',GameMenuFrame)
+GameMenuButtonLogout=CreateFrame('Button','GameMenuButtonLogout',GameMenuFrame)
+GameMenuButtonLogout:SetWidth(180); GameMenuButtonLogout:SetHeight(20)
+GameMenuButtonLogout:SetPoint('TOPLEFT',GameMenuButtonMacros,'BOTTOMLEFT',0,-16)
+GameMenuButtonContinue=CreateFrame('Button','GameMenuButtonContinue',GameMenuFrame); GameMenuButtonContinue.bottom=85
+InterfaceOptionsFrame=CreateFrame('Frame','InterfaceOptionsFrame',UIParent)
+VideoOptionsFrame=CreateFrame('Frame','VideoOptionsFrame',UIParent)
+AudioOptionsFrame=CreateFrame('Frame','AudioOptionsFrame',UIParent)
+''')
+    return lua
+
+source=(root/'EllesmereUI/EUI_OptionsAccess_335.lua').read_text()
+lua=fixture()
+lua.execute(source)
+lua.execute('''
+local A=EllesmereUI._wrathOptionsAccess
+assert(#categories==1 and categories[1]==A.category and not A.category:IsShown())
+assert(A.menuButton:GetText()=='EllesmereUI' and loads==0 and opens==0,'Options loaded without an explicit click')
+for i=1,5 do A.events:RunScript('OnEvent','PLAYER_ENTERING_WORLD'); GameMenuFrame:Show() end
+assert(#categories==1 and #GameMenuFrame.hooks.OnShow==1)
+assert(A.menuButton:GetWidth()==180 and A.menuButton:GetHeight()==20)
+assert(select(2,GameMenuButtonLogout:GetPoint(1))==A.menuButton)
+assert(select(2,A.menuButton:GetPoint(1))==GameMenuButtonMacros)
+assert(GameMenuFrame:GetHeight()==231,'Menu clipped buttons or expanded on every show')
+A.menuButton:RunScript('OnClick')
+assert(loads==1 and opens==1 and not GameMenuFrame:IsShown() and not InterfaceOptionsFrame:IsShown())
+-- Explicit category entry opens the same panel and closes native options.
+InterfaceOptionsFrame:Show(); A.category:Show(); A.category.openButton:RunScript('OnClick')
+assert(loads==2 and opens==2 and not InterfaceOptionsFrame:IsShown())
+assert(not A.category.scripts.OnKeyDown and not A.menuButton.scripts.OnKeyDown)
+-- Failed LOD load keeps the existing UI; combat cannot load or open options.
+loadOK=false; GameMenuFrame:Show(); assert(A.Open()==false and loads==3 and opens==2 and GameMenuFrame:IsShown())
+loadOK=true; combat=true; assert(A.Open()==false and loads==3 and opens==2 and lastError)
+A.LayoutMenu(); combat=false
+-- Coexist with another addon inserting its menu button after ours.
+local other=CreateFrame('Button',nil,GameMenuFrame)
+other:SetPoint('TOPLEFT',A.menuButton,'BOTTOMLEFT',0,-1)
+GameMenuButtonLogout:ClearAllPoints(); GameMenuButtonLogout:SetPoint('TOPLEFT',other,'BOTTOMLEFT',0,-16)
+GameMenuFrame:Show()
+assert(select(2,GameMenuButtonLogout:GetPoint(1))==other and select(2,A.menuButton:GetPoint(1))==GameMenuButtonMacros)
+-- Native re-layout drops our entry from the chain and resets the frame height.
+GameMenuButtonLogout:ClearAllPoints(); GameMenuButtonLogout:SetPoint('TOPLEFT',GameMenuButtonMacros,'BOTTOMLEFT',0,-16)
+GameMenuFrame:SetHeight(200); GameMenuFrame:Show(); assert(GameMenuFrame:GetHeight()==231)
+assert(select(2,GameMenuButtonLogout:GetPoint(1))==A.menuButton)
+''')
+lua.execute(source)
+lua.execute('assert(#categories==1 and #GameMenuFrame.hooks.OnShow==1)')
+
+# Prefer the existing Retail entry on clients with a pooled modern menu.
+modern=fixture()
+modern.execute('GameMenuFrame.Layout=function() end; GameMenuFrame.buttonPool={}')
+modern.execute(source)
+modern.execute('assert(#categories==1 and not EllesmereUI._wrathOptionsAccess.menuButton)')
+
+# APIs/frames can become available later; registration is retried once out of combat.
+late=fixture()
+late.execute('savedMenu=GameMenuFrame; GameMenuFrame=nil; combat=true')
+late.execute(source)
+late.execute('''
+assert(#categories==0); combat=false
+EllesmereUI._wrathOptionsAccess.events:RunScript('OnEvent','PLAYER_REGEN_ENABLED')
+assert(#categories==1 and not EllesmereUI._wrathOptionsAccess.menuButton)
+GameMenuFrame=savedMenu
+EllesmereUI._wrathOptionsAccess.events:RunScript('OnEvent','PLAYER_ENTERING_WORLD')
+assert(EllesmereUI._wrathOptionsAccess.menuButton)
+''')
+print('PASS: Wrath Escape menu and Interface/AddOns entries; click-only LOD/open, native panel close, missing-options/combat guards, idempotent registration/layout, other-addon anchor chain, native re-layout, late frames and pooled-menu fallback.')
