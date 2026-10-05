@@ -86,6 +86,10 @@ EllesmereUI.HideWidgetTooltip=function() widgetTip=nil end
 EllesmereUI.FRAME_STRATA_ORDER_FULL={'MEDIUM'}
 EllesmereUI._groupDeathSoundPaths={airhorn='airhorn.ogg'}
 ''')
+# Unlock Mode reads the field names produced by the real core factory.
+core_src=(root/'EllesmereUI/EllesmereUI.lua').read_text(encoding='utf-8-sig')
+mk_start=core_src.index('function EllesmereUI.MakeUnlockElement(opts)')
+lua.execute(core_src[mk_start:core_src.index('\nend\n',mk_start)+5])
 ns=lua.table()
 for file in ['EUI_AuraBuffReminders_335_Catalog.lua','EUI_AuraBuffReminders_335_Display.lua','EUI_AuraBuffReminders_335.lua','EUI_AuraBuffReminders_335_Extras.lua']:
     lua.execute((root/'EllesmereUIAuraBuffReminders'/file).read_text(encoding='utf-8-sig'),'EllesmereUIAuraBuffReminders',ns)
@@ -219,15 +223,25 @@ D.RCWOnEvent(nil,'READY_CHECK'); assert(D._rcFrame:IsShown()); D.RCWHide(); asse
 power=90; D.RCWOnEvent(nil,'READY_CHECK'); assert(not D._rcFrame:IsShown()); raid=0
 
 -- Unlock mode position and grow-edge conversion.
-unlock.EABR_Reminders.savePosition(nil,'CENTER','CENTER',15,25); assert(p.unlockPos.y==25)
-EllesmereUI.SetAuraBuffGrowDir('RIGHT'); assert(p.unlockPos.point=='LEFT')
+local mover=unlock.EABR_Reminders
+assert(mover.noResize and mover.noAnchorTarget and mover.getFrame()==D.iconAnchor and mover.order==600)
+local mw,mh=mover.getSize(); assert(mw>0 and mh>0)
+mover.savePosition(nil,'CENTER','CENTER',15,25); assert(p.unlockPos.y==25)
+EllesmereUI.SetAuraBuffGrowDir('RIGHT'); assert(p.unlockPos.point=='LEFT' and EllesmereUI.GetAuraBuffGrowDir()=='RIGHT')
+local lp=mover.loadPosition(); assert(lp.point=='CENTER' and math.abs(lp.x-15)<0.01)
 EllesmereUI.SetAuraBuffGrowDir('CENTER'); assert(p.unlockPos.point=='CENTER' and p.unlockPos.x==15)
+mover.saveRawPosition(nil,{point='CENTER',relPoint='CENTER',x=3,y=4}); assert(mover.loadRawPosition().x==3)
+mover.clearPosition(); assert(p.unlockPos==nil); mover.applyPosition()
 SlashCmdList.EABR(); assert(shownModule=='EllesmereUIAuraBuffReminders')
 ''')
 # Options page: registers on PLAYER_LOGIN against the Wrath globals.
 source=(root/'EllesmereUIOptions/EUI_AuraBuffReminders_335_Options.lua').read_text(encoding='utf-8-sig')
 for retail_only in ['C_Traits','C_ClassTalents','C_Map','GetSpecialization','134400','.png','augment_rune','inky_black','showUnderMPlus']:
     assert retail_only not in source,retail_only
+# Unlock Mode right-click "Element Options" opens this page's DISPLAY section.
+unlock_src=(root/'EllesmereUI/EUI_UnlockMode.lua').read_text(encoding='utf-8-sig')
+assert '["EABR_Reminders"] = { module = "EllesmereUIAuraBuffReminders", page = "Auras, Buffs & Consumables", sectionName = "DISPLAY" }' in unlock_src
+assert 'barKey == "EABR_Reminders"' in unlock_src and 'EllesmereUI.SetAuraBuffGrowDir(val)' in unlock_src
 lua.execute(r'''
 EllesmereUI.PanelPP=EllesmereUI.PP
 EllesmereUI.CONTENT_PAD=45
@@ -285,7 +299,7 @@ local function Control(text) for _,c in ipairs(rows) do if c.text==text then ret
 rows={}; sections={}
 assert(cfg.buildPage('Auras, Buffs & Consumables',UIParent,0)>0)
 local seen={}; for _,s in ipairs(sections) do seen[s]=true end
-assert(seen['RAID BUFFS'] and seen['ROGUE POISONS'] and seen['WARLOCK'] and seen['CUSTOM REMINDERS'] and not seen['PALADIN RITES'])
+assert(seen['DISPLAY'] and seen['RAID BUFFS'] and seen['ROGUE POISONS'] and seen['WARLOCK'] and seen['CUSTOM REMINDERS'] and not seen['PALADIN RITES'])
 assert(Control('Show Below') and not Control('Show Below Pre-Key') and not Control('Augment Rune') and not Control('Inky Black Potion'))
 local p=_EABR_AceDB.profile
 Control('Show Below').setValue(9); assert(p.display.showUnder==9)
