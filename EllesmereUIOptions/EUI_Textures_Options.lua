@@ -633,9 +633,8 @@ end
 local function TileChat(parent, y, W, tile)
     local ns = NS(tile.folder)
     if not ns then return DisabledTile(parent, y, W, tile) end
-    if ns.IsWrath then
-        y = NoteRow(parent, y, "Wrath Chat uses a solid background and border. Their colors and opacity are available on the Chat page.")
-        return LinkRow(parent, y, "Chat Appearance", tile.folder, "Chat", "DISPLAY", "Border Size")
+    if ns.IsWrath and ns.ChatStyle and ns.ChatStyle() ~= "eui" then
+        return NoteRow(parent, y, "A stock chat style is active: chat keeps Blizzard's own background and tab art.")
     end
     local ECHAT = ns.ECHAT
     local function db()

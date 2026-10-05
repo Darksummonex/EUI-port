@@ -341,11 +341,9 @@ end
 Register("questtracker", "EllesmereUIQuestTracker",    "Quest Tracker",
     "Blizzard's own tracker, with every EllesmereUI tracker feature. Both stock styles look the same here.",
     QTProfile, "useBlizzardStyle", "useClassicStyle", "QT_Style")
-if not (NS("EllesmereUIChat") and NS("EllesmereUIChat").IsWrath) then
 Register("chat",         "EllesmereUIChat",            "Chat",
     "Blizzard's own chat window, tabs and input box, or the same window with the classic tab art, with every EllesmereUI chat feature.",
     ChatProfile, "useBlizzardStyle", "useClassicStyle", "ChatStyle")
-end
 -- One row covers raid, party (in its Raid Frames layout), Friendly Boss and
 -- Extra Frames, on both clients (WoW Forever draws Blizzard Style here).
 -- Either stock style's first visit seeds the stock raid fill (the 12.1 flat

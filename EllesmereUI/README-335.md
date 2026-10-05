@@ -1,4 +1,62 @@
-# EllesmereUI Wrath Core — 0.28
+# EllesmereUI Wrath Core — 0.35
+
+0.35 corrige os ícones das páginas de opções: o Wrath não lê PNG, então
+`prepare_option_icons.py` gerou cópias TGA potência-de-dois em `media/icons_335`
+e as constantes de ícone (fechar, olho, direções, etc.) em `EllesmereUI.lua`
+apontam para elas. Os PNGs originais continuam intactos.
+
+0.34 porta o sistema Settings Overrides do Retail:
+
+- `EllesmereUI_SpecOverrides_335.lua`: grupos de spec ("Editing as"), captura
+  automática das configurações alteradas, bordas douradas, Default Editing
+  Mode, layouts de Unlock Mode por grupo, lista de overrides em Profiles &
+  Presets e o botão de glifo ao lado da busca. Spec no Wrath = árvore de
+  talentos dominante do talent group ativo (dual spec troca os valores na
+  hora), usando os IDs sintéticos do core (33000 + classID*10 + aba).
+- `EllesmereUI_Conditions_335.lua`: overrides condicionais (keybind fora de
+  combate, Dark Mode, dungeon, raid, arena, battleground, solo). Solo usa
+  `GetNumPartyMembers`/`GetNumRaidMembers` e os eventos
+  `PARTY_MEMBERS_CHANGED`/`RAID_ROSTER_UPDATE`.
+- `EllesmereUI_Presets.lua`: o popup de specs agora lista as 10 classes e 30
+  árvores do Wrath (com IDs sintéticos e papéis para Tanks/Healers/DPS). Antes
+  listava specs Retail que nunca batiam com o spec do Wrath, então a
+  atribuição de perfil por spec também passa a funcionar.
+- Arte em TGA (`media/icons_335`): ícones de condição, papéis, multispec,
+  info/editar/cadeado e sprites de classe sem RLE.
+
+Não portado: forks de Buff/Debuff Manager (o Raid Frames Wrath não tem esse
+sistema; o motor fica inerte) e a condição Druid Form (também "em breve" no
+Retail). Teste: `backport-tools/validate_spec_overrides.py`.
+
+0.33 porta os motores portáveis do Core Retail:
+
+- `Libs\LibDeflate` (1.0.2, cópia Retail) carrega antes de Profiles, então
+  export/import de perfis e strings compartilhadas voltam a funcionar.
+- `EllesmereUI_Kick_335.lua`: interrupt ativo por classe (Mind Freeze,
+  Pummel/Shield Bash, Spell Lock do Felhunter, Wind Shear, Kick, Silence,
+  Counterspell, Silencing Shot, Feral Charge), resolvido pelo spellbook do
+  jogador/pet, com `GetActiveKickSpell`, `IsKickReady`,
+  `RefreshKickAbility` e `ComputeCastBarTint`.
+- `EllesmereUI_ManaRegenSpark_335.lua`: spark da regra dos 5 segundos e dos
+  ticks de mana (`Attach`/`Detach`/`SetMana`), horizontal, invertido e
+  vertical; ignora Warrior/Rogue e só conta feitiços que custam mana.
+- `EllesmereUI_SpellCostPrediction_335.lua`: segmento do custo do cast atual
+  sobre a barra de power, acompanhando castID do `UnitCastingInfo`.
+- `EllesmereUI_VideoGuides_335.lua`: guias em vídeo do Retail (Overrides,
+  Unlock Mode, Cooldown Manager, presets) com ícone play em TGA; o guia do
+  lançamento 12.1 foi removido.
+- `EllesmereUI_PartyMode_335.lua`: Party Mode completo (luzes, feixes em TGA
+  com rotação por texcoord, música, spin) com gatilhos Wrath: boss kill
+  heroico/normal (unidades boss ou DBM_Kill), vitória em arena ranqueada e
+  battleground, Bloodlust/Heroism (Sated/Exhaustion), level up e aleatório.
+  Brilho/contraste usam gamma quando os CVars Retail não existem.
+
+Não portado: ClientGate, RetailAtlas, AuraKit, WarriorCharges, LibKeystone,
+LibSpecialization (APIs/sistemas inexistentes no 3.3.5), BlizzardParty (não
+existe CompactRaidFrameManager), proxies seguros de menu do Kick (sem ação
+"togglemenu"), gatilhos de keystone/Mythic/LFR/rated BG e o vídeo 12.1.
+Range e MacroFactory ficam para Nameplates/QoL; ResourceBars ainda não
+hospeda o spark/custo. Teste: `backport-tools/validate_core_engines.py`.
 
 0.28 replaces the Options sidebar CPU readout with combined loaded EUI addon
 memory, including Options. Native KB accounting is shown as MB every 5 seconds

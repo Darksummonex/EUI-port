@@ -14,13 +14,10 @@ function ns.Text(parent,size)
     local fs=parent:CreateFontString(nil,"OVERLAY"); ns.Font(fs,size or 11); fs:SetTextColor(1,1,1); fs:SetJustifyH("LEFT"); fs:SetJustifyV("MIDDLE"); return fs
 end
 local function Accent() if E.GetAccentColor then return E.GetAccentColor() end; return .047,.824,.616 end
+ns.Accent=Accent
 function ns.Skin(f,alpha)
     f:SetBackdrop({bgFile=white,edgeFile=white,edgeSize=1}); f:SetBackdropColor(.025,.035,.045,alpha or .96)
     f:SetBackdropBorderColor(Accent())
-end
-local function ButtonBackground(b,alpha,color)
-    b.bgAlpha=alpha; b.bgColor=color
-    b:SetBackdropColor(color and color.r or .025,color and color.g or .035,color and color.b or .045,alpha)
 end
 function ns.Button(parent,text,w,h,fn)
     local b=nativeCreateFrame("Button",nil,parent); ns.Size(b,w or 24,h or 22); ns.Skin(b,.85)
@@ -29,14 +26,27 @@ function ns.Button(parent,text,w,h,fn)
     b:SetScript("OnLeave",function(self) local c=self.bgColor; self:SetBackdropColor(c and c.r or .025,c and c.g or .035,c and c.b or .045,self.bgAlpha or .85) end); return b
 end
 ns.MEDIA="Interface\\AddOns\\EllesmereUIDamageMeters\\Media_335\\"
-function ns.IconButton(parent,icon,w,h,fn,tip)
-    local b=ns.Button(parent,"",w,h,fn)
-    b.icon=b:CreateTexture(nil,"ARTWORK"); b.icon:SetTexture(ns.MEDIA..icon)
-    b.icon:SetPoint("TOPLEFT",b,"TOPLEFT",4,-4); b.icon:SetPoint("BOTTOMRIGHT",b,"BOTTOMRIGHT",-4,4)
-    local enter,leave=b:GetScript("OnEnter"),b:GetScript("OnLeave")
-    b:SetScript("OnEnter",function(self) enter(self); if tip then GameTooltip:SetOwner(self,"ANCHOR_TOP"); GameTooltip:SetText(tip); GameTooltip:Show() end end)
-    b:SetScript("OnLeave",function(self) leave(self); if tip then GameTooltip:Hide() end end)
-    return b
+local ICON_ALPHA,ICON_HOVER_ALPHA,ICON_DISABLED_ALPHA=.4,.9,.2
+local SNAP_THRESH=6
+-- The padlock glyphs are centred on a 64px canvas.
+local LOCK_COORDS={.28125,.71875,.203125,.796875}
+ns.MAX_WINDOWS,ns.MIN_WIDTH,ns.MAX_WIDTH=5,150,1200
+local function ShowTip(owner,text)
+    if not text then return end
+    GameTooltip:SetOwner(owner,"ANCHOR_TOP"); GameTooltip:SetText(text); GameTooltip:Show()
+end
+ns.ShowTip=ShowTip
+local function PaintIcon(b) b.icon:SetAlpha(b.disabled and ICON_DISABLED_ALPHA or b.hover and ICON_HOVER_ALPHA or ICON_ALPHA) end
+ns.PaintHeaderIcon=PaintIcon
+-- Bare desaturated header glyph, brightened while hovered.
+function ns.HeaderIcon(parent,file,tip,fn)
+    local b=nativeCreateFrame("Button",nil,parent); ns.Size(b,22,22)
+    b.icon=b:CreateTexture(nil,"ARTWORK"); b.icon:SetAllPoints(b); b.icon:SetTexture(ns.MEDIA..file); b.icon:SetDesaturated(true)
+    b.tip=tip
+    b:SetScript("OnEnter",function(self) self.hover=true; PaintIcon(self); if self.onEnter then self.onEnter() end; ShowTip(self,self.disabled and self.disabledTip or self.tip) end)
+    b:SetScript("OnLeave",function(self) self.hover=false; PaintIcon(self); GameTooltip:Hide() end)
+    b:SetScript("OnClick",function(self,button) if not self.disabled and fn then GameTooltip:Hide(); fn(self,button) end end)
+    PaintIcon(b); return b
 end
 local resourceTextures={"atrocity","beautiful","divide","fade","fade-right","glass","gradient-bt","gradient-lr","gradient-rl","gradient-tb","matte","plating","sheer","thin-line-bottom","thin-line-top"}
 local function SharedMedia()
@@ -170,6 +180,7 @@ local function Settings(index)
     if E.EnsureOptionsLoaded then E.EnsureOptionsLoaded() end
     if E.ShowModule then E:ShowModule(ADDON) end
 end
+ns.OpenSettings=Settings
 local function MetricMenu(index,anchor)
     local items={}
     for _,m in ipairs(ns.metrics) do local key=m.key
@@ -184,7 +195,9 @@ function ns.SegmentChoices()
     end
     return values,order
 end
-function ns.WindowHeight(cfg) return cfg.headerHeight+8+cfg.rows*(cfg.rowHeight+cfg.barSpacing) end
+local function Border(cfg) return ns.Clamp(cfg.borderSize,0,4) end
+function ns.WindowHeight(cfg) return Border(cfg)*2+cfg.headerHeight+cfg.rows*(cfg.rowHeight+cfg.barSpacing) end
+function ns.RowsForHeight(cfg,h) return ns.Clamp(math.floor((h-Border(cfg)*2-cfg.headerHeight)/(cfg.rowHeight+cfg.barSpacing)+.5),1,40) end
 function ns.SelectSegment(index,key)
     local windows=ns.Profile().windows; local cfg=windows[index]; if not cfg then return end
     cfg.segment=key
@@ -209,6 +222,7 @@ local function InstanceHidden(cfg)
     if not inside then return cfg.hideOutOfInstance end
     return kind=="party" and cfg.hideInDungeon or kind=="raid" and cfg.hideInRaid or (kind=="pvp" or kind=="arena") and cfg.hideInPvP
 end
+ns.InstanceHidden=InstanceHidden
 -- Instance entry/exit flips windows with Auto Swap between Current and Overall.
 function ns.InstanceChanged()
     local inside=IsInInstance and IsInInstance() and true or false
@@ -229,6 +243,7 @@ local function SettingsMenu(index,anchor)
         local c=Cfg(); if c.autoCurrentOnCombat==nil then return ns.Profile().autoCurrent end
         return c.autoCurrentOnCombat
     end
+    local cfg=Cfg()
     ns.OpenMenu(anchor,{
         Toggle("Hide in Dungeons","hideInDungeon"),
         Toggle("Hide in Raids","hideInRaid"),
@@ -236,15 +251,17 @@ local function SettingsMenu(index,anchor)
         Toggle("Hide out of Instances","hideOutOfInstance"),
         "---",
         {text="Width",isInput=true,getValue=function() return Cfg().width end,
-         setValue=function(v) Cfg().width=ns.Clamp(v,220,650); ns.Apply() end},
+         setValue=function(v) Cfg().width=ns.Clamp(v,ns.MIN_WIDTH,ns.MAX_WIDTH); ns.Apply() end},
         {text="Height",isInput=true,getValue=function() return math.floor(ns.WindowHeight(Cfg())+.5) end,
-         setValue=function(v) local c=Cfg(); c.rows=ns.Clamp(math.floor((v-c.headerHeight-8)/(c.rowHeight+c.barSpacing)),1,40); ns.Apply() end},
-        Toggle("Lock Position","locked","Prevents dragging this window by its header"),
+         setValue=function(v) local c=Cfg(); c.rows=ns.Clamp(math.floor((v-Border(c)*2-c.headerHeight)/(c.rowHeight+c.barSpacing)),1,40); ns.Apply() end},
+        {text=cfg.snapDisabled and "Enable Snapping" or "Disable Snapping",tooltip="Snap this window to nearby meter windows while dragging or resizing",
+         fn=function() local c=Cfg(); c.snapDisabled=not c.snapDisabled end},
         Toggle("Hide Timer","hideTimer"),
         Toggle("Auto Swap Current/Overall","autoSwapInstance","Switch this window to Overall when you leave a dungeon or raid, and to Current when you enter one"),
         {text="Auto Current on Combat",tooltip="Entering combat switches this window back to Current if viewing a past segment",keepOpen=true,
          isActive=AutoCurrent,fn=function() Cfg().autoCurrentOnCombat=not AutoCurrent() end},
         Toggle("Sync Segment Selection","syncSegments","Selecting a segment switches all synced windows to it"),
+        {text="Report",fn=function() ns.ShowReport(index) end},
         {text="Settings",fn=function() Settings(index) end},
     },190)
 end
@@ -257,16 +274,60 @@ function ns.RightClick(index)
     elseif r.focusGUID then ns.BackToGroup(index)
     elseif ns.ShowHome then ns.ShowHome(index) end
 end
+-- Hover state drives the mouseover header icons and the grip/padlock fade.
+local hoverDriver=nativeCreateFrame("Frame"); hoverDriver:Hide(); ns.hoverDriver=hoverDriver
+local function Over(f)
+    if f.IsMouseOver then return f:IsMouseOver() and true or false end
+    return MouseIsOver~=nil and MouseIsOver(f) and true or false
+end
+function ns.PaintGrip(index)
+    local r,cfg=ns.windows[index],ns.Profile().windows[index]; if not r or not cfg then return end
+    local base=(r.fade or 0)*.3
+    r.grip:SetAlpha(cfg.locked and 0 or r.grip.hover and .7 or base)
+    r.lock:SetAlpha(r.lock.hover and .7 or base)
+end
+function ns.StartHover(index,header)
+    local r=ns.windows[index]; if not r then return end
+    r.hoverActive=true; r.fadeTarget=1
+    if header and not r.headerHover then
+        r.headerHover=true
+        local cfg=ns.Profile().windows[index]; if cfg and cfg.mouseoverIcons then ns.RefreshWindow(index) end
+    end
+    hoverDriver:Show()
+end
+hoverDriver:SetScript("OnUpdate",function(self,dt)
+    self.poll=(self.poll or 0)+dt
+    local poll=self.poll>=.1; if poll then self.poll=0 end
+    local busy=false; local p=ns.Profile()
+    for index,r in pairs(ns.windows) do
+        local cfg=p and p.windows[index]
+        if r.hoverActive and poll then
+            local shown=cfg and r.frame:IsShown()
+            local header=shown and (r.drag or Over(r.header)) and true or false
+            if header~=(r.headerHover or false) then r.headerHover=header; if cfg.mouseoverIcons then ns.RefreshWindow(index) end end
+            if not (shown and (r.drag or r.resizing or Over(r.frame))) then r.hoverActive=false; r.fadeTarget=0 end
+        end
+        local target,fade=r.fadeTarget or 0,r.fade or 0
+        if fade~=target then
+            local s=dt/.12
+            fade=target>fade and math.min(target,fade+s) or math.max(target,fade-s)
+            r.fade=fade; ns.PaintGrip(index)
+        end
+        if r.hoverActive or fade~=target then busy=true end
+    end
+    if not busy then self:Hide() end
+end)
 local function NewRow(parent,index)
     local r=nativeCreateFrame("Button",nil,parent)
     r.windowIndex=index
     r.bg=r:CreateTexture(nil,"BACKGROUND"); r.bg:SetTexture(white); r.bg:SetAllPoints(r); r.bg:SetVertexColor(0,0,0,0)
-    r.bar=nativeCreateFrame("StatusBar",nil,r); r.bar:SetAllPoints(r); r.bar:SetStatusBarTexture(white)
+    r.bar=nativeCreateFrame("StatusBar",nil,r); r.bar:SetAllPoints(r); r.bar:SetStatusBarTexture(white); r.barInset=0
     r.bar:SetFrameLevel(r:GetFrameLevel()); r.textHost=nativeCreateFrame("Frame",nil,r); r.textHost:SetAllPoints(r); r.textHost:SetFrameLevel(r.bar:GetFrameLevel()+1)
     r.border=nativeCreateFrame("Frame",nil,r); r.border:SetAllPoints(r); r.border:SetFrameLevel(r.textHost:GetFrameLevel()+1); r.border:Hide()
-    r.icon=r.textHost:CreateTexture(nil,"ARTWORK"); r.icon:SetPoint("LEFT",r.textHost,"LEFT",4,0); r.icon:Hide()
-    r.label=ns.Text(r.textHost); r.label:SetPoint("LEFT",r.textHost,"LEFT",5,0)
-    r.value=ns.Text(r.textHost); r.value:SetPoint("RIGHT",r.textHost,"RIGHT",-5,0); r.value:SetJustifyH("RIGHT")
+    r.icon=r.textHost:CreateTexture(nil,"ARTWORK"); r.icon:SetPoint("LEFT",r,"LEFT",0,0); r.icon:Hide()
+    r.label=ns.Text(r.textHost); r.label:SetPoint("LEFT",r.bar,"LEFT",3,0)
+    r.value=ns.Text(r.textHost); r.value:SetPoint("RIGHT",r.bar,"RIGHT",-3,0); r.value:SetJustifyH("RIGHT")
+    r.hl=r.textHost:CreateTexture(nil,"BACKGROUND"); r.hl:SetTexture(white); r.hl:SetAllPoints(r); r.hl:SetVertexColor(1,1,1,.08); r.hl:Hide()
     r:SetScript("OnClick",function(self,button)
         if button=="RightButton" then ns.RightClick(self.windowIndex); return end
         if not self.data then return end
@@ -277,15 +338,17 @@ local function NewRow(parent,index)
     end)
     r:RegisterForClicks("LeftButtonUp","RightButtonUp")
     r:SetScript("OnEnter",function(self)
+        ns.StartHover(self.windowIndex)
         if not self.data then return end
+        self.hl:Show()
         local cfg=ns.Profile().windows[self.windowIndex]
         local entry=self.data.breakdown and self.data.entry
         if cfg and cfg.spellTooltips and entry and entry.id and entry.id>0 and self.focusMode~="targets" then
             GameTooltip:SetOwner(self,"ANCHOR_RIGHT"); GameTooltip:SetHyperlink("spell:"..entry.id); GameTooltip:Show(); self.spellTip=true
         elseif not cfg or cfg.hoverBreakdown~=false then ns.ShowBreakdownTooltip(self) end
     end)
-    r:SetScript("OnLeave",function(self) ns.HideBreakdownTooltip(self); if self.spellTip then self.spellTip=nil; GameTooltip:Hide() end end)
-    r:SetScript("OnHide",function(self) ns.HideBreakdownTooltip(self) end); return r
+    r:SetScript("OnLeave",function(self) self.hl:Hide(); ns.HideBreakdownTooltip(self); if self.spellTip then self.spellTip=nil; GameTooltip:Hide() end end)
+    r:SetScript("OnHide",function(self) self.hl:Hide(); ns.HideBreakdownTooltip(self) end); return r
 end
 local function Register(index,cfg)
     if ns.registered[index] then ns.registered[index].label=cfg.name; return end
@@ -301,40 +364,215 @@ local function Register(index,cfg)
     ns.registered[index]=elem; E:RegisterUnlockElements({elem},ADDON)
     E._ELEMENT_SETTINGS_MAP=E._ELEMENT_SETTINGS_MAP or {}; E._ELEMENT_SETTINGS_MAP["EDM_"..index]={module=ADDON,page="Windows",sectionName="WINDOW SETTINGS",highlightText="Select Window"}
 end
+local function Cursor(f) local x,y=GetCursorPosition(); local s=f:GetEffectiveScale(); return x/s,y/s end
+local function Screen(f)
+    local s=f and f:GetScale() or 1
+    return (UIParent:GetWidth() or 1920)/s,(UIParent:GetHeight() or 1080)/s
+end
+-- Dragging and growing need a fixed top-left corner.
+local function AnchorTopLeft(f)
+    local l,t=f:GetLeft(),f:GetTop(); if not l or not t then return end
+    f:ClearAllPoints(); f:SetPoint("TOPLEFT",UIParent,"BOTTOMLEFT",l,t)
+end
+local function Snap(value,candidates)
+    local best,dist=value,math.huge
+    for i=1,#candidates,2 do
+        local d=math.abs(candidates[i]-value)
+        if d<=SNAP_THRESH and d<dist then best,dist=candidates[i+1],d end
+    end
+    return best,dist
+end
+-- Edge snapping against the nearest shown meter window.
+function ns.SnapPosition(index,left,top)
+    local cfg,r=ns.Profile().windows[index],ns.windows[index]
+    if not cfg or cfg.snapDisabled or not r then return left,top end
+    local w,h=r.frame:GetWidth(),r.frame:GetHeight()
+    local bestX,bestY,dx,dy=left,top,math.huge,math.huge
+    for i,o in pairs(ns.windows) do
+        local of=o.frame
+        if i~=index and ns.Profile().windows[i] and of:IsShown() then
+            local ol,orr,ot,ob=of:GetLeft(),of:GetRight(),of:GetTop(),of:GetBottom()
+            if ol and orr and ot and ob then
+                local x,d=Snap(left,{ol,ol,orr,orr,ol-w,ol-w,orr-w,orr-w})
+                if d<dx then bestX,dx=x,d end
+                local y,e=Snap(top,{ot,ot,ob,ob,ot+h,ot+h,ob+h,ob+h})
+                if e<dy then bestY,dy=y,e end
+            end
+        end
+    end
+    return bestX,bestY
+end
+function ns.StartDrag(index)
+    local r,cfg=ns.windows[index],ns.Profile().windows[index]
+    if not r or not cfg or cfg.locked or r.resizing then return end
+    AnchorTopLeft(r.frame)
+    local x,y=Cursor(r.frame)
+    r.drag={x=x,y=y,left=r.frame:GetLeft() or 0,top=r.frame:GetTop() or 0}; r.dragMoved=nil
+    r.title:SetScript("OnUpdate",r.dragStep)
+end
+function ns.DragStep(index)
+    local r=ns.windows[index]; local d=r and r.drag; if not d then return end
+    if IsMouseButtonDown and not IsMouseButtonDown("LeftButton") then ns.StopDrag(index); return end
+    local x,y=Cursor(r.frame); local dx,dy=x-d.x,y-d.y
+    if not d.moved and math.abs(dx)+math.abs(dy)>2 then d.moved=true; ns.CloseMenu(); ns.HideBreakdownTooltip() end
+    if not d.moved then return end
+    local left,top=ns.SnapPosition(index,d.left+dx,d.top+dy)
+    r.frame:ClearAllPoints(); r.frame:SetPoint("TOPLEFT",UIParent,"BOTTOMLEFT",left,top)
+end
+function ns.StopDrag(index)
+    local r=ns.windows[index]; local d=r and r.drag; if not d then return end
+    r.drag=nil; r.title:SetScript("OnUpdate",nil); r.dragMoved=d.moved
+    local cfg=ns.Profile().windows[index]
+    if d.moved and cfg then SavePosition(cfg,r.frame) end
+end
+local function SnapSize(index,w,h)
+    local cfg=ns.Profile().windows[index]; if cfg.snapDisabled then return w,h end
+    local bw,bh,dw,dh=w,h,math.huge,math.huge
+    for i,o in pairs(ns.windows) do
+        if i~=index and ns.Profile().windows[i] and o.frame:IsShown() then
+            local ow,oh=o.frame:GetWidth(),o.frame:GetHeight()
+            local d=math.abs(w-ow); if d<=SNAP_THRESH and d<dw then bw,dw=ow,d end
+            d=math.abs(h-oh); if d<=SNAP_THRESH and d<dh then bh,dh=oh,d end
+        end
+    end
+    return bw,bh
+end
+-- Corner grip: Shift locks the first axis moved; height converts to rows.
+function ns.StartResize(index)
+    local r,cfg=ns.windows[index],ns.Profile().windows[index]
+    if not r or not cfg or cfg.locked or r.resizing or r.drag then return end
+    AnchorTopLeft(r.frame)
+    local x,y=Cursor(r.frame)
+    r.resizing={x=x,y=y,w=r.frame:GetWidth(),h=r.frame:GetHeight()}
+    ns.CloseMenu(); ns.HideBreakdownTooltip(); GameTooltip:Hide()
+    r.grip:SetScript("OnUpdate",r.resizeStep)
+end
+function ns.ResizeStep(index)
+    local r,cfg=ns.windows[index],ns.Profile().windows[index]; local s=r and r.resizing
+    if not s or not cfg then return end
+    if IsMouseButtonDown and not IsMouseButtonDown("LeftButton") then ns.StopResize(index); return end
+    local x,y=Cursor(r.frame); local dx,dy=x-s.x,s.y-y
+    if IsShiftKeyDown and IsShiftKeyDown() then
+        if not s.axis and math.abs(dx)+math.abs(dy)>3 then s.axis=math.abs(dx)>=math.abs(dy) and "x" or "y" end
+        if s.axis=="x" then dy=0 elseif s.axis=="y" then dx=0 end
+    else s.axis=nil end
+    local sw,sh=Screen(r.frame); local left,top=r.frame:GetLeft() or 0,r.frame:GetTop() or sh
+    local minH=Border(cfg)*2+cfg.headerHeight+cfg.rowHeight+cfg.barSpacing
+    local w=ns.Clamp(s.w+dx,ns.MIN_WIDTH,math.max(ns.MIN_WIDTH,math.min(ns.MAX_WIDTH,sw-left)))
+    local h=ns.Clamp(s.h+dy,minH,math.max(minH,math.min(ns.MAX_WIDTH,top)))
+    w,h=SnapSize(index,w,h)
+    w=math.floor(w+.5); local rows=ns.RowsForHeight(cfg,h)
+    if w~=cfg.width or rows~=cfg.rows then
+        cfg.width,cfg.rows=w,rows; ns.Size(r.frame,w,ns.WindowHeight(cfg)); ns.RefreshWindow(index)
+        if r.home and r.home:IsShown() and ns.PaintHome then ns.PaintHome(index) end
+    end
+end
+function ns.StopResize(index)
+    local r=ns.windows[index]; if not r or not r.resizing then return end
+    r.resizing=nil; r.grip:SetScript("OnUpdate",nil)
+    local cfg=ns.Profile().windows[index]
+    if cfg then SavePosition(cfg,r.frame) end
+    ns.Apply()
+end
+function ns.UpdateLock(index)
+    local r,cfg=ns.windows[index],ns.Profile().windows[index]; if not r or not cfg then return end
+    r.lock.tex:SetTexture(ns.MEDIA..(cfg.locked and "dm_locked.tga" or "dm_unlocked.tga"))
+    r.lock:ClearAllPoints()
+    if cfg.locked then r.lock:SetPoint("BOTTOMRIGHT",r.frame,"BOTTOMRIGHT",-4,4) else r.lock:SetPoint("RIGHT",r.grip,"LEFT",-2,0) end
+    r.grip:EnableMouse(not cfg.locked)
+    if index~=1 then r.action.disabled=cfg.locked and true or false; PaintIcon(r.action) end
+end
+local function CreateGrip(r,index)
+    local f=r.frame
+    local g=nativeCreateFrame("Button",nil,f); ns.Size(g,18,18); g:SetPoint("BOTTOMRIGHT",f,"BOTTOMRIGHT",-2,2)
+    g:SetFrameLevel(f:GetFrameLevel()+15); g:SetAlpha(0)
+    g.tex=g:CreateTexture(nil,"ARTWORK"); g.tex:SetAllPoints(g); g.tex:SetTexture(ns.MEDIA.."resize_element.tga"); g.tex:SetDesaturated(true)
+    g:SetScript("OnEnter",function(self) self.hover=true; ns.StartHover(index); ns.PaintGrip(index) end)
+    g:SetScript("OnLeave",function(self) self.hover=false; ns.PaintGrip(index) end)
+    g:SetScript("OnMouseDown",function(_,button) if button=="LeftButton" then ns.StartResize(index) end end)
+    g:SetScript("OnMouseUp",function() ns.StopResize(index) end)
+    g:SetScript("OnHide",function() if r.resizing then ns.StopResize(index) end end)
+    r.grip=g
+    local l=nativeCreateFrame("Button",nil,f); ns.Size(l,13,17); l:SetFrameLevel(f:GetFrameLevel()+16); l:SetAlpha(0)
+    l.tex=l:CreateTexture(nil,"ARTWORK"); l.tex:SetAllPoints(l); l.tex:SetDesaturated(true); l.tex:SetTexCoord(unpack(LOCK_COORDS))
+    local function Tip(self) local c=ns.Profile().windows[index]; ShowTip(self,c and c.locked and "Locked" or "Unlocked") end
+    l:SetScript("OnEnter",function(self) self.hover=true; ns.StartHover(index); ns.PaintGrip(index); Tip(self) end)
+    l:SetScript("OnLeave",function(self) self.hover=false; ns.PaintGrip(index); GameTooltip:Hide() end)
+    l:SetScript("OnClick",function(self)
+        local c=ns.Profile().windows[index]; if not c then return end
+        c.locked=not c.locked; ns.UpdateLock(index); ns.PaintGrip(index); Tip(self)
+    end)
+    r.lock=l
+end
 function ns.CreateWindow(index)
-    local r={rows={},offset=0}; local f=nativeCreateFrame("Frame","EUI335DamageMeter_"..index,UIParent)
+    local r={rows={},offset=0,fade=0,fadeTarget=0}; local f=nativeCreateFrame("Frame","EUI335DamageMeter_"..index,UIParent)
     r.frame=f; f:SetFrameStrata("LOW"); f:SetClampedToScreen(true); f:SetMovable(true); f:EnableMouse(true)
-    r.title=ns.Button(f,"",220,22,function(self,button)
+    r.dragStep=function() ns.DragStep(index) end
+    r.resizeStep=function() ns.ResizeStep(index) end
+    f:SetScript("OnEnter",function() ns.StartHover(index) end)
+    local header=nativeCreateFrame("Frame",nil,f); r.header=header; header:SetFrameLevel(f:GetFrameLevel()+5)
+    header.bg=header:CreateTexture(nil,"BACKGROUND"); header.bg:SetTexture(white); header.bg:SetAllPoints(header)
+    r.headerLine=header:CreateTexture(nil,"OVERLAY"); r.headerLine:SetTexture(white); r.headerLine:Hide()
+    r.title=nativeCreateFrame("Button",nil,header); r.title:SetAllPoints(header); r.title:SetFrameLevel(header:GetFrameLevel()+1)
+    r.title:RegisterForClicks("LeftButtonUp","RightButtonUp")
+    r.title.text=ns.Text(r.title,11); r.title.text:SetPoint("LEFT",r.title,"LEFT",6,0)
+    r.timer=ns.Text(r.title,11); r.timer:SetPoint("LEFT",r.title.text,"RIGHT",4,0); r.timer:SetTextColor(1,1,1,.7); r.timer:Hide()
+    r.title:SetScript("OnMouseDown",function(_,button) if button=="LeftButton" then ns.StartDrag(index) end end)
+    r.title:SetScript("OnMouseUp",function(_,button) if button=="LeftButton" then ns.StopDrag(index) end end)
+    r.title:SetScript("OnClick",function(self,button)
+        local moved=r.dragMoved; r.dragMoved=nil
         if button=="RightButton" then ns.RightClick(index)
+        elseif moved then return
         elseif r.focusGUID then ns.FocusModeMenu(index,self)
         else MetricMenu(index,self) end
-    end); r.title:SetPoint("TOPLEFT",f,"TOPLEFT",3,-3)
-    r.title.text:ClearAllPoints(); r.title.text:SetPoint("LEFT",r.title,"LEFT",7,0); r.title.text:SetPoint("RIGHT",r.title,"RIGHT",-4,0); r.title.text:SetJustifyH("LEFT")
-    r.title:RegisterForClicks("LeftButtonUp","RightButtonUp")
-    r.title:RegisterForDrag("LeftButton")
-    r.title:SetScript("OnDragStart",function() local c=ns.Profile().windows[index]; if c and not c.locked then f:StartMoving() end end)
-    r.title:SetScript("OnDragStop",function() f:StopMovingOrSizing(); local c=ns.Profile().windows[index]; if c then SavePosition(c,f) end end)
-    r.close=ns.IconButton(f,"dm_close.tga",22,22,function() ns.Profile().windows[index].enabled=false; ns.Apply() end,"Hide window")
-    r.settings=ns.IconButton(f,"dm_settings.tga",22,22,function(self) SettingsMenu(index,self) end,"Settings")
-    r.segment=ns.IconButton(f,"dm_sheet.tga",22,22,function(self) SegmentMenu(index,self) end,"Select Segment")
-    r.reset=ns.IconButton(f,"dm_reset.tga",22,22,function() ns.ShowReset() end,"Clear combat history")
-    r.report=ns.IconButton(f,"dm_report.tga",22,22,function() ns.ShowReport(index) end,"Report")
-    r.headerButtons={r.close,r.settings,r.segment,r.reset,r.report}
-    r.headerLine=f:CreateTexture(nil,"OVERLAY"); r.headerLine:SetTexture(white); r.headerLine:Hide()
-    r.back=ns.IconButton(f,"dm_undo.tga",22,22,function() ns.BackToGroup(index) end,"Back to group (right click)")
-    r.back:SetPoint("TOPLEFT",f,"TOPLEFT",3,-3); r.back:Hide()
+    end)
+    r.title:SetScript("OnEnter",function() ns.StartHover(index,true) end)
+    r.title:SetScript("OnHide",function() ns.StopDrag(index) end)
+    local function Icon(file,tip,fn)
+        local b=ns.HeaderIcon(header,file,tip,fn); b:SetFrameLevel(header:GetFrameLevel()+2)
+        b.onEnter=function() ns.StartHover(index,true) end; return b
+    end
+    r.settings=Icon("dm_settings.tga","Settings",function(self) SettingsMenu(index,self) end)
+    r.segment=Icon("dm_sheet.tga","Select Segment",function(self) SegmentMenu(index,self) end)
+    r.mode=Icon("dm_home_damage.tga","Switch Meter Type",function(self) if r.focusGUID then ns.FocusModeMenu(index,self) else MetricMenu(index,self) end end)
+    r.reset=Icon("dm_reset.tga","Reset Data",function() ns.ShowReset() end)
+    if index==1 then
+        r.action=Icon("dm_open.tga","New Window",function() ns.NewWindow() end)
+        r.action.disabledTip="You may only have "..ns.MAX_WINDOWS.." windows active"
+    else
+        r.action=Icon("dm_close.tga","Close Window",function() ns.DeleteWindow(index) end)
+        r.action.disabledTip="Unlock Window to Close"
+        r.action.icon:ClearAllPoints(); r.action.icon:SetPoint("TOPLEFT",r.action,"TOPLEFT",-1,1); r.action.icon:SetPoint("BOTTOMRIGHT",r.action,"BOTTOMRIGHT",1,-1)
+    end
+    r.headerButtons={r.settings,r.segment,r.mode,r.reset,r.action}
+    r.back=Icon("dm_undo.tga","Back to group (right click)",function() ns.BackToGroup(index) end); r.back:Hide()
     r.empty=ns.Text(f); r.empty:SetPoint("CENTER",f,"CENTER",0,0); r.empty:SetText("Waiting for combat data")
     f:EnableMouseWheel(true); f:SetScript("OnMouseWheel",function(_,delta) r.offset=math.max(0,r.offset-delta); ns.RefreshWindow(index) end)
     f:SetScript("OnMouseUp",function(_,button) if button=="RightButton" then ns.RightClick(index) end end)
     f:SetScript("OnHide",function() ns.HideWindowBreakdown(index); if ns.HideHome then ns.HideHome(index) end end)
     -- Preallocate all rows; live combat updates never construct a row frame.
     for i=1,40 do r.rows[i]=NewRow(f,index); r.rows[i]:Hide() end
+    CreateGrip(r,index)
     ns.CreateBreakdownTooltip()
     ns.windows[index]=r; return r
 end
+-- Right to left: Settings, Segment, Meter Type, Reset, then + / x.
+function ns.LayoutHeader(index,cfg)
+    local r=ns.windows[index]; local hh=cfg.headerHeight
+    local shown=not cfg.mouseoverIcons or r.headerHover or ns.preview
+    local n=0
+    for _,b in ipairs(r.headerButtons) do
+        if b==r.reset and cfg.hideResetButton or b==r.segment and cfg.metric=="threat" then b:Hide()
+        else
+            n=n+1; ns.Size(b,hh,hh); b:ClearAllPoints(); b:SetPoint("RIGHT",r.header,"RIGHT",-(hh*(n-1)-2*n+2),0)
+            b:SetAlpha(shown and 1 or 0); b:EnableMouse(shown and true or false); b:Show()
+        end
+    end
+    r.iconCount=shown and n or 0
+end
 function ns.RefreshWindow(index)
-    local cfg=ns.Profile().windows[index]; local r=ns.windows[index]; if not cfg or not r then return end
-    local visible=ns.Profile().enabled and cfg.enabled and (ns.preview or not InstanceHidden(cfg) and (cfg.visibility=="always"
+    local p=ns.Profile(); local cfg=p.windows[index]; local r=ns.windows[index]; if not cfg or not r then return end
+    local visible=p.enabled and cfg.enabled and (ns.preview or not ns.toggleHidden and not InstanceHidden(cfg) and (cfg.visibility=="always"
         or cfg.visibility=="combat" and ns.current~=nil or cfg.visibility=="group" and (GetNumPartyMembers()>0 or GetNumRaidMembers()>0)))
     if not visible then ns.HideWindowBreakdown(index); r.frame:Hide(); return end
     r.frame:Show()
@@ -344,22 +582,29 @@ function ns.RefreshWindow(index)
     end
     local actorRow
     if r.focusGUID then rows,actorRow=ns.FocusRows(index,cfg,rows,s) end
-    local step=cfg.headerHeight+2; local titleX=r.focusGUID and step+3 or 3
-    if r.focusGUID then r.back:Show() else r.back:Hide() end
-    r.title:ClearAllPoints(); r.title:SetPoint("TOPLEFT",r.frame,"TOPLEFT",titleX,-3)
-    r.title:SetWidth(math.max(40,cfg.width-titleX-3-#r.headerButtons*step))
-    if cfg.metric=="threat" then r.segment:Hide() else r.segment:Show() end
+    local b,hh=Border(cfg),cfg.headerHeight
+    r.mode.icon:SetTexture(ns.MetricIcon and ns.MetricIcon(cfg.metric) or ns.MEDIA.."dm_home_damage.tga")
+    if index==1 then r.action.disabled=#p.windows>=ns.MAX_WINDOWS; PaintIcon(r.action) end
+    ns.LayoutHeader(index,cfg)
+    local titleX=6
+    if r.focusGUID then
+        ns.Size(r.back,hh,hh); r.back:ClearAllPoints(); r.back:SetPoint("LEFT",r.header,"LEFT",2,0); r.back:Show(); titleX=hh+4
+    else r.back:Hide() end
+    r.title.text:ClearAllPoints(); r.title.text:SetPoint("LEFT",r.title,"LEFT",titleX,0)
     local count=ns.Clamp(cfg.rows,1,40); r.offset=ns.Clamp(r.offset,0,math.max(0,#rows-count))
-    local title
+    local title,timer
     if r.focusGUID then
         title=r.focusName.." - "..(cfg.metric=="deaths" and ("Death "..(r.focusDeath or 1)) or r.focusMode=="targets" and "Targets" or m.label)
     elseif cfg.metric=="threat" then title=m.label.."  "..(UnitName("target") or "Target")
     else
         local values=ns.SegmentChoices(); local seg=cfg.segment=="current" and "Current" or cfg.segment=="overall" and "Overall" or (s and s.label) or values[cfg.segment] or "Expired"
         title=m.label.." - "..seg
-        if s and not cfg.hideTimer then local d=math.floor(ns.Duration(s)); title=title..string.format("  %d:%02d",math.floor(d/60),d%60) end
     end
-    r.title.text:SetText(title)
+    if s and not cfg.hideTimer and cfg.metric~="threat" then local d=math.floor(ns.Duration(s)); timer=string.format("(%d:%02d)",math.floor(d/60),d%60) end
+    r.title.text:SetWidth(0); r.title.text:SetText(title)
+    if timer then r.timer:SetText(timer); r.timer:Show() else r.timer:Hide() end
+    local room=cfg.width-b*2-titleX-4-(r.iconCount or 0)*(hh-2)-(timer and r.timer:GetStringWidth()+4 or 0)
+    r.title.text:SetWidth(math.max(20,math.min(room,r.title.text:GetStringWidth()+2)))
     r.empty:SetText(r.focusGUID and "No data for this player in this view" or "Waiting for combat data")
     if #rows==0 then r.empty:Show() else r.empty:Hide() end
     local max=.0001; for _,data in ipairs(rows) do max=math.max(max,data.value) end
@@ -372,7 +617,7 @@ function ns.RefreshWindow(index)
             if data.guid==me then if i>r.offset+count then ranks[count]=i end; break end
         end
     end
-    local top=cfg.headerHeight+6; local step=cfg.rowHeight+cfg.barSpacing
+    local top=b+hh; local step=cfg.rowHeight+cfg.barSpacing; local rowW=cfg.width-b*2
     local alpha=ns.Clamp(cfg.barAlpha==nil and 1 or cfg.barAlpha,0,1)
     local texture=ns.BarTexturePath(cfg.barTexture); local bgc=cfg.barBgColor
     local style=cfg.showSpecIcons==false and "none" or cfg.iconStyle or "spec"
@@ -381,13 +626,17 @@ function ns.RefreshWindow(index)
         local rank=i<=count and ranks[i]; local data=rank and rows[rank]
         if data then
             row.data,row.metric,row.segment,row.actorRow,row.focusMode=data,cfg.metric,s,actorRow,r.focusMode
-            row:ClearAllPoints(); row:SetPoint("TOPLEFT",r.frame,"TOPLEFT",3,-top-(i-1)*step); ns.Size(row,cfg.width-6,cfg.rowHeight)
+            row:ClearAllPoints(); row:SetPoint("TOPLEFT",r.frame,"TOPLEFT",b,-top-(i-1)*step); ns.Size(row,rowW,cfg.rowHeight)
             row.bar:SetStatusBarTexture(texture)
-            row.bar:SetMinMaxValues(0,max); row.bar:SetValue(data.value)
             local cr,cg,cb
             if cfg.barColorMode=="custom" then cr,cg,cb=cfg.barColor.r,cfg.barColor.g,cfg.barColor.b
             elseif cfg.barColorMode=="accent" then cr,cg,cb=Accent()
             else cr,cg,cb=Color(data.class) end
+            if data.recap then
+                -- Death recap rows show the victim's health when the hit landed.
+                row.bar:SetMinMaxValues(0,1); row.bar:SetValue(data.hp or 0)
+                if data.heal then cr,cg,cb=.1,.5,.1 else cr,cg,cb=.6,.08,.08 end
+            else row.bar:SetMinMaxValues(0,max); row.bar:SetValue(data.value) end
             row.bar:SetStatusBarColor(cr,cg,cb,alpha)
             row.bg:SetVertexColor(bgc.r or .1,bgc.g or .1,bgc.b or .1,bgc.a or 0)
             if borderSize>0 then
@@ -399,22 +648,30 @@ function ns.RefreshWindow(index)
             if data.breakdown then icon=data.icon
             elseif style=="class" then icon,coords=ns.RowIcon({guid="",class=data.class})
             elseif style=="spec" then icon,coords,specName=ns.RowIcon(data) end
-            local iconSize=cfg.rowHeight-2; local textX=5
+            local inset=0
             row.specName=nil
             if icon then
-                ns.Size(row.icon,iconSize,iconSize); row.icon:SetTexture(icon)
+                inset=cfg.rowHeight
+                ns.Size(row.icon,inset,inset); row.icon:SetTexture(icon)
                 if coords then row.icon:SetTexCoord(unpack(coords)) else row.icon:SetTexCoord(.08,.92,.08,.92) end
-                row.icon:Show(); textX=iconSize+8; row.specName=specName
+                row.icon:Show(); row.specName=specName
             else row.icon:Hide() end
-            row.label:ClearAllPoints(); row.label:SetPoint("LEFT",row.textHost,"LEFT",textX,0)
+            if row.barInset~=inset then
+                row.barInset=inset; row.bar:ClearAllPoints()
+                row.bar:SetPoint("TOPLEFT",row,"TOPLEFT",inset,0); row.bar:SetPoint("BOTTOMRIGHT",row,"BOTTOMRIGHT",0,0)
+            end
             local fmt=cfg.numberFormat
-            local value=ns.Format(data.value,fmt)
-            if cfg.showRate and not m.rate and (cfg.metric=="damage" or cfg.metric=="healing") then value=value.." ("..ns.Format(data.rate,fmt).."/s)" end
-            if cfg.showPercent and not data.recap then value=value..string.format(" %.1f%%",data.percent or 0) end
-            row.value:SetText(value); local reserved=math.min(cfg.width*.62,row.value:GetStringWidth()+10)
+            local value
+            if data.recap then value=ns.RecapAmount(data.entry,data.fatal)
+            else
+                value=ns.Format(data.value,fmt)
+                if cfg.showRate and not m.rate and (cfg.metric=="damage" or cfg.metric=="healing") then value=value.." ("..ns.Format(data.rate,fmt).."/s)" end
+                if cfg.showPercent then value=value..string.format(" %.1f%%",data.percent or 0) end
+            end
+            row.value:SetText(value); local reserved=math.min(rowW*.62,row.value:GetStringWidth()+6)
             row.value:SetWidth(reserved); row.value:SetHeight(cfg.rowHeight); row.label:SetHeight(cfg.rowHeight)
             local name=data.breakdown and data.name or (cfg.hideRank and data.name or rank..". "..data.name)
-            row.label:SetWidth(math.max(20,cfg.width-reserved-textX-10)); row.label:SetText(name); row:Show()
+            row.label:SetWidth(math.max(20,rowW-inset-reserved-9)); row.label:SetText(name); row:Show()
         else row.data=nil; row.icon:Hide(); row:Hide() end
     end
     ns.UpdateWindowBreakdown(index)
@@ -423,6 +680,23 @@ end
 function ns.Refresh()
     if not ns.Profile() then return end
     for i in ipairs(ns.Profile().windows) do ns.RefreshWindow(i) end
+    if ns.UpdateTimer then ns.UpdateTimer() end
+end
+local function SameValue(a,b)
+    if type(a)=="table" and type(b)=="table" then
+        return math.abs((a.r or 0)-(b.r or 0))<.002 and math.abs((a.g or 0)-(b.g or 0))<.002 and math.abs((a.b or 0)-(b.b or 0))<.002
+    end
+    return a==b
+end
+-- One-time switch to the Retail look for windows still on the old defaults.
+function ns.MigrateStyle(p)
+    for _,cfg in ipairs(p.windows) do
+        if cfg.titleUseAccent==nil then cfg.titleUseAccent=cfg.titleColor==nil or SameValue(cfg.titleColor,{r=1,g=1,b=1}) end
+        for _,change in ipairs(ns.styleMigration) do
+            if cfg[change[1]]==nil or SameValue(cfg[change[1]],change[2]) then cfg[change[1]]=ns.Copy(change[3]) end
+        end
+    end
+    p.styleVersion=2
 end
 function ns.Apply()
     local p=ns.Profile(); if not p then return end
@@ -430,14 +704,19 @@ function ns.Apply()
     if ns.events then
         if p.enabled then ns.events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED") else ns.events:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED"); ns.Finish() end
     end
+    -- The DB re-adds removed default windows on login; the count keeps them deleted.
+    if not p.windowCount then p.windowCount=#p.windows end
+    while #p.windows>math.max(1,math.min(p.windowCount,ns.MAX_WINDOWS)) do table.remove(p.windows) end
+    p.windowCount=#p.windows
+    if (p.styleVersion or 1)<2 then ns.MigrateStyle(p) end
     for index,cfg in ipairs(p.windows) do
-        -- Existing third/fourth windows are outside the default array entries.
+        -- Added windows are outside the default array entries.
         -- Fill their new fields as well, preserving explicit zero/false values.
         for _,key in ipairs({"fontOutline","barAlpha","chromeAlpha","showSpecIcons"}) do
             if cfg[key]==nil then cfg[key]=ns.defaults.profile.windows[1][key] end
         end
         for key,value in pairs(ns.windowExtras) do if cfg[key]==nil then cfg[key]=ns.Copy(value) end end
-        cfg.width=ns.Clamp(cfg.width,220,650); cfg.rows=ns.Clamp(cfg.rows,1,40); cfg.rowHeight=ns.Clamp(cfg.rowHeight,14,36)
+        cfg.width=ns.Clamp(cfg.width,ns.MIN_WIDTH,ns.MAX_WIDTH); cfg.rows=ns.Clamp(cfg.rows,1,40); cfg.rowHeight=ns.Clamp(cfg.rowHeight,14,36)
         cfg.fontSize=ns.Clamp(cfg.fontSize,8,20); cfg.valueFontSize=ns.Clamp(cfg.valueFontSize,8,20)
         cfg.headerHeight=ns.Clamp(cfg.headerHeight,16,34); cfg.barSpacing=ns.Clamp(cfg.barSpacing,0,10)
         cfg.titleFontSize=ns.Clamp(cfg.titleFontSize,8,20)
@@ -445,42 +724,72 @@ function ns.Apply()
         local r=ns.windows[index] or ns.CreateWindow(index)
         ns.Size(r.frame,cfg.width,ns.WindowHeight(cfg))
         r.frame:SetScale(ns.Clamp(cfg.scale,.5,2)); Position(cfg,r.frame)
-        local border=ns.Clamp(cfg.borderSize,0,4); local bg=cfg.bgColor
+        local border=Border(cfg); local bg=cfg.bgColor
         r.frame:SetBackdrop(border>0 and {bgFile=white,edgeFile=white,edgeSize=border} or {bgFile=white})
-        r.frame:SetBackdropColor(bg.r or .025,bg.g or .035,bg.b or .045,ns.Clamp(cfg.alpha,0,1))
+        r.frame:SetBackdropColor(bg.r or 0,bg.g or 0,bg.b or 0,ns.Clamp(cfg.alpha,0,1))
         if border>0 then
             if cfg.borderUseAccent~=false then r.frame:SetBackdropBorderColor(Accent())
             else r.frame:SetBackdropBorderColor(cfg.borderColor.r,cfg.borderColor.g,cfg.borderColor.b,1) end
         end
-        local chrome=ns.Clamp(cfg.chromeAlpha==nil and .85 or cfg.chromeAlpha,0,1)
-        for _,b in ipairs({r.title,r.settings,r.close,r.segment,r.report,r.reset,r.back}) do
-            ButtonBackground(b,chrome,cfg.headerColor)
-            ns.Font(b.text,10,cfg.fontOutline)
-        end
-        ns.Font(r.title.text,cfg.titleFontSize,cfg.fontOutline)
-        r.title.text:SetTextColor(cfg.titleColor.r,cfg.titleColor.g,cfg.titleColor.b)
-        r.title:SetHeight(hh); ns.Size(r.back,hh,hh)
-        for i,b in ipairs(r.headerButtons) do
-            ns.Size(b,hh,hh); b:ClearAllPoints(); b:SetPoint("TOPRIGHT",r.frame,"TOPRIGHT",-3-(i-1)*(hh+2),-3)
-        end
+        r.header:ClearAllPoints(); r.header:SetPoint("TOPLEFT",r.frame,"TOPLEFT",border,-border); r.header:SetPoint("TOPRIGHT",r.frame,"TOPRIGHT",-border,-border)
+        r.header:SetHeight(hh)
+        local chrome=ns.Clamp(cfg.chromeAlpha==nil and 1 or cfg.chromeAlpha,0,1); local hc=cfg.headerColor
+        r.header.bg:SetVertexColor(hc.r or .106,hc.g or .106,hc.b or .106,chrome)
+        ns.Font(r.title.text,cfg.titleFontSize,cfg.fontOutline); ns.Font(r.timer,cfg.titleFontSize,cfg.fontOutline)
+        r.title.text:SetHeight(hh); r.timer:SetHeight(hh)
+        if cfg.titleUseAccent~=false then r.title.text:SetTextColor(Accent())
+        else r.title.text:SetTextColor(cfg.titleColor.r,cfg.titleColor.g,cfg.titleColor.b) end
         local lineSize=ns.Clamp(cfg.headerBorderSize,0,4)
         r.headerLine:ClearAllPoints()
-        r.headerLine:SetPoint("TOPLEFT",r.frame,"TOPLEFT",3,-(hh+3)); r.headerLine:SetPoint("TOPRIGHT",r.frame,"TOPRIGHT",-3,-(hh+3))
+        r.headerLine:SetPoint("TOPLEFT",r.header,"BOTTOMLEFT",0,0); r.headerLine:SetPoint("TOPRIGHT",r.header,"BOTTOMRIGHT",0,0)
         r.headerLine:SetHeight(math.max(1,lineSize))
         r.headerLine:SetVertexColor(cfg.headerBorderColor.r,cfg.headerBorderColor.g,cfg.headerBorderColor.b,1)
         if lineSize>0 then r.headerLine:Show() else r.headerLine:Hide() end
         ns.Font(r.empty,cfg.fontSize,cfg.fontOutline)
+        ns.UpdateLock(index); ns.PaintGrip(index)
         Register(index,cfg)
     end
     for index,r in pairs(ns.windows) do if not p.windows[index] then r.focusGUID=nil; r.frame:Hide() end end
     if not p.enabled then ns.reportQueue=nil; ns.CloseMenu(); if ns.detail then ns.detail:Hide() end; if ns.report then ns.report:Hide() end; if ns.resetDialog then ns.resetDialog:Hide() end end
     for index,r in pairs(ns.windows) do if r.home and r.home:IsShown() and ns.PaintHome then ns.PaintHome(index) end end
     ns.Refresh()
+    if ns.ApplyExtras then ns.ApplyExtras() end
 end
+-- New windows copy window 1 and open above the highest window, or below
+-- the lowest one when the screen top has no room.
 function ns.NewWindow()
-    if #ns.Profile().windows>=4 then return end
-    local cfg=ns.Copy(ns.defaults.profile.windows[1]); cfg.name="Meter "..(#ns.Profile().windows+1); cfg.enabled=true
-    cfg.savedPos={point="CENTER",relPoint="CENTER",x=0,y=0}; table.insert(ns.Profile().windows,cfg); ns.selectedWindow=#ns.Profile().windows; ns.Apply()
+    local p=ns.Profile(); local windows=p.windows
+    if #windows>=ns.MAX_WINDOWS then return end
+    local src=windows[1]
+    local cfg=ns.Copy(src); cfg.name="Meter "..(#windows+1); cfg.enabled=true; cfg.locked=false; cfg.segment="current"
+    cfg.metric=src.metric=="damage" and "healing" or "damage"
+    local scale=ns.Clamp(cfg.scale,.5,2); local w,h=cfg.width*scale,ns.WindowHeight(cfg)*scale
+    local _,sh=Screen(); local high,low
+    for i in ipairs(windows) do
+        local r=ns.windows[i]
+        if r and r.frame:IsShown() then
+            local f=r.frame:GetEffectiveScale()/UIParent:GetEffectiveScale()
+            local t,bt,l=(r.frame:GetTop() or 0)*f,(r.frame:GetBottom() or 0)*f,(r.frame:GetLeft() or 0)*f
+            if not high or t>high.t then high={t=t,l=l} end
+            if not low or bt<low.b then low={b=bt,l=l} end
+        end
+    end
+    local ux,uy=UIParent:GetCenter(); local cx,cy
+    if high and high.t+4+h<=sh then cx,cy=high.l+w/2,high.t+4+h/2
+    elseif low and low.b-4-h>=0 then cx,cy=low.l+w/2,low.b-4-h/2 end
+    cfg.savedPos=cx and {point="CENTER",relPoint="CENTER",x=cx-ux,y=cy-uy} or {point="CENTER",relPoint="CENTER",x=0,y=0}
+    windows[#windows+1]=cfg; p.windowCount=#windows; ns.selectedWindow=#windows
+    ns.Apply()
+    if ns.ShowHome then ns.ShowHome(#windows) end
+end
+function ns.DeleteWindow(index)
+    local p=ns.Profile(); local cfg=p and p.windows[index]
+    if not cfg or index==1 or cfg.locked then return end
+    table.remove(p.windows,index); p.windowCount=#p.windows
+    ns.HideBreakdownTooltip(); ns.CloseMenu()
+    for _,r in pairs(ns.windows) do r.focusGUID=nil; r.offset=0; if r.home then r.home:Hide() end end
+    if (ns.selectedWindow or 1)>#p.windows then ns.selectedWindow=#p.windows end
+    ns.Apply()
 end
 function ns.ShowDetail(row,metric,segment,mode)
     if metric=="threat" then return end
@@ -592,9 +901,11 @@ reportDriver:SetScript("OnUpdate",function(_,dt)
 end)
 SLASH_EUI335DM1="/edm"
 SlashCmdList.EUI335DM=function(message)
-    if message=="show" then for _,c in ipairs(ns.Profile().windows) do c.enabled=true end; ns.Apply()
+    if message=="show" then for _,c in ipairs(ns.Profile().windows) do c.enabled=true end; ns.toggleHidden=nil; ns.Apply()
     elseif message=="hide" then for _,c in ipairs(ns.Profile().windows) do c.enabled=false end; ns.Apply()
+    elseif message=="toggle" and ns.ToggleWindows then ns.ToggleWindows()
     elseif message=="reset" then ns.ShowReset()
     elseif message=="report" then ns.ShowReport(ns.selectedWindow or 1)
+    elseif message=="spells" and ns.OpenSpellHistorySettings then ns.OpenSpellHistorySettings()
     else Settings(ns.selectedWindow or 1) end
 end

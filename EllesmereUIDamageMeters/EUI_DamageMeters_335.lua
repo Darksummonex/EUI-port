@@ -25,23 +25,44 @@ ns.metricMap={}; for _,m in ipairs(ns.metrics) do ns.metricMap[m.key]=m end
 -- Appearance keys added after the first Wrath release; Apply fills them into
 -- every saved window, preserving explicit false/zero values.
 ns.windowExtras={
-    borderSize=1,borderUseAccent=true,borderColor={r=.1,g=.8,b=.7},bgColor={r=.025,g=.035,b=.045},alwaysShowPlayer=false,
-    headerHeight=22,headerColor={r=.025,g=.035,b=.045},headerBorderSize=0,headerBorderColor={r=0,g=0,b=0},
-    titleFontSize=10,titleColor={r=1,g=1,b=1},
-    barTexture="none",barColorMode="class",barColor={r=.97,g=.55,b=.75},barBgColor={r=.1,g=.1,b=.1,a=0},
-    barSpacing=1,iconStyle="spec",barBorderSize=0,barBorderColor={r=0,g=0,b=0},
+    borderSize=0,borderUseAccent=true,borderColor={r=.1,g=.8,b=.7},bgColor={r=0,g=0,b=0},alwaysShowPlayer=false,
+    headerHeight=22,headerColor={r=.106,g=.106,b=.106},headerBorderSize=0,headerBorderColor={r=0,g=0,b=0},
+    titleFontSize=11,titleColor={r=1,g=1,b=1},titleUseAccent=true,mouseoverIcons=false,hideResetButton=false,snapDisabled=false,
+    barTexture="atrocity",barColorMode="class",barColor={r=.97,g=.55,b=.75},barBgColor={r=.1,g=.1,b=.1,a=0},
+    barSpacing=2,iconStyle="spec",barBorderSize=0,barBorderColor={r=0,g=0,b=0},
     numberFormat="short",hideRank=false,valueFontSize=11,hoverBreakdown=true,spellTooltips=false,
     bookmarks={"damage","healing","interrupts","deaths","taken"},
     hideInDungeon=false,hideInRaid=false,hideInPvP=false,hideOutOfInstance=false,
     hideTimer=false,autoSwapInstance=false,syncSegments=false,
 }
+-- Values the first Wrath release shipped, replaced once by the Retail look.
+-- Only values still equal to the old default change; customised ones stay.
+ns.styleMigration={
+    {"borderSize",1,0},{"bgColor",{r=.025,g=.035,b=.045},{r=0,g=0,b=0}},{"alpha",.92,.75},
+    {"headerColor",{r=.025,g=.035,b=.045},{r=.106,g=.106,b=.106}},{"chromeAlpha",.85,1},{"titleFontSize",10,11},
+    {"barTexture","none","atrocity"},{"barSpacing",1,2},{"rowHeight",20,18},
+}
 ns.defaults={profile={enabled=true,historyLimit=15,saveHistory=true,mergePets=true,groupOnly=true,
-    autoCurrent=true,endDelay=3,refreshRate=.3,windows={
-    {name="Damage",enabled=true,metric="damage",segment="current",width=310,rows=8,rowHeight=20,
-      fontSize=11,fontOutline="OUTLINE",alpha=.92,barAlpha=1,chromeAlpha=.85,showSpecIcons=true,scale=1,showRate=true,showPercent=true,locked=false,visibility="always",
+    autoCurrent=true,endDelay=3,refreshRate=.3,
+    tooltipScale=100,tooltipAnchor="row",tooltipMoreSpells=true,tooltipBarTexture="match",
+    standaloneTimer=false,standaloneTimerSize=26,standaloneTimerDecimal=false,standaloneTimerUseAccent=false,
+    standaloneTimerColor={r=1,g=1,b=1},standaloneTimerAnchor="free",standaloneTimerStrata="HIGH",
+    standaloneTimerShowOOC=false,standaloneTimerDesatOOC=false,standaloneTimerOutline="INHERIT",
+    standaloneTimerBackgroundColor={r=0,g=0,b=0,a=0},standaloneTimerBorderColor={r=0,g=0,b=0,a=1},
+    standaloneTimerBorderSize=0,standaloneTimerLocked=false,
+    resetDataKey="",toggleWindowsKey="",toggleIncludeTimer=false,toggleIncludeSpellHistory=false,
+    spellHistory={iconEnabled=false,barEnabled=false,growDirection="LEFT",iconSize=36,iconZoom=.08,iconFadeTime=0,
+        iconSpacing=1,iconCount=5,iconOpacity=1,iconAnimation="none",maxBars=5,hideTopBar=false,barWidth=300,
+        barLocked=false,barColorMode="custom",barColor={r=.298,g=.565,b=.494},barOpacity=1,barTexture="match",
+        textSize=11,textColorMode="custom",textColor={r=1,g=1,b=1},barHeight=20,bgColor={r=0,g=0,b=0},bgAlpha=.25,
+        iconHideInDungeon=false,iconHideInRaid=false,iconHideInPvP=false,iconHideOutOfInstance=false,
+        barHideInDungeon=false,barHideInRaid=false,barHideInPvP=false,barHideOutOfInstance=false},
+    windows={
+    {name="Damage",enabled=true,metric="damage",segment="current",width=310,rows=8,rowHeight=18,
+      fontSize=11,fontOutline="OUTLINE",alpha=.75,barAlpha=1,chromeAlpha=1,showSpecIcons=true,scale=1,showRate=true,showPercent=true,locked=false,visibility="always",
       savedPos={point="BOTTOMRIGHT",relPoint="BOTTOMRIGHT",x=-10,y=180}},
-    {name="Healing",enabled=true,metric="healing",segment="current",width=310,rows=8,rowHeight=20,
-      fontSize=11,fontOutline="OUTLINE",alpha=.92,barAlpha=1,chromeAlpha=.85,showSpecIcons=true,scale=1,showRate=true,showPercent=true,locked=false,visibility="always",
+    {name="Healing",enabled=true,metric="healing",segment="current",width=310,rows=8,rowHeight=18,
+      fontSize=11,fontOutline="OUTLINE",alpha=.75,barAlpha=1,chromeAlpha=1,showSpecIcons=true,scale=1,showRate=true,showPercent=true,locked=false,visibility="always",
       savedPos={point="BOTTOMRIGHT",relPoint="BOTTOMRIGHT",x=-325,y=180}},
 }}}
 function ns.Copy(t) if type(t)~="table" then return t end; local n={}; for k,v in pairs(t) do n[k]=ns.Copy(v) end; return n end

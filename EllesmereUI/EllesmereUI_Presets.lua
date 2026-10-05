@@ -43,128 +43,83 @@ local CB_ACT_BRD_A = EllesmereUI.CB_ACT_BRD_A
 --  Stores assignments in db[dbKey][presetKey] = { [specID] = true, ... }
 -------------------------------------------------------------------------------
 do
-    -- All WoW Retail classes and their specs (as of TWW / 12.0)
+    -- Wrath classes and talent trees, alphabetical (popup column order).
+    -- Spec IDs are the core's synthetic Wrath IDs (33000 + classID*10 + tab,
+    -- see EllesmereUI_3.3.5_Compat.lua); icons are the talent tree icons.
+    local function Trees(classID, list)
+        local specs = {}
+        for tab, t in ipairs(list) do
+            specs[tab] = { id = 33000 + classID * 10 + tab, name = t[1],
+                icon = "Interface\\Icons\\" .. t[2], roles = t[3] }
+        end
+        return specs
+    end
+    local TANK, HEALER, DPS = { TANK = true }, { HEALER = true }, { DAMAGER = true }
     local SPEC_DATA = {
-        {
-            class = "DEATHKNIGHT",
-            name = "Death Knight",
-            specs = {
-                { id = 250, name = "Blood" },
-                { id = 251, name = "Frost" },
-                { id = 252, name = "Unholy" },
-            }
-        },
-        {
-            class = "DEMONHUNTER",
-            name = "Demon Hunter",
-            specs = {
-                { id = 577,  name = "Havoc" },
-                { id = 581,  name = "Vengeance" },
-                { id = 1480, name = "Devourer" },
-            }
-        },
-        {
-            class = "DRUID",
-            name = "Druid",
-            specs = {
-                { id = 102, name = "Balance" },
-                { id = 103, name = "Feral" },
-                { id = 104, name = "Guardian" },
-                { id = 105, name = "Restoration" },
-            }
-        },
-        {
-            class = "EVOKER",
-            name = "Evoker",
-            specs = {
-                { id = 1467, name = "Devastation" },
-                { id = 1468, name = "Preservation" },
-                { id = 1473, name = "Augmentation" },
-            }
-        },
-        {
-            class = "HUNTER",
-            name = "Hunter",
-            specs = {
-                { id = 253, name = "Beast Mastery" },
-                { id = 254, name = "Marksmanship" },
-                { id = 255, name = "Survival" },
-            }
-        },
-        {
-            class = "MAGE",
-            name = "Mage",
-            specs = {
-                { id = 62, name = "Arcane" },
-                { id = 63, name = "Fire" },
-                { id = 64, name = "Frost" },
-            }
-        },
-        {
-            class = "MONK",
-            name = "Monk",
-            specs = {
-                { id = 268, name = "Brewmaster" },
-                { id = 270, name = "Mistweaver" },
-                { id = 269, name = "Windwalker" },
-            }
-        },
-        {
-            class = "PALADIN",
-            name = "Paladin",
-            specs = {
-                { id = 65, name = "Holy" },
-                { id = 66, name = "Protection" },
-                { id = 70, name = "Retribution" },
-            }
-        },
-        {
-            class = "PRIEST",
-            name = "Priest",
-            specs = {
-                { id = 256, name = "Discipline" },
-                { id = 257, name = "Holy" },
-                { id = 258, name = "Shadow" },
-            }
-        },
-        {
-            class = "ROGUE",
-            name = "Rogue",
-            specs = {
-                { id = 259, name = "Assassination" },
-                { id = 260, name = "Outlaw" },
-                { id = 261, name = "Subtlety" },
-            }
-        },
-        {
-            class = "SHAMAN",
-            name = "Shaman",
-            specs = {
-                { id = 262, name = "Elemental" },
-                { id = 263, name = "Enhancement" },
-                { id = 264, name = "Restoration" },
-            }
-        },
-        {
-            class = "WARLOCK",
-            name = "Warlock",
-            specs = {
-                { id = 265, name = "Affliction" },
-                { id = 266, name = "Demonology" },
-                { id = 267, name = "Destruction" },
-            }
-        },
-        {
-            class = "WARRIOR",
-            name = "Warrior",
-            specs = {
-                { id = 71, name = "Arms" },
-                { id = 72, name = "Fury" },
-                { id = 73, name = "Protection" },
-            }
-        },
+        { class = "DEATHKNIGHT", classID = 6, name = "Death Knight", specs = Trees(6, {
+            { "Blood", "Spell_Deathknight_BloodPresence", TANK },
+            { "Frost", "Spell_Deathknight_FrostPresence", DPS },
+            { "Unholy", "Spell_Deathknight_UnholyPresence", DPS } }) },
+        { class = "DRUID", classID = 11, name = "Druid", specs = Trees(11, {
+            { "Balance", "Spell_Nature_StarFall", DPS },
+            { "Feral Combat", "Ability_Racial_BearForm", { TANK = true, DAMAGER = true } },
+            { "Restoration", "Spell_Nature_HealingTouch", HEALER } }) },
+        { class = "HUNTER", classID = 3, name = "Hunter", specs = Trees(3, {
+            { "Beast Mastery", "Ability_Hunter_BeastTaming", DPS },
+            { "Marksmanship", "Ability_Marksmanship", DPS },
+            { "Survival", "Ability_Hunter_SwiftStrike", DPS } }) },
+        { class = "MAGE", classID = 8, name = "Mage", specs = Trees(8, {
+            { "Arcane", "Spell_Holy_MagicalSentry", DPS },
+            { "Fire", "Spell_Fire_FireBolt02", DPS },
+            { "Frost", "Spell_Frost_FrostBolt02", DPS } }) },
+        { class = "PALADIN", classID = 2, name = "Paladin", specs = Trees(2, {
+            { "Holy", "Spell_Holy_HolyBolt", HEALER },
+            { "Protection", "Spell_Holy_DevotionAura", TANK },
+            { "Retribution", "Spell_Holy_AuraOfLight", DPS } }) },
+        { class = "PRIEST", classID = 5, name = "Priest", specs = Trees(5, {
+            { "Discipline", "Spell_Holy_WordFortitude", HEALER },
+            { "Holy", "Spell_Holy_GuardianSpirit", HEALER },
+            { "Shadow", "Spell_Shadow_ShadowWordPain", DPS } }) },
+        { class = "ROGUE", classID = 4, name = "Rogue", specs = Trees(4, {
+            { "Assassination", "Ability_Rogue_Eviscerate", DPS },
+            { "Combat", "Ability_BackStab", DPS },
+            { "Subtlety", "Ability_Stealth", DPS } }) },
+        { class = "SHAMAN", classID = 7, name = "Shaman", specs = Trees(7, {
+            { "Elemental", "Spell_Nature_Lightning", DPS },
+            { "Enhancement", "Spell_Nature_LightningShield", DPS },
+            { "Restoration", "Spell_Nature_MagicImmunity", HEALER } }) },
+        { class = "WARLOCK", classID = 9, name = "Warlock", specs = Trees(9, {
+            { "Affliction", "Spell_Shadow_DeathCoil", DPS },
+            { "Demonology", "Spell_Shadow_Metamorphosis", DPS },
+            { "Destruction", "Spell_Shadow_RainOfFire", DPS } }) },
+        { class = "WARRIOR", classID = 1, name = "Warrior", specs = Trees(1, {
+            { "Arms", "Ability_Warrior_SavageBlow", DPS },
+            { "Fury", "Ability_Warrior_InnerRage", DPS },
+            { "Protection", "Ability_Warrior_DefensiveStance", TANK } }) },
     }
     EllesmereUI._SPEC_DATA = SPEC_DATA
+
+    -- Spec name (localized for the player's own class), class display name,
+    -- icon, class token and role set of a Wrath spec ID, or nil.
+    function EllesmereUI.WrathSpecInfo(specID)
+        specID = tonumber(specID)
+        if not specID then return nil end
+        for _, cls in ipairs(SPEC_DATA) do
+            for tab, s in ipairs(cls.specs) do
+                if s.id == specID then
+                    local name, icon = s.name, s.icon
+                    if select(2, UnitClass("player")) == cls.class and GetTalentTabInfo then
+                        local n, ic = GetTalentTabInfo(tab)
+                        if n and n ~= "" then name = n end
+                        if ic then icon = ic end
+                    end
+                    local className = (LOCALIZED_CLASS_NAMES_MALE and LOCALIZED_CLASS_NAMES_MALE[cls.class]) or cls.name
+                    return name, className, icon, cls.class, s.roles
+                end
+            end
+        end
+        return nil
+    end
 
     ---------------------------------------------------------------------------
     --  WoW Forever spec translation. Forever has ONE spec per class (named
@@ -331,7 +286,7 @@ do
 
     -- 5-column layout, sorted alphabetically left-to-right, top-to-bottom
     local NUM_COLS = 5
-    local COL_LISTS = { {1,6,11}, {2,7,12}, {3,8,13}, {4,9}, {5,10} }
+    local COL_LISTS = { {1,6}, {2,7}, {3,8}, {4,9}, {5,10} }
     -- WoW Forever: the class loop runs over no classes (it still hides the
     -- pooled rows) and one row per class is built instead, in two rows that
     -- need a shorter popup.
@@ -369,7 +324,7 @@ do
             local CLASS_GAP = 10
 
             local POPUP_W = CONTENT_LEFT + CONTENT_RIGHT + NUM_COLS * COL_W + (NUM_COLS - 1) * COL_GAP
-            local POPUP_H = 740
+            local POPUP_H = 620
             local ppScale = EllesmereUI.GetPopupScale()
 
             -- Dimmer
@@ -959,13 +914,9 @@ do
                     PP.Point(row, "TOPLEFT", col, "TOPLEFT", 0, -yOff)
                     row:Show()
 
-                    local locSpecName = spec.name
-                    if GetSpecializationInfoByID then
-                        local sn = select(2, GetSpecializationInfoByID(spec.id))
-                        if sn and sn ~= "" then locSpecName = sn end
-                    end
-                    row._lbl:SetText(locSpecName)
+                    row._lbl:SetText(EllesmereUI.WrathSpecInfo(spec.id) or spec.name)
                     row._specID = spec.id
+                    row._roles = spec.roles
 
                     local lockedBy = lockedSpecs[spec.id]
                     local disabledTip = disabledSpecs[spec.id]
@@ -1036,12 +987,7 @@ do
             local EG2 = ELLESMERE_GREEN
             for _, row in ipairs(allCheckboxes) do
                 if not row._locked and not row._disabled and not row._lockedOn and row._specID then
-                    -- The by-id lookup is not registered on WoW Forever: no role there.
-                    local specRole
-                    if GetSpecializationInfoByID then
-                        specRole = select(5, GetSpecializationInfoByID(row._specID))
-                    end
-                    if specRole == role then
+                    if row._roles and row._roles[role] then
                         row._checked = true
                         assignments[row._specID] = true
                         row._check:Show()

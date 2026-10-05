@@ -1,51 +1,107 @@
--- Unified Wrath inventory. Physical slot IDs and native item actions stay intact.
+-- Retail EllesmereUI Bags on Wrath. Physical slot IDs and native item actions stay intact.
 local ADDON_NAME,ns=...
 local E=EllesmereUI
 if not E or not E.Lite then return end
 E._ModuleNS[ADDON_NAME]=ns
 local addon=E.Lite.NewAddon(ADDON_NAME)
 ns.addon,ns.IsWrath=addon,true
-local defaults={profile={enhancedBags=true,enhancedBank=true,bagScale=1,bagColumns=12,bagIconSize=34,bagSpacing=4,
-    bagItemIconZoom=.08,bagCountFontSize=11,itemlevelFontSize=11,bagCatTitleSize=11,
-    showItemlevelInBags=true,bagDesaturateJunkItems=false,bagGroupByCategory=true,bagHideEmptySlots=false,
-    bagIncludeKeyring=true,bagSortView=false,bagShowSlots=true,bagShowAltCounts=true,bagCategoryFilter=0,bgAlpha=.95,positions={},}}
+local defaults={profile={enhancedBags=true,enhancedBank=true,bagScale=1,bagItemIconZoom=.08,bagColumns=12,bankColumns=14,
+    bagAutoSize=false,bagCatTitleSize=11,bagCountFontSize=11,itemlevelFontSize=12,showItemlevelInBags=true,
+    bagHideEmptyCategories=true,bagSplitSetGearBySet=false,bagShowSetGearName=false,bagSetNameFontSize=9,
+    bagMergeDuplicates=true,bagSidebarCollapsed=false,bankSidebarCollapsed=false,bagShowPinnedItems=true,bagShowRecentItems=true,
+    bagPinnedInOneBag=true,bagRecentInOneBag=false,bagShowRecentClear=false,bagShowPinRecentTips=true,bagShowSortIcon=true,
+    bagSortToBottom=false,bagHideRandomize=false,bagDefaultBagType="all",bankGroupByCategory=false,bankCategorySidebar=false,
+    bankHideTabsInSidebar=false,bankHideEmptyWhenNested=false,bagArmoryGroupBySlot=false,bagCompactArmorySlotGroups=false,
+    bagHideOneBagWarning=false,bagHideAddCategory=false,bagMoveNoShift=false,bagStackSplitter=false,enableGoldTracking=true,
+    bagDesaturateJunkItems=false,bagDisplayBindType=false,bagBindTypeFontSize=11,
+    bagIncludeKeyring=true,bagShowSlots=false,bagShowAltCounts=true,positions={},}}
 ns.defaults=defaults
 local views,bankOpen,nativeBank,pending,bankSnapshot={},false,false,false,nil
 ns.views=views
+ns.MEDIA="Interface\\AddOns\\EllesmereUIBags\\Media_335\\"
+ns.WHITE="Interface\\Buttons\\WHITE8X8"
+ns.SLOT,ns.SPACING,ns.HEADER_H,ns.FOOTER_H=34,4,35,28
 function ns.IsBankOpen() return bankOpen end
-local white="Interface\\Buttons\\WHITE8X8"
-local categories={"Weapons","Armor","Other Consumables","Crafting Reagents","Quest Items","Miscellaneous","Junk","Empty Slots","Food & Drink","Potions","Flasks & Elixirs"}
-ns.categoryNames=categories
-local itemTypes={consumable="Consumable",trade="Trade Goods",reagent="Reagent",quest="Quest",food="Food & Drink",potion="Potion",flask="Flask",elixir="Elixir"}
-local function RefreshItemTypes()
-    -- Native cached items supply localized class/subclass names on Wrath.
-    for _,sample in ipairs({{117,"consumable","food"},{118,"consumable","potion"},{13510,"consumable","flask"},{9233,"consumable","elixir"},{2589,"trade"},{17020,"reagent"},{29443,"quest"}}) do
-        local _,_,_,_,_,class,subclass=GetItemInfo(sample[1])
-        if class then itemTypes[sample[2]]=class end
-        if sample[3] and subclass then itemTypes[sample[3]]=subclass end
-    end
-end
-local function Size(f,w,h) f:SetWidth(w); f:SetHeight(h) end
 function ns.GetSettings() return addon.db and addon.db.profile end
-local function Font(fs,size)
+function ns.Size(f,w,h) f:SetWidth(w); f:SetHeight(h) end
+function ns.Shown(f,show) if not f then return end; if show then f:Show() else f:Hide() end end
+function ns.Font(fs,size)
     local path=(E.GetFontPath and E.GetFontPath("bags")) or STANDARD_TEXT_FONT or "Fonts\\FRIZQT__.TTF"
     local flag=((E.GetFontOutlineFlag and E.GetFontOutlineFlag("bags")) or "OUTLINE"):gsub(",?%s*SLUG","")
-    if not fs:SetFont(path,size or 11,flag) then fs:SetFont("Fonts\\FRIZQT__.TTF",11,"OUTLINE") end
+    if not fs:SetFont(path,size or 11,flag) then fs:SetFont("Fonts\\FRIZQT__.TTF",size or 11,"OUTLINE") end
 end
-local function Backdrop(f,alpha)
-    f:SetBackdrop({bgFile=white,edgeFile=white,edgeSize=1}); f:SetBackdropColor(.025,.04,.045,alpha or .95); f:SetBackdropBorderColor(.06,.45,.35,1)
+function ns.Text(parent,size,layer)
+    local fs=parent:CreateFontString(nil,layer or "OVERLAY"); ns.Font(fs,size); return fs
 end
-local function Text(parent,size)
-    local f=parent:CreateFontString(nil,"OVERLAY"); Font(f,size); return f
+function ns.Solid(parent,layer,r,g,b,a)
+    local t=parent:CreateTexture(nil,layer or "BACKGROUND"); t:SetTexture(r,g,b,a); return t
 end
-local function Button(parent,label,width,fn)
-    local b=CreateFrame("Button",nil,parent); Size(b,width,20); Backdrop(b,.8)
-    b.label=Text(b,11); b.label:SetPoint("CENTER",b,"CENTER",0,0); b.label:SetText(label); b:SetScript("OnClick",fn); return b
+function ns.Accent()
+    if E.GetAccentColor then local r,g,b=E.GetAccentColor(); if r then return r,g,b end end
+    local c=E.ELLESMERE_GREEN; if c then return c.r,c.g,c.b end
+    return .047,.824,.616
 end
+-- 1px inset edges (Retail CreateInsetBorder); SetTexture colours them on Wrath.
+function ns.Border(f,r,g,b,a,layer)
+    local edges={}
+    for i=1,4 do edges[i]=f:CreateTexture(nil,layer or "OVERLAY"); edges[i]:SetTexture(ns.WHITE) end
+    edges[1]:SetPoint("TOPLEFT",f,"TOPLEFT",0,0); edges[1]:SetPoint("TOPRIGHT",f,"TOPRIGHT",0,0)
+    edges[2]:SetPoint("BOTTOMLEFT",f,"BOTTOMLEFT",0,0); edges[2]:SetPoint("BOTTOMRIGHT",f,"BOTTOMRIGHT",0,0)
+    edges[3]:SetPoint("TOPLEFT",f,"TOPLEFT",0,0); edges[3]:SetPoint("BOTTOMLEFT",f,"BOTTOMLEFT",0,0)
+    edges[4]:SetPoint("TOPRIGHT",f,"TOPRIGHT",0,0); edges[4]:SetPoint("BOTTOMRIGHT",f,"BOTTOMRIGHT",0,0)
+    ns.BorderSize(edges,1); ns.BorderColor(edges,r,g,b,a)
+    return edges
+end
+function ns.BorderColor(edges,r,g,b,a) for _,t in ipairs(edges) do t:SetVertexColor(r,g,b,a) end; edges.color={r,g,b,a} end
+function ns.BorderSize(edges,px) edges[1]:SetHeight(px); edges[2]:SetHeight(px); edges[3]:SetWidth(px); edges[4]:SetWidth(px); edges.size=px end
+
+-- Wrath has no C_Timer: one shared OnUpdate runs delayed callbacks.
+local timers={}
+local timerFrame=CreateFrame("Frame"); timerFrame:Hide()
+timerFrame:SetScript("OnUpdate",function(self)
+    local now=GetTime(); local due={}
+    for i=#timers,1,-1 do if timers[i].at<=now then due[#due+1]=table.remove(timers,i).fn end end
+    for i=#due,1,-1 do due[i]() end
+    if #timers==0 then self:Hide() end
+end)
+function ns.After(delay,fn) timers[#timers+1]={at=GetTime()+(delay or 0),fn=fn}; timerFrame:Show() end
+ns.timerFrame=timerFrame
+
+-- Merging pauses while a panel that takes items (mail, trade, AH, bank) is open.
+ns.panels={}
+function ns.ItemPanelOpen() return next(ns.panels)~=nil end
+local PANEL_EVENTS={MAIL_SHOW={"mail",true},MAIL_CLOSED={"mail"},TRADE_SHOW={"trade",true},TRADE_CLOSED={"trade"},
+    AUCTION_HOUSE_SHOW={"auction",true},AUCTION_HOUSE_CLOSED={"auction"},GUILDBANKFRAME_OPENED={"guildbank",true},
+    GUILDBANKFRAME_CLOSED={"guildbank"},BANKFRAME_OPENED={"bank",true},BANKFRAME_CLOSED={"bank"}}
+
+-- Recent Items: session only, newest 15 item IDs whose bag count rose.
+ns.recent={}
+local lastTotals
+function ns.TrackRecent()
+    if GetContainerNumSlots(0)<=0 then return end
+    local totals={}
+    for bag=0,4 do
+        for slot=1,GetContainerNumSlots(bag) do
+            local link=GetContainerItemLink(bag,slot); local id=link and tonumber(link:match("item:(%d+)"))
+            if id then local _,count=GetContainerItemInfo(bag,slot); totals[id]=(totals[id] or 0)+(count or 1) end
+        end
+    end
+    if lastTotals and not ns.sorting then
+        local now=GetTime()
+        for id,n in pairs(totals) do if n>(lastTotals[id] or 0) then ns.recent[id]=now end end
+        local list={}; for id,at in pairs(ns.recent) do list[#list+1]={id=id,at=at} end
+        table.sort(list,function(a,b) return a.at>b.at end)
+        for i=16,#list do ns.recent[list[i].id]=nil end
+    end
+    lastTotals=totals
+end
+function ns.ClearRecent() wipe(ns.recent); ns.Refresh("bags") end
+
 local function SavePosition(kind)
     local p=ns.GetSettings(); local f=views[kind]; if not p or not f then return end
-    local point,relative,relPoint,x,y=f:GetPoint(1); p.positions[kind]={point=point,relPoint=relPoint,x=x,y=y}
+    local point,_,relPoint,x,y=f:GetPoint(1); p.positions[kind]={point=point,relPoint=relPoint,x=x,y=y}
 end
+ns.SavePosition=SavePosition
 local function RestoreBank()
     if not bankSnapshot or not BankFrame then return end
     BankFrame:ClearAllPoints(); for _,point in ipairs(bankSnapshot.points) do BankFrame:SetPoint(unpack(point)) end
@@ -53,6 +109,7 @@ local function RestoreBank()
     if BankFrame.SetClampedToScreen then BankFrame:SetClampedToScreen(bankSnapshot.clamped) end
     bankSnapshot=nil
 end
+ns.RestoreBank=RestoreBank
 local function SuppressBank()
     if not BankFrame or bankSnapshot then return end
     bankSnapshot={alpha=BankFrame:GetAlpha(),points={},clamped=BankFrame:IsClampedToScreen()}
@@ -65,143 +122,14 @@ function ns.UseNativeBank()
     if views.bank then views.bank._restoring=true; views.bank:Hide(); views.bank._restoring=false end
     if BankFrame and bankOpen then BankFrame:Show() end
 end
-local function MakeView(kind)
-    local f=CreateFrame("Frame","EUI335Inventory_"..kind,UIParent); f:Hide(); f:SetFrameStrata("HIGH")
-    f:SetMovable(true); f:SetClampedToScreen(true); f:EnableMouse(true); f:RegisterForDrag("LeftButton")
-    f:SetScript("OnDragStart",function(self) if not InCombatLockdown() then self:StartMoving() end end)
-    f:SetScript("OnDragStop",function(self) self:StopMovingOrSizing(); SavePosition(kind) end)
-    f.pool,f.bagParents,f.headings={}, {}, {}
-    f.scroll=CreateFrame("ScrollFrame","EUI335InventoryScroll_"..kind,f,"UIPanelScrollFrameTemplate")
-    f.scroll:SetPoint("TOPLEFT",f,"TOPLEFT",0,-62); f.scroll:SetPoint("BOTTOMRIGHT",f,"BOTTOMRIGHT",-25,32)
-    f.content=CreateFrame("Frame",nil,f.scroll); Size(f.content,400,200); f.scroll:SetScrollChild(f.content)
-    f.title=Text(f,13); f.title:SetPoint("TOPLEFT",f,"TOPLEFT",10,-10); f.title:SetText(kind=="bank" and "Bank" or "Bags")
-    f.close=Button(f,"X",22,function() f:Hide() end); f.close:SetPoint("TOPRIGHT",f,"TOPRIGHT",-7,-7)
-    f.search=CreateFrame("EditBox",nil,f); Size(f.search,180,22); f.search:SetPoint("TOPLEFT",f,"TOPLEFT",10,-33)
-    Font(f.search,11); f.search:SetAutoFocus(false); f.search:SetTextInsets(5,5,0,0); Backdrop(f.search,.9)
-    f.search:SetScript("OnTextChanged",function() if f:IsShown() then ns.Refresh(kind) end end)
-    f.search:SetScript("OnEscapePressed",function(self) self:ClearFocus(); self:SetText("") end)
-    f.search:SetScript("OnEnterPressed",function(self) self:ClearFocus() end)
-    f.footer=Text(f,11); f.footer:SetPoint("BOTTOMLEFT",f,"BOTTOMLEFT",10,10)
-    f.footer:SetHeight(16)
-    f.footerHover=CreateFrame("Frame",nil,f); f.footerHover:SetAllPoints(f.footer); f.footerHover:EnableMouse(true)
-    f.footerHover:SetScript("OnEnter",function(self)
-        ns.CaptureMoney(); GameTooltip:SetOwner(self,"ANCHOR_TOP"); GameTooltip:SetText("EllesmereUI Bags")
-        ns.AddGoldTooltip(GameTooltip); GameTooltip:Show()
-    end)
-    f.footerHover:SetScript("OnLeave",function() GameTooltip:Hide() end)
-    if kind=="bank" then f.native=Button(f,"Native Bank",95,ns.UseNativeBank); f.native:SetPoint("BOTTOMRIGHT",f,"BOTTOMRIGHT",-8,7)
-    else f.settings=Button(f,"Options",65,function() if E.EnsureOptionsLoaded then E.EnsureOptionsLoaded() end; E:ShowModule(ADDON_NAME) end); f.settings:SetPoint("BOTTOMRIGHT",f,"BOTTOMRIGHT",-8,7) end
-    f:SetScript("OnHide",function(self)
-        self.search:ClearFocus()
-        if self.selector then self.selector:Hide() end
-        if kind=="bank" and bankOpen and not self._restoring then RestoreBank(); if CloseBankFrame then CloseBankFrame() end end
-    end)
-    views[kind]=f; ns.BuildInventoryControls(f,kind); return f
-end
-local function Category(link,quality,itemType,equip,subclass)
-    if not link then return 8 end
-    if quality==0 then return 7 end
-    if equip and equip~="" then if equip:find("WEAPON",1,true) or equip=="INVTYPE_2HWEAPON" or equip=="INVTYPE_RANGED" or equip=="INVTYPE_RANGEDRIGHT" or equip=="INVTYPE_THROWN" then return 1 end; return 2 end
-    if itemType==itemTypes.consumable then
-        if subclass==itemTypes.food then return 9 end
-        if subclass==itemTypes.potion then return 10 end
-        if subclass==itemTypes.flask or subclass==itemTypes.elixir then return 11 end
-        return 3
-    end
-    if itemType==itemTypes.trade or itemType==itemTypes.reagent then return 4 end
-    if itemType==itemTypes.quest or itemType=="Quest Item" then return 5 end
-    return 6
-end
-ns.Category=Category
-local function ItemButton(f,bag,slot)
-    local readonly=not ns.IsLiveView(f); local pool=readonly and f.savedPool or f.pool
-    local key=bag..":"..slot; local b=pool[key]; if b then return b end
-    local parent=f.bagParents[bag]
-    if not parent then parent=CreateFrame("Frame",nil,f.content); parent:SetID(bag); parent:SetAllPoints(f.content); f.bagParents[bag]=parent end
-    local name="EUI335Item_"..(readonly and "Saved" or "")..(f==views.bank and "Bank" or "Bags").."_"..(bag<0 and "N"..(-bag) or bag).."_"..slot
-    b=CreateFrame(readonly and "Button" or "CheckButton",name,parent,not readonly and (bag==-1 and "BankItemButtonGenericTemplate" or "ContainerFrameItemButtonTemplate") or nil)
-    b:SetID(slot); b.bagID=bag; b.slotID=slot
-    b.icon=_G[name.."IconTexture"] or b:GetNormalTexture() or b:CreateTexture(nil,"ARTWORK")
-    b.stackCount=_G[name.."Count"] or Text(b,11); b.level=Text(b,11); b.level:SetPoint("TOPLEFT",b,"TOPLEFT",2,-2)
-    b.cooldown=_G[name.."Cooldown"]
-    if not b.cooldown then b.cooldown=CreateFrame("Cooldown",name.."Cooldown",b,"CooldownFrameTemplate"); b.cooldown:SetAllPoints(b) end
-    b.stackCount:ClearAllPoints(); b.stackCount:SetPoint("BOTTOMRIGHT",b,"BOTTOMRIGHT",-2,2)
-    b.stackCount:SetDrawLayer("OVERLAY"); b.stackCount:SetTextColor(1,1,1,1)
-    b.shade=b:CreateTexture(nil,"OVERLAY"); b.shade:SetAllPoints(b); b.shade:SetTexture(0,0,0,.75); b.shade:Hide()
-    b:SetNormalTexture(""); b:SetPushedTexture("")
-    if not readonly then b:SetCheckedTexture("") end
-    b:SetHighlightTexture(white); b:GetHighlightTexture():SetAlpha(.2)
-    b:SetScript("OnEnter",function(self)
-        GameTooltip:SetOwner(self,"ANCHOR_RIGHT")
-        if readonly then if self.link then GameTooltip:SetHyperlink(self.link) else GameTooltip:SetText("Empty slot") end; GameTooltip:AddLine("Saved view - read only",1,.8,.2)
-        else GameTooltip:SetBagItem(bag,slot) end
-        ns.AddOwnershipTooltip(self.link); GameTooltip:Show()
-    end)
-    b:SetScript("OnLeave",function() GameTooltip:Hide() end)
-    -- Keep template OnClick/OnDragStart/OnReceiveDrag: they use parent bag ID
-    -- and button slot ID for pickup, equip, split stacks, trade and purchases.
-    pool[key]=b; return b
-end
+function ns.IsNativeBank() return nativeBank end
 function ns.Refresh(kind)
     local p,f=ns.GetSettings(),views[kind]; if not p or not f or not f:IsShown() then return end
     if kind=="bank" and ns.IsLiveView(f) and nativeBank then return end
     if InCombatLockdown() then pending=true; return end
-    local rows,free,total,uncached,snapshot,record=ns.ViewItems(f); local items={}
-    RefreshItemTypes()
-    for _,item in ipairs(rows) do if not p.bagHideEmptySlots or item.link then
-        item.category=Category(item.link,item.quality,item.itemType,item.equip,item.itemSubType)
-        if not p.bagCategoryFilter or p.bagCategoryFilter==0 or p.bagCategoryFilter==item.category then items[#items+1]=item end
-    end end
-    if p.bagGroupByCategory or p.bagSortView then table.sort(items,function(a,b)
-        if p.bagGroupByCategory and a.category~=b.category then return a.category<b.category end
-        if p.bagSortView and a.name~=b.name then return a.name<b.name end
-        if a.bag~=b.bag then return a.bag<b.bag end; return a.slot<b.slot
-    end) end
-    for _,b in pairs(f.pool) do b:Hide() end
-    for _,b in pairs(f.savedPool) do b:Hide() end
-    for _,heading in ipairs(f.headings) do heading:Hide() end
-    local columns=math.max(4,math.min(20,math.floor(p.bagColumns))); local size=math.max(20,math.min(60,p.bagIconSize)); local spacing=p.bagSpacing
-    local width=math.max(270,columns*(size+spacing)-spacing+45); local x,y,current,headingIndex=0,0,nil,0
-    local query=string.lower(f.search:GetText() or "")
-    for _,item in ipairs(items) do
-        if p.bagGroupByCategory and current~=item.category then
-            if current then if x>0 then y=y+size+spacing end; y=y+4 end
-            current=item.category; x=0; headingIndex=headingIndex+1
-            local h=f.headings[headingIndex] or Text(f.content,p.bagCatTitleSize); f.headings[headingIndex]=h
-            Font(h,p.bagCatTitleSize); h:ClearAllPoints(); h:SetPoint("TOPLEFT",f.content,"TOPLEFT",10,-y); h:SetText(categories[current]); h:Show(); y=y+18
-        end
-        local b=ItemButton(f,item.bag,item.slot); b:ClearAllPoints(); b:SetPoint("TOPLEFT",f.content,"TOPLEFT",10+x*(size+spacing),-y); Size(b,size,size)
-        Backdrop(b,.65)
-        local c=ITEM_QUALITY_COLORS and ITEM_QUALITY_COLORS[item.quality]; b:SetBackdropBorderColor(c and c.r or .2,c and c.g or .2,c and c.b or .2,1)
-        if b.icon then b.icon:ClearAllPoints(); b.icon:SetPoint("TOPLEFT",b,"TOPLEFT",1,-1); b.icon:SetPoint("BOTTOMRIGHT",b,"BOTTOMRIGHT",-1,1); b.icon:SetTexture(item.icon or "Interface\\PaperDoll\\UI-Backpack-EmptySlot"); local z=p.bagItemIconZoom; b.icon:SetTexCoord(z,1-z,z,1-z); b.icon:SetDesaturated((item.locked or (p.bagDesaturateJunkItems and item.quality==0)) and true or false) end
-        Font(b.stackCount,p.bagCountFontSize); Font(b.level,p.itemlevelFontSize)
-        -- Native item/refund handlers expect count to be a number.
-        b.count=item.count or 0
-        -- Wrath ItemButtonTemplate starts with its Count FontString hidden.
-        -- SetText alone does not reveal it; apply visibility for both pools.
-        if item.link and b.count>1 then b.stackCount:SetText(tostring(b.count)); b.stackCount:Show()
-        else b.stackCount:SetText(""); b.stackCount:Hide() end
-        b.level:SetText(p.showItemlevelInBags and item.equip and item.equip~="" and item.level and tostring(item.level) or "")
-        local start,duration,enabled=0,0,0
-        if ns.IsLiveView(f) then start,duration,enabled=GetContainerItemCooldown(item.bag,item.slot) end
-        if CooldownFrame_SetTimer then CooldownFrame_SetTimer(b.cooldown,start or 0,duration or 0,enabled or 0) end
-        b.link=item.link; b.hasItem=item.link~=nil; b.readable=item.readable; b.lootable=item.lootable; b.locked=item.locked
-        local match=query=="" or string.lower(item.name):find(query,1,true) or (item.link and tostring(item.link):find(query,1,true))
-        if match then b.shade:Hide() else b.shade:Show() end
-        b:Show(); x=x+1; if x>=columns then x=0; y=y+size+spacing end
-    end
-    if x>0 then y=y+size+spacing end
-    Size(f.content,width-25,math.max(1,y))
-    local available=math.max(220,(GetScreenHeight and GetScreenHeight() or 1080)/p.bagScale-120)
-    Size(f,width,math.max(180,math.min(available,y+(p.bagShowSlots and 130 or 94)))); f.search:SetWidth(math.max(64,width-(kind=="bags" and 202 or 111)))
-    local _,current=ns.CurrentCharacter(); local live=ns.IsLiveView(f)
-    f.title:SetText((f.selectedName or current).." - "..(kind=="bank" and "Bank" or "Bags")..(live and "" or " (Saved)")); f.title:SetWidth(width-45)
-    local money=ns.MoneyText(record and record.money or 0)
-    f.footer:SetText(not snapshot and "Contents not ready - visit the bank to record it" or free.." / "..total.." free   "..(kind=="bags" and money or live and "" or "Saved "..date("%Y-%m-%d %H:%M",snapshot.updated)))
-    f.footer:SetWidth(math.max(100,width-(kind=="bank" and live and 118 or kind=="bags" and 88 or 20)))
-    ns.RefreshInventoryControls(f,snapshot)
-    f._uncached=uncached
+    ns.Render(f)
 end
+function ns.RefreshAll() ns.Refresh("bags"); ns.Refresh("bank") end
 function ns.Show(kind,keepSelection)
     local p=ns.GetSettings(); if not p then return end
     if kind=="bank" and not p.enhancedBank then return end
@@ -210,7 +138,9 @@ function ns.Show(kind,keepSelection)
     local f=views[kind]; if f then
         if not keepSelection then ns.UseCurrentView(kind) end
         if kind=="bank" and ns.IsLiveView(f) and nativeBank then return end
+        local first=not f:IsShown()
         f:Show(); f.search:ClearFocus(); ns.Refresh(kind)
+        if first and kind=="bags" and ns.OnFirstOpen then ns.OnFirstOpen(f) end
     end
 end
 function ns.OpenCharacterBank()
@@ -222,10 +152,12 @@ function ns.Toggle() local f=views.bags; if not f then return end; if f:IsShown(
 function ns.Apply()
     local p=ns.GetSettings(); if not p then return end
     if InCombatLockdown() then pending=true; return end; pending=false
-    for i,kind in ipairs({"bags","bank"}) do
-        local f=views[kind] or MakeView(kind); Backdrop(f,p.bgAlpha); f:SetScale(p.bagScale)
+    for _,kind in ipairs({"bags","bank"}) do
+        local f=views[kind] or ns.MakeView(kind); f:SetScale(p.bagScale)
         local pos=p.positions[kind]; f:ClearAllPoints()
-        if pos then f:SetPoint(pos.point,UIParent,pos.relPoint,pos.x,pos.y) else f:SetPoint("BOTTOMRIGHT",UIParent,"BOTTOMRIGHT",-40-(i-1)*470,100) end
+        if pos then f:SetPoint(pos.point,UIParent,pos.relPoint,pos.x,pos.y)
+        elseif kind=="bags" then f:SetPoint("BOTTOMRIGHT",UIParent,"BOTTOMRIGHT",-50,50)
+        else f:SetPoint("TOPLEFT",UIParent,"TOPLEFT",50,-120) end
         if not p[kind=="bags" and "enhancedBags" or "enhancedBank"] then f._restoring=true; f:Hide(); f._restoring=false end
         ns.Refresh(kind)
     end
@@ -251,12 +183,13 @@ end
 function addon:OnInitialize()
     addon.db=E.Lite.NewDB("EllesmereUIBagsDB",defaults); ns.db=addon.db; E._bagsDB=addon.db
     _G._EBAGS_RefreshAll=ns.Apply
-    _G.EUI_Bags={RefreshTextSizes=function() ns.Apply() end,RefreshInventory=function() ns.Refresh("bags"); ns.Refresh("bank") end}
+    _G.EUI_Bags={RefreshTextSizes=function() ns.Apply() end,RefreshInventory=function() ns.RefreshAll() end,
+        ClearRecentItems=function() ns.ClearRecent() end}
     _G.EUI_BankFrame={RefreshTextSizes=function() ns.Apply() end,RefreshInventory=function() ns.Refresh("bank") end}
     SLASH_EUI335BAGS1="/ebags"; SlashCmdList.EUI335BAGS=function() ns.Toggle() end
 end
 function addon:OnEnable()
-    ns.InventoryStore(); ns.CaptureInventory("bags"); ns.InitializeBroker(); ns.Apply(); TakeOverBags()
+    ns.CM:Seed(); ns.InventoryStore(); ns.CaptureInventory("bags"); ns.TrackRecent(); ns.InitializeBroker(); ns.Apply(); TakeOverBags()
     if UISpecialFrames then for _,kind in ipairs({"bags","bank"}) do UISpecialFrames[#UISpecialFrames+1]="EUI335Inventory_"..kind end end
     if E.RegisterUnlockElements and E.MakeUnlockElement then
         local elements={}
@@ -272,20 +205,27 @@ function addon:OnEnable()
         E:RegisterUnlockElements(elements,ADDON_NAME)
     end
     local events=CreateFrame("Frame"); ns.events=events
-    for _,event in ipairs({"ADDON_LOADED","PLAYER_ENTERING_WORLD","PLAYER_LOGOUT","PLAYER_REGEN_ENABLED","BAG_UPDATE","BAG_UPDATE_COOLDOWN","ITEM_LOCK_CHANGED","PLAYER_MONEY","BANKFRAME_OPENED","BANKFRAME_CLOSED","PLAYERBANKSLOTS_CHANGED","PLAYERBANKBAGSLOTS_CHANGED"}) do events:RegisterEvent(event) end
+    for _,event in ipairs({"ADDON_LOADED","PLAYER_ENTERING_WORLD","PLAYER_LOGOUT","PLAYER_REGEN_ENABLED","BAG_UPDATE","BAG_UPDATE_COOLDOWN",
+        "ITEM_LOCK_CHANGED","PLAYER_MONEY","BANKFRAME_OPENED","BANKFRAME_CLOSED","PLAYERBANKSLOTS_CHANGED","PLAYERBANKBAGSLOTS_CHANGED",
+        "EQUIPMENT_SETS_CHANGED","CURRENCY_DISPLAY_UPDATE","PLAYER_LEVEL_UP","SKILL_LINES_CHANGED","MAIL_SHOW","MAIL_CLOSED","TRADE_SHOW",
+        "TRADE_CLOSED","AUCTION_HOUSE_SHOW","AUCTION_HOUSE_CLOSED","GUILDBANKFRAME_OPENED","GUILDBANKFRAME_CLOSED"}) do events:RegisterEvent(event) end
     events:SetScript("OnEvent",function(_,event)
-        if event=="ADDON_LOADED" then
-            ns.InitializeBroker()
-            return
-        end
+        if event=="ADDON_LOADED" then ns.InitializeBroker(); return end
+        local panel=PANEL_EVENTS[event]
+        if panel then ns.panels[panel[1]]=panel[2] end
+        if event=="EQUIPMENT_SETS_CHANGED" then ns.CM:OnEquipmentSetsChanged() end
+        if event=="PLAYER_LEVEL_UP" or event=="SKILL_LINES_CHANGED" then if ns.ClearScanCache then ns.ClearScanCache() end end
         if event=="PLAYER_ENTERING_WORLD" then ns.InitializeBroker() end
-        if event~="BANKFRAME_CLOSED" and event~="BAG_UPDATE_COOLDOWN" and event~="ITEM_LOCK_CHANGED" then ns.CaptureInventory("bags"); if bankOpen then ns.CaptureInventory("bank") end end
-        if event=="BANKFRAME_OPENED" then bankOpen=true; nativeBank=false; ns.CaptureInventory("bank"); ns.UseCurrentView("bank"); ns.Apply()
-        elseif event=="BANKFRAME_CLOSED" then bankOpen=false; nativeBank=false; RestoreBank(); if views.bank then views.bank._restoring=true; views.bank:Hide(); views.bank._restoring=false end
+        if event=="PLAYER_ENTERING_WORLD" or event=="CURRENCY_DISPLAY_UPDATE" then ns.CaptureCurrencies() end
+        if event=="BAG_UPDATE" then ns.TrackRecent() end
+        if event~="BANKFRAME_CLOSED" and event~="BAG_UPDATE_COOLDOWN" and event~="ITEM_LOCK_CHANGED" and not panel then ns.CaptureInventory("bags"); if bankOpen then ns.CaptureInventory("bank") end end
+        if event=="BANKFRAME_OPENED" then bankOpen=true; nativeBank=false; ns.CaptureInventory("bank"); ns.UseCurrentView("bank"); if views.bank then ns.ResetView(views.bank) end; ns.Apply()
+        elseif event=="BANKFRAME_CLOSED" then bankOpen=false; nativeBank=false; RestoreBank(); if views.bank then views.bank._restoring=true; views.bank:Hide(); views.bank._restoring=false end; ns.Refresh("bags")
         elseif event=="PLAYER_ENTERING_WORLD" or (event=="PLAYER_REGEN_ENABLED" and pending) then ns.Apply()
-        else ns.Refresh("bags"); ns.Refresh("bank") end
+        elseif not ns.sorting then ns.RefreshAll() end
     end)
     if BankFrame and BankFrame.HookScript then BankFrame:HookScript("OnShow",function() local p=ns.GetSettings(); if bankOpen and p and p.enhancedBank and not nativeBank and not InCombatLockdown() then SuppressBank() end end) end
+    if hooksecurefunc and ns.HookSplitter then ns.HookSplitter() end
     -- GetItemInfo can be uncached on Wrath; bounded visible retries, no modern event.
     local elapsed,retries,recordElapsed=0,0,0
     events:SetScript("OnUpdate",function(_,dt)
@@ -293,6 +233,6 @@ function addon:OnEnable()
         if recordElapsed>=5 then recordElapsed=0; ns.CaptureInventory("bags"); if bankOpen then ns.CaptureInventory("bank") end end
         elapsed=elapsed+dt; if elapsed<.5 then return end; elapsed=0
         local needed=false; for _,f in pairs(views) do if f:IsShown() and f._uncached then needed=true end end
-        if needed and retries<20 then retries=retries+1; ns.Refresh("bags"); ns.Refresh("bank") elseif not needed then retries=0 end
+        if needed and retries<20 then retries=retries+1; ns.RefreshAll() elseif not needed then retries=0 end
     end)
 end

@@ -17,10 +17,20 @@ local function BrokenAura(recipient,id)
         ns.activeAuras[key]=nil
     end end
 end
-local function Log(guid,name,flags,kind,amount,id,spellName,source)
+-- Wrath's combat log carries no health, so the recap reads the unit when it
+-- is a group member; other actors keep the bar empty.
+local function Health(guid)
+    local r=ns.roster[guid]; local unit=r and r.unit
+    if not unit then return end
+    local max=UnitHealthMax(unit)
+    if not max or max<=0 then return end
+    return math.max(0,math.min(1,(UnitHealth(unit) or 0)/max))
+end
+local function Log(guid,name,flags,kind,amount,id,spellName,source,overkill)
     if not ns.Friendly(guid,flags) then return end
     local a=ns.Actor(ns.current,guid,name,flags)
-    local log={at=GetTime()-ns.started,kind=kind,amount=amount,id=id,name=spellName or "Melee",source=source or "Environment"}
+    local log={at=GetTime()-ns.started,kind=kind,amount=amount,id=id,name=spellName or "Melee",source=source or "Environment",
+        hp=Health(guid),overkill=(tonumber(overkill) or 0)>0 and overkill or nil}
     a.logs[#a.logs+1]=log
     while #a.logs>40 or (#a.logs>1 and a.logs[1].at<log.at-20) do table.remove(a.logs,1) end
 end
@@ -112,7 +122,7 @@ function ns.Parse(timestamp,event,sg,sn,sf,dg,dn,df,...)
             ns.Add("absorbed",absorbed,dg,dn,df,id,name,sg,sn,false,school)
             ns.Add("blocked",blocked,dg,dn,df,id,name,sg,sn,false,school)
             ns.Add("resisted",resisted,dg,dn,df,id,name,sg,sn,false,school)
-            Log(dg,dn,df,"damage",amount,id,name,sn)
+            Log(dg,dn,df,"damage",amount,id,name,sn,overkill)
         end
     elseif healEvents[event] then
         local id,name,school,amount,overheal,absorbed,critical=...

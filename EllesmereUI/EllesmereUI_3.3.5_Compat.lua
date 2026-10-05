@@ -185,8 +185,14 @@ Settings.RegisterCanvasLayoutCategory=Settings.RegisterCanvasLayoutCategory or f
  if panel then panel.name = panel.name or name end
  return panel
 end
+-- A top-level entry with the same name is already listed (EUI_OptionsAccess_335
+-- registers the Wrath "EllesmereUI" entry), so the list keeps a single one.
 Settings.RegisterAddOnCategory=Settings.RegisterAddOnCategory or function(category)
- if category and InterfaceOptions_AddCategory then InterfaceOptions_AddCategory(category) end
+ if not category then return category end
+ for _,panel in ipairs(INTERFACEOPTIONS_ADDONCATEGORIES or {}) do
+  if panel.name==category.name and type(panel.parent)~="string" then return panel end
+ end
+ if InterfaceOptions_AddCategory then InterfaceOptions_AddCategory(category) end
  return category
 end
 

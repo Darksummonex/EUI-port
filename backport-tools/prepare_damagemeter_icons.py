@@ -12,7 +12,9 @@ src = root / 'EllesmereUIDamageMeters' / 'Media'
 dst = root / 'EllesmereUIDamageMeters' / 'Media_335'
 dst.mkdir(exist_ok=True)
 SIZE = 64
-for png in sorted(src.glob('dm_*.png')):
+# The window resize grip uses the shared EUI element-resize glyph.
+shared = [root / 'EllesmereUI' / 'media' / 'icons' / 'resize_element.png']
+for png in sorted(src.glob('dm_*.png')) + shared:
     img = Image.open(png).convert('RGBA')
     img.thumbnail((SIZE, SIZE), Image.LANCZOS)
     canvas = Image.new('RGBA', (SIZE, SIZE), (0, 0, 0, 0))

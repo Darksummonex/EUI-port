@@ -2,7 +2,7 @@
 ## Title: |cff0cd29fEllesmereUI|r Options - 3.3.5
 ## Notes: EllesmereUI settings panel (3.3.5 backport). Loads on demand when you open EllesmereUI options.
 ## Author: Ellesmere / 3.3.5 backport
-## Version: 9.3.4-335-0.47
+## Version: 9.3.4-335-0.54
 ## Dependencies: EllesmereUI
 ## LoadOnDemand: 1
 
@@ -27,6 +27,7 @@ EUI_Style_Options.lua
 # (each one already early-returns when its module namespace is absent).
 #EUI_Gamepad_Options.lua
 #EUI_PartyMode_Options.lua
+EUI_PartyMode_335_Options.lua
 #EUI_ActionBars_Options.lua
 EUI_ActionBars_335_Options.lua
 #EUI_AuraBuffReminders_Options.lua

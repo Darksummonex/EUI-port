@@ -1,4 +1,33 @@
-# Options 3.3.5 — 0.43
+# Options 3.3.5 — 0.53
+
+0.53: nova página Party Mode (`EUI_PartyMode_335_Options.lua`), cópia da
+Retail com gatilhos Wrath (Heroic/Normal Boss Kill, Rated Arena Win,
+Battleground Win, Bloodlust / Heroism, Level Up, Randomly), alvos de spin só
+para módulos com motor de spin carregado e ícone de preview de som nativo.
+
+0.52: Bags > WRATH INVENTORY ganha "Delete Saved Character", que apaga um
+personagem salvo (exceto o logado) após confirmação.
+
+0.51 refaz as opções de Bags para o port Retail, agora com as páginas Bags e
+Bank: DISPLAY (escala, zoom, auto-size, mesclar, sets, Default Bag Type, BoE,
+categorias e moedas habilitadas), EXTRAS (sort, ouro, pinned/recent com
+engrenagens, dicas, Add Category, mover sem Shift, avisos, Armory, Stack
+Splitter) e WRATH INVENTORY (colunas, keyring, barra de slots, contagens de
+personagens, cache). Bank: agrupamento, sidebar e slots vazios. A aba Fonts
+de Bags mostra Set Name e BoE Text Size no Wrath.
+
+0.50 rebuilds the Chat pages for the Retail port: Chat (display, visibility,
+border, idle fade, input field, extras), Tabs, Sidebar and Chat Bubbles. The
+Style page now lists Chat, and the Textures card shows the Retail background
+and tab textures.
+
+0.49 rebuilds the Minimap page for the Retail port: shape and style, border
+texture/colour source, visibility options, elements, addon flyout and rows,
+extra buttons, clock/zone boxes, coordinates, FPS, difficulty text and
+accented text.
+
+0.48 adds the Damage Meters Spell History page and Windows rows for header
+icons, snapping, hover breakdown, standalone combat timer and keybinds.
 
 0.43 adds native Friends and Quest Tracker settings, including visibility,
 Unlock Mode placement, fonts and optional quest helpers.

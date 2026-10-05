@@ -2,9 +2,9 @@
 ## Title: |cff0cd29fEllesmereUI|r Minimap
 ## Category: |cff0cd29fEllesmere|rUI
 ## Group: EllesmereUI
-## Notes: Wrath minimap layout, text, zoom and addon-button controls.
+## Notes: Wrath minimap with the Retail EUI shapes, borders, indicators, addon flyout, text and tooltips.
 ## Author: Ellesmere
-## Version: 9.3.4-335-0.3
+## Version: 9.3.4-335-0.4
 ## Dependencies: EllesmereUI
 ## SavedVariables: EllesmereUIMinimapDB
 ## IconTexture: Interface\AddOns\EllesmereUI\media\eg-logo.tga

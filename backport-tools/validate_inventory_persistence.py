@@ -30,7 +30,7 @@ function ReloadUI() reloads=reloads+1; serialized=SaveVariables() end
     lua.execute((root/'EllesmereUI/EllesmereUI_Lite.lua').read_text(encoding='utf-8-sig'),'EllesmereUI',lua.table())
     lua.execute("lifecycle=allFrames[#allFrames]; lifecycle:RunScript('OnEvent','ADDON_LOADED','EllesmereUI')")
     ns=lua.table()
-    for file in ['EUI_Bags_335.lua','EUI_Bags_335_Cache.lua','EUI_Bags_335_Broker.lua']:
+    for file in ['EUI_Bags_335.lua','EUI_Bags_335_Cache.lua','EUI_Bags_335_Categories.lua','EUI_Bags_335_Window.lua','EUI_Bags_335_Broker.lua']:
         lua.execute((root/'EllesmereUIBags'/file).read_text(encoding='utf-8-sig'),'EllesmereUIBags',ns)
     lua.globals().B=ns
     if saved: lua.execute(saved)

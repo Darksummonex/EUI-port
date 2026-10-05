@@ -939,11 +939,9 @@ local function TileBags(parent, y, W, tile)
     _, h = W:DualRow(parent, y,
         size("Item Count Text Size", "bagCountFontSize", 8, 16, 11, TextSizes),
         size("Item Level Text Size", "itemlevelFontSize", 8, 16, 12, TextSizes));  y = y - h
-    if not ns.IsWrath then
-        _, h = W:DualRow(parent, y,
-            size("Set Name Text Size", "bagSetNameFontSize", 7, 14, 9, TextSizes),
-            size("BoE / Warbound Text Size", "bagBindTypeFontSize", 8, 16, 11, TextSizes));  y = y - h
-    end
+    _, h = W:DualRow(parent, y,
+        size("Set Name Text Size", "bagSetNameFontSize", 7, 14, 9, TextSizes),
+        size(ns.IsWrath and "BoE Text Size" or "BoE / Warbound Text Size", "bagBindTypeFontSize", 8, 16, 11, TextSizes));  y = y - h
     return y
 end
 

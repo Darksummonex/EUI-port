@@ -8,7 +8,7 @@ lua=LuaRuntime()
 for file in ['backport-tools/wrath_mock.lua','backport-tools/inventory_resources_mock.lua','EllesmereUI/EllesmereUI_Lite.lua']:
     lua.execute((root/file).read_text(encoding='utf-8-sig'))
 ns=lua.table()
-for file in ['EUI_Bags_335.lua','EUI_Bags_335_Cache.lua','EUI_Bags_335_Broker.lua']:
+for file in ['EUI_Bags_335.lua','EUI_Bags_335_Cache.lua','EUI_Bags_335_Categories.lua','EUI_Bags_335_Window.lua','EUI_Bags_335_Broker.lua']:
     lua.execute((root/'EllesmereUIBags'/file).read_text(encoding='utf-8-sig'),'EllesmereUIBags',ns)
 lua.globals().B=ns
 lua.execute('''
@@ -17,8 +17,9 @@ B.addon:OnInitialize(); B.addon:OnEnable()
 local p=B.GetSettings(); local f,bank=B.views.bags,B.views.bank
 local store=B.InventoryStore(); local record=B.CharacterRecord('Test Realm','player')
 assert(record.bags and not record.bank and record.money==12345)
-B.Show('bags'); assert(f.bagSlots[0]:IsShown() and f.bagSlots[1]:IsShown() and f.bagSlots[-2]:IsShown())
-assert(select(5,f.scroll:GetPoint(1))==-98)
+assert(p.bagShowSlots==false)
+p.bagShowSlots=true; B.Show('bags'); assert(f.bagSlots[0]:IsShown() and f.bagSlots[1]:IsShown() and f.bagSlots[-2]:IsShown())
+assert(f.bagWindow:IsShown() and select(2,f.bagWindow:GetPoint(1))==f and f.bagSlots[0]:GetParent()==f.bagWindow)
 f.bagSlots[1]:RunScript('OnClick'); assert(f.selectedBag==1 and f.pool['1:1']:IsShown() and not f.pool['0:1']:IsShown())
 f.bagSlots[1]:RunScript('OnClick'); assert(f.selectedBag==nil and f.pool['0:1']:IsShown())
 cursorItem=true; f.bagSlots[1]:RunScript('OnReceiveDrag'); f.bagSlots[0]:RunScript('OnClick'); f.bagSlots[-2]:RunScript('OnReceiveDrag')
@@ -60,10 +61,10 @@ local duplicate=B.CharacterRecord('Other Realm','Alt',true); duplicate.bags=Copy
 assert(#B.Characters()==3 and record.bags.containers[0].items[2].count==18)
 local actions=#itemActions; local equipment=#bagActions
 B.SelectCharacter('bags','Test Realm','Alt'); assert(not B.IsLiveView(f) and f.savedPool['0:2'].stackCount:GetText()=='7' and not f.pool['0:2']:IsShown())
-assert(f.savedPool['0:2'].stackCount:IsShown() and not f.savedPool['0:1'].stackCount:IsShown() and not f.savedPool['0:4'].stackCount:IsShown())
+assert(f.savedPool['0:2'].stackCount:IsShown() and not f.savedPool['0:1'].stackCount:IsShown() and not f.savedPool['0:4'])
 cursorItem=true; f.bagSlots[1]:RunScript('OnReceiveDrag'); f.bagSlots[1]:RunScript('OnDragStart'); f.savedPool['0:2']:RunScript('OnClick','RightButton')
 assert(#itemActions==actions and #bagActions==equipment,'Saved view changed live items'); cursorItem=false
-f.search:SetText('potion'); assert(not f.savedPool['0:2'].shade:IsShown() and f.savedPool['0:1'].shade:IsShown())
+f.search:SetText('potion'); assert(f.savedPool['0:2']:GetAlpha()==1 and f.savedPool['0:1']:GetAlpha()==.2); f.search:SetText('')
 f.bagSlots[1]:RunScript('OnClick'); assert(f.selectedBag==1 and f.savedPool['1:1']:IsShown() and not f.savedPool['0:2']:IsShown())
 f.bagSlots[1]:RunScript('OnClick'); assert(f.selectedBag==nil)
 B.SelectCharacter('bank','Test Realm','Alt'); assert(bank.savedPool['-1:1'].stackCount:GetText()=='9' and not B.IsLiveView(bank))
@@ -76,7 +77,7 @@ EllesmereUIInventoryDB=CopyTable(cache); B.SelectCharacter('bank','Test Realm','
 local frames=#allFrames; B.Refresh('bank'); B.Refresh('bank'); assert(#allFrames==frames)
 B.OpenCharacterBank(); assert(bank.savedPool['-1:1'].stackCount:GetText()=='4')
 B.Show('bags'); assert(B.IsLiveView(f) and f.pool['0:2']:IsShown() and not f.savedPool['0:2']:IsShown())
-p=B.GetSettings(); p.bagShowSlots=false; B.Apply(); assert(not f.bagSlots[0]:IsShown() and select(5,f.scroll:GetPoint(1))==-62)
+p=B.GetSettings(); p.bagShowSlots=false; B.Apply(); assert(not f.bagWindow:IsShown())
 -- A bank opening switches from saved/alt content to the current live bank.
 bankSession=true; B.events:RunScript('OnEvent','BANKFRAME_OPENED'); assert(B.IsLiveView(bank) and bank.pool['-1:1']:IsShown() and not bank.savedPool['-1:1']:IsShown())
 bank.pool['-1:1']:RunScript('OnClick','RightButton'); assert(itemActions[#itemActions][1]==-1)
@@ -90,4 +91,34 @@ FindRow('Show Bag Slot Bar').setValue(true); assert(B.GetSettings().bagShowSlots
 FindRow('Show Character Item Counts').setValue(false); assert(not B.GetSettings().bagShowAltCounts)
 buttons['Show Character Bank'](); assert(B.views.bank:IsShown())
 ''')
-print('PASS: bags/bank slot strips, native equip/drop/filter/purchase, bank cached away from banker, independent realm/alt snapshots, closed-window/combat recording, stale removal, read-only pools, search/counts, profile/reset/reload persistence, selector/options and exact live/native bank restoration.')
+lua.execute('''
+local f=B.views.bags; B.Show('bags'); f.view='onebag'; items['0:3'].locked=false; items['0:2'].count=12
+local function Drain() for _=1,60 do now=now+1; for _,fr in ipairs(allFrames) do if fr.scripts and fr.scripts.OnUpdate then fr:RunScript('OnUpdate',1) end end; if not B.IsSorting() then return end end; error('sort never finished') end
+local function Order() local out={}; for _,k in ipairs({'0:1','0:2','0:3','0:4','1:1','1:2'}) do out[#out+1]=items[k] and items[k].name or '-' end; return table.concat(out,',') end
+B.SortClick(f); assert(B.confirmDialog:IsShown() and not B.IsSorting())
+B.confirmDialog.check:RunScript('OnClick'); B.confirmDialog.ok:RunScript('OnClick'); assert(EllesmereUIDB.bagSortWarningDismissed and B.IsSorting())
+Drain(); assert(Order()=='Armor,Sword,Healing Potion,Junk,-,-',Order())
+B.GetSettings().bagSortToBottom=true; f._sortLocked=nil; B.SortClick(f); assert(B.IsSorting()); Drain()
+assert(Order()=='-,-,Armor,Sword,Healing Potion,Junk',Order())
+''')
+print('PASS: physical OneBag sort (confirm/dismiss, gear-first order, Sort to Bottom) using native pickups')
+lua.execute('''
+local f=B.views.bags; B.Show('bags')
+assert(f.settingsBtn:IsShown()); shownModule=nil; f.settingsBtn:RunScript('OnClick'); assert(optionsLoaded and shownModule=='EllesmereUIBags')
+B.SelectCharacter('bags','Other Realm','Alt'); assert(f.selectedRealm=='Other Realm')
+EllesmereUIDB.bagCurrencyByChar={['Other Realm-Alt']={1}}
+f.characters:RunScript('OnClick'); local list=f.selector.rows
+assert(list[1].del:IsShown() and list[2].del:IsShown() and not list[3].del:IsShown(),'Logged-in character offers delete')
+list[1].del:RunScript('OnClick'); assert(B.confirmDialog:IsShown() and B.CharacterRecord('Other Realm','Alt'))
+B.confirmDialog.ok:RunScript('OnClick')
+assert(not B.CharacterRecord('Other Realm','Alt') and not B.InventoryStore().realms['Other Realm'] and not EllesmereUIDB.bagCurrencyByChar['Other Realm-Alt'])
+assert(f.selectedRealm=='Test Realm' and f.selectedName=='player' and B.IsLiveView(f) and not list[3]:IsShown())
+assert(not B.DeleteCharacter('Test Realm','player') and B.CharacterRecord('Test Realm','player'))
+rows={}; modules.EllesmereUIBags.buildPage('Bags',UIParent,0); local dd=FindRow('Delete Saved Character')
+assert(dd.values['Test Realm\\001Alt'] and not dd.values['Test Realm\\001player'] and not dd.disabled())
+invalidated=false; dd.setValue('Test Realm\\001Alt'); B.confirmDialog.ok:RunScript('OnClick')
+assert(not B.CharacterRecord('Test Realm','Alt') and invalidated and #B.Characters()==1)
+rows={}; modules.EllesmereUIBags.buildPage('Bags',UIParent,0); assert(FindRow('Delete Saved Character').disabled())
+''')
+print('PASS: header settings button, character deletion from the selector and options (confirmed, current character protected, views reset)')
+print('PASS: bags/bank floating slot strips, native equip/drop/filter/purchase, bank cached away from banker, independent realm/alt snapshots, closed-window/combat recording, stale removal, read-only pools, search/counts, profile/reset/reload persistence, selector/options and exact live/native bank restoration.')

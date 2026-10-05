@@ -45,6 +45,33 @@ function m:SetPushedTexture(v) self.pushed=v end
 function m:SetCheckedTexture(v) self.checked=v end
 function m:SetHighlightTexture(v) self.highlight=self.highlight or self:CreateTexture(); self.highlight:SetTexture(v) end
 function m:GetHighlightTexture() return self.highlight end
+function m:SetVerticalScroll(v) self.vscroll=v end
+function m:GetVerticalScroll() return self.vscroll or 0 end
+function m:EnableMouseWheel(v) self.wheel=v end
+function m:IsMouseOver() return self.mouseOver or false end
+function m:GetStringWidth() return #(self.text or "")*6 end
+function m:SetNumeric(v) self.numeric=v end
+function m:HighlightText() end
+function m:SetFocus() self.focus=true end
+function m:Click(button) self:RunScript("OnClick",button or "LeftButton") end
+function IsShiftKeyDown() return shiftDown or false end
+function IsControlKeyDown() return ctrlDown or false end
+cursorInfo=nil; pickups={}; clearedCursor=0
+function GetCursorInfo() if cursorInfo then return unpack(cursorInfo) end end
+function ClearCursor() cursorInfo=nil; cursorItem=false; clearedCursor=clearedCursor+1 end
+function GetContainerNumFreeSlots(bag) local free=0; for s=1,(bagSlots[bag] or 0) do if not items[bag..':'..s] then free=free+1 end end; return free,0 end
+-- Pickups apply like the client: an empty cursor lifts a slot, a held item swaps or merges.
+function PickupContainerItem(bag,slot)
+    pickups[#pickups+1]={bag,slot}
+    local key=bag..':'..slot
+    if not held then held={key=key,item=items[key]}; items[key]=nil; return end
+    local target=items[key]
+    if target and held.item and target.link==held.item.link then target.count=target.count+held.item.count
+    else items[key]=held.item; if held.key~=key then items[held.key]=target end end
+    held=nil
+end
+function SplitContainerItem(bag,slot,n) pickups[#pickups+1]={'split',bag,slot,n} end
+function EasyMenu(list) lastMenu=list end
 function m:RunScript(name,...)
     local script=self.scripts[name]; if script then script(self,...) end
     local hook=self.hooks[name]; if hook then hook(self,...) end
@@ -57,6 +84,8 @@ end
 function NativeItemDrag(self) NativeItemClick(self,"Drag") end
 local create=CreateFrame
 function CreateFrame(kind,name,parent,template)
+    -- Wrath's UIPanelScrollFrameTemplate OnLoad concatenates self:GetName().."ScrollBar".
+    assert(template~="UIPanelScrollFrameTemplate" or name,"UIPanelScrollFrameTemplate requires a frame name")
     local f=create(kind,name,parent,template); f.name=name; f.template=template
     if kind=="Button" then
         setmetatable(f,{__index=function(_,key)

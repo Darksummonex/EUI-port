@@ -1,10 +1,11 @@
 ## Interface: 30300
 ## Title: |cff0cd29fEllesmereUI|r Chat
-## Notes: Native Wrath chat styling, fonts, timestamps, URL selection and copy.
+## Notes: Wrath chat with the Retail EUI panel, tabs, sidebar, idle fade, timestamps, channel names, history and bubbles.
 ## Author: Ellesmere / 3.3.5 backport
-## Version: 9.3.4-335-0.3
+## Version: 9.3.4-335-0.42
 ## Dependencies: EllesmereUI
 ## SavedVariables: EllesmereUIChatDB
+## SavedVariablesPerCharacter: EllesmereUIChatScrollDB
 ## IconTexture: Interface\AddOns\EllesmereUI\media\eg-logo.tga
 
 # Retail engines stay in the folder as reference only.

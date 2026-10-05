@@ -4,17 +4,18 @@
 ## Group: EllesmereUI
 ## Notes: Simple raid buff, auras, consumables and talent reminders.
 ## Author: Ellesmere
-## Version: 9.3.4-335-0.1
+## Version: 9.3.4-335-0.3
 ## Dependencies: EllesmereUI
 ## SavedVariables: EllesmereUIAuraBuffRemindersDB
 ## IconTexture: Interface\AddOns\EllesmereUI\media\eg-logo.tga
 
 # Native Wrath runtime. Retail Lua files remain unloaded references.
 EUI_AuraBuffReminders_335_Catalog.lua
-EUI_AuraBuffReminders_335.lua
 EUI_AuraBuffReminders_335_Display.lua
+EUI_AuraBuffReminders_335.lua
+EUI_AuraBuffReminders_335_Extras.lua
 
-# Talent Reminders (standalone, no ABR dependency)
+# Talent Reminders live in EUI_AuraBuffReminders_335_Extras.lua
 #EllesmereUIABR_TalentReminders.lua
 
 # Options

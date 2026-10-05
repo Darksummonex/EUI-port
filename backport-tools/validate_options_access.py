@@ -1,5 +1,6 @@
 """Exercise Wrath menu/category entry points without building the settings UI."""
 from pathlib import Path
+import re
 import sys
 root=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(root/'.codex-tools'))
@@ -21,7 +22,9 @@ function m:RunScript(event,...) if self.scripts[event] then self.scripts[event](
 function m:Show() self.shown=true; self:RunScript('OnShow') end
 function m:GetTop() return self.top end
 function m:GetBottom() return self.bottom end
-function InterfaceOptions_AddCategory(panel) assert(panel.name=='EllesmereUI'); categories[#categories+1]=panel end
+function m:GetChildren() return unpack(self.children) end
+INTERFACEOPTIONS_ADDONCATEGORIES={}
+function InterfaceOptions_AddCategory(panel) assert(panel.name=='EllesmereUI'); categories[#categories+1]=panel; table.insert(INTERFACEOPTIONS_ADDONCATEGORIES,panel) end
 function HideUIPanel(frame) frame:Hide() end
 function EllesmereUI.EnsureOptionsLoaded() loads=loads+1; return loadOK end
 function EllesmereUI:Show() assert(self==EllesmereUI and not combat); opens=opens+1 end
@@ -93,4 +96,34 @@ GameMenuFrame=savedMenu
 EllesmereUI._wrathOptionsAccess.events:RunScript('OnEvent','PLAYER_ENTERING_WORLD')
 assert(EllesmereUI._wrathOptionsAccess.menuButton)
 ''')
+# The Retail core's own entry goes through the Settings shim; only one
+# "EllesmereUI" entry may be listed whichever side registers first.
+compat=(root/'EllesmereUI/EllesmereUI_3.3.5_Compat.lua').read_text(encoding='utf-8-sig')
+shim=re.search(r'-- Retail Settings API.*?\nSettings\.RegisterAddOnCategory=.*?\nend\n',compat,re.S).group(0)
+RETAIL_PANEL='''
+retailPanel=CreateFrame('Frame'); retailPanel.name='EllesmereUI'
+retailButton=CreateFrame('Button',nil,retailPanel,'UIPanelButtonTemplate')
+retailButton:SetScript('OnClick',function() retailClicked=true end)
+Settings.RegisterAddOnCategory(Settings.RegisterCanvasLayoutCategory(retailPanel,'EllesmereUI'))
+'''
+retailFirst=fixture()
+retailFirst.execute(shim)
+retailFirst.execute(RETAIL_PANEL)
+retailFirst.execute(source)
+retailFirst.execute('''
+local A=EllesmereUI._wrathOptionsAccess
+assert(#categories==1 and A.category==retailPanel and retailPanel.openButton==retailButton)
+InterfaceOptionsFrame:Show(); retailButton:RunScript('OnClick')
+assert(not retailClicked and opens==1 and not InterfaceOptionsFrame:IsShown(),'Retail entry opens through the Wrath path')
+''')
+wrathFirst=fixture()
+wrathFirst.execute(shim)
+wrathFirst.execute(source)
+wrathFirst.execute(RETAIL_PANEL)
+wrathFirst.execute('''
+local A=EllesmereUI._wrathOptionsAccess
+assert(#categories==1,#categories)
+assert(categories[1]==A.category and A.category~=retailPanel,tostring(A.category))
+''')
+print('PASS: single EllesmereUI Interface/AddOns entry in either registration order;')
 print('PASS: Wrath Escape menu and Interface/AddOns entries; click-only LOD/open, native panel close, missing-options/combat guards, idempotent registration/layout, other-addon anchor chain, native re-layout, late frames and pooled-menu fallback.')

@@ -1,4 +1,26 @@
-# EllesmereUI Damage Meters — Wrath 3.3.5a — 0.3
+# EllesmereUI Damage Meters — Wrath 3.3.5a — 0.6
+
+0.6 ports the remaining Retail features and look:
+- Windows: flat black body, dark header with accent title, Atrocity bars,
+  18 px rows. Untouched profiles switch once (styleVersion 2); customised
+  values are kept. Header icons, right to left: Settings, Segment, Meter
+  Type, Reset, then + (window 1, up to five windows) or x (deletes an
+  unlocked window). Options: header icons on mouseover, hide Reset.
+- Corner grip and padlock fade in on hover. Shift locks the first axis
+  moved; width/height snap to other windows and title drags snap to their
+  edges (Disable Snapping per window). Locked windows cannot move, resize
+  or close.
+- Hover breakdown: up to 15 spells (or 8) and the top three targets, with
+  scale, anchor (row/center/left/right) and bar texture options. Death
+  recaps draw the victim's health at each hit plus overkill.
+- Standalone combat timer (preview while options are open, corner anchors,
+  outline/border/strata, Unlock Mode element).
+- Typed keybinds for Reset Data and Show / Hide Windows (override bindings,
+  applied after combat and restored after LoadBindings), optionally also
+  hiding the timer and Spell History.
+- Spell History: icon strip and bar window of the player's casts, with
+  failed/interrupted outcomes, hide rules and Unlock Mode. Wrath cast events
+  carry only spell names, so casts are matched by name.
 
 0.3 adds a live hover breakdown with spell icons, amounts/percentages,
 target bars and Other totals. Left-click a player to replace that meter
@@ -25,7 +47,7 @@ The installed Details main addon was inspected as a protocol reference;
 no separate Details plugins were installed. No Details code, libraries,
 globals, plugin APIs or SavedVariables are required or loaded here.
 The original EllesmereUI Retail Lua/media are retained byte for byte as
-unloaded references. Only the five EUI_DamageMeters_335 files run.
+unloaded references. Only the EUI_DamageMeters_335 files run.
 
 Open `/edm` or EllesmereUI > Damage Meters. Two windows (damage/healing)
 start enabled; create up to four in Windows. Change metric by clicking
@@ -71,7 +93,7 @@ historical data, and is not a promise of parity with every Details feature.
 
 The R button opens a local copy/preview. Only Send queues chat messages;
 channel availability is checked, messages are paced, and module disable
-cancels the queue. `/edm show`, `hide`, `reset`, `report` are also supported.
+cancels the queue. `/edm show`, `hide`, `toggle`, `reset`, `report`, `spells` are also supported.
 All runtime frames are unprotected, rows are preallocated, native frame
 creation/Escape bindings/game menus are untouched. Report EditBoxes never
 autofocus and clear focus on hide. Client rendering/real encounter totals

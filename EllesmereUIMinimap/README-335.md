@@ -1,4 +1,42 @@
-# Minimap 3.3.5 — 0.3
+# Minimap 3.3.5 — 0.4
+
+0.4 ports every Retail feature and look that Wrath can run.
+- Shapes: square, rectangular (Retail crop mask, 256x192 window, hit insets),
+  circle (disc border sized for circle_mask's 104/128 fill, which 0.3 hid
+  under the map) and textured circle (EUI textured ring for the Retail atlas).
+- Borders: size, opacity, solid strips outside the visible rect or the core
+  textured border styles, custom/accent/class colour, show behind. 0.3's
+  "class colour" flag migrates once to Retail's borderUseClassColor.
+- Style: EllesmereUI or Classic WoW UI (vanilla ring and zone banner, native
+  zoom buttons at vanilla anchors, ring-bordered indicators orbiting the map).
+- Indicators: tracking (Wrath tracking menu), calendar (day, saved instances
+  and server time on hover), mail (row or map corner with offsets, senders on
+  hover), Retail black backgrounds, button size, element row position/spacing/
+  distance; round maps chain them beside a top clock. The native Blizzard
+  buttons stay alpha 0 and are restored on disable.
+- Addon buttons: always collected into the Retail flyout (grid, junk-texture
+  stripping, auto/manual grow direction, outside-click close); ungrouped
+  picker, button row position/spacing/distance, backgrounds, Shift-drag Free
+  Move with click-through blocking and Reset Button Positions. A lone button
+  sits on the row with no flyout button.
+- Extra buttons: Friends Online (guild, Real ID and character friends, notes,
+  row cap; left-click whispers, right-click invites), flyout button toggle,
+  extras on mouseover.
+- Text: clock and zone as Inside/Map Edge boxes with ten positions, scale and
+  offsets; Retail clock format; coordinates always/hover, position, scale;
+  FPS/MS segments with divider, size, scale, interval, position, offsets;
+  instance difficulty as text (5N/25H, tier colours); accented descriptions;
+  saved-instance hover on clock and FPS; custom tooltip size.
+- Visibility: shared Visibility Options list (instances, mounted, target,
+  enemy target and the other lanes the 3.3.5 core evaluates).
+- EllesmereUI style zoom buttons appear while the map is hovered.
+
+Wrath substitutions: lockouts show the reset timer (no encounter progress API)
+and no weekly reset row; latency is a single value (GetNetStats has no world
+MS); Friends Online and the flyout button use EUI glyphs converted to TGA by
+backport-tools/prepare_minimap_icons.py. Not ported (no Wrath equivalent):
+Great Vault, M+ portals, crafting orders, Omnium Folio, Addon Compartment,
+housing, Blizzard 12.1 Style.
 
 0.3 dispatches every native-window menu action through Wrath securecall.
 Where available, the menu calls the original native toggle by name; it

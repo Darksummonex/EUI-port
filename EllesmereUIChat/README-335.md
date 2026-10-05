@@ -1,4 +1,60 @@
-# EllesmereUI Chat — 3.3.5 — 0.3
+# EllesmereUI Chat — 3.3.5 — 0.42
+
+0.42: no Unlock Mode, clique direito (ou engrenagem) no chat mostra "Element
+Options", que abre /echat > Chat na seção DISPLAY destacando Main Chat Width.
+
+0.41 corrige o primeiro teste no cliente:
+- Os contadores da sidebar recebiam texto antes da fonte; o cliente Wrath
+  rejeita isso e interrompia todo Apply. Por isso a sidebar não aparecia, as
+  abas não subiam acima da entrada no topo e os toggles (ex.: Lock Main Chat
+  Size) só atualizavam ao reabrir as opções.
+- Unlock Mode: o elemento usa a chave Retail ECHAT_MainChat (o Unlock não
+  instala hooks de SetPoint no ChatFrame1), aplica ao fechar a sessão e marca
+  o chat como user placed, pois FCF_UpdateDockPosition adicionava de volta seu
+  ponto BOTTOMLEFT. Desabilitar o módulo devolve o estado original.
+- Opacidade 0 salva na 0.3 volta ao padrão Retail 0.65 uma vez (painel e
+  sidebar compartilham essa opacidade).
+
+0.4 porta o visual e as funções portáveis do Chat Retail. Use com Options 0.50.
+
+- Painel EUI: fundo com cor/opacidade/textura, divisor entre mensagens e
+  entrada, entrada acima/abaixo com altura própria, borda Retail (estilo,
+  tamanho, cor/origem, opacidade, atrás) envolvendo painel e sidebar.
+- Abas Retail desenhadas sobre as abas nativas do dock: largura pelo texto,
+  espaçamento, padding, altura, offset, alinhamento ao painel, fundo/textura,
+  underline ativo, borda ativa e borda sincronizada. O alerta de nova
+  mensagem vira o texto da aba na cor de destaque. As abas nativas mantêm
+  cliques, menu, drag e docking.
+- Sidebar Retail com os ícones originais (convertidos para TGA em Media_335):
+  amigos (online + Battle.net), guilda, durabilidade, copiar, voz/canais,
+  configurações e rolar ao fim. Ordem, tamanho, espaçamento, cor/destaque,
+  lado direito, fundo, separada, Free Move com posições salvas e botão de
+  scroll no painel. Visibilidade Always/Mouseover/Never.
+- Visibilidade do chat e Idle Fade (atraso/intensidade) com mouseover pelas
+  áreas do chat; com alpha zero o chat deixa os cliques passarem.
+- Timestamps Retail (formatos com espaço, Blizzard Default, None, Timestamp
+  All) via filtros: por padrão só as linhas de chat de jogadores, igual ao
+  Wrath. Remove o timestamp nativo duplicado.
+- Nomes de canais abreviados ([2], [P]; letras opcionais Ge/T/LD/WD/LFG),
+  nomes do grupo/raide na cor da classe, tooltip de links no hover, som de
+  whisper (sons EUI + SharedMedia), histórico das últimas linhas salvo por
+  personagem (EllesmereUIChatScrollDB) e mostrado no próximo login.
+- URL abre a janela Retail no cursor; cópia usa a janela Retail com Close.
+- Lock Main Chat Size esconde o grip nativo; o tamanho escolhido no menu da
+  aba vira o tamanho do perfil para todas as janelas.
+- Botões nativos de menu do chat e social ficam ocultos (a sidebar os substitui).
+- Chat Bubbles: liga as CVars de bolhas pelos canais marcados, oculta em
+  instâncias, e reestiliza as bolhas do WorldFrame (fundo, borda, padding,
+  largura, fonte, cor, offset). Desligar restaura as CVars salvas.
+- Página Style: Blizzard/Classic usam o chat nativo (fixado até o reload);
+  timestamps, URLs e os demais recursos de texto continuam.
+- Chaves 0.3 alteradas pelo usuário são migradas (borda, timestamps).
+
+Não portado: portais M+ (Retail), mute/troca do som nativo de whisper
+(MuteSoundFile não existe; o som escolhido toca junto), switch de bolhas de
+raide (Wrath não tem CVar), motor de display/scrollbar Retail, kits da
+sidebar stock e look Forever, e integração com Edit Mode. Abas dinâmicas
+com espaçamento usam a rolagem nativa aproximada.
 
 0.3 permite arrastar a borda inferior do chat até Y=0, removendo a reserva
 nativa de 50px em GetClampRectInsets. Mantém clamping ligado e os insets de

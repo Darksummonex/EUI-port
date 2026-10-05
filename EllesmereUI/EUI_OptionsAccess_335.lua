@@ -18,8 +18,27 @@ function A.Open()
     return true
 end
 
+local function ExistingCategory()
+    for _,panel in ipairs(INTERFACEOPTIONS_ADDONCATEGORIES or {}) do
+        if panel.name=="EllesmereUI" and type(panel.parent)~="string" then return panel end
+    end
+end
+
 local function RegisterCategory()
     if A.category or not InterfaceOptions_AddCategory then return end
+    -- The Retail core may have listed its own entry first; its button closes
+    -- the Retail SettingsPanel, so it is rewired to close the native windows.
+    local existing=ExistingCategory()
+    if existing then
+        for _,child in ipairs({existing:GetChildren()}) do
+            if child:IsObjectType("Button") then
+                child:SetScript("OnClick",A.Open)
+                existing.openButton=existing.openButton or child
+            end
+        end
+        A.category=existing
+        return
+    end
     local panel=CreateFrame("Frame","EllesmereUI_InterfaceOptions335",UIParent)
     panel.name="EllesmereUI"
     local title=panel:CreateFontString(nil,"ARTWORK","GameFontNormalLarge")

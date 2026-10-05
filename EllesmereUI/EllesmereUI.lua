@@ -1137,6 +1137,14 @@ EllesmereUI.SYNC_ICON       = MEDIA_PATH .. "icons\\sync.png"
 if _G.EUI_WOW_335 then EllesmereUI.SYNC_ICON = MEDIA_PATH .. "icons_335\\sync.tga" end
 EllesmereUI.EYE_VISIBLE_ICON   = MEDIA_PATH .. "icons\\eui-visible.png"
 EllesmereUI.EYE_INVISIBLE_ICON = MEDIA_PATH .. "icons\\eui-invisible.png"
+if _G.EUI_WOW_335 then
+    EllesmereUI.COGS_ICON          = MEDIA_PATH .. "icons_335\\cogs-3.tga"
+    EllesmereUI.UNDO_ICON          = MEDIA_PATH .. "icons_335\\undo.tga"
+    EllesmereUI.DIRECTIONS_ICON    = MEDIA_PATH .. "icons_335\\eui-directions.tga"
+    EllesmereUI.EYE_VISIBLE_ICON   = MEDIA_PATH .. "icons_335\\eui-visible.tga"
+    EllesmereUI.EYE_INVISIBLE_ICON = MEDIA_PATH .. "icons_335\\eui-invisible.tga"
+    EllesmereUI.CLOSE_ICON_335     = MEDIA_PATH .. "icons_335\\eui-close.tga"
+end
 
 -- Shared chat/tooltip colour escapes. Leave codes inside L()/Lf() literals alone:
 -- that text is the translation key.

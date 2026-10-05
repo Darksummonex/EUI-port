@@ -81,7 +81,7 @@ CharacterMicroButton=CreateFrame('Button','CharacterMicroButton',UIParent)
 CharacterMicroButton:SetScript('OnClick',function() microClicked=true end)
 ''')
 bags=lua.table()
-for file in ['EUI_Bags_335.lua','EUI_Bags_335_Cache.lua','EUI_Bags_335_Broker.lua']:
+for file in ['EUI_Bags_335.lua','EUI_Bags_335_Cache.lua','EUI_Bags_335_Categories.lua','EUI_Bags_335_Window.lua','EUI_Bags_335_Broker.lua']:
     lua.execute((root/'EllesmereUIBags'/file).read_text(encoding='utf-8-sig'),'EllesmereUIBags',bags)
 lua.globals().B=bags
 lua.execute("lifecycle:RunScript('OnEvent','ADDON_LOADED','EllesmereUIBags'); assert(#lifecycleErrors==0,lifecycleErrors[1])")

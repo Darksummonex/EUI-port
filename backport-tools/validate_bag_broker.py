@@ -16,7 +16,7 @@ local observer={}; brokerChanges=0
 LibStub('LibDataBroker-1.1').RegisterCallback(observer,'LibDataBroker_AttributeChanged',function() brokerChanges=brokerChanges+1 end)
 ''')
 ns=lua.table()
-for file in ['EUI_Bags_335.lua','EUI_Bags_335_Cache.lua','EUI_Bags_335_Broker.lua']:
+for file in ['EUI_Bags_335.lua','EUI_Bags_335_Cache.lua','EUI_Bags_335_Categories.lua','EUI_Bags_335_Window.lua','EUI_Bags_335_Broker.lua']:
     source=(root/'EllesmereUIBags'/file).read_text(encoding='utf-8-sig')
     assert 'Bagnon' not in source
     lua.execute(source,'EllesmereUIBags',ns)

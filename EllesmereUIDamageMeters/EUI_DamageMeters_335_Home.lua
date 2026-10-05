@@ -70,8 +70,9 @@ end
 function ns.PaintHome(index)
     local r=ns.windows[index]; local h=r and r.home; local cfg=ns.Profile().windows[index]
     if not h or not cfg then return end
-    local w=cfg.width-6; local pad=6; local colW=math.floor((w-pad*2-4)/2)
-    h:ClearAllPoints(); h:SetPoint("TOPLEFT",r.frame,"TOPLEFT",3,-(cfg.headerHeight+5)); h:SetWidth(w)
+    local b=ns.Clamp(cfg.borderSize,0,4)
+    local w=cfg.width-b*2; local pad=6; local colW=math.floor((w-pad*2-4)/2)
+    h:ClearAllPoints(); h:SetPoint("TOPLEFT",r.frame,"TOPLEFT",b,-(b+cfg.headerHeight)); h:SetWidth(w)
     local y=-pad
     h.metersLabel:ClearAllPoints(); h.metersLabel:SetPoint("TOPLEFT",h,"TOPLEFT",pad,y); y=y-16
     local marks=Bookmarks(cfg); local tileRows=math.ceil(#marks/2)

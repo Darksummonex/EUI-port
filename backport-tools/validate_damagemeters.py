@@ -20,6 +20,27 @@ function m:SetShadowOffset(...) self.shadowOffset={...} end
 function m:SetNumeric(v) self.numeric=v end
 function m:SetMaxLetters(v) self.maxLetters=v end
 function m:SetTextInsets() end
+function m:SetVertexColor(...) self.vertex={...} end
+-- Geometry: a TOPLEFT/BOTTOMLEFT anchor on UIParent sets the edges; anything
+-- else sits at a fixed spot well inside the 1920x1080 screen.
+local setPoint,clearPoints=m.SetPoint,m.ClearAllPoints
+function m:SetPoint(p,rel,rp,x,y,...)
+    setPoint(self,p,rel,rp,x,y,...)
+    if p=='TOPLEFT' and rel==UIParent and rp=='BOTTOMLEFT' then self.left,self.top=x,y end
+end
+function m:ClearAllPoints() clearPoints(self); self.left,self.top=nil,nil end
+function m:GetLeft() return self.left or 100 end
+function m:GetTop() return self.top or 700 end
+function m:GetRight() return (self.left or 100)+self.width end
+function m:GetBottom() return (self.top or 700)-self.height end
+function m:GetStringHeight() return 14 end
+mouseOver=nil; function m:IsMouseOver() return mouseOver==self end
+UIParent.width,UIParent.height=1920,1080
+shift,alt,ctrl=false,false,false
+function IsShiftKeyDown() return shift end; function IsAltKeyDown() return alt end; function IsControlKeyDown() return ctrl end
+overrides={}
+function ClearOverrideBindings(owner) overrides[owner]=nil end
+function SetOverrideBindingClick(owner,_,key,button) overrides[owner]={key=key,button=button} end
 instanceInside,instanceKind=nil,'none'
 function IsInInstance() return instanceInside,instanceKind end
 function time() return 1790840000 end
@@ -71,7 +92,7 @@ _detalhes=setmetatable({},{__index=function() error('Details dependency') end})
 DetailsFramework=nil; LibStub=function() error('External library dependency') end
 ''')
 ns=lua.table()
-for file in ['EUI_DamageMeters_335.lua','EUI_DamageMeters_335_Parser.lua','EUI_DamageMeters_335_Specs.lua','EUI_DamageMeters_335_Display.lua','EUI_DamageMeters_335_Breakdown.lua','EUI_DamageMeters_335_Home.lua']:
+for file in ['EUI_DamageMeters_335.lua','EUI_DamageMeters_335_Parser.lua','EUI_DamageMeters_335_Specs.lua','EUI_DamageMeters_335_Display.lua','EUI_DamageMeters_335_Breakdown.lua','EUI_DamageMeters_335_Home.lua','EUI_DamageMeters_335_Extras.lua','EUI_DamageMeters_335_SpellHistory.lua']:
     lua.execute((root/'EllesmereUIDamageMeters'/file).read_text(encoding='utf-8-sig'),'EllesmereUIDamageMeters',ns)
 lua.globals().D=ns
 lua.execute('''
@@ -81,6 +102,18 @@ function IsLoggedIn() return true end
 lifecycle:RunScript('OnEvent','PLAYER_LOGIN')
 assert(#lifecycleErrors==0,lifecycleErrors[1]); assert(D.events.events.COMBAT_LOG_EVENT_UNFILTERED)
 assert(#D.Profile().windows==2 and #D.windows[1].rows==40 and unlock.EDM_1)
+-- Retail look: flat black window, dark header, accent title, Atrocity bars.
+local w1cfg=D.Profile().windows[1]
+assert(D.Profile().styleVersion==2 and D.Profile().windowCount==2 and w1cfg.alpha==.75 and w1cfg.rowHeight==18)
+assert(w1cfg.borderSize==0 and w1cfg.barTexture=='atrocity' and w1cfg.barSpacing==2 and w1cfg.titleUseAccent and w1cfg.chromeAlpha==1)
+assert(D.windows[1].header.bg.vertex[1]==.106 and D.windows[1].title.text.textColor[1]==.1)
+local legacy=D.Copy(D.Profile()); legacy.styleVersion=nil
+local lw,cw=legacy.windows[1],legacy.windows[2]
+lw.alpha,lw.borderSize,lw.barTexture,lw.rowHeight,lw.titleUseAccent,lw.titleColor=.92,1,'none',20,nil,{r=1,g=1,b=1}
+cw.alpha,cw.barTexture,cw.titleUseAccent,cw.titleColor=.5,'glass',nil,{r=1,g=0,b=0}
+D.MigrateStyle(legacy)
+assert(lw.alpha==.75 and lw.borderSize==0 and lw.barTexture=='atrocity' and lw.rowHeight==18 and lw.titleUseAccent==true)
+assert(cw.alpha==.5 and cw.barTexture=='glass' and cw.titleUseAccent==false and legacy.styleVersion==2)
 assert(D.specs.P.icon=='warrior-spec-2' and D.specs.P.name=='Fury')
 assert(D.Profile().windows[1].fontOutline=='OUTLINE' and D.Profile().windows[1].showSpecIcons)
 D.UpdateSpecs(); assert(inspectCalls[1]=='party1' and D.pendingSpec.guid=='H')
@@ -148,11 +181,14 @@ assert(healerRow.label.shadowColor[4]==1 and healerRow.label.shadowOffset[2]==-1
 -- percentages and native spell icons, same meter changes to player detail.
 local hover=D.breakdownTooltip; local row=D.windows[1].rows[1]
 local beforeHover=#allFrames
-row:RunScript('OnEnter'); assert(hover:IsShown() and hover.title:GetText():find("Player's Damage Done"))
-assert(hover.lines[2].name=='Fireball' and hover.lines[2].value=='100')
-assert(math.abs(hover.lines[2].percent-100/230*100)<.0001 and hover.rows[2].icon.texture=='spell-icon')
-assert(hover.lines[#hover.lines].name=='Boss' and hover.lines[#hover.lines].percent==100)
-row:RunScript('OnLeave'); assert(not hover:IsShown())
+row:RunScript('OnEnter'); assert(hover:IsShown() and hover.title:GetText()=="Player's Damage Done Breakdown")
+assert(hover.lines[1].kind=='spell' and hover.lines[1].name=='Fireball' and hover.lines[1].value=='100' and hover.lines[1].fill==1)
+assert(math.abs(hover.lines[1].percent-100/230*100)<.0001 and hover.rows[1].icon.texture=='spell-icon')
+local targetLine=hover.lines[#hover.lines-1]; assert(targetLine.kind=='label' and targetLine.name=='Targets' and hover.rows[#hover.lines-1].line:IsShown())
+assert(hover.lines[#hover.lines].kind=='target' and hover.lines[#hover.lines].name=='Boss' and hover.lines[#hover.lines].percent==100)
+assert(hover:GetPoint()=='BOTTOMRIGHT' and select(2,hover:GetPoint())==row and hover.scale==1 and hover.width==275)
+assert(hover.header.bg.vertex[1]==.106 and hover.title.textColor[1]==.1 and row.hl:IsShown())
+row:RunScript('OnLeave'); assert(not hover:IsShown() and not row.hl:IsShown())
 row:RunScript('OnClick','LeftButton')
 assert(D.windows[1].focusGUID=='P' and D.windows[1].back:IsShown())
 assert(D.windows[1].rows[1].data.breakdown and D.windows[1].rows[1].label:GetText()=='Fireball')
@@ -182,11 +218,16 @@ wc.metric='damage'; wc.segment=origSegment; D.RefreshWindow(1)
 w1.rows[1]:RunScript('OnClick','LeftButton'); assert(w1.focusGUID=='P')
 w1.rows[1]:RunScript('OnClick','RightButton'); assert(not w1.focusGUID and not w1.home:IsShown())
 assert(w1.rows[1].label:GetText()=='1. Player')
--- Header: no footer controls; segment picker beside settings, synced windows follow.
+-- Header, right to left: Settings, Segment, Meter Type, Reset, then + on window 1 / x elsewhere.
 local hh=wc.headerHeight
-assert(w1.close:GetPoint()=='TOPRIGHT' and select(5,w1.settings:GetPoint())==-3 and select(4,w1.segment:GetPoint())==-3-2*(hh+2))
-assert(select(4,w1.report:GetPoint())==-3-4*(hh+2) and math.abs(w1.frame:GetHeight()-D.WindowHeight(wc))<.01)
-assert(w1.title.text:GetText():find('Damage Done %- Current') and w1.title.text:GetText():find('%d:%d%d'),w1.title.text:GetText())
+assert(w1.settings:GetPoint()=='RIGHT' and select(4,w1.settings:GetPoint())==0 and select(4,w1.segment:GetPoint())==-(hh-2))
+assert(select(4,w1.mode:GetPoint())==-(2*hh-4) and select(4,w1.reset:GetPoint())==-(3*hh-6) and select(4,w1.action:GetPoint())==-(4*hh-8))
+assert(w1.action.icon.texture:find('dm_open') and D.windows[2].action.icon.texture:find('dm_close') and w1.mode.icon.texture:find('dm_home_damage'))
+assert(w1.settings.icon.desaturated and w1.settings.icon.alpha==.4 and w1.settings.width==hh and math.abs(w1.frame:GetHeight()-D.WindowHeight(wc))<.01)
+w1.settings:RunScript('OnEnter'); assert(w1.settings.icon.alpha==.9 and GameTooltip.tooltipText=='Settings'); w1.settings:RunScript('OnLeave')
+assert(w1.title.text:GetText()=='Damage Done - Current' and w1.timer:IsShown() and w1.timer:GetText():find('^%(%d:%d%d%)$'),w1.title.text:GetText())
+assert(w1.rows[1]:GetPoint()=='TOPLEFT' and select(5,w1.rows[1]:GetPoint())==-hh and w1.rows[1].width==wc.width)
+assert(w1.rows[1].icon.width==wc.rowHeight and select(4,w1.rows[1].bar:GetPoint())==wc.rowHeight)
 local w2seg=D.Profile().windows[2].segment
 w1.segment:RunScript('OnClick','LeftButton'); assert(D.menu:IsShown() and D.menu.items[1].isActive and D.menu.items[2].text=='Overall')
 wc.syncSegments=true; D.Profile().windows[2].syncSegments=true
@@ -206,10 +247,10 @@ menu.buttons[1]:RunScript('OnClick','LeftButton'); assert(wc.hideInDungeon and n
 menu.buttons[1]:RunScript('OnClick','LeftButton'); menu.buttons[4]:RunScript('OnClick','LeftButton')
 instanceInside,instanceKind=nil,'none'; D.Refresh(); assert(w1.frame:IsShown() and not wc.hideInDungeon and not wc.hideOutOfInstance)
 menu.buttons[5].input:SetText('300'); menu.buttons[5].input:RunScript('OnEnterPressed'); assert(wc.width==300 and w1.frame:GetWidth()==300)
-local oldRows=wc.rows; menu.buttons[6].input:SetText(tostring(hh+8+4*(wc.rowHeight+wc.barSpacing))); menu.buttons[6].input:RunScript('OnEnterPressed')
+local oldRows=wc.rows; menu.buttons[6].input:SetText(tostring(2*wc.borderSize+hh+4*(wc.rowHeight+wc.barSpacing))); menu.buttons[6].input:RunScript('OnEnterPressed')
 assert(wc.rows==4 and menu.buttons[6].input:GetText()==tostring(D.WindowHeight(wc)))
 wc.rows=oldRows; wc.width=310
-menu.buttons[8]:RunScript('OnClick','LeftButton'); assert(wc.hideTimer and not w1.title.text:GetText():find('%d:%d%d'))
+menu.buttons[8]:RunScript('OnClick','LeftButton'); assert(wc.hideTimer and not w1.timer:IsShown())
 menu.buttons[8]:RunScript('OnClick','LeftButton')
 menu.buttons[9]:RunScript('OnClick','LeftButton'); assert(wc.autoSwapInstance)
 D.InstanceChanged(); instanceInside,instanceKind=1,'raid'; D.InstanceChanged(); assert(wc.segment=='current')
@@ -217,13 +258,28 @@ instanceInside,instanceKind=nil,'none'; D.InstanceChanged(); assert(wc.segment==
 menu.buttons[9]:RunScript('OnClick','LeftButton')
 assert(menu.buttons[10].text:GetText()=='Auto Current on Combat'); menu.buttons[10]:RunScript('OnClick','LeftButton'); assert(wc.autoCurrentOnCombat==false)
 menu.buttons[10]:RunScript('OnClick','LeftButton'); assert(wc.autoCurrentOnCombat==true)
-menu.buttons[12]:RunScript('OnClick','LeftButton'); assert(shownModule=='EllesmereUIDamageMeters' and not menu:IsShown())
+assert(menu.buttons[12].text:GetText()=='Report' and menu.buttons[13].text:GetText()=='Settings')
+menu.buttons[13]:RunScript('OnClick','LeftButton'); assert(shownModule=='EllesmereUIDamageMeters' and not menu:IsShown())
+w1.settings:RunScript('OnClick','LeftButton'); assert(D.menu.buttons[7].text:GetText()=='Disable Snapping')
+D.menu.buttons[7]:RunScript('OnClick','LeftButton'); assert(wc.snapDisabled and not D.menu:IsShown())
+w1.settings:RunScript('OnClick','LeftButton'); assert(D.menu.buttons[7].text:GetText()=='Enable Snapping')
+D.menu.buttons[7]:RunScript('OnClick','LeftButton'); assert(not wc.snapDisabled)
 shownModule=nil; wc.segment=origSegment; D.Apply()
 -- Death view drills into the latest native recap rather than spell counts.
 D.Profile().windows[1].metric='deaths'; D.RefreshWindow(1)
+D.windows[1].rows[1]:RunScript('OnEnter')
+assert(hover.title:GetText()=="Player's Death Recap" and hover.lines[1].kind=='recap' and hover.lines[1].fill==.25)
+assert(hover.lines[#hover.lines].name:find('^%-%d+%.%ds ') and hover.lines[1].value:find('%(25%%%)'))
+D.windows[1].rows[1]:RunScript('OnLeave')
 D.windows[1].rows[1]:RunScript('OnClick','LeftButton')
 assert(D.windows[1].focusGUID=='P' and D.windows[1].rows[1].data.recap)
 assert(D.windows[1].rows[1].label:GetText():find('Flash Heal'))
+-- Recap rows draw the victim's health at each hit, green for heals, red for damage.
+local recapRow=D.windows[1].rows[1]
+assert(recapRow.bar.maximum==1 and recapRow.bar.value==.25 and recapRow.bar.color[2]==.5 and recapRow.value:GetText()=='+100 (25%)')
+assert(D.windows[1].rows[3].bar.color[1]==.6 and D.windows[1].rows[3].value:GetText():find('^%-70'))
+assert(D.RecapAmount({kind='damage',amount=1200,overkill=300,hp=0},true)=='-1.2k |cffff3333(300 overkill)|r (0%)')
+assert(D.RecapAmount({kind='damage',amount=1200,overkill=300},false)=='-1.2k')
 D.BackToGroup(1); D.Profile().windows[1].metric='damage'; D.RefreshWindow(1)
 D.ShowDetail(rows[1],'damage',s,'spells'); assert(D.detail.rows[1].text:GetText():find('Fireball'))
 D.ShowDetail(rows[1],'deaths',s,'spells'); assert(#D.detail.deathList==1 and D.detail.rows[1].text:GetText():find('Flash Heal'))
@@ -233,7 +289,7 @@ row:RunScript('OnClick','LeftButton')
 Event('SPELL_DAMAGE','P','Player',1,'BOSS','Boss',0,133,'Fireball',4,10,0,4,0,0,0,false)
 D.Refresh(); assert(#allFrames==frameCount)
 assert(D.windows[1].rows[1].data.value==110)
-D.BackToGroup(1); row:RunScript('OnEnter'); assert(hover.lines[2].value=='110' and #allFrames==frameCount)
+D.BackToGroup(1); row:RunScript('OnEnter'); assert(hover.lines[1].value=='110' and #allFrames==frameCount)
 D.BackToGroup(1)
 assert(not D.Reset()); combat=false; fighting=false
 D.Finish(); assert(#D.history.segments==1 and D.history.overall.actors.P.values.damage==240)
@@ -258,9 +314,10 @@ D.Parse(0,'SWING_DAMAGE','P','Player',1,'B','Boss',0,100,0,1,0,0,0,false); asser
 D.Profile().enabled=true; D.Apply(); assert(D.events.events.COMBAT_LOG_EVENT_UNFILTERED)
 local e=unlock.EDM_1; e.savePos(nil,'TOPLEFT','TOPLEFT',20,-40); e.applyPos(); assert(e.loadPos().y==-40)
 -- Profile replacement callbacks read the active config rather than old tables.
-local old=D.Profile(); D.addon.db.profile=D.Copy(old); D.windows[1].close:RunScript('OnClick')
-assert(not D.Profile().windows[1].enabled and old.windows[1].enabled)
-D.Profile().windows[1].enabled=true; D.Apply()
+local old=D.Profile(); D.addon.db.profile=D.Copy(old)
+D.windows[1].settings:RunScript('OnClick','LeftButton'); D.menu.buttons[1]:RunScript('OnClick','LeftButton')
+assert(D.Profile().windows[1].hideInDungeon and not old.windows[1].hideInDungeon)
+D.Profile().windows[1].hideInDungeon=false; D.CloseMenu(); D.Apply()
 -- Talent switches update the live cache while known past segments keep their specialization.
 playerTalentGroup=2; D.events:RunScript('OnEvent','ACTIVE_TALENT_GROUP_CHANGED')
 assert(D.specs.P.icon=='warrior-spec-3' and D.history.segments[1].actors.P.specIcon=='warrior-spec-2')
@@ -292,10 +349,22 @@ D.report.channel='PARTY'; D.report.send:RunScript('OnClick'); assert(D.reportQue
 for _,f in ipairs(allFrames) do if f.scripts.OnUpdate then f:RunScript('OnUpdate',1) end end
 assert(#sent>0 and sent[1][2]=='PARTY')
 assert(CreateFrame==nativeFactory)
-D.NewWindow(); D.NewWindow(); D.NewWindow(); assert(#D.Profile().windows==4)
-local legacy=D.Profile().windows[4]
+-- "+" copies window 1 into up to five windows, stacked above the highest one.
+D.NewWindow(); assert(D.windows[3].home:IsShown() and D.Profile().windows[3].metric=='healing' and D.Profile().windows[3].savedPos.point=='CENTER')
+D.NewWindow(); D.NewWindow(); assert(#D.Profile().windows==5 and D.Profile().windowCount==5 and D.windows[1].action.disabled)
+D.windows[1].action:RunScript('OnClick','LeftButton'); assert(#D.Profile().windows==5)
+local legacy=D.Profile().windows[5]
 legacy.barAlpha=nil; legacy.chromeAlpha=0; legacy.showSpecIcons=false; legacy.fontOutline=nil
 D.Apply(); assert(legacy.barAlpha==1 and legacy.fontOutline=='OUTLINE' and legacy.chromeAlpha==0 and not legacy.showSpecIcons)
+-- "x" deletes an unlocked window; window 1 and locked windows stay.
+D.Profile().windows[4].locked=true; D.Apply(); assert(D.windows[4].action.disabled)
+D.windows[4].action:RunScript('OnClick','LeftButton'); assert(#D.Profile().windows==5)
+D.Profile().windows[4].locked=false; D.Apply()
+D.windows[5].action:RunScript('OnClick','LeftButton')
+assert(#D.Profile().windows==4 and D.Profile().windowCount==4 and not D.windows[5].frame:IsShown() and not D.windows[1].action.disabled)
+-- Login re-adds stripped default windows; the stored count keeps deleted ones gone.
+D.Profile().windows[5]=D.Copy(D.Profile().windows[1]); D.Apply(); assert(#D.Profile().windows==4)
+D.DeleteWindow(4); D.DeleteWindow(3); D.DeleteWindow(1); assert(#D.Profile().windows==2 and D.Profile().windowCount==2)
 -- Flush/reconcile unknown pre-combat casters without double-counting.
 now=now+10; D.Start('Aura Test')
 D.Aura('SPELL_AURA_APPLIED',nil,nil,nil,'P','Player',1,139,'Renew','BUFF')
@@ -324,13 +393,17 @@ D.Touch(h,'damage',10,1,'Other Spell','T1','Target 1')
 D.history={segments={s},overall=s,nextID=999}; cfg.metric='damage'; cfg.segment=999
 D.Refresh(); local r=D.windows[1]; local count=#allFrames
 r.rows[1]:RunScript('OnEnter'); local hover=D.breakdownTooltip
-assert(hover:IsShown() and #hover.lines==17)
-assert(hover.lines[10].name=='Other' and hover.lines[17].name=='Other')
-local spellSum,targetSum=0,0
-for i,line in ipairs(hover.lines) do if line.percent then
- if i<11 then spellSum=spellSum+line.percent else targetSum=targetSum+line.percent end
-end end
-assert(math.abs(spellSum-100)<.00001 and math.abs(targetSum-100)<.00001)
+-- Retail breakdown: up to 15 spells, then the top three targets in red.
+assert(hover:IsShown() and #hover.lines==16 and hover.lines[13].kind=='label' and hover.lines[13].name=='Targets')
+local spellSum=0
+for i=1,12 do spellSum=spellSum+hover.lines[i].percent end
+assert(math.abs(spellSum-100)<.00001 and hover.lines[1].name=='Ability 12' and hover.lines[12].fill==10/120)
+assert(hover.lines[14].name=='Target 12' and hover.lines[16].name=='Target 10' and hover.rows[14].bar.color[1]==.867)
+p.tooltipMoreSpells=false; r.rows[1]:RunScript('OnLeave'); r.rows[1]:RunScript('OnEnter'); assert(#hover.lines==12)
+p.tooltipMoreSpells=true; p.tooltipScale=150; p.tooltipAnchor='right'; r.rows[1]:RunScript('OnLeave'); r.rows[1]:RunScript('OnEnter')
+assert(hover.scale==1.5 and hover:GetPoint()=='TOPLEFT' and select(2,hover:GetPoint())==r.frame)
+p.tooltipAnchor='center'; r.rows[1]:RunScript('OnLeave'); r.rows[1]:RunScript('OnEnter'); assert(hover:GetPoint()=='CENTER')
+p.tooltipScale=100; p.tooltipAnchor='row'; r.rows[1]:RunScript('OnLeave'); r.rows[1]:RunScript('OnEnter')
 -- A reordered bar must never retain the old player's hover.
 D.Touch(h,'damage',1000,1,'Other Spell','T1','Target 1'); D.Refresh()
 assert(r.rows[1].data.guid=='H' and not hover:IsShown())
@@ -363,7 +436,7 @@ function IsLoggedIn() return true end
 ''')
 lua.execute((root/'EllesmereUIOptions/EUI_DamageMeters_335_Options.lua').read_text(encoding='utf-8-sig'))
 lua.execute('''
-local cfg=modules.EllesmereUIDamageMeters; assert(cfg and #cfg.pages==2)
+local cfg=modules.EllesmereUIDamageMeters; assert(cfg and #cfg.pages==3 and cfg.pages[2]=='Spell History')
 cfg.buildPage('Windows',UIParent,0); assert(Find('Select Window') and Find('Display'))
 Find('Select Window').setValue(2); rows={}; cfg.buildPage('Windows',UIParent,0)
 Find('Display').setValue('interrupts'); assert(D.Profile().windows[2].metric=='interrupts')
@@ -371,9 +444,9 @@ Find('Left Text Size').setValue(15); assert(D.Profile().windows[2].fontSize==15)
 Find('Display').setValue('damage'); assert(D.windows[2].rows[1]:IsShown())
 Find('Background Opacity').setValue(0); assert(D.windows[2].frame.backdropColor[4]==0)
 Find('Bar Opacity').setValue(.3); assert(D.windows[2].rows[1].bar.color[4]==.3)
-Find('Header / Footer Opacity').setValue(0); assert(D.windows[2].title.backdropColor[4]==0)
-D.windows[2].title:RunScript('OnEnter'); D.windows[2].title:RunScript('OnLeave')
-assert(D.windows[2].title.backdropColor[4]==0 and D.windows[2].segment.backdropColor[4]==0)
+Find('Header / Footer Opacity').setValue(0); assert(D.windows[2].header.bg.vertex[4]==0)
+D.windows[2].title:RunScript('OnEnter'); D.windows[2].title:RunScript('OnLeave'); assert(D.windows[2].header.bg.vertex[4]==0)
+Find('Header / Footer Opacity').setValue(1)
 Find('Font Outline').setValue('THICKOUTLINE'); assert(D.windows[2].rows[1].label.font[3]=='THICKOUTLINE')
 Find('Icon Style').setValue('none'); assert(not D.windows[2].rows[1].icon:IsShown() and D.Profile().windows[2].showSpecIcons==false)
 local point=D.windows[2].rows[1].label:GetPoint(); assert(point=='LEFT')
@@ -393,13 +466,163 @@ Find('Header Height').setValue(28); Find('Spacing').setValue(3); Find('Bar Borde
 Find('Header Bottom Border').setValue(2); Find('Always Show Player').setValue(true)
 local texNames,texOrder=D.BarTextureChoices(); Find('Bar Texture').setValue(texOrder[#texOrder])
 assert(D.windows[2].rows[1]:IsShown() and #lifecycleErrors==0)
-Find('Header Height').setValue(22); Find('Spacing').setValue(1); Find('Bar Border Size').setValue(0)
-Find('Header Bottom Border').setValue(0); Find('Always Show Player').setValue(false); Find('Bar Texture').setValue('none')
-assert(D.Profile().windows[1].barAlpha==1 and D.Profile().windows[1].alpha==.92)
+Find('Header Height').setValue(22); Find('Spacing').setValue(2); Find('Bar Border Size').setValue(0)
+Find('Header Bottom Border').setValue(0); Find('Always Show Player').setValue(false); Find('Bar Texture').setValue('atrocity')
+assert(D.Profile().windows[1].barAlpha==1 and D.Profile().windows[1].alpha==.75)
+-- New Retail window options.
+D.hoverDriver:RunScript('OnUpdate',.2); assert(not D.windows[2].headerHover)
+Find('Show Header Icons on Mouseover').setValue(true); assert(D.Profile().windows[2].mouseoverIcons and D.windows[2].iconCount==0)
+Find('Show Header Icons on Mouseover').setValue(false); Find('Hide Reset Button').setValue(true)
+assert(not D.windows[2].reset:IsShown() and D.windows[2].iconCount==4); Find('Hide Reset Button').setValue(false)
+Find('Snap to Other Windows').setValue(false); assert(D.Profile().windows[2].snapDisabled); Find('Snap to Other Windows').setValue(true)
+Find('Accent Colored Header Text').setValue(false); assert(D.Profile().windows[2].titleUseAccent==false); Find('Accent Colored Header Text').setValue(true)
+Find('Breakdown Scale (%)').setValue(120); Find('Breakdown Position').setValue('left'); Find('Show 15 Spells (Otherwise 8)').setValue(false)
+assert(D.Profile().tooltipScale==120 and D.Profile().tooltipAnchor=='left' and D.TooltipSpellLimit()==8)
+Find('Breakdown Scale (%)').setValue(100); Find('Breakdown Position').setValue('row'); Find('Show 15 Spells (Otherwise 8)').setValue(true)
+assert(Find('Standalone Combat Timer') and Find('Reset Data Keybind (Example: CTRL-R)') and (Find('Delete Selected Window') or buttons['Delete Selected Window']))
+rows={}; cfg.buildPage('Spell History',UIParent,0); assert(Find('Enable Icon History') and Find('Enable Bar History') and Find('Bar Color'))
+assert(D.optionsOpen)
 rows={}; cfg.buildPage('Combat Data',UIParent,0); assert(Find('Save History Between Sessions'))
 Find('Save History Between Sessions').setValue(false)
 D.events:RunScript('OnEvent','PLAYER_LOGOUT'); assert(EllesmereUIDamageMetersHistory==nil)
 SlashCmdList.EUI335DM(''); assert(shownModule=='EllesmereUIDamageMeters')
+-- Retail corner grip and padlock: hidden until hovered, faded in over 0.12 s.
+cursorX,cursorY=500,500; function GetCursorPosition() return cursorX,cursorY end
+local p=D.Profile(); local c1,c2=p.windows[1],p.windows[2]
+c1.enabled,c2.enabled,c1.visibility,c2.visibility=true,true,'always','always'
+local w1,r1,w2,r2=c1.width,c1.rows,c2.width,c2.rows
+c1.width,c1.rows,c2.width,c2.rows=300,10,250,5; D.SetOptionsOpen(false); D.Apply()
+local W1,W2=D.windows[1],D.windows[2]
+assert(W1.frame:IsShown() and W2.frame:IsShown())
+local g,l=W2.grip,W2.lock
+assert(g.tex.texture:find('resize_element') and g.tex.desaturated and l.tex.texture:find('dm_unlocked') and g.alpha==0 and l.alpha==0)
+assert(l:GetPoint()=='RIGHT' and select(2,l:GetPoint())==g)
+mouseOver=W2.frame; W2.frame:RunScript('OnEnter'); assert(D.hoverDriver:IsShown())
+D.hoverDriver:RunScript('OnUpdate',.2); assert(W2.fade==1 and g.alpha==.3 and l.alpha==.3)
+g:RunScript('OnEnter'); assert(g.alpha==.7); g:RunScript('OnLeave'); assert(g.alpha==.3)
+mouseOver=nil; D.hoverDriver:RunScript('OnUpdate',.06); D.hoverDriver:RunScript('OnUpdate',.2)
+assert(W2.fade==0 and g.alpha==0 and not D.hoverDriver:IsShown())
+-- Header icons can stay hidden until the header is hovered.
+c2.mouseoverIcons=true; D.Apply(); assert(W2.iconCount==0 and W2.settings.alpha==0)
+mouseOver=W2.header; W2.title:RunScript('OnEnter'); assert(W2.iconCount==5 and W2.settings.alpha==1)
+mouseOver=nil; D.hoverDriver:RunScript('OnUpdate',.2); assert(W2.iconCount==0 and not W2.headerHover)
+c2.mouseoverIcons=false; c2.hideResetButton=true; D.Apply()
+assert(not W2.reset:IsShown() and select(4,W2.action:GetPoint())==-(3*c2.headerHeight-6))
+c2.hideResetButton=false; D.Apply()
+-- Resizing: free width, whole rows, Shift locks the first axis, sizes snap to the other window.
+local step=c2.rowHeight+c2.barSpacing
+local function Drag(moves)
+    cursorX,cursorY=500,500; g:RunScript('OnMouseDown','LeftButton'); assert(W2.resizing and g.scripts.OnUpdate)
+    for _,m in ipairs(moves) do cursorX,cursorY=500+m[1],500-m[2]; g.scripts.OnUpdate(g) end
+    g:RunScript('OnMouseUp'); assert(not W2.resizing and not g.scripts.OnUpdate)
+end
+Drag({{60,3*step}}); assert(c2.width==310 and c2.rows==8 and c1.width==300 and c1.rows==10)
+assert(c2.savedPos.point=='CENTER' and W2.frame.width==c2.width)
+shift=true; Drag({{20,2},{40,3*step}}); shift=false; assert(c2.width==350 and c2.rows==8,'shift locks the width axis')
+Drag({{-47,0}}); assert(c2.width==300,'width snaps to window 1')
+Drag({{5000,-5000}}); assert(c2.width==1200 and c2.rows==1,'resize respects width and row limits')
+c2.width,c2.rows=250,5; D.Apply()
+-- Padlock: a locked window cannot be resized, dragged or closed.
+l:RunScript('OnClick'); assert(c2.locked and l.tex.texture:find('dm_locked') and l:GetPoint()=='BOTTOMRIGHT' and W2.action.disabled)
+assert(g.alpha==0); g:RunScript('OnMouseDown','LeftButton'); assert(not W2.resizing)
+W2.title:RunScript('OnMouseDown','LeftButton'); assert(not W2.drag)
+W2.action:RunScript('OnClick','LeftButton'); assert(#p.windows==2)
+l:RunScript('OnClick'); assert(not c2.locked and l.tex.texture:find('dm_unlocked') and not W2.action.disabled)
+-- Title drag snaps to the other window's edges; a click without movement opens the menu.
+W1.frame:ClearAllPoints(); W1.frame:SetPoint('TOPLEFT',UIParent,'BOTTOMLEFT',400,600)
+local function Move(dx,dy)
+    cursorX,cursorY=500,500; W2.title:RunScript('OnMouseDown','LeftButton'); assert(W2.drag)
+    cursorX,cursorY=500+dx,500+dy; W2.title.scripts.OnUpdate()
+    local left,top=W2.frame.left,W2.frame.top
+    W2.title:RunScript('OnMouseUp','LeftButton'); W2.title:RunScript('OnClick','LeftButton')
+    assert(not W2.drag and not W2.title.scripts.OnUpdate); return left,top
+end
+local left,top=Move(603,-98); assert(left==700 and top==600 and not D.menu:IsShown(),'drag snaps to the right edge')
+W2.title:RunScript('OnMouseDown','LeftButton'); W2.title:RunScript('OnMouseUp','LeftButton'); W2.title:RunScript('OnClick','LeftButton')
+assert(D.menu:IsShown()); D.CloseMenu()
+c2.snapDisabled=true; c2.savedPos=nil; D.Apply(); W1.frame:ClearAllPoints(); W1.frame:SetPoint('TOPLEFT',UIParent,'BOTTOMLEFT',400,600)
+left,top=Move(603,-98); assert(left==703 and top==602,'snapping can be disabled'); c2.snapDisabled=false
+D.Apply()
+-- Standalone combat timer: preview while options are open, live while fighting.
+local t
+p.standaloneTimer=true; D.SetOptionsOpen(true); D.Apply(); t=D.standaloneTimer
+assert(t:IsShown() and t.text:GetText()=='11:37' and unlock.EDM_CombatTimer)
+D.SetOptionsOpen(false); assert(not t:IsShown())
+D.Start('Timer'); now=now+65; D.UpdateTimer(); assert(t:IsShown() and t.text:GetText()=='1:05')
+now=now+1; t:RunScript('OnUpdate',.2); assert(t.text:GetText()=='1:06')
+p.standaloneTimerDecimal=true; D.Apply(); assert(t.text:GetText()=='1:06.0')
+p.standaloneTimerAnchor='topright'; D.Apply(); assert(t:GetPoint()=='BOTTOMRIGHT' and select(2,t:GetPoint())==W1.frame)
+p.toggleIncludeTimer=true; D.ToggleWindows(); assert(D.toggleHidden and not t:IsShown() and not W1.frame:IsShown())
+D.ToggleWindows(); assert(not D.toggleHidden and t:IsShown() and W1.frame:IsShown())
+D.Finish(); D.UpdateTimer(); assert(not t:IsShown())
+p.standaloneTimerShowOOC=true; D.UpdateTimer(); assert(t:IsShown())
+p.standaloneTimer=false; p.standaloneTimerAnchor='free'; p.standaloneTimerDecimal=false; p.standaloneTimerShowOOC=false; D.Apply(); assert(not t:IsShown())
+-- Keybinds: override bindings on hidden buttons, deferred out of combat, restored after LoadBindings.
+chat={}; DEFAULT_CHAT_FRAME={AddMessage=function(_,text) chat[#chat+1]=text end}
+local function Bound(key) for owner,o in pairs(overrides) do if o.key==key then return owner,o.button end end end
+p.resetDataKey='ctrl-r'; p.toggleWindowsKey=' alt-m '; D.Apply()
+local rb,rname=Bound('CTRL-R'); local tb,tname=Bound('ALT-M')
+assert(rb==EllesmereUIDMResetBindBtn and rname=='EllesmereUIDMResetBindBtn' and tname=='EllesmereUIDMToggleBindBtn')
+tb:RunScript('OnClick'); assert(D.toggleHidden and not W1.frame:IsShown()); tb:RunScript('OnClick'); assert(not D.toggleHidden and W1.frame:IsShown())
+combat=true; p.resetDataKey='CTRL-T'; D.ApplyKeybinds(); assert(Bound('CTRL-R') and D.bindWatch.events.PLAYER_REGEN_ENABLED)
+rb:RunScript('OnClick'); assert(chat[1] and chat[1]:find('finish combat'))
+combat=false; D.bindWatch:RunScript('OnEvent','PLAYER_REGEN_ENABLED')
+assert(Bound('CTRL-T') and not Bound('CTRL-R') and not D.bindWatch.events.PLAYER_REGEN_ENABLED)
+overrides={}; D.bindWatch:RunScript('OnEvent','UPDATE_BINDINGS'); assert(not Bound('CTRL-T'),'own binding writes are ignored')
+now=now+1; D.bindWatch:RunScript('OnEvent','UPDATE_BINDINGS'); assert(Bound('CTRL-T') and Bound('ALT-M'))
+D.Touch(D.Actor(D.history.overall,'P','Player',1),'damage',10,1,'Hit','BOSS','Boss'); D.history.segments[1]=D.NewSegment(50,'Old')
+EllesmereUIDMResetBindBtn:RunScript('OnClick'); assert(#D.history.segments==0)
+p.resetDataKey=''; p.toggleWindowsKey=''; D.Apply(); assert(next(overrides)==nil and not D.bindWatch.events.UPDATE_BINDINGS)
+-- Spell History: no cast events while both displays are off.
+local sh,ev,H=p.spellHistory,D.castEvents,D.castHistory
+assert(next(ev.events)==nil and not sh.iconEnabled and not sh.barEnabled)
+sh.iconEnabled,sh.barEnabled=true,true; D.Apply(); assert(ev.events.UNIT_SPELLCAST_SENT and ev.events.UNIT_SPELLCAST_CHANNEL_STOP)
+local win=EllesmereUIDMBarHistory; local bars=win.bars; local strip=EllesmereUIDMIconStrip
+assert(win:IsShown() and not EllesmereUIDMIconHistoryFrame:IsShown() and unlock.EDM_IconHistory)
+D.SetOptionsOpen(true); assert(EllesmereUIDMIconHistoryFrame:IsShown() and strip.children[5].shown,'options preview fills the strip')
+D.SetOptionsOpen(false); assert(not EllesmereUIDMIconHistoryFrame:IsShown())
+local function Cast(event,name,target) ev:RunScript('OnEvent',event,'player',name,'Rank 1',target) end
+local function Icon(i) return strip.children[i].children[2] end
+nativeCast={'Frostbolt','Rank 1','Frostbolt','frost-icon',now*1000,(now+2)*1000}
+Cast('UNIT_SPELLCAST_SENT','Frostbolt','Boss'); Cast('UNIT_SPELLCAST_START','Frostbolt')
+assert(H[1].spellName=='Frostbolt' and H[1].status=='casting' and H[1].target=='Boss' and H[1].icon=='frost-icon')
+assert(bars[1].row:IsShown() and bars[1].fill.value==0 and Icon(1).texture=='frost-icon')
+now=now+1; D.RefreshBarWindow(); assert(bars[1].fill.value==.5 and bars[1].right:GetText()=='1.0  Boss')
+Cast('UNIT_SPELLCAST_FAILED','Frostbolt'); assert(H[1].status=='casting','re-pressing a key mid-cast is not a failure')
+nativeCast=nil; Cast('UNIT_SPELLCAST_SUCCEEDED','Frostbolt'); Cast('UNIT_SPELLCAST_STOP','Frostbolt')
+assert(H[1].status=='success' and #H==1 and bars[1].fill.value==1 and bars[1].right:GetText()=='1.0s  Boss')
+assert(bars[1].fill.color[1]==.298)
+nativeCast={'Polymorph','Rank 1','Polymorph','poly-icon',now*1000,(now+1.5)*1000}
+Cast('UNIT_SPELLCAST_START','Polymorph'); nativeCast=nil; Cast('UNIT_SPELLCAST_INTERRUPTED','Polymorph')
+assert(H[1].status=='interrupted' and bars[1].fill.color[1]==.859 and Icon(1).vertex[1]==.859 and bars[1].right:GetText():find('Interrupted'))
+now=now+.2; Cast('UNIT_SPELLCAST_SUCCEEDED','Polymorph'); assert(H[1].status=='success' and #H==2,'a late success repairs the entry')
+nativeCast={'Fireball','Rank 1','Fireball','fire-icon',now*1000,(now+2)*1000}
+Cast('UNIT_SPELLCAST_START','Fireball'); now=now+.5; nativeCast=nil; Cast('UNIT_SPELLCAST_STOP','Fireball'); assert(H[1].status=='casting')
+D.castStopDriver:RunScript('OnUpdate',.01); assert(H[1].status=='failed' and H[1].fillProgress==.25 and bars[1].fill.value==.25)
+Cast('UNIT_SPELLCAST_SENT','Ice Lance','Boss'); Cast('UNIT_SPELLCAST_SUCCEEDED','Ice Lance')
+assert(H[1].isInstant and H[1].icon=='spell-icon' and bars[1].right:GetText()=='Boss' and #H==4)
+Cast('UNIT_SPELLCAST_SUCCEEDED','Spell 75'); assert(#H==4,'Auto Shot is not recorded')
+nativeChannel={'Drain Life','Rank 1','Drain Life','drain-icon',now*1000,(now+3)*1000}
+Cast('UNIT_SPELLCAST_CHANNEL_START','Drain Life'); Cast('UNIT_SPELLCAST_SUCCEEDED','Drain Life')
+assert(H[1].status=='channeling' and #H==5)
+now=now+1; D.RefreshBarWindow(); assert(math.abs(bars[1].fill.value-2/3)<.0001)
+nativeChannel=nil; Cast('UNIT_SPELLCAST_CHANNEL_STOP','Drain Life'); assert(H[1].status=='success' and H[1].castDuration==1)
+assert(bars[5].row:IsShown() and bars[5].label:GetText()=='Frostbolt' and not bars[6].row:IsShown() and strip.children[5].shown)
+-- Hide rules and the Show / Hide keybind include.
+sh.iconHideOutOfInstance=true; D.ApplySpellHistory(); assert(not EllesmereUIDMIconHistoryFrame:IsShown() and win:IsShown())
+instanceInside,instanceKind=1,'party'; D.ApplySpellHistory(); assert(EllesmereUIDMIconHistoryFrame:IsShown())
+sh.barHideInDungeon=true; D.ApplySpellHistory(); assert(not win:IsShown())
+sh.iconHideOutOfInstance,sh.barHideInDungeon=false,false; instanceInside,instanceKind=nil,'none'; D.ApplySpellHistory()
+p.toggleIncludeSpellHistory=true; D.ToggleWindows(); assert(not win:IsShown() and not EllesmereUIDMIconHistoryFrame:IsShown())
+D.ToggleWindows(); assert(win:IsShown() and EllesmereUIDMIconHistoryFrame:IsShown()); p.toggleIncludeSpellHistory=false
+-- Bar window lock button.
+win.lockButton:RunScript('OnClick','LeftButton'); assert(sh.barLocked and win.lockButton.icon.texture:find('dm_locked_top'))
+win.hdr:RunScript('OnMouseDown','LeftButton'); assert(not win.moving)
+win.lockButton:RunScript('OnClick','LeftButton'); assert(not sh.barLocked and win.lockButton.icon.texture:find('dm_unlock_top'))
+sh.iconEnabled,sh.barEnabled=false,false; D.Apply()
+assert(next(ev.events)==nil and not win:IsShown() and not EllesmereUIDMIconHistoryFrame:IsShown())
+c1.width,c1.rows,c2.width,c2.rows=w1,r1,w2,r2; D.Apply()
+assert(#lifecycleErrors==0,lifecycleErrors[1])
 ''')
 original=Path('D:/World of Warcraft/_retail_/Interface/AddOns/EllesmereUIDamageMeters')
 for p in original.rglob('*'):
@@ -414,4 +637,4 @@ for folder in root.glob('EllesmereUI*'):
         for line in toc.read_text(encoding='utf-8-sig').splitlines():
             if line.strip() and not line.startswith('#') and line.endswith('.lua'):
                 p=folder/line.replace('\\','/'); compile_lua(p.read_text(encoding='utf-8-sig'),str(p)); active+=1
-print(f'PASS: {active} active Lua 5.1 files; actual Core/meter lifecycle and independent collector/history; real mouseover spell/target bars/icons/percentages/Other totals, actor focus/back/targets/death recap/rates/scroll/live updates, row reorder/segment/metric/profile/hide cleanup without combat allocation; native specs and opacity/outline settings; unlock, explicit reports and unchanged Retail references.')
+print(f'PASS: {active} active Lua 5.1 files; actual Core/meter lifecycle and independent collector/history; Retail look migration, header icons/5 windows/delete, grip fade/padlock/axis lock/size+edge snapping, breakdown scale/anchor/15 spells/top targets, death recap HP%/overkill, standalone timer, keybinds, Spell History icons/bars/cast outcomes; real mouseover spell/target bars/icons/percentages, actor focus/back/targets/death recap/rates/scroll/live updates, row reorder/segment/metric/profile/hide cleanup without combat allocation; native specs and opacity/outline settings; unlock, explicit reports and unchanged Retail references.')
