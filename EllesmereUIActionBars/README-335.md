@@ -1,4 +1,48 @@
-# Action Bars 3.3.5 — 0.12
+# Action Bars 3.3.5 — 0.15
+
+0.15: Quick Keybind Mode com o atalho /kb (o Wrath não tem o
+Blizzard_QuickKeybind, então a janela e a captura são do EUI). Passe o mouse
+sobre um botão e aperte a tecla (com Shift/Ctrl/Alt, botões 3-5 do mouse ou a
+roda) para atribuir; botão direito remove o atalho. Cada comando guarda até
+dois atalhos, como na janela de Key Bindings. Vale para as Barras 1-6, pet e
+postura. Enquanto o modo está aberto, todas as barras (menos as em Never)
+aparecem com opacidade total. Okay salva, Cancel e Esc desfazem, Reset To
+Default volta aos padrões e "Character Specific Keybindings" alterna entre
+atalhos do personagem e da conta. Entrar em combate salva e fecha o modo.
+
+0.14: o texto de atalho agora é abreviado como no Retail: Shift+1 vira S1,
+Control+1 vira C1, Alt+Q vira AQ, botões do mouse viram M4/M3, roda do mouse
+MwU/MwD e teclado numérico N5/N+. Vale para as barras do EUI e para os botões
+nativos de pet e postura (estes só enquanto o módulo estiver ativo).
+
+0.13: porta as funções e o visual do Retail que existem no 3.3.5. Cada barra
+agora tem as próprias configurações de texto (atalho, macro, contagem e tempo
+de recarga: tamanho, cor, posição e deslocamento), borda (tamanho, cor ou cor
+de classe), fundo da barra (espaçamento, cor e borda), opacidade, click
+through, orientação vertical, ordem dos ícones, direção de crescimento,
+dicas, coloração fora de alcance e cor. Globais: zoom do ícone, fundo do slot,
+dessaturar e transparência em recarga, opacidade do swipe, números de recarga
+próprios do EUI e as animações de botão do Retail (Light, Medium, Strong,
+Solid Color, Border e None) para pressionado, destaque e lançamento, com cor
+de classe ou personalizada. A visibilidade usa o mesmo motor do Retail
+(seleção múltipla, Any/All, instâncias, descanso, veículo, montado, alvo e
+"Toggle Action Bar" com atalho fora de combate). A Barra 1 ganhou paginação por
+Shift/Ctrl/Alt e alvo amigo/hostil, opção para desligar a paginação por forma
+e setas de página. As opções antigas (visibility, showHotkeys, showMacroNames,
+fontSize, rangeColor, tooltip, borda e iconCrop) migram uma vez para as novas
+chaves por barra; sem mudanças, o driver de paginação continua idêntico. Os
+contratos seguros (paginação, veículo, arrastar, atalhos) não mudaram. As
+texturas de destaque viraram TGA 64x64 em Media/Textures_335. Requer
+Options 0.59.
+
+Não portado: formas/máscaras de ícone, paginação e visibilidade de
+skyriding, housing, assisted highlight e one-button assist, brilho de proc,
+rank de item, cargas, Quick Keybind (use o Key Bindings da Blizzard), mostrar
+barras ao abrir o grimório ou arrastar, estilos Blizzard/Classic e end caps,
+multiplicadores de fundo, borda e cor do swipe de recarga (o Cooldown do 3.3.5
+não tem essa API), flash de atalho pressionado, texturas de interação nos
+botões nativos de pet/postura, linhas de visibilidade das barras de dados e
+animações de lançamento.
 
 0.12 places the native stance/pet controllers and unused bonus bar shell
 under a hidden parent while EUI is active. Blizzard Show/alpha/animation

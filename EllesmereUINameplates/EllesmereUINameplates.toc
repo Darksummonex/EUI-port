@@ -2,7 +2,7 @@
 ## Title: |cff0cd29fEllesmereUI|r Nameplates
 ## Notes: Retail EllesmereUI nameplate look over native Wrath plates, with GUID-tracked auras and filters.
 ## Author: Ellesmere / 3.3.5 backport
-## Version: 9.3.4-335-0.10
+## Version: 9.3.4-335-0.11
 ## Dependencies: EllesmereUI
 ## SavedVariables: EllesmereUINameplatesDB
 ## IconTexture: Interface\AddOns\EllesmereUI\media\eg-logo.tga

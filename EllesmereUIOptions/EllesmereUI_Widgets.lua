@@ -9553,7 +9553,7 @@ function EllesmereUI.AttachVisibilityChecklist(region, opts)
         if def.isHeader then
             items[#items + 1] = def
         elseif not (def.key == "mouseover" and caps.noMouseover)
-            and not (def.forever and EllesmereUI.IS_FOREVER and ForeverRowHidden(def)) then
+            and not (def.forever and (EllesmereUI.IS_FOREVER or _G.EUI_WOW_335) and ForeverRowHidden(def)) then
             local item = { key = def.key, label = def.label, tooltip = def.tooltip,
                            dual = def.axis and true or nil,
                            isModifier = def.modifier }

@@ -129,10 +129,11 @@ local function TileActionBars(parent, y, W, tile)
     local ns = NS(tile.folder)
     if ns and ns.IsWrath then
         local _, h = W:DualRow(parent, y, ModuleOutlineCfg(tile.folder, tile.display),
-            { type = "slider", text = "Button Text Size", min = 8, max = 20, step = 1,
+            { type = "slider", text = "XP & Reputation Text Size", min = 8, max = 20, step = 1,
               getValue = function() return ns.GetSettings().fontSize end,
               setValue = function(v) ns.GetSettings().fontSize = v; ns.Apply() end })
-        return LinkRow(parent, y-h, "Hotkeys & Macro Names", tile.folder, "Action Bars", "GLOBAL SETTINGS")
+        return LinkRow(parent, y-h, "Keybind, Macro, Count & Cooldown Text (per bar)",
+            tile.folder, "Bar Display", "TEXT", "Keybind Text Size")
     end
     local function bars()
         local EAB = ns and ns.EAB

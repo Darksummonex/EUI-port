@@ -26,6 +26,19 @@ lua.execute((root/'EllesmereUIActionBars/Libs/LibActionButton-1.0-335.lua').read
 ns=lua.table()
 lua.execute((root/'EllesmereUIActionBars/EUI_ActionBars_335.lua').read_text(),'EllesmereUIActionBars',ns)
 lua.execute((root/'EllesmereUIActionBars/EUI_NativeHUD_335.lua').read_text(),'EllesmereUIActionBars',ns)
+lua.execute('''
+local m=getmetatable(UIParent).__index
+function m:EnableKeyboard(v) self.keyboard=v end
+function m:EnableMouseWheel(v) self.wheel=v end
+function m:SetCheckedTexture(t) self.checkedTexture=t end
+function m:GetChecked() return self.checked end
+for _,k in ipairs({"SetMovable","SetClampedToScreen","StartMoving","StopMovingOrSizing"}) do m[k]=function() end end
+StaticPopupDialogs,UISpecialFrames,tinsert={}, {}, table.insert
+function StaticPopup_Show(name) shownPopup=name end
+DEFAULT_CHAT_FRAME={AddMessage=function(_,msg) lastChat=msg end}
+function IsControlKeyDown() return ctrlDown or false end
+''')
+lua.execute((root/'EllesmereUIActionBars/EUI_QuickKeybind_335.lua').read_text(),'EllesmereUIActionBars',ns)
 lua.globals().AB=ns
 core_source=(root/'EllesmereUI/EllesmereUI_Lite.lua').read_text(encoding='utf-8-sig')
 safe_body='local function errorhandler'+core_source.split('local function errorhandler',1)[1].split('\n--------------------------------------------------------------------------------',1)[0]
@@ -37,6 +50,61 @@ lua.execute('assert(#lifecycleErrors==0,lifecycleErrors[1])')
 safe(ns.addon.OnEnable,ns.addon)
 lua.execute('assert(#lifecycleErrors==0,lifecycleErrors[1])')
 lua.execute('''
+-- Quick Keybind Mode: real binding writes through a modeled binding table, then restored.
+local Q=AB.QuickKeybind
+assert(Q and SLASH_EUI335QUICKKEYBIND1=="/kb" and SlashCmdList.EUI335QUICKKEYBIND==Q.Toggle)
+local function Copy(t) local r={}; for k,v in pairs(t) do r[k]={unpack(v)} end; return r end
+local savedKeys,blockSet=Copy(bindingKeys),SetBinding
+local actions,saved,loaded={},nil,nil
+for command,keys in pairs(bindingKeys) do for _,key in ipairs(keys) do actions[key]=command end end
+function GetBindingAction(key) return actions[key] or "" end
+function SetBinding(key,command)
+    assert(not combat,"binding written in combat")
+    local old=actions[key]
+    if old and bindingKeys[old] then for i=#bindingKeys[old],1,-1 do if bindingKeys[old][i]==key then table.remove(bindingKeys[old],i) end end end
+    actions[key]=command
+    if command then bindingKeys[command]=bindingKeys[command] or {}; table.insert(bindingKeys[command],key) end
+end
+function SaveBindings(set) saved=set end
+function LoadBindings(set) loaded=set end
+function GetCurrentBindingSet() return 1 end
+combat=true; Q.Open(); assert(not Q.open and lastChat:find("combat")); combat=false
+local p2=AB.GetSettings("bar2"); p2.barVisibility="mouseover"; AB.Apply(); hover=false; AB.UpdateAlpha()
+assert(AB.bars.bar2:GetAlpha()==0)
+Q.Open()
+assert(Q.open and AB.quickKeybind and EUI335QuickKeybindFrame:IsShown() and AB.bars.bar2:GetAlpha()==1)
+local o=Q.overlays[AB.bars.bar1.buttons[1]]
+assert(o and o:IsShown() and o.command=="ACTIONBUTTON1" and o.label=="Action Bar 1 - Button 1")
+assert(Q.overlays[AB.bars.bar2.buttons[1]].command=="MULTIACTIONBAR1BUTTON1")
+assert(not Q.overlays[AB.bars.bar6.buttons[1]] or not Q.overlays[AB.bars.bar6.buttons[1]]:IsShown())
+local pet=Q.overlays[PetActionButton1]; assert(pet and pet.command=="BONUSACTIONBUTTON1")
+assert(Q.overlays[ShapeshiftButton1].command=="SHAPESHIFTBUTTON1")
+o:GetScript("OnEnter")(o); assert(o.keyboard==true and GameTooltip.owner==o)
+o:GetScript("OnKeyDown")(o,"LSHIFT"); assert(GetBindingAction("LSHIFT")=="")
+modified=true; o:GetScript("OnKeyDown")(o,"2"); modified=false
+assert(GetBindingAction("SHIFT-2")=="ACTIONBUTTON1" and Q.dirty)
+ctrlDown=true; o:GetScript("OnMouseDown")(o,"Button4"); ctrlDown=false
+o:GetScript("OnMouseWheel")(o,1)
+local keys={GetBindingKey("ACTIONBUTTON1")}
+assert(#keys==2 and keys[1]=="CTRL-BUTTON4" and keys[2]=="MOUSEWHEELUP",table.concat(keys,","))
+o:GetScript("OnMouseDown")(o,"LeftButton"); assert(#{GetBindingKey("ACTIONBUTTON1")}==2)
+o:GetScript("OnMouseDown")(o,"RightButton"); assert(select("#",GetBindingKey("ACTIONBUTTON1"))==0)
+o:GetScript("OnLeave")(o); assert(o.keyboard==false)
+o:GetScript("OnKeyDown")(o,"ESCAPE")
+assert(not Q.open and loaded==1 and saved==nil and not o:IsShown() and not EUI335QuickKeybindFrame:IsShown())
+assert(not AB.quickKeybind and AB.bars.bar2:GetAlpha()==0)
+Q.Open(); local check=EUI335QuickKeybindFrame.check; assert(check:GetChecked()==false)
+check:SetChecked(true); check:GetScript("OnClick")(check); assert(Q.set==2)
+check:SetChecked(false); check:GetScript("OnClick")(check); assert(check:GetChecked()==true and shownPopup=="EUI335_QK_ACCOUNT")
+StaticPopupDialogs.EUI335_QK_ACCOUNT.OnAccept(); assert(Q.set==1 and loaded==1)
+StaticPopupDialogs.EUI335_QK_RESET.OnAccept(); assert(loaded==0)
+Q.Toggle(); assert(not Q.open and saved==1)
+saved=nil; Q.Open(); combat=true
+for _,f in ipairs(allFrames) do if f.events and f.events.PLAYER_REGEN_DISABLED and f.scripts.OnEvent then f.scripts.OnEvent(f,"PLAYER_REGEN_DISABLED") end end
+assert(not Q.open and saved==1 and lastChat:find("combat")); combat=false
+p2.barVisibility="always"; bindingKeys=savedKeys; SetBinding=blockSet; AB.Apply()
+''')
+lua.execute('''
 local main=AB.bars.bar1
 local button=main.buttons[1]
 assert(button:GetAttribute("action")==1 and button._state_action==1 and button.icon:GetTexture()=="icon-1")
@@ -44,6 +112,13 @@ assert(button.cooldown.duration==3 and button.count:GetText()==5)
 button:GetScript("OnEnter")(button); assert(GameTooltip.action==1)
 button:GetScript("OnLeave")(button)
 assert(main.bindings["1"][1]==button:GetName() and main.bindings["SHIFT-1"])
+for raw,short in pairs({["SHIFT-1"]="S1",["CTRL-1"]="C1",["ALT-Q"]="AQ",["CTRL-SHIFT-2"]="CS2",["BUTTON4"]="M4",
+    ["NUMPAD5"]="N5",["NUMPADPLUS"]="N+",["SHIFT-MOUSEWHEELUP"]="SMwU",["s-1"]="S1",["c-s-3"]="CS3",["Num Pad 7"]="N7",
+    ["Middle Mouse"]="M3",["1"]="1",["F"]="F"}) do
+    assert(AB.ShortKey(raw)==short,raw.." -> "..tostring(AB.ShortKey(raw)))
+end
+button.hotkey:SetText("CTRL-2"); assert(button.hotkey:GetText()=="C2")
+PetActionButton1HotKey:SetText("s-1"); assert(PetActionButton1HotKey:GetText()=="S1")
 assert(AB.bars.bar2.buttons[1]:GetAttribute("action")==61)
 assert(AB.bars.bar3.buttons[1]:GetAttribute("action")==49)
 assert(AB.bars.bar4.buttons[1]:GetAttribute("action")==25)
@@ -72,8 +147,10 @@ AB.GetSettings().enabled=true; AB.Apply()
 PetActionButton1:GetScript("OnClick")(PetActionButton1); assert(nativeClicks==1)
 assert(unlockFolder=="EllesmereUIActionBars" and #unlockElements==14)
 -- Mover shortcut works before the lazy options module has ever loaded.
-EllesmereUI._ELEMENT_SETTINGS_MAP.EUI335_HUD_xp.preSelectFn()
-assert(AB.selectedWrathBar=='xp')
+local hudMap=EllesmereUI._ELEMENT_SETTINGS_MAP.EUI335_HUD_xp
+assert(hudMap.page=='Menu, Bags & XP Bars' and hudMap.sectionName=='EXPERIENCE BAR' and hudMap.preSelectFn==nil)
+EllesmereUI._ELEMENT_SETTINGS_MAP.EUI335_AB_bar3.preSelectFn()
+assert(AB.selectedWrathBar=='bar3' and EllesmereUI._ELEMENT_SETTINGS_MAP.EUI335_AB_bar3.page=='Bar Display')
 assert(MainMenuBarTexture0:GetTexture()==nil and MainMenuBarTexture0:GetAlpha()==0)
 assert(MainMenuBarArtFrame.art:GetTexture()==nil and MainMenuBarArtFrame.art:GetAlpha()==0)
 assert(MainMenuBar:IsShown() and MainMenuBarArtFrame:IsShown() and MainMenuBarArtFrame.functionalChild:IsShown())
@@ -130,13 +207,16 @@ assert(main.bindings.F1 and not main.bindings["1"])
 AB.GetSettings("bar6").enabled=true; AB.Apply()
 assert(AB.bars.bar6.bindings.F6 and AB.bars.bar6.buttons[1]:GetAttribute("action")==13)
 AB.GetSettings("bar1").buttons=6; AB.GetSettings("bar1").buttonsPerRow=3
-AB.GetSettings().showHotkeys=false; AB.GetSettings().showMacroNames=false; AB.GetSettings().clickOnDown=true
+AB.GetSettings("bar1").hideKeybind=true; AB.GetSettings("bar1").hideMacroText=true; AB.GetSettings().clickOnDown=true
 AB.Apply(); assert(not main.buttons[7]:IsShown() and main:GetWidth()==152 and main:GetHeight()==100)
 assert(button.config.hideElements.hotkey and button.config.hideElements.macro and button.clicks[1]=="AnyDown")
-AB.GetSettings("bar1").visibility="in_combat"; AB.Apply(); assert(not main:IsShown() and next(main.bindings)==nil)
+assert(not AB.bars.bar2.buttons[1].config.hideElements.hotkey,'Keybind text is per bar')
+AB.GetSettings("bar1").hideKeybind=false; AB.GetSettings("bar1").hideMacroText=false; AB.Apply()
+assert(not button.config.hideElements.hotkey and not button.config.hideElements.macro)
+AB.GetSettings("bar1").barVisibility="in_combat"; AB.Apply(); assert(not main:IsShown() and next(main.bindings)==nil)
 combat=true; TickDrivers(); assert(main:IsShown() and main.bindings.F1)
 combat=false; TickDrivers(); assert(not main:IsShown())
-AB.GetSettings("bar1").visibility="mouseover"; AB.Apply(); hover=false; AB.UpdateAlpha(); assert(main:GetAlpha()==0)
+AB.GetSettings("bar1").barVisibility="mouseover"; AB.Apply(); hover=false; AB.UpdateAlpha(); assert(main:GetAlpha()==0)
 hover=true; AB.UpdateAlpha(); assert(main:GetAlpha()==1)
 hover=false; EllesmereUI._unlockModeSessionActive=true; AB.UpdateAlpha(); assert(main:GetAlpha()==1)
 EllesmereUI._unlockModeSessionActive=false; AB.UpdateAlpha(); assert(main:GetAlpha()==0)
@@ -280,7 +360,7 @@ for file in ['EUI_Fonts_Options.lua','EUI_Textures_Options.lua']:
 local NS=EllesmereUI.ModuleNS
 local ModuleOutlineCfg=function() return {type="dropdown"} end
 local NoteRow=function(_,y) return y-30 end
-local LinkRow=function(_,y,_,_,page) assert(page=="Action Bars"); return y-30 end
+local LinkRow=function(_,y,_,_,page,section) assert((page=="Bar Display" and section=="TEXT") or (page=="Menu, Bags & XP Bars" and section=="EXPERIENCE BAR")); return y-30 end
 local function TileActionBars('''+body+'\nreturn TileActionBars')
     lua.globals().cardBuilder=card
     lua.execute('rows={}; assert(cardBuilder(UIParent,0,EllesmereUI.Widgets,{folder="EllesmereUIActionBars",display="Action Bars"})<0)')
@@ -289,63 +369,108 @@ local function TileActionBars('''+body+'\nreturn TileActionBars')
 lua.execute('IsLoggedIn=function() return true end; function EllesmereUI:RefreshPage(force) refreshForced=force end')
 lua.execute((root/'EllesmereUIOptions/EUI_ActionBars_335_Options.lua').read_text())
 lua.execute('''
-assert(testModule and #testModule.pages==1 and testModule.pages[1]=='Action Bars' and SlashCmdList.EUI335ACTIONBARS)
-rows={}
+local pages=testModule and testModule.pages
+assert(pages and #pages==3 and pages[1]=='Bar Display' and pages[2]=='Menu, Bags & XP Bars' and pages[3]=='Bar Animations' and SlashCmdList.EUI335ACTIONBARS)
 EllesmereUI.Widgets={
     DualRow=function(_,parent,y,left,right) rows[#rows+1]={left,right}; return {},50 end,
-    SectionHeader=function() return {},30 end,
+    SectionHeader=function(_,parent,label,y) local h={GetPoint=function() return 'TOPLEFT',parent,'TOPLEFT',0,y end}; sections[label]=h; return h,30 end,
     WideButton=function(_,parent,text,y,fn) optionButtons[text]=fn; return {},40 end,
 }
-local function Build(key)
-    AB.SelectWrathBar(key,false); rows={}; optionButtons={}; assert(testModule.buildPage('Action Bars',UIParent,0)>0)
+function EllesmereUI:SetContentHeader(fn) headerBuilder=fn end
+function EllesmereUI:InvalidateContentHeaderCache() headerInvalidated=true end
+EllesmereUI.SmoothScrollTo=function(y) scrolledTo=y end
+EllesmereUI.CreatePreviewHitOverlay=function(el,nav,key,isText) hits[#hits+1]={el=el,nav=nav,key=key,text=isText}; return CreateFrame('Button',nil,UIParent) end
+local function Find(label,nth)
+    nth=nth or 1
+    for _,r in ipairs(rows) do for i=1,2 do if r[i] and r[i].text==label then nth=nth-1; if nth==0 then return r[i] end end end end
 end
-Build('bar1'); assert(#rows[1][1].order==14 and rows[1][1].values.buffs=='Player Buffs')
-rows[1][1].setValue('bar2'); assert(AB.selectedWrathBar=='bar2' and refreshForced==true)
-Build('bar2')
-rows[2][1].setValue(42); assert(AB.bars.bar2.buttons[1]:GetWidth()==42)
-assert(AB.bars.bar1.buttons[1]:GetWidth()==48)
-rows[1][2].setValue(false); assert(not AB.bars.bar2:IsShown()); rows[1][2].setValue(true)
-local oldSizeSetter=rows[2][1].setValue
-Build('bar3'); oldSizeSetter(43); assert(AB.bars.bar2.buttons[1]:GetWidth()==43 and AB.bars.bar3.buttons[1]:GetWidth()==36)
-Build('micro'); assert(rows[2][1].getValue()==36 and rows[1][2].text=='Enable Skin')
-rows[1][2].setValue(false); assert(CharacterMicroButton:GetParent()==nativeParent)
+local function Build(page,key)
+    if key then AB.SelectWrathBar(key,false) end
+    rows,sections,optionButtons,headerBuilder={},{},{},nil
+    assert(testModule.buildPage(page,UIParent,0)>0)
+end
+-- Bar Display: per-bar settings, Retail visibility lane, header preview.
+AB.SelectWrathBar('bar2'); assert(AB.selectedWrathBar=='bar2' and refreshForced==true and headerInvalidated)
+Build('Bar Display','bar2')
+Find('Icon Size').setValue(42); assert(AB.bars.bar2.buttons[1]:GetWidth()==42 and AB.bars.bar1.buttons[1]:GetWidth()==48)
+local vis=Find('Visibility'); assert(vis.values.never and vis.values.in_raid)
+vis.setValue('never'); assert(not AB.bars.bar2:IsShown() and AB.GetSettings('bar2').enabled==false)
+vis.setValue('always'); assert(AB.bars.bar2:IsShown() and AB.GetSettings('bar2').enabled==true)
+local oldSizeSetter=Find('Icon Size').setValue
+Build('Bar Display','bar3'); oldSizeSetter(43)
+assert(AB.bars.bar2.buttons[1]:GetWidth()==43 and AB.bars.bar3.buttons[1]:GetWidth()==36,'Stale setter leaked across bars: '..AB.bars.bar2.buttons[1]:GetWidth()..' '..AB.bars.bar3.buttons[1]:GetWidth())
+assert(Find('Shift Modifier')==nil and Find('Always Show Buttons'),'Bar 3 page rows')
+assert(optionButtons['Quick Keybind Mode (/kb)'] and optionButtons['Open Unlock Mode'],'Top buttons')
+optionButtons['Quick Keybind Mode (/kb)'](); assert(AB.QuickKeybind.open); AB.QuickKeybind.Close(false); assert(not AB.QuickKeybind.open)
+Build('Bar Display','bar1')
+assert(AB.GetSettings('bar1').buttons==6 and AB.GetSettings('bar1').buttonsPerRow==3)
+Find('Number of Rows').setValue(1); assert(AB.GetSettings('bar1').buttonsPerRow==6 and AB.bars.bar1:GetHeight()==48)
+Find('Number of Rows').setValue(2); Find('Number of Icons').setValue(12)
+assert(AB.GetSettings('bar1').buttons==12 and AB.GetSettings('bar1').buttonsPerRow==6 and AB.bars.bar1.buttons[12]:IsShown())
+Find('Shift Modifier').setValue(2); assert(AB.GetPageDriver():find('%[mod:shift%] 2;'))
+local main1=AB.bars.bar1.buttons[1]
+modShift=true; TickDrivers(); assert(main1:GetAttribute('action')==13,'Shift paging did not reach page 2')
+modShift=false; TickDrivers(); assert(main1:GetAttribute('action')==1)
+Find('Shift Modifier').setValue(0); assert(not AB.GetPageDriver():find('mod:shift'))
+Find('Hide Keybind Text').setValue(true); assert(AB.bars.bar1.buttons[1].config.hideElements.hotkey and not AB.bars.bar2.buttons[1].config.hideElements.hotkey)
+Find('Hide Keybind Text').setValue(false)
+assert(Find('Hide Blizzard Bar Art'))
+Find('Hide Blizzard Bar Art').setValue(false); assert(MainMenuBarTexture0:GetAlpha()==.8)
+Find('Hide Blizzard Bar Art').setValue(true); assert(MainMenuBarTexture0:GetTexture()==nil)
+-- Live preview mirrors the bar and each element navigates to its options.
+assert(headerBuilder and testModule.getHeaderBuilder('Bar Display')==headerBuilder and testModule.getHeaderBuilder('Bar Animations')==nil,'Header builder registration')
+hits={}; local hdr=CreateFrame('Frame',nil,UIParent); hdr:SetWidth(900); hdr:Show()
+local headerH=headerBuilder(hdr,900)
+assert(headerH>64 and #hits==1+12*4,'Header preview '..tostring(headerH)..' hits '..#hits)
+local keybindHit
+for _,hit in ipairs(hits) do if hit.key=='keybind' then keybindHit=hit; break end end
+assert(keybindHit and keybindHit.text and keybindHit.el:GetParent():GetParent():GetWidth()==AB.GetSettings('bar1').size,'Preview button size')
+assert(keybindHit.el:GetParent():GetParent().icon:GetTexture()=='icon-1','Preview shows the real action icon')
+keybindHit.nav('keybind'); assert(scrolledTo==math.max(0,math.abs(select(5,sections.TEXT:GetPoint(1)))-40))
+-- Menu, Bags & XP Bars page keeps every native HUD control.
+Build('Menu, Bags & XP Bars')
+Find('Micro Menu Skin').setValue(false); assert(CharacterMicroButton:GetParent()==nativeParent)
 assert(MainMenuBarArtFrame:IsShown() and MainMenuBarArtFrame.functionalChild:IsShown() and MainMenuBarTexture0:GetTexture()==nil)
-rows[1][2].setValue(true); assert(CharacterMicroButton:GetParent()==AB.NativeHUD.holders.micro)
-rows[2][1].setValue(32); assert(CharacterMicroButton:GetWidth()==32 and MainMenuBarBackpackButton:GetWidth()==36)
-rows[2][2].setValue(7); assert(AB.GetSettings().nativeHUD.microSpacing==7 and AB.GetSettings().nativeHUD.bagsSpacing==nil)
-Build('bags'); rows[2][1].setValue(24); assert(MainMenuBarBackpackButton:GetWidth()==24 and CharacterMicroButton:GetWidth()==32)
-assert(rows[3][1].text=='Consolidate Bags'); rows[3][1].setValue(true)
+Find('Micro Menu Skin').setValue(true); assert(CharacterMicroButton:GetParent()==AB.NativeHUD.holders.micro)
+assert(Find('Micro Button Size').getValue()==36)
+Find('Micro Button Size').setValue(32); assert(CharacterMicroButton:GetWidth()==32 and MainMenuBarBackpackButton:GetWidth()==36)
+Find('Micro Spacing').setValue(7); assert(AB.GetSettings().nativeHUD.microSpacing==7 and AB.GetSettings().nativeHUD.bagsSpacing==nil)
+Find('Bag Button Size').setValue(24); assert(MainMenuBarBackpackButton:GetWidth()==24 and CharacterMicroButton:GetWidth()==32)
+local consolidate=Find('Consolidate Bags').setValue; consolidate(true)
 assert(AB.NativeHUD.holders.bags:GetWidth()==24 and MainMenuBarBackpackButton:GetParent()==AB.NativeHUD.holders.bags)
 assert(CharacterBag0Slot:GetParent()==AB.NativeHUD.hiddenBags and not AB.NativeHUD.hiddenBags:IsShown() and KeyRingButton:GetParent()==AB.NativeHUD.hiddenBags)
-local consolidate=rows[3][1].setValue
 combat=true; consolidate(false); assert(CharacterBag0Slot:GetParent()==AB.NativeHUD.hiddenBags)
 combat=false; AB.events:RunScript('OnEvent','PLAYER_REGEN_ENABLED')
 assert(CharacterBag0Slot:GetParent()==AB.NativeHUD.holders.bags and KeyRingButton:GetParent()==AB.NativeHUD.holders.bags and AB.NativeHUD.holders.bags:GetWidth()>24)
-Build('xp'); rows[2][1].setValue(520); rows[2][2].setValue(18)
+Find('Width',1).setValue(520); Find('Height',1).setValue(18)
 assert(AB.NativeHUD.holders.xp:GetWidth()==520 and AB.NativeHUD.holders.xp:GetHeight()==18)
 assert(AB.NativeHUD.holders.reputation:GetWidth()==AB.GetSettings().nativeHUD.barWidth)
-Build('reputation'); rows[2][1].setValue(610); rows[2][2].setValue(20)
+Find('Width',2).setValue(610); Find('Height',2).setValue(20)
 assert(AB.NativeHUD.holders.reputation:GetWidth()==610 and AB.NativeHUD.holders.xp:GetWidth()==520)
-Build('buffs'); assert(rows[1][2].text=='Enable Aura Mover'); rows[2][1].setValue(5)
+Find('Buff Icons Per Row').setValue(5)
 assert(AB.NativeHUD.holders.buffs:GetWidth()==174 and AB.NativeHUD.holders.debuffs:GetWidth()==282)
-Build('debuffs'); rows[2][1].setValue(4); assert(AB.NativeHUD.holders.debuffs:GetWidth()==138)
-rows[1][2].setValue(false); assert(select(2,DebuffButton1:GetPoint(1))==UIParent)
-rows[1][2].setValue(true); assert(select(2,DebuffButton1:GetPoint(1))==AB.NativeHUD.holders.debuffs)
--- Position resets apply only to the selected bar; switching never clears saves.
-local p=AB.GetSettings(); local buffPos=p.barPositions.hud_buffs; local barPos=p.barPositions.bar1
-assert(p.barPositions.hud_debuffs and buffPos and barPos)
-optionButtons['Reset Selected Bar Position'](); assert(not p.barPositions.hud_debuffs and p.barPositions.hud_buffs==buffPos and p.barPositions.bar1==barPos)
-Build('bar1'); assert(p.barPositions.bar1==barPos)
-optionButtons['Reset Selected Bar Position'](); assert(not p.barPositions.bar1 and p.barPositions.hud_buffs==buffPos)
-AB.SelectWrathBar('invalid'); assert(AB.selectedWrathBar=='bar1')
-for _,key in ipairs(rows[1][1].order) do Build(key); assert(rows[1][1].getValue()==key) end
-local mapping=EllesmereUI._ELEMENT_SETTINGS_MAP.EUI335_HUD_xp
-assert(mapping.page=='Action Bars' and mapping.sectionName=='BAR SELECTION')
-mapping.preSelectFn(); assert(AB.selectedWrathBar=='xp')
-Build('xp'); assert(rows[4][2].text=='Hide Blizzard Bar Art')
-rows[4][2].setValue(false); assert(MainMenuBarTexture0:GetAlpha()==.8)
-rows[4][2].setValue(true); assert(MainMenuBarTexture0:GetTexture()==nil)
-optionButtons['Reset All Bar Positions'](); assert(next(p.barPositions)==nil)
+Find('Debuff Icons Per Row').setValue(4); assert(AB.NativeHUD.holders.debuffs:GetWidth()==138)
+Find('Debuff Mover').setValue(false); assert(select(2,DebuffButton1:GetPoint(1))==UIParent)
+Find('Debuff Mover').setValue(true); assert(select(2,DebuffButton1:GetPoint(1))==AB.NativeHUD.holders.debuffs)
+Find('Text Size').setValue(14); assert(AB.GetSettings().fontSize==14); Find('Text Size').setValue(11)
+-- Position resets are scoped: HUD page clears only HUD movers, bar page only the selected bar.
+local p=AB.GetSettings(); local barPos=p.barPositions.bar1
+assert(p.barPositions.hud_debuffs and p.barPositions.hud_buffs and barPos)
+optionButtons['Reset Menu, Bags & XP Positions'](); assert(not p.barPositions.hud_debuffs and not p.barPositions.hud_buffs and p.barPositions.bar1==barPos)
+Build('Bar Display','bar2'); p.barPositions.bar2={point='CENTER',relPoint='CENTER',x=1,y=2}
+optionButtons['Reset Selected Bar Position'](); assert(not p.barPositions.bar2 and p.barPositions.bar1==barPos)
+AB.selectedWrathBar='invalid'; Build('Bar Display'); assert(AB.selectedWrathBar=='bar1')
+-- Bar Animations drive the interaction looks.
+Build('Bar Animations')
+Find('Pushed Type').setValue(5); assert(p.pushedTextureType==5)
+Find('Highlight Type').setValue(6); assert(p.highlightTextureType==6)
+Find('Show Highlight on Spell Cast').setValue(false); assert(p.showCastHighlight==false)
+Find('Pushed Type').setValue(2); Find('Highlight Type').setValue(2); Find('Show Highlight on Spell Cast').setValue(true)
+Build('Bar Display','bar1')
+p.barPositions.hud_buffs={point='CENTER',relPoint='CENTER',x=3,y=4}
+optionButtons['Reset All Bar Positions']()
+for key in pairs(p.barPositions) do assert(key:sub(1,4)=='hud_','Bar position survived reset') end
+assert(p.barPositions.hud_buffs,'Bar reset cleared a HUD mover')
 ''')
 bindings=ET.parse(root/'EllesmereUIActionBars/Bindings.xml').getroot()
 assert len(bindings)==12
@@ -425,4 +550,4 @@ local elems=AB.NativeHUD.Elements(); assert(elems[3].isHidden() and not elems[4]
 EllesmereUI._ModuleNS.EllesmereUIDataBars=nil; AB.NativeHUD.UpdateData()
 assert(AB.NativeHUD.holders.xp:IsShown() and not elems[3].isHidden(),'Removing DataBars did not restore HUD XP')
 ''')
-print('PASS: real Wrath LAB/secure paging/bindings/vehicle/drag; ElvUI XP texture/colors/empty/rested layers; native HUD and aura movers, combat/restore; reversible art toggle; DataBars XP/rep handoff and fallback; one settings page with 14 choices, isolated layouts/position resets/mover shortcuts; shared cards, real Core profile migration/MakeUnlockElement and XML. Native taint/rendering require in-game testing.')
+print('PASS: real Wrath LAB/secure paging/bindings/vehicle/drag; ElvUI XP texture/colors/empty/rested layers; native HUD and aura movers, combat/restore; reversible art toggle; DataBars XP/rep handoff and fallback; Retail pages (Bar Display with live clickable preview, Menu/Bags/XP, Bar Animations), per-bar text/visibility/paging, scoped position resets and mover shortcuts; shared cards, real Core profile migration/MakeUnlockElement and XML. Native taint/rendering require in-game testing.')

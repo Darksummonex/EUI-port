@@ -89,6 +89,12 @@ local function Condition(text)
         elseif token=="stealth" then good=stealth elseif token=="nostealth" then good=not stealth
         elseif token=="group" then good=group~=nil elseif token=="group:party" then good=group=="party"
         elseif token=="group:raid" then good=group=="raid"
+        elseif token=="nogroup" then good=group==nil elseif token=="nogroup:raid" then good=group~="raid"
+        elseif token=="mod:shift" then good=modShift elseif token=="mod:ctrl" then good=modCtrl elseif token=="mod:alt" then good=modAlt
+        elseif token=="help" then good=targetReaction=="help" elseif token=="harm" then good=targetReaction=="harm"
+        elseif token=="noharm" then good=targetReaction~="harm"
+        elseif token=="exists" then good=targetReaction~=nil elseif token=="noexists" then good=targetReaction==nil
+        elseif token=="mounted" then good=mounted elseif token=="nomounted" then good=not mounted
         elseif token:find("bonusbar:",1,true) then good=bonus==tonumber(token:match("%d+"))
         elseif token:find("bar:",1,true) then good=page==tonumber(token:match("%d+"))
         elseif token:find("form:",1,true) then good=form==tonumber(token:match("%d+"))
@@ -161,6 +167,7 @@ for _,prefix in ipairs({"ActionButton","BonusActionButton","MultiBarBottomLeftBu
         local b=CreateFrame("CheckButton",prefix..i,nativeParent)
         b:SetPoint("LEFT",nativeParent,"LEFT",i,2); b:SetWidth(36); b:SetHeight(36); b:SetScale(.9)
         b:SetScript("OnClick",function() nativeClicks=(nativeClicks or 0)+1 end)
+        if prefix=="PetActionButton" or prefix=="ShapeshiftButton" then _G[prefix..i.."HotKey"]=b:CreateTexture() end
     end
 end
 for _,name in ipairs({"MainMenuBarTexture0","MainMenuBarLeftEndCap","ActionBarUpButton","MainMenuBarPageNumber","BonusActionBarFrame","PetActionBarFrame","ShapeshiftBarFrame","VehicleMenuBar","PossessBarFrame","MainMenuExpBar","CharacterMicroButton","MainMenuBarBackpackButton"}) do

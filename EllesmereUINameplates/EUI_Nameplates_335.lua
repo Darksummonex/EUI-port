@@ -13,10 +13,10 @@ local defaults={enabled=true,
     width=150,height=17,castHeight=17,yOffset=0,showBorder=true,borderSize=1,
     healthBarTexture="flat",castBarTexture="flat",
     bgColor=C(.12,.12,.12),bgAlpha=1,borderColor=C(.067,.067,.067),
-    nameSize=11,healthTextSize=10,levelSize=10,castNameSize=10,castTimerSize=10,
+    nameSize=11,healthTextSize=10,levelSize=10,totSize=10,castNameSize=10,castTimerSize=10,
     auraStackTextSize=10,auraDurationTextSize=10,nameYOffset=4,
-    textSlotTop="name",textSlotLeft="level",textSlotRight="healthPercent",textSlotCenter="none",
-    showHealthText=true,showLevel=true,classColoredNames=false,
+    textSlotTop="enemyName",textSlotLeft="level",textSlotRight="healthPercent",textSlotCenter="none",
+    showHealthText=true,healthPctDecimal=false,showLevel=true,classColoredNames=false,
     enemyInCombat=C(.8,.137,.137),neutral=C(.81,.72,.19),tapped=C(.5,.5,.5),
     boss=C(.518,.243,.984),miniboss=C(.518,.243,.984),colorBosses=true,colorElitesInInstances=true,
     friendlyBarColor=C(.314,.8,.408),friendlyNPCColor=C(0,1,0),friendlyHealthClassColored=false,
@@ -385,6 +385,9 @@ local function Migrate(p)
     if p.showTargetBorder==false then p.targetEffect="none" end
     if p.borderSize==0 then p.showBorder,p.borderSize=false,1 end
     p.threatColors,p.tankMode,p.showTargetBorder=nil,nil,nil
+    for _,slot in ipairs({"Top","Left","Right","Center"}) do
+        if p["textSlot"..slot]=="name" then p["textSlot"..slot]="enemyName" end
+    end
 end
 ns.Migrate=Migrate
 function ns.Apply()

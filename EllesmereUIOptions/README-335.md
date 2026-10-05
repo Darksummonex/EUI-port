@@ -1,4 +1,38 @@
-# Options 3.3.5 — 0.57
+# Options 3.3.5 — 0.61
+
+0.61: o botão do topo de Bar Display agora é "Quick Keybind Mode (/kb)", como
+no Retail, e abre o modo de atalho rápido do Action Bars (no lugar de
+"Blizzard Key Bindings"). Requer Action Bars 0.15.
+
+0.60: a pré-visualização de Bar Display mostra os atalhos abreviados (S1, C1)
+e deixa vazio o slot sem atalho, em vez do ponto de alcance. Requer Action
+Bars 0.14.
+
+0.59: Action Bars no estilo Retail, com três páginas: "Bar Display", "Menu,
+Bags & XP Bars" e "Bar Animations". Bar Display tem no cabeçalho o seletor de
+barra (350 px) e uma pré-visualização ao vivo com os ícones, atalhos, macros e
+contagens reais da barra, borda, fundo de slot, zoom, fundo da barra e layout
+(linhas, orientação, ordem e direção). Clicar num ícone, atalho, macro,
+contagem ou no fundo rola até a opção e a destaca em verde. Seções:
+VISIBILITY (linha de visibilidade do Retail com seleção múltipla, Any/All,
+"Apply to all Bars" e o atalho "Toggle Action Bar"), LAYOUT, BAR BACKGROUND,
+ICONS, ICON EFFECTS, PAGING (só na Barra 1: formas, setas e páginas por
+Shift/Ctrl/Alt/alvo amigo/hostil), TEXT (atalho, macro, contagem e tempo de
+recarga com cor, posição e deslocamento por barra) e GENERAL. As cores ficam
+em amostras inline, os ajustes finos em engrenagens e cada controle por barra
+tem o link "Apply to all". Os atalhos do Unlock Mode abrem Bar Display com a
+barra certa ou a página Menu, Bags & XP Bars na seção do elemento. Os cartões
+de Fonts e Textures apontam para as novas páginas. Requer Action Bars 0.13.
+
+0.58: Nameplates > CORE TEXT POSITIONS oferece todos os textos do Retail
+(Enemy Name, Level | Name, Name | Level, Level, Target of Target, Health %,
+Health % (No Sign), Health #, Health % | #, Health # | %, Health % - #,
+Health # - % e None). Escolher uma variante de nome libera o slot de outra
+variante; textos combinados de vida ficam bloqueados em Left/Right com um nome
+no Center. A engrenagem de cada texto abre Size (e "Show % Decimal" para vida),
+e cada texto da pré-visualização é clicável e leva ao slot onde está. O toggle
+"Health Percentage" de GENERAL TEXT agora se chama "Health Text". Requer
+Nameplates 0.11.
 
 0.57: a pré-visualização de Nameplates não some mais ao trocar de aba ou
 fechar o painel (o cache do cabeçalho escondia a placa e ninguém a redesenhava).

@@ -195,32 +195,39 @@ init:SetScript("OnEvent",function(self)
     end
 
     -- Core text positions: one text element per slot.
-    local TEXT_VALUES={name="Enemy Name",healthPercent="Health %",level="Level",none="None"}
-    local TEXT_ORDER={"name","healthPercent","level","none"}
     local TEXT_SLOTS={"Top","Right","Left","Center"}
+    -- Retail rule: a name-family element evicts any other name-family slot (they share one string).
+    local function SameText(a,b) return a==b or (ns.IsNameElement(a) and ns.IsNameElement(b)) end
+    local COMBO_TIP="Disabled when the Name/Level text is centered on the health bar due to overlapping text"
     local function TextSlot(slot,label)
         local key="textSlot"..slot
-        return {type="dropdown",text=label,values=TEXT_VALUES,order=TEXT_ORDER,getValue=function() return Get(key) end,
+        local cfg={type="dropdown",text=label,values=ns.TEXT_VALUES,order=ns.TEXT_ORDER,getValue=function() return Get(key) end,
             setValue=function(v)
                 local p=P(); if not p then return end
-                if v~="none" then for _,other in ipairs(TEXT_SLOTS) do if p["textSlot"..other]==v then p["textSlot"..other]="none" end end end
+                if v~="none" then for _,other in ipairs(TEXT_SLOTS) do if other~=slot and SameText(p["textSlot"..other],v) then p["textSlot"..other]="none" end end end
                 p[key]=v; Refresh()
                 if E.RefreshPage then E:RefreshPage() end
             end}
+        if slot=="Right" or slot=="Left" then
+            cfg.disabledValues=function(k) if ns.IsComboHealthText(k) and ns.IsNameElement(Get("textSlotCenter")) then return COMBO_TIP end end
+        end
+        return cfg
     end
-    local TEXT_ROWS={
-        name={title="Enemy Name",rows={CogSlider("nameSize","Size",8,24),CogSlider("nameYOffset","Top Offset",-10,20)}},
-        healthPercent={title="Health %",rows={CogSlider("healthTextSize","Size",8,20)}},
-        level={title="Level",rows={CogSlider("levelSize","Size",8,20)}},
-    }
+    local function TextRows(element)
+        if ns.IsNameElement(element) then return {CogSlider("nameSize","Size",8,24),CogSlider("nameYOffset","Top Offset",-10,20)} end
+        if element=="level" then return {CogSlider("levelSize","Size",8,20)} end
+        if element=="targetOfTarget" then return {CogSlider("totSize","Size",8,20)} end
+        if ns.IsHealthElement(element) then return {CogSlider("healthTextSize","Size",8,20),CogToggle("healthPctDecimal","Show % Decimal")} end
+    end
+    local function HasText(slot) local element=Get("textSlot"..slot); return element~="none" and ns.TEXT_VALUES[element]~=nil end
     local textPopups={}
     local function TextCog(rgn,slot)
         Resize(rgn,"Text",nil,{show=function(btn)
-            local element=Get("textSlot"..slot); local def=TEXT_ROWS[element]
-            if not def or not E.BuildCogPopup then return end
-            if not textPopups[element] then textPopups[element]=select(2,E.BuildCogPopup({title=def.title,rows=def.rows})) end
+            local element=Get("textSlot"..slot)
+            if not HasText(slot) or not E.BuildCogPopup then return end
+            if not textPopups[element] then textPopups[element]=select(2,E.BuildCogPopup({title=ns.TEXT_VALUES[element],rows=TextRows(element)})) end
             textPopups[element](btn)
-        end,disabled=function() return not TEXT_ROWS[Get("textSlot"..slot)] end,
+        end,disabled=function() return not HasText(slot) end,
         disabledTooltip="Choose a text for this slot first.",rawTooltip=true})
     end
 
@@ -259,7 +266,7 @@ init:SetScript("OnEvent",function(self)
     end end
     local function TextAt(element) return function()
         local info={"text1"}
-        for _,slot in ipairs(TEXT_SLOTS) do if Get("textSlot"..slot)==element then info=TEXT_ROW[slot] end end
+        for _,slot in ipairs(TEXT_SLOTS) do if SameText(Get("textSlot"..slot),element) then info=TEXT_ROW[slot] end end
         return {section=refs.textHeader,target=refs[info[1]],side=info[2]}
     end end
     local NAV={
@@ -268,8 +275,13 @@ init:SetScript("OnEvent",function(self)
         targetArrows=At("targetHeader","targetEffect","right"),classResource=At("classHeader","classPower","left"),
         auraStack=At("generalHeader","auraText","left"),auraDuration=At("generalHeader","auraText","right"),
         debuffIcon=CoreAt("debuffs"),buffIcon=CoreAt("buffs"),raidMarker=CoreAt("raidmarker"),classIcon=CoreAt("classification"),
-        enemyName=TextAt("name"),healthText=TextAt("healthPercent"),levelText=TextAt("level"),
+        enemyName=TextAt("enemyName"),healthText=TextAt("healthPercent"),levelText=TextAt("level"),
     }
+    -- Preview text strings by engine key; the remaining elements navigate under their own name.
+    local TEXT_NAV={name="enemyName",healthPercent="healthText",level="levelText"}
+    for _,element in ipairs(ns.TEXT_ORDER) do
+        if ns.TEXT_VALUES[element] and not NAV[element] and not ns.IsNameElement(element) and not TEXT_NAV[element] then NAV[element]=TextAt(element) end
+    end
     local function Navigate(key)
         local m=NAV[key] and NAV[key]()
         if not m or not m.section or not m.target then return end
@@ -305,7 +317,7 @@ init:SetScript("OnEvent",function(self)
         end
         Hit(s.health,"healthBar"); Hit(s.cast,"castBar"); Hit(s.castIcon,"castIcon")
         Hit(s.castText,"castName",true); Hit(s.castTimer,"castTimer",true)
-        Hit(s.name,"enemyName",true); Hit(s.healthText,"healthText",true); Hit(s.level,"levelText",true)
+        for key,fs in pairs(s.texts) do Hit(fs,TEXT_NAV[key] or key,true) end
         Hit(s.raid,"raidMarker"); Hit(s.class,"classIcon")
         Hit(s.arrowL,"targetArrows"); Hit(s.arrowR,"targetArrows")
         for _,pip in ipairs(s.pips) do Hit(pip,"classResource") end
@@ -402,7 +414,7 @@ init:SetScript("OnEvent",function(self)
                 refs.auraText=Row(Slider("auraStackTextSize","Aura Stacks",8,20),Slider("auraDurationTextSize","Debuff Duration",8,20))
                 Row(Dropdown("auraTimerPosition","Duration Position",{topleft="Top Left",center="Center"},{"topleft","center"}),
                     Toggle("classColoredNames","Class Colored Names","Allied names keep their class color without target or mouseover. Group/raid members are identified automatically; other allies are learned from target, mouseover or focus."))
-                Row(Toggle("showHealthText","Health Percentage"),Toggle("showLevel","Level & Elite Indicator"))
+                Row(Toggle("showHealthText","Health Text","Shows the health text elements placed in Core Text Positions."),Toggle("showLevel","Level & Elite Indicator"))
                 if preview then BuildOverlays() end
             elseif page=="Colors" then
                 Section("ENEMY COLORS")

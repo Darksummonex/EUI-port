@@ -1,4 +1,23 @@
-# Nameplates 3.3.5 — 0.10
+# Nameplates 3.3.5 — 0.11
+
+0.11: o menu de texto de CORE TEXT POSITIONS agora tem todas as opções do
+Retail: None, Enemy Name, Level | Name, Name | Level, Level, Target of Target,
+Health %, Health % (No Sign), Health #, Health % | #, Health # | %,
+Health % - # e Health # - %. Cada elemento tem a própria FontString
+(`ns.TextString`); as variantes de nome dividem a do nome, então escolher uma
+tira a outra do slot (regra Retail), enquanto vida e nível podem coexistir.
+Vida # vem do valor absoluto da barra nativa, abreviado como o
+AbbreviateNumbers padrão da Blizzard (1.2K, 12K, 1.2M; `ns.AbbreviateNumber`).
+O cog de vida ganhou "Show % Decimal" (global, `healthPctDecimal`); Target of
+Target tem tamanho próprio (`totSize`) e só aparece em placas identificadas
+(alvo/mouseover), com cor de classe para jogadores. Como no Retail, os textos
+combinados ficam bloqueados em Left/Right enquanto um nome está no Center.
+O toggle "Health Percentage" virou "Health Text" e vale para todos os textos de
+vida. Perfis com o valor antigo `name` migram para `enemyName`. A
+pré-visualização mostra amostras de todos os elementos (72% de 10.000 = 7.2K;
+o próprio jogador como Target of Target). Não portados: slots Bottom Left/Bottom
+Right, cor/largura/offset/strata por slot, Level Difficulty Color opcional (o
+nível usa sempre a cor nativa) e Name Format do WoW Forever.
 
 0.10: a placa de pré-visualização ignora o OnHide do cache do cabeçalho e se
 redesenha no OnShow; mostra 3 pontos de combo de exemplo para qualquer classe.

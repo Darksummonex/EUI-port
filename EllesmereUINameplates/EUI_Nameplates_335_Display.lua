@@ -32,6 +32,29 @@ ns.TARGET_ARROW_STYLES={
 }
 ns.TARGET_ARROW_ORDER={"simple","double","winged","feathered","split","celestial","rune","demon",
     "halo","curved","barbed","holyspear","bracket","diamond","crystal","classic"}
+-- Retail text-slot elements (labels and dropdown order as in Retail).
+ns.TEXT_VALUES={none="None",enemyName="Enemy Name",levelName="Level | Name",nameLevel="Name | Level",level="Level",
+    targetOfTarget="Target of Target",healthPercent="Health %",healthPercentNoSign="Health % (No Sign)",healthNumber="Health #",
+    healthPctNum="Health % | #",healthNumPct="Health # | %",healthPctNumDash="Health % - #",healthNumPctDash="Health # - %"}
+ns.TEXT_ORDER={"none","---","enemyName","levelName","nameLevel","level","targetOfTarget","healthPercent","healthPercentNoSign",
+    "healthNumber","healthPctNum","healthNumPct","healthPctNumDash","healthNumPctDash"}
+-- The name family shares the name FontString, so only one of them may hold a slot.
+local NAME_FAMILY={enemyName=true,levelName=true,nameLevel=true}
+local HEALTH_TEXT={healthPercent=true,healthPercentNoSign=true,healthNumber=true,
+    healthPctNum=true,healthNumPct=true,healthPctNumDash=true,healthNumPctDash=true}
+local COMBO_HEALTH={healthPctNum=" | ",healthNumPct=" | ",healthPctNumDash=" - ",healthNumPctDash=" - "}
+function ns.IsNameElement(element) return NAME_FAMILY[element]==true end
+function ns.IsHealthElement(element) return HEALTH_TEXT[element]==true end
+function ns.IsComboHealthText(element) return COMBO_HEALTH[element]~=nil end
+-- Blizzard's default AbbreviateNumbers tiers (Retail health numbers); absent on 3.3.5.
+local ABBREVIATIONS={{1e10,1e9,1,"B"},{1e9,1e8,10,"B"},{1e7,1e6,1,"M"},{1e6,1e5,10,"M"},{1e4,1e3,1,"K"},{1e3,100,10,"K"}}
+function ns.AbbreviateNumber(n)
+    n=math.floor(tonumber(n) or 0)
+    for _,row in ipairs(ABBREVIATIONS) do
+        if n>=row[1] then return (math.floor(n/row[2])/row[3])..row[4] end
+    end
+    return tostring(n)
+end
 local GLOW_MARGIN,GLOW_CORNER,GLOW_EXTEND=.48,12,6
 local function PlayerClass() return select(2,UnitClass("player")) end
 
@@ -134,6 +157,7 @@ function ns.Capture(plate,native)
     s.border=Edges(s.health)
     s.textHost=Frame(root); s.textHost:SetAllPoints(root); s.textHost:SetFrameLevel(base+6)
     s.name=Text(s.textHost,p.nameSize); s.level=Text(s.textHost,p.levelSize); s.healthText=Text(s.textHost,p.healthTextSize)
+    s.texts={name=s.name,level=s.level,healthPercent=s.healthText}
     s.arrowL,s.arrowR=Tex(s.textHost,"OVERLAY"),Tex(s.textHost,"OVERLAY")
     s.raid,s.class=Tex(s.textHost,"OVERLAY"),Tex(s.textHost,"OVERLAY")
     s.cast=Bar(root); s.cast:SetFrameLevel(base+2)
@@ -197,7 +221,26 @@ function ns.PaintHealth(s,p)
     s.health:SetStatusBarColor(ns.HealthColor(s,p))
     local bc=s.threatBorder or (s.isTarget and p.targetEffect=="border" and p.targetBorderColor) or p.borderColor
     ColorEdges(s.border,bc.r,bc.g,bc.b,1)
-    s.healthText:SetText(s.healthText.slot and p.showHealthText and string.format("%d%%",math.floor(ratio*100+.5)) or "")
+    local pct,noSign,num
+    for _,fs in pairs(s.texts) do
+        local element=fs.slot and fs.element
+        if HEALTH_TEXT[element] then
+            if not p.showHealthText then fs:SetText("")
+            else
+                if not pct then
+                    noSign=p.healthPctDecimal and string.format("%.1f",ratio*100) or tostring(math.floor(ratio*100+.5))
+                    pct=noSign.."%"
+                    num=ns.AbbreviateNumber(ratio>0 and s.native.health:GetValue() or 0)
+                end
+                local sep=COMBO_HEALTH[element]
+                if element=="healthPercent" then fs:SetText(pct)
+                elseif element=="healthPercentNoSign" then fs:SetText(noSign)
+                elseif element=="healthNumber" then fs:SetText(num)
+                elseif element=="healthPctNum" or element=="healthPctNumDash" then fs:SetText(pct..sep..num)
+                else fs:SetText(num..sep..pct) end
+            end
+        end
+    end
     if s.isTarget and p.targetTexture and p.targetTexture~="none" and ns.TARGET_TEXTURES[p.targetTexture] and ratio>0 then
         s.targetTex:SetTexture(MEDIA..p.targetTexture..".tga")
         -- Source art is 512 px wide; keep the stripe density constant.
@@ -218,19 +261,34 @@ function ns.PaintHealth(s,p)
 end
 
 local TEXT_SLOTS={"Top","Left","Right","Center"}
+-- One FontString per element (the name family shares s.name); built on first use.
+function ns.TextString(s,element)
+    local key=NAME_FAMILY[element] and "name" or element
+    local fs=s.texts[key]
+    if not fs then fs=Text(s.textHost,10); s.texts[key]=fs end
+    return fs
+end
+local function TextSize(p,element)
+    if NAME_FAMILY[element] then return p.nameSize end
+    if element=="level" then return p.levelSize end
+    if element=="targetOfTarget" then return p.totSize or 10 end
+    return p.healthTextSize
+end
 local function PlaceText(s,p,nameOnly)
-    local strings={name=s.name,healthPercent=s.healthText,level=s.level}
-    for _,fs in pairs(strings) do fs:ClearAllPoints(); fs.slot=nil end
+    for _,fs in pairs(s.texts) do fs:ClearAllPoints(); fs.slot,fs.element=nil,nil; fs:SetText("") end
     s.topText=nil
     if nameOnly then
+        Font(s.name,p.friendlyNameSize)
         s.name:SetPoint("BOTTOM",s.health,"TOP",0,p.nameYOffset); s.name:SetJustifyH("CENTER"); s.name:SetWidth(p.width+40)
-        s.name.slot,s.topText="top",s.name
+        s.name.slot,s.name.element,s.topText="top","enemyName",s.name
         return
     end
     for _,slot in ipairs(TEXT_SLOTS) do
-        local fs=strings[p["textSlot"..slot]]
+        local element=p["textSlot"..slot]
+        local fs=element and element~="none" and ns.TEXT_VALUES[element] and ns.TextString(s,element)
         if fs and not fs.slot then
-            fs.slot=slot:lower()
+            fs.slot,fs.element=slot:lower(),element
+            Font(fs,TextSize(p,element))
             if slot=="Top" then
                 fs:SetPoint("BOTTOM",s.health,"TOP",0,p.nameYOffset); fs:SetJustifyH("CENTER"); fs:SetWidth(p.width); s.topText=fs
             elseif slot=="Left" then
@@ -269,7 +327,6 @@ local function Layout(s,p,nameOnly)
         glow:SetPoint("TOPLEFT",s.health,"TOPLEFT",-GLOW_EXTEND,GLOW_EXTEND)
         glow:SetPoint("BOTTOMRIGHT",s.health,"BOTTOMRIGHT",GLOW_EXTEND,-GLOW_EXTEND)
     end
-    Font(s.name,nameOnly and p.friendlyNameSize or p.nameSize); Font(s.healthText,p.healthTextSize); Font(s.level,p.levelSize)
     PlaceText(s,p,nameOnly)
     s.cast:ClearAllPoints(); s.cast:SetPoint("TOPLEFT",s.health,"BOTTOMLEFT",0,p.castBarOffsetY or 0)
     Size(s.cast,p.width,p.castHeight)
@@ -345,6 +402,7 @@ local function PaintCast(s,p)
     s.castTimer:SetText(p.showCastTimer and left and string.format("%.1f",left) or "")
 end
 
+local TOT_UNITS={target="targettarget",mouseover="mouseovertarget",focus="focustarget"}
 local function PaintText(s,p,friendly)
     local r,g,b=s.native.name:GetTextColor()
     local class=s.friendlyClass or (s.unit and UnitIsPlayer(s.unit) and select(2,UnitClass(s.unit)))
@@ -353,12 +411,33 @@ local function PaintText(s,p,friendly)
     if s.threatName then r,g,b=RGB(s.threatName) end
     s.name:SetTextColor(r,g,b)
     local hideName=p.hideEnemyNameWhileCasting and s.castVisible and not friendly
-    s.name:SetText(s.name.slot and not hideName and (s.native.name:GetText() or "") or "")
+    local name=s.native.name:GetText() or ""
     local level=s.native.level:GetText() or "??"
-    s.level:SetTextColor(s.native.level:GetTextColor())
-    if s.native.boss and s.native.boss:IsShown() then level="??"
+    -- The preview's sample skull only demonstrates the icon slot.
+    if s.native.boss and s.native.boss:IsShown() and not s.isPreview then level="??"
     elseif s.native.elite and s.native.elite:IsShown() then level=level.."+" end
-    s.level:SetText(s.level.slot and p.showLevel and level or "")
+    if not p.showLevel then level=nil end
+    for _,fs in pairs(s.texts) do
+        local element=fs.slot and fs.element
+        if element=="enemyName" then fs:SetText(hideName and "" or name)
+        elseif element=="levelName" or element=="nameLevel" then
+            local lr,lg,lb=s.native.level:GetTextColor()
+            local lv=level and string.format("|cff%02x%02x%02x%s|r",math.floor(lr*255+.5),math.floor(lg*255+.5),math.floor(lb*255+.5),level)
+            if hideName then fs:SetText("")
+            elseif not lv then fs:SetText(name)
+            elseif element=="levelName" then fs:SetText(lv.." | "..name)
+            else fs:SetText(name.." | "..lv) end
+        elseif element=="level" then fs:SetTextColor(s.native.level:GetTextColor()); fs:SetText(level or "")
+        elseif element=="targetOfTarget" then
+            local unit=s.isPreview and "player" or TOT_UNITS[s.unit]
+            local tot=unit and UnitName(unit)
+            if s.isPreview then tot=tot or "Player" end
+            local class=tot and (s.isPreview or UnitIsPlayer(unit)) and select(2,UnitClass(unit))
+            local cc=class and RAID_CLASS_COLORS[class]
+            if cc then fs:SetTextColor(cc.r,cc.g,cc.b) else fs:SetTextColor(1,1,1) end
+            fs:SetText(tot or "")
+        end
+    end
     if s.nameOnly then s.health:Hide() else s.health:Show() end
 end
 
@@ -509,10 +588,12 @@ function ns.CreatePreview(parent)
     native.level:SetText("80"); native.level:SetTextColor(1,.82,0)
     native.boss:SetTexture("Interface\\TargetingFrame\\UI-TargetingFrame-Skull")
     native.raid:SetTexture("Interface\\TargetingFrame\\UI-RaidTargetingIcons"); native.raid:SetTexCoord(0,.25,0,.25)
-    native.health=CreateFrame("StatusBar",nil,plate); native.health:SetMinMaxValues(0,100); native.health:SetValue(72)
+    native.health=CreateFrame("StatusBar",nil,plate); native.health:SetMinMaxValues(0,10000); native.health:SetValue(7200)
     native.health:SetStatusBarColor(1,0,0)
     native.cast=CreateFrame("StatusBar",nil,plate); native.cast:SetMinMaxValues(0,1); native.cast:SetValue(.6)
     s=ns.Capture(plate,native); s.isPreview,s.previewPoints=true,3; ns.preview=s
+    -- Every element's string exists up front so the options page can attach its click overlays.
+    for _,element in ipairs(ns.TEXT_ORDER) do if ns.TEXT_VALUES[element] and element~="none" then ns.TextString(s,element) end end
     return s
 end
 local function Samples(paths,count,start)
@@ -537,7 +618,6 @@ function ns.PaintPreview()
     -- The sample skull only demonstrates the icon slot; keep the bar and level of a normal enemy.
     if not hidden.classification then
         s.native.boss:Hide(); s.health:SetStatusBarColor(ns.HealthColor(s,p)); s.native.boss:Show()
-        s.level:SetText(s.level.slot and p.showLevel and "80" or "")
     end
     local top=p.height/2+(p.nameYOffset or 4)+p.nameSize+((#s.debuffList>0 and p.debuffSlot=="top") and p.auraSize+(p.debuffYOffset or 2) or 0)
     local bottom=p.height/2+(p.showCastBar and p.castHeight-(p.castBarOffsetY or 0) or 0)

@@ -49,7 +49,11 @@ function m:HookScript(event,fn)
     self.hooks[event]=function(...) if before then before(...) end; fn(...) end
 end
 function m:RunScript(event,...) if self.scripts[event] then self.scripts[event](self,...) end; if self.hooks[event] then self.hooks[event](self,...) end end
-function hooksecurefunc(name,fn) local original=_G[name]; _G[name]=function(...) local a,b=original(...); fn(...); return a,b end end
+function hooksecurefunc(target,name,fn)
+    if type(target)=='string' then fn,name,target=name,target,_G end
+    local original=target[name]; assert(type(original)=='function')
+    target[name]=function(...) local a,b=original(...); fn(...); return a,b end
+end
 MainMenuBarTexture0.kind='Texture'; MainMenuBarTexture0:SetTexture('Interface\\MainMenuBar\\UI-MainMenuBar-Left')
 MainMenuBar=CreateFrame('Frame','MainMenuBar',UIParent)
 MainMenuBarArtFrame=CreateFrame('Frame','MainMenuBarArtFrame',MainMenuBar)

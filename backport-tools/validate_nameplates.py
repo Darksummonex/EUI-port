@@ -206,7 +206,7 @@ local p,a=NP.GetSettings(),NP.plates[plateA]
 rows={}; testModule.buildPage('Display',UIParent,0)
 Find('Health Bar Width').setValue(180); assert(p.width==180 and a.root:GetWidth()==180)
 Find('Top Text').setValue('healthPercent'); assert(a.healthText.slot=='top' and not a.name.slot and a.name:GetText()=='')
-Find('Top Text').setValue('name'); assert(a.name.slot=='top' and a.name:GetText()=='Mob')
+Find('Top Text').setValue('enemyName'); assert(a.name.slot=='top' and a.name:GetText()=='Mob')
 Find('Background').setValue(50); assert(p.bgAlpha==.5 and a.healthBg.color[4]==.5 and Find('Background').getValue()==50)
 Find('Background').setValue(100)
 Find('Border').setValue('none'); assert(p.showBorder==false and not a.border.t:IsShown() and not a.castBorder.l:IsShown() and Find('Border').getValue()=='none')
@@ -219,8 +219,53 @@ Find('Right').setValue('debuffs'); assert(p.debuffSlot=='right' and Find('Top').
 Find('Top Right').setValue('buffs'); assert(p.buffSlot=='topright' and p.raidMarkerSlot=='none')
 Find('Bottom').setValue('raidmarker'); assert(p.raidMarkerSlot=='bottom' and a.raid.point[1]=='TOP' and a.raid.point[2]==a.cast)
 p.debuffSlot,p.buffSlot,p.raidMarkerSlot='top','left','topright'; NP.Apply()
-Find('Right Text').setValue('name'); assert(p.textSlotRight=='name' and p.textSlotTop=='none' and a.name.slot=='right')
-p.textSlotTop,p.textSlotRight='name','healthPercent'; NP.Apply()
+Find('Right Text').setValue('enemyName'); assert(p.textSlotRight=='enemyName' and p.textSlotTop=='none' and a.name.slot=='right')
+p.textSlotTop,p.textSlotRight='enemyName','healthPercent'; NP.Apply()
+-- Older Wrath profiles stored the enemy name as 'name'.
+p.textSlotTop='name'; NP.Apply(); assert(p.textSlotTop=='enemyName' and a.name.slot=='top')
+-- Every Retail text element is offered, in Retail order.
+local top=Find('Top Text')
+local expected={'none','---','enemyName','levelName','nameLevel','level','targetOfTarget','healthPercent','healthPercentNoSign',
+    'healthNumber','healthPctNum','healthNumPct','healthPctNumDash','healthNumPctDash'}
+assert(#top.order==#expected)
+for i,k in ipairs(expected) do assert(top.order[i]==k,'order '..i); assert(k=='---' or top.values[k],'missing value '..k) end
+assert(top.values.nameLevel=='Name | Level' and top.values.levelName=='Level | Name' and top.values.targetOfTarget=='Target of Target')
+assert(top.values.healthPercentNoSign=='Health % (No Sign)' and top.values.healthPctNum=='Health % | #' and top.values.healthNumPctDash=='Health # - %')
+-- Blizzard default abbreviation tiers, as Retail's health numbers.
+for n,text in pairs({[999]='999',[1000]='1K',[1234]='1.2K',[12345]='12K',[1234567]='1.2M',[12345678]='12M',[1500000000]='1.5B'}) do
+    assert(NP.AbbreviateNumber(n)==text,n..' -> '..NP.AbbreviateNumber(n))
+end
+-- Health text elements read the native bar's absolute values.
+a.native.health:SetMinMaxValues(0,250000); a.native.health:SetValue(123456)
+for element,text in pairs({healthPercent='49%',healthPercentNoSign='49',healthNumber='123K',healthPctNum='49% | 123K',
+    healthNumPct='123K | 49%',healthPctNumDash='49% - 123K',healthNumPctDash='123K - 49%'}) do
+    Find('Right Text').setValue(element); local fs=NP.TextString(a,element)
+    assert(fs.slot=='right' and fs:GetText()==text,element..': '..tostring(fs:GetText()))
+    assert(fs.font[2]==p.healthTextSize)
+end
+p.healthPctDecimal=true; Find('Right Text').setValue('healthPercent'); assert(a.healthText:GetText()=='49.4%')
+Find('Right Text').setValue('healthPercentNoSign'); assert(NP.TextString(a,'healthPercentNoSign'):GetText()=='49.4')
+p.healthPctDecimal=false; p.showHealthText=false; NP.Apply(); assert(NP.TextString(a,'healthPercentNoSign'):GetText()=='')
+p.showHealthText=true; Find('Right Text').setValue('healthNumber'); Find('Left Text').setValue('healthPercent')
+assert(NP.TextString(a,'healthNumber'):GetText()=='123K' and a.healthText.slot=='left' and a.healthText:GetText()=='49%','two health texts coexist')
+-- Name family: level combos share the name string, so one evicts another; standalone level coexists.
+Find('Left Text').setValue('level'); Find('Top Text').setValue('nameLevel')
+assert(a.name.slot=='top' and a.name.element=='nameLevel' and a.name:GetText()=='Mob | |cffffffff80|r' and a.level:GetText()=='80')
+Find('Center Text').setValue('levelName'); assert(p.textSlotTop=='none' and a.name.slot=='center' and a.name:GetText()=='|cffffffff80|r | Mob')
+p.showLevel=false; NP.Apply(); assert(a.name:GetText()=='Mob' and a.level:GetText()==''); p.showLevel=true
+-- Retail: combined health text is unavailable beside a centered name.
+assert(Find('Right Text').disabledValues('healthPctNum') and Find('Left Text').disabledValues('healthNumPctDash'))
+assert(not Find('Right Text').disabledValues('healthNumber') and not Find('Top Text').disabledValues and not Find('Center Text').disabledValues)
+Find('Center Text').setValue('none'); assert(not Find('Right Text').disabledValues('healthPctNum'))
+-- Target of Target: identified plates show their unit's target, players by class.
+units.target={name='Mob',guid='GUID-TOT'}; units.targettarget={name='Healer',player=true,class='MAGE',reaction=5}
+Find('Center Text').setValue('targetOfTarget'); local tot=NP.TextString(a,'targetOfTarget')
+assert(a.unit=='target' and tot.slot=='center' and tot:GetText()=='Healer' and tot.textColor[1]==.25 and tot.font[2]==p.totSize)
+units.targettarget={name='Boar'}; NP.Update(); assert(tot:GetText()=='Boar' and tot.textColor[1]==1)
+units.target=nil; units.targettarget=nil; NP.Update(); assert(not a.unit and tot:GetText()=='','anonymous plates have no target of target')
+p.textSlotTop,p.textSlotLeft,p.textSlotRight,p.textSlotCenter='enemyName','level','healthPercent','none'
+a.native.health:SetMinMaxValues(0,100); a.native.health:SetValue(60); NP.Apply()
+assert(a.name:GetText()=='Mob' and a.healthText:GetText()=='60%' and tot:GetText()=='' and not tot.slot)
 p.borderSize=0; p.showBorder=true; NP.Apply(); assert(p.showBorder==false and p.borderSize==1); p.showBorder=true; NP.Apply()
 Find('Class Colored Names').setValue(false); assert(colorState.name.textColor[1]==1)
 Find('Class Colored Names').setValue(true); assert(colorState.name.textColor[1]==.25)
@@ -308,9 +353,25 @@ local function Click(key) glowed,scrolledTo=nil,nil; byKey[key].navigate(key); r
 assert(Click('healthBar') and scrolledTo and scrolledTo>0 and dismissed==1)
 local spellName=Click('castName'); local castTimer=Click('castTimer')
 assert(spellName and castTimer and spellName~=castTimer and spellName.parent==castTimer.parent,'spell name and timer glow the two halves of one row')
-p.textSlotRight='name'; p.textSlotTop='none'; local nameRight=Click('enemyName')
-p.textSlotTop='name'; p.textSlotRight='healthPercent'; local nameTop=Click('enemyName')
+p.textSlotRight='enemyName'; p.textSlotTop='none'; local nameRight=Click('enemyName')
+p.textSlotTop='enemyName'; p.textSlotRight='healthPercent'; local nameTop=Click('enemyName')
 assert(nameRight and nameTop and nameRight~=nameTop,'enemy name follows its text slot')
+-- Every text element has a preview overlay that glows the slot holding it.
+for _,key in ipairs({'targetOfTarget','healthPercentNoSign','healthNumber','healthPctNum','healthNumPct','healthPctNumDash','healthNumPctDash'}) do
+    assert(byKey[key],'missing preview overlay '..key)
+end
+p.textSlotTop='nameLevel'; assert(Click('enemyName')==nameTop,'name combos navigate with the name'); p.textSlotTop='enemyName'
+p.textSlotLeft='healthNumber'; local hpNum=Click('healthNumber'); p.textSlotLeft='level'; assert(hpNum and hpNum==Click('levelText'))
+p.textSlotCenter='targetOfTarget'; local totCenter=Click('targetOfTarget'); p.textSlotCenter='none'
+assert(totCenter and totCenter~=nameTop and totCenter~=hpNum)
+-- Text cogs: health elements share the size and % decimal settings; empty slots are disabled.
+local textCogs={}; for _,b in ipairs(cogs) do if b.opts.title=='Text' then textCogs[#textCogs+1]=b end end
+assert(#textCogs==4 and textCogs[4].opts.disabled() and not textCogs[2].opts.disabled())
+p.textSlotRight='healthNumPct'; textCogs[2].opts.show(textCogs[2])
+assert(popups[#popups].title=='Health # | %' and popups[#popups].rows[2].label=='Show % Decimal')
+p.textSlotRight='healthPercent'
+p.textSlotCenter='targetOfTarget'; textCogs[4].opts.show(textCogs[4]); assert(popups[#popups].title=='Target of Target' and popups[#popups].rows[1].label=='Size')
+p.textSlotCenter='none'
 p.raidMarkerSlot='bottom'; local raidBottom=Click('raidMarker'); p.raidMarkerSlot='topright'; local raidTR=Click('raidMarker')
 assert(raidBottom and raidTR and raidBottom~=raidTR,'raid marker follows its core slot'); NP.Apply()
 p.showClassPower=true; NP.PaintPreview(); assert(pv.pips[1]:IsShown(),'preview shows sample class resource')
@@ -394,5 +455,20 @@ NP.previewHidden.raidmarker=nil; NP.previewHidden.classification=nil
 p.showCastBar=false; local short=NP.PaintPreview(); assert(not s.cast:IsShown() and short<h); p.showCastBar=true
 s.plate:Hide(); s.plate:Show(); NP.PaintPreview(); assert(s.auras[1]:IsShown(),'Header cache restore dropped preview auras')
 assert(NP.CreatePreview(UIParent)==s and s.plate.parent==UIParent)
+-- Every text element paints sample text on the preview (72% of 10,000; the player stands in as Target of Target).
+local samples={enemyName='Enemy Name Text',levelName='|cffffd10080|r | Enemy Name Text',nameLevel='Enemy Name Text | |cffffd10080|r',
+    level='80',targetOfTarget='Player',healthPercent='72%',healthPercentNoSign='72',healthNumber='7.2K',
+    healthPctNum='72% | 7.2K',healthNumPct='7.2K | 72%',healthPctNumDash='72% - 7.2K',healthNumPctDash='7.2K - 72%'}
+for _,element in ipairs(NP.TEXT_ORDER) do
+    if element~='none' and element~='---' then
+        assert(samples[element],'no preview sample for '..element)
+        p.textSlotTop,p.textSlotLeft,p.textSlotRight,p.textSlotCenter='none','none',element,'none'; NP.PaintPreview()
+        local fs=NP.TextString(s,element)
+        assert(fs.slot=='right' and fs:GetText()==samples[element],element..': '..tostring(fs:GetText()))
+    end
+end
+assert(NP.TextString(s,'targetOfTarget').textColor[1]==RAID_CLASS_COLORS.WARRIOR.r)
+p.textSlotTop,p.textSlotLeft,p.textSlotRight,p.textSlotCenter='enemyName','level','healthPercent','none'; NP.PaintPreview()
+assert(s.name:GetText()=='Enemy Name Text' and s.healthText:GetText()=='72%' and not NP.TextString(s,'healthNumber').slot)
 ''')
-print('PASS: real Core Lua 5.1 lifecycle; native plate detection/clicks/alpha, Retail look (size, text slots, palette, glow, arrows, hash line, execute glow, target texture, combo points), casts (tint, shield, spark, kick tick, interrupted flash), unique mappings, top/left aura slots and recycling, threat roles and channels, friendly class colors, profile migration, combat deferral and real module/shared options (live header preview surviving the header cache, click-to-navigate preview elements, inline swatches/cogs, one-per-slot core and text positions, preview eyes). Rendering and taint require in-game confirmation.')
+print('PASS: real Core Lua 5.1 lifecycle; native plate detection/clicks/alpha, Retail look (size, text slots, palette, glow, arrows, hash line, execute glow, target texture, combo points), casts (tint, shield, spark, kick tick, interrupted flash), unique mappings, top/left aura slots and recycling, threat roles and channels, friendly class colors, profile migration, combat deferral and real module/shared options (live header preview surviving the header cache, click-to-navigate preview elements, inline swatches/cogs, one-per-slot core and text positions, preview eyes, every Retail text element: name/level combos, Target of Target, health %/#/combos with K/M abbreviation, live and preview). Rendering and taint require in-game confirmation.')
