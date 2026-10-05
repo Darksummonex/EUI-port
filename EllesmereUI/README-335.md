@@ -1,4 +1,19 @@
-# EllesmereUI Wrath Core — 0.35
+# EllesmereUI Wrath Core — 0.37
+
+0.37 converte a arte do Unlock Mode para TGA (o Wrath não lê PNG):
+`prepare_unlock_media.py` gerou cópias potência-de-dois do banner, das camadas
+do cadeado (normal e override), do brilho da grade (`media/unlock_335`) e dos
+ícones da barra e das setas (`media/icons_335`). Todas são desenhadas com
+tamanho fixo no Lua, então o esticamento mantém o resultado; o banner de 1144 px
+fica com 1024x128. `EUI_UnlockMode.lua` aponta para os TGA e os PNG originais
+continuam intactos. `validate_unlock_media.py` confere que todo caminho existe
+e é potência de dois.
+
+0.36 corrige `EllesmereUI_Kick_335.lua`: a cor "Interrupt on CD" (interruptReady)
+aparecia com o kick disponível; agora, como no Retail, ela aparece enquanto o
+kick recarrega e o kick disponível mantém a cor base. Novo
+`EllesmereUI.GetKickCooldownRemaining()` (segundos até o kick, 0 = pronto),
+usado pela marca do kick nas nameplates.
 
 0.35 corrige os ícones das páginas de opções: o Wrath não lê PNG, então
 `prepare_option_icons.py` gerou cópias TGA potência-de-dois em `media/icons_335`

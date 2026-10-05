@@ -156,7 +156,7 @@ local function TileNameplates(parent, y, W, tile)
                 setValue=function(v) local p=ns.GetSettings(); if p then p[key]=v; ns.Apply() end end}
         end
         local _,h=W:DualRow(parent,y,cfg("Health Texture","healthBarTexture"),cfg("Cast Texture","castBarTexture")); y=y-h
-        return LinkRow(parent,y,"Nameplate Borders",tile.folder,"Nameplates","DISPLAY","Border Size")
+        return LinkRow(parent,y,"Nameplate Borders",tile.folder,"Display","STYLE","Border Size")
     end
     local function db() return ns.db and ns.db.profile end
     local DEF = ns.defaults or {}

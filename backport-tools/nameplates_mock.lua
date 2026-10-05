@@ -31,6 +31,8 @@ function m:SetStatusBarColor(...) self.barColor={...} end
 function m:GetStatusBarColor() return unpack(self.barColor or {1,0,0,1}) end
 function m:SetStatusBarTexture(v) self.barTexture=v end
 function m:GetTexCoord() return unpack(self.texcoords or {0,1,0,1}) end
+function m:SetWordWrap(v) self.wordWrap=v end
+function m:SetNonSpaceWrap(v) self.nonSpaceWrap=v end
 fontWrites=0
 function m:SetFont(...) self.font={...}; fontWrites=fontWrites+1 end
 function m:RunScript(k,...) if self.scripts[k] then self.scripts[k](self,...) end; if self.hooks[k] then self.hooks[k](self,...) end end
@@ -71,7 +73,21 @@ function UnitAura(u,i,filter)
 end
 combat=false
 function InCombatLockdown() return combat end
-cvars={showVKeyCastbar='0',nameplateShowEnemies='1',nameplateShowFriends='0',nameplateAllowOverlap='0',ShowClassColorInNameplate='0'}
+function UnitThreatSituation(_,u) local t=units[u]; return t and t.threat end
+function UnitAffectingCombat(u) local t=units[u]; return t and t.combat or false end
+groupSize=0
+function GetNumPartyMembers() return groupSize end
+instanceType='none'
+function IsInInstance() return instanceType~='none',instanceType end
+comboPoints=0
+function GetComboPoints() return comboPoints end
+spellNames={[5308]='Execute',[24275]='Hammer of Wrath',[53351]='Kill Shot',[1120]='Drain Soul',[71]='Defensive Stance'}
+knownSpells={}
+function GetSpellInfo(id)
+    if type(id)=='number' then return spellNames[id] end
+    if knownSpells[id] then return id end
+end
+cvars={showVKeyCastbar='0',nameplateShowEnemies='1',nameplateShowFriends='0',nameplateAllowOverlap='0',ShowClassColorInNameplate='0',nameplateShowEnemyPets='0'}
 function GetCVar(k) assert(cvars[k]~=nil,k); return cvars[k] end
 function SetCVar(k,v) assert(not combat,'CVar write in combat'); assert(cvars[k]~=nil,k); cvars[k]=v end
 function IsLoggedIn() return true end

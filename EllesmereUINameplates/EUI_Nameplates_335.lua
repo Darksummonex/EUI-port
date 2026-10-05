@@ -1,5 +1,6 @@
 -- Wrath's anonymous WorldFrame plates remain the native data/click backend.
--- Retail engines and namespaces are not loaded or emulated.
+-- Retail engines and namespaces are not loaded or emulated; the Retail look
+-- is painted by EUI_Nameplates_335_Display.lua.
 local ADDON_NAME,ns=...
 local E=EllesmereUI
 if not E or not E.Lite or not WorldFrame then return end
@@ -7,21 +8,46 @@ local addon=E.Lite.NewAddon(ADDON_NAME)
 E._ModuleNS[ADDON_NAME]=ns
 ns.addon,ns.ENP,ns.IsWrath=addon,addon,true
 _G.EllesmereNameplates_NS=ns
-local defaults={enabled=true,width=120,height=12,castHeight=8,yOffset=0,
-    nameSize=11,healthTextSize=10,levelSize=10,castNameSize=10,castTimerSize=9,
-    auraStackTextSize=10,auraDurationTextSize=9,
-    showHealthText=true,showLevel=true,showCastBar=true,showCastName=true,showCastTimer=true,
-    showRaidMarker=true,raidMarkerSize=20,showTargetBorder=true,targetScale=1.1,
-    borderSize=1,healthBarTexture="flat",castBarTexture="flat",
-    friendlyNameOnly=false,classColoredNames=false,threatColors=false,tankMode=false,
-    friendlyHealthClassColored=false,
-    opacity=100,nonTargetAlpha=100,showAuras=true,showDebuffs=true,showBuffs=false,
-    onlyPlayerDebuffs=true,auraSize=20,maxAuras=6,
+local function C(r,g,b) return {r=r,g=g,b=b} end
+local defaults={enabled=true,
+    width=150,height=17,castHeight=17,yOffset=0,showBorder=true,borderSize=1,
+    healthBarTexture="flat",castBarTexture="flat",
+    bgColor=C(.12,.12,.12),bgAlpha=1,borderColor=C(.067,.067,.067),
+    nameSize=11,healthTextSize=10,levelSize=10,castNameSize=10,castTimerSize=10,
+    auraStackTextSize=10,auraDurationTextSize=10,nameYOffset=4,
+    textSlotTop="name",textSlotLeft="level",textSlotRight="healthPercent",textSlotCenter="none",
+    showHealthText=true,showLevel=true,classColoredNames=false,
+    enemyInCombat=C(.8,.137,.137),neutral=C(.81,.72,.19),tapped=C(.5,.5,.5),
+    boss=C(.518,.243,.984),miniboss=C(.518,.243,.984),colorBosses=true,colorElitesInInstances=true,
+    friendlyBarColor=C(.314,.8,.408),friendlyNPCColor=C(0,1,0),friendlyHealthClassColored=false,
+    threatColorMode="instances",threatRole="auto",threatColorHealth=true,threatColorBorder=false,threatColorName=false,
+    classicTankAggro=false,tankHasAggro=C(.05,.82,.62),tankLosingAggro=C(.81,.72,.19),tankNoAggro=C(1,.22,.17),
+    dpsHasAggro=C(1,.5,0),dpsNearAggro=C(.81,.72,.19),
+    showCastBar=true,showCastName=true,showCastTimer=true,castBarOffsetY=0,
+    castBarColor=C(.7,.4,.9),castBarUninterruptible=C(.45,.45,.45),interruptReady=C(.92,.35,.2),
+    castBarKickTint=true,castBarShieldEnabled=true,castBarSparkEnabled=true,
+    castBgColor=C(.1,.1,.1),castBgAlpha=.9,castIconPosition="left",
+    kickTickEnabled=true,kickTickColor=C(1,1,1),showInterruptedFlash=true,interruptedColor=C(.8,0,0),
+    hideEnemyNameWhileCasting=false,
+    targetEffect="glow",targetGlowColor=C(.41,.67,1),targetBorderColor=C(1,1,1),
+    showTargetArrows=false,targetArrowStyle="simple",targetArrowScale=1,targetArrowClassColor=false,targetArrowColor=C(1,1,1),
+    enableTargetColor=false,targetColor=C(.41,.67,1),targetTexture="none",targetScale=1,
+    hoverEffect="highlight",opacity=100,nonTargetAlpha=100,
+    hashLineEnabled=false,hashLinePercent=30,hashLineColor=C(1,1,1),
+    executeGlow=true,showClassPower=true,classPowerScale=1.8,
+    showAuras=true,showDebuffs=true,showBuffs=true,onlyPlayerDebuffs=true,buffHasDuration=true,
+    debuffSlot="top",buffSlot="left",auraSize=26,buffSize=24,auraSpacing=2,maxAuras=5,maxBuffs=4,
+    debuffYOffset=2,sideAuraXOffset=2,auraTimerPosition="topleft",
+    showRaidMarker=true,raidMarkerSlot="topright",raidMarkerSize=24,
+    showClassification=true,classificationSlot="topleft",classificationSize=20,
+    friendlyNameOnly=true,friendlyNameSize=15,hideEnemiesOutOfCombat=false,
 }
 ns.defaults=defaults
+ns.MAX_DEBUFFS,ns.MAX_BUFFS=8,6
 local states,active,pending={},false,false
 ns.plates=states
-local elapsed,scanElapsed,layoutVersion=0,0,0
+local elapsed,scanElapsed=0,0
+ns.layoutVersion=0
 local castCVarOriginal,pendingCVars
 local auraLib=LibStub and LibStub("LibAuraInfo-1.0-ElvUI",true)
 local syncingAuraCache=false
@@ -29,61 +55,8 @@ ns.auraLib=auraLib
 -- Class hints are cosmetic only; never use name/roster matches for auras or casts.
 local rosterClasses,observedClasses={},{}
 local marker="interface\\targetingframe\\ui-targetingframe-flash"
-local textures={flat="Interface\\Buttons\\WHITE8X8",blizzard="Interface\\TargetingFrame\\UI-StatusBar"}
-ns.textureValues,ns.textureOrder={flat="Flat",blizzard="Blizzard"},{"flat","blizzard"}
 function ns.GetSettings() return addon.db and addon.db.profile end
-local function Size(f,w,h) f:SetWidth(w); f:SetHeight(h) end
-local function Font(fs,size)
-    local flags=E.GetFontOutlineFlag and E.GetFontOutlineFlag("nameplates") or ""
-    fs:SetFont(E.GetFontPath("nameplates"),size,(flags:gsub(",?%s*SLUG","")))
-end
-local function Text(parent,size)
-    local fs=parent:CreateFontString(nil,"OVERLAY"); Font(fs,size); fs:SetTextColor(1,1,1)
-    return fs
-end
-local function Frame(parent)
-    local f=CreateFrame("Frame",nil,parent); f:EnableMouse(false); return f
-end
--- ElvUI-style look: translucent dark backdrop, thin dark border OUTSIDE the bar
--- (the old border sat behind the opaque bar and was never visible), soft palette.
-local BACKDROP,BORDER={.06,.06,.06,.8},{.1,.1,.1}
-local PALETTE={bad={.78,.25,.25},neutral={.85,.77,.36},good={.29,.69,.30},
-    friendlyPlayer={.31,.45,.63},tapped={.6,.6,.6},transition={.92,.64,.16},
-    cast={1,.81,0},castLocked={.78,.25,.25},glow={.3,.7,1}}
-local function Soften(r,g,b)
-    if r>.9 and g<.1 and b<.1 then return unpack(PALETTE.bad) end
-    if r>.9 and g>.9 and b<.1 then return unpack(PALETTE.neutral) end
-    if r<.1 and g>.9 and b<.1 then return unpack(PALETTE.good) end
-    if r<.1 and g<.1 and b>.9 then return unpack(PALETTE.friendlyPlayer) end
-    if math.abs(r-.5)<.05 and math.abs(g-.5)<.05 and math.abs(b-.5)<.05 then return unpack(PALETTE.tapped) end
-    return r,g,b
-end
-local function WithBorder(f)
-    local border=Frame(f); border:SetFrameLevel(math.max(0,f:GetFrameLevel()-1))
-    border:SetPoint("TOPLEFT",f,"TOPLEFT",-1,1); border:SetPoint("BOTTOMRIGHT",f,"BOTTOMRIGHT",1,-1)
-    f.border=border
-    local bg=f:CreateTexture(nil,"BACKGROUND"); bg:SetAllPoints(f); bg:SetTexture(textures.flat)
-    bg:SetVertexColor(BACKDROP[1],BACKDROP[2],BACKDROP[3],BACKDROP[4])
-    return f
-end
-local function Bar(parent)
-    local f=CreateFrame("StatusBar",nil,parent); f:EnableMouse(false)
-    f:SetStatusBarTexture(textures.flat); f:SetMinMaxValues(0,1)
-    return WithBorder(f)
-end
-local function Box(parent)
-    local f=WithBorder(Frame(parent))
-    f.tex=f:CreateTexture(nil,"ARTWORK"); f.tex:SetAllPoints(f); f.tex:SetTexCoord(.08,.92,.08,.92)
-    return f
-end
-local function Border(f,p,r,g,b)
-    local n=math.max(0,math.min(4,p.borderSize or 1))
-    local owner=f:GetParent()
-    f:ClearAllPoints()
-    f:SetPoint("TOPLEFT",owner,"TOPLEFT",-n,n); f:SetPoint("BOTTOMRIGHT",owner,"BOTTOMRIGHT",n,-n)
-    f:SetBackdrop(n>0 and {edgeFile=textures.flat,edgeSize=n} or nil)
-    f:SetBackdropBorderColor(r or BORDER[1],g or BORDER[2],b or BORDER[3],1)
-end
+function ns.IsActive() return active end
 local function Kind(object,kind)
     return object and object.GetObjectType and object:GetObjectType()==kind
 end
@@ -106,81 +79,44 @@ function ns.FindNativeParts(plate)
     return {health=health,cast=cast,threat=threat,border=border,castBorder=castBorder,
         shield=shield,icon=icon,highlight=highlight,name=name,level=level,boss=boss,raid=raid,elite=elite}
 end
-local function HideNative(s)
+function ns.HideNative(s)
     for region in pairs(s.originalAlpha) do region:SetAlpha(0) end
     -- The client's flash animation can overwrite alpha. Keep its threat state
-    -- and vertex colors, but render the warning on the owned health bar.
+    -- and vertex colors, but never let the old-size texture render.
     s.native.threat:SetTexture("")
 end
-local function ClearUnit(s)
+function ns.ClearUnit(s)
+    if s.isPreview then return end
     s.unit,s.guid,s.isTarget=nil,nil,false
     s.friendlyClass=nil
     s.auraGUID,s.auraName,s.auraVerified=nil,nil,nil
-    if s.aggro then s.aggro:Hide() end
+    s.flashUntil=nil
+    s.debuffList,s.buffList,s.auraDirty={},{},true
     if s.auras then for _,a in ipairs(s.auras) do a:Hide() end end
+    if s.buffs then for _,a in ipairs(s.buffs) do a:Hide() end end
 end
-local function Capture(plate,native)
-    local p=ns.GetSettings()
-    local s={native=native,plate=plate,originalAlpha={},auras={},originalThreatTexture=native.threat:GetTexture()}
-    states[plate]=s
-    for _,region in pairs(native) do
-        if region.GetAlpha and region.SetAlpha then s.originalAlpha[region]=region:GetAlpha() end
-    end
-    local root=Frame(plate); root:SetPoint("CENTER",plate,"CENTER",0,0)
-    Size(root,p.width,p.height); root:SetFrameLevel(plate:GetFrameLevel()+4); s.root=root
-    s.health=Bar(root); s.health:SetAllPoints(root)
-    s.aggro=Frame(s.health); s.aggro:SetAllPoints(s.health)
-    s.aggro:SetFrameLevel(s.health:GetFrameLevel()+2)
-    s.aggro:SetBackdrop({edgeFile=textures.flat,edgeSize=2}); s.aggro:Hide()
-    -- Target glow: two thin rings just outside the dark border (ElvUI "border" glow).
-    s.glowInner,s.glowOuter=Frame(root),Frame(root)
-    s.glowInner:SetFrameLevel(math.max(0,s.health:GetFrameLevel()-2)); s.glowInner:Hide()
-    s.glowOuter:SetFrameLevel(math.max(0,s.health:GetFrameLevel()-3)); s.glowOuter:Hide()
-    -- Name above-left, level above-right, health text centred on the bar.
-    s.name=Text(root,p.nameSize); s.name:SetPoint("BOTTOMLEFT",s.health,"TOPLEFT",0,3)
-    s.name:SetJustifyH("LEFT"); s.name:SetWordWrap(false)
-    s.level=Text(root,p.levelSize); s.level:SetPoint("BOTTOMRIGHT",s.health,"TOPRIGHT",0,3); s.level:SetJustifyH("RIGHT")
-    s.healthText=Text(s.health,p.healthTextSize); s.healthText:SetPoint("CENTER",s.health,"CENTER",0,0)
-    -- Cast bar under the health bar; bordered icon on the left spanning both bars; spark.
-    s.cast=Bar(root); s.cast:SetPoint("TOPLEFT",s.health,"BOTTOMLEFT",0,-4)
-    s.castText=Text(s.cast,p.castNameSize); s.castText:SetPoint("LEFT",s.cast,"LEFT",4,0); s.castText:SetJustifyH("LEFT")
-    s.castTimer=Text(s.cast,p.castTimerSize); s.castTimer:SetPoint("RIGHT",s.cast,"RIGHT",-4,0)
-    s.castSpark=s.cast:CreateTexture(nil,"OVERLAY"); s.castSpark:SetTexture("Interface\\CastingBar\\UI-CastingBar-Spark")
-    s.castSpark:SetBlendMode("ADD"); s.castSpark:SetWidth(14)
-    s.castSpark:SetPoint("CENTER",s.cast:GetStatusBarTexture(),"RIGHT",0,0)
-    s.castIcon=Box(root); s.castIcon:SetPoint("BOTTOMRIGHT",s.cast,"BOTTOMLEFT",-4,0)
-    s.raid=root:CreateTexture(nil,"OVERLAY"); s.raid:SetPoint("LEFT",s.health,"RIGHT",5,0)
-    s.hover=s.health:CreateTexture(nil,"OVERLAY")
-    s.hover:SetPoint("TOPLEFT",s.health,"TOPLEFT"); s.hover:SetPoint("BOTTOMRIGHT",s.health:GetStatusBarTexture(),"BOTTOMRIGHT")
-    s.hover:SetTexture(textures.flat); s.hover:SetVertexColor(1,1,1,.3)
-    for i=1,8 do
-        local a=Frame(root); a.icon=a:CreateTexture(nil,"ARTWORK"); a.icon:SetAllPoints(a); a.icon:SetTexCoord(.08,.92,.08,.92)
-        a.border=Frame(a); a.border:SetFrameLevel(math.max(0,a:GetFrameLevel()-1))
-        a.border:SetPoint("TOPLEFT",a,"TOPLEFT",-1,1); a.border:SetPoint("BOTTOMRIGHT",a,"BOTTOMRIGHT",1,-1)
-        a.border:SetBackdrop({edgeFile=textures.flat,edgeSize=1}); a.border:SetBackdropBorderColor(BORDER[1],BORDER[2],BORDER[3],1)
-        a.count=Text(a,p.auraStackTextSize); a.count:SetPoint("BOTTOMRIGHT",a,"BOTTOMRIGHT",1,0)
-        a.time=Text(a,p.auraDurationTextSize); a.time:SetPoint("CENTER",a,"CENTER",0,0)
-        a:Hide(); s.auras[i]=a
-    end
-    plate:HookScript("OnHide",function() ClearUnit(s); s.root:Hide() end)
-    plate:HookScript("OnShow",function() ClearUnit(s); if active then ns.Update() end end)
-    native.health:HookScript("OnValueChanged",function() if active and plate:IsShown() then ns.UpdateHealth(s) end end)
-    return s
-end
-local function Ratio(bar)
+function ns.Ratio(bar)
     local low,high=bar:GetMinMaxValues(); local value=bar:GetValue()
     if type(low)~="number" or type(high)~="number" or type(value)~="number" or high<=low then return 0 end
     return math.max(0,math.min(1,(value-low)/(high-low)))
 end
-local function Friendly(s)
+-- Native bar colors: red hostile, yellow neutral, green friendly NPC,
+-- blue friendly player, grey tapped; anything else is a native class color.
+function ns.NativeKind(s)
+    local r,g,b=s.native.health:GetStatusBarColor()
+    if math.abs(r-.5)<.05 and math.abs(g-.5)<.05 and math.abs(b-.5)<.05 then return "tapped" end
+    if r>.9 and g<.1 and b<.1 then return "hostile" end
+    if r>.9 and g>.9 and b<.1 then return "neutral" end
+    if r<.1 and g>.9 and b<.1 then return "friendlyNPC" end
+    if r<.1 and g<.1 and b>.9 then return "friendlyPlayer" end
+    return "class"
+end
+function ns.Friendly(s)
     if s.unit and UnitReaction then local r=UnitReaction("player",s.unit); if r then return r>=5 end end
-    local r,g,b=s.native.health:GetStatusBarColor()
-    return r<.01 and ((g>.99 and b<.01) or (b>.99 and g<.01))
+    local kind=ns.NativeKind(s)
+    return kind=="friendlyNPC" or kind=="friendlyPlayer"
 end
-local function NativeFriendlyPlayer(s)
-    local r,g,b=s.native.health:GetStatusBarColor()
-    return r<.01 and g<.01 and b>.99
-end
+local function NativeFriendlyPlayer(s) return ns.NativeKind(s)=="friendlyPlayer" end
 local function FriendlyUnitClass(unit)
     if not UnitExists(unit) or not UnitIsPlayer(unit) then return end
     local reaction=UnitReaction("player",unit)
@@ -231,28 +167,56 @@ local function ResolveFriendlyClasses()
         end
     end
 end
-local function Threat(s)
+-- Native glow: 3 red (securely tanking), 2 orange (tanking, not highest),
+-- 1 yellow (high threat). Identified units use the unit API instead.
+function ns.NativeThreat(s)
     local n=s.native.threat
     if not n or not n:IsShown() then return end
     local r,g,b=n:GetVertexColor()
     if r and r>0 then if g and g>0 then return b and b>0 and 1 or 2 end; return 3 end
 end
-function ns.UpdateHealth(s)
-    local p=ns.GetSettings(); if not p then return end
-    local ratio=Ratio(s.native.health); s.health:SetValue(ratio)
-    local r,g,b=Soften(s.native.health:GetStatusBarColor())
-    local classColor=p.friendlyHealthClassColored and s.friendlyClass and RAID_CLASS_COLORS[s.friendlyClass]
-    if classColor then r,g,b=classColor.r,classColor.g,classColor.b end
-    local status=not Friendly(s) and Threat(s)
-    if status and s.health:IsShown() then
-        local ar,ag,ab=s.native.threat:GetVertexColor()
-        s.aggro:SetBackdropBorderColor(ar,ag,ab,1); s.aggro:Show()
-    else s.aggro:Hide() end
-    local threat=p.threatColors and status
-    if threat==3 then if p.tankMode then r,g,b=unpack(PALETTE.good) else r,g,b=unpack(PALETTE.bad) end
-    elseif threat then r,g,b=unpack(PALETTE.transition) end
-    s.health:SetStatusBarColor(r,g,b)
-    s.healthText:SetText(p.showHealthText and string.format("%d%%",math.floor(ratio*100+.5)) or "")
+function ns.ThreatStatus(s)
+    if s.unit and UnitThreatSituation and UnitGUID(s.unit)==s.guid then
+        local status=UnitThreatSituation("player",s.unit)
+        if status then return status,UnitAffectingCombat and UnitAffectingCombat(s.unit) end
+    end
+    local status=ns.NativeThreat(s)
+    return status,status~=nil
+end
+local TANK_AURAS={71,5487,9634,25780,48263} -- Defensive Stance, Bear, Dire Bear, Righteous Fury, Frost Presence
+function ns.IsTank(p)
+    if p.threatRole=="tank" then return true elseif p.threatRole=="dps" then return false end
+    for _,id in ipairs(TANK_AURAS) do
+        local name=GetSpellInfo and GetSpellInfo(id)
+        if name and UnitAura("player",name) then return true end
+    end
+    return false
+end
+function ns.InGroup()
+    return (GetNumRaidMembers and GetNumRaidMembers() or 0)>0 or (GetNumPartyMembers and GetNumPartyMembers() or 0)>0
+end
+function ns.ThreatAllowed(p)
+    local mode=p.threatColorMode
+    if mode=="never" then return false end
+    if mode=="always" then return true end
+    local inside,kind=false,nil
+    if IsInInstance then inside,kind=IsInInstance() end
+    return inside and (kind=="party" or kind=="raid") or false
+end
+-- Retail threat palette, resolved for an enemy plate. Returns a color table or nil.
+function ns.ThreatColor(s,p)
+    if not ns.ThreatAllowed(p) then return end
+    local status,inCombat=ns.ThreatStatus(s)
+    if not status then return end
+    if ns.IsTank(p) then
+        if status>=3 then return p.classicTankAggro and p.tankHasAggro or nil end
+        if status==2 then return p.tankLosingAggro end
+        if inCombat then return p.tankNoAggro end
+        return
+    end
+    if not ns.InGroup() then return end
+    if status>=3 then return p.dpsHasAggro end
+    if status==2 then return p.dpsNearAggro end
 end
 local function MatchName(s,unit)
     local name=UnitName(unit); return name and name==s.native.name:GetText()
@@ -285,6 +249,7 @@ local function BindUnits()
     for _,s in pairs(states) do if s.unit and s.guid then owners[s.guid]=s end end
     for _,s in pairs(states) do
         if s.unit~=s.oldUnit or s.guid~=s.oldGUID then s.auraDirty=true end
+        if s.guid~=s.oldGUID then s.flashUntil=nil end
         if s.unit then s.auraGUID,s.auraName,s.auraVerified=s.guid,s.native.name:GetText(),true
         elseif not s.auraVerified or s.auraName~=s.native.name:GetText()
             or (s.auraGUID and owners[s.auraGUID] and owners[s.auraGUID]~=s) then
@@ -301,7 +266,9 @@ local function BindUnits()
         if s.auraGUID~=s.oldAuraGUID then s.auraDirty=true end
     end
 end
-local function CastInfo(s)
+-- Returns name, icon, seconds left, bar value, uninterruptible, duration, channel.
+function ns.CastInfo(s)
+    if s.previewCast then return unpack(s.previewCast) end
     if not s.unit or UnitGUID(s.unit)~=s.guid then return end
     local name,_,_,icon,startTime,endTime,_,_,locked=UnitCastingInfo(s.unit)
     local channel=false
@@ -309,23 +276,12 @@ local function CastInfo(s)
     if not name or not startTime or not endTime or endTime<=startTime then return end
     local duration=(endTime-startTime)/1000; local left=math.max(0,endTime/1000-GetTime())
     if left<=0 then return end
-    return name,icon,left,channel and left/duration or 1-left/duration,locked
+    return name,icon,left,channel and left/duration or 1-left/duration,locked,duration,channel
 end
-local function UpdateCast(s,p)
-    local name,icon,left,value,locked=CastInfo(s)
-    local visible=p.showCastBar and (name or s.native.cast:IsShown()) and not (p.friendlyNameOnly and Friendly(s))
-    if not visible then s.cast:Hide(); s.castIcon:Hide(); return end
-    s.cast:Show(); s.cast:SetValue(value or Ratio(s.native.cast))
-    local shield=s.native.shield and s.native.shield:IsShown()
-    if locked or shield then s.cast:SetStatusBarColor(unpack(PALETTE.castLocked)) else s.cast:SetStatusBarColor(unpack(PALETTE.cast)) end
-    s.castText:SetText(p.showCastName and name or "")
-    s.castTimer:SetText(p.showCastTimer and left and string.format("%.1f",left) or "")
-    icon=icon or (s.native.icon and s.native.icon:GetTexture())
-    if icon then s.castIcon.tex:SetTexture(icon); s.castIcon:Show() else s.castIcon:Hide() end
-end
-local function UpdateAuras(s,p)
-    for _,a in ipairs(s.auras) do a:Hide() end
-    if not p.showAuras or (p.friendlyNameOnly and Friendly(s)) then return end
+local function CollectAuras(s,p)
+    local debuffs,buffs={},{}
+    s.debuffList,s.buffList=debuffs,buffs
+    if not p.showAuras or (p.friendlyNameOnly and ns.Friendly(s)) then return end
     local direct=s.guid and s.unit and UnitGUID(s.unit)==s.guid
     local cached=auraLib and s.auraVerified and s.auraGUID
     if not direct and not cached then return end
@@ -338,10 +294,9 @@ local function UpdateAuras(s,p)
         syncingAuraCache=false
     end
     if cached then auraLib:GetNumGUIDAuras(s.auraGUID) end -- expires cached entries
-    local count=0
-    local limit=math.max(1,math.min(#s.auras,tonumber(p.maxAuras) or 6))
-    local function Add(filter)
+    local function Add(filter,list,limit)
         for i=1,40 do
+            if #list>=limit then return end
             local name,icon,stacks,duration,expires,caster,stealable,spellID,mine
             if direct then
                 local rank,dtype
@@ -357,92 +312,31 @@ local function UpdateAuras(s,p)
             local prefix=filter=="HARMFUL" and "debuff" or "buff"
             local include=filter~="HARMFUL" or not p.onlyPlayerDebuffs or mine
             if E.WrathAuraFilters then include=E.WrathAuraFilters.Allow(p,prefix,spellID,mine,duration,stealable) end
-            if include then
-                count=count+1; if count>limit then return end
-                local a=s.auras[count]; a.icon:SetTexture(icon)
-                a.count:SetText(stacks and stacks>1 and stacks or "")
-                local left=expires and expires>0 and expires-GetTime()
-                a.time:SetText(left and left>0 and tostring(math.ceil(left)) or "")
-                a:Show()
-            end
+            if include then list[#list+1]={icon=icon,stacks=stacks,expires=expires} end
         end
     end
-    if p.showDebuffs then Add("HARMFUL") end
-    if p.showBuffs and count<limit then Add("HELPFUL") end
+    local maxDebuffs=math.max(1,math.min(ns.MAX_DEBUFFS,tonumber(p.maxAuras) or 5))
+    local maxBuffs=math.max(1,math.min(ns.MAX_BUFFS,tonumber(p.maxBuffs) or 4))
+    if p.showDebuffs and p.debuffSlot~="none" then Add("HARMFUL",debuffs,maxDebuffs) end
+    -- Buffs are only interesting on enemies.
+    if p.showBuffs and p.buffSlot~="none" and not ns.Friendly(s) then Add("HELPFUL",buffs,maxBuffs) end
 end
-local function Layout(s,p)
-    local root=s.root
-    if s.layoutVersion~=layoutVersion then
-    s.layoutVersion=layoutVersion; s.auraDirty=true
-    root:ClearAllPoints(); root:SetPoint("CENTER",s.plate,"CENTER",0,p.yOffset)
-    Size(root,p.width,p.height)
-    Size(s.cast,p.width,p.castHeight)
-    local iconSize=p.height+p.castHeight+4; Size(s.castIcon,iconSize,iconSize)
-    s.castSpark:SetHeight(p.castHeight*2)
-    s.name:SetHeight(p.nameSize+3); s.nameKey=nil
-    s.castText:SetWidth(math.max(20,p.width-35))
-    s.health:SetStatusBarTexture(textures[p.healthBarTexture] or textures.flat)
-    s.cast:SetStatusBarTexture(textures[p.castBarTexture] or textures.flat)
-    Border(s.health.border,p); Border(s.cast.border,p); Border(s.castIcon.border,p)
-    do
-        local n=math.max(0,math.min(4,p.borderSize or 1))
-        s.glowInner:ClearAllPoints(); s.glowOuter:ClearAllPoints()
-        s.glowInner:SetPoint("TOPLEFT",s.health,"TOPLEFT",-(n+1),n+1); s.glowInner:SetPoint("BOTTOMRIGHT",s.health,"BOTTOMRIGHT",n+1,-(n+1))
-        s.glowOuter:SetPoint("TOPLEFT",s.health,"TOPLEFT",-(n+3),n+3); s.glowOuter:SetPoint("BOTTOMRIGHT",s.health,"BOTTOMRIGHT",n+3,-(n+3))
-        s.glowInner:SetBackdrop({edgeFile=textures.flat,edgeSize=1}); s.glowOuter:SetBackdrop({edgeFile=textures.flat,edgeSize=2})
-    end
-    Font(s.name,p.nameSize); Font(s.healthText,p.healthTextSize); Font(s.level,p.levelSize)
-    Font(s.castText,p.castNameSize); Font(s.castTimer,p.castTimerSize)
-    for i,a in ipairs(s.auras) do
-        Size(a,p.auraSize,p.auraSize); a:ClearAllPoints()
-        a:SetPoint("BOTTOMLEFT",s.name,"TOPLEFT",(i-1)*(p.auraSize+4)+1,4)
-        Font(a.count,p.auraStackTextSize); Font(a.time,p.auraDurationTextSize)
-    end
-    end
-    root:SetScale(s.isTarget and p.targetScale or 1)
-    root:SetAlpha(p.opacity/100*(UnitExists("target") and not s.isTarget and p.nonTargetAlpha/100 or 1))
-    s.name:SetText(s.native.name:GetText() or "")
-    local r,g,b=s.native.name:GetTextColor()
-    if p.classColoredNames and s.friendlyClass then
-        local color=RAID_CLASS_COLORS[s.friendlyClass]; if color then r,g,b=color.r,color.g,color.b end
-    elseif p.classColoredNames and s.unit and UnitIsPlayer(s.unit) then
-        local color=RAID_CLASS_COLORS[select(2,UnitClass(s.unit))]; if color then r,g,b=color.r,color.g,color.b end
-    end
-    s.name:SetTextColor(r,g,b)
-    local level=s.native.level:GetText() or "??"
-    s.level:SetTextColor(s.native.level:GetTextColor())
-    if s.native.boss and s.native.boss:IsShown() then level="??"
-    elseif s.native.elite and s.native.elite:IsShown() then level=level.."+" end
-    s.level:SetText(p.showLevel and level or "")
-    local nameOnly=p.friendlyNameOnly and Friendly(s)
-    if nameOnly then s.health:Hide(); s.level:Hide() else s.health:Show(); s.level:Show() end
-    local nameKey=nameOnly and "N" or (p.showLevel and math.floor((s.level:GetStringWidth() or 0)+.5) or 0)
-    if s.nameKey~=nameKey then
-        s.nameKey=nameKey
-        s.name:ClearAllPoints()
-        if nameOnly then
-            s.name:SetPoint("BOTTOM",s.health,"TOP",0,3); s.name:SetJustifyH("CENTER"); s.name:SetWidth(p.width)
-        else
-            s.name:SetPoint("BOTTOMLEFT",s.health,"TOPLEFT",0,3); s.name:SetJustifyH("LEFT")
-            s.name:SetWidth(math.max(20,p.width-(nameKey>0 and nameKey+6 or 0)))
-        end
-    end
-    if s.isTarget and p.showTargetBorder and not nameOnly then
-        s.glowInner:SetBackdropBorderColor(PALETTE.glow[1],PALETTE.glow[2],PALETTE.glow[3],.95)
-        s.glowOuter:SetBackdropBorderColor(PALETTE.glow[1],PALETTE.glow[2],PALETTE.glow[3],.35)
-        s.glowInner:Show(); s.glowOuter:Show()
-    else s.glowInner:Hide(); s.glowOuter:Hide() end
-    if p.showRaidMarker and s.native.raid and s.native.raid:IsShown() then
-        Size(s.raid,p.raidMarkerSize,p.raidMarkerSize); s.raid:SetTexture(s.native.raid:GetTexture())
-        s.raid:SetTexCoord(s.native.raid:GetTexCoord()); s.raid:Show()
-    else s.raid:Hide() end
-    if not nameOnly and s.native.highlight and s.native.highlight:IsShown() then s.hover:Show() else s.hover:Hide() end
-    HideNative(s); root:Show()
+-- Execute-range spells known by the player (rank-independent name lookup).
+local EXECUTE={WARRIOR={5308,.2},PALADIN={24275,.2},HUNTER={53351,.2},WARLOCK={1120,.25}}
+function ns.RefreshExecute()
+    ns.executeThreshold=nil
+    local class=select(2,UnitClass("player")); local entry=EXECUTE[class]
+    if not entry or not GetSpellInfo then return end
+    local name=GetSpellInfo(entry[1])
+    if name and GetSpellInfo(name) then ns.executeThreshold=entry[2] end
 end
 function ns.Scan()
     if not active then return end
     for _,plate in ipairs({WorldFrame:GetChildren()}) do
-        if not states[plate] then local native=ns.FindNativeParts(plate); if native then Capture(plate,native) end end
+        if not states[plate] then
+            local native=ns.FindNativeParts(plate)
+            if native then states[plate]=ns.Capture(plate,native) end
+        end
     end
 end
 function ns.Update()
@@ -451,37 +345,68 @@ function ns.Update()
     ResolveFriendlyClasses()
     for plate,s in pairs(states) do
         if plate:IsShown() then
-            Layout(s,p); ns.UpdateHealth(s); UpdateCast(s,p)
             if s.auraDirty or not s.auraTime or GetTime()-s.auraTime>=.15 then
-                s.auraDirty=false; s.auraTime=GetTime(); UpdateAuras(s,p)
+                s.auraDirty=false; s.auraTime=GetTime(); CollectAuras(s,p)
             end
+            ns.Paint(s,p)
         else s.root:Hide() end
     end
+end
+function ns.UpdateHealth(s)
+    local p=ns.GetSettings(); if p and active then ns.PaintHealth(s,p) end
 end
 function ns.Restore()
     active=false
     for _,s in pairs(states) do
-        ClearUnit(s); s.root:Hide()
+        ns.ClearUnit(s); s.root:Hide()
         for region,alpha in pairs(s.originalAlpha) do region:SetAlpha(alpha) end
         s.native.threat:SetTexture(s.originalThreatTexture)
     end
     if castCVarOriginal~=nil then SetCVar("showVKeyCastbar",castCVarOriginal); castCVarOriginal=nil end
 end
+local NATIVE_CVARS={nameplateShowEnemies=true,nameplateShowFriends=true,nameplateAllowOverlap=true,
+    ShowClassColorInNameplate=true,nameplateShowEnemyPets=true}
 function ns.SetNativeCVar(key,value)
-    if key~="nameplateShowEnemies" and key~="nameplateShowFriends" and key~="nameplateAllowOverlap" and key~="ShowClassColorInNameplate" then return end
+    if not NATIVE_CVARS[key] then return end
     if InCombatLockdown() then pendingCVars=pendingCVars or {}; pendingCVars[key]=value and "1" or "0"; return end
     SetCVar(key,value and "1" or "0")
 end
+-- "Hide Enemy Nameplates out of Combat": the CVar is only writable out of
+-- combat, so plates are revealed on REGEN_DISABLED before lockdown applies.
+local function ApplyCombatVisibility(inCombat)
+    local p=ns.GetSettings()
+    if not p or not p.enabled or not p.hideEnemiesOutOfCombat or InCombatLockdown() then return end
+    SetCVar("nameplateShowEnemies",inCombat and "1" or "0")
+end
+ns.ApplyCombatVisibility=ApplyCombatVisibility
+local function Migrate(p)
+    if p.threatColors==true then p.threatColorMode="always" end
+    if p.tankMode==true then p.threatRole="tank" end
+    if p.showTargetBorder==false then p.targetEffect="none" end
+    if p.borderSize==0 then p.showBorder,p.borderSize=false,1 end
+    p.threatColors,p.tankMode,p.showTargetBorder=nil,nil,nil
+end
+ns.Migrate=Migrate
 function ns.Apply()
     local p=ns.GetSettings(); if not p then return end
     if InCombatLockdown() then pending=true; return end
     pending=false
+    Migrate(p)
     if not p.enabled then ns.Restore(); return end
     if castCVarOriginal==nil then castCVarOriginal=GetCVar("showVKeyCastbar") end
     SetCVar("showVKeyCastbar","1")
-    active=true; layoutVersion=layoutVersion+1; ns.Scan(); ns.Update()
+    ApplyCombatVisibility(false)
+    for _,s in pairs(states) do s.auraDirty=true end
+    active=true; ns.layoutVersion=ns.layoutVersion+1; ns.Scan(); ns.Update()
 end
 ns.RefreshAllSettings=ns.Apply
+local function FlashInterrupted(unit)
+    local p=ns.GetSettings(); if not p or not p.showInterruptedFlash then return end
+    local guid=UnitGUID(unit); if not guid then return end
+    for _,s in pairs(states) do
+        if s.guid==guid then s.flashUntil=GetTime()+.6 end
+    end
+end
 function addon:OnInitialize()
     addon.db=E.Lite.NewDB("EllesmereUINameplatesDB",{profile=defaults}); ns.db=addon.db
     _G._ENP_RefreshAllSettings=ns.Apply
@@ -494,6 +419,7 @@ end
 function addon:OnEnable()
     if not addon.db then return end
     ns.RefreshFriendlyRoster()
+    ns.RefreshExecute()
     ns.Apply()
     if auraLib then
         for _,event in ipairs({"AURA_APPLIED","AURA_REMOVED","AURA_REFRESH","AURA_APPLIED_DOSE","AURA_CLEAR","UNIT_AURA"}) do
@@ -504,13 +430,19 @@ function addon:OnEnable()
         end
     end
     local f=CreateFrame("Frame"); ns.events=f
-    for _,event in ipairs({"PLAYER_ENTERING_WORLD","PLAYER_REGEN_ENABLED","PLAYER_TARGET_CHANGED","UPDATE_MOUSEOVER_UNIT","UNIT_AURA","PARTY_MEMBERS_CHANGED","RAID_ROSTER_UPDATE"}) do f:RegisterEvent(event) end
-    f:SetScript("OnEvent",function(_,event)
+    for _,event in ipairs({"PLAYER_ENTERING_WORLD","PLAYER_REGEN_ENABLED","PLAYER_REGEN_DISABLED","PLAYER_TARGET_CHANGED",
+        "UPDATE_MOUSEOVER_UNIT","UNIT_AURA","PARTY_MEMBERS_CHANGED","RAID_ROSTER_UPDATE","UNIT_SPELLCAST_INTERRUPTED",
+        "SPELLS_CHANGED","LEARNED_SPELL_IN_TAB"}) do f:RegisterEvent(event) end
+    f:SetScript("OnEvent",function(_,event,unit)
         if event=="PLAYER_REGEN_ENABLED" then
             for key,value in pairs(pendingCVars or {}) do SetCVar(key,value) end; pendingCVars=nil
             if pending then ns.Apply() end
-        elseif event=="PLAYER_ENTERING_WORLD" then observedClasses={}; ns.RefreshFriendlyRoster(); ns.Apply()
+            ApplyCombatVisibility(false)
+        elseif event=="PLAYER_REGEN_DISABLED" then ApplyCombatVisibility(true)
+        elseif event=="PLAYER_ENTERING_WORLD" then observedClasses={}; ns.RefreshFriendlyRoster(); ns.RefreshExecute(); ns.Apply()
         elseif event=="PARTY_MEMBERS_CHANGED" or event=="RAID_ROSTER_UPDATE" then ns.RefreshFriendlyRoster(); ns.Update()
+        elseif event=="SPELLS_CHANGED" or event=="LEARNED_SPELL_IN_TAB" then ns.RefreshExecute()
+        elseif event=="UNIT_SPELLCAST_INTERRUPTED" then if unit then FlashInterrupted(unit) end; ns.Update()
         else ns.Update() end
     end)
     f:SetScript("OnUpdate",function(_,dt)

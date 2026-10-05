@@ -258,21 +258,21 @@ assert lua.eval('''(function()
     playerClass = "MAGE"; book.spell = { "Fireball", "Counterspell", "Frostbolt" }
     E.RefreshKickAbility()
     assert(E.GetActiveKickSpell() == 3139, "link id")
-    assert(E.ComputeCastBarTint(ready, base) == 1, "off cd = ready")
+    assert(select(3, E.ComputeCastBarTint(ready, base)) == 1, "off cd = base")
     cooldowns.spell2 = { 50, 24, 1 }
-    assert(select(3, E.ComputeCastBarTint(ready, base)) == 1, "on cd = base")
+    assert(E.ComputeCastBarTint(ready, base) == 1, "on cd = interrupt-on-cd tint")
     cooldowns.spell2 = { 50, 1.5, 1 }
-    assert(E.ComputeCastBarTint(ready, base) == 1, "gcd = ready")
+    assert(select(3, E.ComputeCastBarTint(ready, base)) == 1, "gcd = base")
     playerClass = "WARLOCK"; book.spell = { "Shadow Bolt" }; book.pet = { "Devour Magic", "Spell Lock" }
     E.RefreshKickAbility()
     assert(E.GetActiveKickSpell() == 20647, "pet spell lock")
     cooldowns.pet2 = { 50, 24, 1 }
-    assert(select(3, E.ComputeCastBarTint(ready, base)) == 1, "pet cooldown read from pet book")
+    assert(E.ComputeCastBarTint(ready, base) == 1, "pet cooldown read from pet book")
     playerClass = "WARRIOR"; book.pet = {}; book.spell = { "Pummel", "Shield Bash" }
     E.RefreshKickAbility()
     usable["Shield Bash"] = true
     cooldowns.spell1 = { 50, 10, 1 }
-    assert(E.ComputeCastBarTint(ready, base) == 1, "usable shield bash wins")
+    assert(select(3, E.ComputeCastBarTint(ready, base)) == 1, "usable shield bash wins")
     assert(E.GetActiveKickSpell() == 1072)
     playerClass = "PALADIN"; E.RefreshKickAbility()
     assert(E.GetActiveKickSpell() == nil and select(3, E.ComputeCastBarTint(ready, base)) == 1)

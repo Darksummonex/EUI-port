@@ -434,9 +434,9 @@ local FONT_PATH   = (EllesmereUI.GetFontPath("extras"))
 -- At very low UI scale the overlays/top bar are hard to read, so they're nudged up.
 -- The `UIParent:GetEffectiveScale() < 0.6` test is inlined at each use site (not a
 -- helper) because overlay builders are already at Lua 5.1's 60-upvalue limit.
-local LOCK_INNER  = "Interface\\AddOns\\EllesmereUI\\media\\eui-unlocked-inner-2.png"
-local LOCK_OUTER  = "Interface\\AddOns\\EllesmereUI\\media\\eui-unlocked-outer-2.png"
-local LOCK_TOP    = "Interface\\AddOns\\EllesmereUI\\media\\eui-unlocked-top-2.png"
+local LOCK_INNER  = "Interface\\AddOns\\EllesmereUI\\media\\unlock_335\\eui-unlocked-inner-2.tga"
+local LOCK_OUTER  = "Interface\\AddOns\\EllesmereUI\\media\\unlock_335\\eui-unlocked-outer-2.tga"
+local LOCK_TOP    = "Interface\\AddOns\\EllesmereUI\\media\\unlock_335\\eui-unlocked-top-2.tga"
 local GRID_SPACING = 32          -- pixels between grid lines
 local SNAP_THRESH  = 6            -- px distance to trigger snap-to-element
 local MOVER_ALPHA  = 0.55        -- resting alpha for mover overlays
@@ -5686,7 +5686,7 @@ local function CreateGrid(parent)
     local LIGHT_DIAMETER = LIGHT_RADIUS * 2
     local LIGHT_BOOST    = 0.55
     local NUM_SEGS       = 5
-    local FLASH_PATH = "Interface\\AddOns\\EllesmereUI\\media\\unlock-flash.png"
+    local FLASH_PATH = "Interface\\AddOns\\EllesmereUI\\media\\unlock_335\\unlock-flash.tga"
 
     -- Ambient glow texture (soft circle behind lines)
     local flashTex = gridFrame:CreateTexture(nil, "BACKGROUND", nil, -8)
@@ -9371,10 +9371,10 @@ local function CreateMover(barKey)
     --  Action toolbar: cog settings button only
     --  Cog is flush with mover's top-right corner.
     ---------------------------------------------------------------------------
-    local ICON_PATH = "Interface\\AddOns\\EllesmereUI\\media\\icons\\"
-    local ARROW_ICON  = ICON_PATH .. "eui-arrow.png"
-    local ARROW_RIGHT_ICON = ICON_PATH .. "right-arrow.png"
-    local COGS_ICON   = EllesmereUI.COGS_ICON or (ICON_PATH .. "cogs-3.png")
+local ICON_PATH = "Interface\\AddOns\\EllesmereUI\\media\\icons_335\\"
+local ARROW_ICON  = ICON_PATH .. "eui-arrow.tga"
+local ARROW_RIGHT_ICON = ICON_PATH .. "right-arrow.tga"
+local COGS_ICON   = EllesmereUI.COGS_ICON or (ICON_PATH .. "cogs-3.tga")
     local ACT_SZ = 22       -- cog button size
     local ACT_PAD = 3       -- gap between cog and dropdown
     local DD_W = 150        -- dropdown width
@@ -10928,7 +10928,7 @@ local function CreateMover(barKey)
                 and EllesmereUI._OverrideAnchorGroups
                 and EllesmereUI._OverrideAnchorGroups() or nil
             if ovGroups then
-                local OV_ARROW = "Interface\\AddOns\\EllesmereUI\\media\\icons\\right-arrow.png"
+                local OV_ARROW = "Interface\\AddOns\\EllesmereUI\\media\\icons_335\\right-arrow.tga"
                 local ovOpenSub  -- only one override subnav open at a time
 
                 local function OvSubRow(sub, rsY, text, onClick)
@@ -11259,13 +11259,13 @@ end
 --  pixel-perfect at native resolution, flush with top of screen. Grid + magnet
 --  toggle icons overlaid on top. Slides down during the SHACKLE animation phase.
 -------------------------------------------------------------------------------
-local GRID_ICON       = "Interface\\AddOns\\EllesmereUI\\media\\icons\\grid.png"
-local MAGNET_ICON     = "Interface\\AddOns\\EllesmereUI\\media\\icons\\magnet.png"
-local FLASHLIGHT_ICON = "Interface\\AddOns\\EllesmereUI\\media\\icons\\flashlight.png"
-local HOVER_ICON      = "Interface\\AddOns\\EllesmereUI\\media\\icons\\hover.png"
-local DARK_OVERLAY_ICON = "Interface\\AddOns\\EllesmereUI\\media\\icons\\dark-overlay.png"
-local COORD_ICON      = "Interface\\AddOns\\EllesmereUI\\media\\icons\\coordinates.png"
-local BANNER_TEX      = "Interface\\AddOns\\EllesmereUI\\media\\eui-unlocked-banner-2.png"
+local GRID_ICON       = "Interface\\AddOns\\EllesmereUI\\media\\icons_335\\grid.tga"
+local MAGNET_ICON     = "Interface\\AddOns\\EllesmereUI\\media\\icons_335\\magnet.tga"
+local FLASHLIGHT_ICON = "Interface\\AddOns\\EllesmereUI\\media\\icons_335\\flashlight.tga"
+local HOVER_ICON      = "Interface\\AddOns\\EllesmereUI\\media\\icons_335\\hover.tga"
+local DARK_OVERLAY_ICON = "Interface\\AddOns\\EllesmereUI\\media\\icons_335\\dark-overlay.tga"
+local COORD_ICON      = "Interface\\AddOns\\EllesmereUI\\media\\icons_335\\coordinates.tga"
+local BANNER_TEX      = "Interface\\AddOns\\EllesmereUI\\media\\unlock_335\\eui-unlocked-banner-2.tga"
 
 local HUD_ON_ALPHA  = 0.60
 local HUD_OFF_ALPHA = 0.30
@@ -13331,20 +13331,20 @@ function ns.OpenUnlockMode()
         local ov = EllesmereUI._specialUnlockGroup and "-override" or ""
         if hudFrame and hudFrame._bannerTex then
             hudFrame._bannerTex:SetTexture(
-                "Interface\\AddOns\\EllesmereUI\\media\\eui-unlocked-banner-2" .. ov .. ".png")
+                "Interface\\AddOns\\EllesmereUI\\media\\unlock_335\\eui-unlocked-banner-2" .. ov .. ".tga")
         end
         if openAnimFrame then
             if openAnimFrame._outer then
                 openAnimFrame._outer:SetTexture(
-                    "Interface\\AddOns\\EllesmereUI\\media\\eui-unlocked-outer-2" .. ov .. ".png")
+                    "Interface\\AddOns\\EllesmereUI\\media\\unlock_335\\eui-unlocked-outer-2" .. ov .. ".tga")
             end
             if openAnimFrame._inner then
                 openAnimFrame._inner:SetTexture(
-                    "Interface\\AddOns\\EllesmereUI\\media\\eui-unlocked-inner-2" .. ov .. ".png")
+                    "Interface\\AddOns\\EllesmereUI\\media\\unlock_335\\eui-unlocked-inner-2" .. ov .. ".tga")
             end
             if openAnimFrame._top then
                 openAnimFrame._top:SetTexture(
-                    "Interface\\AddOns\\EllesmereUI\\media\\eui-unlocked-top-2" .. ov .. ".png")
+                    "Interface\\AddOns\\EllesmereUI\\media\\unlock_335\\eui-unlocked-top-2" .. ov .. ".tga")
             end
         end
     end

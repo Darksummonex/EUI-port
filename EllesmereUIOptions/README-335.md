@@ -1,4 +1,37 @@
-# Options 3.3.5 — 0.53
+# Options 3.3.5 — 0.57
+
+0.57: a pré-visualização de Nameplates não some mais ao trocar de aba ou
+fechar o painel (o cache do cabeçalho escondia a placa e ninguém a redesenhava).
+Como no Retail, ela fica só na página Display, e cada elemento é clicável:
+barra de vida, barra/ícone/nome/tempo do lançamento, nome, vida %, nível,
+marcador, classificação, setas, recurso de classe, auras e seus textos rolam
+até a opção correspondente e a destacam em verde. Os elementos de slot seguem o
+slot onde estão (Core Positions / Core Text Positions). A dica "Click elements
+to scroll to and highlight their options" aparece até o primeiro clique.
+
+0.56: opções de Nameplates no estilo Retail. As páginas Display e Colors agora
+têm o cabeçalho com uma placa de pré-visualização ao vivo (o mesmo renderizador
+das placas reais, com auras, barra de lançamento, marcador e caveira de exemplo)
+que se atualiza a cada alteração. As cores ficam em amostras inline ao lado dos
+controles (borda, fundos, interrompível/kick, alvo, setas, hash line, chefes,
+elites, ameaça de tanque/não-tanque), e as engrenagens inline abrem os tamanhos
+e deslocamentos (spell name, cast timer, setas, recurso de classe, nome amigo e
+cada texto). CORE POSITIONS e CORE TEXT POSITIONS funcionam como no Retail:
+cada slot escolhe um elemento, "(one per slot)", escolher um elemento já usado
+libera o slot anterior, a engrenagem de cada slot redimensiona o elemento que
+estiver nele e os olhos de marcador/classificação ocultam o elemento só na
+pré-visualização. Border virou dropdown Basic/None + Border Size (1–4); fundo
+e fundo da barra de lançamento são opacidade 0–100 com amostra de cor.
+
+Não portado: a lista de elementos extras do Retail para os slots (ícones de
+quest, pets de batalha) — esses dados não existem no 3.3.5.
+
+0.55: `EUI_Nameplates_335_Options.lua` reescrito com as páginas Retail Display,
+Colors, General e Aura Filters (seções STYLE, CORE POSITIONS, CORE TEXT
+POSITIONS, HEALTH AND CAST BAR, CAST COLORS AND EFFECTS, TARGET, FOCUS & HOVER
+EFFECTS, CLASS RESOURCE, GENERAL TEXT; ENEMY/THREAT/OTHER COLORS; OTHER
+NAMEPLATES, NAMEPLATE SPACING, EXTRA AURA OPTIONS, TARGET AND FOCUS EFFECTS,
+EXTRAS). O card Nameplates de Textures aponta para Display > STYLE.
 
 0.53: nova página Party Mode (`EUI_PartyMode_335_Options.lua`), cópia da
 Retail com gatilhos Wrath (Heroic/Normal Boss Kill, Rated Arena Win,

@@ -100,14 +100,25 @@ local function KickReady(c)
     return duration <= GCD_MAX
 end
 
+-- readyTint is the Retail "interruptReady" swatch, labelled "Interrupt on CD":
+-- it shows while the kick is cooling down; an available kick keeps baseTint.
 local function ComputeCastBarTint(readyTint, baseTint)
     local c = CurrentKick()
     if not c then return baseTint.r, baseTint.g, baseTint.b end
     activeKickSpell = c.id
     if KickReady(c) then
-        return readyTint.r, readyTint.g, readyTint.b
+        return baseTint.r, baseTint.g, baseTint.b
     end
-    return baseTint.r, baseTint.g, baseTint.b
+    return readyTint.r, readyTint.g, readyTint.b
+end
+
+-- Seconds until the current kick is usable (0 = ready), or nil without one.
+EllesmereUI.GetKickCooldownRemaining = function()
+    local c = CurrentKick()
+    if not c then return nil end
+    if KickReady(c) then return 0 end
+    local start, duration = GetSpellCooldown(c.slot, c.book)
+    return math.max(0, (start or 0) + (duration or 0) - GetTime())
 end
 
 EllesmereUI.GetActiveKickSpell = function()

@@ -74,7 +74,8 @@ for file in source.iterdir():
 execute('EllesmereUINameplates/Libs/LibAuraInfo-1.0/LibAuraInfo-1.0.lua')
 execute('EllesmereUINameplates/Libs/LibAuraInfo-1.0/spellIdData.lua')
 ns = lua.table()
-lua.eval('function(s) return assert(loadstring(s)) end')((root / 'EllesmereUINameplates/EUI_Nameplates_335.lua').read_text())('EllesmereUINameplates', ns)
+for name in ('EUI_Nameplates_335.lua', 'EUI_Nameplates_335_Display.lua'):
+    lua.eval('function(s) return assert(loadstring(s)) end')((root / 'EllesmereUINameplates' / name).read_text())('EllesmereUINameplates', ns)
 lua.globals().NP = ns
 ns.addon.OnInitialize(ns.addon)
 ns.addon.OnEnable(ns.addon)

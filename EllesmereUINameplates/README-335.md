@@ -1,3 +1,70 @@
+# Nameplates 3.3.5 — 0.10
+
+0.10: a placa de pré-visualização ignora o OnHide do cache do cabeçalho e se
+redesenha no OnShow; mostra 3 pontos de combo de exemplo para qualquer classe.
+Border None agora esconde só as bordas: antes escondia também o texto, o tempo,
+o escudo e a marca de kick da barra de lançamento.
+
+0.9: suporte às opções no estilo Retail. Novo slot `bottom` (abaixo da barra
+de lançamento) para auras, marcador e classificação; `showBorder` liga/desliga
+a borda (perfis com Border Size 0 migram para borda desligada com tamanho 1);
+`ns.CreatePreview`/`ns.PaintPreview` desenham a placa de exemplo do cabeçalho
+das opções com o renderizador real, sem entrar na lista de placas vivas e sem
+ser limpa pela reciclagem; `ns.previewHidden` atende aos olhos das opções.
+
+0.8: visual Retail do EllesmereUI portado sobre as placas nativas do Wrath. A
+identificação (alvo/mouseover únicos), o cache de auras por GUID, as dicas de
+classe, o adiamento em combate e a restauração continuam iguais. O TOC agora
+carrega EUI_Nameplates_335.lua (dados, eventos, Apply) e
+EUI_Nameplates_335_Display.lua (construção e pintura). As artes Retail foram
+convertidas para TGA potência de dois em Media_335 (fundo do glow, execute glow,
+escudo, 6 texturas listradas e as 16 setas); os PNG originais seguem intactos.
+
+- Padrões Retail: barra 150x17, fundo .12, borda interna de 1 px (.067), nome
+  centralizado acima, vida % à direita, nível à esquerda. Posições de texto
+  configuráveis (Top/Left/Right/Center: nome, vida %, nível ou nada).
+- Cores Retail: inimigo, neutro, tapped, boss (caveira nativa), elite em
+  instâncias, jogador/NPC aliado, classe do jogador inimigo pela cor nativa.
+- Ameaça Retail: modo Never/In Instances/Always, papel Auto (Defensive Stance,
+  Bear/Dire Bear, Righteous Fury, Frost Presence)/Tank/Non-Tank, cores de tank
+  e não-tank, Classic Tank Aggro, canais vida/borda/nome. Placas anônimas usam
+  o brilho nativo; alvo/mouseover identificados usam UnitThreatSituation.
+- Cast Retail: roxo, "Interrupt on CD" enquanto o kick recarrega (via
+  E.ComputeCastBarTint), cinza com escudo quando não interrompível, spark,
+  fundo .1/.9, ícone fora da barra (esquerda/direita/nenhum), marca do kick no
+  ponto em que ele volta (E.GetKickCooldownRemaining), flash vermelho
+  "Interrupted" (UNIT_SPELLCAST_INTERRUPTED) e opção de esconder o nome durante
+  o cast.
+- Efeitos de alvo: EUI Glow 9-slice, cor de borda ou highlight; setas (16
+  estilos, escala, cor ou cor da classe); cor de alvo; textura listrada no
+  preenchimento; escala do alvo; highlight de mouseover; hash line em % no alvo.
+- Execute Pulse Glow: Execute, Hammer of Wrath e Kill Shot a 20%, Drain Soul a
+  25% (apenas se a magia estiver no grimório).
+- Auras: debuffs centralizados acima do nome (26 px) e buffs inimigos à esquerda
+  (24 px), slots configuráveis, espaçamento/offsets, tempo no canto superior
+  esquerdo, stacks embaixo à direita. Raid marker (24) e ícone de boss (20) em
+  slots próprios.
+- Class Resource: combo points sob a placa do alvo (Rogue/Druid).
+- General: Friendly Name Only ligado por padrão com tamanho 15, Show Enemy Pet
+  Nameplates, Stacking Nameplates (inverso de nameplateAllowOverlap), Hide Enemy
+  Nameplates out of Combat (CVar trocado em REGEN_DISABLED/ENABLED).
+- Opções reorganizadas como no Retail: Display, Colors, General e Aura Filters.
+  Perfis antigos migram threatColors -> threatColorMode "always", tankMode ->
+  threatRole "tank" e showTargetBorder=false -> targetEffect "none". O card de
+  Textures agora aponta para Display > STYLE.
+- Correção junto com o port: a cor "Interrupt on CD" em EllesmereUI_Kick_335.lua
+  estava invertida em relação ao Retail.
+
+Não portado (motivo): focus (placas Wrath não identificam o focus), absorções
+(sem API), cor de mobs de quest e ícone de objetivo (sem dados de quest por
+placa), casts importantes/M+, glows de dispel/pandemic e CC lockout (exigem auras
+de todas as placas), alcance/linha de visão e "Darken Out of Combat" (sem unidade
+por placa), cor por tipo de caster, faction badge, estilos Blizzard/Classic e
+bordas customizadas (dependem de atlas/arte Retail), hitbox e friendly
+click-through (a área de clique é do cliente), threat %, ícone elite dourado
+(atlas Retail; elites mostram "+" no nível) e Unlock Mode (Retail também não
+registra elementos de nameplate).
+
 # Nameplates 3.3.5 — 0.7
 
 0.7: ElvUI-style look (rendering only; unit binding, auras and filters unchanged).
