@@ -39,6 +39,17 @@ local windows={
     -- Frostmourne Rebuffed ships these as part of its own FrameXML.
     {id="collections",key="reskinCollections",label="Collections",frames={"CollectionsJournal"}},
     {id="transmog",key="reskinTransmog",label="Wardrobe & Transmog",frames={"WardrobeFrame"}},
+    {id="barber",key="reskinBarber",label="Barber Shop",frames={"BarberShopFrame"}},
+    {id="pvp",key="reskinPvP",label="PvP, Battlemasters & Arena Registrar",frames={"PVPParentFrame","BattlefieldFrame","ArenaFrame","ArenaRegistrarFrame","PVPBannerFrame"},classic=true},
+    {id="battleground",key="reskinBattleground",label="Battleground Score & Minimap",frames={"WorldStateScoreFrame","BattlefieldMinimap","BattlefieldMinimapTab"}},
+    {id="help",key="reskinHelp",label="Help & GM Requests",frames={"RebuffedHelpFrame","HelpFrame","GMSurveyFrame","TicketStatusFrame"}},
+    {id="timers",key="reskinTimers",label="Breath/Fatigue Timers & Stopwatch",frames={"MirrorTimer1","MirrorTimer2","MirrorTimer3","StopwatchFrame","TimeManagerFrame"}},
+    {id="debugtools",key="reskinDebugTools",label="Debug Tools",frames={"ScriptErrorsFrame","EventTraceFrame"}},
+    -- Painted by EUI_SkinExtras_335.lua; listed here for the toggle and profile kill switch.
+    {id="raidpullout",key="reskinRaidPullouts",label="Raid Pullouts",frames={}},
+    {id="capturebar",key="reskinCaptureBar",label="Battleground Capture Bar",frames={}},
+    {id="gmstatus",key="reskinGMStatus",label="GM Chat Status",frames={}},
+    {id="ace3",key="reskinAce3",label="Ace3 Config Windows",frames={}},
 }
 ns.extras={}
 ns.windows=windows
@@ -56,6 +67,7 @@ local function Killed()
     return p and p.disableWindowSkins or false
 end
 E.BlizzWindowSkinsKilled=Killed
+function ns.WindowSkinEnabled(key) return ns.GetValue(key)~=false and not Killed() end
 function E.GetBlizzWindowStyle(id)
     for _,spec in ipairs(windows) do if spec.id==id then return not Killed() and ns.GetValue(spec.key)~=false and "eui" or "off" end end
     return "off"
@@ -158,7 +170,8 @@ for _,name in ipairs({"PaperDollFrame","PetPaperDollFrame","CharacterAttributesF
     "InterfaceOptionsFrameCategoriesList","InterfaceOptionsFrameAddOnsList",
     "AchievementFrameSummary","AchievementFrameSummaryCategoriesHeader","AchievementFrameSummaryAchievementsHeader",
     "AchievementFrameStatsBG","AchievementFrameAchievements","AchievementFrameComparison",
-    "AchievementFrameComparisonHeader","AchievementFrameComparisonSummaryPlayer","AchievementFrameComparisonSummaryFriend"}) do chromeFrames[name]=true end
+    "AchievementFrameComparisonHeader","AchievementFrameComparisonSummaryPlayer","AchievementFrameComparisonSummaryFriend",
+    "PVPFrame","PVPBattlegroundFrame","ArenaRegistrarGreetingFrame","ArenaRegistrarPurchaseFrame","StopwatchTabFrame"}) do chromeFrames[name]=true end
 local function Content(region,path)
     local name=region.GetName and region:GetName() or ""
     return path:find("interface\\icons\\",1,true) or path:find("interface\\worldmap\\",1,true) and not path:find("ui-worldmap",1,true)
@@ -166,7 +179,9 @@ local function Content(region,path)
         -- Native TaxiFrame continent art is Interface\TaxiFrame\TAXIMAP<n>, not WorldMap tiles.
         or path:find("interface\\taxiframe\\taximap",1,true) or name=="TaxiMap"
         or name and (name:find("Portrait",1,true) or name:find("TradeHighlight",1,true)
-            or name:find("Icon",1,true) or name:find("Arrow",1,true))
+            or name:find("Icon",1,true) or name:find("Arrow",1,true)
+            -- Honor/arena currency symbols and arena team banner emblems.
+            or name:find("Symbol",1,true) or name:find("Emblem",1,true))
 end
 local function Decor(region,root)
     if not Kind(region,"Texture") then return false end
@@ -212,7 +227,8 @@ local function CheckBox(s,button,d,r,g,b)
 end
 local sheetFrames={PaperDollFrame=true,PetPaperDollFrame=true,ReputationFrame=true,SkillFrame=true,TokenFrame=true,
     QuestFrameDetailPanel=true,QuestFrameProgressPanel=true,QuestFrameRewardPanel=true,QuestFrameGreetingPanel=true,
-    GossipFrameGreetingPanel=true,SendMailFrame=true}
+    GossipFrameGreetingPanel=true,SendMailFrame=true,PVPFrame=true,PVPBattlegroundFrame=true,
+    ArenaRegistrarGreetingFrame=true,ArenaRegistrarPurchaseFrame=true}
 local function InnerPanel(s,frame)
     if not frame.GetBackdrop then return end
     local d=s.insets[frame]
@@ -225,6 +241,15 @@ local function InnerPanel(s,frame)
         if s.panel and sheetFrames[frame:GetName()] then
             d.panel:ClearAllPoints(); d.panel:SetPoint("TOPLEFT",s.panel,"TOPLEFT",3,-4)
             d.panel:SetPoint("BOTTOMRIGHT",s.panel,"BOTTOMRIGHT",-3,3)
+        end
+        -- UIDropDownMenuTemplate frames include the label art's transparent
+        -- margins, so a full-frame panel overhangs the window. Frame only the
+        -- visible box, which ends at the arrow button.
+        local name=frame:GetName()
+        local arrow=name and name:find("DropDown$") and _G[name.."Button"]
+        if arrow and arrow.GetParent and arrow:GetParent()==frame then
+            d.panel:ClearAllPoints(); d.panel:SetPoint("TOPLEFT",frame,"TOPLEFT",17,-1)
+            d.panel:SetPoint("BOTTOMRIGHT",arrow,"BOTTOMRIGHT",0,0)
         end
         frame:HookScript("OnShow",function() dirty=true end)
         frame:HookScript("OnHide",function() dirty=true end)
@@ -280,7 +305,7 @@ local function Button(s,button)
         if button[getter] then local texture=button[getter](button); if texture~=icon then Fade(s,texture) end end
     end
     if tab then
-        for _,region in ipairs({button:GetRegions()}) do if Kind(region,"Texture") and region~=icon then Fade(s,region) end end
+        for _,region in ipairs({button:GetRegions()}) do if Kind(region,"Texture") and region~=icon and not owned[region] then Fade(s,region) end end
     elseif button.GetHighlightTexture then
         local highlight=button:GetHighlightTexture()
         if highlight then TextureStyle(s,highlight,1,1,1,.1) end
@@ -388,6 +413,40 @@ local function TaxiMapContent(s)
     end
     map:SetDrawLayer("ARTWORK")
 end
+local function BattlefieldMinimapContent(s)
+    if s.frame~=_G.BattlefieldMinimap then return end
+    -- Tiles share BACKGROUND with the panel fill; BORDER keeps them above it
+    -- and below the ARTWORK fog/POI overlays.
+    s.mapLayers=s.mapLayers or {}
+    for i=1,(NUM_WORLDMAP_DETAIL_TILES or 12) do
+        local tile=_G["BattlefieldMinimap"..i]
+        if Kind(tile,"Texture") then
+            if not s.mapLayers[tile] then local layer,sublevel=tile:GetDrawLayer(); s.mapLayers[tile]={layer=layer,sublevel=sublevel} end
+            tile:SetDrawLayer("BORDER")
+        end
+    end
+    local options=_G.BattlefieldMinimapOptions
+    local opacity=math.max(0,math.min(1,options and tonumber(options.opacity) or 0))
+    s.panel:SetBackdropColor(.08,.08,.08,.95*(1-opacity))
+end
+local function MirrorTimerContent(s)
+    local name=s.frame:GetName() or ""
+    if not name:find("^MirrorTimer%d$") then return end
+    local bar=_G[name.."StatusBar"]
+    if not bar or not bar.GetStatusBarTexture then return end
+    -- The native bar sits at its parent's frame level, so a fill on the
+    -- parent could cover it. Fill the bar's own BACKGROUND instead.
+    s.panel.background:SetAlpha(0)
+    if not s.barBg then
+        s.barBg=bar:CreateTexture(nil,"BACKGROUND"); owned[s.barBg]=true; s.barBg:SetTexture(flat); s.barBg:SetAllPoints(bar)
+        s.barBg:SetVertexColor(.04,.04,.04,.9)
+    end
+    s.barBg:Show()
+    s.statusBars=s.statusBars or {}
+    if not s.statusBars[bar] then local texture=bar:GetStatusBarTexture(); s.statusBars[bar]=texture and texture:GetTexture() or "Interface\\TargetingFrame\\UI-StatusBar" end
+    bar:SetStatusBarTexture(flat)
+    s.panel:ClearAllPoints(); s.panel:SetPoint("TOPLEFT",bar,"TOPLEFT",-2,2); s.panel:SetPoint("BOTTOMRIGHT",bar,"BOTTOMRIGHT",2,-2)
+end
 -- WorldMapFrame keeps one large rectangle across windowed, full and quest
 -- views. Fit the fill to the visible map, controls and quest panes instead.
 local mapBounds={"WorldMapDetailFrame","WorldMapFrameTitle","WorldMapFrameCloseButton","WorldMapFrameSizeUpButton",
@@ -481,6 +540,8 @@ end
 local function Restore(s)
     RestoreGlyphContent(s)
     RestoreMapLayers(s)
+    for bar,path in pairs(s.statusBars or {}) do bar:SetStatusBarTexture(path) end
+    if s.barBg then s.barBg:Hide() end
     if ns.RestoreCharacter and s.frame==_G.CharacterFrame then ns.RestoreCharacter(s) end
     s.active=false
     if s.panel then s.panel:Hide() end
@@ -535,17 +596,35 @@ local function TalentTabs(s)
         local tab=entry.tab; Save(tab); tab:ClearAllPoints(); tab:SetPoint("BOTTOMLEFT",s.frame,"BOTTOMLEFT",8+entry.x,6+(row-entry.row)*30)
         tab:SetWidth(entry.width); tab:SetHeight(26)
     end
-    local bar=_G.PlayerTalentFramePointsBar
-    if #entries>0 and bar then Save(bar); bar:ClearAllPoints(); bar:SetPoint("BOTTOMLEFT",s.frame,"BOTTOMLEFT",8,36+row*30); bar:SetPoint("BOTTOMRIGHT",s.frame,"BOTTOMRIGHT",-8,36+row*30) end
     -- The fill stops above the tab row and left of the dual-spec tabs, which
     -- hang off the art's right edge (TOPRIGHT -32) outside the window.
     local right=-32
     local spec,frameRight=_G.PlayerSpecTab1,s.frame:GetRight()
     local specLeft=spec and spec:IsShown() and spec:GetLeft()
     if specLeft and frameRight then right=math.min(-4,specLeft-frameRight-2) end
+    -- Close button and points footer end at the talent scroll bar's right edge.
+    local limit=right-5
+    local scrollBar=_G.PlayerTalentFrameScrollFrameScrollBar
+    local barRight=scrollBar and scrollBar:GetRight()
+    if barRight and frameRight then limit=math.min(right-2,barRight-frameRight) end
+    local bar=_G.PlayerTalentFramePointsBar
+    if #entries>0 and bar then Save(bar); bar:ClearAllPoints(); bar:SetPoint("BOTTOMLEFT",s.frame,"BOTTOMLEFT",8,36+row*30); bar:SetPoint("BOTTOMRIGHT",s.frame,"BOTTOMRIGHT",limit,36+row*30) end
+    local close=_G.PlayerTalentFrameCloseButton
+    if close then
+        Save(close)
+        if not s.closeTop then local ft,ct=s.frame:GetTop(),close:GetTop(); s.closeTop=ft and ct and ct-ft or -8 end
+        close:ClearAllPoints(); close:SetPoint("TOPRIGHT",s.frame,"TOPRIGHT",limit,s.closeTop)
+    end
     s.panel:ClearAllPoints(); s.panel:SetPoint("TOPLEFT",s.frame,"TOPLEFT",4,-4)
     s.panel:SetPoint("BOTTOMRIGHT",s.frame,"BOTTOMRIGHT",right,#entries>0 and 34+row*30 or 4)
 end
+-- Visible art bodies measured from the client FrameXML: {left,top,right,bottom}.
+local frameInsets={WorldStateScoreFrame={12,-14,-114,70},BattlefieldMinimap={-3,3,3,-3},
+    TimeManagerFrame={11,-12,-48,4},HelpFrame={4,-4,-44,12},GMSurveyFrame={4,-4,-44,12},
+    RaidInfoFrame={4,2,-2,4}}
+-- Small bars and badges get no accent header.
+local compact={MirrorTimer1=true,MirrorTimer2=true,MirrorTimer3=true,StopwatchFrame=true,
+    BattlefieldMinimap=true,BattlefieldMinimapTab=true,TicketStatusFrame=true}
 local function Capture(frame,spec)
     local s={frame=frame,spec=spec,regions={},cleared={},textureStyles={},insets={},fonts={},buttons={},icons={},backdrop=frame:GetBackdrop(),
         bg={frame:GetBackdropColor()},border={frame:GetBackdropBorderColor()},active=false}
@@ -557,7 +636,8 @@ local function Capture(frame,spec)
         local name=frame:GetName()
         if name=="SpellBookFrame" or name=="QuestFrame" then left,top,right,bottom=11,-12,-32,76
         elseif name=="QuestLogFrame" then left,top,right,bottom=11,-12,-1,11
-        elseif name=="LootFrame" then left,top,right,bottom=16,-54,-77,8 end
+        elseif name=="LootFrame" then left,top,right,bottom=16,-54,-77,8
+        elseif frameInsets[name] then left,top,right,bottom=unpack(frameInsets[name]) end
         s.panel:ClearAllPoints(); s.panel:SetPoint("TOPLEFT",frame,"TOPLEFT",left,top); s.panel:SetPoint("BOTTOMRIGHT",frame,"BOTTOMRIGHT",right,bottom)
         s.accent=s.panel:CreateTexture(nil,"OVERLAY"); owned[s.accent]=true; s.accent:SetTexture(flat)
         s.accent:SetHeight(2); s.accent:SetPoint("TOPLEFT",s.panel,"TOPLEFT",1,-1); s.accent:SetPoint("TOPRIGHT",s.panel,"TOPRIGHT",-1,-1)
@@ -597,6 +677,9 @@ Paint=function(s)
     WorldMapContent(s)
     TalentTabs(s)
     GlyphContent(s)
+    BattlefieldMinimapContent(s)
+    MirrorTimerContent(s)
+    if s.accent and compact[s.frame:GetName() or ""] then s.accent:Hide() end
     for region in pairs(s.regions) do region:SetAlpha(0); if s.cleared[region] then region:SetTexture(nil) end end
     for texture,saved in pairs(s.textureStyles) do
         texture:SetTexture(flat); texture:SetTexCoord(0,1,0,1); texture:SetVertexColor(unpack(saved.paint))
@@ -667,7 +750,8 @@ function ns.InstallContentHooks()
         "PetPaperDollFrame_UpdateIsAvailable","CharacterFrame_Update","PaperDollFrame_UpdateStats","SetCurrentTitle",
         "TokenFrame_Update","LFDQueueFrameRandom_UpdateFrame","LFDDungeonReadyDialogReward_SetReward","LFDDungeonReadyDialogReward_SetMisc",
         "WorldMapFrame_SetFullMapView","WorldMapFrame_SetQuestMapView","WorldMapFrame_SetMiniMode","WorldMapFrame_ToggleWindowSize",
-        "WorldMapFrame_ToggleAdvanced","ToggleMapFramerate"}) do
+        "WorldMapFrame_ToggleAdvanced","ToggleMapFramerate",
+        "ToggleHelpFrame","RebuffedHelpFrame_Show","BattlefieldMinimap_UpdateOpacity","PVPFrame_Update","PVPTeamDetails_Update"}) do
         if not contentHooks[name] and type(_G[name])=="function" then hooksecurefunc(name,ns.RequestRefresh); contentHooks[name]=true end
     end
     local container=_G.TokenFrameContainer

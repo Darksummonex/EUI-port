@@ -5,7 +5,8 @@ local white="Interface\\Buttons\\WHITE8X8"
 local frames,dead,alerts={}, {}, {}
 ns.frames=frames
 -- key, mover label, width, height, x, y, text size key, unlock key, options section, options row,
--- x/y given in physical pixels (the Unlock Mode readout) instead of UI units
+-- x/y given in physical pixels (the Unlock Mode readout) instead of UI units.
+-- Rows without an unlock key are fixed anchors: no mover and no saved position.
 local layout={
     {"fps","FPS Counter",220,20,0,-260,"fpsTextSize","EUI_FPS","FPS COUNTER","FPS and Latency"},
     {"stats","Secondary Stats",130,34,0,-285,"statsTextSize","EUI_SecondaryStats","SECONDARY STATS","Secondary Stats"},
@@ -18,7 +19,7 @@ local layout={
     {"battleRes","Rebirth Cooldown",120,32,180,-190,"trackerTextSize","EUI_BattleRes","TRACKERS","Rebirth Cooldown (Druid)"},
     {"movement","Movement Cooldown",120,32,180,-230,"trackerTextSize","EUI_MovementAlert","TRACKERS","Movement Cooldown"},
     {"targetDistance","Target Distance",90,28,0,-120,"targetDistanceTextSize","EUI_TargetDistance","TARGET DISTANCE","Target Distance Text"},
-    {"zoneText","Zone Text",512,64,9,322,nil,"EUI_ZoneText","ZONE TEXT","Move Zone Text",true},
+    {"zoneText","Zone Text",512,64,9,322,nil,nil,"ZONE TEXT","Move Zone Text",true},
 }
 ns.displayLayout=layout
 local _,class=UnitClass("player")
@@ -298,8 +299,7 @@ function ns.UpdateDisplays()
         td.text:SetText(lo and ns.FormatRange(lo,hi,p.targetDistanceFormat) or (ns.preview and ns.FormatRange(30,35,p.targetDistanceFormat) or ""))
         Visible("targetDistance",lo~=nil)
     else td:Hide() end
-    if ns.preview and p.zoneText then local zone=GetZoneText and GetZoneText(); frames.zoneText.text:SetText(zone and zone~="" and zone or "Zone Text") end
-    Visible("zoneText",false)
+    frames.zoneText:Hide()
 end
 local cursor,trail={},{}
 local trailClock,trailIndex=0,0
@@ -368,14 +368,9 @@ end
 local function Px(v) local PP=E.PP; return PP and PP.FromPixels and PP.FromPixels(v) or v end
 function ns.ApplyDisplays()
     local p=ns.GetSettings()
-    -- One-time cleanup: a CENTER 0,0 zone text position is the broken mid-screen spot, not a choice.
-    if not p.zoneTextPosV1 then
-        local z=p.positions.zoneText
-        if z and (z.point or "CENTER")=="CENTER" and (z.relPoint or "CENTER")=="CENTER" and (tonumber(z.x) or 0)==0 and (tonumber(z.y) or 0)==0 then p.positions.zoneText=nil end
-        p.zoneTextPosV1=true
-    end
+    p.positions.zoneText=nil; p.zoneTextPosV1=nil
     for _,c in ipairs(layout) do
-        local f=frames[c[1]] or NewFrame(c); local pos=p.positions[c[1]]
+        local f=frames[c[1]] or NewFrame(c); local pos=c[8] and p.positions[c[1]]
         local x,y=c[5],c[6]; if c[11] then x,y=Px(x),Px(y) end
         f:ClearAllPoints(); if pos then f:SetPoint(pos.point,UIParent,pos.relPoint,pos.x,pos.y) else f:SetPoint("CENTER",UIParent,"CENTER",x,y) end
         if f.text then
@@ -420,7 +415,7 @@ function ns.ApplyDisplays()
 end
 function ns.RegisterElementSettings()
     E._ELEMENT_SETTINGS_MAP=E._ELEMENT_SETTINGS_MAP or {}
-    for _,c in ipairs(layout) do E._ELEMENT_SETTINGS_MAP[c[8]]={module=ADDON_NAME,page="Displays",sectionName=c[9],highlightText=c[10]} end
+    for _,c in ipairs(layout) do if c[8] then E._ELEMENT_SETTINGS_MAP[c[8]]={module=ADDON_NAME,page="Displays",sectionName=c[9],highlightText=c[10]} end end
     E._ELEMENT_SETTINGS_MAP.EUI_RaidTools={module=ADDON_NAME,page="Raid Tools",sectionName="RAID TOOLS",highlightText="Show Raid Tools"}
 end
 function ns.RegisterMovers()
@@ -428,12 +423,12 @@ function ns.RegisterMovers()
     if not E.RegisterUnlockElements or not E.MakeUnlockElement then return end
     local elements={}
     for i,c in ipairs(layout) do local key=c[1]
-        elements[#elements+1]=E.MakeUnlockElement({key=c[8],label=c[2],group="Quality of Life",order=900+i,noResize=true,noAnchorTo=true,
+        if c[8] then elements[#elements+1]=E.MakeUnlockElement({key=c[8],label=c[2],group="Quality of Life",order=900+i,noResize=true,noAnchorTo=true,
             getFrame=function() return frames[key] end,getSize=function() local f=frames[key]; return f:GetWidth(),f:GetHeight() end,
             isHidden=function() local f=frames[key]; return not f or not f:IsShown() end,
             savePos=function(_,point,relPoint,x,y) local p=ns.GetSettings(); if p then p.positions[key]={point=point,relPoint=relPoint,x=x,y=y} end end,
             loadPos=function() local p=ns.GetSettings(); return p and p.positions[key] end,
-            clearPos=function() local p=ns.GetSettings(); if p then p.positions[key]=nil; ns.Apply() end end,applyPos=ns.Apply})
+            clearPos=function() local p=ns.GetSettings(); if p then p.positions[key]=nil; ns.Apply() end end,applyPos=ns.Apply}) end
     end
     if ns.raidFrame then
         elements[#elements+1]=E.MakeUnlockElement({key="EUI_RaidTools",label="Raid Tools",group="Quality of Life",order=920,noResize=true,noAnchorTo=true,

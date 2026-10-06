@@ -26,7 +26,7 @@ init:SetScript("OnEvent",function(self)
     local SIDES,SIDE_ORDER={LEFT="Left",RIGHT="Right"},{"LEFT","RIGHT"}
     if ns.RegisterElementPanels then ns.RegisterElementPanels() end
     E:RegisterModule("EllesmereUIArena",{title="Arena Frames",description="Enemy arena frames with PvP trinket, crowd control and cast tracking.",pages={"Arena Frames"},
-        searchTerms="arena enemy frames arena1 pvp trinket every man for himself crowd control cc immunity cast bar interrupt focus target stealth unseen class icon",
+        searchTerms="arena enemy frames arena1 pvp trinket every man for himself crowd control cc immunity cast bar interrupt focus target stealth unseen class icon pet pets diminishing returns dr range fade",
         buildPage=function(page,parent,y)
             local W=E.Widgets
             local function Row(a,b) local row,h=W:DualRow(parent,y,a,b or Label("")); y=y-h; return row end
@@ -59,9 +59,17 @@ init:SetScript("OnEvent",function(self)
                 Row(Toggle("castBar","Show Cast Bar"),Slider("castBarHeight","Cast Bar Height",8,30))
                 Row(Toggle("castIcon","Show Cast Icon"),Slider("castTextSize","Cast Text Size",8,18))
                 Row(Color("castColor","Cast Color"),Color("uninterruptibleColor","Uninterruptible Color"))
+                Section("PETS")
+                Row(Toggle("pets","Show Arena Pets","Health bar for each enemy pet under its owner. Left click targets, right click sets focus."),Slider("petHeight","Pet Bar Height",8,24))
+                Section("DIMINISHING RETURNS")
+                Row(Toggle("drTracking","Track Diminishing Returns","Icons per crowd control category: green = next is half duration, yellow = quarter, red = immune. Resets 18 seconds after the last one fades."),
+                    Dropdown("drSide","DR Icons Side",SIDES,SIDE_ORDER))
+                Row(Slider("drSize","DR Icon Size",12,48),Label(""))
                 Section("TARGET AND VISIBILITY")
                 Row(Toggle("targetBorder","Highlight Target"),Color("targetColor","Target Highlight Color"))
-                Row(Slider("unseenAlpha","Unseen Opacity",10,100,"Opacity of enemies that are stealthed or out of sight."),Label(""))
+                Row(Slider("unseenAlpha","Unseen Opacity",10,100,"Opacity of enemies that are stealthed or out of sight."),
+                    Toggle("rangeFade","Fade Out of Range","Fades enemies beyond your class's 30-40 yard spell range."))
+                Row(Slider("rangeAlpha","Out of Range Opacity",10,100),Label(""))
             end
             return math.abs(y)
         end,

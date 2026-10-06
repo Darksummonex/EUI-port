@@ -1,4 +1,44 @@
-# Action Bars 3.3.5 — 0.15
+# Action Bars 3.3.5 — 0.18
+
+0.18: Barras de Ação 7 a 10, desligadas por padrão (como a Barra 6). Cada uma
+tem os próprios atalhos (categoria EllesmereUI Action Bars da tela de Key
+Bindings e o Quick Keybind), mover no Unlock Mode e todas as opções de Bar
+Display. O Wrath não tem slots de ação sobrando: as barras usam as páginas
+7-10 (slots 73-120), as mesmas para onde a Barra 1 troca nas posturas e
+formas. Para Guerreiro (Battle/Defensive/Berserker Stance nas páginas 7-9),
+Druida (Cat 7, Prowl 8, Bear 9, Moonkin 10), Ladino (Stealth e Shadow Dance na
+7) e Sacerdote (Shadowform na 7), a barra que divide a página mostra os mesmos
+botões dessa postura, e a página da barra em Bar Display avisa isso. Ligar
+"Disable Form Paging" na Barra 1 libera as páginas. As outras classes usam as
+quatro barras livremente. Os modificadores de paginação da Barra 1
+(Shift/Ctrl/Alt e alvo) também podem ir para as páginas 7-10. Bindings.xml
+agora tem 60 comandos (Barras 6-10). Requer Options 0.84.
+
+0.17: Diamond, Hexagon e Shield agora recortam o ícone no formato (antes só
+ganhavam o contorno), com fundo de slot e swipe dentro da forma. Requer
+Options 0.83.
+
+0.16: "Custom Button Shape" do Retail, por barra (inclusive pet e postura):
+None, Square, Circle, Curved Square, Diamond, Hexagon, Portrait e Shield. O
+Wrath não tem máscara de textura, então Circle e Portrait desenham o ícone
+redondo com SetPortraitToTexture (refeito a cada troca de ícone). Diamond,
+Hexagon e Shield recortam o ícone em faixas horizontais finas (cerca de 1 px),
+cada uma da largura da máscara da forma naquela linha; as faixas copiam
+textura, cor de alcance/uso, dessaturação, transparência e visibilidade do
+ícone. Essas cinco formas ganham fundo de slot com a forma. Square e Curved
+Square mantêm o ícone quadrado com o contorno por cima. O contorno usa a arte de EllesmereUI/media/portraits, ajustada para a
+abertura da forma encostar na borda do botão, e segue o Border Size e a cor (ou
+cor de classe) da barra, como no Retail; com tamanho 0 some. Com forma, a borda
+quadrada sai e as animações de pressionado, destaque e lançamento viram o
+contorno da forma na cor escolhida. O swipe de recarga do 3.3.5 é sempre
+quadrado: nas formas redondas ele encolhe para o quadrado inscrito no círculo,
+e em Diamond, Hexagon e Shield para o maior retângulo dentro da forma.
+A área de clique continua quadrada. None devolve ícone, zoom, borda e swipe.
+Requer Options 0.82.
+
+Não portado: a forma "Cropped", recorte dos cantos em Curved Square, swipe
+com a forma, espessura própria do contorno e os botões nativos
+de pet/postura continuam com o destaque quadrado da Blizzard.
 
 0.15: Quick Keybind Mode com o atalho /kb (o Wrath não tem o
 Blizzard_QuickKeybind, então a janela e a captura são do EUI). Passe o mouse

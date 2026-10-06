@@ -24,6 +24,7 @@ for name,needle in [('EllesmereUI.lua','{ folder = "EllesmereUIArena",'),('Elles
 lua=LuaRuntime(unpack_returned_tuples=True)
 for source in ['backport-tools/wrath_mock.lua','backport-tools/inventory_resources_mock.lua','backport-tools/arena_mock.lua','EllesmereUI/EllesmereUI_Lite.lua']:
     lua.execute((root/source).read_text(encoding='utf-8-sig'))
+lua.execute('watched={}; function RegisterUnitWatch(f) watched[f]=true end; function UnregisterUnitWatch(f) watched[f]=nil end')
 ns=lua.table()
 for name in files:
     lua.execute((arena/name).read_text(encoding='utf-8-sig'),'EllesmereUIArena',ns)
@@ -51,6 +52,13 @@ assert(P[1].name:GetText()=='Frostbite' and P[1].cast:IsShown() and P[1].cast.te
 assert(P[2].trinket.cd:IsShown() and P[2].trinket.cd.duration==120 and P[2].classIcon.icon:GetTexture()=='Interface\\Icons\\Ability_Rogue_KidneyShot')
 assert(P[1].classIcon.icon:GetTexture():find('class%-modern') and P[1].health.color[1]==.25,'Preview class color/icon')
 e:RunScript('OnUpdate',.2); assert(P[2].trinket.timer:GetText()=='2m','Trinket timer '..tostring(P[2].trinket.timer:GetText()))
+-- Preview pets and DR icons (sorted by category: silence before stun).
+assert(P[1].pet:IsShown() and P[1].pet.name:GetText()=='Water Elemental' and P[1].pet.health.value==70 and not P[2].pet:IsShown())
+assert(P[2].drIcons[1]:IsShown() and P[2].drIcons[1].bg.vertexColor[1]==1 and P[2].drIcons[1].bg.vertexColor[2]==.1 and P[2].drIcons[1].cd:IsShown())
+assert(P[2].drIcons[2].bg.vertexColor[1]==.1 and not P[2].drIcons[2].cd:IsShown() and not P[2].drIcons[3]:IsShown())
+assert(select(4,P[2].drIcons[1]:GetPoint(1))==F[1].width+2,'DR icons start right of the block')
+assert(F[1].pet.template=='SecureUnitButtonTemplate' and F[1].pet:GetAttribute('unit')=='arenapet1' and F[1].pet:GetAttribute('type2')=='focus' and watched[F[1].pet])
+p.pets=false; A.Apply(); assert(not P[1].pet:IsShown() and not watched[F[1].pet]); p.pets=true; A.Apply(); assert(P[1].pet:IsShown() and watched[F[1].pet])
 EllesmereUI.listeners.EllesmereUIArena(false); assert(not P[1]:IsShown() and not A.holder:IsShown())
 -- Options page preview follows the open module.
 panelShown,activeModule=true,'EllesmereUIArena'; e:RunScript('OnUpdate',.2); assert(P[1]:IsShown())
@@ -71,6 +79,29 @@ assert(F[1].trinket.cd:IsShown() and F[1].trinket.cd.start==now and F[1].trinket
 e:RunScript('OnUpdate',.2); assert(F[1].trinket.timer:GetText()=='2m')
 e:RunScript('OnEvent','COMBAT_LOG_EVENT_UNFILTERED',now,'SPELL_CAST_SUCCESS','G9','X',0,'','',0,59752,'Every Man for Himself',1)
 assert(A.trinketUsed.G9==now,'Unseen trinket use must be remembered')
+-- Live pet bar.
+units.arenapet1={name='Imp',hp=30,max=60,guid='GP1'}
+e:RunScript('OnUpdate',.2); assert(F[1].pet.name:GetText()=='Imp' and F[1].pet.health.value==30 and F[1].pet.health.maximum==60)
+-- Diminishing returns from aura applications (3.3.5 order: ..., spellId, spellName, school, auraType).
+SPELL_NAMES[6770]='Sap'; SPELL_NAMES[2094]='Blind'; SPELL_NAMES[853]='Hammer of Justice'; A.DR_MAP=nil
+local function CL(sub,id,name,kind) e:RunScript('OnEvent','COMBAT_LOG_EVENT_UNFILTERED',now,sub,'P','Me',0,'G1','Enemy',0,id,name,1,kind) end
+CL('SPELL_AURA_APPLIED',6770,'Sap','DEBUFF'); local dr=F[1].drIcons[1]
+assert(dr:IsShown() and dr.bg.vertexColor[1]==.1 and not dr.cd:IsShown() and dr.icon:GetTexture()=='icon6770')
+CL('SPELL_AURA_REMOVED',6770,'Sap','DEBUFF'); assert(dr.cd:IsShown() and dr.cd.duration==18 and A.dr.G1.disorient.expires==now+18)
+CL('SPELL_AURA_APPLIED',2094,'Blind','DEBUFF'); assert(A.dr.G1.disorient.count==2 and dr.bg.vertexColor[2]==.8 and not dr.cd:IsShown())
+CL('SPELL_AURA_APPLIED',853,'Hammer of Justice','DEBUFF'); assert(F[1].drIcons[2]:IsShown() and A.dr.G1.stun.count==1)
+CL('SPELL_AURA_APPLIED',642,'Divine Shield','BUFF'); CL('SPELL_AURA_APPLIED',118,'Polymorph','BUFF'); assert(A.dr.G1.disorient.count==2,'buffs never count')
+CL('SPELL_AURA_REMOVED',2094,'Blind','DEBUFF'); CL('SPELL_AURA_REMOVED',853,'Hammer of Justice','DEBUFF')
+now=now+10; e:RunScript('OnUpdate',.2); assert(dr:IsShown() and dr.timer:GetText()=='8.0',dr.timer:GetText())
+now=now+8.5; e:RunScript('OnUpdate',.2); assert(not dr:IsShown() and not F[1].drIcons[2]:IsShown())
+CL('SPELL_AURA_APPLIED',6770,'Sap','DEBUFF'); assert(A.dr.G1.disorient.count==1,'DR resets after 18s'); CL('SPELL_AURA_REMOVED',6770,'Sap','DEBUFF')
+-- Out of range fade: class spell first, then follow distance.
+A.rangeSpell='Fireball'; function IsSpellInRange(s,u) return rangeResult end
+rangeResult=0; A.UpdateUnit(F[1]); assert(F[1].alpha==.5)
+rangeResult=1; A.UpdateUnit(F[1]); assert(F[1].alpha==1)
+rangeResult=nil; function CheckInteractDistance() return false end; A.UpdateUnit(F[1]); assert(F[1].alpha==.5)
+A.GetSettings().rangeFade=false; A.UpdateUnit(F[1]); assert(F[1].alpha==1); A.GetSettings().rangeFade=true
+IsSpellInRange,CheckInteractDistance=nil,nil; A.UpdateUnit(F[1]); assert(F[1].alpha==1)
 -- Priority aura: immunity beats a stun; falls back to the class icon.
 auras.arena1={HARMFUL={{name='Kidney Shot',icon='ks',duration=6,expires=now+5,id=408}},HELPFUL={{name='Divine Shield',icon='ds',duration=12,expires=now+10,id=642}}}
 e:RunScript('OnEvent','UNIT_AURA','arena1'); assert(F[1].classIcon.icon:GetTexture()=='ds' and F[1].classIcon.cd.duration==12)
@@ -106,7 +137,7 @@ p.hideBlizzard=false; A.Apply(); assert(ArenaEnemyFrames:GetParent()==UIParent)
 -- Leaving and re-entering resets the match state.
 inside,instanceKind,bracket=false,'none',nil; e:RunScript('OnEvent','PLAYER_ENTERING_WORLD'); assert(not F[1]:IsShown() and not A.holder:IsShown())
 inside,instanceKind,bracket=true,'arena',2; e:RunScript('OnEvent','PLAYER_ENTERING_WORLD')
-assert(next(A.trinketUsed)==nil and F[2]:IsShown() and not F[3]:IsShown() and not F[4]:IsShown() and F[1].name:GetText()=='Arena 1')
+assert(next(A.trinketUsed)==nil and next(A.dr)==nil and F[2]:IsShown() and not F[3]:IsShown() and not F[4]:IsShown() and F[1].name:GetText()=='Arena 1')
 inside,instanceKind,bracket=false,'none',nil; e:RunScript('OnEvent','PLAYER_ENTERING_WORLD')
 -- Growth up anchors from the bottom; disabled module hides everything.
 p.growth='UP'; A.SetPreview(true); assert(select(1,P[2]:GetPoint(1))=='BOTTOMLEFT' and select(5,P[2]:GetPoint(1))>0)
@@ -126,7 +157,9 @@ local width=FindRow('Frame Width'); width.setValue(260); assert(A.GetSettings().
 FindRow('Bar Texture').setValue('glass'); assert(A.frames[1].health.statusTexture:find('EllesmereUIArena\\Media\\Textures_335\\glass.tga',1,true))
 assert(FindRow('Bar Texture').values.atrocity=='Atrocity')
 local color=FindRow('Cast Color'); color.setValue(.1,.2,.3); assert(A.GetSettings().castColor.g==.2)
-for _,label in ipairs({'Enable Arena Frames','Hide Blizzard Arena Frames','Show PvP Trinket','Crowd Control on Class Icon','Show Cast Bar','Highlight Target','Unseen Opacity','Growth Direction'}) do FindRow(label) end
+for _,label in ipairs({'Enable Arena Frames','Hide Blizzard Arena Frames','Show PvP Trinket','Crowd Control on Class Icon','Show Cast Bar','Highlight Target','Unseen Opacity','Growth Direction',
+    'Show Arena Pets','Pet Bar Height','Track Diminishing Returns','DR Icons Side','DR Icon Size','Fade Out of Range','Out of Range Opacity'}) do FindRow(label) end
+FindRow('DR Icons Side').setValue('LEFT'); assert(A.GetSettings().drSide=='LEFT' and select(1,A.frames[1].drIcons[1]:GetPoint(1))=='TOPRIGHT')
 assert(buttons['Unlock Arena Frames'])
 ''')
 print('Arena validation passed')

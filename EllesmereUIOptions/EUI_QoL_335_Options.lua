@@ -40,7 +40,7 @@ init:SetScript("OnEvent",function(self)
     if ns.RegisterElementSettings then ns.RegisterElementSettings() end
     local unlock=function() if E.ToggleUnlockMode then E:ToggleUnlockMode() end end
     E:RegisterModule("EllesmereUIQoL",{title="Quality of Life",description="Native Wrath conveniences, displays, cursor, window dragging and raid tools.",pages={"QoL","Displays","Cursor","Shifter","Raid Tools","Logging"},
-        searchTerms="qol repair junk sell loot mail open all attach delete cinematic train screenshot containers reset role check map coordinates right click rested transform flyout item level fps latency stats crit haste hit coordinates crosshair durability death combat alert sound distance zone text rebirth bloodlust sated movement cursor shifter raid ready markers pull dbm bigwigs boss mod bars ability timeline logging",
+        searchTerms="qol repair junk sell loot mail open all attach delete cinematic train screenshot containers reset role check map coordinates right click rested transform flyout item level fps latency stats crit haste hit coordinates crosshair durability death combat alert sound distance zone text rebirth bloodlust sated movement cursor shifter raid ready markers pull disband interrupt announce invite accept guild friends dbm bigwigs boss mod bars ability timeline logging",
         buildPage=function(page,parent,y)
             local W=E.Widgets
             local function Row(a,b) local row,h=W:DualRow(parent,y,a,b or Label("")); y=y-h; return row end
@@ -81,6 +81,11 @@ init:SetScript("OnEvent",function(self)
                 Section("GROUP")
                 Row(Toggle(nil,"resetAnnounce","Announce Instance Reset"),Text(nil,"resetMessage","Reset Message","Instance has been reset - you can re-enter now!"))
                 Row(Toggle(nil,"roleCheck","Auto-Accept Role Check"),Label("Hold Shift to review the Dungeon Finder role check"))
+                local interrupt=Dropdown(nil,"interruptAnnounce","Announce Interrupts",ns.INTERRUPT_CHANNELS,ns.INTERRUPT_ORDER)
+                interrupt.tooltip="Posts the spell you or your pet interrupted. Party and Raid use the battleground channel inside battlegrounds."
+                local invites=Toggle(nil,"autoAcceptInvites","Accept Invites from Friends & Guild")
+                invites.tooltip="Accepts group invites from your friends list and guildmates. Skipped while queued in the Dungeon Finder or already grouped."
+                Row(interrupt,invites)
             elseif page=="Displays" then
                 Section("FPS COUNTER")
                 Row(Toggle(nil,"fps","FPS and Latency"),Slider(nil,"fpsInterval","Update Interval (seconds)",1,5))
@@ -102,8 +107,8 @@ init:SetScript("OnEvent",function(self)
                     {range="Range (30-35)",plus="Lower Bound (30+)",min="Minimum (30)"},{"range","plus","min"}))
                 Section("ZONE TEXT")
                 local zone=Toggle(nil,"zoneText","Move Zone Text")
-                zone.tooltip="Moves the zone name shown when entering an area to the Zone Text mover in Unlock Mode. Off restores Blizzard's position."
-                Row(zone,Label("Default: top center, X 9 / Y 322 in Unlock Mode"))
+                zone.tooltip="Moves the zone name shown when entering an area to the top of the screen. Off restores Blizzard's position."
+                Row(zone,Label("Fixed at top center, X 9 / Y 322"))
                 Section("ALERTS")
                 Row(Toggle(nil,"durability","Low Durability Warning"),Slider(nil,"durabilityThreshold","Durability Threshold %",5,90))
                 Row(Color(nil,"durabilityColor","Durability Text Color"),Label("Hidden during combat"))
@@ -136,11 +141,12 @@ init:SetScript("OnEvent",function(self)
             elseif page=="Raid Tools" then
                 Section("RAID TOOLS")
                 Row(Toggle("raidTools","enabled","Show Raid Tools"),Toggle("raidTools","groupOnly","Only in a Group"))
-                Row(Slider("raidTools","scale","Window Scale %",50,200),Label("Eight target markers and Ready Check"))
+                Row(Slider("raidTools","scale","Window Scale %",50,200),Label("Eight target markers, Ready Check, Pull and Disband"))
                 Row(Slider("raidTools","pullSeconds","Pull Timer Length (seconds)",3,60),Toggle("raidTools","pullSync","Send to DBM / BigWigs"))
                 Row(Toggle("raidTools","pullChat","Chat Countdown"),Label("Raid Warning > Raid > Party; 10s and final 5s"))
                 Row(Label("Boss mod sync: raid leader / assistant or party leader"),Label(""))
                 Button("Move Raid Tools",unlock)
+                Button("Disband Group",function() if ns.ConfirmDisband then ns.ConfirmDisband() end end)
                 Section("BOSS MOD BARS")
                 local bossBars=Toggle(nil,"hideBossModBars","Hide DBM/BigWigs Bars While Timeline Is Active")
                 bossBars.tooltip="While AbilityTimeline shows DBM or BigWigs timers, that boss mod's own bars turn invisible and click-through. The timers keep running, and the bars come back when the timeline, its source or this option is turned off."

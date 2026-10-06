@@ -32,7 +32,8 @@ local function Config(width,height)
         leaderIconSize=14,leaderIconPosition="top",leaderIconOffsetX=0,leaderIconOffsetY=0,showLeaderIconInCombat=true,
         showCombatIndicator=false,combatIndicatorSize=16,combatIndicatorPosition="right",combatIndicatorOffsetX=0,combatIndicatorOffsetY=0,
         dispelColorMagic=RGB(.349,.475,1),dispelColorCurse=RGB(.636,0,.64),dispelColorDisease=RGB(.671,.384,.098),dispelColorPoison=RGB(0,.706,.286),
-        hideLustDebuff=true,tooltipMode="outOfCombat"}
+        hideLustDebuff=true,tooltipMode="outOfCombat",
+        raidDebuffs=true,raidDebuffSize=22,raidDebuffDispellable=true,raidDebuffOffsetX=0,raidDebuffOffsetY=0}
 end
 local defaults={profile={enabled=true,previewMode="overlay",raid=Config(125,52),raidLayoutMode="auto",raidLayouts={},party=Config(145,54),positions={},clickCasting={enabled=false,bindings={}},
     tankFrames={enabled=false,includeAssist=false,horizontal=false,extraWidth=0,extraHeight=0},

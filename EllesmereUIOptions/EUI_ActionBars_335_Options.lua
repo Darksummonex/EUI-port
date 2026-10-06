@@ -173,6 +173,8 @@ init:SetScript("OnEvent",function(self)
             local b=CreateFrame("Frame",nil,pf)
             b.border=CreateFrame("Frame",nil,b)
             b.icon=b:CreateTexture(nil,"ARTWORK"); b.icon:SetAllPoints(b)
+            b.outline=b:CreateTexture(nil,"OVERLAY"); b.outline:Hide()
+            b.slot=b.border:CreateTexture(nil,"ARTWORK"); b.slot:Hide()
             local text=CreateFrame("Frame",nil,b); text:SetAllPoints(b); text:SetFrameLevel(b:GetFrameLevel()+3)
             b.hotkey,b.count,b.macro=text:CreateFontString(nil,"OVERLAY"),text:CreateFontString(nil,"OVERLAY"),text:CreateFontString(nil,"OVERLAY")
             pf.buttons[i]=b
@@ -207,6 +209,8 @@ init:SetScript("OnEvent",function(self)
             bg:Show()
         else bg:Hide() end
         local z=Clamp(p.iconZoom,0,15)/100
+        local shape=ns.ShapeOf(s)
+        local round,cut=ns.ROUND_SHAPES[shape],ns.CUT_SHAPES[shape]
         local slot=p.slotBgColor or {r=.15,g=.15,b=.15}
         local edge=Clamp(s.borderSize,0,5)
         local br,bgc,bb=(s.borderColor or {}).r or 0,(s.borderColor or {}).g or 0,(s.borderColor or {}).b or 0
@@ -219,10 +223,22 @@ init:SetScript("OnEvent",function(self)
                 b.border:ClearAllPoints(); b.border:SetPoint("TOPLEFT",b,"TOPLEFT",-edge,edge); b.border:SetPoint("BOTTOMRIGHT",b,"BOTTOMRIGHT",edge,-edge)
                 b.border:SetFrameLevel(math.max(0,b:GetFrameLevel()-1))
                 b.border:SetBackdrop({bgFile="Interface\\Buttons\\WHITE8X8",edgeFile="Interface\\Buttons\\WHITE8X8",edgeSize=math.max(1,edge)})
-                b.border:SetBackdropColor(slot.r,slot.g,slot.b,Clamp(p.slotBgOpacity,0,100)/100)
-                b.border:SetBackdropBorderColor(br,bgc,bb,edge>0 and 1 or 0)
+                local slotA=Clamp(p.slotBgOpacity,0,100)/100
+                b.border:SetBackdropColor(slot.r,slot.g,slot.b,cut and 0 or slotA)
+                b.border:SetBackdropBorderColor(br,bgc,bb,(edge>0 and shape=="none") and 1 or 0)
+                if shape~="none" then
+                    b.outline:SetTexture(ns.ShapeTexture(shape,"border")); ns.FitShape(b.outline,b,size,shape)
+                    b.outline:SetVertexColor(ns.ShapeBorderColor(s))
+                    if edge>0 then b.outline:Show() else b.outline:Hide() end
+                else b.outline:Hide() end
+                if cut then
+                    b.slot:SetTexture(ns.ShapeTexture(shape,"mask")); ns.FitShape(b.slot,b,size,shape)
+                    b.slot:SetVertexColor(slot.r,slot.g,slot.b,slotA); b.slot:Show()
+                else b.slot:Hide() end
                 local tex=PreviewIcon(d,i)
-                if tex then b.icon:SetTexture(tex); b.icon:SetTexCoord(z,1-z,z,1-z); b.icon:Show() else b.icon:Hide() end
+                if tex and round and SetPortraitToTexture then SetPortraitToTexture(b.icon,tex); b.icon:SetTexCoord(0,1,0,1); b.icon:Show()
+                elseif tex then b.icon:SetTexture(tex); b.icon:SetTexCoord(z,1-z,z,1-z); b.icon:Show() else b.icon:Hide() end
+                ns.SetStrips(b.icon,b,shape,z)
                 ns.StyleText(b.hotkey,s.keybindFontSize,s.keybindFontColor,1)
                 ns.AnchorText(b.hotkey,b,s.keybindAnchor,s.keybindOffsetX,s.keybindOffsetY,1,true)
                 b.hotkey:SetText(s.hideKeybind and "" or RealText(d,i,"hotkey","HotKey"))
@@ -316,7 +332,7 @@ init:SetScript("OnEvent",function(self)
     local ORDER_KEYS={"default","reversed","TOPLEFT","TOPRIGHT","BOTTOMLEFT","BOTTOMRIGHT"}
     local ANCHOR_VALUES={TOPLEFT="Top Left",TOP="Top",TOPRIGHT="Top Right",BOTTOMLEFT="Bottom Left",BOTTOM="Bottom",BOTTOMRIGHT="Bottom Right"}
     local PAGE_VALUES,PAGE_ORDER={[0]="None"},{0}
-    for _,page in ipairs({1,6,5,3,4,2}) do PAGE_VALUES[page]=ns.PAGE_LABELS[page]; PAGE_ORDER[#PAGE_ORDER+1]=page end
+    for _,page in ipairs({1,6,5,3,4,2,7,8,9,10}) do PAGE_VALUES[page]=ns.PAGE_LABELS[page]; PAGE_ORDER[#PAGE_ORDER+1]=page end
     local INTERACTION_VALUES={[1]="Light",[2]="Medium",[3]="Strong",[4]="Solid Color",[5]="Border",[6]="None"}
     local INTERACTION_ORDER={1,2,3,4,5,6}
     local VIS_VALUES={always="Always",never="Never",mouseover="Mouseover",in_combat="In Combat",
@@ -372,6 +388,11 @@ init:SetScript("OnEvent",function(self)
         else
             Button("Quick Keybind Mode (/kb)",OpenQuickKeybind)
             Button("Open Unlock Mode",OpenUnlock)
+        end
+        local shared=ns.PageShare and ns.PageShare(key)
+        if shared and E.BuildNoteRow then
+            C.y=E.BuildNoteRow(parent,C.y,d.label.." shares its buttons with Action Bar 1 in "..shared..".")
+            C.y=E.BuildNoteRow(parent,C.y,"Turn on Disable Form Paging on Action Bar 1 to give it its own slots.")
         end
 
         Section("VISIBILITY")
@@ -450,6 +471,10 @@ init:SetScript("OnEvent",function(self)
         Swatch(Inline(row and row._leftRegion),SB,"bgBorderColor",true,bgOff.disabled)
 
         refs.iconsHeader=Section("ICONS")
+        row=Row(Dropdown("buttonShape","Custom Button Shape",ns.SHAPE_LABELS,ns.SHAPE_ORDER,
+            {tooltip="Circle and Portrait draw round icons, and Diamond, Hexagon and Shield crop the icon to the shape. Square and Curved Square outline the square icon. The outline uses the Border Size and colour below."}),Blank())
+        refs.shapeRow=row
+        Sync(Inline(row and row._leftRegion),"Custom Button Shape",{"buttonShape"})
         row=Row(Slider("borderSize","Border Size",0,5,1),RootSlider("iconZoom","Icon Zoom",0,15,.5))
         refs.borderRow=row
         local borderL=Inline(row and row._leftRegion)
@@ -555,7 +580,7 @@ init:SetScript("OnEvent",function(self)
     E:RegisterModule("EllesmereUIActionBars",{
         title="Action Bars",description="Action bars, Blizzard HUD skins and player aura positions for Wrath.",
         pages={PAGE_DISPLAY,PAGE_HUD,PAGE_ANIM},
-        searchTerms="action bar keybind macro paging stance pet micro menu bag experience reputation buff debuff highlight pushed cooldown",
+        searchTerms="action bar keybind macro paging stance pet micro menu bag experience reputation buff debuff highlight pushed cooldown button shape circle round",
         buildPage=function(page,parent,y)
             C.W,C.parent,C.y=E.Widgets,parent,y
             parent._showRowDivider=true

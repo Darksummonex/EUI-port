@@ -20,7 +20,7 @@ safe(ns.addon.OnEnable,ns.addon)
 lua.execute('''
 local p=Q.GetSettings(); local e=Q.events
 assert(p and p.enabled and not p.autoRepair and not p.cursor.enabled and not p.raidTools.enabled)
-assert(#unlockByFolder.EllesmereUIQoL==13 and not Q.frames.fps:IsShown())
+assert(#unlockByFolder.EllesmereUIQoL==12 and not Q.frames.fps:IsShown())
 e:RunScript('OnEvent','MERCHANT_SHOW'); assert(#repairs==0 and #sales==0)
 p.autoRepair=true; p.guildRepair=true; p.autoSellJunk=true; Q.Apply()
 e:RunScript('OnEvent','MERCHANT_SHOW'); assert(#repairs==1 and repairs[1]==false and sales[1][2]==1)
@@ -343,7 +343,7 @@ for _,el in ipairs(unlockByFolder.EllesmereUIQoL) do
     local found=false; for _,row in ipairs(page.rows) do if row.text==entry.highlightText then found=true end end
     assert(found,el.key..' row '..tostring(entry.highlightText)); mapped=mapped+1
 end
-assert(mapped==13 and map.EUI_TargetDistance.page=='Displays' and map.EUI_FPS.page=='Displays' and map.EUI_ZoneText.sectionName=='ZONE TEXT')
+assert(mapped==12 and map.EUI_TargetDistance.page=='Displays' and map.EUI_FPS.page=='Displays' and map.EUI_ZoneText==nil)
 rows={}; module.buildPage('QoL',UIParent,0); FindRow('Auto Repair').setValue(false); assert(not Q.GetSettings().autoRepair)
 -- Retail layout: Quick Loot | Auto-Fill Delete, then Auto Repair (guild funds in its cog) | Auto Sell Junk.
 assert(rows[3].text=='Quick Loot' and rows[4].text=='Auto-Fill Delete Confirmation' and rows[5].text=='Auto Repair' and rows[6].text=='Auto Sell Junk')
@@ -390,4 +390,4 @@ for texture in native_textures:
     data=texture.read_bytes(); width,height,depth,flags=struct.unpack('<HHBB',data[12:18])
     assert width&(width-1)==0 and height&(height-1)==0 and depth==32 and data[2]==2 and flags==8,texture
     assert len(data)==18+width*height*4,texture
-print('PASS: QoL Lua51 lifecycle, merchant safety/repair/loot/trainer/delete with chat reports, error whitelist, mail Open All/category attach, logging ownership, screenshot/auto-open/reset announce/role check/world map coords/right-click guard/rested/transforms/flyout ilvl/FPS key, Retail display looks (FPS, stats, durability, alerts, crosshair, target range, trackers, cursor), secure raid controls and scale, combat-safe window dragging, profile swaps, 13 movers with Element Options, options and global fonts; Retail references unchanged.')
+print('PASS: QoL Lua51 lifecycle, merchant safety/repair/loot/trainer/delete with chat reports, error whitelist, mail Open All/category attach, logging ownership, screenshot/auto-open/reset announce/role check/world map coords/right-click guard/rested/transforms/flyout ilvl/FPS key, Retail display looks (FPS, stats, durability, alerts, crosshair, target range, trackers, cursor), secure raid controls and scale, combat-safe window dragging, profile swaps, 12 movers with Element Options, options and global fonts; Retail references unchanged.')

@@ -1,4 +1,37 @@
-# Options 3.3.5 — 0.78
+# Options 3.3.5 — 0.84
+
+0.84: Action Bars > Bar Display lista as Barras 7 a 10 no seletor de barras e
+mostra, no topo da página da barra, um aviso quando ela divide os botões com
+uma postura ou forma da Barra 1. Os modificadores de paginação da Barra 1
+ganharam as páginas 7-10 (requer Action Bars 0.18).
+
+0.83: a prévia de Action Bars mostra Diamond, Hexagon e Shield recortados, e a
+dica de "Custom Button Shape" explica quais formas recortam e quais só ganham
+contorno (requer Action Bars 0.17).
+
+0.82: Action Bars > Bar Display ganhou "Custom Button Shape" no topo da seção
+ICONS, com o link para aplicar em todas as barras. A prévia do topo mostra o
+ícone redondo e o contorno da forma escolhida. A busca encontra button shape,
+circle e round (requer Action Bars 0.16). Patch notes atualizadas.
+
+0.81: Arena Frames ganhou as seções PETS ("Show Arena Pets", "Pet Bar Height")
+e DIMINISHING RETURNS ("Track Diminishing Returns", "DR Icons Side", "DR Icon
+Size"), e "Fade Out of Range"/"Out of Range Opacity" em TARGET AND VISIBILITY
+(requer Arena 0.2). QoL: "Announce Interrupts" e "Accept Invites from Friends &
+Guild" na seção GROUP e o botão "Disband Group" em Raid Tools (requer Quality of
+Life 0.9). Raid Frames: seção RAID DEBUFFS dentro de Dispels (requer Raid Frames
+0.12). Os interruptores "Battleground Capture Bar" e "GM Chat Status" aparecem
+sozinhos em Blizzard Window Skins (requer Blizz UI Enhanced 0.25). Patch notes
+atualizadas.
+
+0.80: Blizz UI Enhanced ganhou a opção "Show Group Roll Choices" (Tooltips,
+Menus & Popups) e os novos interruptores de janela aparecem sozinhos em
+Blizzard Window Skins. A busca encontra barber, pvp, arena, battleground, help,
+timer, pullout, debug, ace3 e loot roll (requer Blizz UI Enhanced 0.24).
+
+0.79: a dica e o rótulo de "Move Zone Text" (QoL > Displays) não falam mais do
+mover do Unlock Mode; o nome da zona fica fixo no topo, X 9 / Y 322 (requer
+Quality of Life 0.8).
 
 0.78: QoL > Raid Tools ganhou a seção BOSS MOD BARS com "Hide DBM/BigWigs Bars
 While Timeline Is Active" (ligado por padrão; requer Quality of Life 0.7) e uma

@@ -1,8 +1,8 @@
 """Zone Text on Wrath: Blizzard anchors ZoneTextFrame/SubZoneTextFrame at UIParent
-BOTTOM +512, which sits mid-screen at small UI scales. The QoL Zone Text mover pins
-both frames by CENTER to a mover anchored at UIParent CENTER +9,+322 physical pixels
-(the Unlock Mode readout), re-applies after Blizzard/other re-anchors, keeps custom
-positions, migrates a broken CENTER 0,0 once, and restores Blizzard's spot when off."""
+BOTTOM +512, which sits mid-screen at small UI scales. QoL pins both frames by CENTER
+to a hidden fixed anchor at UIParent CENTER +9,+322 physical pixels (no Unlock Mode
+mover), re-applies after Blizzard/other re-anchors, drops positions saved by the old
+mover, and restores Blizzard's spot when off."""
 from pathlib import Path
 import sys
 root = Path(__file__).resolve().parents[1]
@@ -47,7 +47,7 @@ safe(ns.addon.OnEnable, ns.addon)
 lua.execute('''
 local p=Q.GetSettings(); local PP=EllesmereUI.PP
 local mover=Q.frames.zoneText
-assert(p.zoneText==true and p.zoneTextPosV1==true and p.positions.zoneText==nil,'Zone Text should default on with no saved position')
+assert(p.zoneText==true and p.positions.zoneText==nil,'Zone Text should default on with no saved position')
 local function OnMover(z)
     local point,rel,relPoint,x,y=z:GetPoint(1)
     return z:GetNumPoints()==1 and point=='CENTER' and rel==mover and relPoint=='CENTER' and x==0 and y==0
@@ -71,20 +71,16 @@ UIParent_ManageFramePositions(); assert(OnMover(ZoneTextFrame),'Layout pass re-a
 ZoneTextFrame.points={{'BOTTOM',UIParent,'BOTTOM',0,512}}; SetZoneText(true); assert(OnMover(ZoneTextFrame) and setZoneTextCalls==1)
 -- Repeated applies keep a single anchor and never stack hooks.
 Q.Apply(); Q.Apply(); assert(OnMover(ZoneTextFrame) and ZoneTextFrame:GetNumPoints()==1)
--- Unlock Mode: mover registered with Element Options, shown in preview with the zone name.
-local el; for _,e in ipairs(unlockByFolder.EllesmereUIQoL) do if e.key=='EUI_ZoneText' then el=e end end
-assert(el and el.label=='Zone Text' and el.getFrame()==mover and el.loadPos()==nil,'Zone Text mover missing')
-local map=EllesmereUI._ELEMENT_SETTINGS_MAP.EUI_ZoneText
-assert(map and map.module=='EllesmereUIQoL' and map.page=='Displays' and map.sectionName=='ZONE TEXT' and map.highlightText=='Move Zone Text')
-assert(not mover:IsShown() and el.isHidden(),'Mover box must stay hidden outside Unlock Mode')
-EllesmereUI.listeners.EllesmereUIQoL(true); assert(mover:IsShown() and not el.isHidden() and mover.text:GetText()=='Dalaran')
+-- Fixed anchor: no Unlock Mode mover or Element Options entry, never drawn, not even in preview.
+for _,e in ipairs(unlockByFolder.EllesmereUIQoL) do assert(e.key~='EUI_ZoneText' and e.label~='Zone Text','Zone Text must not have a mover') end
+assert(EllesmereUI._ELEMENT_SETTINGS_MAP.EUI_ZoneText==nil,'Zone Text must not have Element Options')
+assert(not mover:IsShown(),'Anchor must stay hidden')
+EllesmereUI.listeners.EllesmereUIQoL(true); assert(not mover:IsShown() and OnMover(ZoneTextFrame),'Anchor drawn in Unlock Mode')
 EllesmereUI.listeners.EllesmereUIQoL(false); assert(not mover:IsShown())
--- A custom position is kept and the zone text follows it.
-el.savePos(nil,'CENTER','CENTER',PP.FromPixels(-40),PP.FromPixels(200)); Q.Apply()
-ok,where=MoverAt(-40,200); assert(ok,'Custom position '..where); assert(OnMover(ZoneTextFrame))
--- A deliberate CENTER 0,0 after the migration flag is respected.
-el.savePos(nil,'CENTER','CENTER',0,0); Q.Apply(); ok=MoverAt(0,0); assert(ok,'Deliberate 0,0 overridden')
-el.clearPos(); ok,where=MoverAt(9,322); assert(ok and p.positions.zoneText==nil,'Reset must return to 9,322 '..where)
+-- A leftover saved position from the old mover is dropped; the text stays at 9,322.
+p.positions.zoneText={point='CENTER',relPoint='CENTER',x=PP.FromPixels(-40),y=PP.FromPixels(200)}; p.zoneTextPosV1=true; Q.Apply()
+ok,where=MoverAt(9,322); assert(ok and p.positions.zoneText==nil and p.zoneTextPosV1==nil,'Stale position kept '..where)
+assert(OnMover(ZoneTextFrame))
 -- Off: Blizzard's own anchor comes back and is no longer fought.
 p.zoneText=false; Q.Apply()
 local point,rel,relPoint,x,y=ZoneTextFrame:GetPoint(1)
@@ -95,24 +91,14 @@ p.zoneText=true; Q.Apply(); assert(OnMover(ZoneTextFrame))
 -- QoL master switch off also restores.
 p.enabled=false; Q.Apply(); assert(select(1,ZoneTextFrame:GetPoint(1))=='TOP'); p.enabled=true; Q.Apply(); assert(OnMover(ZoneTextFrame))
 ''')
-# One-time migration of a broken CENTER 0,0 saved position.
-lua.execute('''
-local p=Q.GetSettings(); local PP=EllesmereUI.PP
-p.zoneTextPosV1=nil; p.positions.zoneText={point='CENTER',relPoint='CENTER',x=0,y=0}; Q.Apply()
-assert(p.positions.zoneText==nil and p.zoneTextPosV1==true,'Broken 0,0 position not migrated')
-local _,_,_,x,y=Q.frames.zoneText:GetPoint(1); assert(PP.ToPixels(x)==9 and PP.ToPixels(y)==322)
-p.zoneTextPosV1=nil; p.positions.zoneText={point='CENTER',relPoint='CENTER',x=50,y=-100}; Q.Apply()
-assert(p.positions.zoneText and p.positions.zoneText.x==50 and p.zoneTextPosV1==true,'Custom position wrongly migrated')
-p.positions.zoneText=nil; Q.Apply()
-''')
 # Static guards: the Displays chunk stays under Wrath's 200-local limit and avoids SetRotatesTexture.
 src = (root / 'EllesmereUIQoL/EUI_QoL_335_Displays.lua').read_text(encoding='utf-8-sig')
 assert 'SetRotatesTexture' not in src
-assert '"zoneText","Zone Text",512,64,9,322,nil,"EUI_ZoneText","ZONE TEXT","Move Zone Text",true' in src
+assert '"zoneText","Zone Text",512,64,9,322,nil,nil,"ZONE TEXT","Move Zone Text",true' in src
 top_locals = sum(1 for line in src.splitlines() if line.startswith('local '))
 assert top_locals < 200, top_locals
 opts = (root / 'EllesmereUIOptions/EUI_QoL_335_Options.lua').read_text(encoding='utf-8-sig')
 assert 'Section("ZONE TEXT")' in opts and 'Toggle(nil,"zoneText","Move Zone Text")' in opts
 print('PASS: Zone Text pinned by CENTER to UIParent CENTER +9,+322 physical pixels (Unlock Mode readout) at UI scale 0.62; '
-      'SetPoint/SetAllPoints/SetZoneText/UIParent_ManageFramePositions re-anchors undone; custom and deliberate 0,0 positions kept; '
-      'broken 0,0 migrated once; Blizzard BOTTOM +512 restored when off; mover, preview and Element Options wired.')
+      'SetPoint/SetAllPoints/SetZoneText/UIParent_ManageFramePositions re-anchors undone; no mover, preview or Element Options; '
+      'stale saved positions dropped; Blizzard BOTTOM +512 restored when off.')

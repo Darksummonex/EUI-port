@@ -210,6 +210,7 @@ function ns.Apply()
     if ns.ApplyPanels then ns.ApplyPanels() end
     if ns.ApplyMail then ns.ApplyMail() end
     if ns.ApplyExtras then ns.ApplyExtras() end
+    if ns.ApplyGroup then ns.ApplyGroup() end
     ns.UpdateLogging()
 end
 function addon:OnInitialize()

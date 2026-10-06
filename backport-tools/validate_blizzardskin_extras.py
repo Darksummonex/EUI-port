@@ -14,7 +14,8 @@ from lupa.lua51 import LuaRuntime
 toc=(skin/'EllesmereUIBlizzardSkin.toc').read_text(encoding='utf-8-sig')
 files=[line.strip() for line in toc.splitlines() if line.strip().endswith('.lua') and not line.startswith('#')]
 order=['EUI_BlizzardSkin_335.lua','EUI_Items_335.lua','EUI_CharacterSheet_335.lua','EUI_SocketPanel_335.lua',
-       'EUI_Tooltips_335.lua','EUI_Inspect_335.lua','EUI_Merchant_335.lua','EUI_Popups_335.lua']
+       'EUI_Tooltips_335.lua','EUI_Inspect_335.lua','EUI_Merchant_335.lua','EUI_Popups_335.lua',
+       'EUI_SkinExtras_335.lua','EUI_LootRolls_335.lua']
 assert files[:len(order)]==order,files
 for name in order:
     source=re.sub(r'--[^\n]*','',(skin/name).read_text(encoding='utf-8-sig'))
@@ -187,7 +188,7 @@ lua.globals().BS=ns
 lua.execute(r'''
 BS.addon:OnInitialize(); BS.addon:OnEnable()
 assert(not next(lifecycleErrors),lifecycleErrors[1])
-assert(#BS.extras==4,'extras registry')
+assert(#BS.extras==6,'extras registry')
 -- Server Collections/Wardrobe and Dungeon Finder popups use the window skin.
 assert(BS.states[CollectionsJournal] and BS.states[CollectionsJournal].active,'Collections not skinned')
 assert(BS.states[WardrobeFrame].active and BS.states[LFDRoleCheckPopup].active and BS.states[LFDDungeonReadyStatus].active)
@@ -417,7 +418,9 @@ for _,text in ipairs({'Enchants on Equipment Slots','Show Enchant Names Instead 
     'Show Player Titles','Inspect Item Level','Show GearScore','Guild Rank','Show Target','Show Mount & Collected Status','Hide Health Bar',
     'Anchor to Cursor','Cursor Position','Cursor Offset X','Cursor Offset Y','Growth Direction','Show Tooltips','Peek Modifier',
     'Manage Enhanced Tooltips','Enhanced Tooltips','Resurrect Accept Glow','Dungeon Ready Countdown','Countdown Bar Height',
-    'Countdown Text Size','Countdown Text Color','Countdown Text Offset','Collections','Wardrobe & Transmog'}) do
+    'Countdown Text Size','Countdown Text Color','Countdown Text Offset','Collections','Wardrobe & Transmog',
+    'Show Group Roll Choices','Barber Shop','PvP, Battlemasters & Arena Registrar','Battleground Score & Minimap',
+    'Help & GM Requests','Breath/Fatigue Timers & Stopwatch','Debug Tools','Raid Pullouts','Ace3 Config Windows'}) do
     assert(seen[text],'missing option row: '..text)
 end
 for _,group in ipairs(BS.statGroups) do assert(seen[group.text..' Color'],'missing stat colour row: '..group.text) end

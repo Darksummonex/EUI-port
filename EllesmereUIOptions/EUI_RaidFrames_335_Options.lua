@@ -107,6 +107,18 @@ init:SetScript("OnEvent",function(self)
                 tooltip="Only highlights debuffs your character can remove right now.",
                 getValue=function() return S("dispelShowAll")==false end,
                 setValue=function(v) Set("dispelShowAll",not v) end})
+        Section("RAID DEBUFFS")
+        local function Off() return S("raidDebuffs")==false end
+        Row({type="toggle",text="Boss Debuff Icon",
+                tooltip="Shows the most important boss debuff (ICC, Ruby Sanctum, ToC, Ulduar, Naxxramas) as a large icon in the middle of the frame.",
+                getValue=function() return S("raidDebuffs")~=false end,setValue=function(v) Set("raidDebuffs",v); E:RefreshPage() end},
+            {type="slider",text="Icon Size",min=10,max=48,step=1,disabled=Off,disabledTooltip="Boss Debuff Icon",
+                getValue=function() return S("raidDebuffSize") or 22 end,setValue=function(v) Set("raidDebuffSize",v) end})
+        Row({type="toggle",text="Show Dispellable When No Boss Debuff",disabled=Off,disabledTooltip="Boss Debuff Icon",
+                tooltip="Falls back to the first debuff your character can remove.",
+                getValue=function() return S("raidDebuffDispellable")~=false end,setValue=function(v) Set("raidDebuffDispellable",v) end},
+            {type="slider",text="Icon Offset Y",min=-30,max=30,step=1,disabled=Off,disabledTooltip="Boss Debuff Icon",
+                getValue=function() return S("raidDebuffOffsetY") or 0 end,setValue=function(v) Set("raidDebuffOffsetY",v) end})
     end
     E:RegisterModule("EllesmereUIRaidFrames",{title="Raid Frames",description="Wrath raid and party frames with native unit clicks, auras, range and click casting.",pages={"Raid","Party","Buffs","Debuffs","Extras","Aura Filters","Click Casting"},
         searchTerms="raid party group 10 25 40 players layout hide healer health mana power class name range threat aggro dispel buffs debuffs filter click casting healing ready leader marker preview mode overlay real horizontal frames heal prediction healcomm resurrection combat main tank pets boss valithria healer mana role icon border hover gradient sated dispels dispel overlay opacity frame border type icon dispel colors only show dispellable",

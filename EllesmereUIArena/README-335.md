@@ -2,6 +2,14 @@
 
 Módulo novo do EllesmereUI para o WoW 3.3.5a: quadros dos inimigos de arena (arena1–5). Não existe equivalente no EUI Retail; foi criado para cobrir a lacuna em relação ao ElvUI.
 
+## 9.3.4-335-0.2
+
+- Retornos decrescentes (DR): ícones ao lado de cada inimigo, um por categoria (atordoamento, atordoamento aleatório, investida, medo, desorientação, silêncio, horror, enraizamento, ciclone, banir, controle mental, desarmar). A borda indica o próximo efeito: verde metade da duração, amarelo um quarto, vermelho imune. O contador mostra os 18 segundos até zerar. Os feitiços são comparados pelo nome (todos os ranks contam) via `SPELL_AURA_APPLIED/REFRESH/REMOVED` do log de combate, apenas dentro da arena. Lado (esquerda/direita) e tamanho configuráveis; os ícones ficam fora do bloco do quadro.
+- Pets da arena: barra de vida e nome do `arenapetN` abaixo da barra de lançamento do dono, em botão seguro com `RegisterUnitWatch` (aparece e some sozinho, inclusive em combate). Clique esquerdo seleciona, direito define foco. Altura configurável; a pré-visualização mostra Water Elemental e Ghoul.
+- Desvanecimento por alcance: inimigos fora do alcance de um feitiço de 30–40 jardas da sua classe (Fireball, Shadow Bolt, Shadow Word: Pain, Wrath, Lightning Bolt, Auto Shot, Hand of Reckoning, Death Grip, Throw, Shattering Throw) ficam com a opacidade escolhida; sem o feitiço, usa `CheckInteractDistance` (28 jardas).
+- Opções: seções PETS e DIMINISHING RETURNS; "Fade Out of Range" e "Out of Range Opacity" em TARGET AND VISIBILITY.
+- Teste: `backport-tools/validate_arena.py` (pré-visualização, unit watch, DR aplicado/renovado/removido/zerado, buffs ignorados, alcance com feitiço e com distância, opções).
+
 ## 9.3.4-335-0.1
 
 - Cinco botões seguros (`SecureUnitButtonTemplate`) para arena1–5: clique esquerdo seleciona o alvo, clique direito define o foco.
@@ -19,8 +27,8 @@ Módulo novo do EllesmereUI para o WoW 3.3.5a: quadros dos inimigos de arena (ar
 
 ### Não portado / limitações
 
-- Retornos decrescentes (DR) não são rastreados.
+- DR só conta o que o log de combate mostra: aplicações fora do alcance do log (~50 jardas) não entram. As categorias seguem a tabela padrão do Wrath; regras próprias do servidor não são consideradas.
 - Detecção de especialização não existe no 3.3.5 (não há API de spec para inimigos).
-- Quadros de pets da arena (arenapet1–5) ainda não foram incluídos.
-- Desvanecimento por alcance não foi incluído: o 3.3.5 não tem checagem de alcance confiável para inimigos sem usar feitiços da classe.
+- O alcance depende de um feitiço conhecido da classe; personagens sem ele usam a distância de 28 jardas.
+- Os pets não têm barra de lançamento nem auras.
 - Mudanças de tamanho ou posição durante o combate esperam o fim do combate (restrição dos botões seguros).

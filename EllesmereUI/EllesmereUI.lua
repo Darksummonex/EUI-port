@@ -3084,12 +3084,28 @@ EllesmereUI._RunConflictCheck = function()
                 .. ". Running both at the same time may cause errors or unexpected behavior."
                 .. "\n\nPlease disable one of them."
             )
+            -- One-click fixes: disable the other addon, or (whole-module conflicts
+            -- only) the affected EUI modules, then reload.
+            local function DisableAndReload(list, what)
+                for _, name in ipairs(list) do C_AddOns.DisableAddOn(name) end
+                EllesmereUI.RequestReload("Reload Required", what .. " will be disabled after a reload.")
+            end
+            local extras = {
+                { text = "Disable " .. entry.label,
+                  onClick = function() DisableAndReload({ entry.addon }, entry.label) end },
+            }
+            if entry.targets ~= "all" and not entry.moduleCheck and not entry.message then
+                local what = "EllesmereUI " .. (#names == 1 and names[1] or table.concat(names, ", "))
+                extras[2] = { text = #names == 1 and ("Disable EUI " .. names[1]) or "Disable EUI Modules",
+                              onClick = function() DisableAndReload(affected, what) end }
+            end
             if EllesmereUI.ShowConfirmPopup then
                 EllesmereUI:ShowConfirmPopup({
                     title       = "Incompatible Addon Detected",
                     message     = msg,
                     confirmText = "Okay",
                     cancelText  = "Don't show again",
+                    extraButtons = extras,
                     onConfirm   = function() ShowNextConflict() end,
                     onCancel    = function()
                         dismissed[entry.addon] = true

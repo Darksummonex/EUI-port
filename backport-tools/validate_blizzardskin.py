@@ -64,6 +64,9 @@ CharacterTestCheck:RunScript('OnClick'); assert(CharacterTestCheck:GetChecked())
 assert(CharacterTestCheck.checkedTexture:GetTexture()=='Interface\\\\Buttons\\\\WHITE8X8')
 PlayerStatFrameLeftDropDownButton:RunScript('OnClick'); assert(dropdownOpened)
 assert(PlayerStatFrameLeftDropDown.art:GetTexture()==nil and c.insets[PlayerStatFrameLeftDropDown].panel:IsShown())
+-- Dropdown frames include transparent label-art margins: the panel ends at the arrow button.
+local ddp=c.insets[PlayerStatFrameLeftDropDown].panel.point
+assert(ddp and ddp[1]=='BOTTOMRIGHT' and ddp[2]==PlayerStatFrameLeftDropDownButton and ddp[4]==0 and ddp[5]==0,'dropdown panel overhangs its box')
 assert(SpellButton1.normal:GetTexture()==nil and SpellButton1IconTexture.texcoords[1]==.08)
 assert(SpellButton1Cooldown.start==10 and SpellButton1Cooldown.duration==20)
 assert(SpellBookSkillLineTab1.normal:GetTexture()=='Interface\\\\Icons\\\\Spell_Fire_Fire' and SpellBookSkillLineTab1.normal.texcoords[1]==.08)

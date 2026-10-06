@@ -591,12 +591,15 @@ local function MakeBarCtx(id)
     end
     return ctx
 end
-local function PointXY(point, w, h)
-    if point == "TOPLEFT" then return 0, h elseif point == "TOP" then return w / 2, h
-    elseif point == "TOPRIGHT" then return w, h elseif point == "LEFT" then return 0, h / 2
-    elseif point == "RIGHT" then return w, h / 2 elseif point == "BOTTOMLEFT" then return 0, 0
-    elseif point == "BOTTOM" then return w / 2, 0 elseif point == "BOTTOMRIGHT" then return w, 0 end
-    return w / 2, h / 2
+-- Horizontal ("H": LEFT/RIGHT/"") or vertical ("V": TOP/BOTTOM/"") half of an anchor point.
+local function PointPart(point, axis)
+    point = point or "CENTER"
+    if axis == "H" then return point:find("LEFT") and "LEFT" or point:find("RIGHT") and "RIGHT" or "" end
+    return point:find("TOP") and "TOP" or point:find("BOTTOM") and "BOTTOM" or ""
+end
+local function JoinPoint(v, h)
+    local p = v .. h
+    return p == "" and "CENTER" or p
 end
 local function ApplyBarPosition(id)
     local rec, cfg = live[id], ns.GetBar(id)
@@ -616,32 +619,29 @@ local function ApplyBarPosition(id)
         else bar:SetPoint("CENTER", UIParent, "CENTER", 0, 0) end
         return
     end
-    local uw, uh = UIParent:GetWidth(), UIParent:GetHeight()
-    local bw, bh = bar:GetWidth(), bar:GetHeight()
-    local cx, cy = uw / 2, uh / 2
-    if sp and sp.point then
-        local rx, ry = PointXY(sp.relPoint or sp.point, uw, uh)
-        local px, py = PointXY(sp.point, bw, bh)
-        cx = rx + (sp.x or 0) - px + bw / 2
-        cy = ry + (sp.y or 0) - py + bh / 2
-    end
+    -- Anchor to UIParent's edges, never to coordinates computed from its size: Core
+    -- re-applies the UI scale after OnEnable, which would strand absolute offsets.
+    local pt = sp and sp.point or "CENTER"
+    local rpt = sp and (sp.relPoint or sp.point) or "CENTER"
+    local x, y = sp and sp.x or 0, sp and sp.y or 0
     if vertical then
-        if full then cy = uh / 2 end
-        if edge == "left" then cx = bw / 2 elseif edge == "right" then cx = uw - bw / 2 end
-    else
-        if full then cx = uw / 2 end
-        if edge == "bottom" then cy = bh / 2 elseif edge == "top" then cy = uh - bh / 2 end
-    end
-    if full then
-        if vertical then
-            bar:SetPoint("TOP", UIParent, "TOPLEFT", cx, 0)
-            bar:SetPoint("BOTTOM", UIParent, "BOTTOMLEFT", cx, 0)
+        if full then
+            local h, rh = PointPart(pt, "H"), PointPart(rpt, "H")
+            if edge then h = edge == "left" and "LEFT" or "RIGHT"; rh, x = h, 0 end
+            bar:SetPoint(JoinPoint("TOP", h), UIParent, JoinPoint("TOP", rh), x, 0)
+            bar:SetPoint(JoinPoint("BOTTOM", h), UIParent, JoinPoint("BOTTOM", rh), x, 0)
         else
-            bar:SetPoint("LEFT", UIParent, "BOTTOMLEFT", 0, cy)
-            bar:SetPoint("RIGHT", UIParent, "BOTTOMRIGHT", 0, cy)
+            local e = edge == "left" and "LEFT" or "RIGHT"
+            bar:SetPoint(JoinPoint(PointPart(pt, "V"), e), UIParent, JoinPoint(PointPart(rpt, "V"), e), 0, y)
         end
+    elseif full then
+        local v, rv = PointPart(pt, "V"), PointPart(rpt, "V")
+        if edge then v = edge == "top" and "TOP" or "BOTTOM"; rv, y = v, 0 end
+        bar:SetPoint(JoinPoint(v, "LEFT"), UIParent, JoinPoint(rv, "LEFT"), 0, y)
+        bar:SetPoint(JoinPoint(v, "RIGHT"), UIParent, JoinPoint(rv, "RIGHT"), 0, y)
     else
-        bar:SetPoint("CENTER", UIParent, "BOTTOMLEFT", cx, cy)
+        local e = edge == "top" and "TOP" or "BOTTOM"
+        bar:SetPoint(JoinPoint(e, PointPart(pt, "H")), UIParent, JoinPoint(e, PointPart(rpt, "H")), x, 0)
     end
 end
 ns.ApplyBarPosition = ApplyBarPosition

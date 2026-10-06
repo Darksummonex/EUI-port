@@ -1,4 +1,21 @@
-# Quality of Life 3.3.5 — 0.7
+# Quality of Life 3.3.5 — 0.9
+
+0.9: automação de grupo no estilo do Misc do ElvUI (EUI_QoL_335_Group.lua).
+"Announce Interrupts" (QoL > GROUP) anuncia o feitiço que você ou seu pet
+interromperam, com link, em Say, Emote, Party, Raid (cai para Party fora de
+raide) ou Raid Only; Party e Raid usam o canal de campo de batalha dentro de
+battlegrounds. "Accept Invites from Friends & Guild" aceita convites de grupo
+de amigos e membros da guilda (ignora sufixo de reino), exceto se você já
+estiver em grupo ou na fila do Dungeon Finder; ao contrário da opção do Friends
+List, não depende da skin do Friends. Raid Tools ganhou o botão "Disband" (e
+"Disband Group" na página de opções): após confirmação, o líder remove todos
+(inclusive offline) e sai do grupo; nunca em combate. Teste:
+backport-tools/validate_qol_group.py.
+
+0.8: o Zone Text não tem mais mover no Unlock Mode nem Element Options. O nome
+da zona fica fixo no topo (X 9 / Y 322 a partir do centro da tela) enquanto
+"Move Zone Text" estiver ligado; uma posição salva pelo mover antigo é
+descartada. Teste: backport-tools/validate_qol_zonetext.py.
 
 0.7: com o addon AbilityTimeline ativo, as barras do DBM e do BigWigs somem da
 tela (o timeline já mostra os mesmos timers). As barras ficam invisíveis e sem

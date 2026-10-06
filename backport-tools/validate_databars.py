@@ -502,7 +502,7 @@ if original.exists():
 expected = ['EUI_DataBars_335.lua', 'EUI_DataBars_335_Tip.lua', 'EUI_DataBars_335_Kit.lua'] + ['Blocks_335\\' + n + '.lua' for n in
     ['Clock', 'Stats', 'Location', 'Gold', 'Bags', 'XPRep', 'Travel', 'Spec', 'Profession', 'MicroMenu', 'Currency', 'ItemLevel', 'Audio', 'LDB', 'Spacer']]
 assert files == expected, files
-assert re.search(r'^## Interface: 30300$', toc, re.M) and re.search(r'^## Version: 9\.3\.4-335-0\.3$', toc, re.M)
+assert re.search(r'^## Interface: 30300$', toc, re.M) and re.search(r'^## Version: 9\.3\.4-335-0\.4$', toc, re.M)
 wrath_sources = [root / 'EllesmereUIDataBars' / f.replace('\\', '/') for f in files] + [root / 'EllesmereUIOptions/EUI_DataBars_335_Options.lua']
 banned = re.compile(r'\.png["\']|:SetAtlas\(|:SetRotatesTexture\(|:SetSize\(|:SetShown\(|:SetColorTexture\(|C_Timer\.After|\bC_(Map|CurrencyInfo|Container|PvP|Item|Spell|DateAndTime|ClassTalents|SpecializationInfo|ToyBox|FriendList|BattleNet|Club|TradeSkillUI|WeeklyRewards|AddOns|CVar)\.')
 for src in wrath_sources:
@@ -533,4 +533,40 @@ from PIL import Image  # noqa: E402
 for tga in media.rglob('*.tga'):
     w, h = Image.open(tga).size
     assert w & (w - 1) == 0 and h & (h - 1) == 0, tga
-print('PASS: unchanged Retail references, native TOC 9.3.4-335-0.3 load order, no Retail-only APIs/PNG, power-of-two TGA media present')
+print('PASS: unchanged Retail references, native TOC 9.3.4-335-0.4 load order, no Retail-only APIs/PNG, power-of-two TGA media present')
+
+# Snapped and full-length bars anchor to UIParent's edges, never to offsets computed
+# from its size: Core re-applies the UI scale after OnEnable, which stranded the bar.
+lua.execute('''
+local m=getmetatable(UIParent).__index
+local oldSet,oldClear,oldCombat=m.SetPoint,m.ClearAllPoints,InCombatLockdown
+function InCombatLockdown() return false end
+function m:ClearAllPoints() self.pts={} end
+function m:SetPoint(...) self.pts=self.pts or {}; self.pts[#self.pts+1]={...} end
+local cfg=D.CreateBar('empty'); local id=cfg.id; D.ApplyBar(id); local frame=D.live[id].bar
+local function Is(i,p,rp,x,y) local q=frame.pts[i]; return q and q[1]==p and q[2]==UIParent and q[3]==rp and q[4]==x and q[5]==y end
+local function Apply() D.ApplyBarPosition(id); return #frame.pts end
+-- The reported Bottom Info Bar: custom length, snapped to top, saved BOTTOM/BOTTOM.
+cfg.orientation='H'; cfg.lengthMode='custom'; cfg.snapEdge='top'; cfg.savedPos={point='BOTTOM',relPoint='BOTTOM',x=0,y=0}
+assert(Apply()==1 and Is(1,'TOP','TOP',0,0),'top snap')
+cfg.savedPos={point='TOPRIGHT',relPoint='TOPRIGHT',x=-40,y=-200}; Apply(); assert(Is(1,'TOPRIGHT','TOPRIGHT',-40,0))
+cfg.snapEdge='bottom'; cfg.savedPos={point='LEFT',relPoint='CENTER',x=25,y=99}; Apply(); assert(Is(1,'BOTTOMLEFT','BOTTOM',25,0))
+cfg.lengthMode='full'; cfg.snapEdge='top'; assert(Apply()==2 and Is(1,'TOPLEFT','TOPLEFT',0,0) and Is(2,'TOPRIGHT','TOPRIGHT',0,0))
+cfg.snapEdge='none'; cfg.savedPos={point='CENTER',relPoint='CENTER',x=10,y=-300}; Apply(); assert(Is(1,'LEFT','LEFT',0,-300) and Is(2,'RIGHT','RIGHT',0,-300))
+cfg.orientation='V'; cfg.lengthMode='custom'; cfg.snapEdge='left'; cfg.savedPos={point='TOP',relPoint='CENTER',x=5,y=60}
+assert(Apply()==1 and Is(1,'TOPLEFT','LEFT',0,60))
+cfg.lengthMode='full'; cfg.snapEdge='right'; Apply(); assert(Is(1,'TOPRIGHT','TOPRIGHT',0,0) and Is(2,'BOTTOMRIGHT','BOTTOMRIGHT',0,0))
+cfg.snapEdge='none'; cfg.savedPos={point='CENTER',relPoint='CENTER',x=-70,y=3}; Apply(); assert(Is(1,'TOP','TOP',-70,0) and Is(2,'BOTTOM','BOTTOM',-70,0))
+-- Free bars keep their saved anchor as-is.
+cfg.orientation='H'; cfg.lengthMode='custom'; cfg.snapEdge='none'; cfg.savedPos={point='TOPRIGHT',relPoint='TOPRIGHT',x=-4,y=-240}
+Apply(); assert(Is(1,'TOPRIGHT','TOPRIGHT',-4,-240))
+-- Positioning never reads UIParent's size.
+local gw,gh=UIParent.GetWidth,UIParent.GetHeight
+UIParent.GetWidth=function() error('size-dependent bar anchor') end; UIParent.GetHeight=UIParent.GetWidth
+for _,c in ipairs({{'H','custom','top'},{'H','full','bottom'},{'H','full','none'},{'V','custom','right'},{'V','full','left'},{'V','full','none'}}) do
+    cfg.orientation,cfg.lengthMode,cfg.snapEdge=c[1],c[2],c[3]; Apply()
+end
+UIParent.GetWidth,UIParent.GetHeight=gw,gh
+m.SetPoint,m.ClearAllPoints,InCombatLockdown=oldSet,oldClear,oldCombat
+''')
+print('PASS: snapped and full-length bars anchor to UIParent edges (scale-independent); free bars keep their saved anchor')

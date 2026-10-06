@@ -1,4 +1,15 @@
-# Raid Frames 3.3.5 — 0.11
+# Raid Frames 3.3.5 — 0.12
+
+A 0.12 traz o "Raid Debuffs" do ElvUI: um ícone grande no centro de cada
+quadro para debuffs importantes de ICC, Ruby Sanctum, Trial of the Crusader,
+Ulduar e Naxxramas (lista com prioridade em EUI_RaidFrames_335_RaidDebuffs.lua;
+por exemplo Ice Tomb e Harvest Soul acima de Frost Beacon). O de maior
+prioridade vence; sem nenhum da lista, mostra o primeiro debuff que você pode
+dissipar (opcional). Borda na cor do tipo de dissipação (ou vermelha), espiral,
+contador e acúmulos. Opções na seção RAID DEBUFFS (dentro de Dispels): Boss
+Debuff Icon, Icon Size, Icon Offset Y e Show Dispellable When No Boss Debuff.
+Perfis antigos já começam com o ícone ligado. Teste:
+backport-tools/validate_raidframes.py.
 
 A 0.11 corrige o erro `SecureTemplates.lua:624: bad argument #1 to 'strupper'`
 (repetido ~19x) ao carregar. O header dos pets cria 20 botões (4 colunas de

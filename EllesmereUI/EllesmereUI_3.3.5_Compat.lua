@@ -155,6 +155,48 @@ if (GetBuildInfo and select(4, GetBuildInfo()) or 0) < 70000 then
  end
 end
 
+-- FontString:SetMaxLines came after Wrath, and Core (Unlock Mode movers, the panel)
+-- calls it before the Options addon's own no-op exists. One line is Wrath's
+-- single-line truncation (word wrap off, restored if a later call lifts the limit).
+-- Larger limits are only recorded: a forced height would move JustifyV/anchored
+-- text that Retail leaves alone.
+do
+ local probe = CreateFrame("Frame")
+ probe:Hide()
+ local fsIdx = getmetatable(probe:CreateFontString()).__index
+ if type(fsIdx) == "table" and not fsIdx.SetMaxLines then
+  fsIdx.SetMaxLines = function(self, n)
+   n = tonumber(n) or 0
+   if n < 0 then n = 0 end
+   self._euiMaxLines = n
+   if n == 1 then
+    if not self._euiMaxLinesWrap and self.CanWordWrap and self:CanWordWrap() then
+     self._euiMaxLinesWrap = true
+    end
+    if self.SetWordWrap then self:SetWordWrap(false) end
+   elseif self._euiMaxLinesWrap then
+    self._euiMaxLinesWrap = nil
+    if self.SetWordWrap then self:SetWordWrap(true) end
+   end
+  end
+ end
+ if type(fsIdx) == "table" and not fsIdx.GetMaxLines then
+  fsIdx.GetMaxLines = function(self) return self._euiMaxLines or 0 end
+ end
+ -- Unlock Mode's cog offset boxes ask HasFocus while syncing after a nudge.
+ local box = CreateFrame("EditBox", nil, probe)
+ if box.SetAutoFocus then box:SetAutoFocus(false) end
+ if box.ClearFocus then box:ClearFocus() end
+ if box.EnableKeyboard then box:EnableKeyboard(false) end
+ box:Hide()
+ local ebIdx = getmetatable(box).__index
+ if type(ebIdx) == "table" and not ebIdx.HasFocus then
+  ebIdx.HasFocus = function(self)
+   return GetCurrentKeyBoardFocus ~= nil and GetCurrentKeyBoardFocus() == self
+  end
+ end
+end
+
 -- Physical screen dimensions were added after Wrath. Keep the modern global
 -- available because several original core files call it directly.
 if not GetPhysicalScreenSize then

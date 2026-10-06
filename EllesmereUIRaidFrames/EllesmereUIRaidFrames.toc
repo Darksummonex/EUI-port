@@ -4,7 +4,7 @@
 ## Group: EllesmereUI
 ## Notes: Native Wrath secure raid and party frames, aura filters and click casting.
 ## Author: Ellesmere
-## Version: 9.3.4-335-0.11
+## Version: 9.3.4-335-0.12
 ## Dependencies: EllesmereUI
 ## X-Part-Of: EllesmereUI
 # Module settings are stored in the Core's EllesmereUIDB profiles.
@@ -19,6 +19,7 @@ Libs\LibResComm-1.0\LibResComm-1.0.lua
 # Native runtime and secure child template. Retail originals stay unloaded.
 EUI_RaidFrames_335_Indicators.lua
 EUI_RaidFrames_335.lua
+EUI_RaidFrames_335_RaidDebuffs.lua
 EUI_RaidFrames_335_Display.lua
 EUI_RaidFrames_335_Extras.lua
 EUI_RaidFrames_335_ClickCast.lua

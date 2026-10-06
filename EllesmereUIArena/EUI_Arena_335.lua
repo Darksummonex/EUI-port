@@ -12,7 +12,8 @@ local defaults={profile={enabled=true,hideBlizzard=true,previewCount=3,
     nameSize=12,classColoredNames=false,healthText="percent",healthTextSize=11,
     classIcon=true,iconSide="LEFT",iconStyle="modern",ccOnIcon=true,trinket=true,trinketSide="RIGHT",timers=true,timerSize=12,
     castBar=true,castBarHeight=14,castIcon=true,castTextSize=10,castColor=RGB(1,.7,0),uninterruptibleColor=RGB(.6,.6,.6),
-    targetBorder=true,targetColor=RGB(.05,.82,.61),unseenAlpha=50}}
+    targetBorder=true,targetColor=RGB(.05,.82,.61),unseenAlpha=50,
+    pets=true,petHeight=14,drTracking=true,drSize=26,drSide="RIGHT",rangeFade=true,rangeAlpha=50}}
 ns.defaults=defaults
 ns.MAX=5
 ns.TRINKET_COOLDOWN=120
@@ -36,6 +37,59 @@ function ns.BuildAuraPriority()
     end
     ns.AURA_PRIORITY=map
     return map
+end
+-- Diminishing returns (Wrath DR categories). Matched by name so every rank counts;
+-- a category resets 18 seconds after its last aura fades.
+ns.DR_RESET=18
+ns.DR_CATEGORY_IDS={
+    stun={853,408,1833,5211,9005,22570,19577,24394,12809,46968,20549,47481,44572,30283,22703,2812,50518},
+    randomstun={12355,39796,12798,5530,20170},
+    charge={7922},
+    fear={5782,6213,6215,5484,17928,8122,5246,20511,1513,10326,6358},
+    disorient={118,28271,28272,61305,61721,61025,61780,6770,1776,2094,51514,20066,49203,19386,3355,60210},
+    silence={15487,47476,1330,28730,25046,50613,24259,18469,55021,34490,63529,18498,18425},
+    horror={6789,64044},
+    root={339,122,33395,55080,50245,54706,4167,19975},
+    cyclone={33786},banish={710},mc={605},
+    disarm={676,64058,51722,53359,50541}}
+ns.dr={}
+function ns.BuildDRMap()
+    local map={}
+    for cat,ids in pairs(ns.DR_CATEGORY_IDS) do
+        for _,id in ipairs(ids) do local name=GetSpellInfo and GetSpellInfo(id); if name then map[name]=cat end end
+    end
+    ns.DR_MAP=map
+    return map
+end
+function ns.TrackDR(sub,dstGUID,spellId,spellName,auraType)
+    if auraType~="DEBUFF" or not dstGUID then return end
+    local cat=(ns.DR_MAP or ns.BuildDRMap())[spellName or (GetSpellInfo(spellId))]
+    if not cat then return end
+    local t=ns.dr[dstGUID]; if not t then t={}; ns.dr[dstGUID]=t end
+    local d,now=t[cat],GetTime()
+    if sub=="SPELL_AURA_APPLIED" or sub=="SPELL_AURA_REFRESH" then
+        if not d or (not d.active and d.expires and d.expires<=now) then d={count=0}; t[cat]=d end
+        d.count,d.active,d.expires=d.count+1,true,nil
+        d.icon=select(3,GetSpellInfo(spellId)) or d.icon
+    elseif sub=="SPELL_AURA_REMOVED" then
+        if not d then d={count=1,icon=select(3,GetSpellInfo(spellId))}; t[cat]=d end
+        d.active,d.expires=false,now+ns.DR_RESET
+    else return end
+    local f=ns.FrameForGUID(dstGUID); if f and ns.UpdateDR then ns.UpdateDR(f) end
+end
+-- Enemy range: a 30-40 yard class spell, else the 28 yard follow distance.
+ns.RANGE_SPELLS={MAGE=133,WARLOCK=686,PRIEST=589,DRUID=5176,SHAMAN=403,HUNTER=75,PALADIN=62124,DEATHKNIGHT=49576,ROGUE=2764,WARRIOR=57755}
+function ns.InRange(unit)
+    if ns.rangeSpell==nil then
+        local _,class=UnitClass("player"); local id=ns.RANGE_SPELLS[class or ""]
+        ns.rangeSpell=id and GetSpellInfo(id) or false
+    end
+    if ns.rangeSpell and IsSpellInRange then
+        local r=IsSpellInRange(ns.rangeSpell,unit)
+        if r==1 then return true elseif r==0 then return false end
+    end
+    if CheckInteractDistance then return CheckInteractDistance(unit,4) and true or false end
+    return true
 end
 function ns.GetSettings() return addon.db and addon.db.profile end
 function ns.Copy(value) if type(value)~="table" then return value end; local t={}; for k,v in pairs(value) do t[k]=ns.Copy(v) end; return t end
@@ -86,7 +140,7 @@ function ns.HideBlizzard()
     end
 end
 function ns.ResetMatch()
-    wipe(ns.trinketUsed)
+    wipe(ns.trinketUsed); wipe(ns.dr)
     for _,f in ipairs(ns.frames) do f.guid,f.class,f.unitName,f.lastHP,f.faction,f.everSeen=nil,nil,nil,nil,nil,nil end
 end
 function ns.FrameForGUID(guid)
@@ -142,10 +196,12 @@ end
 local function OnEvent(_,event,...)
     local arg1,arg2=...
     if event=="COMBAT_LOG_EVENT_UNFILTERED" then
-        local _,sub,srcGUID,_,_,_,_,_,spellId=...
+        local _,sub,srcGUID,_,_,dstGUID,_,_,spellId,spellName,_,auraType=...
         if sub=="SPELL_CAST_SUCCESS" and ns.TRINKET_SPELLS[spellId] and srcGUID then
             ns.trinketUsed[srcGUID]=GetTime()
             local f=ns.FrameForGUID(srcGUID); if f and ns.UpdateTrinket then ns.UpdateTrinket(f) end
+        elseif auraType=="DEBUFF" and ns.InArena() then
+            ns.TrackDR(sub,dstGUID,spellId,spellName,auraType)
         end
     elseif SPELLCAST[event] then
         local f=FrameForUnit(arg1); if f and ns.UpdateCast then ns.UpdateCast(f,event) end
@@ -153,6 +209,8 @@ local function OnEvent(_,event,...)
         local f=FrameForUnit(arg1); if f and ns.UpdateIcon then ns.UpdateIcon(f) end
     elseif event=="UNIT_NAME_UPDATE" then
         local f=FrameForUnit(arg1); if f and ns.UpdateUnit then ns.UpdateUnit(f) end
+    elseif event=="UNIT_PET" then
+        local f=FrameForUnit(arg1); if f and ns.UpdatePet then ns.UpdatePet(f) end
     elseif event=="ARENA_OPPONENT_UPDATE" then
         local f=FrameForUnit(arg1)
         if f and (arg2=="destroyed" or arg2=="cleared") then f.guid,f.class,f.unitName,f.lastHP,f.faction=nil,nil,nil,nil,nil end
@@ -178,7 +236,7 @@ function addon:OnEnable()
     if E.RegisterOnHide then E:RegisterOnHide(function() ns.SyncOptionsPreview() end) end
     local events=CreateFrame("Frame"); ns.events=events
     for _,event in ipairs({"PLAYER_ENTERING_WORLD","ZONE_CHANGED_NEW_AREA","PLAYER_REGEN_ENABLED","PLAYER_REGEN_DISABLED","ARENA_OPPONENT_UPDATE","PLAYER_TARGET_CHANGED",
-        "UNIT_AURA","UNIT_NAME_UPDATE","COMBAT_LOG_EVENT_UNFILTERED","ADDON_LOADED"}) do pcall(events.RegisterEvent,events,event) end
+        "UNIT_AURA","UNIT_NAME_UPDATE","UNIT_PET","COMBAT_LOG_EVENT_UNFILTERED","ADDON_LOADED"}) do pcall(events.RegisterEvent,events,event) end
     for event in pairs(SPELLCAST) do pcall(events.RegisterEvent,events,event) end
     events:SetScript("OnEvent",OnEvent)
     local elapsed,slow=0,0

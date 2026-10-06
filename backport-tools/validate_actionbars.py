@@ -145,7 +145,25 @@ assert(ShapeshiftBarFrame:GetParent()==nativeParent and BonusActionBarFrame:GetP
 assert(ShapeshiftButton1:GetParent()==nativeParent)
 AB.GetSettings().enabled=true; AB.Apply()
 PetActionButton1:GetScript("OnClick")(PetActionButton1); assert(nativeClicks==1)
-assert(unlockFolder=="EllesmereUIActionBars" and #unlockElements==14)
+assert(unlockFolder=="EllesmereUIActionBars" and #unlockElements==18)
+-- Bars 7-10: off by default, pages 7-10 (slots 73-120), own bindings and movers.
+for n=7,10 do
+    local key="bar"..n
+    assert(AB.GetSettings(key).enabled==false and not AB.bars[key]:IsShown() and next(AB.bars[key].bindings)==nil)
+    assert(AB.bars[key].buttons[1]:GetAttribute("action")==(n-1)*12+1 and AB.bars[key].buttons[12]:GetAttribute("action")==n*12)
+    assert(unlockElements[n].key=="EUI335_AB_"..key and unlockElements[n].label=="Action Bar "..n and unlockElements[n].isHidden())
+    assert(_G["BINDING_NAME_EUI335_BAR"..n.."_BUTTON12"]=="Action Bar "..n.." - Button 12")
+end
+class="WARRIOR"; assert(AB.PageShare("bar7")=="Battle Stance" and AB.PageShare("bar10")==nil and AB.PageShare("bar6")==nil)
+class="DRUID"; assert(AB.PageShare("bar10")=="Moonkin Form" and AB.PageShare("bar8")=="Prowl")
+class="MAGE"; assert(AB.PageShare("bar7")==nil)
+class="WARRIOR"; AB.GetSettings("bar1").disableFormPaging=true; assert(AB.PageShare("bar7")==nil)
+AB.GetSettings("bar1").disableFormPaging=false
+bindingKeys.EUI335_BAR7_BUTTON1={"F7"}; AB.GetSettings("bar7").enabled=true; AB.Apply()
+assert(AB.bars.bar7:IsShown() and AB.bars.bar7.bindings.F7 and AB.bars.bar7.bindings.F7[1]=="EllesmereUIActionBars_bar7Button1")
+combat=true; page=1; TickDrivers(); assert(AB.bars.bar7.buttons[1]:GetAttribute("action")==73,"Extra bars do not page")
+combat=false; AB.GetSettings("bar7").enabled=false; bindingKeys.EUI335_BAR7_BUTTON1=nil; AB.Apply()
+assert(not AB.bars.bar7:IsShown() and next(AB.bars.bar7.bindings)==nil)
 -- Mover shortcut works before the lazy options module has ever loaded.
 local hudMap=EllesmereUI._ELEMENT_SETTINGS_MAP.EUI335_HUD_xp
 assert(hudMap.page=='Menu, Bags & XP Bars' and hudMap.sectionName=='EXPERIENCE BAR' and hudMap.preSelectFn==nil)
@@ -287,8 +305,8 @@ EllesmereUI._unlockModeSessionActive=true; H.UpdateData(); assert(experience:IsS
 EllesmereUI._unlockModeSessionActive=false; H.UpdateData(); assert(not experience:IsShown() and not rep:IsShown())
 EllesmereUI._unlockModeSessionActive=true
 -- Buffs/debuffs have independent real movers even with no auras or data.
-assert(unlockElements[13].getFrame()==buffs and unlockElements[14].getFrame()==debuffs and not unlockElements[13].isHidden())
-for i=9,14 do
+assert(unlockElements[17].getFrame()==buffs and unlockElements[18].getFrame()==debuffs and not unlockElements[17].isHidden())
+for i=13,18 do
     local element=unlockElements[i]
     element.savePos(nil,'CENTER','CENTER',i*10,i*5); element.applyPos()
     assert(element.getFrame():GetPoint(1)=='CENTER' and element.loadPos().x==i*10)
@@ -305,7 +323,7 @@ buffs:ClearAllPoints(); buffs:SetPoint('CENTER',UIParent,'CENTER',321,123)
 UIParent_ManageFramePositions(); H.events:RunScript('OnUpdate',.3)
 assert(select(4,buffs:GetPoint(1))==321 and select(5,buffs:GetPoint(1))==123,'HUD refresh interrupted live dragging')
 local buffRight,buffTop=321+buffs:GetWidth()/2,123+buffs:GetHeight()/2
-unlockElements[13].savePos(nil,'CENTER','CENTER',321,123); EllesmereUI._unlockModeSessionActive=false; H.Apply()
+unlockElements[17].savePos(nil,'CENTER','CENTER',321,123); EllesmereUI._unlockModeSessionActive=false; H.Apply()
 assert(buffs:GetPoint(1)=='TOPRIGHT' and select(4,buffs:GetPoint(1))==buffRight and select(5,buffs:GetPoint(1))==buffTop)
 local oldHeight=buffs:GetHeight(); AB.GetSettings().nativeHUD.buffsColumns=1; H.UpdateAuras()
 assert(buffs:GetHeight()>oldHeight and select(5,buffs:GetPoint(1))==buffTop,'Buff rows moved their first row upward')
@@ -460,6 +478,15 @@ optionButtons['Reset Menu, Bags & XP Positions'](); assert(not p.barPositions.hu
 Build('Bar Display','bar2'); p.barPositions.bar2={point='CENTER',relPoint='CENTER',x=1,y=2}
 optionButtons['Reset Selected Bar Position'](); assert(not p.barPositions.bar2 and p.barPositions.bar1==barPos)
 AB.selectedWrathBar='invalid'; Build('Bar Display'); assert(AB.selectedWrathBar=='bar1')
+-- Extra bars: listed, warned when they share a stance page, reachable by modifier paging.
+local notes={}; EllesmereUI.BuildNoteRow=function(_,y,text) notes[#notes+1]=text; return y-34 end
+class='WARRIOR'
+Build('Bar Display','bar7'); assert(#notes==2 and notes[1]=='Action Bar 7 shares its buttons with Action Bar 1 in Battle Stance.')
+notes={}; Build('Bar Display','bar10'); assert(#notes==0)
+AB.GetSettings('bar1').disableFormPaging=true; Build('Bar Display','bar7'); assert(#notes==0)
+AB.GetSettings('bar1').disableFormPaging=false
+Build('Bar Display','bar1'); local shift=Find('Shift Modifier'); assert(shift.values[10]=='Action Bar 10' and shift.order[#shift.order]==10)
+EllesmereUI.BuildNoteRow=nil; class='WARRIOR'
 -- Bar Animations drive the interaction looks.
 Build('Bar Animations')
 Find('Pushed Type').setValue(5); assert(p.pushedTextureType==5)
@@ -473,10 +500,12 @@ for key in pairs(p.barPositions) do assert(key:sub(1,4)=='hud_','Bar position su
 assert(p.barPositions.hud_buffs,'Bar reset cleared a HUD mover')
 ''')
 bindings=ET.parse(root/'EllesmereUIActionBars/Bindings.xml').getroot()
-assert len(bindings)==12
-for i,binding in enumerate(bindings,1):
-    assert binding.attrib['name']==f'EUI335_BAR6_BUTTON{i}'
-    assert f'EllesmereUIActionBars_bar6Button{i}:Click' in binding.text
+assert len(bindings)==60
+for index,binding in enumerate(bindings):
+    bar,i=6+index//12,index%12+1
+    assert binding.attrib['name']==f'EUI335_BAR{bar}_BUTTON{i}'
+    assert binding.text==f'EllesmereUIActionBars_bar{bar}Button{i}:Click("LeftButton");'
+    assert ('header' in binding.attrib)==(index==0)
 # Check real Core default migration and mover adapters instead of only fixture stubs.
 lua.execute(core_source)
 lua.execute('''

@@ -101,6 +101,7 @@ function ns.InitButton(b)
     b.rez:SetTexture("Interface\\Icons\\Spell_Holy_Resurrection"); b.rez:SetTexCoord(.08,.92,.08,.92)
     b.buffs,b.debuffs={},{}
     for i=1,8 do b.buffs[i]=Aura(textHost); b.debuffs[i]=Aura(textHost) end
+    b.raidDebuff=Aura(textHost); b.raidDebuff:SetFrameLevel(textHost:GetFrameLevel()+3)
     if not b._euiPreview then
         b:RegisterForClicks("AnyUp"); b:SetAttribute("*type1","target"); b:SetAttribute("*type2","menu")
         b:SetAttribute("toggleForVehicle",not b._euiPet); b:SetAttribute("checkselfcast",false); b:SetAttribute("checkfocuscast",false)
@@ -165,6 +166,12 @@ function ns.LayoutButton(b)
     Place(b.rez,b,c.readyCheckPosition or "center",readySize,c.readyCheckOffsetX,c.readyCheckOffsetY)
     Place(b.combat,b,c.combatIndicatorPosition or "right",math.max(8,math.min(32,tonumber(c.combatIndicatorSize) or 16)),c.combatIndicatorOffsetX,c.combatIndicatorOffsetY)
     Place(b.dispelIcon,b.Health,c.dispelIconPosition or "center",math.max(8,math.min(48,tonumber(c.dispelIconSize) or 16)),c.dispelIconOffsetX,c.dispelIconOffsetY,0)
+    local rd=b.raidDebuff
+    if rd then
+        local size=math.max(10,math.min(48,tonumber(c.raidDebuffSize) or 22))
+        Place(rd,b.Health,"center",math.min(size,math.max(10,h-4)),c.raidDebuffOffsetX,c.raidDebuffOffsetY,0)
+        ns.Font(rd.count,math.max(8,math.floor(size*.45))); ns.Font(rd.time,math.max(8,math.floor(size*.45)))
+    end
     -- Fit both pools into the frame; the large configured value is capped only
     -- for drawing, so narrowing a frame never puts icons over its neighbour.
     for _,entry in ipairs({{"buff",b.buffs},{"debuff",b.debuffs}}) do
@@ -185,6 +192,34 @@ function ns.LayoutButton(b)
 end
 local function ClearAuras(b)
     for _,list in ipairs({b.buffs,b.debuffs}) do for _,a in ipairs(list) do a:Hide(); a.unit=nil end end
+    if b.raidDebuff then b.raidDebuff:Hide(); b.raidDebuff.unit=nil end
+end
+-- Listed boss debuff with the highest priority; otherwise (optional) the
+-- first debuff this character can dispel, via the client's RAID filter.
+local function RaidDebuff(b,unit,c)
+    local rd=b.raidDebuff
+    if not rd or c.raidDebuffs==false then return end
+    local list=ns.RAID_DEBUFFS or {}
+    local best,rank
+    for i=1,40 do
+        local name,_,icon,stacks,dtype,duration,expiry,_,_,_,id=UnitAura(unit,i,"HARMFUL")
+        if not name then break end
+        local p=id and list[id]
+        if p and (not rank or p>rank) then best,rank={index=i,filter="HARMFUL",icon=icon,stacks=stacks,dtype=dtype,duration=duration,expiry=expiry},p end
+    end
+    if not best and c.raidDebuffDispellable~=false then
+        local name,_,icon,stacks,dtype,duration,expiry=UnitAura(unit,1,"HARMFUL|RAID")
+        if name then best={index=1,filter="HARMFUL|RAID",icon=icon,stacks=stacks,dtype=dtype,duration=duration,expiry=expiry} end
+    end
+    if not best then return end
+    rd.unit,rd.index,rd.filter,rd.indicator=unit,best.index,best.filter,nil
+    rd.duration,rd.expiry=best.duration or 0,best.expiry or 0
+    rd.icon:SetTexture(best.icon); rd.icon:Show()
+    Text(rd.count,best.stacks and best.stacks>1 and tostring(best.stacks) or "")
+    local color=dispelPriority[best.dtype] and ns.DispelColor(c,best.dtype) or {r=.8,g=0,b=0}
+    rd:SetBackdropBorderColor(color.r,color.g,color.b,1)
+    if rd.duration>0 then rd.cooldown:SetCooldown(rd.expiry-rd.duration,rd.duration); rd.cooldown:Show() else rd.cooldown:Hide() end
+    rd:Show()
 end
 -- Sated / Exhaustion (Retail "Hide Bloodlust Debuff"; Wrath IDs).
 local lustDebuffs={[57724]=true,[57723]=true}
@@ -245,6 +280,7 @@ function ns.UpdateAuras(b,unit,c)
         end
         if #list>0 then b.dispelColorCandidates=list end
     end
+    RaidDebuff(b,unit,c)
 end
 -- Highest priority first; a type whose swatch alpha is 0 is opted out.
 local function DispelColorType(b,c)
@@ -284,7 +320,7 @@ local function PaintDispel(b,c,kind,dc)
     else b.dispelIcon:Hide() end
 end
 local function AuraTimers(b)
-    for _,list in ipairs({b.buffs,b.debuffs}) do for _,a in ipairs(list) do if a:IsShown() then
+    for _,list in ipairs({b.buffs,b.debuffs,{b.raidDebuff}}) do for _,a in ipairs(list) do if a:IsShown() then
         local remaining=a.expiry>0 and a.expiry-GetTime() or 0
         if a.expiry>0 and remaining<=0 then a:Hide()
         else Text(a.time,a.indicator and a.indicator.durationText==false and "" or (remaining>60 and math.ceil(remaining/60).."m" or remaining>0 and tostring(math.ceil(remaining)) or "")) end

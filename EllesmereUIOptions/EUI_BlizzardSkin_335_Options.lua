@@ -22,7 +22,7 @@ init:SetScript("OnEvent",function(self)
     end
     E:RegisterModule("EllesmereUIBlizzardSkin",{
         title="Blizz UI Enhanced",description="Square dark skins for Wrath windows, tooltips, menus and popups.",
-        pages={"Blizzard Window Skins","Tooltips, Menus & Popups"},searchTerms="blizzard skin character inspect quest merchant trade mail auction talent spellbook tooltip popup menu font collections wardrobe transmog mount gem socket enchant durability cursor resurrect queue gearscore",
+        pages={"Blizzard Window Skins","Tooltips, Menus & Popups"},searchTerms="blizzard skin character inspect quest merchant trade mail auction talent spellbook tooltip popup menu font collections wardrobe transmog mount gem socket enchant durability cursor resurrect queue gearscore barber pvp arena battleground score minimap help gm ticket breath fatigue timer stopwatch pullout debug ace3 loot roll need greed",
         buildPage=function(page,parent,y)
             local W=E.Widgets
             local function Row(left,right) local _,h=W:DualRow(parent,y,left,right); y=y-h end
@@ -87,6 +87,7 @@ init:SetScript("OnEvent",function(self)
                 Row(Toggle("reskinGameMenu","Reskin Pause Menu"),Toggle("reskinPopupsMenus","Reskin Popups & Context Menus"))
                 Row(Toggle("reskinQueuePopup","Reskin Dungeon Ready & Role Check"),{type="label",text="Native actions, input and tooltip anchoring remain available."})
                 Row(Toggle("resurrectAcceptGlow","Resurrect Accept Glow"),Toggle("showQueueTimer","Dungeon Ready Countdown"))
+                Row(Toggle("lootRollShowChoices","Show Group Roll Choices"),{type="label",text="Counts on Need/Greed/Disenchant/Pass; hover a button for names."})
                 local timer=On("showQueueTimer")
                 Row(When(Slider("queueTimerBarHeight","Countdown Bar Height",2,30),timer),When(Slider("queueTimerTextSize","Countdown Text Size",6,24),timer))
                 Row(When({type="colorpicker",text="Countdown Text Color",hasAlpha=false,

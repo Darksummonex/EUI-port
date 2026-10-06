@@ -672,7 +672,46 @@ function EllesmereUI:ShowConfirmPopup(opts)
         popup._padGateLbl:Hide()
     end
 
-    popup:SetHeight((popup._baseH or 176) + scaleWarnH + cbH + typeH)
+    -- Optional extra choices (up to two): a row above Cancel/Confirm; each closes
+    -- the popup and runs its onClick. Pooled buttons are hidden when unused.
+    local extraH = 0
+    local extras = opts.extraButtons
+    popup._extraBtns = popup._extraBtns or {}
+    local extraCount = extras and math.min(#extras, 2) or 0
+    for i = 1, math.max(extraCount, #popup._extraBtns) do
+        local def = i <= extraCount and extras[i] or nil
+        local btn = popup._extraBtns[i]
+        if def and not btn then
+            btn = EllesmereUI.MakePopupButton(popup, "BOTTOM", popup, "BOTTOM", 0, 0,
+                1, 1, 1, 0.7,  1, 1, 1, 0.9,  1, 1, 1, 0.5,  1, 1, 1, 0.6)
+            popup._extraBtns[i] = btn
+        end
+        if def then
+            btn._lbl:SetText(EllesmereUI.L(def.text))
+            local w = math.max(125, math.min(extraCount == 1 and 260 or 172, btn._lbl:GetStringWidth() + 24))
+            btn:SetWidth(w)
+            btn:ClearAllPoints()
+            local y = 13 + 27 + 10 + cbH
+            if extraCount == 1 then
+                btn:SetPoint("BOTTOM", popup, "BOTTOM", 0, y)
+            elseif i == 1 then
+                btn:SetPoint("BOTTOMRIGHT", popup, "BOTTOM", -8, y)
+            else
+                btn:SetPoint("BOTTOMLEFT", popup, "BOTTOM", 8, y)
+            end
+            btn._resetAnim()
+            btn:SetScript("OnClick", function()
+                popup._dimmer:Hide()
+                if def.onClick then def.onClick() end
+            end)
+            btn:Show()
+        elseif btn then
+            btn:Hide()
+        end
+    end
+    if extraCount > 0 then extraH = 27 + 10 end
+
+    popup:SetHeight((popup._baseH or 176) + scaleWarnH + cbH + typeH + extraH)
     popup._cancelBtn._lbl:SetText(EllesmereUI.L(opts.cancelText or "Cancel"))
     popup._confirmBtn._lbl:SetText(EllesmereUI.L(opts.confirmText or "Confirm"))
     -- onDismiss: called on escape/click-outside. Falls back to onCancel if not provided.

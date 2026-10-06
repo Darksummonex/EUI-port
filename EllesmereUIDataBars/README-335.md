@@ -1,4 +1,12 @@
-# DataBars 3.3.5a — 0.3
+# DataBars 3.3.5a — 0.4
+
+0.4: barras presas a uma borda da tela ("Snap to Screen Edge") ou em tela
+cheia não começam mais em posição estranha depois do login. Antes a posição era
+calculada em coordenadas absolutas a partir do tamanho do UIParent no
+OnEnable; o Core reaplica a escala da UI depois disso, e a barra só voltava ao
+lugar ao abrir e fechar o Unlock Mode. Agora a barra é ancorada nas bordas do
+UIParent (TOP, TOPLEFT/TOPRIGHT, etc.), então a escala não a desloca. Teste:
+backport-tools/validate_databars.py.
 
 0.3 porta o motor e o visual do DataBars Retail. Requer EllesmereUIOptions
 9.3.4-335-0.67 ou superior.

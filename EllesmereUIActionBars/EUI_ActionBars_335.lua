@@ -12,7 +12,13 @@ local definitions = {
     {key="bar3",label="Action Bar 3",page=5,binding="MULTIACTIONBAR2BUTTON",x=0,y=154},
     {key="bar4",label="Action Bar 4",page=3,binding="MULTIACTIONBAR3BUTTON",x=510,y=70},
     {key="bar5",label="Action Bar 5",page=4,binding="MULTIACTIONBAR4BUTTON",x=-510,y=70},
-    {key="bar6",label="Action Bar 6",page=2,binding="EUI335_BAR6_BUTTON",x=0,y=196},
+    {key="bar6",label="Action Bar 6",page=2,binding="EUI335_BAR6_BUTTON",x=0,y=196,optional=true},
+    -- Wrath has no spare action slots: Bars 7-10 use pages 7-10, which stance
+    -- and form classes also page Bar 1 into (see ns.PageShare).
+    {key="bar7",label="Action Bar 7",page=7,binding="EUI335_BAR7_BUTTON",x=0,y=286,optional=true},
+    {key="bar8",label="Action Bar 8",page=8,binding="EUI335_BAR8_BUTTON",x=0,y=328,optional=true},
+    {key="bar9",label="Action Bar 9",page=9,binding="EUI335_BAR9_BUTTON",x=0,y=370,optional=true},
+    {key="bar10",label="Action Bar 10",page=10,binding="EUI335_BAR10_BUTTON",x=0,y=412,optional=true},
     {key="petBar",label="Pet Bar",native="PetActionButton",count=10,x=0,y=244},
     {key="stanceBar",label="Stance Bar",native="ShapeshiftButton",count=10,x=-320,y=244},
 }
@@ -35,7 +41,7 @@ local defaults = {profile={enabled=true,lockActions=true,clickOnDown=false,fontS
     nativeHUD={micro=true,bags=true,bagsConsolidate=false,xp=true,reputation=true,
         buffs=true,debuffs=true,buttonSize=28,spacing=4,barWidth=400,barHeight=14,auraColumns=8}}}
 for i,d in ipairs(definitions) do
-    defaults.profile.bars[d.key]={enabled=i~=6,buttons=d.count or 12,
+    defaults.profile.bars[d.key]={enabled=not d.optional,buttons=d.count or 12,
         buttonsPerRow=d.count or 12,size=d.native and 30 or 36,spacing=4,
         opacity=100,barVisibility="always",showEmpty=true,clickThrough=false,
         orientation="horizontal",iconOrder="default",
@@ -47,7 +53,8 @@ for i,d in ipairs(definitions) do
         showCooldownText=true,cooldownFontSize=12,cooldownTextColor=RGB(1,1,1),cooldownTextXOffset=0,cooldownTextYOffset=0,
         disableTooltips=false,outOfRangeColoring=true,outOfRangeColor=RGB(.8,.1,.1),
         disableFormPaging=false,pagingShift=0,pagingCtrl=0,pagingAlt=0,pagingFriendly=0,pagingHostile=0,
-        pagingArrows=false,pagingArrowsRight=false}
+        pagingArrows=false,pagingArrowsRight=false,
+        buttonShape="none"}
 end
 ns.defaults=defaults
 local original, decorations, active, pending = {}, {}, false, false
@@ -123,6 +130,8 @@ function ns.UpdateArt()
 end
 local function RestoreNativeSkins()
     for button,saved in pairs(nativeSkins) do
+        local name=button:GetName() or ""
+        ns.ApplyShape(button,nil,saved.icon,_G[name.."Cooldown"],_G[name.."Flash"])
         if button._euiBorder then button._euiBorder:Hide() end
         if saved.icon then saved.icon:SetTexCoord(0,1,0,1) end
         for t,alpha in pairs(saved.alpha) do t:SetAlpha(alpha) end
@@ -177,7 +186,21 @@ local function HideNativeActions()
     ns.UpdateArt()
 end
 -- Action pages offered by the paging dropdowns, labelled by the bar that shows them.
-ns.PAGE_LABELS={[1]="Action Bar 1",[6]="Action Bar 2",[5]="Action Bar 3",[3]="Action Bar 4",[4]="Action Bar 5",[2]="Action Bar 6"}
+ns.PAGE_LABELS={[1]="Action Bar 1",[6]="Action Bar 2",[5]="Action Bar 3",[3]="Action Bar 4",[4]="Action Bar 5",[2]="Action Bar 6",
+    [7]="Action Bar 7",[8]="Action Bar 8",[9]="Action Bar 9",[10]="Action Bar 10"}
+-- Pages the page driver below gives to a class's stances and forms.
+local FORM_PAGES={WARRIOR={[7]="Battle Stance",[8]="Defensive Stance",[9]="Berserker Stance"},
+    DRUID={[7]="Cat Form",[8]="Prowl",[9]="Bear Form",[10]="Moonkin Form"},
+    ROGUE={[7]="Stealth and Shadow Dance"},PRIEST={[7]="Shadowform"}}
+-- Name of the stance/form whose Bar 1 page this bar shares, or nil when it is free.
+function ns.PageShare(key)
+    local page
+    for _,d in ipairs(definitions) do if d.key==key then page=d.page end end
+    local s1=ns.GetSettings("bar1")
+    if not page or page<7 or (s1 and s1.disableFormPaging) then return end
+    local forms=FORM_PAGES[select(2,UnitClass("player"))]
+    return forms and forms[page]
+end
 local PAGING_MODS={{"pagingShift","shift"},{"pagingCtrl","ctrl"},{"pagingAlt","alt"},{"pagingFriendly","help"},{"pagingHostile","harm"}}
 function ns.GetPageDriver()
     local s=ns.GetSettings("bar1") or {}
@@ -285,6 +308,187 @@ local function StyleText(fs,size,color,scale)
     fs:SetTextColor(color.r or 1,color.g or 1,color.b or 1)
 end
 ns.AnchorText,ns.StyleText=AnchorText,StyleText
+-- Custom button shapes. Wrath has no mask textures: round shapes redraw the icon
+-- with SetPortraitToTexture, the others outline a square icon. The outline art
+-- is EUI's 128px shape border, scaled so the mask opening meets the button edge.
+local SHAPE_MEDIA="Interface\\AddOns\\EllesmereUI\\media\\portraits\\"
+local SHAPE_OPEN={circle=104,portrait=107,csquare=108,diamond=114,hexagon=126,shield=118,square=108}
+local ROUND={circle=true,portrait=true}
+-- The other cut shapes are rebuilt from horizontal strips, each as wide as the
+-- shape's mask at that row: 64 rows of left,right fractions of the button,
+-- generated by backport-tools/build_shape_spans.py.
+local SHAPE_ROWS={
+    diamond={0.491,0.509,0.474,0.526,0.456,0.544,0.439,0.561,0.421,0.579,0.412,0.588,0.395,0.605,0.377,0.623,0.36,0.64,0.351,0.649,0.333,0.667,0.316,0.684,0.298,0.702,0.281,0.719,0.272,0.728,0.254,0.746,0.237,0.763,0.219,0.781,0.211,0.789,0.193,0.807,0.175,0.825,0.158,0.842,0.14,0.86,0.132,0.868,0.114,0.886,0.096,0.904,0.079,0.921,0.07,0.93,0.053,0.947,0.035,0.965,0.018,0.982,0,1,0.009,1,0.026,0.982,0.044,0.965,0.061,0.947,0.079,0.93,0.088,0.921,0.105,0.904,0.123,0.886,0.14,0.868,0.149,0.86,0.167,0.842,0.184,0.825,0.202,0.807,0.219,0.789,0.228,0.781,0.246,0.763,0.263,0.746,0.281,0.728,0.289,0.719,0.307,0.702,0.325,0.684,0.342,0.667,0.36,0.649,0.368,0.64,0.386,0.623,0.404,0.605,0.421,0.588,0.43,0.579,0.447,0.561,0.465,0.544,0.482,0.526,0.5,0.509},
+    hexagon={0,0,0,0,0,0,0,0,0,0,0.238,0.762,0.23,0.77,0.222,0.778,0.214,0.786,0.206,0.794,0.198,0.802,0.19,0.81,0.175,0.825,0.167,0.833,0.159,0.841,0.151,0.849,0.143,0.857,0.135,0.865,0.119,0.881,0.111,0.889,0.103,0.897,0.095,0.905,0.087,0.913,0.079,0.921,0.063,0.937,0.056,0.944,0.048,0.952,0.04,0.96,0.032,0.968,0.024,0.976,0.016,0.984,0,1,0,1,0.008,0.992,0.016,0.984,0.024,0.976,0.032,0.968,0.048,0.952,0.056,0.944,0.063,0.937,0.071,0.929,0.079,0.921,0.087,0.913,0.103,0.897,0.111,0.889,0.119,0.881,0.127,0.873,0.135,0.865,0.143,0.857,0.151,0.849,0.167,0.833,0.175,0.825,0.183,0.817,0.19,0.81,0.198,0.802,0.206,0.794,0.222,0.778,0.23,0.77,0.238,0.762,0.246,0.754,0,0,0,0,0,0,0,0},
+    shield={0.492,0.508,0.441,0.559,0.39,0.61,0.339,0.661,0.288,0.712,0.237,0.763,0.212,0.788,0.161,0.839,0.11,0.89,0.093,0.907,0.093,0.907,0.093,0.907,0.093,0.907,0.093,0.907,0.093,0.907,0.093,0.907,0.093,0.907,0.093,0.907,0.093,0.907,0.093,0.907,0.093,0.907,0.093,0.907,0.093,0.907,0.093,0.907,0.093,0.907,0.093,0.907,0.093,0.907,0.093,0.907,0.093,0.907,0.093,0.907,0.093,0.907,0.093,0.907,0.093,0.907,0.093,0.907,0.093,0.907,0.093,0.907,0.102,0.898,0.102,0.898,0.11,0.89,0.11,0.89,0.119,0.881,0.119,0.881,0.127,0.873,0.136,0.864,0.144,0.856,0.153,0.847,0.161,0.839,0.169,0.831,0.178,0.822,0.195,0.805,0.203,0.797,0.22,0.78,0.229,0.771,0.237,0.763,0.254,0.746,0.271,0.729,0.297,0.703,0.314,0.686,0.339,0.661,0.347,0.653,0.373,0.627,0.398,0.602,0.432,0.568,0.458,0.542,0,0},
+}
+-- Largest rectangle inside each strip shape (left, top, right, bottom); the square swipe is fitted to it.
+local SHAPE_SWIPE={diamond={.228,.266,.781,.734},hexagon={.238,.078,.762,.922},shield={.169,.109,.831,.734}}
+local CUT={circle=true,portrait=true,diamond=true,hexagon=true,shield=true}
+ns.SHAPE_OPEN,ns.ROUND_SHAPES,ns.STRIP_SHAPES,ns.CUT_SHAPES=SHAPE_OPEN,ROUND,SHAPE_ROWS,CUT
+ns.SHAPE_LABELS={none="None",square="Square",circle="Circle",csquare="Curved Square",diamond="Diamond",hexagon="Hexagon",portrait="Portrait",shield="Shield"}
+ns.SHAPE_ORDER={"none","square","circle","csquare","diamond","hexagon","portrait","shield"}
+local function ShapeOf(s) local v=s and s.buttonShape; return SHAPE_OPEN[v] and v or "none" end
+ns.ShapeOf=ShapeOf
+function ns.ShapeTexture(shape,kind) return SHAPE_MEDIA..shape.."_"..kind..".tga" end
+function ns.FitShape(t,anchor,width,shape)
+    local pad=(width*128/SHAPE_OPEN[shape]-width)/2
+    t:ClearAllPoints(); t:SetPoint("TOPLEFT",anchor,"TOPLEFT",-pad,pad); t:SetPoint("BOTTOMRIGHT",anchor,"BOTTOMRIGHT",pad,-pad)
+end
+-- As on Retail, the outline follows the bar's border: size above 0 shows it,
+-- and it takes the border colour or class colour.
+function ns.ShapeBorderColor(s)
+    local c=s.borderColor or RGB(0,0,0,1)
+    local r,g,b=c.r or 0,c.g or 0,c.b or 0
+    if s.borderClassColor then local cr,cg,cb=ClassRGB(); if cr then r,g,b=cr,cg,cb end end
+    return r,g,b,c.a or 1
+end
+-- Every texture change on a round icon is redrawn as a circle; the real path is
+-- kept so turning the shape off restores the square icon.
+local function HookRound(icon)
+    if icon._euiRoundHook then return end
+    icon._euiRoundHook=true
+    icon._euiPath=icon:GetTexture()
+    hooksecurefunc(icon,"SetTexture",function(self,texture)
+        if self._euiRoundBusy then return end
+        self._euiPath=texture
+        if self._euiRound and type(texture)=="string" and SetPortraitToTexture then
+            self._euiRoundBusy=true; SetPortraitToTexture(self,texture); self._euiRoundBusy=false
+        end
+    end)
+end
+ns.HookRound=HookRound
+function ns.SetRound(icon,on)
+    if not icon or (not on and not icon._euiRoundHook) then return end
+    HookRound(icon)
+    if on then
+        icon._euiRound=true
+        local path=icon._euiPath
+        if type(path)=="string" and SetPortraitToTexture then
+            icon._euiRoundBusy=true; SetPortraitToTexture(icon,path); icon._euiRoundBusy=false
+        end
+        icon:SetTexCoord(0,1,0,1)
+    elseif icon._euiRound then
+        icon._euiRound=nil
+        icon._euiRoundBusy=true; icon:SetTexture(icon._euiPath); icon._euiRoundBusy=false
+    end
+end
+-- The icon itself becomes the first strip; the extra strips copy whatever LAB,
+-- Blizzard or EUI do to it (texture, range/usable colour, desaturation, alpha, shown).
+local MIRROR={"SetTexture","SetVertexColor","SetDesaturated","SetAlpha","Show","Hide"}
+local function HookStrips(icon)
+    if icon._euiStripHook then return end
+    icon._euiStripHook=true
+    for _,method in ipairs(MIRROR) do
+        hooksecurefunc(icon,method,function(self,...)
+            if method=="SetDesaturated" then self._euiDesat=... end
+            local strips=self._euiStrips
+            if not strips or not strips.on then return end
+            for i=1,strips.count do strips[i][method](strips[i],...) end
+        end)
+    end
+end
+function ns.SetStrips(icon,anchor,shape,zoom)
+    if not icon then return end
+    local rows=shape and SHAPE_ROWS[shape]
+    local strips=icon._euiStrips
+    if not rows then
+        if strips and strips.on then
+            strips.on=false
+            for i=1,#strips do strips[i]:Hide() end
+            icon:ClearAllPoints(); icon:SetAllPoints(anchor)
+        end
+        return
+    end
+    if not strips then strips={}; icon._euiStrips=strips end
+    HookStrips(icon)
+    zoom=zoom or 0
+    local w,h,span=anchor:GetWidth(),anchor:GetHeight(),1-2*zoom
+    local n=math.max(16,math.min(64,math.floor(h+.5)))
+    local parent=icon:GetParent()
+    local layer=icon.GetDrawLayer and icon:GetDrawLayer() or "BACKGROUND"
+    local used=0
+    for k=0,n-1 do
+        local row=math.floor((k+.5)/n*64)
+        local l,r=rows[row*2+1],rows[row*2+2]
+        if r>l then
+            local t=icon
+            if used>0 then
+                t=strips[used]
+                if not t then t=parent:CreateTexture(nil,layer); strips[used]=t end
+            end
+            used=used+1
+            t:ClearAllPoints()
+            t:SetPoint("TOPLEFT",anchor,"TOPLEFT",l*w,-k/n*h)
+            t:SetPoint("BOTTOMRIGHT",anchor,"TOPLEFT",r*w,-(k+1)/n*h)
+            t:SetTexCoord(zoom+span*l,zoom+span*r,zoom+span*k/n,zoom+span*(k+1)/n)
+        end
+    end
+    local count=math.max(0,used-1)
+    for i=count+1,#strips do strips[i]:Hide() end
+    strips.count,strips.on=count,true
+    local texture,shown,alpha=icon:GetTexture(),icon:IsShown(),icon:GetAlpha()
+    for i=1,count do
+        local t=strips[i]
+        t:SetTexture(texture)
+        if icon.GetVertexColor then t:SetVertexColor(icon:GetVertexColor()) end
+        t:SetDesaturated(icon._euiDesat and true or false)
+        t:SetAlpha(alpha)
+        if shown then t:Show() else t:Hide() end
+    end
+end
+-- The outline is drawn in BORDER: above the icon (BACKGROUND), below the
+-- hotkey text and the pushed, checked and hover textures. The shaped slot
+-- background of cut shapes lives on the border frame behind the button.
+local function ApplyShape(button,s,icon,cooldown,flash)
+    local shape=ShapeOf(s)
+    local outline,bg=button._euiShapeOutline,button._euiShapeBg
+    if shape=="none" then
+        if outline then outline:Hide() end
+        if bg then bg:Hide() end
+        ns.SetStrips(icon,button,nil)
+        ns.SetRound(icon,false)
+        if button._euiShapeCD and cooldown then cooldown:ClearAllPoints(); cooldown:SetAllPoints(button) end
+        if button._euiShapeCD and flash then flash:ClearAllPoints(); flash:SetAllPoints(button) end
+        button._euiShapeCD,button._euiShapeName=nil,nil
+        return
+    end
+    if not outline then outline=button:CreateTexture(nil,"BORDER"); button._euiShapeOutline=outline end
+    if not bg and button._euiBorder then bg=button._euiBorder:CreateTexture(nil,"ARTWORK"); button._euiShapeBg=bg end
+    if icon then icon:SetDrawLayer("BACKGROUND") end
+    local width=button:GetWidth()
+    local round=ROUND[shape]
+    outline:SetTexture(ns.ShapeTexture(shape,"border")); ns.FitShape(outline,button,width,shape)
+    outline:SetVertexColor(ns.ShapeBorderColor(s))
+    if Clamp(s.borderSize,0,5)>0 then outline:Show() else outline:Hide() end
+    local p=ns.GetSettings()
+    if bg then
+        if CUT[shape] then
+            local c=p.slotBgColor or RGB(.15,.15,.15)
+            bg:SetTexture(ns.ShapeTexture(shape,"mask")); ns.FitShape(bg,button,width,shape)
+            bg:SetVertexColor(c.r,c.g,c.b,Clamp(p.slotBgOpacity,0,100)/100); bg:Show()
+        else bg:Hide() end
+    end
+    ns.SetRound(icon,round)
+    ns.SetStrips(icon,button,shape,Clamp(p.iconZoom,0,15)/100)
+    -- Wrath's cooldown swipe is always square: inside a cut shape it shrinks to
+    -- the inscribed square (circle) or the largest rectangle that fits.
+    local height=button:GetHeight()
+    local l,t,r,b=0,0,0,0
+    if round then l=width*(1-.7071)/2; t,r,b=l,l,l
+    elseif SHAPE_SWIPE[shape] then
+        local rect=SHAPE_SWIPE[shape]
+        l,t,r,b=rect[1]*width,rect[2]*height,(1-rect[3])*width,(1-rect[4])*height
+    end
+    for _,f in ipairs({cooldown,flash}) do
+        if f then
+            f:ClearAllPoints()
+            f:SetPoint("TOPLEFT",button,"TOPLEFT",l,-t); f:SetPoint("BOTTOMRIGHT",button,"BOTTOMRIGHT",-r,b)
+        end
+    end
+    button._euiShapeCD,button._euiShapeName=true,shape
+end
+ns.ApplyShape=ApplyShape
 local function Border(button,s,scale)
     local p=ns.GetSettings()
     local border=button._euiBorder
@@ -294,12 +498,14 @@ local function Border(button,s,scale)
     border:ClearAllPoints(); border:SetPoint("TOPLEFT",button,"TOPLEFT",-edge,edge)
     border:SetPoint("BOTTOMRIGHT",button,"BOTTOMRIGHT",edge,-edge)
     border:SetBackdrop({bgFile=FLAT,edgeFile=FLAT,edgeSize=math.max(1/scale,edge)})
+    -- A shape replaces the square edge; cut shapes also draw a shaped slot background.
+    local shape=ShapeOf(s)
     local bg=p.slotBgColor or RGB(.15,.15,.15)
-    border:SetBackdropColor(bg.r,bg.g,bg.b,Clamp(p.slotBgOpacity,0,100)/100)
+    border:SetBackdropColor(bg.r,bg.g,bg.b,CUT[shape] and 0 or Clamp(p.slotBgOpacity,0,100)/100)
     local c=s.borderColor or RGB(0,0,0,1)
     local r,g,b=c.r,c.g,c.b
     if s.borderClassColor then local cr,cg,cb=ClassRGB(); if cr then r,g,b=cr,cg,cb end end
-    border:SetBackdropBorderColor(r,g,b,edge>0 and (c.a or 1) or 0)
+    border:SetBackdropBorderColor(r,g,b,(edge>0 and shape=="none") and (c.a or 1) or 0)
     border:Show()
 end
 local function Edges(button,key)
@@ -319,13 +525,22 @@ local function PaintEdges(e,button,size,r,g,b)
     e[4]:SetPoint("TOPRIGHT",button,"TOPRIGHT"); e[4]:SetPoint("BOTTOMRIGHT",button,"BOTTOMRIGHT"); e[4]:SetWidth(size)
 end
 -- Interaction types: 1-3 textures, 4 flat colour, 5 border edges, 6 none.
-local function StyleState(button,getter,edgeKey,typ,r,g,b,size)
+-- With a custom shape every visible type becomes the shape's outline in that colour.
+local function StyleState(button,getter,edgeKey,typ,r,g,b,size,shape)
     ShowEdges(button[edgeKey],false)
-    button[edgeKey.."On"]=typ==5
-    if typ==5 then PaintEdges(Edges(button,edgeKey),button,size,r,g,b) end
+    local shaped=shape and shape~="none"
+    button[edgeKey.."On"]=typ==5 and not shaped
+    if typ==5 and not shaped then PaintEdges(Edges(button,edgeKey),button,size,r,g,b) end
     local t=button[getter] and button[getter](button)
     if not t then return end
-    t:ClearAllPoints(); t:SetAllPoints(button); t:SetTexCoord(0,1,0,1)
+    t:SetTexCoord(0,1,0,1)
+    if shaped then
+        ns.FitShape(t,button,button:GetWidth(),shape)
+        if typ==6 then t:SetAlpha(0)
+        else t:SetTexture(ns.ShapeTexture(shape,"border")); t:SetVertexColor(r,g,b,1); t:SetAlpha(typ==4 and .6 or 1) end
+        return
+    end
+    t:ClearAllPoints(); t:SetAllPoints(button)
     if typ==5 or typ==6 then t:SetAlpha(0)
     elseif typ==4 then t:SetTexture(FLAT); t:SetVertexColor(r,g,b,.35); t:SetAlpha(1)
     else t:SetTexture(HIGHLIGHT_TEXTURES[typ] or HIGHLIGHT_TEXTURES[1]); t:SetVertexColor(r,g,b,1); t:SetAlpha(1) end
@@ -336,15 +551,15 @@ function ns.InteractionColor(prefix)
     local c=p[prefix.."CustomColor"] or INTERACTION
     return c.r,c.g,c.b
 end
-local function StyleInteractions(button)
+local function StyleInteractions(button,shape)
     local p=ns.GetSettings()
     local pr,pg,pb=ns.InteractionColor("pushed")
     local hr,hg,hb=ns.InteractionColor("highlight")
     local hType=Clamp(p.highlightTextureType or 2,1,6)
-    StyleState(button,"GetPushedTexture","_euiPush",Clamp(p.pushedTextureType or 2,1,6),pr,pg,pb,Clamp(p.pushedBorderSize,1,8))
-    StyleState(button,"GetHighlightTexture","_euiHL",hType,hr,hg,hb,Clamp(p.highlightBorderSize,1,8))
+    StyleState(button,"GetPushedTexture","_euiPush",Clamp(p.pushedTextureType or 2,1,6),pr,pg,pb,Clamp(p.pushedBorderSize,1,8),shape)
+    StyleState(button,"GetHighlightTexture","_euiHL",hType,hr,hg,hb,Clamp(p.highlightBorderSize,1,8),shape)
     -- Spell-cast highlight reuses the hover look; edges have no checked state, so they paint flat.
-    StyleState(button,"GetCheckedTexture","_euiChk",p.showCastHighlight==false and 6 or (hType==5 and 4 or hType),hr,hg,hb,1)
+    StyleState(button,"GetCheckedTexture","_euiChk",p.showCastHighlight==false and 6 or (hType==5 and 4 or hType),hr,hg,hb,1,shape)
     if not button._euiHooked then
         button._euiHooked=true
         button:HookScript("OnEnter",function(self) if self._euiHLOn then ShowEdges(self._euiHL,true) end end)
@@ -432,7 +647,8 @@ local function Skin(button,d)
     StyleText(button.count,s.countFontSize,s.countFontColor,1)
     AnchorText(button.count,button,s.countAnchor or "BOTTOMRIGHT",s.countOffsetX,s.countOffsetY,1,false)
     CooldownText(button,s)
-    StyleInteractions(button)
+    StyleInteractions(button,ShapeOf(s))
+    ApplyShape(button,s,button.icon,button.cooldown,button.flash)
     ns.UpdateCooldownLook(button)
 end
 -- Pet/stance buttons stay Blizzard's (their events own the slots); only the
@@ -460,6 +676,7 @@ local function SkinNative(button,d,scale)
         if s.hideKeybind then hotkey:SetAlpha(0) else hotkey:SetAlpha(1) end
     end
     StyleText(count,s.countFontSize,s.countFontColor,scale)
+    ApplyShape(button,s,icon,_G[name.."Cooldown"],_G[name.."Flash"])
 end
 local function Config(d)
     local p,s=ns.GetSettings(),ns.GetSettings(d.key)
@@ -728,7 +945,9 @@ function addon:OnInitialize()
     addon.db=E.Lite.NewDB("EllesmereUIActionBarsDB",defaults)
     _G._EAB_Apply=ns.Apply
     BINDING_HEADER_EUI335_ACTIONBARS="EllesmereUI Action Bars"
-    for i=1,12 do _G["BINDING_NAME_EUI335_BAR6_BUTTON"..i]="Action Bar 6 - Button "..i end
+    for bar=6,10 do
+        for i=1,12 do _G["BINDING_NAME_EUI335_BAR"..bar.."_BUTTON"..i]="Action Bar "..bar.." - Button "..i end
+    end
     SLASH_EUI335ACTIONBARS1="/eab"
     SlashCmdList.EUI335ACTIONBARS=function()
         if InCombatLockdown() then return end

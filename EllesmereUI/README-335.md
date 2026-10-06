@@ -1,4 +1,23 @@
-# EllesmereUI Wrath Core — 0.46
+# EllesmereUI Wrath Core — 0.48
+
+0.48: o popup "Incompatible Addon Detected" ganhou uma linha de botões acima de
+Okay / Don't show again: "Disable <addon>" desativa o addon incompatível e
+"Disable EUI <módulo>" (ou "Disable EUI Modules" quando há mais de um) desativa
+o módulo afetado do EllesmereUI; os dois recarregam a UI em seguida. O botão do
+módulo só aparece quando o conflito é com módulos inteiros: conflitos com todo
+o EUI (addons Ellesmere antigos, idTip), com uma parte de um módulo (skins da
+ficha de personagem) ou com mensagem própria (ElvUI, WonderBar) só oferecem
+desativar o outro addon. O ShowConfirmPopup aceita extraButtons (até dois),
+reaproveitados e escondidos quando não usados. Teste:
+backport-tools/validate_conflict_popup.py.
+
+0.47 conserta o erro "attempt to call method 'SetMaxLines'" ao abrir o Unlock
+Mode: o FontString:SetMaxLines só existe em expansões depois do Wrath, e o menu
+"Snap to" de cada mover o chama antes de o Options (que tinha um no-op) carregar.
+O compat do Core agora define SetMaxLines/GetMaxLines no metatable de FontString
+(1 linha = sem quebra de linha; limites maiores só são guardados, sem mudar a
+altura) e EditBox:HasFocus (via GetCurrentKeyBoardFocus), só quando faltam.
+Teste: backport-tools/validate_compat_fontstring.py.
 
 0.46: o ponto de "novo patch" do Patch Notes agora compara as versões dos TOCs
 dos módulos EllesmereUI instalados (o EllesmereUI.VERSION fica fixo em 9.3.4

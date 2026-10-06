@@ -67,6 +67,15 @@ PlayerTalentFrameTalent1:RunScript('OnClick'); assert(talentLearned)
 local right=0
 for i=1,4 do local tab=_G['PlayerTalentFrameTab'..i]; assert(tab:GetID()==i and select(4,tab:GetPoint())>=right,'Talent tabs overlap'); right=select(4,tab:GetPoint())+tab:GetWidth()+6 end
 assert(select(5,PlayerTalentFramePointsBar:GetPoint())>select(5,PlayerTalentFrameTab1:GetPoint())+PlayerTalentFrameTab1:GetHeight())
+-- Close button and points footer stop at the scroll bar limit, inside the fill.
+local close,barPoint,fill=PlayerTalentFrameCloseButton.point,PlayerTalentFramePointsBar.point,t.panel.point
+assert(close[1]=='TOPRIGHT' and close[2]==PlayerTalentFrame and barPoint[1]=='BOTTOMRIGHT','Close/footer anchors')
+assert(close[4]==barPoint[4] and close[4]<fill[4],'Close button and footer must end at the scroll bar, inside the fill')
+-- Tab fills live on the button's BACKGROUND layer; the native tab art fade must not clear them.
+for i=1,4 do local bg=t.buttons[_G['PlayerTalentFrameTab'..i]].panel.background
+    assert(bg:GetTexture() and bg:GetAlpha()>0 and bg:IsShown(),'Talent tab background cleared') end
+for _,entry in ipairs(otherTabs) do local bg=BS.states[entry.frame].buttons[entry.tabs[1]].panel.background
+    assert(bg:GetTexture() and bg:GetAlpha()>0,'Tab background cleared') end
 for _,entry in ipairs(otherTabs) do
     local s=BS.states[entry.frame]
     local a,b=entry.tabs[1],entry.tabs[2]
@@ -94,8 +103,9 @@ local nativeTalentX=0
 combat=true; BS.SetValue('reskinPlayerSpells',false); assert(t.active)
 combat=false; BS.events:RunScript('OnEvent','PLAYER_REGEN_ENABLED')
 assert(not t.active and PlayerTalentFrameTalent1IconTexture:GetDrawLayer()=='BORDER' and select(4,PlayerTalentFrameTab2:GetPoint())==85 and PlayerTalentFrameTab2:GetWidth()==100)
+assert(PlayerTalentFrameCloseButton:GetPoint()=='CENTER','Close button geometry not restored')
 BS.SetValue('reskinLFGMenu',false); assert(LFDTestReward.iconTexture:GetDrawLayer()=='BACKGROUND' and not l.buttons[LFDTestReward].panel.background:IsShown())
 BS.SetValue('themedCharacterSheet',false); assert(TokenFrameContainer.buttons[1].icon:GetDrawLayer()=='BACKGROUND' and TokenFrameContainer.buttons[1].label.textColor[1]==.1)
 BS.SetValue('themedCharacterSheet',true); TokenFrame:Hide(); PaperDollFrame:Show(); BS.Apply(); assert(c.character.enhanced and CharacterFrame:GetWidth()==660)
 ''')
-print('PASS: currency native sizing/text/icons, dungeon reward icons/tooltips/LOD refresh, talent icons/clicks/tab spacing, native tab padding/selection across seven windows, combat deferral, layer/geometry restoration and frame reuse.')
+print('PASS: currency native sizing/text/icons, dungeon reward icons/tooltips/LOD refresh, talent icons/clicks/tab spacing, close button and footer at the scroll bar limit, tab backgrounds kept, native tab padding/selection across seven windows, combat deferral, layer/geometry restoration and frame reuse.')

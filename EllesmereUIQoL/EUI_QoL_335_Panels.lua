@@ -101,11 +101,12 @@ local function CreateRaid()
         SetRaidTargetIconTexture(t,i); ns.markers[i]=b
         b:SetHighlightTexture("Interface\\Buttons\\ButtonHilight-Square","ADD")
     end
-    ns.readyButton=Button(f,"Ready",2,72,function()
+    ns.readyButton=Button(f,"Ready",2,54,function()
         if not InCombatLockdown() and (UnitIsPartyLeader("player") or (UnitIsRaidOfficer and UnitIsRaidOfficer("player"))) then DoReadyCheck() end
     end)
-    ns.pullButton=Button(f,"Pull 10s",79,72,ns.StartPull)
-    ns.cancelPullButton=Button(f,"Cancel",156,72,function() ns.CancelPull() end)
+    ns.pullButton=Button(f,"Pull 10s",59,54,ns.StartPull)
+    ns.cancelPullButton=Button(f,"Cancel",116,54,function() ns.CancelPull() end)
+    ns.disbandButton=Button(f,"Disband",173,57,function() if ns.ConfirmDisband then ns.ConfirmDisband() end end)
     local timer=CreateFrame("Frame",nil,UIParent); ns.pullFrame=timer; ns.Size(timer,240,32); timer:SetPoint("CENTER",UIParent,"CENTER",0,85); timer:EnableMouse(false)
     timer.text=timer:CreateFontString(nil,"OVERLAY"); ns.Font(timer.text,24); timer.text:SetPoint("CENTER",timer,"CENTER",0,0); timer:Hide()
 end

@@ -13,10 +13,13 @@ local BLIZZ_CLASSES="Interface\\WorldStateFrame\\Icons-Classes"
 local TRINKET_ICONS={Alliance="Interface\\Icons\\INV_Jewelry_TrinketPVP_01",Horde="Interface\\Icons\\INV_Jewelry_TrinketPVP_02"}
 local GAP,CAST_GAP=2,3
 ns.PREVIEW={
-    {name="Frostbite",class="MAGE",hp=82,power=64,powerType="MANA",cast={name="Polymorph",icon="Interface\\Icons\\Spell_Nature_Polymorph"}},
-    {name="Shadowstep",class="ROGUE",hp=55,power=90,powerType="ENERGY",trinket=35,cc={icon="Interface\\Icons\\Ability_Rogue_KidneyShot",duration=6}},
+    {name="Frostbite",class="MAGE",hp=82,power=64,powerType="MANA",cast={name="Polymorph",icon="Interface\\Icons\\Spell_Nature_Polymorph"},
+        pet={name="Water Elemental",hp=70},dr={disorient={count=2,reset=11,icon="Interface\\Icons\\Spell_Nature_Polymorph"}}},
+    {name="Shadowstep",class="ROGUE",hp=55,power=90,powerType="ENERGY",trinket=35,cc={icon="Interface\\Icons\\Ability_Rogue_KidneyShot",duration=6},
+        dr={stun={count=1,icon="Interface\\Icons\\Ability_Rogue_KidneyShot"},silence={count=3,reset=6,icon="Interface\\Icons\\Spell_Shadow_ImpPhaseShift"}}},
     {name="Lightwell",class="PRIEST",hp=100,power=40,powerType="MANA"},
-    {name="Bloodfang",class="DEATHKNIGHT",hp=33,power=80,powerType="RUNIC_POWER",cast={name="Death Coil",icon="Interface\\Icons\\Spell_Shadow_DeathCoil",notInterruptible=true}},
+    {name="Bloodfang",class="DEATHKNIGHT",hp=33,power=80,powerType="RUNIC_POWER",cast={name="Death Coil",icon="Interface\\Icons\\Spell_Shadow_DeathCoil",notInterruptible=true},
+        pet={name="Ghoul",hp=45}},
     {name="Barkskin",class="DRUID",hp=67,power=70,powerType="MANA",trinket=90}}
 local function Texture(key) return textures[key] or white end
 local function Short(v)
@@ -50,6 +53,22 @@ local function NewBar(parent)
     bar.bg=bar:CreateTexture(nil,"BACKGROUND"); bar.bg:SetAllPoints(bar)
     return bar
 end
+-- arenapetN: a secure button on live frames (unit watch shows it while the
+-- pet exists, also in combat), a plain frame on previews.
+local function NewPet(parent,index,secure)
+    local pet
+    if secure then
+        pet=CreateFrame("Button","EllesmereUIArenaPet"..index,parent,"SecureUnitButtonTemplate")
+        pet.unit="arenapet"..index
+        pet:SetAttribute("unit",pet.unit); pet:SetAttribute("type1","target"); pet:SetAttribute("type2","focus")
+        pet:RegisterForClicks("AnyUp")
+    else pet=CreateFrame("Frame",nil,parent) end
+    pet.border=pet:CreateTexture(nil,"BACKGROUND"); pet.border:SetTexture(white); pet.border:SetVertexColor(0,0,0,1); pet.border:SetAllPoints(pet)
+    pet.health=NewBar(pet)
+    pet.name=pet.health:CreateFontString(nil,"OVERLAY"); ns.Font(pet.name,10); pet.name:SetJustifyH("LEFT")
+    pet:Hide()
+    return pet
+end
 function ns.Build(f)
     f.border=f:CreateTexture(nil,"BACKGROUND"); f.border:SetTexture(white)
     f.health=NewBar(f); f.power=NewBar(f)
@@ -63,6 +82,8 @@ function ns.Build(f)
     c.text=c:CreateFontString(nil,"OVERLAY"); ns.Font(c.text,10); c.text:SetJustifyH("LEFT")
     c.time=c:CreateFontString(nil,"OVERLAY"); ns.Font(c.time,10); c.time:SetJustifyH("RIGHT")
     c:Hide()
+    f.drIcons={}
+    for i=1,5 do local icon=NewIcon(f); icon:Hide(); f.drIcons[i]=icon end
     return f
 end
 local function CreateHolder()
@@ -75,9 +96,9 @@ local function CreateHolder()
         b:RegisterForClicks("AnyUp")
         b:SetScript("OnEnter",function(self) if UnitFrame_OnEnter and UnitExists(self.unit) then UnitFrame_OnEnter(self) end end)
         b:SetScript("OnLeave",function(self) if UnitFrame_OnLeave then UnitFrame_OnLeave(self) end end)
-        ns.Build(b); b:Hide(); ns.frames[i]=b
+        ns.Build(b); b.pet=NewPet(b,i,true); b:Hide(); ns.frames[i]=b
         local pv=CreateFrame("Frame",nil,h); pv.unit,pv.index="arena"..i,i
-        ns.Build(pv); pv:Hide(); ns.previews[i]=pv
+        ns.Build(pv); pv.pet=NewPet(pv,i,false); pv:Hide(); ns.previews[i]=pv
     end
 end
 -- Icons sit outside the bars; when both share a side the trinket is outermost.
@@ -125,9 +146,32 @@ local function ApplyLayout(f,p)
     ns.Font(c.text,p.castTextSize); ns.Font(c.time,p.castTextSize)
     c.text:ClearAllPoints(); c.text:SetPoint("LEFT",c,"LEFT",3,0); c.text:SetPoint("RIGHT",c.time,"LEFT",-3,0)
     c.time:ClearAllPoints(); c.time:SetPoint("RIGHT",c,"RIGHT",-3,0)
+    -- Pet bar under the cast bar row, left aligned with the health bar.
+    local pet=f.pet
+    if pet then
+        local ph=math.max(8,tonumber(p.petHeight) or 14)
+        local y=-h-(p.castBar and ch+CAST_GAP+2*b or 0)-GAP-b
+        pet:ClearAllPoints(); pet:SetPoint("TOPLEFT",f,"TOPLEFT",barsX-b,y+b); pet:SetWidth(math.floor(w*.6)+2*b); pet:SetHeight(ph+2*b)
+        pet.health:ClearAllPoints(); pet.health:SetPoint("TOPLEFT",pet,"TOPLEFT",b,-b); pet.health:SetPoint("BOTTOMRIGHT",pet,"BOTTOMRIGHT",-b,b)
+        pet.health:SetStatusBarTexture(tex); pet.health.bg:SetTexture(tex)
+        ns.Font(pet.name,math.max(8,ph-4))
+        pet.name:ClearAllPoints(); pet.name:SetPoint("LEFT",pet.health,"LEFT",3,0); pet.name:SetPoint("RIGHT",pet.health,"RIGHT",-3,0)
+    end
+    -- DR icons hang outside the frame block, growing away from it.
+    local ds=math.max(12,tonumber(p.drSize) or 26)
+    for i,icon in ipairs(f.drIcons or {}) do
+        icon:ClearAllPoints(); icon:SetWidth(ds); icon:SetHeight(ds)
+        if p.drSide=="LEFT" then icon:SetPoint("TOPRIGHT",f,"TOPLEFT",-GAP-(i-1)*(ds+GAP),0)
+        else icon:SetPoint("TOPLEFT",f,"TOPLEFT",blockW+GAP+(i-1)*(ds+GAP),0) end
+        icon.icon:ClearAllPoints(); icon.icon:SetPoint("TOPLEFT",icon,"TOPLEFT",math.max(b,1),-math.max(b,1)); icon.icon:SetPoint("BOTTOMRIGHT",icon,"BOTTOMRIGHT",-math.max(b,1),math.max(b,1))
+        icon.icon:SetTexCoord(.08,.92,.08,.92); ns.Font(icon.timer,math.max(8,math.floor(ds*.42)))
+    end
     return blockW
 end
-local function Stride(p) return p.height+(p.castBar and p.castBarHeight+CAST_GAP+2*(p.borderSize or 1) or 0)+p.spacing end
+local function Stride(p)
+    return p.height+(p.castBar and p.castBarHeight+CAST_GAP+2*(p.borderSize or 1) or 0)
+        +(p.pets and math.max(8,tonumber(p.petHeight) or 14)+GAP+2*(p.borderSize or 1) or 0)+p.spacing
+end
 local function Place(f,i,p)
     local y=(i-1)*Stride(p)
     f:ClearAllPoints()
@@ -147,6 +191,13 @@ function ns.Layout(p)
     local size=arena and ns.TeamSize() or 0
     if arena or preview then h:Show() else h:Hide() end
     for i,f in ipairs(ns.frames) do
+        local pet=f.pet
+        if p.pets then
+            if not pet.watched and RegisterUnitWatch then RegisterUnitWatch(pet); pet.watched=true end
+        else
+            if pet.watched and UnregisterUnitWatch then UnregisterUnitWatch(pet) end
+            pet.watched=nil; pet:Hide()
+        end
         if arena and (i<=size or f.everSeen) then f:Show(); ns.RefreshFrame(f) else f:Hide(); f.cast:Hide(); f.cast.active=nil end
     end
     if preview then ns.ShowPreviews(p) else ns.HidePreviews() end
@@ -159,6 +210,8 @@ function ns.ShowPreviews(p)
             pv.class,pv.unitName=d.class,d.name
             if d.trinket then pv.fakeTrinket=now-d.trinket end
             if d.cc then pv.fakeCC=now end
+            pv.fakeDR={}
+            for cat,dr in pairs(d.dr or {}) do pv.fakeDR[cat]={count=dr.count,icon=dr.icon,active=not dr.reset,expires=dr.reset and now+dr.reset} end
             pv:Show(); ns.RefreshFrame(pv)
         else pv:Hide() end
     end
@@ -199,7 +252,9 @@ function ns.UpdateUnit(f)
     local text
     if dead then text="Dead" elseif not seen then text=f.unitName and "Unseen" or "" else text=ns.HealthText(p.healthText,hp,max) end
     f.hp:SetText(text)
-    f:SetAlpha(seen and 1 or math.max(.1,(p.unseenAlpha or 50)/100))
+    local alpha=seen and 1 or math.max(.1,(p.unseenAlpha or 50)/100)
+    if seen and not f.fake and p.rangeFade and not dead and not ns.InRange(f.unit) then alpha=math.max(.1,(p.rangeAlpha or 50)/100) end
+    f:SetAlpha(alpha)
     local target=p.targetBorder and not f.fake and UnitIsUnit("target",f.unit)
     if target then f.border:SetVertexColor(p.targetColor.r,p.targetColor.g,p.targetColor.b,1) else f.border:SetVertexColor(0,0,0,1) end
 end
@@ -307,6 +362,55 @@ function ns.TickCast(f)
     c:SetValue(math.max(0,math.min(total,value)))
     c.time:SetText(string.format("%.1f",math.max(0,c.endTime-now)))
 end
+function ns.UpdatePet(f)
+    local pet,p=f.pet,ns.GetSettings()
+    if not pet or not p then return end
+    if not p.pets then if f.fake then pet:Hide() end; return end
+    local name,hp,max
+    if f.fake then
+        local d=f.fake.pet
+        if not d then pet:Hide(); return end
+        pet:Show(); name,hp,max=d.name,d.hp,100
+    else
+        if not UnitExists(pet.unit) then return end
+        name,hp,max=UnitName(pet.unit),UnitHealth(pet.unit) or 0,math.max(1,UnitHealthMax(pet.unit) or 1)
+    end
+    local cc=f.class and RAID_CLASS_COLORS and RAID_CLASS_COLORS[f.class]
+    local r,g,b=.3,.6,.3
+    if p.classColored and cc then r,g,b=cc.r*.75,cc.g*.75,cc.b*.75 elseif p.healthColor then r,g,b=p.healthColor.r,p.healthColor.g,p.healthColor.b end
+    local dark=1-(p.bgDarkness or 75)/100
+    pet.health:SetMinMaxValues(0,max); pet.health:SetValue(hp)
+    pet.health:SetStatusBarColor(r,g,b); pet.health.bg:SetVertexColor(r*dark,g*dark,b*dark,1)
+    pet.name:SetText(name or "")
+end
+-- Next application: 1/2 (green), 1/4 (yellow), immune (red).
+local DR_COLORS={{.1,.9,.1},{1,.8,0},{1,.1,.1}}
+function ns.UpdateDR(f)
+    local pool,p=f.drIcons,ns.GetSettings()
+    if not pool then return end
+    local list={}
+    if p and p.drTracking then
+        local now=GetTime()
+        for cat,d in pairs((f.fake and f.fakeDR) or (f.guid and ns.dr[f.guid]) or {}) do
+            if f.fake and d.expires and d.expires<=now then d.expires=now+ns.DR_RESET end
+            if d.active or (d.expires and d.expires>now) then list[#list+1]={cat=cat,d=d} end
+        end
+        table.sort(list,function(a,z) return a.cat<z.cat end)
+    end
+    for i,icon in ipairs(pool) do
+        local e=list[i]
+        if e then
+            local d=e.d
+            icon.icon:SetTexture(d.icon or "Interface\\Icons\\INV_Misc_QuestionMark")
+            local c=DR_COLORS[math.min(3,math.max(1,d.count or 1))]
+            icon.bg:SetVertexColor(c[1],c[2],c[3],1)
+            icon.expires=not d.active and d.expires or nil
+            if icon.expires then icon.cd:Show(); icon.cd:SetCooldown(icon.expires-ns.DR_RESET,ns.DR_RESET) else icon.cd:Hide() end
+            if p.timers then icon.timer:Show() else icon.timer:Hide() end
+            icon:Show()
+        else icon.expires=nil; icon:Hide() end
+    end
+end
 local function TickTimers(f)
     for _,icon in ipairs({f.classIcon,f.trinket}) do
         local left=icon.expires and icon.expires-GetTime()
@@ -315,9 +419,18 @@ local function TickTimers(f)
         end
         icon.timer:SetText(ns.Timer(left))
     end
+    local expired=false
+    for _,icon in ipairs(f.drIcons or {}) do
+        if icon:IsShown() then
+            local left=icon.expires and icon.expires-GetTime()
+            if left and left<=0 then expired=true end
+            icon.timer:SetText(ns.Timer(left))
+        end
+    end
+    if expired then ns.UpdateDR(f) end
 end
 function ns.RefreshFrame(f)
-    ns.UpdateUnit(f); ns.UpdateIcon(f); ns.UpdateTrinket(f); ns.UpdateCast(f); TickTimers(f)
+    ns.UpdateUnit(f); ns.UpdateIcon(f); ns.UpdateTrinket(f); ns.UpdateCast(f); ns.UpdatePet(f); ns.UpdateDR(f); TickTimers(f)
 end
 function ns.RefreshAll()
     for _,f in ipairs(ns.frames) do if f:IsShown() then ns.RefreshFrame(f) end end
@@ -332,7 +445,7 @@ function ns.Poll(slow)
     for _,list in ipairs({ns.frames,ns.previews}) do
         for _,f in ipairs(list) do
             if f:IsShown() then
-                ns.UpdateUnit(f)
+                ns.UpdateUnit(f); ns.UpdatePet(f)
                 if not f.cast.active then ns.UpdateCast(f) end
                 if slow then ns.UpdateIcon(f) end
                 TickTimers(f)

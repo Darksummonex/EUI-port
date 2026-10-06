@@ -4,7 +4,7 @@
 ## Group: EllesmereUI
 ## Notes: Secure action bars, native pet/stance controls and Wrath paging.
 ## Author: Ellesmere
-## Version: 9.3.4-335-0.15
+## Version: 9.3.4-335-0.18
 ## Dependencies: EllesmereUI
 ## X-Part-Of: EllesmereUI
 ## SavedVariables: EllesmereUIActionBarsDB

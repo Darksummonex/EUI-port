@@ -8,7 +8,7 @@ lua=LuaRuntime(unpack_returned_tuples=True)
 for file in ['backport-tools/wrath_mock.lua','backport-tools/inventory_resources_mock.lua','backport-tools/raidframes_mock.lua','EllesmereUI/EllesmereUI_Lite.lua','EllesmereUI/EUI_AuraFilters_335.lua','EllesmereUI/EUI_AuraIndicators_335.lua','EllesmereUIOptions/EUI_AuraFilters_335_Options.lua','EllesmereUIOptions/EUI_AuraIndicators_335_Options.lua']:
     lua.execute((root/file).read_text(encoding='utf-8-sig'))
 ns=lua.table()
-for file in ['EUI_RaidFrames_335.lua','EUI_RaidFrames_335_Display.lua','EUI_RaidFrames_335_Extras.lua','EUI_RaidFrames_335_ClickCast.lua']:
+for file in ['EUI_RaidFrames_335.lua','EUI_RaidFrames_335_RaidDebuffs.lua','EUI_RaidFrames_335_Display.lua','EUI_RaidFrames_335_Extras.lua','EUI_RaidFrames_335_ClickCast.lua']:
     lua.execute((root/'EllesmereUIRaidFrames'/file).read_text(encoding='utf-8-sig'),'EllesmereUIRaidFrames',ns)
 lua.globals().R=ns
 xml=ET.parse(root/'EllesmereUIRaidFrames/EUI_RaidFrames_335.xml'); tag='{http://www.blizzard.com/wow/ui/}'
@@ -47,6 +47,18 @@ assert(member.Power.value==800 and member:GetAlpha()==.4 and member.borderColor[
 assert(tostring(member.role:GetTexture()):find('Icons_335\\\\healer-modern.tga',1,true) and member.raidMarker.marker==4,tostring(member.role:GetTexture())..' '..tostring(member.raidMarker.marker))
 assert(member.buffs[1]:IsShown() and member.buffs[1].spellID==139 and not member.buffs[2]:IsShown())
 assert(member.debuffs[1]:IsShown() and member.debuffs[1].count:GetText()=='2' and not other.debuffs[1]:IsShown())
+-- Raid debuffs: no listed boss debuff, so the dispellable curse fills the centre icon.
+assert(member.raidDebuff:IsShown() and member.raidDebuff.filter=='HARMFUL|RAID' and member.raidDebuff.icon:GetTexture()=='aura-172','dispellable fallback')
+assert(not other.raidDebuff:IsShown())
+-- A listed boss debuff outranks it, and the higher priority entry wins.
+table.insert(units.party1.debuffs,{name='Instability',id=69766,caster='boss1',duration=8,expires=10,stacks=3,removable=false})
+table.insert(units.party1.debuffs,{name='Frost Beacon',id=70126,caster='boss1',duration=7,expires=9,removable=false})
+R.UpdateFrame(member,true)
+assert(member.raidDebuff.icon:GetTexture()=='aura-70126' and member.raidDebuff.filter=='HARMFUL' and member.raidDebuff.index==3,'boss debuff priority')
+R.GetSettings().party.raidDebuffs=false; R.UpdateFrame(member,true); assert(not member.raidDebuff:IsShown(),'raid debuffs off')
+R.GetSettings().party.raidDebuffs=nil; R.UpdateFrame(member,true); assert(member.raidDebuff:IsShown(),'old profiles default on')
+table.remove(units.party1.debuffs); table.remove(units.party1.debuffs); R.UpdateFrame(member,true)
+assert(member.raidDebuff.icon:GetTexture()=='aura-172')
 assert(not member.buffs[1]:IsMouseEnabled() and member:GetAttribute('*type1')=='target' and ClickCastFrames[member])
 local savedFrames=#allFrames; R.SetPreview(true)
 assert(not R.previewHolders.party:IsShown() and R.previewHolders.raid:IsShown() and R.holders.party:IsShown(),'Preview covered live group members')

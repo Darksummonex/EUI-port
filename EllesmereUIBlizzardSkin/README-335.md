@@ -1,4 +1,45 @@
-# Blizz UI Enhanced 3.3.5 — 0.22
+# Blizz UI Enhanced 3.3.5 — 0.26
+
+0.26: as caixas de dropdown das janelas da Blizzard (UIDropDownMenuTemplate,
+como o "Type" do Dungeon Finder) não passam mais da borda da janela. O quadro
+nativo inclui as margens transparentes da arte; o painel agora começa 17 px
+para dentro e termina no botão da seta. A janela Raid Information usava os
+recuos da janela de Amigos (feitos para a arte grande de 384x512) e o fundo
+terminava 76 px acima da base; agora o fundo cobre o diálogo inteiro de
+345x250, com título, botão de fechar, última linha e os botões Extend Raid
+Lock e Close.
+
+0.25: duas skins novas em Blizzard Window Skins. "Battleground Capture Bar":
+a barra de captura (WorldStateCaptureBarN, criada sob demanda pelo
+`WorldStateAlwaysUpFrame_Update`) fica lisa, com zona azul da Aliança, vermelha
+da Horda e neutra clara, linhas finas e indicador branco; a arte e o brilho dos
+ícones somem. "GM Chat Status": a caixa do aviso de chat com GM
+(Blizzard_GMChatUI, carregado sob demanda) ganha fundo escuro e borda na cor de
+destaque. Ambas restauram o visual original ao desligar (inclusive pelo
+interruptor geral). Teste: backport-tools/validate_skins_lootroll.py.
+
+0.24: novas skins no estilo ElvUI, cada uma com interruptor próprio em
+Blizzard Window Skins: Barber Shop; PvP, Battlemasters (Battleground/Arena) e
+Arena Registrar com o criador de estandarte; placar do campo de batalha e
+minimapa do campo de batalha (os tiles do mapa ficam acima do fundo e o fundo
+segue a opacidade nativa); Help/GM (a janela própria do Rebuffed, a padrão,
+pesquisa GM e aviso de ticket); timers de fôlego/fadiga com barra lisa,
+cronômetro e relógio; Raid Pullouts; Debug Tools (erros de script e Event
+Trace); janelas Ace3 (AceGUI-3.0: frames, grupos, abas, botões, caixas de
+texto, dropdowns, sliders, títulos e checkboxes). Os recuos de cada janela
+foram medidos no FrameXML do cliente; retratos, emblemas de time de arena e
+símbolos de honra/arena não são apagados. A skin Ace3 vale para widgets novos;
+desligá-la por completo pede /reload.
+Loot rolls: os botões Need/Greed/Disenchant/Pass mostram quantos jogadores do
+grupo escolheram cada opção (lido das mensagens de saque, inclusive passes
+automáticos e strings localizadas com %1$s) e a dica do botão lista os nomes
+com cor de classe. Opção "Show Group Roll Choices" em Tooltips, Menus & Popups.
+
+0.23: na janela de Talentos, o botão de fechar (x) e o rodapé de pontos agora
+terminam na borda direita da barra de rolagem, dentro do fundo, em vez de
+passar da borda. As abas das janelas voltam a ter fundo escuro: o fundo da aba
+fica na camada BACKGROUND do próprio botão e era apagado junto com a arte
+nativa da aba. Teste: backport-tools/validate_skin_content.py.
 
 0.22: no mapa-múndi (inclusive mapas de instância), a seta do jogador, os
 pontos de grupo/raide, o cadáver e os marcadores de missão voltam a cair sobre

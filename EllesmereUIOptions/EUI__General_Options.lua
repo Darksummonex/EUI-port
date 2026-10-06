@@ -830,8 +830,18 @@ do
         },
     },
     {
-        version = "Arena 0.1",
+        version = "Arena 0.2",
         heroes = {
+            {
+                title = "Diminishing Returns",
+                desc  = "Icons beside each enemy for every crowd control category they are under or recovering from: green means the next one lasts half as long, yellow a quarter, red immune. A timer shows the 18 second reset.",
+                nav   = Nav("EllesmereUIArena", "Arena Frames"),
+            },
+            {
+                title = "Arena Pets",
+                desc  = "A health bar for each enemy pet under its owner's frame. Left-click targets the pet, right-click sets focus.",
+                nav   = Nav("EllesmereUIArena", "Arena Frames"),
+            },
             {
                 title = "New Module: Arena Frames",
                 desc  = "Enemy frames for arena1-5 with class colored health, power and cast bars plus a highlight on your target. Left-click targets, right-click sets focus. There is no Retail equivalent.",
@@ -843,6 +853,10 @@ do
             },
         },
         features = {
+            {
+                title = "Out of Range Fade",
+                desc  = "Enemies beyond your class's 30-40 yard spell range fade to a chosen opacity",
+            },
             {
                 title = "Test Frames",
                 desc  = "Preview 2 to 5 sample frames in Unlock Mode, while the options page is open, or with /earena test",
@@ -897,8 +911,13 @@ do
         },
     },
     {
-        version = "Raid Frames 0.11",
+        version = "Raid Frames 0.12",
         heroes = {
+            {
+                title = "Raid Debuffs",
+                desc  = "A large icon in the middle of each frame for important ICC, Ruby Sanctum, Trial of the Crusader, Ulduar and Naxxramas debuffs, highest priority first, with timer, stacks and a dispel colored border. Without a listed debuff it can show a dispellable one instead.",
+                nav   = Nav("EllesmereUIRaidFrames", "Raid", "RAID DEBUFFS"),
+            },
             {
                 title = "Dispels",
                 desc  = "Dispel Overlay styles with opacity, a dispel colored Frame Border, Type Icon Position, per-type Dispel Colors and Only Show Dispellable.",
@@ -941,8 +960,12 @@ do
         },
     },
     {
-        version = "Core 0.46",
+        version = "Core 0.48",
         heroes = {
+            {
+                title = "Fix Addon Conflicts in One Click",
+                desc  = "The Incompatible Addon popup can disable the other addon or the affected EllesmereUI module and reload. Okay and Don't show again work as before.",
+            },
             {
                 title = "Settings Overrides",
                 desc  = "Per-spec setting groups with automatic capture and their own Unlock Mode layouts, plus conditional overrides for dungeons, raids, arenas, battlegrounds, solo play and out of combat.",
@@ -981,6 +1004,7 @@ do
             },
         },
         fixes = {
+            { text = "Unlock Mode no longer errors on SetMaxLines when it first opens, so element movers appear again." },
             { text = "The Patch Notes reminder dot now lights after each backport update." },
             { text = "The options search results now draw above the sidebar and page instead of behind them." },
             { text = "The Unlock Mode right-click menu no longer closes right after opening when many elements are on screen." },
@@ -991,8 +1015,20 @@ do
         },
     },
     {
-        version = "Options 0.78",
+        version = "Options 0.84",
         heroes = {
+            {
+                module = "Arena Frames",
+                title  = "Pets, Diminishing Returns and Range",
+                desc   = "New PETS and DIMINISHING RETURNS sections, plus Fade Out of Range and its opacity under Target and Visibility.",
+                nav    = Nav("EllesmereUIArena", "Arena Frames"),
+            },
+            {
+                module = "Quality of Life",
+                title  = "Group Automation",
+                desc   = "Announce Interrupts and Accept Invites from Friends & Guild in the GROUP section, and a Disband Group button on Raid Tools.",
+                nav    = Nav("EllesmereUIQoL", "QoL"),
+            },
             {
                 module = "Action Bars",
                 title  = "Retail Settings Pages",
@@ -1007,6 +1043,24 @@ do
             },
         },
         features = {
+            {
+                module = "Action Bars",
+                title  = "Custom Button Shape",
+                desc   = "New dropdown at the top of Icons, with a link to apply it to every bar. The preview shows the shape.",
+                nav    = Nav("EllesmereUIActionBars", "Bar Display", "ICONS"),
+            },
+            {
+                module = "Raid Frames",
+                title  = "Raid Debuffs Section",
+                desc   = "Boss Debuff Icon, Icon Size, Icon Offset Y and Show Dispellable When No Boss Debuff under Dispels",
+                nav    = Nav("EllesmereUIRaidFrames", "Raid", "RAID DEBUFFS"),
+            },
+            {
+                module = "Blizz UI Enhanced",
+                title  = "Capture Bar and GM Chat Status",
+                desc   = "Two new toggles in the window skins list",
+                nav    = Nav("EllesmereUIBlizzardSkin", "Blizzard Window Skins"),
+            },
             {
                 module = "Arena Frames",
                 title  = "Arena Frames Page",
@@ -1054,13 +1108,28 @@ do
             { module = "General", text = "Combat damage, healing, periodic and pet damage toggles use Wrath's own combat text settings." },
             { module = "General", text = "Hidden option widgets no longer take keyboard focus after other windows close with Escape." },
             { module = "General", text = "Dragging or typing in a slider no longer errors." },
-            { module = "Quality of Life", text = "Displays has a ZONE TEXT section with Move Zone Text, opened from the Zone Text mover's Element Options." },
+            { module = "Quality of Life", text = "Displays has a ZONE TEXT section with Move Zone Text." },
             { module = "Quality of Life", text = "Raid Tools has a BOSS MOD BARS section with Hide DBM/BigWigs Bars While Timeline Is Active and a status line." },
         },
     },
     {
-        version = "Quality of Life 0.7",
+        version = "Quality of Life 0.9",
         heroes = {
+            {
+                title = "Interrupt Announce",
+                desc  = "Posts the spell you or your pet interrupted, with a spell link, to Say, Emote, Party or Raid. Party and Raid switch to the battleground channel inside battlegrounds.",
+                nav   = Nav("EllesmereUIQoL", "QoL"),
+            },
+            {
+                title = "Accept Invites from Friends & Guild",
+                desc  = "Group invites from your friends list and guildmates are accepted automatically, unless you are already grouped or queued in the Dungeon Finder.",
+                nav   = Nav("EllesmereUIQoL", "QoL"),
+            },
+            {
+                title = "Disband Group",
+                desc  = "A Disband button on Raid Tools removes everyone from your raid or party after a confirmation. Leader only, never in combat.",
+                nav   = Nav("EllesmereUIQoL", "Raid Tools"),
+            },
             {
                 title = "Hide Boss Mod Bars Under AbilityTimeline",
                 desc  = "While AbilityTimeline shows DBM or BigWigs timers, their own bars turn invisible and click-through. Timers keep running, nothing in DBM or BigWigs settings changes, and the bars return when the timeline or the option is turned off.",
@@ -1101,12 +1170,17 @@ do
             },
         },
         fixes = {
-            { text = "The zone name no longer appears in the middle of the screen at small UI scales. It now sits at the top (X 9 / Y 322 from screen center) on a Zone Text mover in Unlock Mode." },
+            { text = "The zone name no longer appears in the middle of the screen at small UI scales. It now sits fixed at the top (X 9 / Y 322 from screen center), with no Unlock Mode mover." },
         },
     },
     {
-        version = "Blizz UI Enhanced 0.22",
+        version = "Blizz UI Enhanced 0.26",
         heroes = {
+            {
+                title = "Group Roll Choices",
+                desc  = "Need, Greed, Disenchant and Pass buttons on loot rolls count what the rest of the group picked. Hover a button to see who, in class colors.",
+                nav   = Nav("EllesmereUIBlizzardSkin", "Tooltips, Menus & Popups"),
+            },
             {
                 title = "GearScore on Tooltips",
                 desc  = "Player tooltips show GearScore in the GearScoreLite colors, using its formula when it is loaded. GearScoreLite's own line is kept when its option is on.",
@@ -1135,10 +1209,18 @@ do
                 title = "Collections and Wardrobe Skins",
                 desc  = "The server's Collections and Wardrobe & Transmog windows join the window skins",
             },
+            {
+                title = "More Window Skins",
+                desc  = "Barber Shop, PvP and battlemasters, Arena Registrar, battleground score, minimap and capture bar, Help and GM tickets, GM chat status, breath and fatigue timers, stopwatch, raid pullouts, debug tools and Ace3 config windows",
+            },
         },
         fixes = {
+            { text = "Talents: the close button and the points footer end at the scroll bar instead of past the window edge." },
+            { text = "Window tabs keep their dark background instead of showing through." },
             { text = "World map: the player arrow, party and raid dots, corpse and quest markers stay on the map art after a map view change during combat, including instance maps." },
             { text = "Native dropdown menus no longer show an empty square at the right of each row." },
+            { text = "Dropdown boxes in Blizzard windows, such as the Dungeon Finder type, end at their arrow instead of past the window edge." },
+            { text = "Raid Information: the background covers the whole window, including the title, close button, last row and the Extend Raid Lock and Close buttons." },
             { text = "The Talents and Glyphs background now ends above the tabs and beside the dual spec tabs." },
             { text = "The Glyphs tab shows its native parchment background again, aligned with the glyph sockets." },
             { text = "Sliders in Blizzard windows, such as the Camera and Mouse options, are back to their normal size." },
@@ -1179,7 +1261,7 @@ do
         },
     },
     {
-        version = "DataBars 0.3",
+        version = "DataBars 0.4",
         heroes = {
             {
                 title = "Retail Engine and Look",
@@ -1203,6 +1285,9 @@ do
                 title = "Profile Migration",
                 desc  = "Profiles from 0.2 are converted automatically",
             },
+        },
+        fixes = {
+            { text = "Bars snapped to a screen edge or set to full length start in their place after login instead of needing Unlock Mode opened and closed." },
         },
     },
     {
@@ -1327,8 +1412,18 @@ do
         },
     },
     {
-        version = "Action Bars 0.15",
+        version = "Action Bars 0.18",
         heroes = {
+            {
+                title = "Action Bars 7 to 10",
+                desc  = "Four extra bars, off by default, each with its own keybinds, Unlock Mode mover and the full Bar Display settings. Warriors, Druids, Rogues and Priests see which stance or form shares a bar's slots.",
+                nav   = Nav("EllesmereUIActionBars", "Bar Display"),
+            },
+            {
+                title = "Custom Button Shape",
+                desc  = "Circle and Portrait draw round icons, Diamond, Hexagon and Shield crop the icon to the shape, and Square and Curved Square add a shaped outline. Set per bar, including pet and stance.",
+                nav   = Nav("EllesmereUIActionBars", "Bar Display", "ICONS"),
+            },
             {
                 title = "Quick Keybind Mode",
                 desc  = "Type /kb, hover a button and press a key to bind it, including modifiers, mouse buttons and the wheel. Right-click clears; Cancel or Esc undoes.",
