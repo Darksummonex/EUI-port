@@ -22,6 +22,19 @@ function W.ResolveBarTexture(path)
     end
     return path
 end
+-- 3.3.5 only has state drivers: an attribute driver on "state-X" is the state
+-- driver X (RegisterStateDriver writes that same attribute). Other attributes
+-- have no 3.3.5 driver and are left alone.
+function W.RegisterAttributeDriver(frame, attribute, values)
+    if _G.RegisterAttributeDriver then return _G.RegisterAttributeDriver(frame, attribute, values) end
+    local state = type(attribute) == "string" and attribute:match("^state%-(.+)$")
+    if state then RegisterStateDriver(frame, state, values) end
+end
+function W.UnregisterAttributeDriver(frame, attribute)
+    if _G.UnregisterAttributeDriver then return _G.UnregisterAttributeDriver(frame, attribute) end
+    local state = type(attribute) == "string" and attribute:match("^state%-(.+)$")
+    if state then UnregisterStateDriver(frame, state) end
+end
 local nativeCreateFrame = CreateFrame
 local powerEvents = { "UNIT_MANA", "UNIT_RAGE", "UNIT_ENERGY", "UNIT_FOCUS", "UNIT_RUNIC_POWER" }
 local powerTokens = { UNIT_MANA = "MANA", UNIT_RAGE = "RAGE", UNIT_ENERGY = "ENERGY", UNIT_FOCUS = "FOCUS", UNIT_RUNIC_POWER = "RUNIC_POWER" }

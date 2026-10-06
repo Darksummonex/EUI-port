@@ -17313,9 +17313,9 @@ function InitializeFrames()
                 if frame._euiVisDriver ~= wantDriver and not isLocked then
                     if wantDriver then
                         UnregisterUnitWatch(frame)
-                        RegisterAttributeDriver(frame, "state-visibility", wantDriver)
+                        ns.Wrath.RegisterAttributeDriver(frame, "state-visibility", wantDriver)
                     else
-                        UnregisterAttributeDriver(frame, "state-visibility")
+                        ns.Wrath.UnregisterAttributeDriver(frame, "state-visibility")
                         RegisterUnitWatch(frame)
                     end
                     frame._euiVisDriver = wantDriver
@@ -17471,9 +17471,9 @@ function InitializeFrames()
                     if mini._euiVisDriver ~= miniWant and not isLocked then
                         if miniWant then
                             UnregisterUnitWatch(mini)
-                            RegisterAttributeDriver(mini, "state-visibility", miniWant)
+                            ns.Wrath.RegisterAttributeDriver(mini, "state-visibility", miniWant)
                         else
-                            UnregisterAttributeDriver(mini, "state-visibility")
+                            ns.Wrath.UnregisterAttributeDriver(mini, "state-visibility")
                             RegisterUnitWatch(mini)
                         end
                         mini._euiVisDriver = miniWant
@@ -17503,7 +17503,7 @@ function InitializeFrames()
                 -- hide. Frames that never had a driver keep the legacy disabled path
                 -- untouched. The mini inherits both.
                 if not isLocked and frame._euiVisDriver and frame._euiVisDriver ~= "hide" then
-                    RegisterAttributeDriver(frame, "state-visibility", "hide")
+                    ns.Wrath.RegisterAttributeDriver(frame, "state-visibility", "hide")
                     frame._euiVisDriver = "hide"
                 end
                 local mini = frames[ns.UF_MINI_OF[unitKey]]
@@ -17515,14 +17515,14 @@ function InitializeFrames()
                         -- frame: unpin any driver so the pet's own unit
                         -- watch shows it whenever a pet exists.
                         if not isLocked and mini._euiVisDriver then
-                            UnregisterAttributeDriver(mini, "state-visibility")
+                            ns.Wrath.UnregisterAttributeDriver(mini, "state-visibility")
                             RegisterUnitWatch(mini)
                             mini._euiVisDriver = nil
                         end
                         mini:SetAlpha(1)
                     else
                         if not isLocked and mini._euiVisDriver and mini._euiVisDriver ~= "hide" then
-                            RegisterAttributeDriver(mini, "state-visibility", "hide")
+                            ns.Wrath.RegisterAttributeDriver(mini, "state-visibility", "hide")
                             mini._euiVisDriver = "hide"
                         end
                         mini:SetAlpha(0)

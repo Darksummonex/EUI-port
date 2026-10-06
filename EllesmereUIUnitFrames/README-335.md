@@ -1,4 +1,12 @@
-# Unit Frames 3.3.5 — 0.16
+# Unit Frames 3.3.5 — 0.17
+
+0.17: as condições de Visibility (combate, grupo, esconder sem alvo) davam
+erro `RegisterAttributeDriver` (nil): essa API não existe no 3.3.5. As 7
+chamadas (Register/UnregisterAttributeDriver) passam por
+`ns.Wrath.RegisterAttributeDriver`/`UnregisterAttributeDriver`, que usam a
+nativa quando existe e, no 3.3.5, mapeiam o atributo `state-X` para
+`RegisterStateDriver(frame, "X", ...)` (o mesmo atributo). Era também o
+motivo das caixas do menu Visibility só mudarem ao reabrir.
 
 0.16: no Classic WoW UI a barra de power passava por cima da borda da arte
 (saía da caixa embaixo e à direita). No Retail o contêiner das barras desenha

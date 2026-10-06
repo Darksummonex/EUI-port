@@ -1403,7 +1403,7 @@ do
         },
     },
     {
-        version = "Unit Frames 0.16",
+        version = "Unit Frames 0.17",
         heroes = {
             {
                 title = "Outline per Text",
@@ -1440,6 +1440,7 @@ do
             },
         },
         fixes = {
+            { text = "Visibility conditions (combat, group, and hiding without a target) now apply to the frames instead of stopping with an error, so the Visibility menu's boxes also tick right away." },
             { text = "Classic WoW UI power bars now stay inside the frame art: the art's rim draws over the power bar as it does over the health bar." },
             { text = "Classic WoW UI now gives every unit frame the original green health bar instead of class colors. Returning to the EllesmereUI look restores your colors." },
             { text = "Classic WoW UI power bars use the original game colors (deep blue mana, red rage, yellow energy) instead of the EllesmereUI palette. Other looks keep the palette." },
