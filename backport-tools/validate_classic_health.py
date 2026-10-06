@@ -159,6 +159,14 @@ ufo = read('EllesmereUIOptions/EUI_UnitFrames_Options.lua')
 assert 'EllesmereUI.GetPowerColor(' not in ufo and 'EllesmereUI.ResolveUnitPowerColor(' not in ufo
 assert ufo.count('ns.UF_PowerInfo(') == 17 and 'ns.UF_PowerColor("player")' in ufo
 
+# Classic art over both bars on Wrath (no grouped clip container: the power bar sits at health + 2).
+art = uf[uf.index('function ns.UF_ApplyBlizzFrameArt'):uf.index('function ns.UF_RefreshBlizzTargetArt')]
+assert 'if EUI_WOW_335 and frame.Health then' in art
+assert 'frame.Health:GetFrameLevel() + 3' in art
+assert 'pw:GetParent() == clip then lvl = math.max(lvl, pw:GetFrameLevel() + 1)' in art
+assert 'af:SetFrameLevel(lvl)' in art
+assert 'frame.Power:SetFrameLevel(hpLevel + 2)' in uf
+
 for rel in ('EllesmereUIUnitFrames/EllesmereUIUnitFrames.lua', 'EllesmereUIOptions/EUI_Style_Options.lua',
             'EllesmereUIOptions/EUI_UnitFrames_Options.lua', 'EllesmereUIUnitFrames/EUI_UnitFrames_335_FormBar.lua'):
     res = compiled('return function(...) ' + read(rel) + '\nend')

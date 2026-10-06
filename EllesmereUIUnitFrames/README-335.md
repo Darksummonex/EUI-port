@@ -1,4 +1,12 @@
-# Unit Frames 3.3.5 — 0.15
+# Unit Frames 3.3.5 — 0.16
+
+0.16: no Classic WoW UI a barra de power passava por cima da borda da arte
+(saía da caixa embaixo e à direita). No Retail o contêiner das barras desenha
+as duas como um grupo no nível dele, abaixo da arte; no 3.3.5 cada barra
+desenha no próprio nível e a de power fica em vida + 2, acima da arte. Agora,
+no 3.3.5, a arte dos frames clássicos sobe para acima das duas barras (vida + 3
+ou power + 1), ainda abaixo do nível, dos textos, do brilho de absorção e do
+ícone de descanso.
 
 0.15: no Classic WoW UI a barra de recurso (mana, raiva, energia, poder
 rúnico) usava a paleta do EllesmereUI (mana azul-claro) em vez das cores

@@ -12214,7 +12214,16 @@ function ns.UF_ApplyBlizzFrameArt(frame, G)
     -- target and pet frames) draws it OVER the bars instead: above the
     -- clipped group, still under the text overlays.
     if G.artAbove then
-        af:SetFrameLevel(base + 2)
+        local lvl = base + 2
+        -- Wrath cannot draw the container as one group: each bar draws at its
+        -- own level (power at health + 2), so the art clears both fills to keep
+        -- its rim over them. The absorb glow and rest icon stay above it.
+        if EUI_WOW_335 and frame.Health then
+            lvl = math.max(lvl, frame.Health:GetFrameLevel() + 3)
+            local pw = frame.Power
+            if pw and pw:GetParent() == clip then lvl = math.max(lvl, pw:GetFrameLevel() + 1) end
+        end
+        af:SetFrameLevel(lvl)
     else
         af:SetFrameLevel(math.max(0, base - 1))
     end
