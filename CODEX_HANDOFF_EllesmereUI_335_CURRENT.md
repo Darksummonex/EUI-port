@@ -77,8 +77,8 @@ Working-tree backups: `backport-tools/backup_project.py` writes
 Core 0.50; Action Bars 0.18; Arena 0.2; AuraBuff Reminders 0.3; Bags 0.10;
 Blizz UI Enhanced (BlizzardSkin) 0.26; Chat 0.42; Cooldown Manager 0.2;
 Damage Meters 0.6; Data Bars 0.4; Friends 0.3; Minimap 0.4; Nameplates 0.13;
-Options 0.89; QoL 0.10; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.12;
-Resource Bars 0.3; Unit Frames 0.14.
+Options 0.90; QoL 0.10; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.12;
+Resource Bars 0.3; Unit Frames 0.15.
 
 Git: branch `cursor/eui-shapes-bars-skins-qol`, built on
 `cursor/eui-arena-and-fixes`. Neither is merged into `main`; no PR is open.
@@ -92,6 +92,10 @@ Git: branch `cursor/eui-shapes-bars-skins-qol`, built on
   The keys are in `ns.UF_StyleSlotKeys()` and `SLOT_KEYS.unitframes`; a
   profile already Classic banks its current colours into `_styleSlots.eui`
   first. Validator: `validate_classic_health.py`.
+- Classic WoW UI power colours (Unit Frames 0.15, Options 0.90): every Unit
+  Frames power colour read goes through `ns.UF_PowerColor(unit)` /
+  `ns.UF_PowerInfo(token)`, which return the client's `PowerBarColor` under
+  Classic only and EllesmereUI's palette otherwise. No settings change.
 
 - Per-text outline (Core 0.50, Nameplates 0.13, Unit Frames 0.11, QoL 0.10,
   Options 0.86): `EllesmereUI.ApplyTextOutline(fs, path, size, mode, moduleKey)`

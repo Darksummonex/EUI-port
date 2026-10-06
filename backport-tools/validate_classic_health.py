@@ -1,5 +1,6 @@
-"""Classic WoW UI (vanilla) Unit Frames seed: the original green health fill on every
-frame instead of class colours, once per profile, banked in the Style page slots."""
+"""Classic WoW UI (vanilla) Unit Frames: the original green health fill on every frame
+instead of class colours (once per profile, banked in the Style page slots), and power
+bars in the client's own PowerBarColor instead of EllesmereUI's palette."""
 from pathlib import Path
 import sys
 root = Path(__file__).resolve().parents[1]
@@ -115,8 +116,52 @@ assert 'k[#k + 1] = units[i] .. ".healthClassColored"' in style
 assert 'k[#k + 1] = units[i] .. ".customFillColor"' in style
 assert 'then return "classicHealthSeeded" end' in style
 
-for rel in ('EllesmereUIUnitFrames/EllesmereUIUnitFrames.lua', 'EllesmereUIOptions/EUI_Style_Options.lua'):
+# Classic power colours: the client's PowerBarColor under Classic, EUI's palette otherwise.
+pstart = uf.index('-- Classic WoW UI paints power')
+pend = uf.index('-- The class resource style that builds.')
+res = compiled(uf[pstart:pend])
+assert res is True, res
+r = lua.execute(r'''
+PowerBarColor = { MANA = { r = 0, g = 0, b = 1 }, [0] = { r = 0, g = 0, b = 1 },
+                  RAGE = { r = 1, g = 0, b = 0 }, [1] = { r = 1, g = 0, b = 0 } }
+local units = { player = { 0, "MANA" }, target = { 1, "RAGE" }, boss1 = { 8, "LUNAR_POWER" } }
+function UnitPowerType(u) local t = units[u]; return t[1], t[2] end
+EllesmereUI = { GetPowerColor = function(k)
+    if k == "MANA" or k == 0 then return { r = 0, g = .55, b = 1 } end
+    if k == "LUNAR_POWER" then return { r = 1, g = .5, b = 0 } end end }
+function EllesmereUI.ResolveUnitPowerColor(u)
+    local c = EllesmereUI.GetPowerColor(units[u][2]); if c then return c.r, c.g, c.b end end
+local override
+function EllesmereUI.GetPlayerPowerOverride() return override end
+local out = {}
+ns.UF_Style = function() return "classic" end
+local _, g, b = ns.UF_PowerColor("player"); out[#out + 1] = (g == 0 and b == 1)
+local r1, g1 = ns.UF_PowerColor("target"); out[#out + 1] = (r1 == 1 and g1 == 0)
+local r2 = ns.UF_PowerColor("boss1"); out[#out + 1] = (r2 == 1)
+out[#out + 1] = (ns.UF_PowerInfo("MANA").g == 0)
+override = 1
+local r3 = ns.UF_PowerColor("player"); out[#out + 1] = (r3 == 1)
+override = nil
+ns.UF_Style = function() return "eui" end
+local _, g4 = ns.UF_PowerColor("player"); out[#out + 1] = (g4 == .55)
+out[#out + 1] = (ns.UF_PowerInfo("MANA").g == .55)
+ns.UF_Style = function() return "blizzard" end
+local _, g5 = ns.UF_PowerColor("player"); out[#out + 1] = (g5 == .55)
+return unpack(out)
+''')
+assert all(x is True for x in r), r
+
+uf = read('EllesmereUIUnitFrames/EllesmereUIUnitFrames.lua')
+assert uf.count('EllesmereUI.ResolveUnitPowerColor(') == 1, 'power colour must go through ns.UF_PowerColor'
+assert uf.count('ns.UF_PowerColor(') >= 8
+assert 'ns.UF_PowerInfo(S.token)' in read('EllesmereUIUnitFrames/EUI_UnitFrames_335_FormBar.lua')
+ufo = read('EllesmereUIOptions/EUI_UnitFrames_Options.lua')
+assert 'EllesmereUI.GetPowerColor(' not in ufo and 'EllesmereUI.ResolveUnitPowerColor(' not in ufo
+assert ufo.count('ns.UF_PowerInfo(') == 17 and 'ns.UF_PowerColor("player")' in ufo
+
+for rel in ('EllesmereUIUnitFrames/EllesmereUIUnitFrames.lua', 'EllesmereUIOptions/EUI_Style_Options.lua',
+            'EllesmereUIOptions/EUI_UnitFrames_Options.lua', 'EllesmereUIUnitFrames/EUI_UnitFrames_335_FormBar.lua'):
     res = compiled('return function(...) ' + read(rel) + '\nend')
     assert res is True, f'{rel}: {res}'
 
-print('classic health seed OK')
+print('classic health seed and power colours OK')

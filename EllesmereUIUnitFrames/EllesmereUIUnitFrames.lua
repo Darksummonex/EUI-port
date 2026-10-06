@@ -5147,7 +5147,7 @@ local function CreateBottomTextBar(frame, unit, settings, anchorFrame, xOffset, 
             -- Secret-safe per-unit power color: player resolves via the clean
             -- string token; non-player units recover it from the clean integer
             -- power type instead of falling back to white.
-            local r, g, b = EllesmereUI.ResolveUnitPowerColor(unit)
+            local r, g, b = ns.UF_PowerColor(unit)
             if r then fs:SetTextColor(r, g, b)
             else fs:SetTextColor(1, 1, 1) end
         end
@@ -7593,7 +7593,7 @@ local function CreatePowerBar(frame, unit, settings)
             -- Secret-safe: player via the clean token, non-player via the clean integer
             -- power type, so the custom color applies on EVERY unit without depending
             -- on oUF's colors.power sync. Unmapped power types return nil (keep oUF's).
-            bR, bG, bB = EllesmereUI.ResolveUnitPowerColor(unit)
+            bR, bG, bB = ns.UF_PowerColor(unit)
         end
         if s2.powerGradientEnabled and bR then
             local gc = s2.powerGradientColor
@@ -7617,7 +7617,7 @@ local function CreatePowerBar(frame, unit, settings)
         -- target/power-type changes (mirrors the fill). Opacity stays on
         -- customPowerBgAlpha; gated off = zero cost (custom/dark bg stands unchanged).
         if s2.powerBgPowerColored and self.bg then
-            local pr, pg, pb = EllesmereUI.ResolveUnitPowerColor(unit)
+            local pr, pg, pb = ns.UF_PowerColor(unit)
             if pr then
                 local f = EllesmereUI.GetPowerBgDarkenFactor()
                 self.bg:SetColorTexture(pr * f, pg * f, pb * f, 1)
@@ -7661,7 +7661,7 @@ local function CreatePowerBar(frame, unit, settings)
         if s.powerPercentTextPowerColor then
             -- Secret-safe per-unit color: player keeps the exact token color,
             -- non-player recovers it from the clean integer power type.
-            local r, g, b = EllesmereUI.ResolveUnitPowerColor(unit)
+            local r, g, b = ns.UF_PowerColor(unit)
             if r then ppFS:SetTextColor(r, g, b)
             else ppFS:SetTextColor(1, 1, 1) end
         elseif s.powerTextColor then
@@ -7785,7 +7785,7 @@ local function CreatePowerBar(frame, unit, settings)
             if s.powerBgPowerColored and self.bg then
                 -- Restore this unit's power color (mirrors the fill); the next
                 -- PostUpdateColor keeps it tracking thereafter.
-                local pr, pg, pb = EllesmereUI.ResolveUnitPowerColor(u)
+                local pr, pg, pb = ns.UF_PowerColor(u)
                 if pr then
                     local f = EllesmereUI.GetPowerBgDarkenFactor()
                     self.bg:SetColorTexture(pr * f, pg * f, pb * f, 1)
@@ -11522,6 +11522,30 @@ function ns.UF_Forever()
     if ns._ufStyle == nil then ns.UF_Style() end
     return ns._ufForever == true
 end
+-- Classic WoW UI paints power in the client's own PowerBarColor (deep blue
+-- mana, red rage, yellow energy) instead of EllesmereUI's palette; the other
+-- looks keep the palette. Power types the client table lacks fall back to it.
+function ns.UF_StockPowerInfo(key)
+    if key == nil or ns.UF_Style() ~= "classic" then return nil end
+    local pbc = _G.PowerBarColor
+    local c = pbc and pbc[key]
+    if type(c) == "table" and c.r then return c end
+end
+function ns.UF_PowerInfo(token)
+    return ns.UF_StockPowerInfo(token) or EllesmereUI.GetPowerColor(token)
+end
+function ns.UF_PowerColor(who)
+    if ns.UF_Style() == "classic" then
+        local pType, pToken
+        if who == "player" and EllesmereUI.GetPlayerPowerOverride then
+            pType = EllesmereUI.GetPlayerPowerOverride()
+        end
+        if pType == nil then pType, pToken = UnitPowerType(who) end
+        local c = ns.UF_StockPowerInfo(pToken) or ns.UF_StockPowerInfo(pType)
+        if c then return c.r, c.g, c.b end
+    end
+    return EllesmereUI.ResolveUnitPowerColor(who)
+end
 -- The class resource style that builds. WoW Forever outside its own style
 -- has no Blizzard class resource bar to adopt, so a saved "blizzard" builds
 -- as modern there. Read-side only: the saved style is never rewritten.
@@ -14570,7 +14594,7 @@ ReloadFramesBody = function()
                         -- Secret-safe per-unit power color (player via token,
                         -- non-player via the clean integer type), so custom power
                         -- colors apply on EVERY unit independent of oUF's sync.
-                        bR, bG, bB = EllesmereUI.ResolveUnitPowerColor(unit)
+                        bR, bG, bB = ns.UF_PowerColor(unit)
                     end
                     if s2.powerGradientEnabled and bR then
                         local gc = s2.powerGradientColor
@@ -14590,7 +14614,7 @@ ReloadFramesBody = function()
                     -- Bar Background: power-colored bg tracks this unit's power
                     -- color each update (mirrors the fill); see CreatePowerBar.
                     if s2.powerBgPowerColored and self.bg then
-                        local pr, pg, pb = EllesmereUI.ResolveUnitPowerColor(unit)
+                        local pr, pg, pb = ns.UF_PowerColor(unit)
                         if pr then
                             local f = EllesmereUI.GetPowerBgDarkenFactor()
                             self.bg:SetColorTexture(pr * f, pg * f, pb * f, 1)

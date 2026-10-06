@@ -1,4 +1,12 @@
-# Unit Frames 3.3.5 — 0.14
+# Unit Frames 3.3.5 — 0.15
+
+0.15: no Classic WoW UI a barra de recurso (mana, raiva, energia, poder
+rúnico) usava a paleta do EllesmereUI (mana azul-claro) em vez das cores
+originais do jogo. Agora, só nesse estilo, a cor vem do `PowerBarColor` do
+cliente (mana azul-escuro, raiva vermelha, energia amarela), via
+`ns.UF_PowerColor` / `ns.UF_PowerInfo`: barra, fundo, textos de power, Bottom
+Text Bar e a barra de forma do druida. Os outros estilos continuam com a
+paleta; tipos que o cliente não tem caem nela. Nenhuma opção é alterada.
 
 0.14: no estilo Classic WoW UI (arte vanilla) a barra de vida usava a cor da
 classe (o azul-arroxeado do bruxo) em vez do verde original. Ao entrar no

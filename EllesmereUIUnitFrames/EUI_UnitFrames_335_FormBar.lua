@@ -46,7 +46,7 @@ end
 
 local function Color()
     local s, bar = S.settings, S.bar
-    local info = S.token and EllesmereUI.GetPowerColor(S.token)
+    local info = S.token and ns.UF_PowerInfo(S.token)
     local r, g, b = 1, 1, 1
     if info then r, g, b = info.r, info.g, info.b end
     local op = s.powerBarOpacity or 100

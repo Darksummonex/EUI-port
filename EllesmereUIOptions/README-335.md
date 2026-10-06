@@ -1,4 +1,8 @@
-# Options 3.3.5 — 0.89
+# Options 3.3.5 — 0.90
+
+0.90: a prévia e as amostras de cor de power dos Unit Frames usam
+`ns.UF_PowerInfo` / `ns.UF_PowerColor`, então mostram as cores originais do
+jogo no Classic WoW UI.
 
 0.89: a página Style guarda por estilo a cor de vida dos Unit Frames
 (`healthClassColored` e `customFillColor` de cada frame, carimbo

@@ -2297,7 +2297,7 @@ initFrame:SetScript("OnEvent", function(self)
         local function PreviewPowerColor(fs, contentKey, usePowerColor)
             if not fs or not usePowerColor then return end
             if contentKey == "perpp" or contentKey == "curpp" or contentKey == "curhp_curpp" or contentKey == "perhp_perpp" then
-                local pcR, pcG, pcB = EllesmereUI.ResolveUnitPowerColor("player")
+                local pcR, pcG, pcB = ns.UF_PowerColor("player")
                 local info = pcR and { r = pcR, g = pcG, b = pcB }
                 if info then fs:SetTextColor(info.r, info.g, info.b)
                 else fs:SetTextColor(1, 1, 1) end
@@ -2420,7 +2420,7 @@ initFrame:SetScript("OnEvent", function(self)
             local pfR, pfG, pfB
             if isPowerColored then
                 local _, pToken = UnitPowerType("player")
-                local info = EllesmereUI.GetPowerColor(pToken or "MANA")
+                local info = ns.UF_PowerInfo(pToken or "MANA")
                 pfR, pfG, pfB = info.r, info.g, info.b
             elseif customPFill then
                 pfR, pfG, pfB = customPFill.r, customPFill.g, customPFill.b
@@ -2430,7 +2430,7 @@ initFrame:SetScript("OnEvent", function(self)
             local pbR, pbG, pbB
             if settings.powerBgPowerColored then
                 local _, pbToken = UnitPowerType("player")
-                local pbInfo = EllesmereUI.GetPowerColor(pbToken or "MANA")
+                local pbInfo = ns.UF_PowerInfo(pbToken or "MANA")
                 local pbF = EllesmereUI.GetPowerBgDarkenFactor()
                 pbR, pbG, pbB = pbInfo.r * pbF, pbInfo.g * pbF, pbInfo.b * pbF
             elseif customPBg then
@@ -2493,7 +2493,7 @@ initFrame:SetScript("OnEvent", function(self)
                 local isPwrC = settings.powerPercentPowerColor ~= false
                 if isPwrC then
                     local _, pToken = UnitPowerType("player")
-                    local info = EllesmereUI.GetPowerColor(pToken or "MANA")
+                    local info = ns.UF_PowerInfo(pToken or "MANA")
                     txR, txG, txB = info.r, info.g, info.b
                 else
                     local cpf = settings.customPowerFillColor
@@ -3494,7 +3494,7 @@ initFrame:SetScript("OnEvent", function(self)
                     ns.GetMiniDonorSettings and ns.GetMiniDonorSettings() or db.profile.player)
                 local texPath = (ns.healthBarTextures or {})[texKey]
                 local _, pToken = UnitPowerType("player")
-                local pc = EllesmereUI.GetPowerColor(pToken or "MANA")
+                local pc = ns.UF_PowerInfo(pToken or "MANA")
                 PV_FillColor(pw._fill, texPath, pc.r, pc.g, pc.b, nil, nil, nil, 1)
             end
             local pPos = s.powerPosition or "below"
@@ -4098,7 +4098,7 @@ initFrame:SetScript("OnEvent", function(self)
                         local isPwrC2 = s.powerPercentPowerColor ~= false
                         if isPwrC2 then
                             local _, pToken = UnitPowerType("player")
-                            local info = EllesmereUI.GetPowerColor(pToken or "MANA")
+                            local info = ns.UF_PowerInfo(pToken or "MANA")
                             pvFR, pvFG, pvFB = info.r, info.g, info.b
                         else
                             local cpf2 = s.customPowerFillColor
@@ -4212,7 +4212,7 @@ initFrame:SetScript("OnEvent", function(self)
                 local pvUsePowerColor = s.powerPercentPowerColor ~= false
                 if pvUsePowerColor then
                     local _, pToken = UnitPowerType("player")
-                    local info = EllesmereUI.GetPowerColor(pToken or "MANA")
+                    local info = ns.UF_PowerInfo(pToken or "MANA")
                     pvPfR, pvPfG, pvPfB = info.r, info.g, info.b
                 else
                     local cpFill = s.customPowerFillColor
@@ -4223,7 +4223,7 @@ initFrame:SetScript("OnEvent", function(self)
                 local cpBg = s.customPowerBgColor
                 if s.powerBgPowerColored then
                     local _, pbToken = UnitPowerType("player")
-                    local pbInfo = EllesmereUI.GetPowerColor(pbToken or "MANA")
+                    local pbInfo = ns.UF_PowerInfo(pbToken or "MANA")
                     local pbF = EllesmereUI.GetPowerBgDarkenFactor()
                     pvPbR, pvPbG, pvPbB = pbInfo.r * pbF, pbInfo.g * pbF, pbInfo.b * pbF
                 elseif cpBg then pvPbR, pvPbG, pvPbB = cpBg.r, cpBg.g, cpBg.b
@@ -4330,7 +4330,7 @@ initFrame:SetScript("OnEvent", function(self)
                         -- EUI global power color (player's current power) as the swatch
                         -- and real frame use, not hardcoded blue.
                         local _, pToken = UnitPowerType("player")
-                        local info = EllesmereUI.GetPowerColor(pToken or "MANA")
+                        local info = ns.UF_PowerInfo(pToken or "MANA")
                         if info then ppPreviewFS:SetTextColor(info.r, info.g, info.b)
                         else ppPreviewFS:SetTextColor(1, 1, 1) end
                     else
@@ -9630,7 +9630,7 @@ initFrame:SetScript("OnEvent", function(self)
                   hasAlpha = false,
                   getValue = function()
                       local _, pToken = UnitPowerType("player")
-                      local info = EllesmereUI.GetPowerColor(pToken or "MANA")
+                      local info = ns.UF_PowerInfo(pToken or "MANA")
                       return info.r, info.g, info.b
                   end,
                   setValue = function() end,
@@ -9653,7 +9653,7 @@ initFrame:SetScript("OnEvent", function(self)
             -- Power-colored background swatch (shows the player's power color; not editable).
             local bgPwrGet = function()
                 local _, pToken = UnitPowerType("player")
-                local info = EllesmereUI.GetPowerColor(pToken or "MANA")
+                local info = ns.UF_PowerInfo(pToken or "MANA")
                 local f = EllesmereUI.GetPowerBgDarkenFactor()
                 return info.r * f, info.g * f, info.b * f
             end
@@ -9861,7 +9861,7 @@ initFrame:SetScript("OnEvent", function(self)
                   hasAlpha = false,
                   getValue = function()
                       local _, pToken = UnitPowerType("player")
-                      local info = EllesmereUI.GetPowerColor(pToken or "MANA")
+                      local info = ns.UF_PowerInfo(pToken or "MANA")
                       return info.r, info.g, info.b
                   end,
                   setValue = function() end,
@@ -11741,7 +11741,7 @@ initFrame:SetScript("OnEvent", function(self)
                 btbLRgn, btbLRgn:GetFrameLevel() + 5,
                 function()
                     local _, pToken = UnitPowerType("player")
-                    local info = EllesmereUI.GetPowerColor(pToken or "MANA")
+                    local info = ns.UF_PowerInfo(pToken or "MANA")
                     if info then return info.r, info.g, info.b end
                     return 1, 1, 1
                 end,
@@ -11877,7 +11877,7 @@ initFrame:SetScript("OnEvent", function(self)
                 btbRRgn, btbRRgn:GetFrameLevel() + 5,
                 function()
                     local _, pToken = UnitPowerType("player")
-                    local info = EllesmereUI.GetPowerColor(pToken or "MANA")
+                    local info = ns.UF_PowerInfo(pToken or "MANA")
                     if info then return info.r, info.g, info.b end
                     return 1, 1, 1
                 end,
@@ -12094,7 +12094,7 @@ initFrame:SetScript("OnEvent", function(self)
                 btbCRgn, btbCRgn:GetFrameLevel() + 5,
                 function()
                     local _, pToken = UnitPowerType("player")
-                    local info = EllesmereUI.GetPowerColor(pToken or "MANA")
+                    local info = ns.UF_PowerInfo(pToken or "MANA")
                     if info then return info.r, info.g, info.b end
                     return 1, 1, 1
                 end,
@@ -16574,7 +16574,7 @@ initFrame:SetScript("OnEvent", function(self)
                 local rgn = pwrRow2._leftRegion
                 local bgPwrGet = function()
                     local _, pToken = UnitPowerType("player")
-                    local info = EllesmereUI.GetPowerColor(pToken or "MANA")
+                    local info = ns.UF_PowerInfo(pToken or "MANA")
                     local f = EllesmereUI.GetPowerBgDarkenFactor()
                     return info.r * f, info.g * f, info.b * f
                 end
@@ -16630,7 +16630,7 @@ initFrame:SetScript("OnEvent", function(self)
                 local rgn = pwrRow2._rightRegion
                 local fPwrGet = function()
                     local _, pToken = UnitPowerType("player")
-                    local info = EllesmereUI.GetPowerColor(pToken or "MANA")
+                    local info = ns.UF_PowerInfo(pToken or "MANA")
                     return info.r, info.g, info.b
                 end
                 local fPwrSw, fPwrUpdate = EllesmereUI.BuildColorSwatch(rgn, rgn:GetFrameLevel() + 5, fPwrGet, function() end, false, 20)
@@ -16735,7 +16735,7 @@ initFrame:SetScript("OnEvent", function(self)
                 local powerSw, powerSwUp = EllesmereUI.BuildColorSwatch(rgn, rgn:GetFrameLevel() + 5,
                     function()
                         local _, pToken = UnitPowerType("player")
-                        local info = EllesmereUI.GetPowerColor(pToken or "MANA")
+                        local info = ns.UF_PowerInfo(pToken or "MANA")
                         if info then return info.r, info.g, info.b end
                         return 1, 1, 1
                     end,
