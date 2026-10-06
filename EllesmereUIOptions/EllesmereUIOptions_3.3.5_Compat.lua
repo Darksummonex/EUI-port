@@ -20,6 +20,57 @@ do
         SecureHandlerBaseTemplate = false, -- exists in 3.3.5, keep
     }
     local orig = CreateFrame
+
+    -- Screen-level popups (dropdown lists, menus, cog popups): some 3.3.5
+    -- clients draw a popup's child rows under the popup's own background, and
+    -- render a solid colour texture see-through. On every show (and again
+    -- once the show has settled) each child is kept above its parent, and a
+    -- nearly opaque solid background becomes a tinted white file, opaque.
+    local WHITE = "Interface\\Buttons\\WHITE8X8"
+    local function LiftChildren(f, depth)
+        if depth > 12 then return end
+        local lvl = f:GetFrameLevel()
+        local kids = { f:GetChildren() }
+        for i = 1, #kids do
+            local c = kids[i]
+            if c:GetFrameLevel() <= lvl then c:SetFrameLevel(lvl + 1) end
+            LiftChildren(c, depth + 1)
+        end
+    end
+    local function OpaqueBackground(f)
+        local regions = { f:GetRegions() }
+        for i = 1, #regions do
+            local t = regions[i]
+            if t._euiSolid and t._euiA and t._euiA >= 0.9 and t.GetDrawLayer
+                and t:GetDrawLayer() == "BACKGROUND" then
+                t:SetTexture(WHITE)
+                t:SetVertexColor(t._euiR, t._euiG, t._euiB, 1)
+            end
+        end
+    end
+    local function FixPopup(f)
+        OpaqueBackground(f)
+        LiftChildren(f, 0)
+    end
+    local pending, driver = {}, nil
+    local function OnPopupShow(f)
+        FixPopup(f)
+        if not driver then
+            driver = orig("Frame")
+            driver:Hide()
+            driver:SetScript("OnUpdate", function(self)
+                self:Hide()
+                for p in pairs(pending) do
+                    pending[p] = nil
+                    if p:IsShown() then FixPopup(p) end
+                end
+            end)
+        end
+        pending[f] = true
+        driver:Show()
+    end
+    EllesmereUI._FixOptionsPopup = FixPopup
+
     if orig and not EllesmereUI.CreateOptionsFrame then
         function EllesmereUI.CreateOptionsFrame(kind, name, parent, template, id)
             if type(template) == "string" and template ~= "" then
@@ -39,6 +90,10 @@ do
                 if frame.HookScript and frame.ClearFocus then
                     frame:HookScript("OnHide", function(self) self:ClearFocus() end)
                 end
+            end
+            if frame and kind == "Frame" and name == nil and frame.HookScript and (parent == UIParent
+                or (parent and parent.GetName and parent:GetName() == "EllesmereUI_PadOverlayLayer")) then
+                frame:HookScript("OnShow", OnPopupShow)
             end
             return frame
         end

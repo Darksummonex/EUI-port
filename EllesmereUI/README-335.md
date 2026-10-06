@@ -1,4 +1,8 @@
-# EllesmereUI Wrath Core — 0.53
+# EllesmereUI Wrath Core — 0.54
+
+0.54: o shim `SetColorTexture` do 3.3.5 guarda a cor pedida na textura
+(`_euiR/_euiG/_euiB/_euiA`), para o Options trocar fundos sólidos de popups
+por uma textura opaca com a mesma cor.
 
 0.53: com o fundo opaco a lista de busca ficou vazia: as linhas de resultado
 estavam abaixo do próprio fundo da lista (por isso pareciam apagadas antes,

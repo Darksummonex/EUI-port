@@ -1,4 +1,14 @@
-# Options 3.3.5 — 0.90
+# Options 3.3.5 — 0.91
+
+0.91: as listas de dropdown (ex.: Visibility das DataBars), checklists e
+outros popups das opções mostravam os itens apagados, por baixo do próprio
+fundo, com a página aparecendo através dele (mesma causa da busca no Core
+0.52-0.53). `EllesmereUI.CreateOptionsFrame` agora, para todo frame sem nome
+criado direto no UIParent (ou na camada de overlay), engancha o OnShow: em
+cada exibição e de novo no frame seguinte, cada filho fica acima do pai e um
+fundo sólido quase opaco (alfa >= 0.9, camada BACKGROUND) vira
+`WHITE8X8` tingido com alfa 1. Só ganchos por instância, nada em metatable
+compartilhada.
 
 0.90: a prévia e as amostras de cor de power dos Unit Frames usam
 `ns.UF_PowerInfo` / `ns.UF_PowerColor`, então mostram as cores originais do

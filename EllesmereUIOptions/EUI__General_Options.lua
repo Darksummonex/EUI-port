@@ -965,7 +965,7 @@ do
         },
     },
     {
-        version = "Core 0.53",
+        version = "Core 0.54",
         heroes = {
             {
                 title = "Text Outline Styles",
@@ -1026,7 +1026,7 @@ do
         },
     },
     {
-        version = "Options 0.90",
+        version = "Options 0.91",
         heroes = {
             {
                 module = "Unit Frames",
@@ -1122,6 +1122,7 @@ do
             },
         },
         fixes = {
+            { module = "General", text = "Dropdown lists, checklists and other option popups draw their items above their own background, on a solid background, instead of showing faded items with the page bleeding through." },
             { module = "Style", text = "The Style page now keeps the Unit Frames health colors per look, so switching between Classic WoW UI and the EllesmereUI look keeps each one's colors." },
             { module = "Unit Frames", text = "The Unit Frames preview and power color swatches show the original game power colors under Classic WoW UI." },
             { module = "Nameplates", text = "Each Core Text Position row, Spell Name, Cast Timer and Friendly Names now has its own gear for the outline instead of hiding it in the size popup." },

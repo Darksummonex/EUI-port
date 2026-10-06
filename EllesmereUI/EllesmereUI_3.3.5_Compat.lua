@@ -151,7 +151,9 @@ if (GetBuildInfo and select(4, GetBuildInfo()) or 0) < 70000 then
  local setTexture, gradientAlpha = idx.SetTexture, idx.SetGradientAlpha
  idx.SetColorTexture = function(self, r, g, b, a)
   self._euiSolid = true
-  setTexture(self, r or 0, g or 0, b or 0, a == nil and 1 or a)
+  r, g, b, a = r or 0, g or 0, b or 0, a == nil and 1 or a
+  self._euiR, self._euiG, self._euiB, self._euiA = r, g, b, a
+  setTexture(self, r, g, b, a)
  end
  if gradientAlpha then
   local nativeGradient = idx.SetGradient
