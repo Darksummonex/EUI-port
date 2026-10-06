@@ -1,4 +1,7 @@
-# EllesmereUI AuraBuff Reminders — Wrath 3.3.5a — 0.3
+# EllesmereUI AuraBuff Reminders — Wrath 3.3.5a — 0.4
+
+0.4: os sons dos lembretes incluem os sons da LibSharedMedia, inclusive os
+registrados depois do login, e chaves `sm:` tocam via `ResolveSoundPath`.
 
 Executam apenas os quatro arquivos EUI_AuraBuffReminders_335 (Catalog, Display,
 principal e Extras). Os Lua Retail (principal e TalentReminders) e os sons

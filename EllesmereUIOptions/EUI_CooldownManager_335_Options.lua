@@ -72,6 +72,17 @@ init:SetScript("OnEvent",function(self)
     O.filters={HELPFUL="Buff",HARMFUL="Debuff"}; O.filterOrder={"HELPFUL","HARMFUL"}
     O.sounds={none="None",RaidWarning="Raid Warning",ReadyCheck="Ready Check",igQuestFailed="Quest Failed",TellMessage="Whisper",AuctionWindowOpen="Auction Bell"}
     O.soundOrder={"none","RaidWarning","ReadyCheck","igQuestFailed","TellMessage","AuctionWindowOpen"}
+    -- Then the shared alert sounds: EllesmereUI's own and SharedMedia ("sm:" keys).
+    if E.GetAlertSoundCatalogue then
+        local _,names,order=E.GetAlertSoundCatalogue(); local sep=true
+        for _,key in ipairs(order) do
+            if key=="---" then sep=true
+            elseif key~="none" and not O.sounds[key] then
+                if sep then O.soundOrder[#O.soundOrder+1]="---"; sep=false end
+                O.sounds[key]=names[key] or key; O.soundOrder[#O.soundOrder+1]=key
+            end
+        end
+    end
     O.barTypes={cooldowns="Cooldown Bar",utility="Utility Bar",buffs="Buff Bar",focuskick="FocusKick Bar"}
     O.barTypeOrder={"cooldowns","utility","buffs","focuskick"}
     O.addBarType="cooldowns"

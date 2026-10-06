@@ -93,11 +93,13 @@ for _, key in ipairs({ "atrocity", "beautiful", "divide", "fade", "fade-right", 
 end
 _G._ERB_BarTextures, _G._ERB_BarTextureNames, _G._ERB_BarTextureOrder = textures, names, texOrder
 _G._ERB_CastBarTextures, _G._ERB_CastBarTextureNames, _G._ERB_CastBarTextureOrder = textures, names, texOrder
+if E.AppendSharedMediaTextures then E.AppendSharedMediaTextures(names, texOrder, nil, textures) end
 
 function ns.GetSettings() return addon.db and addon.db.profile end
 function ns.Size(f, w, h) f:SetWidth(max(0.01, w)); f:SetHeight(max(0.01, h)) end
 function ns.Texture(key)
-    if textures[key] then return textures[key] end
+    local path = E.ResolveTexturePath(textures, key)
+    if path then return path end
     if type(key) == "string" and key:find("\\", 1, true) then return key end
     return WHITE
 end

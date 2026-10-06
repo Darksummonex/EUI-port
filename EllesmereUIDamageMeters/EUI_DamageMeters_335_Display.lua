@@ -56,8 +56,9 @@ end
 function ns.BarTexturePath(key)
     if not key or key=="none" then return white end
     if key=="blizzard" then return "Interface\\TargetingFrame\\UI-StatusBar" end
-    if key:sub(1,4)=="lsm:" then
-        local lsm=SharedMedia(); local ok,path=lsm and pcall(lsm.Fetch,lsm,"statusbar",key:sub(5),true)
+    local smName=key:match("^lsm:(.+)") or key:match("^sm:(.+)")
+    if smName then
+        local lsm=SharedMedia(); local ok,path=lsm and pcall(lsm.Fetch,lsm,"statusbar",smName,true)
         return ok and path or white
     end
     return "Interface\\AddOns\\EllesmereUIResourceBars\\Media\\Textures_335\\"..key..".tga"

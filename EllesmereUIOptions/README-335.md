@@ -1,4 +1,9 @@
-# Options 3.3.5 — 0.93
+# Options 3.3.5 — 0.94
+
+0.94: no Textures, o bloco Damage Meters leva à Bar Texture de cada janela.
+O Cast Sound do FocusKick e os sons do Chat usam a lista compartilhada de
+sons (EUI + SharedMedia). A prévia dos indicadores de aura mostra texturas
+`sm:` da Raid Frames.
 
 0.93: `tinsert = tinsert or table.insert` reescrevia a global `tinsert` da
 Blizzard e a contaminava ao abrir as opções; agora só escreve se faltar.

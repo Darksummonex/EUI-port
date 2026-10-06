@@ -8,6 +8,14 @@ local PUSHED="Interface\\Buttons\\UI-Quickslot-Depress"
 local D={}
 ns.D=D
 function D.Size(f,w,h) f:SetWidth(math.max(.01,w)); f:SetHeight(math.max(.01,h)) end
+-- Alert-catalogue and SharedMedia keys play as files; the original choices are
+-- Blizzard sound names (RaidWarning, ReadyCheck...) for PlaySound.
+function D.PlayCastSound(key)
+    if type(key)~="string" or key=="" or key=="none" then return end
+    local paths=E._groupDeathSoundPaths or (E.GetAlertSoundCatalogue and E.GetAlertSoundCatalogue())
+    local path=E.ResolveSoundPath and E.ResolveSoundPath(paths,key)
+    if path then PlaySoundFile(path,"Master") elseif PlaySound then PlaySound(key) end
+end
 function D.Font(fs,size,flags)
     local path=E.GetFontPath and E.GetFontPath("cdm") or STANDARD_TEXT_FONT or "Fonts\\FRIZQT__.TTF"
     flags=flags or (E.GetFontOutlineFlag and E.GetFontOutlineFlag("cdm")) or "OUTLINE"
@@ -343,7 +351,7 @@ function ns.PaintBar(bar,visible,now,p)
     local castName
     if bar.barType=="focuskick" and verdict and not ns.preview then castName=D.FocusCast(bar); if not castName then verdict=false end end
     if bar.barType=="focuskick" then
-        if castName and castName~=f.lastCast and bar.focusCastSoundKey and bar.focusCastSoundKey~="none" and PlaySound then PlaySound(bar.focusCastSoundKey) end
+        if castName and castName~=f.lastCast then D.PlayCastSound(bar.focusCastSoundKey) end
         f.lastCast=castName
     end
     if not verdict then f:Hide(); for _,b in ipairs(f.pool) do D.SetGlow(b.glow) end; return end

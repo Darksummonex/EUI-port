@@ -1,4 +1,12 @@
-# EllesmereUI Wrath Core — 0.54
+# EllesmereUI Wrath Core — 0.55
+
+0.55: SharedMedia completo. Fontes, texturas de barra e sons registrados na
+LibSharedMedia-3.0 por outros addons aparecem nos menus do EUI, inclusive os
+registrados depois do login (callback `LibSharedMedia_Registered` para sons,
+como já existia para texturas). Novos `EllesmereUI.ResolveSoundPath` (chave
+`sm:` -> arquivo via `LSM:Fetch`) e `EllesmereUI.GetAlertSoundCatalogue`
+(lista única de sons do EUI + SharedMedia, montada uma vez). A Party Mode
+toca sons `sm:` registrados tarde.
 
 0.54: o shim `SetColorTexture` do 3.3.5 guarda a cor pedida na textura
 (`_euiR/_euiG/_euiB/_euiA`), para o Options trocar fundos sólidos de popups

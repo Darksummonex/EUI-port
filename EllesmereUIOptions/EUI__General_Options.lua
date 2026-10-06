@@ -830,7 +830,7 @@ do
         },
     },
     {
-        version = "Arena 0.2",
+        version = "Arena 0.3",
         heroes = {
             {
                 title = "Diminishing Returns",
@@ -854,6 +854,11 @@ do
         },
         features = {
             {
+                title = "SharedMedia Bar Textures",
+                desc  = "Bar Texture lists textures from SharedMedia and other addons using LibSharedMedia",
+                nav   = Nav("EllesmereUIArena", "Arena Frames"),
+            },
+            {
                 title = "Out of Range Fade",
                 desc  = "Enemies beyond your class's 30-40 yard spell range fade to a chosen opacity",
             },
@@ -873,7 +878,7 @@ do
         },
     },
     {
-        version = "Nameplates 0.13",
+        version = "Nameplates 0.14",
         heroes = {
             {
                 title = "Outline per Text",
@@ -891,6 +896,10 @@ do
             },
         },
         features = {
+            {
+                title = "SharedMedia Bar Textures",
+                desc  = "Health and cast bar textures include textures from SharedMedia and other addons",
+            },
             {
                 title = "Live Preview Plate",
                 desc  = "Display and Colors show a live preview plate; click any part of it to jump to its setting",
@@ -916,7 +925,7 @@ do
         },
     },
     {
-        version = "Raid Frames 0.12",
+        version = "Raid Frames 0.13",
         heroes = {
             {
                 title = "Raid Debuffs",
@@ -935,6 +944,10 @@ do
             },
         },
         features = {
+            {
+                title = "SharedMedia Bar Textures",
+                desc  = "Health Bar Texture lists textures from SharedMedia and other addons, also in the aura indicator preview",
+            },
             {
                 title = "25-Player Preview",
                 desc  = "The Unlock Mode and options previews open on the 25-player layout instead of 40",
@@ -965,8 +978,12 @@ do
         },
     },
     {
-        version = "Core 0.54",
+        version = "Core 0.55",
         heroes = {
+            {
+                title = "SharedMedia Fonts, Textures and Sounds",
+                desc  = "Fonts, bar textures and sounds that other addons register with LibSharedMedia appear in the EllesmereUI menus, including ones registered after login.",
+            },
             {
                 title = "Text Outline Styles",
                 desc  = "A shared outline picker for individual texts: None, Outline, Thick Outline or Shadow, with Module Default following the Fonts page. Text keeps its color when you switch.",
@@ -1026,7 +1043,7 @@ do
         },
     },
     {
-        version = "Options 0.93",
+        version = "Options 0.94",
         heroes = {
             {
                 module = "Unit Frames",
@@ -1060,6 +1077,11 @@ do
             },
         },
         features = {
+            {
+                module = "SharedMedia",
+                title  = "SharedMedia in Sound Menus",
+                desc   = "The FocusKick Cast Sound and the Chat sounds list EllesmereUI and SharedMedia sounds, and the Textures page links Damage Meters to its per-window Bar Texture",
+            },
             {
                 module = "Action Bars",
                 title  = "Custom Button Shape",
@@ -1138,7 +1160,7 @@ do
         },
     },
     {
-        version = "Quality of Life 0.11",
+        version = "Quality of Life 0.12",
         heroes = {
             {
                 title = "Zone Text Outline",
@@ -1177,6 +1199,10 @@ do
             },
         },
         features = {
+            {
+                title = "SharedMedia Sounds",
+                desc  = "Alert sounds from SharedMedia packs that load after Quality of Life play too",
+            },
             {
                 title = "Mailbox Open All",
                 desc  = "An Open All button takes items and gold one letter at a time, skipping COD and GM mail",
@@ -1258,7 +1284,7 @@ do
         },
     },
     {
-        version = "Cooldown Manager 0.2",
+        version = "Cooldown Manager 0.3",
         heroes = {
             {
                 title = "Retail Bar Model",
@@ -1272,6 +1298,10 @@ do
             },
         },
         features = {
+            {
+                title = "SharedMedia Textures and Sounds",
+                desc  = "Tracking bar textures include SharedMedia, and the FocusKick Cast Sound adds EllesmereUI and SharedMedia sounds to the Blizzard ones",
+            },
             {
                 title = "Bar Glows",
                 desc  = "Light up EllesmereUI, Blizzard or ElvUI action buttons while an aura is active or missing",
@@ -1322,7 +1352,7 @@ do
         },
     },
     {
-        version = "Resource Bars 0.3",
+        version = "Resource Bars 0.4",
         heroes = {
             {
                 title = "Retail Pages",
@@ -1336,6 +1366,10 @@ do
             },
         },
         features = {
+            {
+                title = "SharedMedia Bar Textures",
+                desc  = "Bar textures include textures from SharedMedia and other addons",
+            },
             {
                 title = "Health and Power Bars",
                 desc  = "Vertical bars, Retail texts, gradients, thresholds, tick marks and smoothing",
@@ -1501,7 +1535,7 @@ do
         },
     },
     {
-        version = "Aura Buff Reminders 0.3",
+        version = "Aura Buff Reminders 0.4",
         heroes = {
             {
                 title = "Raid Buff Provider Button",
@@ -1514,6 +1548,10 @@ do
             },
         },
         features = {
+            {
+                title = "SharedMedia Sounds",
+                desc  = "Reminder sounds include SharedMedia sounds, even from packs that load later",
+            },
             {
                 title = "Where to Show",
                 desc  = "World, normal and heroic dungeons and raids, or in combat, with Show Below timers",
@@ -1635,7 +1673,7 @@ do
         },
     },
     {
-        version = "Damage Meters 0.6",
+        version = "Damage Meters 0.7",
         heroes = {
             {
                 title = "Retail Windows",
@@ -1648,6 +1686,11 @@ do
             },
         },
         features = {
+            {
+                title = "SharedMedia Bar Textures",
+                desc  = "SharedMedia bar textures load whether a profile stores them in Damage Meters or EllesmereUI format",
+                nav   = Nav("EllesmereUIDamageMeters", "Windows"),
+            },
             {
                 title = "Spell History",
                 desc  = "An icon strip and bar window of your casts, including failed and interrupted ones",

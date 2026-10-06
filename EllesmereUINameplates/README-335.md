@@ -1,4 +1,7 @@
-# Nameplates 3.3.5 — 0.13
+# Nameplates 3.3.5 — 0.14
+
+0.14: texturas de vida e de cast bar incluem a LibSharedMedia e chaves
+`sm:` são resolvidas em jogo.
 
 0.13: cada texto da placa ganhou o menu "Outline" (Module Default, None,
 Outline, Thick Outline, Shadow) logo abaixo do Size na sua engrenagem: nome

@@ -61,9 +61,9 @@ init:SetScript("OnEvent",function(self)
     end
     local function Sounds()
         local values,order={none="None"},{"none"}
-        if E.BuildAlertSoundTables then
-            local paths,names,o=E.BuildAlertSoundTables()
-            if E.AppendSharedMediaSounds then E.AppendSharedMediaSounds(paths,names,o) end
+        local catalogue=E.GetAlertSoundCatalogue or E.BuildAlertSoundTables
+        if catalogue then
+            local _,names,o=catalogue()
             values,order={},{}
             for _,key in ipairs(o) do if key~="---" then values[key]=names[key] or key; order[#order+1]=key end end
             values.none="None"

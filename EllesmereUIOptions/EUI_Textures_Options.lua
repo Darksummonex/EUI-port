@@ -813,6 +813,9 @@ end
 local function TileDamageMeters(parent, y, W, tile)
     local ns = NS(tile.folder)
     if not ns then return DisabledTile(parent, y, W, tile) end
+    if ns.IsWrath then
+        return LinkRow(parent, y, "Bar Texture (per window)", tile.folder, "Windows", "BARS", "Bar Texture")
+    end
     local function db()
         return _G._EDM_DB and _G._EDM_DB.profile and _G._EDM_DB.profile.dm
     end

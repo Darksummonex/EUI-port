@@ -2,6 +2,11 @@
 
 Módulo novo do EllesmereUI para o WoW 3.3.5a: quadros dos inimigos de arena (arena1–5). Não existe equivalente no EUI Retail; foi criado para cobrir a lacuna em relação ao ElvUI.
 
+## 9.3.4-335-0.3
+
+Bar Texture lista as texturas da LibSharedMedia (SharedMedia e outros
+addons) e as resolve em jogo.
+
 ## 9.3.4-335-0.2
 
 - Retornos decrescentes (DR): ícones ao lado de cada inimigo, um por categoria (atordoamento, atordoamento aleatório, investida, medo, desorientação, silêncio, horror, enraizamento, ciclone, banir, controle mental, desarmar). A borda indica o próximo efeito: verde metade da duração, amarelo um quarto, vermelho imune. O contador mostra os 18 segundos até zerar. Os feitiços são comparados pelo nome (todos os ranks contam) via `SPELL_AURA_APPLIED/REFRESH/REMOVED` do log de combate, apenas dentro da arena. Lado (esquerda/direita) e tamanho configuráveis; os ícones ficam fora do bloco do quadro.

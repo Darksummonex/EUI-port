@@ -190,7 +190,7 @@ function EllesmereUI.VisOverrideValue() end
 function EllesmereUI.GetActiveVisibilityModes() end
 function EllesmereUI.VisHasAnyOption() return false end
 function EllesmereUI.NumberAbbrevGlyphs() end
-function EllesmereUI.ResolveTexturePath() return "Interface\\Buttons\\WHITE8X8" end
+function EllesmereUI.ResolveTexturePath(t,key,fallback) return (t and key~=nil and t[key]) or fallback end
 function EllesmereUI.BorderPx() return 1 end
 function EllesmereUI.ApplyBorderStyle() end
 function EllesmereUI.SetBorderStyleColor() end

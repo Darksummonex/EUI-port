@@ -1,4 +1,7 @@
-# Resource Bars 3.3.5a — 0.1
+# Resource Bars 3.3.5a — 0.4
+
+0.4: as texturas das barras incluem a LibSharedMedia e chaves `sm:` são
+resolvidas em jogo.
 
 Native Wrath resource displays with EllesmereUI fonts and flat bar textures.
 Open EllesmereUI > Resource Bars, or /erb. Select a bar in the single Bars page.

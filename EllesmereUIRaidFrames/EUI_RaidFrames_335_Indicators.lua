@@ -111,7 +111,7 @@ local function Install()
         local power=raid and (c.showPower and math.min(h/3,math.max(2,tonumber(c.powerHeight) or 4)) or 0) or tonumber(c.powerHeight) or 6
         view.unit:SetWidth(w); view.unit:SetHeight(h)
         view.health:ClearAllPoints(); view.health:SetPoint("TOPLEFT",view.unit,"TOPLEFT",1,-1); view.health:SetPoint("BOTTOMRIGHT",view.unit,"BOTTOMRIGHT",-1,1+power)
-        view.health:SetStatusBarTexture(E.ResolveTexturePath and E.ResolveTexturePath(c.healthBarTexture or "atrocity") or white)
+        view.health:SetStatusBarTexture(E.ResolveTexturePath and E.ResolveTexturePath(ns.healthBarTextures,c.healthBarTexture or "atrocity") or white)
         local class=select(2,UnitClass("player")); local color=RAID_CLASS_COLORS and RAID_CLASS_COLORS[class]
         if c.healthClassColored and color then view.health:SetStatusBarColor(color.r,color.g,color.b) else view.health:SetStatusBarColor(.12,.55,.82) end
         view.health:SetMinMaxValues(0,100); view.health:SetValue(85)

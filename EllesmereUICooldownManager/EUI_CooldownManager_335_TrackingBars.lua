@@ -14,6 +14,7 @@ ns.TBB_TEXTURE_ORDER={"none","blizzard"}
 for _,k in ipairs({"atrocity","beautiful","divide","fade","fade-right","glass","gradient-bt","gradient-lr","gradient-rl","gradient-tb","matte","melli","plating","sheer","pixels-fill","soft-line","thin-line-bottom","thin-line-top"}) do
     ns.TBB_TEXTURES[k]=MEDIA..k..".tga"; ns.TBB_TEXTURE_NAMES[k]=k:gsub("-"," "):gsub("^%l",string.upper); ns.TBB_TEXTURE_ORDER[#ns.TBB_TEXTURE_ORDER+1]=k
 end
+if E.AppendSharedMediaTextures then E.AppendSharedMediaTextures(ns.TBB_TEXTURE_NAMES,ns.TBB_TEXTURE_ORDER,nil,ns.TBB_TEXTURES) end
 local SPARK="Interface\\CastingBar\\UI-CastingBar-Spark"
 local CLASSIC_BORDER="Interface\\CastingBar\\UI-CastingBar-Border"
 local MAX_BARS,MAX_TICKS=20,10
@@ -62,7 +63,7 @@ function T.Fill(cfg)
     end
     return cfg.fillR or .05,cfg.fillG or .82,cfg.fillB or .62,cfg.fillA or 1
 end
-function T.Texture(key) return ns.TBB_TEXTURES[key or "none"] or (type(key)=="string" and key:find("\\",1,true) and key) or white end
+function T.Texture(key) return E.ResolveTexturePath(ns.TBB_TEXTURES,key or "none") or (type(key)=="string" and key:find("\\",1,true) and key) or white end
 function T.Position(f,key,i)
     local p=ns.Profile().positions[key]; f:ClearAllPoints()
     if p then f:SetPoint(p.point or "CENTER",UIParent,p.relPoint or p.point or "CENTER",p.x or 0,p.y or 0)

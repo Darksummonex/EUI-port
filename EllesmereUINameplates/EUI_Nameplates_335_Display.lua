@@ -8,6 +8,7 @@ local FLAT="Interface\\Buttons\\WHITE8X8"
 local SPARK="Interface\\AddOns\\EllesmereUI\\media\\cast_spark.tga"
 local textures={flat=FLAT,blizzard="Interface\\TargetingFrame\\UI-StatusBar"}
 ns.textureValues,ns.textureOrder={flat="Flat",blizzard="Blizzard"},{"flat","blizzard"}
+if E.AppendSharedMediaTextures then E.AppendSharedMediaTextures(ns.textureValues,ns.textureOrder,nil,textures) end
 ns.TARGET_TEXTURES={none="None",["striped-v2"]="Striped",["striped-wide-v2"]="Striped Wide",["striped-tiny"]="Striped Tiny",
     ["stripes-medium"]="Stripes Medium",["stripes-small-close"]="Stripes Small Close",["stripes-small-spread"]="Stripes Small Spread"}
 ns.TARGET_TEXTURE_ORDER={"none","striped-v2","striped-wide-v2","striped-tiny","stripes-medium","stripes-small-close","stripes-small-spread"}
@@ -326,7 +327,7 @@ local function Layout(s,p,nameOnly)
     local root=s.root
     root:ClearAllPoints(); root:SetPoint("CENTER",s.plate,"CENTER",0,p.yOffset)
     Size(root,p.width,p.height)
-    s.health:SetStatusBarTexture(textures[p.healthBarTexture] or FLAT)
+    s.health:SetStatusBarTexture(E.ResolveTexturePath(textures,p.healthBarTexture,FLAT))
     s.healthBg:SetVertexColor(p.bgColor.r,p.bgColor.g,p.bgColor.b,p.bgAlpha)
     SizeEdges(s.border,p.showBorder~=false and p.borderSize or 0); s.border.cr=nil
     for _,glow in ipairs({s.glow,s.exec}) do
@@ -337,7 +338,7 @@ local function Layout(s,p,nameOnly)
     PlaceText(s,p,nameOnly)
     s.cast:ClearAllPoints(); s.cast:SetPoint("TOPLEFT",s.health,"BOTTOMLEFT",0,p.castBarOffsetY or 0)
     Size(s.cast,p.width,p.castHeight)
-    s.cast:SetStatusBarTexture(textures[p.castBarTexture] or FLAT)
+    s.cast:SetStatusBarTexture(E.ResolveTexturePath(textures,p.castBarTexture,FLAT))
     s.castBg:SetVertexColor(p.castBgColor.r,p.castBgColor.g,p.castBgColor.b,p.castBgAlpha)
     SizeEdges(s.castBorder,p.showBorder~=false and p.borderSize or 0); ColorEdges(s.castBorder,p.borderColor.r,p.borderColor.g,p.borderColor.b,1)
     Size(s.castSpark,8,p.castHeight)

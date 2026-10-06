@@ -1,4 +1,8 @@
-# EllesmereUI Cooldown Manager — Wrath 3.3.5a — 0.2
+# EllesmereUI Cooldown Manager — Wrath 3.3.5a — 0.3
+
+0.3: texturas das Tracking Bars incluem a LibSharedMedia. O Cast Sound da
+barra FocusKick mantém os 5 sons da Blizzard (`PlaySound`) e agora lista os
+sons do EUI e da SharedMedia, tocados com `PlaySoundFile`.
 
 ## Novidades da 0.2 (português)
 

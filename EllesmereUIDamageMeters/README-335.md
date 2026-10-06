@@ -1,4 +1,7 @@
-# EllesmereUI Damage Meters — Wrath 3.3.5a — 0.6
+# EllesmereUI Damage Meters — Wrath 3.3.5a — 0.7
+
+0.7: a textura das barras aceita chaves `sm:` (formato do resto do EUI)
+além de `lsm:`, então perfis com texturas da SharedMedia carregam certo.
 
 0.6 ports the remaining Retail features and look:
 - Windows: flat black body, dark header with accent title, Atrocity bars,

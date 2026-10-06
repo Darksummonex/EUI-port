@@ -41,7 +41,7 @@ function ns.Sounds()
     return ns.soundPaths,ns.soundNames,ns.soundOrder
 end
 function ns.PlaySound(key)
-    local path=key and key~="none" and ns.Sounds()[key]
+    local path=key and key~="none" and (E.ResolveSoundPath and E.ResolveSoundPath(ns.Sounds(),key) or ns.Sounds()[key])
     if path and PlaySoundFile then PlaySoundFile(path,"Master") end
 end
 

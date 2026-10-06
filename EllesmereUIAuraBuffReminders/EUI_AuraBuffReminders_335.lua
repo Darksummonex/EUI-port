@@ -644,7 +644,7 @@ function EABR.HandleAppearSounds(missing)
             if primed and not prev[dk] then
                 local skey = EABR.ResolveReminderSound(dk)
                 local paths = E._groupDeathSoundPaths
-                local path = skey and skey ~= "none" and paths and paths[skey]
+                local path = E.ResolveSoundPath and E.ResolveSoundPath(paths, skey) or (paths and skey and paths[skey])
                 if path then PlaySoundFile(path, "Master") end
             end
         end
@@ -994,7 +994,8 @@ end
 function EABR:OnEnable()
     local _, class = UnitClass("player")
     EABR._class = class
-    if not E._groupDeathSoundPaths and E.BuildAlertSoundTables then
+    if E.GetAlertSoundCatalogue then E.GetAlertSoundCatalogue()
+    elseif not E._groupDeathSoundPaths and E.BuildAlertSoundTables then
         E._groupDeathSoundPaths, E._groupDeathSoundNames, E._groupDeathSoundOrder = E.BuildAlertSoundTables()
     end
     EABR.ScanSpellbook()

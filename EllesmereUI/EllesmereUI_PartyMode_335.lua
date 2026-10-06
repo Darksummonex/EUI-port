@@ -300,8 +300,8 @@ function EllesmereUI_StartPartyMode()
     if not container:IsShown() then
         local key = EllesmereUIDB and EllesmereUIDB.partyModeSoundKey
         if key and key ~= "none" then
-            local paths = GetSoundTables()
-            local path = paths[key]
+            local paths, EUI = GetSoundTables(), _G.EllesmereUI
+            local path = EUI.ResolveSoundPath and EUI.ResolveSoundPath(paths, key) or paths[key]
             if path then PlaySoundFile(path, "Master") end
         end
     end

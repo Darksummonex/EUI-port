@@ -2541,7 +2541,7 @@ EllesmereUI._smTexConsumers = EllesmereUI._smTexConsumers or {}
 
 function EllesmereUI.AppendSharedMediaTextures(names, order, castBarNames, textures)
     local LSM = LibStub and LibStub("LibSharedMedia-3.0", true)
-    if not LSM then return end
+    if not LSM or type(textures) ~= "table" or type(names) ~= "table" or type(order) ~= "table" then return end
 
     -- Icon textures some SM packs wrongly register as statusbar (cached once).
     local blacklist = EllesmereUI._smTexBlacklist
@@ -2630,31 +2630,83 @@ end
 --    paths   - key -> sound file path table
 --    names   - key -> display name string table
 --    order   - ordered array of keys (receives "---" + SM keys appended)
---  Safe to call repeatedly; duplicate keys are skipped via the paths guard.
+--  Safe to call repeatedly; duplicate keys are skipped via the paths guard. Like the
+--  textures, every registered table also receives sounds registered LATER by other addons.
 -------------------------------------------------------------------------------
+EllesmereUI._smSoundConsumers = EllesmereUI._smSoundConsumers or {}
+
 function EllesmereUI.AppendSharedMediaSounds(paths, names, order)
     local LSM = LibStub and LibStub("LibSharedMedia-3.0", true)
-    if not LSM then return end
-    local smSounds = LSM:HashTable("sound")
-    if not smSounds then return end
+    if not LSM or type(paths) ~= "table" or type(names) ~= "table" or type(order) ~= "table" then return end
 
-    local sorted = {}
-    for name in pairs(smSounds) do
+    local function AppendOne(c, name, path)
         local key = "sm:" .. name
-        if not paths[key] then
-            sorted[#sorted + 1] = name
+        if not path or c.paths[key] then return end
+        if not c.sepAdded then
+            c.order[#c.order + 1] = "---"
+            c.sepAdded = true
         end
+        c.paths[key] = path
+        c.names[key] = name
+        c.order[#c.order + 1] = key
     end
-    if #sorted == 0 then return end
-    table.sort(sorted)
 
-    order[#order + 1] = "---"
-    for _, name in ipairs(sorted) do
-        local key = "sm:" .. name
-        paths[key] = smSounds[name]
-        names[key] = name
-        order[#order + 1] = key
+    local c = EllesmereUI._smSoundConsumers[paths]
+    if not c then
+        c = { paths = paths, names = names, order = order }
+        for k in pairs(paths) do
+            if type(k) == "string" and k:sub(1, 3) == "sm:" then c.sepAdded = true; break end
+        end
+        EllesmereUI._smSoundConsumers[paths] = c
     end
+
+    local smSounds = LSM:HashTable("sound")
+    if smSounds then
+        local sorted = {}
+        for name in pairs(smSounds) do
+            if not paths["sm:" .. name] then sorted[#sorted + 1] = name end
+        end
+        table.sort(sorted)
+        for _, name in ipairs(sorted) do AppendOne(c, name, smSounds[name]) end
+    end
+
+    if not EllesmereUI._smSoundCallbackInstalled then
+        EllesmereUI._smSoundCallbackInstalled = true
+        EllesmereUI._smSoundCBOwner = EllesmereUI._smSoundCBOwner or {}
+        LSM.RegisterCallback(EllesmereUI._smSoundCBOwner, "LibSharedMedia_Registered", function(_, mediatype, key)
+            if mediatype ~= "sound" then return end
+            local path = LSM:Fetch("sound", key, true)
+            if not path then return end
+            for _, cc in pairs(EllesmereUI._smSoundConsumers) do AppendOne(cc, key, path) end
+        end)
+    end
+end
+
+-- The shared alert sound list (EllesmereUI sounds + SharedMedia), built once and kept
+-- current by the late-registration callback above. Pickers that rebuild with their
+-- page read this instead of building fresh tables, which would each stay registered.
+function EllesmereUI.GetAlertSoundCatalogue()
+    if not EllesmereUI._groupDeathSoundPaths then
+        EllesmereUI._groupDeathSoundPaths, EllesmereUI._groupDeathSoundNames, EllesmereUI._groupDeathSoundOrder =
+            EllesmereUI.BuildAlertSoundTables()
+    end
+    EllesmereUI.AppendSharedMediaSounds(EllesmereUI._groupDeathSoundPaths,
+        EllesmereUI._groupDeathSoundNames, EllesmereUI._groupDeathSoundOrder)
+    return EllesmereUI._groupDeathSoundPaths, EllesmereUI._groupDeathSoundNames, EllesmereUI._groupDeathSoundOrder
+end
+
+-- Sound key -> file: the module's own table first, then "sm:" keys through
+-- SharedMedia (a pack that registered after the table was built).
+function EllesmereUI.ResolveSoundPath(paths, key)
+    if type(key) ~= "string" or key == "" or key == "none" then return nil end
+    local path = paths and paths[key]
+    if path then return path end
+    local smName = key:match("^sm:(.+)")
+    if not smName then return nil end
+    local LSM = LibStub and LibStub("LibSharedMedia-3.0", true)
+    path = LSM and LSM:Fetch("sound", smName, true)
+    if path and paths then paths[key] = path end
+    return path
 end
 
 -------------------------------------------------------------------------------

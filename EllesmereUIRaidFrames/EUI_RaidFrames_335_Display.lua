@@ -7,7 +7,8 @@ for _,key in ipairs({"atrocity","beautiful","divide","fade","fade-right","glass"
     textures[key]="Interface\\AddOns\\EllesmereUIRaidFrames\\Media\\Textures_335\\"..key..".tga"; names[key]=key:gsub("-"," "):gsub("^%l",string.upper); order[#order+1]=key
 end
 ns.healthBarTextures,ns.healthBarTextureNames,ns.healthBarTextureOrder=textures,names,order
-local function Texture(key) return textures[key] or (type(key)=="string" and key:find("\\",1,true) and key) or white end
+if E.AppendSharedMediaTextures then E.AppendSharedMediaTextures(names,order,nil,textures) end
+local function Texture(key) return E.ResolveTexturePath(textures,key) or (type(key)=="string" and key:find("\\",1,true) and key) or white end
 local function Text(fs,value) if fs:GetText()~=value then fs:SetText(value) end end
 local function NewText(parent)
     local fs=parent:CreateFontString(nil,"OVERLAY"); ns.Font(fs,11); return fs

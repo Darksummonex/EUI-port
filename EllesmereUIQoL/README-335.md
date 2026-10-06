@@ -1,4 +1,7 @@
-# Quality of Life 3.3.5 — 0.11
+# Quality of Life 3.3.5 — 0.12
+
+0.12: sons de alerta tocam chaves `sm:` de pacotes SharedMedia carregados
+depois do QoL.
 
 0.11: "EllesmereUIQoL has been blocked from an action only available to the
 Blizzard UI". `EUI_QoL_335_Group.lua` fazia `StaticPopupDialogs =

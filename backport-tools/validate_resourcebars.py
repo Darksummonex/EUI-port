@@ -13,7 +13,7 @@ for original in retail.rglob('*'):
     if original.is_file() and original.suffix.lower()!='.toc':
         assert original.read_bytes()==(root/FOLDER/original.relative_to(retail)).read_bytes(),original
 toc=(root/FOLDER/(FOLDER+'.toc')).read_text(encoding='utf-8-sig')
-assert '## Interface: 30300' in toc and '## Version: 9.3.4-335-0.3' in toc
+assert '## Interface: 30300' in toc and '## Version: 9.3.4-335-0.4' in toc
 assert [l.strip() for l in toc.splitlines() if l.strip() and not l.startswith('#')]==FILES
 
 import re

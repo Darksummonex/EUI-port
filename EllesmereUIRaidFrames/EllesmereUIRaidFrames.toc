@@ -4,7 +4,7 @@
 ## Group: EllesmereUI
 ## Notes: Native Wrath secure raid and party frames, aura filters and click casting.
 ## Author: Ellesmere
-## Version: 9.3.4-335-0.12
+## Version: 9.3.4-335-0.13
 ## Dependencies: EllesmereUI
 ## X-Part-Of: EllesmereUI
 # Module settings are stored in the Core's EllesmereUIDB profiles.

@@ -1,4 +1,7 @@
-# Raid Frames 3.3.5 — 0.12
+# Raid Frames 3.3.5 — 0.13
+
+0.13: a textura de vida lista a LibSharedMedia e as resolve nos quadros e
+na prévia dos indicadores de aura.
 
 A 0.12 traz o "Raid Debuffs" do ElvUI: um ícone grande no centro de cada
 quadro para debuffs importantes de ICC, Ruby Sanctum, Trial of the Crusader,

@@ -8,6 +8,7 @@ for _,key in ipairs({"atrocity","beautiful","divide","fade","fade-right","glass"
     textures[key]=MEDIA..key..".tga"; names[key]=key:gsub("-"," "):gsub("^%l",string.upper); order[#order+1]=key
 end
 ns.textures,ns.textureNames,ns.textureOrder=textures,names,order
+if E.AppendSharedMediaTextures then E.AppendSharedMediaTextures(names,order,nil,textures) end
 local MODERN_CLASSES="Interface\\AddOns\\EllesmereUI\\media\\icons_335\\class-modern.tga"
 local BLIZZ_CLASSES="Interface\\WorldStateFrame\\Icons-Classes"
 local TRINKET_ICONS={Alliance="Interface\\Icons\\INV_Jewelry_TrinketPVP_01",Horde="Interface\\Icons\\INV_Jewelry_TrinketPVP_02"}
@@ -21,7 +22,7 @@ ns.PREVIEW={
     {name="Bloodfang",class="DEATHKNIGHT",hp=33,power=80,powerType="RUNIC_POWER",cast={name="Death Coil",icon="Interface\\Icons\\Spell_Shadow_DeathCoil",notInterruptible=true},
         pet={name="Ghoul",hp=45}},
     {name="Barkskin",class="DRUID",hp=67,power=70,powerType="MANA",trinket=90}}
-local function Texture(key) return textures[key] or white end
+local function Texture(key) return E.ResolveTexturePath(textures,key,white) end
 local function Short(v)
     v=tonumber(v) or 0
     if v>=1e6 then return string.format("%.1fm",v/1e6) elseif v>=1e3 then return string.format("%.1fk",v/1e3) end
