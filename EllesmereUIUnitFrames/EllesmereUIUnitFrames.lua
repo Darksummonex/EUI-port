@@ -11553,7 +11553,7 @@ end
 -- "classic"). Once per profile: the "Blizzard" cast fill (the vanilla cast
 -- bar's own texture) as the cast bar texture, and under Classic the Plating
 -- health bar texture on every frame (per-frame choices cleared so they
--- inherit it). Once per style switch: the
+-- inherit it) and the original green health fill. Once per style switch: the
 -- player frame's combat indicator on the portrait, in the style's own icon
 -- (the Classic icon under Classic WoW UI, the Dungeoneer icon under
 -- Blizzard Style), so each stock look starts with its matching indicator
@@ -11569,8 +11569,14 @@ function ns.UF_StyleSlotKeys()
                 "player.combatIndicatorStyle", "player.combatIndicatorPosition" }
     local units = ns.UF_TEXTURE_UNITS
     for i = 1, #units do k[#k + 1] = units[i] .. ".healthBarTexture" end
+    for i = 1, #units do
+        k[#k + 1] = units[i] .. ".healthClassColored"
+        k[#k + 1] = units[i] .. ".customFillColor"
+    end
     return k
 end
+-- Classic WoW UI health fill: the original frames' green on every frame.
+ns.UF_CLASSIC_HEALTH_COLOR = { r = 0, g = 1, b = 0 }
 -- The WoW Forever variant's own seed: its combo point arc (the "Blizzard"
 -- class resource there), once per profile. The Style page keeps these keys
 -- in a Forever-only slot (p._foreverStyleSlots): the other looks' values are
@@ -11600,6 +11606,28 @@ function ns.UF_SeedStock(p, styleKey, isForever)
         for i = 1, #units do
             local s = p[units[i]]
             if type(s) == "table" then s.healthBarTexture = nil end
+        end
+    end
+    -- Classic WoW UI: the original green health fill instead of class colours,
+    -- once per profile. A profile that was already Classic before this seed
+    -- existed banks its current colours into the EllesmereUI slot first.
+    if styleKey == "classic" and not p.classicHealthSeeded then
+        p.classicHealthSeeded = true
+        local slots = p._styleSlots
+        local bank = type(slots) == "table" and type(slots.eui) == "table" and slots.eui
+        local units = ns.UF_TEXTURE_UNITS
+        local green = ns.UF_CLASSIC_HEALTH_COLOR
+        for i = 1, #units do
+            local s = p[units[i]]
+            if type(s) == "table" then
+                if bank then
+                    local ck, fk = units[i] .. ".healthClassColored", units[i] .. ".customFillColor"
+                    if bank[ck] == nil then bank[ck] = s.healthClassColored end
+                    if bank[fk] == nil then bank[fk] = s.customFillColor end
+                end
+                s.healthClassColored = false
+                s.customFillColor = { r = green.r, g = green.g, b = green.b }
+            end
         end
     end
     local icon = ns.UF_STOCK_COMBAT[styleKey]
@@ -18888,6 +18916,7 @@ local function EnableBody()
     if ns.UF_Blizz() then
         local p = db.profile
         if p.stockCastTextureSeeded == nil and p.classicTextureSeeded == nil
+            and p.classicHealthSeeded == nil
             and p.stockCombatSeededStyle == nil and EllesmereUI.BankEuiStyleSlot then
             EllesmereUI.BankEuiStyleSlot(p, ns.UF_StyleSlotKeys())
         end

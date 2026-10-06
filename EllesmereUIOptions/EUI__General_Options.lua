@@ -1013,6 +1013,7 @@ do
             },
         },
         fixes = {
+            { text = "The Style page now keeps the Unit Frames health colors per look, so switching between Classic WoW UI and the EllesmereUI look keeps each one's colors." },
             { text = "Unlock Mode no longer errors on SetMaxLines when it first opens, so element movers appear again." },
             { text = "The Patch Notes reminder dot now lights after each backport update." },
             { text = "The options search results now draw above the sidebar and page instead of behind them." },
@@ -1025,7 +1026,7 @@ do
         },
     },
     {
-        version = "Options 0.88",
+        version = "Options 0.89",
         heroes = {
             {
                 module = "Unit Frames",
@@ -1398,7 +1399,7 @@ do
         },
     },
     {
-        version = "Unit Frames 0.13",
+        version = "Unit Frames 0.14",
         heroes = {
             {
                 title = "Outline per Text",
@@ -1435,6 +1436,7 @@ do
             },
         },
         fixes = {
+            { text = "Classic WoW UI now gives every unit frame the original green health bar instead of class colors. Returning to the EllesmereUI look restores your colors." },
             { text = "Text outlines now apply to the live frames, not only the options preview." },
             { text = "Unit frames no longer fail to load on setups whose mask textures come back empty (absorb bar error at login)." },
             { text = "Icons shown by spell ID now show the right icon or a question mark, never an empty square." },

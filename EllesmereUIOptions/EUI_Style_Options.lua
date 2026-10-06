@@ -403,7 +403,7 @@ end
 -------------------------------------------------------------------------------
 local SLOT_KEYS = {
     unitframes = {
-        stamps = { "stockCastTextureSeeded", "classicTextureSeeded", "stockCombatSeededStyle" },
+        stamps = { "stockCastTextureSeeded", "classicTextureSeeded", "classicHealthSeeded", "stockCombatSeededStyle" },
         keys = function()
             local k = { "castBarTexture", "healthBarTexture",
                         "player.combatIndicatorStyle", "player.combatIndicatorPosition" }
@@ -411,12 +411,17 @@ local SLOT_KEYS = {
             local units = uf and uf.UF_TEXTURE_UNITS
             if units then
                 for i = 1, #units do k[#k + 1] = units[i] .. ".healthBarTexture" end
+                for i = 1, #units do
+                    k[#k + 1] = units[i] .. ".healthClassColored"
+                    k[#k + 1] = units[i] .. ".customFillColor"
+                end
             end
             return k
         end,
         seededBy = function(key)
             if key == "castBarTexture" then return "stockCastTextureSeeded" end
             if key:find("combatIndicator", 1, true) then return "stockCombatSeededStyle" end
+            if key:find("healthClassColored", 1, true) or key:find("customFillColor", 1, true) then return "classicHealthSeeded" end
             return "classicTextureSeeded"
         end,
     },

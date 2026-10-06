@@ -1,4 +1,8 @@
-# Options 3.3.5 — 0.88
+# Options 3.3.5 — 0.89
+
+0.89: a página Style guarda por estilo a cor de vida dos Unit Frames
+(`healthClassColored` e `customFillColor` de cada frame, carimbo
+`classicHealthSeeded`), junto da textura e do ícone de combate.
 
 0.88: Nameplates: o contorno saiu do popup de tamanho (ícone de redimensionar)
 e ganhou uma engrenagem própria em cada linha de CORE TEXT POSITIONS (segue o

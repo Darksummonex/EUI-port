@@ -1,4 +1,12 @@
-# Unit Frames 3.3.5 — 0.13
+# Unit Frames 3.3.5 — 0.14
+
+0.14: no estilo Classic WoW UI (arte vanilla) a barra de vida usava a cor da
+classe (o azul-arroxeado do bruxo) em vez do verde original. Ao entrar no
+estilo, uma vez por perfil, todos os frames (player, target, focus, pet,
+targettarget, focustarget, boss) recebem preenchimento personalizado verde e a
+cor de classe é desligada. Um perfil que já estava no Classic recebe o verde no
+próximo /reload, e as cores anteriores vão para o slot do visual EllesmereUI,
+então voltar a esse visual devolve as cores do usuário.
 
 0.13: o contorno por texto só aparecia na prévia. Ao salvar uma opção, o
 recarregamento dos frames principais refazia a fonte de Left, Right e Center
