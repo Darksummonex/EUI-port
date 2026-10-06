@@ -306,11 +306,23 @@ local function PatchRegion(obj)
         function obj:CreateTexture(...) return PatchRegion(create(self, ...)) end
         local font = obj.CreateFontString
         function obj:CreateFontString(...) return PatchRegion(font(self, ...)) end
-        if obj.CreateMaskTexture then
-            local createMask = obj.CreateMaskTexture
-            function obj:CreateMaskTexture(...) return PatchRegion(createMask(self, ...)) end
-        else
-            function obj:CreateMaskTexture(...) local t = self:CreateTexture(); t:Hide(); return t end
+        -- Some 3.3.5 clients/addons expose a CreateMaskTexture that returns nil:
+        -- fall back to a hidden placeholder that native AddMaskTexture never sees.
+        local createMask = obj.CreateMaskTexture
+        function obj:CreateMaskTexture(...)
+            local mask = createMask and createMask(self, ...)
+            if mask then return PatchRegion(mask) end
+            mask = self:CreateTexture(); mask:Hide(); mask._eui335FakeMask = true
+            return mask
+        end
+    end
+    for _, key in ipairs({ "AddMaskTexture", "RemoveMaskTexture" }) do
+        local native = obj[key]
+        if native then
+            obj[key] = function(self, mask, ...)
+                if not mask or mask._eui335FakeMask then return end
+                return native(self, mask, ...)
+            end
         end
     end
     return obj

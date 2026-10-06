@@ -1,4 +1,8 @@
-# Options 3.3.5 — 0.86
+# Options 3.3.5 — 0.87
+
+0.87: o compat das opções aplica a mesma proteção: `CreateMaskTexture` nativo
+que devolve nil vira uma textura escondida, ignorada por `AddMaskTexture` e
+`RemoveMaskTexture`.
 
 0.86: menus "Outline" por texto nas engrenagens de Nameplates e Unit Frames e
 "Zone Text Outline" em QoL > Displays. A prévia de Unit Frames mostra o

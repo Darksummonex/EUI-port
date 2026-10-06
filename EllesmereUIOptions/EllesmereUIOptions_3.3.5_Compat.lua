@@ -145,9 +145,30 @@ do
 
     -- Frame-level creators absent on 3.3.5: hand back inert texture objects so
     -- callers that only add masks / draw preview lines keep running.
+    -- Some clients/addons expose a CreateMaskTexture that returns nil: wrap it the same way.
     local fmt = getmetatable(probe).__index
-    if not fmt.CreateMaskTexture then
-        fmt.CreateMaskTexture = function(self) local t = self:CreateTexture(); t:Hide(); return t end
+    if not fmt._euiSafeMask then
+        local createMask = fmt.CreateMaskTexture
+        fmt.CreateMaskTexture = function(self, ...)
+            local mask = createMask and createMask(self, ...)
+            if mask then return mask end
+            mask = self:CreateTexture(); mask:Hide(); mask._eui335FakeMask = true
+            return mask
+        end
+        fmt._euiSafeMask = true
+    end
+    local tmt = getmetatable(probe:CreateTexture()).__index
+    if type(tmt) == "table" and not tmt._euiSafeMask then
+        for _, key in ipairs({ "AddMaskTexture", "RemoveMaskTexture" }) do
+            local native = tmt[key]
+            if native then
+                tmt[key] = function(self, mask, ...)
+                    if not mask or mask._eui335FakeMask then return end
+                    return native(self, mask, ...)
+                end
+            end
+        end
+        tmt._euiSafeMask = true
     end
     if not fmt.CreateLine then
         fmt.CreateLine = function(self)

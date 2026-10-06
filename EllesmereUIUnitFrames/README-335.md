@@ -1,4 +1,12 @@
-# Unit Frames 3.3.5 — 0.11
+# Unit Frames 3.3.5 — 0.12
+
+0.12: correção para outro jogador: em alguns clientes/addons o
+`CreateMaskTexture` existe mas devolve nil, e um `UnitGetTotalAbsorbs` global
+faz a barra de absorção ser criada; o frame do jogador parava com "attempt to
+index local 'absorbMask'". O shim (EUI_UnitFrames_335.lua) agora devolve uma
+textura escondida quando a máscara nativa vem vazia, e `AddMaskTexture` /
+`RemoveMaskTexture` nativos nunca recebem essa máscara falsa. Teste:
+backport-tools/validate_unitframes.py.
 
 0.11: contorno por texto. As engrenagens de Left, Right, Center e Extra Text
 (nome, vida, power, etc.), dos três textos da Bottom Text Bar e do Power

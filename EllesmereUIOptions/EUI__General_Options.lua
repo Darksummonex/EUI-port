@@ -1025,7 +1025,7 @@ do
         },
     },
     {
-        version = "Options 0.86",
+        version = "Options 0.87",
         heroes = {
             {
                 module = "Unit Frames",
@@ -1121,6 +1121,7 @@ do
             },
         },
         fixes = {
+            { module = "General", text = "Settings previews no longer error on setups whose mask textures come back empty." },
             { module = "General", text = "Combat damage, healing, periodic and pet damage toggles use Wrath's own combat text settings." },
             { module = "General", text = "Hidden option widgets no longer take keyboard focus after other windows close with Escape." },
             { module = "General", text = "Dragging or typing in a slider no longer errors." },
@@ -1396,7 +1397,7 @@ do
         },
     },
     {
-        version = "Unit Frames 0.11",
+        version = "Unit Frames 0.12",
         heroes = {
             {
                 title = "Outline per Text",
@@ -1433,6 +1434,7 @@ do
             },
         },
         fixes = {
+            { text = "Unit frames no longer fail to load on setups whose mask textures come back empty (absorb bar error at login)." },
             { text = "Icons shown by spell ID now show the right icon or a question mark, never an empty square." },
             { text = "The faction indicator no longer errors in mercenary mode, and Retail-only PvP styles use the Wrath PvP icon." },
             { text = "Level text no longer errors with Font not set when frames are first created." },

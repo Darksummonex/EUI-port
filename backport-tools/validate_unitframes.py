@@ -533,6 +533,35 @@ t:SetAtlas("nameplates-icon-elite-gold")
 assert(t.texture == "Interface\\\\AddOns\\\\EllesmereUIUnitFrames\\\\Media\\\\elite-badge-335.tga")
 assert(nativeAtlasCalls == 0)
 ''')
+# Clients/addons whose CreateMaskTexture returns nil (absorb bar crashed on a player's
+# machine: "attempt to index local 'absorbMask'"): placeholder mask, native Add never sees it.
+nilmask_lua = LuaRuntime()
+nilmask_lua.execute((root/'backport-tools/wrath_mock.lua').read_text())
+nilmask_lua.execute('''
+local fm=getmetatable(CreateFrame("Frame")).__index
+fm.CreateMaskTexture=function() return nil end
+local tm=getmetatable(CreateFrame("Frame"):CreateTexture()).__index
+nativeMaskAdds=0
+tm.AddMaskTexture=function(_, m) assert(m and m.realMask, "native AddMaskTexture got a fake mask"); nativeMaskAdds=nativeMaskAdds+1 end
+tm.RemoveMaskTexture=tm.AddMaskTexture
+''')
+nilmask_ns = nilmask_lua.table()
+nilmask_lua.execute((root/'EllesmereUIUnitFrames/EUI_UnitFrames_335.lua').read_text(), 'EllesmereUIUnitFrames', nilmask_ns)
+nilmask_lua.globals().W = nilmask_ns.Wrath
+nilmask_lua.execute('''
+local bar=W.CreateFrame("StatusBar")
+local mask=bar:CreateMaskTexture()
+assert(mask and mask._eui335FakeMask and not mask:IsShown(), "nil native mask needs a hidden placeholder")
+mask:SetAllPoints(bar); mask:SetTexture("Interface\\\\Buttons\\\\WHITE8X8")
+local tex=bar:CreateTexture(); tex:AddMaskTexture(mask); tex:RemoveMaskTexture(mask)
+assert(nativeMaskAdds==0)
+local fm=getmetatable(CreateFrame("Frame")).__index
+fm.CreateMaskTexture=function(self) local t=self:CreateTexture(); t.realMask=true; return t end
+local real=W.CreateFrame("StatusBar"):CreateMaskTexture()
+assert(real.realMask and not real._eui335FakeMask)
+local tex2=W.CreateFrame("Frame"):CreateTexture(); tex2:AddMaskTexture(real)
+assert(nativeMaskAdds==1, "real masks still reach the native method")
+''')
 # Visual parity: Retail media Wrath cannot load (PNG, non-power-of-two TGA,
 # file IDs, missing atlases, masks) resolves to art that does load.
 lua.execute('''
