@@ -770,21 +770,20 @@ local function PagingArrows(bar,s,size)
     if not s.pagingArrows then if a then a:Hide() end; return end
     if not a then
         a=CreateFrame("Frame",nil,bar); bar._euiArrows=a
-        local function Arrow(dir,step)
-            local b=CreateFrame("Button",nil,a)
+        -- ChangeActionBarPage is Blizzard-only on 3.3.5: the secure "actionbar"
+        -- action runs the stock page up/down (wrapping 1..6) on the click.
+        local function Arrow(dir,action)
+            local b=CreateFrame("Button",nil,a,"SecureActionButtonTemplate")
+            b:RegisterForClicks("AnyUp")
+            b:SetAttribute("type","actionbar"); b:SetAttribute("action",action)
             local t=b:CreateTexture(nil,"ARTWORK"); t:SetAllPoints(b)
             local up,down="Interface\\MainMenuBar\\UI-MainMenu-Scroll"..dir.."Button-Up","Interface\\MainMenuBar\\UI-MainMenu-Scroll"..dir.."Button-Down"
             t:SetTexture(up)
             b:SetScript("OnMouseDown",function() t:SetTexture(down) end)
             b:SetScript("OnMouseUp",function() t:SetTexture(up) end)
-            b:SetScript("OnClick",function()
-                local n=(GetActionBarPage and GetActionBarPage() or 1)+step
-                if n>6 then n=1 elseif n<1 then n=6 end
-                if ChangeActionBarPage then ChangeActionBarPage(n) end
-            end)
             return b
         end
-        a.up,a.down=Arrow("Up",1),Arrow("Down",-1)
+        a.up,a.down=Arrow("Up","increment"),Arrow("Down","decrement")
         a.text=a:CreateFontString(nil,"OVERLAY")
     end
     local w=math.max(14,math.floor(size/2))

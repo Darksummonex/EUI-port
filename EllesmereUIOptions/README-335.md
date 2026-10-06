@@ -1,4 +1,10 @@
-# Options 3.3.5 — 0.92
+# Options 3.3.5 — 0.93
+
+0.93: `tinsert = tinsert or table.insert` reescrevia a global `tinsert` da
+Blizzard e a contaminava ao abrir as opções; agora só escreve se faltar.
+Novo `validate_taint_safety.py` varre todos os arquivos dos TOCs: nenhuma
+chamada direta a função protegida (exceto cancelar buff fora de combate) e
+nenhuma escrita em global da Blizzard.
 
 0.92: nas checklists (ex.: Visibility das Unit Frames) as caixas só mudavam
 depois de fechar e reabrir o menu. O clique grava o valor e roda a cadeia de

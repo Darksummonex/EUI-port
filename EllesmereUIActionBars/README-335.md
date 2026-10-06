@@ -1,4 +1,9 @@
-# Action Bars 3.3.5 — 0.18
+# Action Bars 3.3.5 — 0.19
+
+0.19: as setas de página da Barra 1 chamavam `ChangeActionBarPage`, que no
+3.3.5 é exclusiva da Blizzard (popup "blocked from an action"). Agora são
+`SecureActionButtonTemplate` com `type = "actionbar"` e `action =
+"increment"/"decrement"`, a página padrão (1..6) da Blizzard.
 
 0.18: Barras de Ação 7 a 10, desligadas por padrão (como a Barra 6). Cada uma
 tem os próprios atalhos (categoria EllesmereUI Action Bars da tela de Key

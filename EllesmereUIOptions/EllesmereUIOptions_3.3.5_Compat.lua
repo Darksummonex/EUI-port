@@ -227,7 +227,7 @@ end
 issecretvalue = issecretvalue or function() return false end
 issecrettable = issecrettable or function() return false end
 if not strtrim then strtrim = function(s) return (tostring(s):gsub("^%s+", ""):gsub("%s+$", "")) end end
-tinsert = tinsert or table.insert
+if not tinsert then tinsert = table.insert end
 if not wipe then wipe = function(t) for k in pairs(t) do t[k] = nil end return t end end
 
 -- C_Spell: the companion core already supplies the Retail table shape.

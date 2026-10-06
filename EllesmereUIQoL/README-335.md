@@ -1,4 +1,11 @@
-# Quality of Life 3.3.5 — 0.10
+# Quality of Life 3.3.5 — 0.11
+
+0.11: "EllesmereUIQoL has been blocked from an action only available to the
+Blizzard UI". `EUI_QoL_335_Group.lua` fazia `StaticPopupDialogs =
+StaticPopupDialogs or {}`: reescrever a global (mesmo com o mesmo valor) a
+contamina, e os popups da Blizzard que chamam funções protegidas (Logout,
+Quit, Release Spirit...) eram bloqueados em nome do QoL. A linha saiu; só o
+campo `EUI335_DISBAND_GROUP` é adicionado.
 
 0.10: Displays > ZONE TEXT ganhou "Zone Text Outline" ao lado de "Move Zone
 Text": Blizzard Default, None, Outline, Thick Outline ou Shadow, aplicado aos

@@ -1026,7 +1026,7 @@ do
         },
     },
     {
-        version = "Options 0.92",
+        version = "Options 0.93",
         heroes = {
             {
                 module = "Unit Frames",
@@ -1122,6 +1122,7 @@ do
             },
         },
         fixes = {
+            { module = "General", text = "Opening the options no longer makes later Blizzard actions risk being blocked in EllesmereUI's name." },
             { module = "General", text = "Checklist menus such as Visibility tick and untick their boxes as soon as they are clicked, even when the module's live update runs into a problem, instead of only after closing and reopening the menu." },
             { module = "General", text = "Dropdown lists, checklists and other option popups draw their items above their own background, on a solid background, instead of showing faded items with the page bleeding through." },
             { module = "Style", text = "The Style page now keeps the Unit Frames health colors per look, so switching between Classic WoW UI and the EllesmereUI look keeps each one's colors." },
@@ -1137,7 +1138,7 @@ do
         },
     },
     {
-        version = "Quality of Life 0.10",
+        version = "Quality of Life 0.11",
         heroes = {
             {
                 title = "Zone Text Outline",
@@ -1199,6 +1200,7 @@ do
             },
         },
         fixes = {
+            { text = "Logging out, exiting, releasing spirit and other Blizzard confirmation popups no longer trigger the \"EllesmereUIQoL has been blocked from an action only available to the Blizzard UI\" message." },
             { text = "The zone name no longer appears in the middle of the screen at small UI scales. It now sits fixed at the top (X 9 / Y 322 from screen center), with no Unlock Mode mover." },
         },
     },
@@ -1452,7 +1454,7 @@ do
         },
     },
     {
-        version = "Action Bars 0.18",
+        version = "Action Bars 0.19",
         heroes = {
             {
                 title = "Action Bars 7 to 10",
@@ -1491,6 +1493,7 @@ do
             },
         },
         fixes = {
+            { text = "Bar 1 paging arrows change the page without the \"blocked from an action only available to the Blizzard UI\" message." },
             { text = "Changing stance no longer reveals a duplicate Blizzard stance and pet bar." },
             { text = "Spells can be dropped on Bar 1 while the Blizzard bar art is hidden." },
             { text = "Player Buffs keep growing downward as rows are added." },

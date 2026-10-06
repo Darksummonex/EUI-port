@@ -76,7 +76,6 @@ function ns.DisbandGroup()
     end
     LeaveParty()
 end
-StaticPopupDialogs=StaticPopupDialogs or {}
 StaticPopupDialogs.EUI335_DISBAND_GROUP={text="Disband your group? Everyone will be removed.",button1=YES or "Yes",button2=NO or "No",
     OnAccept=function() ns.DisbandGroup() end,timeout=0,whileDead=1,hideOnEscape=1}
 function ns.ConfirmDisband()
