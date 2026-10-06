@@ -510,9 +510,9 @@ local GRID_ALPHA_DIMMED = 0.15
 local GRID_ALPHA_BRIGHT = 0.30
 local GRID_CENTER_DIMMED = 0.25
 local GRID_CENTER_BRIGHT = 0.50
-local GRID_HUD_BRIGHT = 0.60   -- matches HUD_ON_ALPHA
-local GRID_HUD_DIMMED = 0.45
-local GRID_HUD_OFF    = 0.30   -- matches HUD_OFF_ALPHA
+local GRID_HUD_BRIGHT = 0.90   -- matches HUD_ON_ALPHA
+local GRID_HUD_DIMMED = 0.75
+local GRID_HUD_OFF    = 0.60   -- matches HUD_OFF_ALPHA
 
 local function GridBaseAlpha()
     return gridMode == "bright" and GRID_ALPHA_BRIGHT or GRID_ALPHA_DIMMED
@@ -6895,6 +6895,14 @@ local function CreateMover(barKey)
     local cogBtn  -- forward declaration; assigned later in CreateMover
 
     local mover = CreateFrame("Button", nil, unlockFrame)
+    -- Wrath clamps frame levels near 256, so hovered movers (+100) could reach
+    -- the cog/snap click-catcher (249) and menu (250); leaving the mover then
+    -- collapses the overlay and its cog OnHide closes the menu mid-use.
+    -- 238 keeps the cog (mover + 10) under the catcher as well.
+    if _G.EUI_WOW_335 then
+        local setLevel = mover.SetFrameLevel
+        function mover:SetFrameLevel(level) setLevel(self, math.min(level, 238)) end
+    end
     -- Party Frames always render above Raid Frames in unlock mode
     local MOVER_LEVEL_BUMP = (barKey == "RF_PartyFrames") and 10 or 0
     local MOVER_BASE_LEVEL = unlockFrame:GetFrameLevel() + 20 + MOVER_LEVEL_BUMP
@@ -11267,8 +11275,10 @@ local DARK_OVERLAY_ICON = "Interface\\AddOns\\EllesmereUI\\media\\icons_335\\dar
 local COORD_ICON      = "Interface\\AddOns\\EllesmereUI\\media\\icons_335\\coordinates.tga"
 local BANNER_TEX      = "Interface\\AddOns\\EllesmereUI\\media\\unlock_335\\eui-unlocked-banner-2.tga"
 
-local HUD_ON_ALPHA  = 0.60
-local HUD_OFF_ALPHA = 0.30
+-- Wrath's 10px outlined text loses most of its fill below ~0.6 alpha (no Slug
+-- renderer), so the banner runs brighter than Retail's 0.60 / 0.30.
+local HUD_ON_ALPHA  = 0.90
+local HUD_OFF_ALPHA = 0.60
 local HUD_ICON_SZ   = 20
 
 -- Banner native pixel dimensions
@@ -11330,8 +11340,8 @@ local function CreateHUD(parent)
     local function SetupToggleBtn(wrapper, iconTex, labelFS, getState, setState)
         wrapper:SetScript("OnClick", function() setState() end)
         wrapper:SetScript("OnEnter", function()
-            iconTex:SetAlpha(0.9)
-            labelFS:SetTextColor(1, 1, 1, 0.9)
+            iconTex:SetAlpha(1)
+            labelFS:SetTextColor(1, 1, 1, 1)
         end)
         wrapper:SetScript("OnLeave", function()
             local a = getState() and HUD_ON_ALPHA or HUD_OFF_ALPHA
@@ -11384,8 +11394,8 @@ local function CreateHUD(parent)
         end
     end)
     gridBtn:SetScript("OnEnter", function()
-        gridTex:SetAlpha(0.9)
-        gridLabel:SetTextColor(1, 1, 1, 0.9)
+        gridTex:SetAlpha(1)
+        gridLabel:SetTextColor(1, 1, 1, 1)
     end)
     gridBtn:SetScript("OnLeave", function()
         local a = GridHudAlpha()
@@ -11608,8 +11618,14 @@ local function CreateHUD(parent)
     exitBtn:SetSize(EXIT_BTN_W, BTN_H)
     local exitLeftEdge = min(-BANNER_PX_W / 2 + 85, flashLeftEdge - CHAIN_GAP - EXIT_BTN_W)
     exitBtn:SetPoint("LEFT", hudFrame, "TOPLEFT", exitLeftEdge + BANNER_PX_W / 2, btnCenterY)
-    EllesmereUI.MakeStyledButton(exitBtn, "Exit", BTN_FONT,
-        EllesmereUI.RB_COLOURS, function() ns.RequestClose(false) end)
+    local exitColours = {}
+    for i, v in ipairs(EllesmereUI.RB_COLOURS) do exitColours[i] = v end
+    exitColours[12], exitColours[16] = 0.55, 0.75   -- border
+    exitColours[20], exitColours[24] = 0.85, 1      -- text
+    local _, _, exitLbl = EllesmereUI.MakeStyledButton(exitBtn, "Exit", BTN_FONT,
+        exitColours, function() ns.RequestClose(false) end)
+    -- The label's widget alpha would multiply the hover text alpha on leave.
+    if exitLbl then exitLbl:SetAlpha(1); exitLbl:SetTextColor(1, 1, 1, exitColours[20]) end
     hudFrame._exitBtn = exitBtn
 
     -- Save & Exit button (right side, 50px from right edge, green "Done" style)

@@ -242,7 +242,9 @@ local function Icon(s,button,icon)
         local layer,sublevel=icon:GetDrawLayer()
         d={border=border,coords={icon:GetTexCoord()},layer=layer,sublevel=sublevel}; s.icons[icon]=d
     end
-    icon:SetDrawLayer("ARTWORK"); icon:SetTexCoord(.08,.92,.08,.92); d.border:SetBackdropBorderColor(.25,.25,.25,1); d.border:Show()
+    icon:SetDrawLayer("ARTWORK"); icon:SetTexCoord(.08,.92,.08,.92); d.border:SetBackdropBorderColor(.25,.25,.25,1)
+    -- Dropdown rows keep a hidden 16px Icon texture; frame it only while shown.
+    if icon:IsShown() then d.border:Show() else d.border:Hide() end
     -- Mail attachment counts start in BORDER/ARTWORK. Raising their icon must
     -- keep the native quantity above it; native mail code still owns the text.
     local name=button.GetName and button:GetName()
@@ -322,13 +324,20 @@ local function Walk(s,frame,depth,root)
         local backdrop=frame:GetBackdrop()
         if backdrop and (backdrop.bgFile or backdrop.edgeFile) then InnerPanel(s,frame) end
     end
-    if not s.spec.tooltip and Kind(frame,"Slider") and frame.GetThumbTexture then
-        local r,g,b=Accent(); TextureStyle(s,frame:GetThumbTexture(),r,g,b,1)
+    local thumb=not s.spec.tooltip and Kind(frame,"Slider") and frame.GetThumbTexture and frame:GetThumbTexture()
+    if thumb then
+        local r,g,b=Accent(); TextureStyle(s,thumb,r,g,b,1)
+        -- Native knobs are 32x32 art with transparent margins; flat paint
+        -- would fill the whole square, so the painted knob is resized.
+        local saved=s.textureStyles[thumb]
+        if not saved.size then saved.size={thumb:GetWidth(),thumb:GetHeight()} end
+        local vertical=frame.GetOrientation and frame:GetOrientation()=="VERTICAL"
+        thumb:SetWidth(8); thumb:SetHeight(vertical and 20 or 16)
     end
     if not s.spec.tooltip and (Kind(frame,"Button") or Kind(frame,"CheckButton")) then Button(s,frame) end
     if frame.GetRegions then
         for _,region in ipairs({frame:GetRegions()}) do
-            if not owned[region] then
+            if not owned[region] and not (s.keep and s.keep[region]) then
                 if Kind(region,"FontString") then Font(s,region,s.spec.tooltip and ns.GetValue("tooltipFontScale") or 1)
                 elseif not s.spec.tooltip and not s.textureStyles[region] and
                     (Decor(region,root) or chrome and Kind(region,"Texture") and region:GetTexture()~=nil
@@ -411,19 +420,52 @@ local function WorldMapContent(s)
     s.panel:SetPoint("BOTTOMLEFT",frame,"BOTTOMLEFT",left-frameLeft-6,bottom-frameBottom-6)
     s.panel:SetPoint("TOPRIGHT",frame,"BOTTOMLEFT",right-frameLeft+6,top-frameBottom+6)
 end
+-- UI-GlyphFrame is a whole 1:1 window sheet (title bar, border, portrait
+-- hole) drawn from GlyphFrame's TOPLEFT. Its parchment body spans x 22-342,
+-- y 38-432; the top stops at 58 where the portrait hole ends.
+local glyphBody={left=22,top=58,right=342,bottom=432}
+local function KeepNative(s,region)
+    if not region then return end
+    s.keep=s.keep or {}; s.keep[region]=true
+    if s.regions[region]~=nil then region:SetAlpha(s.regions[region]); s.regions[region]=nil end
+    if s.cleared[region] then region:SetTexture(s.cleared[region].path); s.cleared[region]=nil end
+end
 local function RestoreGlyphContent(s)
     for frame,shown in pairs(s.glyphHidden or {}) do if shown then frame:Show() end end
     s.glyphHidden=nil
+    local art=s.glyphArt
+    if art then
+        local bg=art.texture
+        bg:ClearAllPoints(); for _,point in ipairs(art.points) do bg:SetPoint(unpack(point)) end
+        bg:SetWidth(art.width); bg:SetHeight(art.height); bg:SetTexCoord(unpack(art.coords))
+        s.glyphArt=nil
+    end
 end
 local function GlyphContent(s)
     if s.frame~=_G.GlyphFrame then return end
     if not s.frame:IsShown() then RestoreGlyphContent(s); return end
     -- GlyphFrame is a higher-level sheet inside PlayerTalentFrame, not a
     -- second top-level window. Its fill must not cover shared tabs/header.
+    local l,t,r,b=glyphBody.left,glyphBody.top,glyphBody.right,glyphBody.bottom
     s.panel:ClearAllPoints()
-    s.panel:SetPoint("TOPLEFT",s.frame,"TOPLEFT",16,-58)
-    s.panel:SetPoint("BOTTOMRIGHT",s.frame,"BOTTOMRIGHT",-45,72)
+    s.panel:SetPoint("TOPLEFT",s.frame,"TOPLEFT",l,-t)
+    s.panel:SetPoint("BOTTOMRIGHT",s.frame,"BOTTOMRIGHT",r-384,512-b)
     s.accent:Hide()
+    local bg=_G.GlyphFrameBackground
+    if Kind(bg,"Texture") then
+        KeepNative(s,bg)
+        if not s.glyphArt then
+            local art={texture=bg,points={},width=bg:GetWidth(),height=bg:GetHeight(),coords={bg:GetTexCoord()}}
+            for i=1,bg:GetNumPoints() do art.points[i]={bg:GetPoint(i)} end
+            s.glyphArt=art
+        end
+        -- Keep the art at its native offset so the drawn rune lines stay under
+        -- the sockets; inset 1px so the box's border frame stays visible.
+        bg:ClearAllPoints(); bg:SetPoint("TOPLEFT",s.frame,"TOPLEFT",l+1,-(t+1))
+        bg:SetWidth(r-l-2); bg:SetHeight(b-t-2)
+        bg:SetTexCoord((l+1)/512,(r-1)/512,(t+1)/512,(b-1)/512)
+    end
+    KeepNative(s,_G.GlyphFrameGlow)
     s.glyphHidden=s.glyphHidden or {}
     for _,name in ipairs({"PlayerTalentFrameTitleText","PlayerTalentFrameScrollFrame","PlayerTalentFramePointsBar",
         "PlayerTalentFrameStatusFrame","PlayerTalentFramePreviewBar","PlayerTalentFrameActivateButton"}) do
@@ -448,6 +490,7 @@ local function Restore(s)
     for texture,saved in pairs(s.textureStyles) do
         texture:SetTexture(saved.path); texture:SetTexCoord(unpack(saved.coords)); texture:SetAlpha(saved.alpha)
         if saved.color and #saved.color>=3 then texture:SetVertexColor(unpack(saved.color)) end
+        if saved.size then texture:SetWidth(saved.size[1]); texture:SetHeight(saved.size[2]) end
     end
     for frame,d in pairs(s.insets) do
         d.panel:Hide(); frame:SetBackdrop(d.backdrop)
@@ -494,6 +537,14 @@ local function TalentTabs(s)
     end
     local bar=_G.PlayerTalentFramePointsBar
     if #entries>0 and bar then Save(bar); bar:ClearAllPoints(); bar:SetPoint("BOTTOMLEFT",s.frame,"BOTTOMLEFT",8,36+row*30); bar:SetPoint("BOTTOMRIGHT",s.frame,"BOTTOMRIGHT",-8,36+row*30) end
+    -- The fill stops above the tab row and left of the dual-spec tabs, which
+    -- hang off the art's right edge (TOPRIGHT -32) outside the window.
+    local right=-32
+    local spec,frameRight=_G.PlayerSpecTab1,s.frame:GetRight()
+    local specLeft=spec and spec:IsShown() and spec:GetLeft()
+    if specLeft and frameRight then right=math.min(-4,specLeft-frameRight-2) end
+    s.panel:ClearAllPoints(); s.panel:SetPoint("TOPLEFT",s.frame,"TOPLEFT",4,-4)
+    s.panel:SetPoint("BOTTOMRIGHT",s.frame,"BOTTOMRIGHT",right,#entries>0 and 34+row*30 or 4)
 end
 local function Capture(frame,spec)
     local s={frame=frame,spec=spec,regions={},cleared={},textureStyles={},insets={},fonts={},buttons={},icons={},backdrop=frame:GetBackdrop(),

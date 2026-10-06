@@ -13,6 +13,7 @@ lua.execute(r'''
 local function Bounds(f,l,b,r,t) f.GetLeft=function() return l end; f.GetBottom=function() return b end; f.GetRight=function() return r end; f.GetTop=function() return t end end
 Bounds(WorldMapFrame,0,0,1200,900)
 WorldMapDetailFrame=CreateFrame('Frame','WorldMapDetailFrame',WorldMapFrame); Bounds(WorldMapDetailFrame,100,200,800,700)
+WorldMapDetailFrame:SetWidth(700); WorldMapDetailFrame:SetHeight(500)
 WorldMapButton=CreateFrame('Button','WorldMapButton',WorldMapFrame)
 WorldMapButton.width,WorldMapButton.height=700,500
 WorldMapButton.GetCenter=function() return 450,450 end

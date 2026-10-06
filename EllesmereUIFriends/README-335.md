@@ -1,4 +1,18 @@
-# Friends 3.3.5 — 0.1
+# Friends 3.3.5 — 0.3
+
+0.3: paridade com o Retail. Ícone de classe à esquerda da linha, com os temas
+do EUI (Modern por padrão; Blizzard usa o atlas nativo), nome deslocado e
+detalhes logo abaixo; amigos offline mostram o ícone offline esmaecido. Orbe
+de status ao lado do nome (online, AFK, DND, offline) no lugar do ícone
+nativo, nota do amigo anexada aos detalhes, faixa de facção (Enable Faction
+Banners; sem ela, a faixa neutra do Retail) e realce ao passar o mouse. Borda
+com tamanho 0 a 4 e cor Custom ou Accent (o antigo "Accent Border"/"Show
+Border" é migrado uma vez). Enable Accent Colors sublinha a aba selecionada.
+Auto-Accept Friend Invites aceita convites de grupo de amigos (e de membros da
+guilda, pela engrenagem) e fecha o popup. Com Blizzard/Classic ativo, a janela
+fica nativa mas as linhas ganham ícone de classe e nome colorido. A arte do
+Retail foi convertida para TGA em Media_335 (prepare_friends_media.py).
+/efr abre a página. Requer Options 0.65.
 
 Open /efriends or EllesmereUI > Friends. The native social window and friend
 list keep their existing actions, tabs, tooltips and client-supported data.

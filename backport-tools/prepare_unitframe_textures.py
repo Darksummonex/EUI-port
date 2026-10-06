@@ -10,7 +10,10 @@ import struct
 root = Path(__file__).resolve().parents[1]
 core = (root / 'EllesmereUI/EllesmereUI.lua').read_text(encoding='utf-8-sig')
 catalog = core.split('EllesmereUI.BAR_TEXTURE_FILES = {', 1)[1].split('}', 1)[0]
-names = sorted(set(re.findall(r'"([^"\n]+\.tga)"', catalog)))
+# Overlay art the unit frames reference outside the bar catalogue (dispel
+# overlay "Sharp Gradient").
+EXTRA = ['gradient-sharp.tga']
+names = sorted(set(re.findall(r'"([^"\n]+\.tga)"', catalog)) | set(EXTRA))
 target = root / 'EllesmereUIUnitFrames/Media/Textures_335'
 target.mkdir(parents=True, exist_ok=True)
 converted = []

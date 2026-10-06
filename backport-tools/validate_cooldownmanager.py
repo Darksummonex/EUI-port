@@ -1,10 +1,33 @@
-"""Native Wrath cooldown/aura/items, actual Lite lifecycle, settings and memory."""
+﻿"""Wrath Cooldown Manager 0.2: Retail bar model and migration, Unlock Mode movers with
+Element Options targets, CDM icons, tracking bars, bar glows, options pages, combat
+allocation, Lua limits, combined EUI memory and untouched Retail references."""
 from pathlib import Path
+import re
 import sys
 root=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(root/'.codex-tools'))
 from lupa.lua51 import LuaRuntime
+module=root/'EllesmereUICooldownManager'
+toc=(module/'EllesmereUICooldownManager.toc').read_text(encoding='utf-8-sig')
+assert '## Version: 9.3.4-335-0.2' in toc
+files=[l.strip() for l in toc.splitlines() if l.strip().endswith('.lua')]
+assert files==['EUI_CooldownManager_335_Catalog.lua','EUI_CooldownManager_335.lua','EUI_CooldownManager_335_Display.lua',
+    'EUI_CooldownManager_335_TrackingBars.lua','EUI_CooldownManager_335_Glows.lua'],files
+options_toc=(root/'EllesmereUIOptions/EllesmereUIOptions.toc').read_text(encoding='utf-8-sig')
+version=re.search(r'## Version: 9\.3\.4-335-0\.(\d+)',options_toc)
+assert version and int(version.group(1))>=70 and 'EUI_CooldownManager_335_Options.lua' in options_toc
+readme=(module/'README-335.md').read_text(encoding='utf-8-sig')
+assert '0.2' in readme and 'Não portado' in readme
+sources={f:(module/f).read_text(encoding='utf-8-sig') for f in files}
+sources['Options']=(root/'EllesmereUIOptions/EUI_CooldownManager_335_Options.lua').read_text(encoding='utf-8-sig')
+for name,src in sources.items():
+    for banned in ('C_CooldownViewer','C_Spell.','C_Timer','SetRotatesTexture','SetColorTexture','SetAtlas','SetShown','SetSwipeColor','CreateMaskTexture','.png'):
+        assert banned not in src,(name,banned)
 lua=LuaRuntime()
+# Lua 5.1 compile of every chunk, and the 200-locals limit per function.
+for name,src in sources.items():
+    ok=lua.eval('function(s,n) local f,e=loadstring(s,n); return f~=nil,e end')(src,name)
+    assert ok[0],(name,ok[1])
 for file in ['backport-tools/wrath_mock.lua','backport-tools/inventory_resources_mock.lua','EllesmereUI/EllesmereUI_Lite.lua']:
     if file.endswith('EllesmereUI_Lite.lua'):
         lua.execute('lifecycleErrors={}; function geterrorhandler() return function(e) lifecycleErrors[#lifecycleErrors+1]=e end end')
@@ -16,13 +39,26 @@ lifecycle:RunScript('OnEvent','ADDON_LOADED','EllesmereUI')
 local m=getmetatable(UIParent).__index
 function m:SetShadowColor(...) self.shadowColor={...} end
 function m:SetShadowOffset(...) self.shadowOffset={...} end
-spells={{id=100,name='Charge'},{id=200,name='Charge'},{id=300,name='Passive',passive=true}}
+function m:SetClampedToScreen() end
+function m:SetMovable() end
+function m:SetSize(w,h) self.width,self.height=w,h end
+function m:SetPoint(p,rel,rp,x,y) self.point={p,rel,rp,x,y} end
+function m:ClearAllPoints() self.point=nil end
+function m:GetPoint() if self.point then return unpack(self.point) end end
+function m:SetVertexColor(...) self.color={...} end
+function m:SetFrameStrata(s) self.strata=s end
+function m:SetAlpha(a) self.alpha=a end
+function MouseIsOver() return false end
+function UnitHasVehicleUI() return false end
+combat=false; function InCombatLockdown() return combat end
+spells={{id=100,name='Charge'},{id=200,name='Charge'},{id=300,name='Passive',passive=true},{id=600,name='Kick'}}
 function GetSpellName(slot,book) local s=(book=='pet' and {{id=400,name='Pet Skill'}} or spells)[slot]; if s then return s.name,'Rank '..slot end end
 function GetSpellLink(slot,book) local name=GetSpellName(slot,book); if name then return 'spell:'..(book=='pet' and 400 or spells[slot].id) end end
 function GetSpellTexture(slot,book) return 'icon-'..slot..book end
 function IsPassiveSpell(slot,book) return book~='pet' and spells[slot].passive end
 function HasPetSpells() return 1 end
-function GetSpellInfo(id) if id==999999 then return end; return (id==100 or id==200) and 'Charge' or id==300 and 'Passive' or id==400 and 'Pet Skill' or 'Spell '..id,nil,'icon-'..id end
+function GetSpellInfo(id) id=tonumber(id); if not id or id<=0 or id==999999 then return end
+    return (id==100 or id==200) and 'Charge' or id==300 and 'Passive' or id==400 and 'Pet Skill' or id==600 and 'Kick' or 'Spell '..id,nil,'icon-'..id end
 cooldowns={}; gcd={0,0,1}; now=10
 function GetSpellCooldown(slot,book) if slot==61304 then return unpack(gcd) end; assert(book=='spell' or book=='pet'); return unpack(cooldowns[book..slot] or {0,0,1}) end
 function IsUsableSpell() return true end
@@ -36,20 +72,29 @@ function GetItemCount() return 4 end
 auras={player={HELPFUL={}},target={HARMFUL={}},focus={HELPFUL={}}}
 function UnitAura(unit,i,filter) local a=auras[unit] and auras[unit][filter] and auras[unit][filter][i]; if a then return a.name,nil,a.icon,a.count,nil,a.duration,a.expires,a.caster,false,false,a.id end end
 function GetActiveTalentGroup() return spec or 1 end
-function GetBindingKey(command) if command=='ACTIONBUTTON1' then return '1' end end
+function GetNumTalentTabs() return 1 end
+function GetNumTalents() return 1 end
+talentRank=0; function GetTalentInfo() return 'Improved Charge',nil,nil,nil,talentRank end
+function GetBindingKey(command) if command=='ACTIONBUTTON1' then return 'SHIFT-1' end end
+function GetActionInfo(slot) if slot==1 then return 'spell',2,'spell',200 end end
+function HasAction(slot) return slot==1 end
 function GameTooltip:SetOwner(owner) self.owner=owner end
 function GameTooltip:GetOwner() return self.owner end
 function GameTooltip:SetSpell(slot,book) self.slot,self.book=slot,book end
 function GameTooltip:AddLine(text) self.tooltipText=text end
 function GameTooltip:SetUnitAura(unit,i,filter) self.unit,self.index,self.filter=unit,i,filter end
-sounds=0; function PlaySound() sounds=sounds+1 end
+sounds={}; function PlaySound(s) sounds[#sounds+1]=s end
 modules={}; function EllesmereUI:RegisterModule(name,cfg) modules[name]=cfg end
-unlock={}; function EllesmereUI:RegisterUnlockElements(elements) for _,e in ipairs(elements) do unlock[e.key]=e end end
-function EllesmereUI.MakeUnlockElement(c) c.savePosition=c.savePos; return c end
+unlock={}; registrations=0
+function EllesmereUI:RegisterUnlockElements(elements) registrations=registrations+1; for _,e in ipairs(elements) do unlock[e.key]=e end end
+function EllesmereUI.MakeUnlockElement(c)
+    return {key=c.key,label=c.label,group=c.group,order=c.order,getFrame=c.getFrame,getSize=c.getSize,savePosition=c.savePos,loadPosition=c.loadPos,
+        clearPosition=c.clearPos,applyPosition=c.applyPos,isHidden=c.isHidden,noResize=c.noResize,noAnchorTarget=c.noAnchorTarget}
+end
 function EllesmereUI:RegisterUnlockModeListener(_,fn) unlockListener=fn end
 function EllesmereUI:RegisterOnHide(fn) hideOptions=fn end
 function EllesmereUI:InvalidatePageCache() end
-function EllesmereUI:RefreshPage() end
+function EllesmereUI:RefreshPage() refreshed=(refreshed or 0)+1 end
 function EllesmereUI:ShowModule(folder) shownModule=folder end
 function EllesmereUI.EnsureOptionsLoaded() end
 function EllesmereUI.GetAccentColor() return .1,.8,.7 end
@@ -57,68 +102,205 @@ LibStub=function() error('External dependency') end
 C_CooldownViewer=setmetatable({},{__index=function() error('Retail cooldown viewer') end})
 ''')
 ns=lua.table()
-for file in ['EUI_CooldownManager_335_Catalog.lua','EUI_CooldownManager_335.lua','EUI_CooldownManager_335_Display.lua']:
-    lua.execute((root/'EllesmereUICooldownManager'/file).read_text(encoding='utf-8-sig'),'EllesmereUICooldownManager',ns)
+for file in files:
+    lua.execute(sources[file],'EllesmereUICooldownManager',ns)
 lua.globals().D=ns
 lua.execute('''
 lifecycle:RunScript('OnEvent','ADDON_LOADED','EllesmereUICooldownManager')
 assert(#lifecycleErrors==0,lifecycleErrors[1])
 function IsLoggedIn() return true end
 lifecycle:RunScript('OnEvent','PLAYER_LOGIN'); assert(#lifecycleErrors==0,lifecycleErrors[1])
-assert(D.events and #D.frames.cooldowns.pool==40 and unlock.CDM_tracking,tostring(D.events)..' '..tostring(unlock.CDM_tracking)..' db '..tostring(D.addon.db)..' frames '..#allFrames)
+
+-- Retail bar model: three seeded bars with Retail keys and type sizes.
+local bars=D.Bars()
+assert(#bars==3 and bars[1].barType=='cooldowns' and bars[3].barType=='buffs')
+assert(D.Config('cooldowns').iconSize==42 and D.Config('utility').iconSize==36 and D.Config('buffs').iconSize==32)
+assert(D.Config('cooldowns').barVisibility=='always' and D.Config('cooldowns').spellDefaults)
+
+-- Every bar and tracking bar has a mover and an Element Options target.
+local MAP=EllesmereUI._ELEMENT_SETTINGS_MAP
+for _,k in ipairs({'cooldowns','utility','buffs'}) do
+    local u=unlock['CDM_'..k]; assert(u and u.getFrame()==D.frames[k],k)
+    local t=MAP['CDM_'..k]; assert(t and t.module=='EllesmereUICooldownManager' and t.page=='CDM Bars' and t.sectionName=='BAR LAYOUT' and t.highlightText=='Icon Size',k)
+    t.preSelectFn(); assert(D.selectedBar==k)
+end
+for i=1,20 do assert(unlock['TBB_'..i] and MAP['TBB_'..i].page=='Tracking Bars' and MAP['TBB_'..i].sectionName=='BAR LAYOUT' and MAP['TBB_'..i].highlightText=='Width') end
+for g=1,4 do assert(unlock['TBBG_'..g] and MAP['TBBG_'..g].sectionName=='GROUP SETTINGS' and MAP['TBBG_'..g].highlightText=='Grow Direction') end
+MAP.TBB_2.preSelectFn(); assert(D.selectedTBB==2)
+local regs=registrations; D.Apply(); D.Apply(); assert(registrations==regs,'unlock re-registered without changes')
+
+-- Resolution: ranks, passives, pet book, items and equipment slots.
 assert(D.Resolve({kind='spell',id=100}).slot==2)
 assert(not D.Resolve({kind='spell',id=300}) and not D.Resolve({kind='spell',id=999999}))
 assert(D.Resolve({kind='spell',id=400}).book=='pet')
-local lists=D.Lists(); lists.cooldowns={{kind='spell',id=100},{kind='spell',id=400}}
+assert(D.Resolve({kind='preset',id='healthstone'}).preset.key=='healthstone')
+
+local lists=D.Lists()
+lists.cooldowns={{kind='spell',id=100},{kind='spell',id=400}}
 lists.utility={{kind='slot',id=13},{kind='item',id=500},{kind='item',id=501}}
 lists.buffs={{kind='aura',id=700,unit='target',filter='HARMFUL',ownOnly=true}}
-lists.tracking={{kind='aura',id=701,unit='player'}}
+lists.tbb={{spellID=701,unit='player'},{spellID=702,trackType='aura',hideWhenInactive=true}}
 auras.player.HELPFUL={{id=700,name='Spell 700',icon='wrong-unit',count=2,duration=10,expires=20,caster='player'},{id=701,name='Spell 701',icon='permanent',count=3,duration=0,expires=0,caster='other'}}
 auras.target.HARMFUL={{id=700,name='Spell 700',icon='other-caster',count=1,duration=15,expires=25,caster='other'},{id=700,name='Spell 700',icon='correct',count=2,duration=12,expires=22,caster='player'}}
-cooldowns.spell2={9,20,1}; D.Apply()
+cooldowns.spell2={9,20,1}; D.Config('cooldowns').showTooltip=true; D.Apply()
 assert(#D.compiled.utility==2 and D.compiled.cooldowns[1].remaining==19)
 assert(D.compiled.buffs[1].aura.icon=='correct' and D.compiled.buffs[1].count==2)
 assert(D.frames.buffs.pool[1].icon.texture=='correct' and D.frames.buffs.pool[1].count.text=='2')
-assert(D.frames.tracking.pool[1].bar.value==1 and D.frames.tracking.pool[1].count.text=='3')
-assert(D.frames.cooldowns.pool[1].timer.font[3]=='OUTLINE')
+assert(D.frames.cooldowns.pool[1].timer.text=='19' and D.frames.cooldowns.pool[1].cooldown.duration==20)
+assert(D.frames.utility.pool[2].count.text=='4')
+
+-- Tracking bars: permanent aura fills, stacks text, inactive bar hidden.
+local tb=D.tbbFrames[1]; assert(tb and tb:IsShown() and tb.value==1 and tb.stacks.text=='3',tostring(tb and tb.value))
+assert(not D.tbbFrames[2]:IsShown())
+auras.player.HELPFUL[3]={id=702,name='Spell 702',icon='timed',count=1,duration=10,expires=15,caster='player'}
+D.ScanAuras(); D.Update(); local t2=D.tbbFrames[2]
+assert(t2:IsShown() and math.abs(t2.value-.5)<.001 and t2.timer.text=='5' and t2.fill.texcoords[2]==t2.value)
+lists.tbb[2].reverseFill=true; D.Apply(); D.Update(); assert(t2.fill.texcoords[1]==.5 and t2.fill.point[1]=='BOTTOMRIGHT')
+lists.tbb[2].stackBasedBar=true; lists.tbb[2].stackThresholdMax=4; D.Apply(); assert(D.tbbFrames[2].value==.25)
+lists.tbb[2].stackBasedBar=false; lists.tbb[2].reverseFill=false
+-- Pandemic glow on the last 30%: falls back to the edge pulse when Core glows are absent.
+now=12.5; D.Update(); assert(t2.glow.edges and t2.glow.edges[1]:IsShown())
+now=10; D.Update(); assert(not t2.glow.edges[1]:IsShown())
+-- Groups: members chain under one mover.
+lists.tbb[1].groupID=1; lists.tbb[2].groupID=1; D.Apply(); D.Update()
+assert(D.tbbGroupFrames[1]:IsShown() and t2.point[2]==D.tbbFrames[1] and t2.point[1]=='TOP')
+unlock.TBBG_1.savePosition(nil,'LEFT','LEFT',5,6); assert(D.Profile().positions.TBBG_1.x==5 and D.tbbGroupFrames[1].point[4]==5)
+lists.tbb[1].groupID=0; lists.tbb[2].groupID=0; D.Apply()
+unlock.TBB_1.savePosition(nil,'TOP','TOP',7,8); assert(D.tbbFrames[1].point[1]=='TOP' and D.Profile().positions.TBB_1.y==8)
+
+-- Tooltip, GCD suppression, ready sound.
 D.frames.cooldowns.pool[1]:RunScript('OnEnter'); assert(GameTooltip.slot==2 and GameTooltip.book=='spell')
 D.frames.cooldowns.pool[1]:RunScript('OnLeave'); assert(not GameTooltip:IsShown())
-gcd={9.5,1.5,1}; cooldowns.spell2={9.5,1.5,1}; D.Update(); assert(not D.compiled.cooldowns[1].active)
-D.Config('cooldowns').showGCD=true; D.Update(); assert(D.compiled.cooldowns[1].remaining==1)
-D.Config('cooldowns').showGCD=false; cooldowns.spell2={9.6,1,1}; D.Update(); assert(D.compiled.cooldowns[1].active)
-D.Profile().readySound=true; now=11; D.Update(); assert(sounds==1); D.Update(); assert(sounds==1)
-local frames=#allFrames; combat=true; for i=1,20 do D.Update() end; assert(#allFrames==frames)
-now=23; D.Update(); assert(not D.compiled.buffs[1].active and not D.frames.buffs:IsShown())
-unlockListener(true); assert(D.frames.buffs:IsShown()); unlockListener(false)
-unlock.CDM_cooldowns.savePos(nil,'BOTTOM','BOTTOM',12,34); D.Apply(); assert(D.frames.cooldowns:GetPoint()=='BOTTOM' and D.Profile().positions.cooldowns.y==34)
+gcd={9.5,1.5,1}; cooldowns.spell2={9.5,1.5,1}; D.Update(); assert(not D.compiled.cooldowns[1].onCD and D.compiled.cooldowns[1].remaining==1)
+D.Config('cooldowns').suppressGCD=true; D.Update(); assert(D.compiled.cooldowns[1].remaining==0)
+D.Config('cooldowns').suppressGCD=false; gcd={0,0,1}; cooldowns.spell2={9.6,1.6,1}; D.Update(); assert(D.compiled.cooldowns[1].onCD)
+D.Profile().readySound=true; now=11.5; D.Update(); assert(#sounds==1); D.Update(); assert(#sounds==1); D.Profile().readySound=false
+
+-- Cooldown states (Retail cdStateEffect) and glows.
+cooldowns.spell2={10.5,20,1}; D.Config('cooldowns').spellDefaults.cdStateEffect='hiddenOnCDShift'; D.Update()
+assert(D.frames.cooldowns.pool[2]:IsShown()==false and D.frames.cooldowns.pool[1].state.meta.book=='pet')
+D.Config('cooldowns').spellDefaults.cdStateEffect='lowerAlphaOnCD'; D.Config('cooldowns').spellDefaults.cdStateLowerAlpha=.3; D.Update()
+assert(D.frames.cooldowns.pool[1].alpha==.3)
+cooldowns.spell2=nil; D.Config('cooldowns').spellDefaults.cdStateEffect='pixelGlowReady'; D.Update()
+assert(D.frames.cooldowns.pool[1].glow.edges and D.frames.cooldowns.pool[1].glow.edges[1]:IsShown())
+D.Profile().glowsOnlyInCombat=true; D.Update(); assert(not D.frames.cooldowns.pool[1].glow.edges[1]:IsShown()); D.Profile().glowsOnlyInCombat=false
+D.Config('cooldowns').spellDefaults.cdStateEffect=nil
+-- Talent conditions hide entries until the talent is taken.
+lists.cooldowns[2].talentName='Improved Charge'; D.Apply(); assert(#D.compiled.cooldowns==1)
+talentRank=1; D.Apply(); assert(#D.compiled.cooldowns==2); lists.cooldowns[2].talentName=nil
+
+-- Overflow: extra icons move to another bar.
+D.Config('cooldowns').maxIcons=1; D.Config('cooldowns').overflowTarget='utility'; D.Apply()
+assert(D.frames.utility.pool[3]:IsShown() and not D.frames.cooldowns.pool[2]:IsShown())
+D.Config('cooldowns').maxIcons=0; D.Config('cooldowns').overflowTarget=nil; D.Apply()
+
+-- Custom and FocusKick bars get movers and Element Options; FocusKick targets its section.
+local custom=D.AddBar('utility'); D.AddBar('focuskick'); D.Apply()
+assert(unlock['CDM_'..custom.key] and MAP['CDM_'..custom.key].highlightText=='Icon Size')
+assert(unlock.CDM_focuskick and MAP.CDM_focuskick.sectionName=='FOCUSKICK OPTIONS' and MAP.CDM_focuskick.highlightText=='Interrupt Spell')
+D.Config('focuskick').focusKickInterruptSpellID=600; D.Apply(); assert(D.compiled.focuskick[1].meta.name=='Kick')
+function UnitCanAttack() return true end; function UnitChannelInfo() end
+local before=#sounds; nativeCast={'Fireball','Rank 1','Fireball','fire-icon',1000,4000,false,19,false}; D.Update()
+assert(D.frames.focuskick:IsShown() and #sounds==before+1 and sounds[#sounds]=='RaidWarning' and D.frames.focuskick.reminder.text=='Interrupt: Fireball')
+nativeCast={'Shield','Rank 1','Shield','icon',1000,4000,false,20,true}; D.Update(); assert(not D.frames.focuskick:IsShown())
+nativeCast=nil; D.Update(); assert(not D.frames.focuskick:IsShown())
+assert(D.RemoveBar(custom.key) and not D.RemoveBar('cooldowns'))
+
+-- Anchoring to another bar.
+D.Config('utility').anchorTo='cooldowns'; D.Config('utility').anchorPosition='bottom'; D.Apply()
+assert(D.frames.utility.point[2]==D.frames.cooldowns and D.frames.utility.point[1]=='TOP')
+assert(unlock.CDM_utility.isHidden()); D.Config('utility').anchorTo='none'; D.Apply()
+
+-- No frames are created in combat; Bar Glow wrappers wait for combat to end.
+D.OnEvent(nil,'PLAYER_REGEN_DISABLED'); combat=true
+local frames=#allFrames; for i=1,20 do now=now+.1; D.Update() end; D.PrepareActionGlows(); assert(#allFrames==frames)
+now=23; D.ScanAuras(); D.Update(); assert(not D.compiled.buffs[1].active and not D.frames.buffs:IsShown())
+combat=false; D.OnEvent(nil,'PLAYER_REGEN_ENABLED')
+unlockListener(true); assert(D.frames.buffs:IsShown() and D.tbbFrames[2]:IsShown()); unlockListener(false)
+unlock.CDM_cooldowns.savePosition(nil,'BOTTOM','BOTTOM',12,34); D.Apply(); assert(D.frames.cooldowns:GetPoint()=='BOTTOM' and D.Profile().positions.cooldowns.y==34)
 spec=2; D.Apply(); assert(D.Lists()~=lists); spec=1; D.Apply(); assert(D.Lists()==lists)
-D.Profile().cdmBars.bars={}; assert(D.Config('cooldowns').iconSize==42); D.Apply()
-combat=false
-local abButton=CreateFrame('Button',nil,UIParent); abButton.config={keyBoundTarget='ACTIONBUTTON1'}
-function abButton:GetAction() return 'spell',200 end
+
+-- Bar Glows on action buttons, keybinds from the same buttons.
+now=10
+local abButton=CreateFrame('Button',nil,UIParent); abButton.config={keyBoundTarget='ACTIONBUTTON1'}; abButton.action=1
 EllesmereUI._ModuleNS.EllesmereUIActionBars={bars={bar1={buttons={abButton}}}}
-D.PrepareActionGlows(); now=10; lists.buffs[1].highlightSpellID=100; D.Apply(); D.Profile().actionBarGlows=true; D.Update(); D.Update()
-assert(D.actionGlows[abButton][1]:IsShown() and D.frames.cooldowns.pool[1].keybind.text=='1')
-D.Profile().enabled=false; D.Update(); assert(not D.actionGlows[abButton][1]:IsShown() and not D.frames.cooldowns:IsShown())
+lists.barGlows={enabled=true,list={D.NewBarGlowRule(700,200)}}
+lists.barGlows.list[1].unit='target'; lists.barGlows.list[1].filter='HARMFUL'
+auras.target.HARMFUL[2].expires=30; D.Config('cooldowns').showKeybind=true; D.Apply(); D.Update()
+assert(abButton._eui335CdmGlow and abButton._eui335CdmGlow.edges and abButton._eui335CdmGlow.edges[1]:IsShown())
+assert(D.frames.cooldowns.pool[1].keybind.text=='S1',tostring(D.frames.cooldowns.pool[1].keybind.text))
+lists.barGlows.list[1].mode='missing'; D.Update(); assert(not abButton._eui335CdmGlow.edges[1]:IsShown())
+lists.barGlows.list[1].mode='active'; D.Profile().enabled=false; D.Apply(); assert(not abButton._eui335CdmGlow.edges[1]:IsShown() and not D.frames.cooldowns:IsShown())
 D.Profile().enabled=true; D.Apply()
+
+-- 0.1 profiles: indexed bars (defaults stripped) become Retail bars.
+local old={cdmBars={enabled=true,bars={{iconSize=50,growDirection='UP'},{},{show='always'},{width=300}}},positions={tracking={point='TOP',x=1,y=2}}}
+D.Migrate(old)
+local b1=old.cdmBars.bars[1]
+assert(#old.cdmBars.bars==3 and b1.barType=='cooldowns' and b1.iconSize==50 and b1.rowGrowDirection=='UP' and b1.growDirection=='RIGHT')
+assert(old.cdmBars.bars[3].showInactiveBuffIcons==true and old.positions.TBB_1.y==2 and old.tbbLegacy.width==300)
+local fresh={cdmBars={enabled=true}}; D.Migrate(fresh); assert(type(fresh.cdmBars.bars)=='table' and #fresh.cdmBars.bars==0)
+local v1lists={cooldowns={},utility={},buffs={{kind='aura',id=700,highlightSpellID=200}},tracking={{kind='aura',id=701,unit='player'}}}
+D.Profile().wrathSpecLists['TEST:1']=v1lists; local conv=D.ListsFor('TEST:1')
+assert(conv.tbb[1].spellID==701 and conv.tbb[1].width==270 and conv.barGlows.list[1].spellID==200 and conv.tracking==nil)
+
+-- Options widgets
 rows={}; buttons={}; EllesmereUI.Widgets={}
 function EllesmereUI.Widgets:DualRow(parent,y,a,b) rows[#rows+1]=a; rows[#rows+1]=b; return {},40 end
-function EllesmereUI.Widgets:SectionHeader() return {},30 end
+function EllesmereUI.Widgets:SectionHeader(parent,text) rows[#rows+1]={type='section',text=text}; return {},30 end
 function EllesmereUI.Widgets:WideButton(parent,text,y,fn) buttons[text]=fn; return {},30 end
 function Find(text) for _,r in ipairs(rows) do if r.text==text then return r end end end
-function IsLoggedIn() return true end
 ''')
-lua.execute((root/'EllesmereUIOptions/EUI_CooldownManager_335_Options.lua').read_text(encoding='utf-8-sig'))
+lua.execute(sources['Options'])
 lua.execute('''
-local c=modules.EllesmereUICooldownManager; assert(c and #c.pages==3)
-c.buildPage('CDM Bars',UIParent,0); Find('Icon Size').setValue(50); assert(D.Config('cooldowns').iconSize==50)
+local c=modules.EllesmereUICooldownManager; assert(c and #c.pages==3 and c.pages[1]=='CDM Bars' and c.pages[2]=='Bar Glows' and c.pages[3]=='Tracking Bars')
+local MAP=EllesmereUI._ELEMENT_SETTINGS_MAP
+D.selectedBar='cooldowns'
+rows={}; c.buildPage('CDM Bars',UIParent,0)
+for _,name in ipairs({'BAR LAYOUT','ICON DISPLAY','EXTRAS','ADDITIONAL BAR OFFSET','TRACKED SPELLS','ADD ENTRY'}) do assert(Find(name),name) end
+assert(Find(MAP.CDM_cooldowns.highlightText))
+Find('Icon Size').setValue(50); assert(D.Config('cooldowns').iconSize==50)
+Find('Rows').setValue(2); assert(D.Config('cooldowns').numRows==2)
+Find('Cooldown State').setValue('lowerAlphaOnCD'); assert(D.Config('cooldowns').spellDefaults.cdStateEffect=='lowerAlphaOnCD')
+Find('Border Color').setValue(.1,.2,.3,.4); assert(D.Config('cooldowns').borderR==.1 and D.Config('cooldowns').borderA==.4)
 Find('Entry Type').setValue('aura'); Find('Spell / Item ID').setValue('702'); buttons['Add Entry'](); assert(D.Lists().cooldowns[3].id==702)
 rows={}; c.buildPage('CDM Bars',UIParent,0); Find('Aura Unit').setValue('focus'); Find('Aura Type').setValue('HARMFUL'); assert(D.Lists().cooldowns[3].unit=='focus')
 buttons['Move Entry Up'](); assert(D.Lists().cooldowns[2].id==702); buttons['Remove Entry'](); assert(#D.Lists().cooldowns==2)
-rows={}; c.buildPage('Tracking Bars',UIParent,0); Find('Bar Width').setValue(350); assert(D.Config('tracking').width==350)
-Find('Preview').setValue(true); hideOptions(); assert(not D.preview)
-rows={}; c.buildPage('Bar Glows',UIParent,0); assert(Find('Highlight EUI Action Buttons'))
+rows={}; c.buildPage('CDM Bars',UIParent,0)
+Find('Edit Entry').setValue(1); rows={}; c.buildPage('CDM Bars',UIParent,0)
+local cs; for _,r in ipairs(rows) do if r.text=='Cooldown State' then cs=r end end
+assert(cs~=Find('Cooldown State') and cs.getValue()=='default')
+cs.setValue('hiddenReady'); assert(D.Lists().cooldowns[1].cdStateEffect=='hiddenReady' and D.Config('cooldowns').spellDefaults.cdStateEffect=='lowerAlphaOnCD')
+cs.setValue('default'); assert(D.Lists().cooldowns[1].cdStateEffect==nil)
+Find('Talent Must Be').setValue('missing'); assert(D.Lists().cooldowns[1].talentTaken==false)
+Find('Add Item Preset').setValue('runic_mana'); assert(D.Lists().cooldowns[3].kind=='preset')
+Find('Add Buff Preset').setValue('bloodlust'); assert(D.Lists().cooldowns[4].preset=='bloodlust' and D.Lists().cooldowns[4].kind=='aura')
+buttons['Copy This Bar to Other Talent Group'](); assert(#D.ListsFor(D.OtherSpecKey()).cooldowns==4)
+Find('New Bar Type').setValue('focuskick'); buttons['Add Bar'](); assert(D.selectedBar=='focuskick')
+rows={}; c.buildPage('CDM Bars',UIParent,0); assert(Find('FOCUSKICK OPTIONS') and Find(MAP.CDM_focuskick.highlightText))
+Find('Interrupt Spell').setValue('600'); assert(D.Config('focuskick').focusKickInterruptSpellID==600)
+buttons['Remove Selected Bar'](); assert(not D.BarByKey('focuskick') and D.selectedBar=='cooldowns')
+Find('Preview').setValue(true); assert(D.preview); hideOptions(); assert(not D.preview)
+
+rows={}; c.buildPage('Tracking Bars',UIParent,0)
+D.selectedTBB=1; rows={}; c.buildPage('Tracking Bars',UIParent,0)
+for _,name in ipairs({'BAR LAYOUT','TRACKING','TEXT','STACKS','PANDEMIC GLOW','GROUP SETTINGS'}) do assert(Find(name),name) end
+assert(Find(MAP.TBB_1.highlightText))
+Find('Width').setValue(350); assert(D.Lists().tbb[1].width==350 and D.tbbFrames[1].width==350)
+Find('Group').setValue(2); rows={}; c.buildPage('Tracking Bars',UIParent,0)
+Find(MAP.TBBG_2.highlightText).setValue('RIGHT'); assert(D.Profile().tbbGroups[2].growDirection=='RIGHT')
+local n=#D.Lists().tbb; buttons['Add Tracking Bar'](); assert(#D.Lists().tbb==n+1 and D.selectedTBB==n+1)
+buttons['Remove Selected Bar'](); assert(#D.Lists().tbb==n)
+
+rows={}; c.buildPage('Bar Glows',UIParent,0); assert(Find('BAR GLOWS') and Find('Enable Bar Glows'))
+buttons['Add Glow'](); rows={}; c.buildPage('Bar Glows',UIParent,0)
+Find('Aura Spell ID').setValue('701'); Find('Glow When').setValue('missing'); local g=D.Lists().barGlows.list[#D.Lists().barGlows.list]
+assert(g.auraID==701 and g.mode=='missing')
+Find('Glow Color').setValue(.2,.3,.4); assert(g.glowR==.2)
+buttons['Remove Glow'](); assert(D.Lists().barGlows.list[#D.Lists().barGlows.list]~=g)
 SlashCmdList.EUI335CDM(''); assert(shownModule=='EllesmereUICooldownManager')
+c.onReset(); assert(#D.Bars()==3 and D.Config('cooldowns').iconSize==42)
+assert(#lifecycleErrors==0,lifecycleErrors[1])
 ''')
 panel=(root/'EllesmereUI/EllesmereUI_Panel.lua').read_text(encoding='utf-8-sig')
 helper=panel.split('function EllesmereUI.GetCombinedAddonMemoryUsage()',1)[1].split('\nend',1)[0]
@@ -134,5 +316,8 @@ lua.execute('assert(EllesmereUI.GetCombinedAddonMemoryUsage()==1792 and memoryUp
 assert 'resCpuLabel:SetText("Memory Usage:")' in panel and 'memory / 1024' in panel
 original=Path('D:/World of Warcraft/_retail_/Interface/AddOns/EllesmereUICooldownManager')
 for p in original.rglob('*.lua'):
-    assert p.read_bytes()==(root/'EllesmereUICooldownManager'/p.name).read_bytes(),p
-print('PASS: cooldown manager native Lite lifecycle, ranks/passives/pet, own unit-filtered auras, timers/GCD/stacks/items, preview/unlock/spec persistence, settings assignments, action glows/bindings, no combat frame allocations, independent runtime, unchanged Retail references; combined loaded EUI memory including Options.')
+    assert p.read_bytes()==(module/p.name).read_bytes(),p
+print('PASS: cooldown manager 0.2 - Retail bar model and 0.1 migration, CDM/TBB/group movers with Element Options targets, '
+      'spell/item/aura/preset resolution, timers/GCD/stacks/states/glows/talent conditions/overflow/anchors/FocusKick, '
+      'tracking bars (fill, reverse, stacks, pandemic, groups), bar glows and keybinds, options pages, no combat frame '
+      'allocation, Lua 5.1 compile, combined EUI memory, unchanged Retail references.')

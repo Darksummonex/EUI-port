@@ -1,4 +1,4 @@
-"""Native Wrath API/lifecycle checks for both new modules; in-game QA still required."""
+"""Native Wrath API/lifecycle checks for Bags plus the shared Retail-copy/TOC checks for Resource Bars; in-game QA still required."""
 from pathlib import Path
 import sys
 root=Path(__file__).resolve().parents[1]
@@ -35,6 +35,7 @@ local function CopyBarDD(names,order,lookup) return names,order end
 '''
     return lua.execute(context+body+'\nreturn '+name)
 
+RB_FILES=['EUI_ResourceBars_335.lua','EUI_ResourceBars_335_Bars.lua','EUI_ResourceBars_335_Cast.lua','EUI_ResourceBars_335_Swing.lua','EUI_ResourceBars_335_Totems.lua']
 BAG_FILES=['EUI_Bags_335.lua','EUI_Bags_335_Cache.lua','EUI_Bags_335_Categories.lua','EUI_Bags_335_Window.lua','EUI_Bags_335_Broker.lua']
 for folder in ['EllesmereUIBags','EllesmereUIResourceBars']:
     retail=Path('D:/World of Warcraft/_retail_/Interface/AddOns')/folder
@@ -44,7 +45,7 @@ for folder in ['EllesmereUIBags','EllesmereUIResourceBars']:
     toc=(root/folder/(folder+'.toc')).read_text(encoding='utf-8-sig')
     assert '## Interface: 30300' in toc
     loaded=[line.strip() for line in toc.splitlines() if line.strip() and not line.startswith('#')]
-    assert loaded==(BAG_FILES if folder.endswith('Bags') else ['EUI_ResourceBars_335.lua'])
+    assert loaded==(BAG_FILES if folder.endswith('Bags') else RB_FILES)
 
 lua,safe=runtime()
 bags=load(lua,'EllesmereUIBags',BAG_FILES[0]); lua.globals().BAGS=bags
@@ -169,89 +170,4 @@ FindRow('Set Name Text Size').setValue(12); assert(BAGS.GetSettings().bagSetName
 FindRow('BoE Text Size'); for _,row in ipairs(rows) do assert(row.text~='BoE / Warbound Text Size') end
 ''')
 print('PASS: real Global Fonts Bags tile writes live item counts, set name and BoE sizes without the Warbound label')
-
-for player_class in ['WARRIOR','ROGUE','DRUID','DEATHKNIGHT','SHAMAN']:
-    lua,safe=runtime(player_class)
-    resource=load(lua,'EllesmereUIResourceBars','EUI_ResourceBars_335.lua'); lua.globals().RB=resource
-    safe(resource.addon.OnInitialize,resource.addon); safe(resource.addon.OnEnable,resource.addon)
-    lua.execute('''
-local p=RB.GetSettings(); local f=RB.frames
-assert(_ERB_AceDB==RB.addon.db and _ERB_Apply==RB.Apply)
-assert(f.primary:IsShown() and not f.health:IsShown() and not f.castBar:IsShown())
-assert(f.primary.bar.value==50 and f.primary.bar.maximum==100 and f.primary.bar.text:GetText()=='50 / 100')
-assert(CastingBarFrame:GetAlpha()==.7)
-maxPower=0; RB.UpdateVitals(); assert(not f.primary:IsShown() and f.primary.bar.maximum==1)
-maxPower=100; powerType=1; powerToken='RAGE'; RB.UpdateVitals(); assert(f.primary.bar.color[1]==1 and f.primary.bar.color[2]==0)
-p.castBar.enabled=true; p.gcdBar.enabled=true; p.health.enabled=true; RB.Apply(); assert(CastingBarFrame:GetAlpha()==0)
-CastingBarFrame:SetAlpha(1); assert(CastingBarFrame:GetAlpha()==0)
-now=10; nativeCast={'Fireball','Rank 1','Fireball','fire-icon',9000,12000,false,1}; RB.events:RunScript('OnEvent','UNIT_SPELLCAST_START','player')
-assert(f.castBar:IsShown() and f.castBar.bar.value==1 and f.castBar.timer:GetText()=='2.0')
-nativeCast[6]=13000; RB.events:RunScript('OnEvent','UNIT_SPELLCAST_DELAYED','player'); assert(f.castBar.bar.maximum==4)
-nativeCast={'Frostbolt','Rank 1','Frostbolt','frost-icon',10000,14000,false,2}
-RB.events:RunScript('OnEvent','UNIT_SPELLCAST_STOP','player','Fireball',1,1); assert(RB.cast.name=='Frostbolt')
-nativeCast=nil; nativeChannel={'Drain Life','Rank 1','Drain Life','drain-icon',9000,13000}
-RB.events:RunScript('OnEvent','UNIT_SPELLCAST_CHANNEL_START','player'); assert(RB.cast.channel and f.castBar.bar.value==3)
-local cb=f.castBar.bar; local tick=cb._euiChannelTicks[1]
-assert(#cb._euiChannelTicks==4 and cb._euiChannelTicks[4]:IsShown() and math.abs(select(4,tick:GetPoint(1))-cb:GetWidth()*.8)<.00001)
-now=10.016; RB.events:RunScript('OnUpdate',.016); assert(math.abs(cb.value-2.984)<.00001,'Cast fill still throttled at 20Hz')
-nativeChannel[6]=12000; RB.events:RunScript('OnEvent','UNIT_SPELLCAST_CHANNEL_UPDATE','player')
-assert(RB.cast.ticks.interval==.8 and cb._euiChannelTicks[3]:IsShown() and not cb._euiChannelTicks[4]:IsShown())
-p.castBar.showChannelTicks=false; RB.ReadCast(); assert(not tick:IsShown())
-p.castBar.showChannelTicks=true; RB.ReadCast(); assert(tick:IsShown() and cb._euiChannelTicks[1]==tick)
-now=10
-nativeChannel=nil; RB.events:RunScript('OnEvent','UNIT_SPELLCAST_CHANNEL_STOP','player'); assert(not f.castBar:IsShown())
-gcdStart=10; gcdDuration=1.5; RB.events:RunScript('OnEvent','SPELL_UPDATE_COOLDOWN'); assert(f.gcdBar:IsShown())
-now=10.5; RB.events:RunScript('OnUpdate',.1); assert(f.gcdBar.bar.value==1)
-now=12; RB.events:RunScript('OnUpdate',.1); assert(not f.gcdBar:IsShown())
-gcdDuration=10; RB.ReadGCD(); assert(not f.gcdBar:IsShown())
-local mover=unlockByFolder.EllesmereUIResourceBars[2]; mover.savePos(nil,'CENTER','CENTER',10,0); RB.Apply(); assert(select(5,f.primary:GetPoint(1))==0)
-local db=RB.addon.db; RB.addon.db=nil; assert(mover.loadPos()==nil and mover.isHidden()); mover.savePos(nil,'CENTER','CENTER',1,1); mover.clearPos(); mover.applyPos(); RB.addon.db=db
-local width=f.primary:GetWidth(); combat=true; p.primary.width=300; RB.Apply(); assert(f.primary:GetWidth()==width)
-combat=false; RB.events:RunScript('OnEvent','PLAYER_REGEN_ENABLED'); assert(f.primary:GetWidth()==300)
-p.primary.textSize=16; p.general.barTexture='plating'; _ERB_Apply(); assert(f.primary.bar.text.font[2]==16 and f.primary.bar.statusTexture==_ERB_BarTextures.plating)
-p.splitTex=true; p.health.barTexture='fade'; RB.Apply(); assert(f.health.bar.statusTexture==_ERB_BarTextures.fade and f.secondary.bars[1].statusTexture==_ERB_BarTextures.plating)
-if playerClass=='ROGUE' then
-    assert(f.secondary:IsShown() and f.secondary.bars[3].value==1 and f.secondary.bars[4].value==0 and not f.secondary.bars[6]:IsShown())
-elseif playerClass=='DRUID' then
-    assert(not f.secondary:IsShown()); powerType=3; RB.events:RunScript('OnEvent','UNIT_DISPLAYPOWER','player'); assert(f.secondary:IsShown()); powerType=0; RB.UpdateClass(); assert(not f.secondary:IsShown())
-elseif playerClass=='DEATHKNIGHT' then
-    assert(f.secondary:IsShown() and f.secondary.bars[6]:IsShown())
-    runes[1]={start=10,duration=10,ready=false,type=4}; now=15; RB.UpdateClass(); assert(f.secondary.bars[1].value==.5 and f.secondary.bars[1].text:GetText()=='5.0')
-    runes[1].ready=true; RB.events:RunScript('OnEvent','RUNE_POWER_UPDATE',1); assert(f.secondary.bars[1].value==1 and f.secondary.bars[1].text:GetText()=='')
-elseif playerClass=='SHAMAN' then
-    totems[1]={name='Searing Totem',start=10,duration=30}; now=15; RB.events:RunScript('OnEvent','PLAYER_TOTEM_UPDATE',1)
-    assert(f.totemBar:IsShown() and f.totemBar.bars[1].value==25 and f.totemBar.bars[1].text:GetText()=='25')
-    now=41; RB.events:RunScript('OnUpdate',.1); assert(not f.totemBar:IsShown())
-else assert(not f.secondary:IsShown() and not f.totemBar:IsShown()) end
-EllesmereUI.listeners.EllesmereUIResourceBars(true); assert(f.castBar:IsShown() and f.gcdBar:IsShown())
-EllesmereUI.listeners.EllesmereUIResourceBars(false); assert(not f.castBar:IsShown() and not f.gcdBar:IsShown())
-p.enabled=false; RB.Apply(); for _,frame in pairs(f) do assert(not frame:IsShown()) end; assert(CastingBarFrame:GetAlpha()==.7)
-p.enabled=true; p.castBar.enabled=false; RB.Apply(); assert(f.primary:IsShown() and CastingBarFrame:GetAlpha()==.7)
-''')
-    load(lua,'EllesmereUIOptions','EUI_ResourceBars_335_Options.lua')
-    lua.execute('''
-allFrames[#allFrames]:RunScript('OnEvent','PLAYER_LOGIN')
-local cfg=modules.EllesmereUIResourceBars; assert(cfg and #cfg.pages==1)
-for _,key in ipairs(RB.order) do
-    rows={}; RB.SelectWrathBar(key,false); cfg.buildPage('Bars',UIParent,0)
-    assert(FindRow('Select Bar').getValue()==key)
-    FindRow('Width').setValue(240); assert(RB.frames[key]:GetWidth()==240)
-end
-FindRow('Select Bar').setValue('primary'); assert(RB.selectedWrathBar=='primary' and invalidated and refreshed)
-EllesmereUI._ELEMENT_SETTINGS_MAP.ERB_CastBar.preSelectFn(); assert(RB.selectedWrathBar=='castBar')
-''')
-    if player_class=='SHAMAN':
-        rb_font=tile(lua,'EUI_Fonts_Options.lua','TileResourceBars','TileAuraBuffReminders')
-        lua.execute('rows={}')
-        rb_font(lua.globals().UIParent,0,lua.globals().EllesmereUI.Widgets,lua.table_from({'folder':'EllesmereUIResourceBars','display':'Resource Bars'}))
-        lua.execute("FindRow('Totem Timer Size').setValue(14); assert(RB.frames.totemBar.bars[1].text.font[2]==14)")
-        rb_texture=tile(lua,'EUI_Textures_Options.lua','TileResourceBars','TileChat')
-        lua.execute('rows={}; links={}')
-        rb_texture(lua.globals().UIParent,0,lua.globals().EllesmereUI.Widgets,lua.table_from({'folder':'EllesmereUIResourceBars','display':'Resource Bars'}))
-        lua.execute('''
-FindRow('Power Bar Texture').setValue('fade'); assert(RB.frames.primary.bar.statusTexture==_ERB_BarTextures.fade)
-FindRow('Cast Bar Texture').setValue('glass'); assert(RB.frames.castBar.bar.statusTexture==_ERB_BarTextures.glass)
-assert(links[#links][2]=='Bars')
-''')
-        print('PASS: real Global Fonts/Textures Resource Bars tiles write live timer/fonts/textures and navigate to the Wrath page')
-    print(f'PASS: {player_class} power/class bars, cast/channel events, GCD, native restoration, combat, fonts/textures, Edit Mode and all option selections')
+# Resource Bars behaviour lives in validate_resourcebars.py.

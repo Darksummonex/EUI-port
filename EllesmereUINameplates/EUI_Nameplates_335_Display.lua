@@ -160,7 +160,7 @@ function ns.Capture(plate,native)
     s.texts={name=s.name,level=s.level,healthPercent=s.healthText}
     s.arrowL,s.arrowR=Tex(s.textHost,"OVERLAY"),Tex(s.textHost,"OVERLAY")
     s.raid,s.class=Tex(s.textHost,"OVERLAY"),Tex(s.textHost,"OVERLAY")
-    s.cast=Bar(root); s.cast:SetFrameLevel(base+2)
+    s.cast=Bar(root); s.cast:SetFrameLevel(base+2); s.cast.state=s
     s.castBg=Tex(s.cast,"BACKGROUND"); s.castBg:SetAllPoints(s.cast)
     s.castBorder=Edges(s.cast)
     s.castSpark=Tex(s.cast,"OVERLAY",SPARK); s.castSpark:SetBlendMode("ADD")
@@ -364,31 +364,59 @@ local function Layout(s,p,nameOnly)
     end
 end
 
+-- Called every frame while a cast is shown. Timed casts follow GetTime();
+-- anonymous plates mirror the native bar, which the client advances per frame.
+local function CastProgress(s,value,left)
+    if s.castEnd then
+        left=s.castEnd-GetTime(); if left<0 then left=0 end
+        value=left/s.castDuration
+        if not s.castChannel then value=1-value end
+    elseif not value then value=ns.Ratio(s.native.cast) end
+    s.cast:SetValue(value)
+    local spark=s.castSparkOn and value>0 and value<1 or false
+    if spark~=s.castSparkShown then
+        s.castSparkShown=spark
+        if spark then s.castSpark:Show() else s.castSpark:Hide() end
+    end
+    local tenth=s.castTimerOn and left and math.floor(left*10+.5) or -1
+    if tenth~=s.castTenth then
+        s.castTenth=tenth
+        s.castTimer:SetText(tenth>=0 and string.format("%.1f",tenth/10) or "")
+    end
+    return value,left
+end
+local function CastTick(bar) CastProgress(bar.state) end
+local function StopCastTick(s)
+    if s.castTicking then s.castTicking=false; s.cast:SetScript("OnUpdate",nil) end
+end
 local function PaintCast(s,p)
-    local name,icon,left,value,locked,duration,channel=ns.CastInfo(s)
+    local name,icon,left,value,locked,duration,channel,endTime=ns.CastInfo(s)
     local flashing=s.flashUntil and s.flashUntil>GetTime() and not name
     local visible=p.showCastBar and not s.nameOnly and (name or s.native.cast:IsShown() or flashing)
     s.castVisible=visible and not flashing and true or false
-    if not visible then s.cast:Hide(); s.castIcon:Hide(); return end
+    if not visible then StopCastTick(s); s.cast:Hide(); s.castIcon:Hide(); return end
     s.cast:Show()
     icon=icon or (s.native.icon and s.native.icon:GetTexture()) or s.lastCastIcon
     s.lastCastIcon=icon
     if icon and p.castIconPosition~="none" then s.castIcon.tex:SetTexture(icon); s.castIcon:Show() else s.castIcon:Hide() end
     if flashing then
+        StopCastTick(s)
         s.cast:SetValue(1); s.cast:SetStatusBarColor(RGB(p.interruptedColor))
-        s.castText:SetText(p.showCastName and (INTERRUPTED or "Interrupted") or ""); s.castTimer:SetText("")
-        s.castSpark:Hide(); s.castShield:Hide(); s.kickTick:Hide()
+        s.castText:SetText(p.showCastName and (INTERRUPTED or "Interrupted") or ""); s.castTimer:SetText(""); s.castTenth=-1
+        s.castSpark:Hide(); s.castSparkShown=false; s.castShield:Hide(); s.kickTick:Hide()
         return
     end
-    value=value or ns.Ratio(s.native.cast)
-    s.cast:SetValue(value)
+    s.castEnd=endTime and duration and duration>0 and endTime or nil
+    s.castDuration,s.castChannel=duration,channel
+    s.castSparkOn,s.castTimerOn=p.castBarSparkEnabled,p.showCastTimer
+    value,left=CastProgress(s,value,left)
+    if not s.isPreview and not s.castTicking then s.castTicking=true; s.cast:SetScript("OnUpdate",CastTick) end
     local uninterruptible=locked or (s.native.shield and s.native.shield:IsShown()) or false
     s.uninterruptible=uninterruptible
     if uninterruptible then s.cast:SetStatusBarColor(RGB(p.castBarUninterruptible))
     elseif p.castBarKickTint and E.ComputeCastBarTint then s.cast:SetStatusBarColor(E.ComputeCastBarTint(p.interruptReady,p.castBarColor))
     else s.cast:SetStatusBarColor(RGB(p.castBarColor)) end
     if uninterruptible and p.castBarShieldEnabled then s.castShield:Show() else s.castShield:Hide() end
-    if p.castBarSparkEnabled and value>0 and value<1 then s.castSpark:Show() else s.castSpark:Hide() end
     -- Kick tick: where the bar will be when the interrupt comes off cooldown.
     local remaining=p.kickTickEnabled and name and not uninterruptible and E.GetKickCooldownRemaining and E.GetKickCooldownRemaining()
     if remaining and remaining>0 and remaining<left and duration and duration>0 then
@@ -399,7 +427,6 @@ local function PaintCast(s,p)
     s.castText:ClearAllPoints()
     s.castText:SetPoint("LEFT",s.cast,"LEFT",s.castShield:IsShown() and math.floor(p.castHeight*.75+.5)+4 or 4,0)
     s.castText:SetText(p.showCastName and name or "")
-    s.castTimer:SetText(p.showCastTimer and left and string.format("%.1f",left) or "")
 end
 
 local TOT_UNITS={target="targettarget",mouseover="mouseovertarget",focus="focustarget"}

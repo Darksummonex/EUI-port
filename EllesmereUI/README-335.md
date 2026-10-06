@@ -1,4 +1,71 @@
-# EllesmereUI Wrath Core — 0.37
+# EllesmereUI Wrath Core — 0.46
+
+0.46: o ponto de "novo patch" do Patch Notes agora compara as versões dos TOCs
+dos módulos EllesmereUI instalados (o EllesmereUI.VERSION fica fixo em 9.3.4
+no Wrath), então acende uma vez após cada atualização do backport. As notas
+em si ficam no Options 0.76. Teste: backport-tools/validate_patch_notes.py.
+
+0.45 registra o novo módulo EllesmereUI Arena: entra na barra lateral como
+"Arena Frames" no grupo Core Addons (abaixo de Raid Frames), na lista do
+primeiro uso, nos perfis (EllesmereUIArenaDB), na troca de perfil e nas
+substituições por especialização (_EARENA_Apply), na fonte por módulo
+(chave "arena") e nos apelidos da busca ("arena", "trinket", "gladius").
+
+0.44 conserta a lista de resultados da busca do painel: ela aparecia sem fundo,
+com a barra lateral (nomes dos módulos e botões de ligar) e a página por cima
+dos resultados. No Wrath o estrato próprio de um quadro filho volta ao do pai
+quando ele aparece, então a lista ficava atrás do painel. Agora ela é filha do
+UIParent (como os menus suspensos), reaplica FULLSCREEN_DIALOG ao abrir, segue
+a escala do painel e fecha junto com ele.
+
+0.43 limpa os nomes na lista de addons: o Core agora aparece só como
+"EllesmereUI" (sem "- 3.3.5 Core"), e Options e DataBars perderam o
+"- 3.3.5". Todos os módulos declaram `## X-Part-Of: EllesmereUI`, então no
+ACP, com "Group By Name", eles ficam agrupados (e recolhíveis) abaixo da linha
+do Core, como os módulos do DBM. Na ordenação "Titles" eles também vêm logo
+depois do Core, porque o título do Core é o prefixo de todos os outros.
+
+0.42 traz de volta o botão "EllesmereUI" do menu Esc. Até a 0.40 o Wrath
+ignorava a opção "Hide Pause Menu Button", então um `hideGameMenuButton=true`
+salvo (de um perfil importado ou marcado sem querer) nunca aparecia. A 0.40
+passou a respeitar essa opção e o botão sumiu. O valor salvo é limpo uma única
+vez (`wrathGameMenuFlagsV1`); depois disso a opção em "EUI Buttons" funciona
+normalmente e uma escolha nova de esconder é mantida.
+
+0.41 corrige o menu de clique direito (engrenagem) dos elementos no Unlock
+Mode, que sumia logo depois de aberto. O Wrath limita o nível dos frames a
+cerca de 256. Com muitos elementos, o mover em foco (nível +100) passava do
+bloqueador de cliques (249) e do próprio menu (250). Ao tirar o mouse do
+mover, a sobreposição se recolhia em 0,15 s e a engrenagem, ao esconder,
+fechava o menu. No Wrath, os movers agora ficam no máximo no nível 238 (a
+engrenagem, em 248), sempre abaixo do bloqueador. O menu fica aberto como no
+Retail.
+
+0.40 adiciona o botão "EUI Unlock Mode" ao menu Esc, logo abaixo do botão
+"EllesmereUI". Ele fecha o menu e liga/desliga o Unlock Mode; em combate só
+mostra o aviso. Diferente do Retail, que o esconde até ser ativado, no Wrath
+ele aparece por padrão (o valor salvo `hideUnlockMenuButton=false` é gravado
+uma única vez, e uma escolha explícita de esconder é respeitada). Os dois
+botões seguem o menu "EUI Buttons" das opções gerais. Agora eles ficam
+ancorados em Macros, e o que vinha depois (Logout, ElvUI, ACP) desce para
+baixo deles; assim a cadeia nunca fica circular com o ElvUI, em qualquer
+ordem de carregamento.
+
+0.39 clareia a barra superior do Unlock Mode, que ficava quase ilegível no
+Wrath: o texto de 10px com contorno perde o preenchimento em alfa baixo (o
+Wrath não tem o renderizador Slug do Retail). As opções (Cursor Light, Dark
+Overlays, Grid Lines, Snap Elements, Coordinates, Hover Top Bar) passam de
+0,60/0,30 para 0,90/0,60 (ligado/desligado) e chegam a 1,0 com o mouse por
+cima. O botão Exit ganhou texto e borda mais fortes, e o texto não escurece
+mais depois de passar o mouse. O painel de opções não muda.
+
+0.38 corrige o "C stack overflow" em `EllesmereUI_SpecOverrides_335.lua` ao
+abrir as opções de Raid Frames. As bordas douradas leem as opções através de
+proxies; quando um getter gravava de volta o que leu (`t.x = t.x or {}`), o
+proxy era salvo no perfil real e ganhava uma camada a cada leitura. Agora os
+proxies nunca são gravados no perfil, e os que já estavam presos são
+desembrulhados na próxima leitura. `validate_spec_overrides.py` repete o
+padrão 300 vezes.
 
 0.37 converte a arte do Unlock Mode para TGA (o Wrath não lê PNG):
 `prepare_unlock_media.py` gerou cópias potência-de-dois do banner, das camadas

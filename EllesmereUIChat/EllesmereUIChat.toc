@@ -4,6 +4,7 @@
 ## Author: Ellesmere / 3.3.5 backport
 ## Version: 9.3.4-335-0.42
 ## Dependencies: EllesmereUI
+## X-Part-Of: EllesmereUI
 ## SavedVariables: EllesmereUIChatDB
 ## SavedVariablesPerCharacter: EllesmereUIChatScrollDB
 ## IconTexture: Interface\AddOns\EllesmereUI\media\eg-logo.tga

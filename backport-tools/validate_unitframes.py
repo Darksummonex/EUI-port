@@ -61,6 +61,7 @@ def load(name):
 
 load('EUI_UnitFrames_335.lua')
 load('EUI_UnitFrames_335_Textures.lua')
+load('EUI_UnitFrames_335_Media.lua')
 lua.globals().W = ns.Wrath
 lua.execute('''
 assert(type(W.IsSecretValue) == "function")
@@ -364,6 +365,155 @@ settings.buffExclude={[100]=true}; UF.UF_ReloadAuraContainers(frame,"target"); a
 settings.showBuffs=false; UF.UF_ReloadAuraContainers(frame,"target"); assert(not buffs.shown)
 UF.UF_HideAuraContainers(frame); assert(not debuffs.shown)
 ''')
+lua.execute('''
+-- Retail aura look keys on the Wrath lanes: layout, crop, text, borders,
+-- weapon enchants, right-click cancel, purge glow and the dispel overlay.
+local methods = getmetatable(UIParent).__index
+local setPoint, setLevel, border = methods.SetPoint, methods.SetFrameLevel, EllesmereUI.ApplyBorderStyle
+function methods:SetPoint(...) self.point = {...} end
+function methods:SetFrameLevel(v) self.level = v end
+function EllesmereUI.ApplyBorderStyle(f, size, r, g, b, a, tex) f.bs = {size=size, r=r, g=g, b=b, a=a, tex=tex} end
+local fmt = UF.UF_WrathFormatAuraDuration
+assert(fmt(30) == "30" and fmt(90) == "2m" and fmt(90, 120) == "1:30" and fmt(150, 120) == "3m" and fmt(7200) == "2h")
+local s = { showBuffs=true, buffAnchor="topleft", buffGrowth="auto", maxBuffs=4, buffSize=20, buffSpacingX=2, buffSpacingY=3,
+    debuffAnchor="bottomright", debuffGrowth="left", maxDebuffs=8, debuffSize=30, debuffCropIcons=true, debuffMaxPerRow=1,
+    debuffShowCooldownText=true, debuffStackTextPosition="topleft", debuffDispelBorder=true, auraBorderTexture="beveled" }
+UF.UF_GetSettings = function() return s end
+local frame = W.CreateFrame("Button"); frame._euiUnit="target"; frame:SetSize(200,40)
+UF.UF_CreateAuraContainers(frame,"target")
+local buffs, debuffs = frame.children[1], frame.children[2]
+assert(buffs.width == 20 and buffs.height == 20 and buffs.point[1] == "BOTTOMLEFT" and buffs.point[3] == "TOPLEFT")
+assert(buffs.buttons[1].count.text == 2 and buffs.buttons[1].border.level == 3 and buffs.buttons[1].textFrame.level == 5)
+local d1, d2 = debuffs.buttons[1], debuffs.buttons[2]
+assert(debuffs.point[1] == "TOPRIGHT" and debuffs.point[3] == "BOTTOMRIGHT")
+assert(d1.width == 30 and d1.height == 24, "cropped icons are 80% tall")
+assert(debuffs.width == 30 and debuffs.height == 24*2+1, "one per row stacks the lane")
+assert(d2.point[1] == "BOTTOMRIGHT" and d2.point[4] == 0 and d2.point[5] == 25)
+assert(d1.dur.shown and d1.dur.text == "10" and not buffs.buttons[1].dur.shown)
+assert(d1.border.bs.tex == "solid" and math.abs(d1.border.bs.b - 1) < 1e-9, "dispel ring defaults to a solid Magic tint")
+s.auraBorderDispelTextured=true; UF.UF_ReloadAuraContainers(frame,"target")
+assert(d1.border.bs.tex == "beveled")
+s.auraBorderBehind=true; UF.UF_ReloadAuraContainers(frame,"target"); assert(d1.border.level == 0)
+s.auraBorderBehind=nil; s.debuffDispelBorder=nil; s.auraBorderR=.5; UF.UF_ReloadAuraContainers(frame,"target")
+assert(d1.border.bs.r == .5 and d1.border.bs.tex == "beveled")
+-- Purgeable Buff Glow: an attackable unit, a Magic buff and a class that can remove it.
+local glow = EllesmereUI.Glows
+glow.StartSpecGlow = function(w, spec, wd, ht, host) w.spec, w.host = spec, host end
+glow.ResolveColor = function(mode, r, g, b) if mode ~= "default" then return r, g, b end end
+local ua, uc, uca = UnitAura, UnitClass, UnitCanAttack
+UnitAura = function(u, i, f)
+    if f == "HELPFUL" and i == 1 then return "Buff",nil,"buff-icon",1,"Magic",10,12,"other",nil,nil,100 end
+    return ua(u, i, f)
+end
+UnitCanAttack = function() return true end
+UnitClass = function() return "Mage","MAGE" end
+s.buffPurgeGlow=3; s.buffPurgeGlowColor={r=0,g=1,b=0}; UF.UF_ReloadAuraContainers(frame,"target")
+local bg = buffs.buttons[1].glow
+assert(bg.shown and bg.spec.style == 3 and bg.spec.g == 1 and bg.host == "icon")
+assert(UF.UF_PurgeGlowSpec(s).style == 3 and UF.UF_WrathCanPurge())
+UnitClass = uc; UF.UF_ReloadAuraContainers(frame,"target"); assert(not bg.shown, "warriors cannot purge")
+UnitClass = function() return "Mage","MAGE" end; UnitCanAttack = uca
+UF.UF_ReloadAuraContainers(frame,"target"); assert(not bg.shown, "friendly buffs never glow")
+UnitAura, UnitClass, s.buffPurgeGlow = ua, uc, nil
+-- Player: weapon enchants lead the All buff run; right-click cancels out of combat.
+local enchant = { 1, 60000, 3 }
+GetWeaponEnchantInfo = function() return enchant[1], enchant[2], enchant[3], nil, nil, nil end
+GetInventoryItemTexture = function(_, slot) return slot == 16 and "mh-icon" end
+local cancelled = {}
+CancelUnitBuff = function(u, i, f) cancelled[#cancelled+1] = u..i..f end
+CancelItemTempEnchantment = function(w) cancelled[#cancelled+1] = "enchant"..w end
+local pf = W.CreateFrame("Button"); pf._euiUnit="player"; pf:SetSize(200,40)
+pf.Health = W.CreateFrame("StatusBar", nil, pf)
+UF.UF_CreateAuraContainers(pf,"player")
+local pb = UF.WrathAuraEntries[pf].buffs
+local e1, b1 = pb.enchants[1], pb.buttons[1]
+assert(e1.shown and e1.slot == 16 and e1.icon.texture == "mh-icon" and e1.count.text == 3)
+assert(e1.point[4] == 0 and b1.point[4] == 22 and pb.width == 42, "main hand sits before the aura run")
+b1:GetScript("OnClick")(b1, "RightButton"); e1:GetScript("OnClick")(e1, "RightButton")
+assert(cancelled[1] == "player1HELPFUL" and cancelled[2] == "enchant1")
+local combat = InCombatLockdown; InCombatLockdown = function() return true end
+b1:GetScript("OnClick")(b1, "RightButton"); assert(#cancelled == 2, "cancel is blocked in combat")
+InCombatLockdown = combat
+s.buffFilterMode="own"; UF.UF_ReloadAuraContainers(pf,"player"); assert(not e1.shown)
+s.buffFilterMode=nil; enchant[1] = nil; UF.UF_ReloadAuraContainers(pf,"player"); assert(not e1.shown and pb.width == 20)
+-- Player dispel overlay: fill / sharp gradient / By Me (HARMFUL|RAID) / custom border.
+local profile = { dispelOverlay="fill", dispelOverlayOpacity=50, player={} }
+local getProfile = UF.UF_GetProfile
+UF.UF_GetProfile = function() return profile end
+UF.UF_ReloadAuraContainers(pf,"player")
+local d = UF.WrathAuraEntries[pf].dispel
+assert(d and d.type == "Magic" and d.tex.shown)
+profile.dispelOverlay="gradient_sharp"; UF.UF_ReloadAuraContainers(pf,"player")
+assert(d.tex.texture:find("gradient-sharp.tga", 1, true))
+profile.dispelOverlayByMe=true; UF.UF_ReloadAuraContainers(pf,"player")
+assert(not d.tex.shown and d.type == nil, "By Me reads HARMFUL|RAID only")
+profile.dispelOverlayByMe=nil; profile.dispelOverlay="none"; UF.UF_ReloadAuraContainers(pf,"player")
+assert(not d.tex.shown)
+UF.UF_GetProfile = getProfile
+GetWeaponEnchantInfo, GetInventoryItemTexture, CancelUnitBuff, CancelItemTempEnchantment = nil, nil, nil, nil
+methods.SetPoint, methods.SetFrameLevel, EllesmereUI.ApplyBorderStyle = setPoint, setLevel, border
+-- Power events carry the native event's power token, not the display type.
+local pe, got = W.CreateFrame("Frame")
+pe:RegisterUnitEvent("UNIT_POWER_FREQUENT", "player")
+pe:SetScript("OnEvent", function(_, _, _, token) got = token end)
+pe:GetScript("OnEvent")(pe, "UNIT_RAGE", "player"); assert(got == "RAGE")
+pe:GetScript("OnEvent")(pe, "UNIT_RUNIC_POWER", "player"); assert(got == "RUNIC_POWER")
+-- Boss range, threat %, pet power/happiness and the diet list.
+IsSpellInRange = function(name) if name == "Smite" then return 1 elseif name == "Far" then return 0 end end
+assert(W.IsSpellInRange("Smite", "boss1") == true and W.IsSpellInRange("Far", "boss1") == false)
+assert(W.IsSpellInRange("Unknown", "boss1") == nil and W.IsSpellInRange("Smite", nil) == nil)
+assert(W.HealSpells.PRIEST and W.HarmRangeSpells.SHAMAN)
+IsSpellInRange = nil
+local fs = W.CreateFrame("Frame"):CreateFontString()
+EllesmereUI.PaintThreatPct(fs, 87.4, 2, false, true); assert(fs.text == "87%")
+assert(UF.UF_PetHasPower == true and type(UF.UF_ApplyPetHappiness) == "function")
+GetPetFoodTypes = function() return "Meat", "Fish" end
+local diet = C_PetInfo.GetPetFoodTypes(); assert(type(diet) == "table" and diet[2] == "Fish")
+GetPetFoodTypes = nil
+assert(type(UF.UFOpt_WrathFilterRow) == "function")
+''')
+# The druid form bar loads for druids only; exercise it as a Cat Form druid.
+lua.execute('''
+local methods = getmetatable(UIParent).__index
+methods.SetWordWrap = methods.SetWordWrap or function() end
+methods.SetReverseFill = methods.SetReverseFill or function() end
+EllesmereUI.PP.UpdateBorder = EllesmereUI.PP.UpdateBorder or function() end
+savedUnitClass, UnitClass = UnitClass, function() return "Druid","DRUID" end
+savedPowerType, UnitPowerType = UnitPowerType, function() return formPT or 0, formToken or "MANA" end
+''')
+load('EUI_UnitFrames_335_FormBar.lua')
+lua.execute('''
+local draws = UF.UF_PowerBarDraws
+formPT, formToken = 3, "ENERGY"
+UF.UF_PowerBarDraws = function() return true end
+local fp = W.CreateFrame("Frame"); local pw = W.CreateFrame("StatusBar", nil, fp)
+pw:SetStatusBarTexture("Interface\\\\Buttons\\\\WHITE8X8")
+local fs = { powerTypeOverride={ foreverDruid=0 }, foreverFormBar=true, powerPercentText="center", powerTextFormat="perpp" }
+UF.UF_ForeverFormBar(fp, pw, fs)
+local S = UF.UF_WrathFormBarState
+assert(S.on and S.live and S.bar:IsShown() and S.token == "ENERGY" and S.bar.value == 50 and S.bar.text.text == "50%")
+formPT, formToken = nil, nil; UF.UF_ForeverFormBar(fp, pw, fs)
+assert(not S.bar:IsShown() and not S.live, "caster form hides the form bar")
+fs.foreverFormBar = nil; UF.UF_ForeverFormBar(fp, pw, fs); assert(not S.on)
+UF.UF_PowerBarDraws, UnitClass, UnitPowerType = draws, savedUnitClass, savedPowerType
+savedUnitClass, savedPowerType = nil, nil
+''')
+# Every UF unlock mover must have a settings-map entry on a real Wrath page.
+import re
+uf_src = (root/'EllesmereUIUnitFrames/EllesmereUIUnitFrames.lua').read_text(encoding='utf-8-sig')
+unlock_src = (root/'EllesmereUI/EUI_UnlockMode.lua').read_text(encoding='utf-8-sig')
+mover_keys = set(re.findall(r'(?:AddUFElement|MakeUFElement|MakeCastBarElement)\("(\w+)"', uf_src))
+assert {'player', 'target', 'focus', 'pet', 'targettarget', 'focustarget', 'boss', 'classPower',
+        'playerCastbar', 'targetCastbar', 'focusCastbar'} <= mover_keys, mover_keys
+pages = {'Main Frames', 'Boss Frames', 'Mini Frames', 'Buffs', 'Debuffs', 'Aura Filters'}
+for key in mover_keys:
+    m = re.search(r'\["' + key + r'"\]\s*=\s*\{([^\n]*)\}', unlock_src)
+    assert m, 'no _ELEMENT_SETTINGS_MAP entry for ' + key
+    entry = m.group(1)
+    assert 'module = "EllesmereUIUnitFrames"' in entry, key
+    page = re.search(r'page\s*=\s*"([^"]+)"', entry)
+    assert page and page.group(1) in pages, key
+    assert 'sectionName' in entry and 'highlightText' in entry, key
 native_lua = LuaRuntime()
 native_lua.execute((root/'backport-tools/wrath_mock.lua').read_text())
 native_lua.execute('issecretvalue=function(v) return v == "native-secret" end')
@@ -383,5 +533,105 @@ t:SetAtlas("nameplates-icon-elite-gold")
 assert(t.texture == "Interface\\\\AddOns\\\\EllesmereUIUnitFrames\\\\Media\\\\elite-badge-335.tga")
 assert(nativeAtlasCalls == 0)
 ''')
+# Visual parity: Retail media Wrath cannot load (PNG, non-power-of-two TGA,
+# file IDs, missing atlases, masks) resolves to art that does load.
+lua.execute('''
+local t = W.CreateFrame("Frame"):CreateTexture()
+local COMBAT = "Interface\\\\AddOns\\\\EllesmereUI\\\\media\\\\combat\\\\"
+local ART = "Interface\\\\AddOns\\\\EllesmereUIUnitFrames\\\\Media\\\\Art_335\\\\combat\\\\"
+for i = 0, 5 do
+    t:SetTexture(COMBAT .. "combat" .. i .. ".tga")
+    assert(t.texture == ART .. "combat" .. i .. ".tga" and canLoadTexture(t.texture), t.texture)
+end
+for _, name in ipairs({"combat-indicator-custom", "combat-indicator-class-custom"}) do
+    t:SetTexture(COMBAT .. name .. ".png")
+    assert(t.texture == ART .. name .. ".tga" and canLoadTexture(t.texture), t.texture)
+end
+t:SetTexture(136197); assert(t.texture == "Interface\\\\Icons\\\\Spell_Shadow_ShadowBolt")
+t:SetTexture(136243); assert(t.texture == "Interface\\\\Icons\\\\Trade_Engineering")
+t:SetTexture(4622462); assert(t.texture == "Interface\\\\Icons\\\\INV_Misc_QuestionMark")
+t:SetTexture(0); assert(t.texture == 0)
+t:SetTexture(1); assert(t.texture == 1)
+t:SetTexture(nil); assert(t.texture == nil)
+-- Faction badge: Retail atlas styles fall back to the Wrath PvP icon.
+EllesmereUI.FACTION_ART = {
+    pvp = { atlas = "UI-HUD-UnitFrame-Player-PVP-%sIcon" },
+    honor = { atlas = "honorsystem-portrait-%s", lower = true },
+    classic = { file = "Interface\\\\TargetingFrame\\\\UI-PVP-%s", coords = { 0, 0.65625, 0, 0.65625 } },
+}
+local fallback = EllesmereUI.SetFactionArt
+local delegated
+EllesmereUI.SetFactionArt = function(_, style) delegated = style end
+for _, style in ipairs({"pvp", "honor", "missing"}) do
+    t.texture = nil
+    W.SetFactionArt(t, style, "Horde")
+    assert(t.texture == "Interface\\\\TargetingFrame\\\\UI-PVP-Horde" and t.texcoords[2] == 0.65625, style)
+end
+assert(delegated == nil)
+W.SetFactionArt(t, "classic", "Alliance"); assert(delegated == "classic")
+atlasInfoMock["honorsystem-portrait-horde"] = {width=32, height=32}
+delegated = nil; W.SetFactionArt(t, "honor", "Horde"); assert(delegated == "honor")
+atlasInfoMock["honorsystem-portrait-horde"] = nil
+EllesmereUI.SetFactionArt, EllesmereUI.FACTION_ART = fallback, nil
+assert(W.UnitIsMercenary("player") == false)
+-- Detached shapes without masks: the art fits the shape opening.
+local methods = getmetatable(UIParent).__index
+local setPoint, clear = methods.SetPoint, methods.ClearAllPoints
+methods.SetPoint = function(self, p, _, _, x, y) self.pts = self.pts or {}; self.pts[p] = {x, y} end
+methods.ClearAllPoints = function(self) self.pts = {} end
+local host = W.CreateFrame("Frame"); host.width, host.height = 128, 128
+local tex2d, texClass = host:CreateTexture(), host:CreateTexture()
+W.FitUnmaskedPortrait(host, "circle", 17, tex2d, texClass)
+assert(tex2d.pts.TOPLEFT[1] == 17 and tex2d.pts.TOPLEFT[2] == -17 and tex2d.pts.BOTTOMRIGHT[1] == -17)
+assert(math.abs(texClass.pts.TOPLEFT[1] - (17 + 128 * 0.08)) < 1e-6)
+assert(tex2d.texcoords[1] == 0 and tex2d.texcoords[2] == 1 and tex2d._wrathRound)
+W.FitUnmaskedPortrait(host, "diamond", 20, tex2d)
+assert(math.abs(tex2d.texcoords[1] - .15) < 1e-6 and not tex2d._wrathRound)
+tex2d.texcoords = nil
+W.FitUnmaskedPortrait(host, nil, nil, tex2d); assert(tex2d.texcoords == nil, "reset only after a round fit")
+tex2d._mirrored = true
+W.FitUnmaskedPortrait(host, "portrait", 17, tex2d)
+assert(tex2d.texcoords[1] == 1 and tex2d.texcoords[2] == 0)
+W.FitUnmaskedPortrait(host, nil, nil, tex2d)
+assert(math.abs(tex2d.texcoords[1] - .85) < 1e-6 and math.abs(tex2d.texcoords[2] - .15) < 1e-6 and not tex2d._wrathRound)
+methods.SetPoint, methods.ClearAllPoints = setPoint, clear
+-- Options preview aura icons come from Wrath spells.
+local getInfo = GetSpellInfo
+GetSpellInfo = function(id) if id ~= 34914 then return "S" .. id, "", "Interface\\\\Icons\\\\S" .. id end end
+local icons = W.SpellIcons(W.PreviewDebuffSpells)
+assert(#icons == 20 and icons[1] == "Interface\\\\Icons\\\\S589" and icons[20] == "Interface\\\\Icons\\\\INV_Misc_QuestionMark")
+for class, ids in pairs(W.PreviewBuffSpells) do assert(#ids == 5, class) end
+assert(W.PreviewCastSpells[1].spellID == 8690)
+GetSpellInfo = getInfo
+''')
+# The core C_Spell.GetSpellInfo shim reads the 3.3.5 return order (cost and
+# power type sit before the cast time).
+compat_lua = LuaRuntime()
+compat_lua.execute('GetSpellInfo=function() return "Hearthstone","","hs-icon",0,false,0,10000,0,5 end; GetSpellLink=function() return "|Hspell:8690|h[Hearthstone]|h" end')
+compat_src = (root/'EllesmereUI/EllesmereUI_3.3.5_Compat.lua').read_text(encoding='utf-8-sig')
+shim = 'C_Spell={}\nC_Spell.GetSpellInfo=C_Spell.GetSpellInfo or function(id)' + compat_src.split('C_Spell.GetSpellInfo=C_Spell.GetSpellInfo or function(id)', 1)[1].split('\nend\n', 1)[0] + '\nend\n'
+compat_lua.execute(shim)
+info = compat_lua.eval('C_Spell.GetSpellInfo("Hearthstone")')
+assert info.castTime == 10000 and info.iconID == 'hs-icon' and info.maxRange == 5 and info.spellID == 8690
+assert compat_lua.eval('C_Spell.GetSpellInfo(8690)').spellID == 8690
+# Live detached portrait and the options preview use the same unmasked fit.
+opts_src = (root/'EllesmereUIOptions/EUI_UnitFrames_Options.lua').read_text(encoding='utf-8-sig')
+live_fn = uf_src.split('function ApplyDetachedPortraitShape(', 1)[1].split('\nend\n', 1)[0]
+pv_fn = opts_src.split('local function ApplyPreviewPortraitShape(', 1)[1].split('\n    end\n\n', 1)[0]
+assert live_fn.count('FitUnmaskedPortrait(') == 3, live_fn.count('FitUnmaskedPortrait(')
+assert pv_fn.count('FitUnmaskedPortrait(') == 3, pv_fn.count('FitUnmaskedPortrait(')
+assert 'FitUnmaskedPortrait(backdrop, shape, insetPx, backdrop._2d, backdrop._class)' in live_fn
+assert 'ns.Wrath.SetFactionArt(tex, style, fac)' in uf_src and 'UnitIsMercenary("player")' not in uf_src.replace('ns.Wrath.UnitIsMercenary("player")', '')
+assert 'ns.Wrath.SetFactionArt or EllesmereUI.SetFactionArt' in opts_src
+assert 'ns.Wrath.SpellIcons(ns.Wrath.PreviewDebuffSpells)' in opts_src and 'FALLBACK_CAST_SPELLS = ns.Wrath.PreviewCastSpells' in opts_src
+toc = (root/'EllesmereUIUnitFrames/EllesmereUIUnitFrames.toc').read_text(encoding='utf-8-sig')
+assert toc.index('EUI_UnitFrames_335_Textures.lua') < toc.index('EUI_UnitFrames_335_Media.lua') < toc.index('EllesmereUIUnitFrames.lua')
+# Default fonts and every redirected/declared UF media file load on 3.3.5.
+fonts_src = (root/'EllesmereUI/EllesmereUI_Fonts.lua').read_text(encoding='utf-8-sig')
+for font in re.findall(r'=\s*"([^"]+\.(?:ttf|TTF|otf))"', fonts_src.split('EllesmereUI.FONT_FILES = {', 1)[1].split('\n}', 1)[0]):
+    assert (root/'EllesmereUI/media/fonts'/font).is_file(), font
+import subprocess
+audit = subprocess.run([sys.executable, str(root/'backport-tools/audit_unitframe_media.py')], capture_output=True, text=True)
+assert audit.returncode == 0, audit.stdout + audit.stderr
 lua.execute('assert(rotationCalls == 0, "native rotation reached during validation")')
-print(f'PASS: {count} Lua 5.1 files; Blizzard level font-before-text without Retail FontObject/name, custom size, name inheritance, rejected font fallback, level events/skulls/visibility; real bar catalogue/Fade initialization, all texture swaps and missing-file fallback; missing/existing atlases and icon fallbacks, native rotation avoided on Wrath, absent/native secret predicates, event mappings/filtering, EditBox lifecycle, cast/channel start-stop, timers, curves, frame initialization/reload, options registration, aura filtering.')
+print(f'PASS: {count} Lua 5.1 files; Blizzard level font-before-text without Retail FontObject/name, custom size, name inheritance, rejected font fallback, level events/skulls/visibility; real bar catalogue/Fade initialization, all texture swaps and missing-file fallback; missing/existing atlases and icon fallbacks, native rotation avoided on Wrath, absent/native secret predicates, event mappings/filtering, EditBox lifecycle, cast/channel start-stop, timers, curves, frame initialization/reload, options registration, aura filtering; aura layout/crop/duration/stack/border/dispel ring/behind levels, weapon enchants, combat-safe cancel, purge glow, dispel overlay modes, power event tokens, boss range, threat %, pet power/diet, druid form bar, unlock settings map; visual parity: combat media redirects, file-ID icons, faction fallback, unmasked portrait fit (live = preview), preview spell icons, GetSpellInfo order, fonts, media audit.')

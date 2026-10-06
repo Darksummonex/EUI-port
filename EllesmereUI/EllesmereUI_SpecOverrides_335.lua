@@ -231,6 +231,7 @@ local REFRESH_FNS = {
     EllesmereUIDamageMeters      = { "_EDM_Apply" },
     EllesmereUIDataBars          = { "_EDB_Apply" },
     EllesmereUIQuickdraw         = { "_EQD_Apply" },
+    EllesmereUIArena             = { "_EARENA_Apply" },
     EllesmereUIAuraBuffReminders = { "_EABR_UpdateGroupAuraRegistration", "_EABR_ApplyAllIconBorders", "_EABR_RequestRefresh", "_EABR_ApplyUnlockPos" },
     -- Capture/apply-blacklisted (see FOLDER_BLACKLIST); insurance so a leaked
     -- key can never hit the unmapped-folder fallback's full RefreshAllAddons.
@@ -5003,12 +5004,25 @@ end
 -------------------------------------------------------------------------------
 local _traceSink = nil
 local _traceReal = nil
+-- Getters may lazily write back what they read (t.x = t.x or {}); a proxy stored in
+-- a real profile would nest one layer per trace until the C stack overflows and
+-- would save as an empty table, so proxies are always unwrapped before storage.
+local _proxyReal = setmetatable({}, { __mode = "k" })
+
+local function Unwrap(v)
+    while _proxyReal[v] do v = _proxyReal[v] end
+    return v
+end
 
 local function MakeReadProxy(real, folder, prefix)
+    real = Unwrap(real)
     local proxy = {}
+    _proxyReal[proxy] = real
     setmetatable(proxy, {
         __index = function(_, k)
-            local v = real[k]
+            local v = rawget(real, k)
+            if v == nil then v = real[k] end
+            if _proxyReal[v] then v = Unwrap(v); rawset(real, k, v) end
             local path = prefix and (prefix .. PS .. tostring(k)) or tostring(k)
             if type(v) == "table" then
                 return MakeReadProxy(v, folder, path)
@@ -5018,7 +5032,7 @@ local function MakeReadProxy(real, folder, prefix)
             end
             return v
         end,
-        __newindex = function(_, k, v) real[k] = v end,
+        __newindex = function(_, k, v) real[k] = Unwrap(v) end,
     })
     return proxy
 end

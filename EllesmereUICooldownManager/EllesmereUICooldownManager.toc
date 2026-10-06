@@ -4,8 +4,9 @@
 ## Group: EllesmereUI
 ## Notes: A CDM replacement focused on performance, customizations and alerts.
 ## Author: Ellesmere
-## Version: 9.3.4-335-0.1
+## Version: 9.3.4-335-0.2
 ## Dependencies: EllesmereUI
+## X-Part-Of: EllesmereUI
 ## OptionalDeps: EllesmereUIActionBars
 ## SavedVariables: EllesmereUICooldownManagerDB
 ## IconTexture: Interface\AddOns\EllesmereUI\media\eg-logo.tga
@@ -14,5 +15,7 @@
 EUI_CooldownManager_335_Catalog.lua
 EUI_CooldownManager_335.lua
 EUI_CooldownManager_335_Display.lua
+EUI_CooldownManager_335_TrackingBars.lua
+EUI_CooldownManager_335_Glows.lua
 
 # Options

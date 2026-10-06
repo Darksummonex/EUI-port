@@ -3924,6 +3924,7 @@ function EllesmereUI:RegisterModule(folderName, config)
         EllesmereUINameplates = true,
         EllesmereUIPartyMode = true,
         EllesmereUIRaidFrames = true,
+        EllesmereUIArena = true,
         EllesmereUIResourceBars = true,
         EllesmereUIUnitFrames = true,
         EllesmereUIMythicTimer = true,

@@ -1,9 +1,10 @@
 ## Interface: 30300
-## Title: |cff0cd29fEllesmereUI|r Options - 3.3.5
+## Title: |cff0cd29fEllesmereUI|r Options
 ## Notes: EllesmereUI settings panel (3.3.5 backport). Loads on demand when you open EllesmereUI options.
 ## Author: Ellesmere / 3.3.5 backport
-## Version: 9.3.4-335-0.61
+## Version: 9.3.4-335-0.78
 ## Dependencies: EllesmereUI
+## X-Part-Of: EllesmereUI
 ## LoadOnDemand: 1
 
 # 3.3.5 shims first (widget methods, CreateFrame templates, C_* stubs).
@@ -71,6 +72,7 @@ EUI_Quickdraw_335_Options.lua
 #EUI_RaidFrames_ManagerPages.lua
 #EUI_RaidFrames_Options.lua
 EUI_RaidFrames_335_Options.lua
+EUI_Arena_335_Options.lua
 #ResourceBars_Options\HealthSection_Options.lua
 #ResourceBars_Options\PowerSection_Options.lua
 #ResourceBars_Options\ClassResourceSection_Options.lua

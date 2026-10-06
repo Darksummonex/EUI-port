@@ -10,9 +10,11 @@ ns.defaults={profile={questTracker={enabled=true,useBlizzardStyle=false,useClass
  focusR=.871,focusG=.251,focusB=1,headerUseAccent=true,headerShowClassColor=false,headerR=1,headerG=1,headerB=1,
  lineUseAccent=true,lineShowClassColor=false,lineR=1,lineG=1,lineB=1,bgR=.035,bgG=.045,bgB=.05,hideAllObjectivesHeader=false,
  visibility="always",hideInRaidMode="never",
- visOnlyInstances=false,visHideMounted=false,visHideNoTarget=false,autoAccept=false,autoAcceptShiftSkip=true,
+ visOnlyInstances=false,visHideMounted=false,visHideNoTarget=false,autoAccept=false,autoAcceptPreventMulti=true,autoAcceptShiftSkip=true,
  autoTurnIn=false,autoTurnInShiftSkip=true,questItemHotkey="",unlockPos=nil}}}
 ns.EQT={}; EllesmereUIQuestTracker=ns.EQT
+E._ELEMENT_SETTINGS_MAP=E._ELEMENT_SETTINGS_MAP or {}
+E._ELEMENT_SETTINGS_MAP.EQT_Tracker={module=ADDON,page="Quest Tracker",sectionName="DISPLAY",highlightText="Visibility"}
 local legacyModes={combat="in_combat",outofcombat="out_of_combat"}
 function ns.Config()
  local p=ns.addon.db and ns.addon.db.profile.questTracker
@@ -23,13 +25,21 @@ function ns.EQT.DB() return ns.Config() end
 function ns.QT_Style() local p=ns.Config(); return p and (p.useClassicStyle and "classic" or p.useBlizzardStyle and "blizzard") or "eui" end
 function ns.Font(fs,size)
  if not fs then return end
- if not ns.savedFonts[fs] then ns.savedFonts[fs]={font={fs:GetFont()},color={fs:GetTextColor()}} end
+ if not ns.savedFonts[fs] then ns.savedFonts[fs]={font={fs:GetFont()},color={fs:GetTextColor()},object=fs.GetFontObject and fs:GetFontObject() or nil} end
  local p=ns.Config()
  local path=p.font and p.font~="__global" and E.ResolveFontName and E.ResolveFontName(p.font) or E.GetFontPath("questTracker")
  local entry=E.GetModuleFontEntry and E.GetModuleFontEntry("questTracker")
  local flags=entry and entry.outline and entry.outline~="__global" and E.GetFontOutlineFlag and E.GetFontOutlineFlag("questTracker") or p.fontOutline
  flags=(flags or "OUTLINE"):gsub(",?%s*SLUG","")
+ -- Shadows only render when carried by a font object, so prime before SetFont.
+ if E.PrimeFontShadow and E.GetFontUseShadow then E.PrimeFontShadow(fs,E.GetFontUseShadow("questTracker")) end
  if not fs:SetFont(path or "Fonts\\FRIZQT__.TTF",size,flags) then fs:SetFont("Fonts\\FRIZQT__.TTF",size,"OUTLINE") end
+end
+local function RestoreFonts()
+ for fs,s in pairs(ns.savedFonts) do
+  if s.object and fs.SetFontObject then fs:SetFontObject(s.object) end
+  if s.font[1] then fs:SetFont(unpack(s.font)); fs:SetTextColor(unpack(s.color)) end
+ end
 end
 function ns.StyleLine(line,header,complete)
  if not line or not line.text then return end
@@ -67,16 +77,51 @@ function ns.ShowHeader(show)
  if title then title:SetAlpha(show and 1 or 0) end
  if toggle then toggle:SetAlpha(show and 1 or 0); toggle:EnableMouse(show) end
 end
+-- The collapse button's art takes the Header colour; nil restores the native tint.
+function ns.TintToggle(r,g,b)
+ local _,toggle=ns.HeaderParts(); if not toggle then return end
+ local function Tint(tex)
+  if not tex then return end
+  if tex.SetDesaturated then tex:SetDesaturated(r~=nil) end
+  tex:SetVertexColor(r or 1,g or 1,b or 1)
+ end
+ Tint(toggle.GetNormalTexture and toggle:GetNormalTexture()); Tint(toggle.GetPushedTexture and toggle:GetPushedTexture())
+ Tint(toggle.GetDisabledTexture and toggle:GetDisabledTexture())
+end
 function ns.Schedule() if not ns.applying then ns.dirty=true end end
+-- First watched quest's usable item, else any quest's; collapsed log headers hide their quests.
+function ns.ScanQuestItem()
+ if not GetNumQuestLogEntries or not GetQuestLogSpecialItemInfo then return nil end
+ local fallback
+ for i=1,(GetNumQuestLogEntries() or 0) do
+  local _,_,_,_,isHeader=GetQuestLogTitle(i)
+  local link=not isHeader and GetQuestLogSpecialItemInfo(i)
+  local name=type(link)=="string" and link:match("%[(.-)%]")
+  if name then
+   if IsQuestWatched and IsQuestWatched(i) then return name end
+   fallback=fallback or name
+  end
+ end
+ return fallback
+end
 function ns.ItemBinding()
  if InCombatLockdown() or not ns.itemButton then ns.pending=true; return end
- ClearOverrideBindings(ns.itemButton); ns.itemButton:SetAttribute("type",nil); ns.itemButton:SetAttribute("clickbutton",nil)
- local p=ns.Config(); local key=(p.questItemHotkey or ""):upper():gsub("%s","")
+ local b,p=ns.itemButton,ns.Config(); local key=(p.questItemHotkey or ""):upper():gsub("%s","")
  local ignored={LSHIFT=true,RSHIFT=true,LCTRL=true,RCTRL=true,LALT=true,RALT=true}
- if not p.enabled or key=="" or key=="ESCAPE" or key:find("MOUSEWHEEL") or ignored[key] then return end
- local item
- for i=1,(WATCHFRAME_NUM_ITEMS or 25) do local button=_G["WatchFrameItem"..i]; if button and button:IsShown() then item=button; break end end
- if item then ns.itemButton:SetAttribute("type","click"); ns.itemButton:SetAttribute("clickbutton",item); pcall(SetOverrideBindingClick,ns.itemButton,true,key,ns.itemButton:GetName(),"LeftButton") end
+ local kind,target
+ if p.enabled and key~="" and key~="ESCAPE" and not key:find("MOUSEWHEEL") and not ignored[key] then
+  target=ns.ScanQuestItem()
+  if target then kind="item"
+  else
+   for i=1,(WATCHFRAME_NUM_ITEMS or 25) do local button=_G["WatchFrameItem"..i]; if button and button:IsShown() then target=button; break end end
+   kind=target and "click"
+  end
+ end
+ if not kind then key=nil end
+ if not ns.bindingDirty and ns.bound and ns.bound[1]==key and ns.bound[2]==kind and ns.bound[3]==target then return end
+ ns.bindingDirty=false; ns.bound={key,kind,target}; ns.selfWrite=(GetTime() or 0)+.5
+ ClearOverrideBindings(b); b:SetAttribute("type",kind); b:SetAttribute("item",kind=="item" and target or nil); b:SetAttribute("clickbutton",kind=="click" and target or nil)
+ if key then pcall(SetOverrideBindingClick,b,true,key,b:GetName(),"LeftButton") end
 end
 -- The shared Visibility checklist (modes, Match All/Any, Show/Hide lanes) decides; the
 -- secure driver carries the combat edge and alpha covers what can change mid-fight.
@@ -87,6 +132,7 @@ end
 local function LegacyOptionHide(p)
  return p.visOnlyInstances and not IsInInstance() or p.visHideMounted and IsMounted() or p.visHideNoTarget and not UnitExists("target")
 end
+local function ArenaHidden() return select(2,IsInInstance())=="arena" end
 function ns.Verdict(p,inCombat)
  local state=GroupState(inCombat)
  local v=E.EvalVisibilityExtended and E.EvalVisibilityExtended(p,"visibility",state)
@@ -118,7 +164,7 @@ local function RaidHidden(p,inCombat)
  return mode=="always" or inCombat and (mode=="combat" or mode=="boss" and (UnitExists("boss1") or UnitClassification("target")=="worldboss"))
 end
 function ns.DriverString(p)
- if next(ns.suppressors) or p.hideInRaidMode=="always" and GetNumRaidMembers()>0 then return "hide" end
+ if next(ns.suppressors) or ArenaHidden() or p.hideInRaidMode=="always" and GetNumRaidMembers()>0 then return "hide" end
  local inState=(ns.Verdict(p,true) or ns.CanFlipInCombat(p)) and "show" or "hide"
  local outState=ns.Verdict(p,false) and "show" or "hide"
  local body=inState==outState and inState or "[combat] "..inState.."; "..outState
@@ -148,7 +194,7 @@ function ns.UpdateAlpha()
  if not ns.preview then
   local inCombat=InCombatLockdown() or UnitAffectingCombat("player")
   local v=ns.Verdict(p,inCombat)
-  if next(ns.suppressors) or RaidHidden(p,inCombat) then v=false end
+  if next(ns.suppressors) or ArenaHidden() or RaidHidden(p,inCombat) then v=false end
   if v=="mouseover" then v=Hovered() end
   alpha=v and 1 or 0
  end
@@ -179,7 +225,7 @@ end
 function ns.Restore()
  local f,o=WatchFrame,ns.original
  if not f or not o then return end
- for fs,s in pairs(ns.savedFonts) do if s.font[1] then fs:SetFont(unpack(s.font)); fs:SetTextColor(unpack(s.color)) end end
+ RestoreFonts(); ns.TintToggle()
  f:ClearAllPoints(); for _,point in ipairs(o.points) do f:SetPoint(unpack(point)) end
  f:SetScale(o.scale); f:SetHeight(o.height); f:SetClampedToScreen(o.clamped)
  if WatchFrame_SetWidth then WatchFrame_SetWidth(o.width>250 and "1" or "0") else f:SetWidth(o.width) end
@@ -199,6 +245,8 @@ function ns.Apply()
   ns.fill=f:CreateTexture(nil,"BACKGROUND"); ns.fill:SetTexture("Interface\\Buttons\\WHITE8X8"); ns.fill:SetAllPoints(ns.background)
   ns.background:HookScript("OnShow",function() ns.fill:Show() end); ns.background:HookScript("OnHide",function() ns.fill:Hide() end)
   ns.line=ns.background:CreateTexture(nil,"OVERLAY"); ns.line:SetTexture("Interface\\Buttons\\WHITE8X8"); ns.line:SetHeight(2); ns.line:SetPoint("TOPLEFT",ns.background,"TOPLEFT",1,-1); ns.line:SetPoint("TOPRIGHT",ns.background,"TOPRIGHT",-1,-1)
+  ns.headerLine=ns.background:CreateTexture(nil,"OVERLAY"); ns.headerLine:SetTexture("Interface\\Buttons\\WHITE8X8"); ns.headerLine:SetHeight(1)
+  if WatchFrameTitle then ns.headerLine:SetPoint("TOPLEFT",WatchFrameTitle,"BOTTOMLEFT",0,-3) else ns.headerLine:SetPoint("TOPLEFT",f,"TOPLEFT",0,-18) end
   ns.itemButton=CreateFrame("Button","EUI335QuestItemHotkey",UIParent,"SecureActionButtonTemplate")
   ns.itemButton:SetWidth(1); ns.itemButton:SetHeight(1); ns.itemButton:SetPoint("TOPLEFT",UIParent,"TOPLEFT",0,0); ns.itemButton:EnableMouse(false); ns.itemButton:RegisterForClicks("AnyUp")
   f:HookScript("OnShow",ns.Schedule); f:HookScript("OnHide",function() ns.background:Hide() end)
@@ -208,6 +256,7 @@ function ns.Apply()
     savePos=function(_,point,relPoint,x,y) ns.Config().unlockPos={point=point,relPoint=relPoint,x=x,y=y} end,
     loadPos=function() return ns.Config().unlockPos end,clearPos=function() ns.Config().unlockPos=nil end,applyPos=ns.Apply})},ADDON)
   end
+  if E.RegAccent then E.RegAccent({type="callback",fn=function() ns.Schedule() end}) end
  end
  if not p.enabled then ns.Restore(); ns.Visibility(); ns.ItemBinding(); ns.applying=false; return end
  f:SetScale(p.scale); f:SetClampedToScreen(p.forceOnScreen); f:ClearAllPoints()
@@ -219,33 +268,68 @@ function ns.Apply()
  if WatchFrame_Update then WatchFrame_Update(f) end
  if ns.QT_Style()=="eui" then
   ns.fill:SetVertexColor(p.bgR,p.bgG,p.bgB,p.bgAlpha); ns.background:SetBackdropBorderColor(.15,.2,.22,.9)
-  local r,g,b=ns.ModeColor("line"); ns.line:SetVertexColor(r,g,b,1); if p.showTopLine then ns.line:Show() else ns.line:Hide() end
-  ns.Font(WatchFrameTitle,p.headerFontSize); if WatchFrameTitle then WatchFrameTitle:SetTextColor(ns.ModeColor("header")) end
+  -- Retail: the top divider is the accent; Line Color drives the divider under the header.
+  local ar,ag,ab=E.GetAccentColor(); ns.line:SetVertexColor(ar,ag,ab,1); if p.showTopLine then ns.line:Show() else ns.line:Hide() end
+  local r,g,b=ns.ModeColor("line"); ns.headerLine:SetVertexColor(r,g,b,1); ns.headerLine:SetWidth(math.max(1,f:GetWidth()-4))
+  if p.hideAllObjectivesHeader then ns.headerLine:Hide() else ns.headerLine:Show() end
+  ns.Font(WatchFrameTitle,p.headerFontSize); local hr,hg,hb=ns.ModeColor("header")
+  if WatchFrameTitle then WatchFrameTitle:SetTextColor(hr,hg,hb) end
+  ns.TintToggle(hr,hg,hb)
   for line,state in pairs(ns.lines) do ns.StyleLine(line,state.header,state.complete) end
  else
-  for fs,s in pairs(ns.savedFonts) do if s.font[1] then fs:SetFont(unpack(s.font)); fs:SetTextColor(unpack(s.color)) end end
+  RestoreFonts(); ns.TintToggle()
   ns.background:Hide()
  end
  ns.ShowHeader(not p.hideAllObjectivesHeader)
  ns.Visibility(); ns.ItemBinding(); ns.applying=false
 end
+local function Skip(p,key) return p[key] and IsShiftKeyDown() end
+-- An NPC offering several quests is left to the player until a different NPC is met.
+function ns.AllowAutoPick(p,count)
+ if not p.autoAcceptPreventMulti then return true end
+ local npc=UnitGUID("npc")
+ if count>1 then ns.preventNPC=npc end
+ return ns.preventNPC~=npc
+end
+-- Gossip returns a fixed number of values per quest; the stride is derived, not assumed.
+local function Stride(count,...) return count>0 and math.floor(select("#",...)/count) or 0 end
 function ns.QuestEvent(event)
  local p=ns.Config(); if not p or not p.enabled or InCombatLockdown() then return end
  local costs=(GetRequiredMoney and GetRequiredMoney() or 0)>0 or (GetNumQuestItems and GetNumQuestItems() or 0)>0
- if event=="QUEST_DETAIL" and p.autoAccept and not (p.autoAcceptShiftSkip and IsShiftKeyDown()) then
-  -- Confirm quest acceptance only; shared/gossip choices remain explicit.
+ if event=="QUEST_DETAIL" and p.autoAccept and not Skip(p,"autoAcceptShiftSkip") then
   if not QuestGetAutoAccept or not QuestGetAutoAccept() then AcceptQuest() end
- elseif event=="QUEST_PROGRESS" and p.autoTurnIn and not costs and not (p.autoTurnInShiftSkip and IsShiftKeyDown()) and IsQuestCompletable() then CompleteQuest()
- elseif event=="QUEST_COMPLETE" and p.autoTurnIn and not (p.autoTurnInShiftSkip and IsShiftKeyDown()) then
-  if not costs and GetNumQuestChoices()==0 then GetQuestReward(0) end
+ elseif event=="QUEST_PROGRESS" and p.autoTurnIn and not costs and not Skip(p,"autoTurnInShiftSkip") and IsQuestCompletable() then CompleteQuest()
+ elseif event=="QUEST_COMPLETE" and p.autoTurnIn and not Skip(p,"autoTurnInShiftSkip") then
+  local choices=GetNumQuestChoices()
+  if not costs and choices<=1 then GetQuestReward(choices) end
+ elseif event=="GOSSIP_SHOW" then
+  if p.autoTurnIn and not Skip(p,"autoTurnInShiftSkip") and GetNumGossipActiveQuests and GetGossipActiveQuests then
+   local count=GetNumGossipActiveQuests() or 0; local step=Stride(count,GetGossipActiveQuests())
+   -- 3.3.5 returns title, level, trivial, complete per active quest; without the flag, stay manual.
+   if step>=4 then for i=1,count do if select((i-1)*step+4,GetGossipActiveQuests()) then SelectGossipActiveQuest(i); return end end end
+  end
+  if p.autoAccept and not Skip(p,"autoAcceptShiftSkip") and GetNumGossipAvailableQuests then
+   local count=GetNumGossipAvailableQuests() or 0
+   if count>0 and ns.AllowAutoPick(p,count) then SelectGossipAvailableQuest(1) end
+  end
+ elseif event=="QUEST_GREETING" and p.autoAccept and not Skip(p,"autoAcceptShiftSkip") and GetNumAvailableQuests then
+  local count=GetNumAvailableQuests() or 0
+  if count>0 and ns.AllowAutoPick(p,count) then SelectAvailableQuest(1) end
  end
 end
 function ns.addon:OnInitialize() ns.addon.db=E.Lite.NewDB("EllesmereUIQuestTrackerDB",ns.defaults); _EQT_DB=ns.addon.db end
 function ns.addon:OnEnable()
  for _,event in ipairs({"PLAYER_ENTERING_WORLD","PLAYER_REGEN_ENABLED","PLAYER_REGEN_DISABLED","PLAYER_TARGET_CHANGED","PARTY_MEMBERS_CHANGED","RAID_ROSTER_UPDATE",
   "ZONE_CHANGED_NEW_AREA","PLAYER_UPDATE_RESTING","UNIT_ENTERED_VEHICLE","UNIT_EXITED_VEHICLE","UPDATE_SHAPESHIFT_FORM","COMPANION_UPDATE",
-  "QUEST_LOG_UPDATE","QUEST_WATCH_UPDATE","QUEST_DETAIL","QUEST_PROGRESS","QUEST_COMPLETE"}) do ns.events:RegisterEvent(event) end
- ns.events:SetScript("OnEvent",function(_,event) ns.QuestEvent(event); if InCombatLockdown() then ns.UpdateAlpha() end; ns.Schedule() end)
+  "QUEST_LOG_UPDATE","QUEST_WATCH_UPDATE","QUEST_DETAIL","QUEST_PROGRESS","QUEST_COMPLETE","GOSSIP_SHOW","QUEST_GREETING","UPDATE_BINDINGS"}) do ns.events:RegisterEvent(event) end
+ ns.events:SetScript("OnEvent",function(_,event)
+  if event=="UPDATE_BINDINGS" then
+   -- Our own override writes echo back; an external LoadBindings clears every override.
+   if (GetTime() or 0)<(ns.selfWrite or 0) then return end
+   ns.bindingDirty=true
+  end
+  ns.QuestEvent(event); if InCombatLockdown() then ns.UpdateAlpha() end; ns.Schedule()
+ end)
  ns.events:SetScript("OnUpdate",function(_,dt)
   ns.elapsed=(ns.elapsed or 0)+dt; ns.hoverElapsed=(ns.hoverElapsed or 0)+dt
   if ns.dirty or ns.elapsed>=1 then local dirty=ns.dirty; ns.dirty=false; ns.elapsed=0; ns.hoverElapsed=0; if dirty or ns.pending or not ns.original then ns.Apply() else ns.Visibility() end
@@ -261,4 +345,14 @@ end
 _EQT_RefreshAll=ns.Apply
 ns.EQT.RestyleAll=ns.Apply
 _EQT_SetSuppressed=function(key,on) if key then ns.suppressors[key]=on and true or nil; ns.Visibility() end end
-SLASH_EQT1="/eqt"; SlashCmdList.EQT=function() if E.EnsureOptionsLoaded then E.EnsureOptionsLoaded() end; if E.ShowModule then E:ShowModule(ADDON) end end
+SLASH_EQT1="/eqt"
+SlashCmdList.EQT=function(msg)
+ msg=(msg or ""):lower():gsub("^%s+",""):gsub("%s+$","")
+ local p=ns.Config()
+ if p and (msg=="show" or msg=="hide" or msg=="toggle") then
+  if msg=="toggle" then p.enabled=not p.enabled else p.enabled=msg=="show" end
+  ns.Apply(); return
+ end
+ if InCombatLockdown() then return end
+ if E.EnsureOptionsLoaded then E.EnsureOptionsLoaded() end; if E.ShowModule then E:ShowModule(ADDON) end
+end

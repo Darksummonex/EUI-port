@@ -1,10 +1,15 @@
 ## Interface: 30300
 ## Title: |cff0cd29fEllesmereUI|r Resource Bars
-## Notes: Native Wrath health, power, combo points, runes, cast, GCD and totem bars.
+## Notes: Native Wrath health, power, combo points, runes, cast, GCD, swing timer and totem bars.
 ## Author: Ellesmere / 3.3.5 backport
-## Version: 9.3.4-335-0.2
+## Version: 9.3.4-335-0.3
 ## Dependencies: EllesmereUI
+## X-Part-Of: EllesmereUI
 ## SavedVariables: EllesmereUIResourceBarsDB
 
 # Retail source remains available as an unloaded reference.
 EUI_ResourceBars_335.lua
+EUI_ResourceBars_335_Bars.lua
+EUI_ResourceBars_335_Cast.lua
+EUI_ResourceBars_335_Swing.lua
+EUI_ResourceBars_335_Totems.lua

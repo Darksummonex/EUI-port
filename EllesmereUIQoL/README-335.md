@@ -1,4 +1,89 @@
-# Quality of Life 3.3.5 — 0.2
+# Quality of Life 3.3.5 — 0.7
+
+0.7: com o addon AbilityTimeline ativo, as barras do DBM e do BigWigs somem da
+tela (o timeline já mostra os mesmos timers). As barras ficam invisíveis e sem
+clique, mas continuam contando: o DBM lê o tempo restante das próprias barras.
+DBM: o anchor das barras (DBT) fica com alpha 0; BigWigs: cada barra vai para um
+quadro transparente. Nenhuma opção salva do DBM/BigWigs é alterada. Tudo volta
+ao desligar o AbilityTimeline, a fonte (DBM/BigWigs) dele ou a nova opção
+QoL > Raid Tools > BOSS MOD BARS > "Hide DBM/BigWigs Bars While Timeline Is
+Active" (ligada por padrão). "Move bars" do DBM mostra as barras enquanto move.
+Novo arquivo EUI_QoL_335_BossBars.lua; teste: validate_qol_bossbars.py.
+
+0.6: o nome da zona (o texto grande ao entrar numa área) não aparece mais no
+meio da tela. O Wrath prende o ZoneTextFrame a 512 da borda de baixo, e com uma
+escala de UI pequena (ex.: 0,62) isso cai no centro. Agora ele fica no novo
+mover "Zone Text" do Unlock Mode, por padrão no topo: X 9 / Y 322 a partir do
+centro da tela (em pixels, como o Unlock Mode mostra). Se a Blizzard ou outro
+addon reposicionar o quadro, ele volta sozinho. Uma posição salva em 0,0 (o
+centro quebrado) é limpa uma única vez; posições escolhidas são mantidas.
+QoL > Displays > ZONE TEXT > "Move Zone Text" desligado devolve a posição da
+Blizzard.
+
+0.5: "Quick Loot" agora funciona como no Retail: pega tudo na hora mesmo com o
+Auto Loot da Blizzard desligado, e segurar Shift ao saquear mostra a janela de
+saque. Espaços travados (rolagem de grupo, master loot) são ignorados. Antes
+ele só agia quando o Auto Loot estava ligado.
+
+0.4 traz mais funções e o visual do Retail (novo arquivo EUI_QoL_335_Extras.lua
+e nova página Displays nas opções). Tudo o que é automação começa desligado.
+- QoL > Automation: "Auto Open Containers" abre caixas/bolsas com
+  "<Right Click to Open>", uma por vez, só fora de combate e com vendedor,
+  correio, banco, troca, leilão, banco da guilda e saque fechados. Se a caixa
+  não abrir (bolsa cheia, trancada), não tenta de novo.
+- Reparo e venda de lixo avisam no chat (valor, banco da guilda, ouro
+  insuficiente, itens que não puderam ser vendidos). Train All fica ao lado do
+  botão Train, desativa quando não há nada para aprender, mostra no tooltip
+  quantas magias e o custo, e respeita os espaços livres de profissão.
+- Hide Error Messages mantém visíveis os erros importantes do Retail (bolsa
+  cheia, log de quests cheio, jogador morto...). O texto DELETE já vem com o
+  foco no campo.
+- QoL > Interface: esconder o aviso de screenshot, coordenadas do jogador e do
+  cursor no mapa-múndi, item level na janela de troca de equipamento (flyout),
+  remover transformações de itens de evento (Hallow's End, Noblegarden, peru do
+  Pilgrim's, Noggenfogger; só fora de combate), indicador de descanso (ZZZ) no
+  quadro do jogador do EUI com ajuste X/Y, e desativar o clique direito em
+  inimigos (e em aliados durante o combate). O clique direito vira giro de
+  câmera via driver seguro; nada muda em combate.
+- QoL > Group: anunciar reset de instância no grupo/raide (mensagem
+  personalizável) e aceitar sozinho o role check do Dungeon Finder (segure
+  Shift para revisar).
+- Displays (visual do Retail): FPS com latência world/local, rótulos, cor
+  própria ou da classe, intervalo e tecla de atalho; Secondary Stats em linhas
+  (Hit/Expertise/Armor Pen opcionais); aviso de durabilidade pulsando com cor
+  própria e escondido em combate; alerta de combate com textos, cores e modo
+  (entrar/sair); alerta de morte com ícone de caveira, nome na cor da classe e
+  som; mira com comprimento, espessura, cor, borda, visibilidade (combate/
+  instância) e cor quando o alvo está fora de alcance; novo texto de distância
+  do alvo (faixas como 30-35, estilo LibRangeCheck); tamanho dos ícones dos
+  rastreadores, movimento só em combate e som quando fica pronto.
+- Cursor: cor própria, opacidade, só em instâncias e retícula central.
+  Raid Tools: escala da janela (50-200%).
+- Unlock Mode: 12 elementos (o novo Target Distance incluído), todos com
+  "Element Options" levando à seção certa da página Displays ou Raid Tools.
+
+Não portado (não existe no 3.3.5): filtro de expansão do leilão, Talking
+Head, janela de histórico de loot, chaves Mítica+ e lista de grupos premade
+(inscrição rápida, nota fixa), coleções para desembrulhar, privacidade do chat
+de guilda das Communities, marcadores de chão (world markers), TTS, rastreios
+de Time Spiral/Gateway, cargas compartilhadas de battle-res, Mastery e
+Versatility. A correção do relógio 24h não é necessária (o CVar persiste). O
+painel de grupo da Blizzard fica com o Core/RaidFrames.
+
+0.3 adiciona funções de correio (seção MAIL, ligadas por padrão):
+- Botão "Open All" na caixa de entrada, como o do Retail. Pega itens e ouro
+  do fim da lista para o começo, uma ação por vez, esperando a caixa mudar
+  (mínimo de 0,15 s; 3 s sem resposta pula a carta). Ignora cartas COD, de GM
+  e só com texto. Com a bolsa cheia, para de pegar itens mas continua pegando
+  o ouro, e avisa no chat. Clique de novo para parar; fechar o correio para.
+  Se o Postal estiver com o próprio Open All ativo, o botão do EUI se esconde.
+- Shift + clique esquerdo num item da bolsa com a aba Send Mail aberta anexa
+  o item e todos os da mesma categoria até os 12 espaços: mesma classe e
+  subclasse (Metal & Stone = minérios e barras, Herb, Cloth, Elemental...).
+  Equipamentos agrupam por tipo de vínculo e qualidade (BoE verdes não
+  levam BoE épicos). Itens Soulbound, de quest ou travados ficam de fora.
+  Com o chat aberto, o Shift + clique continua inserindo o link; fora do
+  correio, continua dividindo a pilha. Nada é enviado sozinho.
 
 0.2 adds Raid Tools > Pull Timer Length (3-60 seconds, default 10), Send to
 DBM / BigWigs and Chat Countdown. The Pull button displays the selected
@@ -27,7 +112,7 @@ Use with Core 0.23 and Options 0.24. The three EUI_QoL_335 runtime files load;
 the copied Retail Lua/media files remain unchanged, unloaded references.
 Settings live in the Core's EllesmereUIDB profiles, including imports/resets.
 
-Pages: QoL, Cursor, Shifter, Raid Tools, Logging. Automation and overlays
+Pages: QoL, Displays, Cursor, Shifter, Raid Tools, Logging. Automation and overlays
 start disabled and can be enabled individually. The first-install Cursor
 Circle checkbox is respected. Global Settings > Fonts edits native text sizes
 and the module font; Unlock Mode moves enabled displays and the raid toolbar.

@@ -287,6 +287,56 @@ local function MarkerTooltip()
     tip:Show()
 end
 
+-- Native views rescale the art (WorldMapDetailFrame) and the pin layers one call
+-- at a time. The protected quest blob is anchored to the art, so a view change
+-- that runs tainted in combat only loses the art's SetScale/SetPoint:
+-- WORLDMAP_SETTINGS.size, WorldMapButton (party, raid, corpse, flags), quest
+-- POIs and the player arrow switch view while the art keeps the old one.
+-- WORLDMAP_SETTINGS is never written here; that would taint later view changes.
+local poiScaled
+local function SameScale(a,b) return math.abs((a or 1)-(b or 1))<.001 end
+local function ViewSize()
+    local settings=_G.WORLDMAP_SETTINGS
+    local size=type(settings)=="table" and tonumber(settings.size)
+    if size and size>0 then return size end
+end
+local function SyncMapLayers()
+    local detail,button,poi=_G.WorldMapDetailFrame,_G.WorldMapButton,_G.WorldMapPOIFrame
+    local size=ViewSize()
+    if not detail or not button or not size then return end
+    if InCombatLockdown() then
+        local art=detail:GetScale()
+        if not SameScale(button:GetScale(),art) then button:SetScale(art) end
+        if poi then
+            local native=size==_G.WORLDMAP_WINDOWED_SIZE and size or _G.WORLDMAP_QUESTLIST_SIZE or size
+            local want=SameScale(art,size) and 1 or art/native
+            if not SameScale(poi:GetScale(),want) and (poiScaled or not SameScale(want,1)) then
+                poi:SetScale(want); poiScaled=not SameScale(want,1) or nil
+            end
+        end
+        return
+    end
+    if not SameScale(detail:GetScale(),size) then
+        detail:SetScale(size)
+        local guide=_G.WorldMapPositioningGuide
+        if guide and size==_G.WORLDMAP_FULLMAP_SIZE then detail:SetPoint("TOPLEFT",guide,"TOP",-502,-69)
+        elseif guide and size==_G.WORLDMAP_QUESTLIST_SIZE then detail:SetPoint("TOPLEFT",guide,"TOP",-726,-99) end
+    end
+    if not SameScale(button:GetScale(),size) then button:SetScale(size) end
+    if poi and poiScaled then poi:SetScale(1); poiScaled=nil end
+end
+ns.SyncWorldMapLayers=SyncMapLayers
+-- The native arrow offset is multiplied by WORLDMAP_SETTINGS.size; follow the art.
+local function PlaceArrow()
+    local detail,size=_G.WorldMapDetailFrame,ViewSize()
+    if not detail or not size or type(PositionWorldMapArrowFrame)~="function" then return end
+    local art=detail:GetScale()
+    if SameScale(art,size) then return end
+    local px,py=GetPlayerMapPosition("player")
+    if not px or not py or (px==0 and py==0) then return end
+    PositionWorldMapArrowFrame("CENTER","WorldMapDetailFrame","TOPLEFT",px*detail:GetWidth()*art,-py*detail:GetHeight()*art)
+end
+
 local coords,coordElapsed
 local function UpdateCoords(button,elapsed)
     if not ns.GetValue("worldMapCoords") then if coords then coords:GetParent():Hide() end; return end
@@ -306,10 +356,11 @@ local function UpdateCoords(button,elapsed)
     local px,py=GetPlayerMapPosition("player")
     local player=(px and px>0 or py and py>0) and format("%.1f, %.1f",px*100,py*100) or "--"
     local cursor="--"
-    local left,top,w,h=button:GetLeft(),button:GetTop(),button:GetWidth(),button:GetHeight()
+    local art=_G.WorldMapDetailFrame or button
+    local left,top,w,h=art:GetLeft(),art:GetTop(),art:GetWidth(),art:GetHeight()
     if left and top and w>0 and h>0 then
         local x,y=GetCursorPosition()
-        local scale=button:GetEffectiveScale()
+        local scale=art:GetEffectiveScale()
         local cx,cy=(x/scale-left)/w,(top-y/scale)/h
         if cx>=0 and cx<=1 and cy>=0 and cy<=1 then cursor=format("%.1f, %.1f",cx*100,cy*100) end
     end
@@ -317,6 +368,8 @@ local function UpdateCoords(button,elapsed)
 end
 
 local function OnButtonUpdate(button,elapsed)
+    SyncMapLayers()
+    PlaceArrow()
     UpdateHoverLabel(button)
     MarkerTooltip()
     UpdateCoords(button,elapsed)
@@ -333,11 +386,17 @@ function ns.RefreshWorldMap()
 end
 
 if type(WorldMapFrame_Update)=="function" then hooksecurefunc("WorldMapFrame_Update",Refresh) end
+for _,name in ipairs({"WorldMapFrame_SetFullMapView","WorldMapFrame_SetQuestMapView","WorldMap_ToggleSizeUp","WorldMap_ToggleSizeDown"}) do
+    if type(_G[name])=="function" then hooksecurefunc(name,SyncMapLayers) end
+end
 if _G.WorldMapButton and _G.WorldMapButton.HookScript then _G.WorldMapButton:HookScript("OnUpdate",OnButtonUpdate) end
+if _G.WorldMapFrame and _G.WorldMapFrame.HookScript then _G.WorldMapFrame:HookScript("OnShow",SyncMapLayers) end
 local events=CreateFrame("Frame")
 events:RegisterEvent("PLAYER_LEVEL_UP")
 events:RegisterEvent("TAXIMAP_OPENED")
+events:RegisterEvent("PLAYER_REGEN_ENABLED")
 events:SetScript("OnEvent",function(_,event)
+    if event=="PLAYER_REGEN_ENABLED" then SyncMapLayers(); return end
     if event=="TAXIMAP_OPENED" then ScanTaxiMap()
     else for key in pairs(levelTexts) do levelTexts[key]=nil end end
     ns.RefreshWorldMap()

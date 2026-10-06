@@ -118,7 +118,7 @@ local function Install()
         view.power:SetWidth(w-2); view.power:SetHeight(math.max(1,power)); view.power:SetStatusBarColor(.12,.3,.8); view.power:SetMinMaxValues(0,100); view.power:SetValue(65)
         if power>0 then view.power:Show() else view.power:Hide() end
         view.name:SetText(raid and "Healer Preview" or (UnitName("player") or "Player"))
-        view.title:SetText((prefix=="buff" and "Buff" or "Debuff").." Indicators — "..(raid and (ns.selectedWrathAuraGroup or "raid").." "..(ns.selectedRaidLayout or ns.activeRaidLayout or "40") or (ns.selectedWrathAuraUnit or "player")))
+        view.title:SetText((prefix=="buff" and "Buff" or "Debuff").." Indicators — "..(raid and (ns.selectedWrathAuraGroup or "raid").." "..(ns.selectedRaidLayout or ns.activeRaidLayout or ns.DEFAULT_RAID_LAYOUT or "25") or (ns.selectedWrathAuraUnit or "player")))
         local used=0; local minX,maxX,minY,maxY=-w/2,w/2,-h/2,h/2
         for _,a in ipairs(view.icons) do a:Hide() end
         for n,d in ipairs(list) do
@@ -227,7 +227,7 @@ local function Install()
     local function ShowAddMenu(v,anchor,prefix,ops)
         local m=v.addMenu
         if not m then
-            m=CreateFrame("Frame",nil,v.root); m:SetFrameStrata("DIALOG"); m:EnableMouse(true); m.buttons={}
+            m=CreateFrame("Frame",nil,v.root); m:Hide(); m:SetFrameStrata("DIALOG"); m:EnableMouse(true); m.buttons={}
             m:SetBackdrop({bgFile=white,edgeFile=white,edgeSize=1}); m:SetBackdropColor(.04,.05,.07,.98); m:SetBackdropBorderColor(.22,.24,.3,1)
             m:SetScript("OnUpdate",function(self)
                 if IsMouseButtonDown and IsMouseButtonDown("LeftButton") and not MouseIsOver(self) and not MouseIsOver(anchor) then self:Hide() end
@@ -390,14 +390,11 @@ local function Install()
                 {type="toggle",text="Use Indicator Layout",tooltip="Enable the indicators previewed above. Disable to return to the existing aura rows.",getValue=function() return Settings()[prefix.."IndicatorMode"] or false end,setValue=function(v) Settings()[prefix.."IndicatorMode"]=v; Apply() end})
         end
         if prefix=="debuff" and raid then
-            Section("DISPEL FRAME COLOR")
-            Row({type="toggle",text="Color Frame by Debuff Type",
-                    tooltip="Swaps the health bar colour to the debuff type (Magic, Curse, Disease, Poison) when your character can remove that debuff right now.",
-                    getValue=function() local c=Settings(); return c and c.dispelFrameColor~=false end,
-                    setValue=function(v) local c=Settings(); if c then c.dispelFrameColor=v; Apply() end end},
-                {type="slider",text="Color Strength",min=.1,max=1,step=.05,
-                    getValue=function() local c=Settings(); return c and c.dispelFrameColorStrength or 1 end,
-                    setValue=function(v) local c=Settings(); if c then c.dispelFrameColorStrength=v; Apply() end end})
+            Section("DEBUFF OPTIONS")
+            Row({type="toggle",text="Hide Sated / Exhaustion",tooltip="Hides the Bloodlust/Heroism lockout debuffs from the debuff icons.",
+                    getValue=function() local c=Settings(); return c and c.hideLustDebuff~=false end,
+                    setValue=function(v) local c=Settings(); if c then c.hideLustDebuff=v; Apply() end end},
+                {type="label",text="Dispel overlay, border and colors: Raid / Party > DISPELS"})
         end
         do
             local cur=Current()

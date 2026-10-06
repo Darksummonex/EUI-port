@@ -266,7 +266,7 @@ local function BindUnits()
         if s.auraGUID~=s.oldAuraGUID then s.auraDirty=true end
     end
 end
--- Returns name, icon, seconds left, bar value, uninterruptible, duration, channel.
+-- Returns name, icon, seconds left, bar value, uninterruptible, duration, channel, end time (seconds).
 function ns.CastInfo(s)
     if s.previewCast then return unpack(s.previewCast) end
     if not s.unit or UnitGUID(s.unit)~=s.guid then return end
@@ -276,7 +276,7 @@ function ns.CastInfo(s)
     if not name or not startTime or not endTime or endTime<=startTime then return end
     local duration=(endTime-startTime)/1000; local left=math.max(0,endTime/1000-GetTime())
     if left<=0 then return end
-    return name,icon,left,channel and left/duration or 1-left/duration,locked,duration,channel
+    return name,icon,left,channel and left/duration or 1-left/duration,locked,duration,channel,endTime/1000
 end
 local function CollectAuras(s,p)
     local debuffs,buffs={},{}

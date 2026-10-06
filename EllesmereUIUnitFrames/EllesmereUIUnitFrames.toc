@@ -4,14 +4,16 @@
 ## Group: EllesmereUI
 ## Notes: Simple unit frames with a modern visual style.
 ## Author: Ellesmere
-## Version: 9.3.4-335-0.8
+## Version: 9.3.4-335-0.10
 ## Dependencies: EllesmereUI
+## X-Part-Of: EllesmereUI
 ## SavedVariables: EllesmereUIUnitFramesDB
 ## IconTexture: Interface\AddOns\EllesmereUI\media\eg-logo.tga
 
 # Main Luas
 EUI_UnitFrames_335.lua
 EUI_UnitFrames_335_Textures.lua
+EUI_UnitFrames_335_Media.lua
 EUI_UnitFrames_Engine.lua
 EllesmereUIUnitFrames.lua
 # Retail/Forever aura containers are replaced by the Wrath implementation.
@@ -20,5 +22,6 @@ EllesmereUIUnitFrames.lua
 #EUI_UnitFrames_ForeverImbues.lua
 #EUI_UnitFrames_AuraContainers.lua
 EUI_UnitFrames_335_Auras.lua
+EUI_UnitFrames_335_FormBar.lua
 
 # Options

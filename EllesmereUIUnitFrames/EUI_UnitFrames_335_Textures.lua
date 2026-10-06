@@ -11,6 +11,7 @@ paths[ [[interface\addons\ellesmereui\media\textures\glass.tga]] ] = [[Interface
 paths[ [[interface\addons\ellesmereui\media\textures\gradient-bt.tga]] ] = [[Interface\AddOns\EllesmereUIUnitFrames\Media\Textures_335\gradient-bt.tga]]
 paths[ [[interface\addons\ellesmereui\media\textures\gradient-lr.tga]] ] = [[Interface\AddOns\EllesmereUIUnitFrames\Media\Textures_335\gradient-lr.tga]]
 paths[ [[interface\addons\ellesmereui\media\textures\gradient-rl.tga]] ] = [[Interface\AddOns\EllesmereUIUnitFrames\Media\Textures_335\gradient-rl.tga]]
+paths[ [[interface\addons\ellesmereui\media\textures\gradient-sharp.tga]] ] = [[Interface\AddOns\EllesmereUIUnitFrames\Media\Textures_335\gradient-sharp.tga]]
 paths[ [[interface\addons\ellesmereui\media\textures\gradient-tb.tga]] ] = [[Interface\AddOns\EllesmereUIUnitFrames\Media\Textures_335\gradient-tb.tga]]
 paths[ [[interface\addons\ellesmereui\media\textures\matte.tga]] ] = [[Interface\AddOns\EllesmereUIUnitFrames\Media\Textures_335\matte.tga]]
 paths[ [[interface\addons\ellesmereui\media\textures\plating.tga]] ] = [[Interface\AddOns\EllesmereUIUnitFrames\Media\Textures_335\plating.tga]]

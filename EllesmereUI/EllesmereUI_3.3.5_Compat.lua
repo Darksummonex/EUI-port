@@ -51,9 +51,10 @@ C_AddOns.LoadAddOn=C_AddOns.LoadAddOn or LoadAddOn
 C_AddOns.GetNumAddOns=C_AddOns.GetNumAddOns or GetNumAddOns
 C_Spell=C_Spell or {}
 C_Spell.GetSpellInfo=C_Spell.GetSpellInfo or function(id)
- local name, rank, icon, castTime, minRange, maxRange, spellID = GetSpellInfo(id)
+ -- 3.3.5 order: name, rank, icon, cost, isFunnel, powerType, castTime, minRange, maxRange.
+ local name, rank, icon, _, _, _, castTime, minRange, maxRange = GetSpellInfo(id)
  if not name then return nil end
- return {name=name, subName=rank, iconID=icon, castTime=castTime, minRange=minRange, maxRange=maxRange, spellID=spellID or id}
+ return {name=name, subName=rank, iconID=icon, castTime=castTime, minRange=minRange, maxRange=maxRange, spellID=tonumber(id) or tonumber((GetSpellLink and GetSpellLink(id) or ""):match("spell:(%d+)"))}
 end
 C_Spell.GetSpellTexture=C_Spell.GetSpellTexture or function(id) return GetSpellTexture(id) end
 C_Spell.GetSpellCooldown=C_Spell.GetSpellCooldown or function(id)

@@ -151,6 +151,7 @@ end}
 ''')
 escape = next(line for line in panel.splitlines() if 'sbEdit:SetScript("OnEscapePressed"' in line)
 lua.execute('local sbEdit=EllesmereUI._sidebarSearchBox\n' + escape)
+lua.execute('EUI335={IsWrath=true}; local m=getmetatable(UIParent).__index; function m:SetFrameStrata(s) self.strata=s end')
 lua.execute((root / 'EllesmereUI/EllesmereUI_GlobalSearch.lua').read_text(encoding='utf-8-sig'))
 lua.execute('''
 local E=EllesmereUI
@@ -164,6 +165,11 @@ for _,f in ipairs(allFrames) do
  if f._label and f._label:GetText()=="Health Class Color" and f:IsShown() then found=f end
 end
 assert(found,"feature search has no row for unvisited page")
+-- Wrath: the results list lives outside the panel so the sidebar/page can't draw over it.
+local popup=found:GetParent():GetParent()
+assert(popup:GetParent()==UIParent and popup:IsShown(),'search popup still parented inside the panel')
+popup.strata=nil; popup:Run("OnShow"); assert(popup.strata=="FULLSCREEN_DIALOG",'strata not reapplied on show')
+E._clickArea:Run("OnHide"); assert(not popup:IsShown(),'popup outlived the panel'); popup:Show()
 found:Run("OnClick"); assert(jump and jump[1]=="Test" and jump[4]=="Health Class Color")
 assert(box:GetText()=="")
 E:Show(); E:Toggle(); assert(#box.hooks.OnTextChanged==1)

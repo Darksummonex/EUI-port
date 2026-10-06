@@ -1,9 +1,26 @@
 ## Interface: 30300
-## Title: |cff0cd29fEllesmereUI|r DataBars - 3.3.5
+## Title: |cff0cd29fEllesmereUI|r DataBars
 ## Notes: Configurable information bars for Wrath with native game data.
 ## Author: Ellesmere / 3.3.5 backport
-## Version: 9.3.4-335-0.2
+## Version: 9.3.4-335-0.3
 ## Dependencies: EllesmereUI
+## X-Part-Of: EllesmereUI
 
 EUI_DataBars_335.lua
-EUI_DataBars_335_Blocks.lua
+EUI_DataBars_335_Tip.lua
+EUI_DataBars_335_Kit.lua
+Blocks_335\Clock.lua
+Blocks_335\Stats.lua
+Blocks_335\Location.lua
+Blocks_335\Gold.lua
+Blocks_335\Bags.lua
+Blocks_335\XPRep.lua
+Blocks_335\Travel.lua
+Blocks_335\Spec.lua
+Blocks_335\Profession.lua
+Blocks_335\MicroMenu.lua
+Blocks_335\Currency.lua
+Blocks_335\ItemLevel.lua
+Blocks_335\Audio.lua
+Blocks_335\LDB.lua
+Blocks_335\Spacer.lua

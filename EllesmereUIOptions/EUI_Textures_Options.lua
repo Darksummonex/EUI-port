@@ -622,7 +622,7 @@ local function TileResourceBars(parent, y, W, tile)
           end },
         BLANK());  y = y - h
     if ns.IsWrath then
-        y = LinkRow(parent, y, "Resource Bar Settings", tile.folder, "Bars", "BAR SELECTION", "Select Bar")
+        y = LinkRow(parent, y, "Resource Bar Settings", tile.folder, "Class, Power and Health Bars", "GENERAL", "Bar Texture")
     else
         y = LinkRow(parent, y, "Border Styles (per bar)",
             tile.folder, "Class, Power and Health Bars", nil, "Border Style")

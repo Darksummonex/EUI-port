@@ -1,4 +1,46 @@
-# Blizz UI Enhanced 3.3.5 — 0.17
+# Blizz UI Enhanced 3.3.5 — 0.22
+
+0.22: no mapa-múndi (inclusive mapas de instância), a seta do jogador, os
+pontos de grupo/raide, o cadáver e os marcadores de missão voltam a cair sobre
+a arte do mapa. No 3.3.5 a arte (WorldMapDetailFrame, 1002x668) faz parte da
+família de âncoras do WorldMapBlobFrame, que é protegido; quando o Blizzard
+troca de visão (mapa cheio, lista de missões ou janela) por um caminho
+contaminado em combate, só o SetScale/SetPoint da arte é bloqueado, e a arte
+fica em 0.691 enquanto WORLDMAP_SETTINGS.size, o WorldMapButton e a seta vão
+para 1.0. O EUI agora segue a arte em combate (escala do WorldMapButton e do
+WorldMapPOIFrame, seta reposicionada) sem tocar na arte nem escrever em
+WORLDMAP_SETTINGS, e ao sair do combate devolve a arte à visão nativa. As
+coordenadas do cursor passaram a ser medidas sobre a própria arte.
+
+0.21: os menus suspensos nativos (Localizador de Masmorras, carimbo de hora
+do chat etc.) não mostram mais um quadrado vazio à direita de cada linha. Era
+a moldura do ícone nativo da linha, que fica oculto quando a opção não tem
+ícone; agora a moldura só aparece quando o ícone está visível.
+
+0.20: o fundo escuro da janela de Talentos/Glifos agora termina logo acima da
+fileira de abas e à esquerda das abas de especialização dupla (que ficam
+penduradas na borda direita, fora da janela), em vez de cobrir as duas
+áreas. Sem especialização dupla, a borda direita fica em -32, a borda da arte
+nativa.
+
+0.19: a aba de Glifos voltou a mostrar o fundo nativo (o pergaminho com o
+desenho das runas). Antes, a skin apagava a textura UI-GlyphFrame junto com o
+resto da arte da janela. Essa textura, porém, é uma janela inteira em escala
+1:1 (barra de título, borda e o furo do retrato); por isso agora ela aparece
+recortada só no corpo do pergaminho, na mesma posição nativa, e as linhas
+continuam alinhadas com os encaixes. A caixa do EUI também foi ajustada a esse
+corpo (x 22–342, y 58–432 da folha de 384x512); antes ela ia de 16 a 339 e
+descia até 440, passando por cima da borda inferior. O brilho nativo que
+aparece ao aprender um glifo também deixou de ser apagado. Ao esconder a aba
+ou desligar a skin, a textura volta ao tamanho e recorte originais. O Retail
+não tem GlyphFrame (os glifos saíram no Legion), então não há referência
+Retail para este ajuste.
+
+0.18: os controles deslizantes (sliders) das janelas da Blizzard, como as
+páginas Camera e Mouse das opções de Interface, voltaram ao tamanho certo. O botão nativo é uma arte 32x32
+com margens transparentes, e a pintura lisa do EUI preenchia o quadrado
+inteiro; agora o botão pintado fica com 8x16 (8x20 nas barras de rolagem
+verticais) e o tamanho original volta quando o skin é desligado.
 
 0.17 adds "GearScore: N" to player tooltips (on by default), coloured by the
 GearScoreLite bands. It uses the character sheet formula (GearScoreLite's own

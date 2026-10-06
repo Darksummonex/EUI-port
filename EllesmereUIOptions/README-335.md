@@ -1,4 +1,92 @@
-# Options 3.3.5 — 0.61
+# Options 3.3.5 — 0.78
+
+0.78: QoL > Raid Tools ganhou a seção BOSS MOD BARS com "Hide DBM/BigWigs Bars
+While Timeline Is Active" (ligado por padrão; requer Quality of Life 0.7) e uma
+linha de status dizendo se o AbilityTimeline está carregado e quais barras
+estão escondidas.
+
+0.77: QoL > Displays ganhou a seção ZONE TEXT com "Move Zone Text" (ligado
+por padrão; requer Quality of Life 0.6). O Element Options do mover "Zone Text"
+no Unlock Mode abre essa seção.
+
+0.76: Patch Notes no Wrath mostra só as notas do backport (um banner de visão
+geral e uma entrada por módulo, da mais nova para a mais antiga, com a versão
+do backport de cada módulo no título); as notas do Retail saíram. A aba EUI
+Legends (pódio e lista de doadores) e a linha "Special thanks to:" do
+cabeçalho foram removidas; a equipe continua na nova aba "EUI Staff".
+
+0.75: nova página Arena Frames (EUI_Arena_335_Options.lua) para o módulo
+EllesmereUI Arena, com seções General, Layout, Health and Power, Text, Icons,
+Cast Bar e Target and Visibility. Os quadros de teste aparecem enquanto a
+página está aberta.
+
+0.74: QoL > Automation segue o layout do Retail: Quick Loot | Auto-Fill
+Delete Confirmation, depois Auto Repair | Auto Sell Junk. "Use Guild Repair
+First" virou "Use Guild Bank Funds" dentro da engrenagem do Auto Repair
+(desativada enquanto o Auto Repair estiver desligado). As quatro opções têm as
+dicas do Retail; o texto "Delete confirmation still requires your click" saiu,
+porque Enter já confirma a exclusão.
+
+0.73: Raid Frames ganhou a seção DISPELS do Retail nas páginas Raid e Party
+(Dispel Overlay, Overlay Opacity, Frame Border com engrenagem, Type Icon
+Position com engrenagem, Dispel Colors e Only Show Dispellable; requer Raid
+Frames 0.9). "Debuff Type Border" saiu de BORDERS (agora é Color Custom
+Borders na engrenagem de Frame Border) e as linhas de cor de dispel saíram
+da página Debuffs.
+
+0.72: Raid Frames ganhou o "Preview Mode" do Retail (Real, Overlay ou No
+Preview) no topo das páginas Raid e Party, e a página Party ganhou a seção
+LAYOUT com "Horizontal Frames". Requer Raid Frames 0.8.
+
+0.66: Quality of Life ganhou a seção MAIL com "Mailbox: Open All Button" e
+"Shift-Click: Attach Same Category" (QoL 0.3).
+
+0.65: Friends List no layout do Retail, numa seção DISPLAY com o aviso do
+Style: Class Icon Theme (Blizzard, Modern, Pixel, Pixels Comic, Glyph, Arcade,
+Legend, Midnight, Runic) | Class Color Names; Border Size | Border Color
+(Custom / Accent Colored); Enable Accent Colors | Enable Faction Banners; Show
+Class Icons | Auto-Accept Friend Invites (engrenagem: Accept Invites from
+Guildmates). Ficam, só no Wrath: Enable Friends Skin, Window Scale,
+Background/Friend Row Opacity e os tamanhos de fonte (engrenagem com Font
+Outline). Com Blizzard/Classic ativo, as linhas do visual EllesmereUI ficam
+desativadas. O seletor de estilo saiu da página (fica na página Style).
+Requer Friends 0.3.
+
+0.64: Quest Tracker no layout do Retail. No topo, "Reposition this element
+within Unlock Mode" e o link verde "Force Quest Tracker on Screen" / "Allow
+Quest Tracker to be Moved Offscreen" (alterna a trava na tela e abre o Unlock
+Mode). DISPLAY traz o aviso do Style quando Blizzard/Classic está ativo e
+esconde as linhas que só valem para o visual EllesmereUI; Background Opacity
+tem a amostra de cor inline e Font tem a engrenagem com Font Outline. COLORS
+usa rótulo + amostra (Title, Completed, Focused, Objective) e as amostras
+Class/Custom/Accent de Header e Line. EXTRAS: Auto Accept com engrenagem
+(Prevent Multi Quest Accept, Hold Shift to Skip), Auto Turn In com engrenagem
+e Quest Item Hotkey. O atalho do Unlock Mode abre DISPLAY > Visibility. O
+seletor de estilo saiu da página (fica na página Style, como no Retail).
+Requer Quest Tracker 0.3.
+
+0.63: Unit Frames, paridade visual da pré-visualização. Os ícones de buffs e
+debuffs da prévia eram IDs de arquivo do Retail (quadrados vazios no Wrath);
+agora vêm de magias do Wrath da mesma classe/tipo. A barra de cast da prévia
+usa Pedra de Regresso (Hearthstone) quando a classe não tem magia com tempo de
+cast, e mostra o tempo real: o C_Spell.GetSpellInfo do núcleo lia o custo de
+mana como tempo de cast (correção compartilhada no EllesmereUI). O indicador de
+facção e o retrato destacado da prévia usam os mesmos ajustes do quadro real
+(ícone PvP do Wrath; arte ajustada ao formato, sem máscara). Requer Unit
+Frames 0.10.
+
+0.62: Unit Frames. A linha de filtro de Buffs/Debuffs do Retail dependia do
+registro de filtros do Player Aura Bars, que o Wrath não tem; agora usa os
+modos do Aura Filters (Show All, Own Only, Only Tracked Auras) com "Edit in
+Aura Filters" no topo do menu. A engrenagem de buffs tem Has Duration e, em
+alvo/foco, Stealable Only e o brilho de buffs removíveis (Purgeable Buff Glow,
+com pré-visualização). A de debuffs tem Has Duration. Passam a aparecer, como
+no Forever: posição do Threat %, ícone de humor do pet na prévia, seção do pet
+com barra de poder, Power Type de druida (Mana / Mana + Form Power) com os
+deslocamentos do texto da forma e o Mana Regen Spark. Somem as opções sem API
+no 3.3.5: absorção/cura recebida e as alternativas de poder por spec. Em Class
+Resource, "Blizzard" fica desativado fora do Death Knight (só as runas têm
+barra nativa no Wrath). Requer Unit Frames 0.9.
 
 0.61: o botão do topo de Bar Display agora é "Quick Keybind Mode (/kb)", como
 no Retail, e abre o modo de atalho rápido do Action Bars (no lugar de

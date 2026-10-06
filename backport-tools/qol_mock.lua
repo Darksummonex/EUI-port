@@ -9,6 +9,25 @@ function m:SetFrameStrata(v) self.strata=v end
 function m:SetVertexColor(...) self.vertexColor={...} end
 function m:SetTextColor(...) self.textColor={...} end
 function m:IsProtected() return self.protected or false end
+function m:Enable() self.enabled=true end
+function m:Disable() self.enabled=false end
+function m:IsEnabled() return self.enabled and 1 or nil end
+function m:SetScale(v) self.scale=v end
+function m:SetJustifyH(v) self.justifyH=v end
+function m:RegisterForClicks(...) self.clicks={...} end
+function m:SetFrameLevel(v) self.level=v end
+-- Native 3.3.5 globals used by the QoL extras (bindings, sounds, chat, auras).
+overrideBindings={}
+function SetOverrideBindingClick(owner,_,key,button) overrideBindings[#overrideBindings+1]={owner,key,button} end
+function ClearOverrideBindings(owner) for i=#overrideBindings,1,-1 do if overrideBindings[i][1]==owner then table.remove(overrideBindings,i) end end end
+function UnregisterStateDriver(f,attribute) if f.drivers then f.drivers[attribute]=nil end end
+SecureStateDriverManager={events={},RegisterEvent=function(self,e) self.events[e]=true end}
+mouselook=false
+function MouselookStart() mouselook=true end
+function MouselookStop() mouselook=false end
+sounds={}; function PlaySoundFile(path,channel) sounds[#sounds+1]={path,channel} end
+chatSent={}; function SendChatMessage(text,channel) chatSent[#chatSent+1]={text,channel} end
+cancelled={}; function CancelUnitBuff(unit,index,filter) cancelled[#cancelled+1]={unit,index,filter} end
 local originalCreate=CreateFrame
 function CreateFrame(kind,name,parent,template) assert(not combat,'QoL created frames in combat'); return originalCreate(kind,name,parent,template) end
 for _,key in ipairs({'SetPoint','ClearAllPoints','SetMovable','EnableMouse','StartMoving','StopMovingOrSizing'}) do

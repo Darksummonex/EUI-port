@@ -55,40 +55,66 @@ local function RegisterCategory()
     InterfaceOptions_AddCategory(panel)
 end
 
-local function InAnchorChain(frame,button)
-    local seen={}
-    while frame and frame.GetPoint and not seen[frame] do
-        if frame==button then return true end
-        seen[frame]=true
-        local _,relative=frame:GetPoint(1)
-        frame=type(relative)=="string" and _G[relative] or relative
+function A.Unlock()
+    if InCombatLockdown() then
+        if E.PrintError then E.PrintError("Cannot toggle Unlock Mode during combat.") end
+        return false
     end
-    return false
+    if not E.ToggleUnlockMode then return false end
+    if GameMenuFrame and GameMenuFrame:IsShown() then HideUIPanel(GameMenuFrame) end
+    E:ToggleUnlockMode()
+    return true
 end
 
+local function ButtonShown(button)
+    local db=EllesmereUIDB
+    if button==A.unlockButton then return db and db.hideUnlockMenuButton==false end
+    return not (db and db.hideGameMenuButton)
+end
+
+local function IsOurs(frame) return frame and (frame==A.menuButton or frame==A.unlockButton) end
+
+-- ElvUI, ACP and similar insert their entry right above Logout, so ours hang
+-- off Macros instead; whatever followed Macros moves below our last entry.
+-- Anchoring only to Macros or to each other keeps the chain acyclic.
 function A.LayoutMenu()
     if InCombatLockdown() then return end
-    local menu,logout,button=GameMenuFrame,GameMenuButtonLogout,A.menuButton
-    if not menu or not logout or not button then return end
-    button:SetWidth(logout:GetWidth()); button:SetHeight(logout:GetHeight())
-    -- Other addons can insert their own button between ours and Logout.
-    -- Leave that chain intact rather than creating a circular anchor.
-    if not InAnchorChain(logout,button) then
-        local point,relative,relPoint,x,y=logout:GetPoint(1)
-        if not point or not relative then return end
-        button:ClearAllPoints(); button:SetPoint(point,relative,relPoint,x or 0,-1)
-        logout:ClearAllPoints(); logout:SetPoint(point,button,relPoint,0,y or -16)
+    local menu,anchor=GameMenuFrame,GameMenuButtonMacros or GameMenuButtonKeybindings
+    if not menu or not anchor or not A.menuButton then return end
+    local size=GameMenuButtonLogout or anchor
+    local width,height=size:GetWidth(),size:GetHeight()
+    local last,shown=anchor,0
+    for _,button in ipairs({A.menuButton,A.unlockButton}) do
+        button:SetWidth(width); button:SetHeight(height)
+        if ButtonShown(button) then
+            button:ClearAllPoints(); button:SetPoint("TOP",last,"BOTTOM",0,-1)
+            button:Show(); last=button; shown=shown+1
+        else
+            button:Hide()
+        end
     end
-    button:Show()
-    local continue=GameMenuButtonContinue
-    local top,bottom=menu:GetTop(),continue and continue:GetBottom()
+    for _,child in ipairs({menu:GetChildren()}) do
+        if not IsOurs(child) and child.GetPoint then
+            local point,relative,relPoint,x,y=child:GetPoint(1)
+            relative=type(relative)=="string" and _G[relative] or relative
+            if (relative==anchor or IsOurs(relative)) and relative~=last then
+                child:ClearAllPoints(); child:SetPoint(point,last,relPoint,x or 0,y or 0)
+            end
+        end
+    end
+    local top,bottom=menu:GetTop(),nil
+    for _,child in ipairs({menu:GetChildren()}) do
+        if child.IsObjectType and child:IsObjectType("Button") and child:IsShown() then
+            local edge=child:GetBottom()
+            if edge then bottom=bottom and math.min(bottom,edge) or edge end
+        end
+    end
     if top and bottom then
-        local required=top-bottom+16
-        if menu:GetHeight()<required then menu:SetHeight(required) end
-    elseif not A.menuHeightAdded then
-        menu:SetHeight(menu:GetHeight()+button:GetHeight()+1)
+        menu:SetHeight(math.max(menu:GetHeight(),top-bottom+16))
+    elseif shown~=(A.menuHeightAdded or 0) then
+        menu:SetHeight(menu:GetHeight()+(shown-(A.menuHeightAdded or 0))*(height+1))
+        A.menuHeightAdded=shown
     end
-    A.menuHeightAdded=true
 end
 
 local function RegisterMenuButton()
@@ -99,11 +125,25 @@ local function RegisterMenuButton()
     local button=CreateFrame("Button","EllesmereUI_GameMenuButton",menu,"GameMenuButtonTemplate")
     button:SetText("EllesmereUI"); button:SetScript("OnClick",A.Open)
     A.menuButton=button
+    local unlock=CreateFrame("Button","EllesmereUI_UnlockMenuButton",menu,"GameMenuButtonTemplate")
+    unlock:SetText("EUI Unlock Mode"); unlock:SetScript("OnClick",A.Unlock)
+    A.unlockButton=unlock
     menu:HookScript("OnShow",A.LayoutMenu)
     if menu:IsShown() then A.LayoutMenu() end
 end
 
 function A.Initialize()
+    -- Retail hides the Unlock entry until opted in; Wrath shows it by default.
+    -- An explicit false keeps the General "EUI Buttons" dropdown in sync.
+    if type(EllesmereUIDB)=="table" and EllesmereUIDB.hideUnlockMenuButton==nil then
+        EllesmereUIDB.hideUnlockMenuButton=false
+    end
+    -- Wrath ignored hideGameMenuButton before core 0.40, so a saved true was
+    -- never seen in game; clear it once instead of silently hiding the entry.
+    if type(EllesmereUIDB)=="table" and not EllesmereUIDB.wrathGameMenuFlagsV1 then
+        EllesmereUIDB.hideGameMenuButton=nil
+        EllesmereUIDB.wrathGameMenuFlagsV1=true
+    end
     if InCombatLockdown() then return end
     RegisterCategory(); RegisterMenuButton()
     if A.menuButton and GameMenuFrame:IsShown() then A.LayoutMenu() end

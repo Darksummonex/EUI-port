@@ -1,4 +1,13 @@
-# Nameplates 3.3.5 — 0.11
+# Nameplates 3.3.5 — 0.12
+
+0.12: a barra de lançamento preenche suavemente. Antes o preenchimento só era
+atualizado no refresh das placas (a cada 0,05 s), por isso andava em degraus.
+Agora a barra tem um OnUpdate próprio que roda a cada frame só enquanto há
+cast visível (sai no fim, no flash "Interrupted" e ao esconder): casts de
+alvo/mouseover seguem GetTime() contra o fim do cast, canais esvaziam, e placas
+anônimas espelham a barra nativa. Spark e tempo também andam por frame; o texto
+do tempo só é reescrito quando muda o décimo (fora isso, nada é alocado por
+frame).
 
 0.11: o menu de texto de CORE TEXT POSITIONS agora tem todas as opções do
 Retail: None, Enemy Name, Level | Name, Name | Level, Level, Target of Target,

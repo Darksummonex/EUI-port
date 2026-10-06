@@ -4,6 +4,7 @@
 ## Author: Ellesmere / 3.3.5 backport
 ## Version: 9.3.4-335-0.10
 ## Dependencies: EllesmereUI
+## X-Part-Of: EllesmereUI
 ## SavedVariables: EllesmereUIInventoryDB
 # Layout settings use Core profiles; inventory has its own account save file.
 

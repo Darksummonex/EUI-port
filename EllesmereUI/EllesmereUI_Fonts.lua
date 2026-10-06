@@ -270,6 +270,7 @@ EllesmereUI._addonKeyToFolder = {
     damageMeters = "EllesmereUIDamageMeters",
     dataBars     = "EllesmereUIDataBars",
     raidFrames   = "EllesmereUIRaidFrames",
+    arena        = "EllesmereUIArena",
     bags         = "EllesmereUIBags",
     quickdraw    = "EllesmereUIQuickdraw",
 }

@@ -6,6 +6,7 @@
 ## Author: Ellesmere
 ## Version: 9.3.4-335-0.6
 ## Dependencies: EllesmereUI
+## X-Part-Of: EllesmereUI
 ## SavedVariables: EllesmereUIDamageMetersDB
 ## SavedVariablesPerCharacter: EllesmereUIDamageMetersHistory
 ## IconTexture: Interface\AddOns\EllesmereUI\media\eg-logo.tga

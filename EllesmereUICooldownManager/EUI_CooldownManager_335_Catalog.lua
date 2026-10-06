@@ -12,15 +12,74 @@ ns.catalog={
  WARLOCK={cooldowns={47897,17962,50796,48181,47241,18540,1122,19647,7812},utility={48020,6789,5484,18220,18708,29858,17928},buffs={54277,34936,71165,47241,17941}},
  DRUID={cooldowns={17116,50334,61336,22812,22842,29166,48477,18562,50516,48505,33831},utility={5229,5217,1850,8983,6795,5209},buffs={16870,48517,48518,69369,5217,50334,22812}},
 }
-ns.racials={59752,20594,58984,20549,20572,26297,7744,28730,59547,59548,59549}
+-- Retail RACE_RACIALS with the Wrath spell IDs (class variants share one slot).
+ns.RACE_RACIALS={
+ Human={59752},Dwarf={20594},NightElf={58984},Gnome={20589},
+ Draenei={28880,59542,59543,59544,59545,59547,59548},
+ Orc={20572,33697,33702},Scourge={7744},Tauren={20549},Troll={26297},
+ BloodElf={28730,25046,50613},
+}
+ns.racials={}
+for _,list in pairs(ns.RACE_RACIALS) do for _,id in ipairs(list) do ns.racials[#ns.racials+1]=id end end
+table.sort(ns.racials)
+-- Retail CDM_ITEM_PRESETS with Wrath consumables. items is the display order:
+-- the first one in the bags is shown; swapWith follows when a family runs out.
+ns.ITEM_PRESETS={
+ {key="healthstone",name="Healthstone",items={36892,36893,36894,36889,36890,36891,22103,22104,22105,9421,19012,19013}},
+ {key="runic_healing",name="Runic Healing Potion",items={33447,43569,41166,22829}},
+ {key="runic_mana",name="Runic Mana Potion",items={33448,43570,42545,22832}},
+ {key="potion_speed",name="Potion of Speed",items={40211},swapWith={"potion_wild_magic","indestructible"}},
+ {key="potion_wild_magic",name="Potion of Wild Magic",items={40212},swapWith={"potion_speed","indestructible"}},
+ {key="indestructible",name="Indestructible Potion",items={40093},swapWith={"potion_speed","potion_wild_magic"}},
+ {key="saronite_bomb",name="Saronite Bomb",items={41119,40771}},
+}
+ns.ITEM_PRESET_BY_KEY={}
+for _,p in ipairs(ns.ITEM_PRESETS) do ns.ITEM_PRESET_BY_KEY[p.key]=p end
+-- Retail BUFF_BAR_PRESETS for Tracking Bars and buff bars. Wrath auras are readable,
+-- so Bloodlust/Heroism track the buff itself instead of the Sated debuff edge.
+ns.BUFF_PRESETS={
+ {key="bloodlust",name="Bloodlust / Heroism",ids={2825,32182},icon="Interface\\Icons\\Spell_Nature_BloodLust"},
+ {key="potion_speed",name="Potion of Speed",ids={53908}},
+ {key="potion_wild_magic",name="Potion of Wild Magic",ids={53909}},
+ {key="indestructible",name="Indestructible Potion",ids={53762}},
+ {key="hyperspeed",name="Hyperspeed Acceleration",ids={54758}},
+ {key="tricks",name="Tricks of the Trade",ids={57933}},
+ {key="power_infusion",name="Power Infusion",ids={10060}},
+ {key="innervate",name="Innervate",ids={29166}},
+}
+ns.BUFF_PRESET_BY_KEY={}
+for _,p in ipairs(ns.BUFF_PRESETS) do ns.BUFF_PRESET_BY_KEY[p.key]=p end
+-- Proc glow on Wrath: no spell activation overlay exists, so procs come from
+-- the player's own proc buffs. [spellID]={auraID,minStacks}.
+ns.PROC_AURAS={
+ [879]={59578},[19750]={59578},[635]={54149},                 -- Art of War, Infusion of Light
+ [133]={57761},[44614]={57761},[11366]={48108},[5143]={44401},[30455]={44544},[44572]={44544}, -- Brain Freeze, Hot Streak, Missile Barrage, Fingers of Frost
+ [403]={53817,5},[421]={53817,5},[331]={53817,5},[8004]={53817,5},[1064]={53817,5},[51514]={53817,5}, -- Maelstrom Weapon x5
+ [1464]={46916},[5308]={52437},[7384]={60503},[23922]={50227},   -- Bloodsurge, Sudden Death, Taste for Blood, Sword and Board
+ [49184]={59052},[45477]={51124},[49143]={51124},               -- Freezing Fog, Killing Machine
+ [53301]={56453},[3044]={56453},                                -- Lock and Load
+ [2912]={48518},[5176]={48517},                                 -- Eclipse
+ [2061]={33151},[585]={33151},                                  -- Surge of Light
+ [6353]={63167},[29722]={71165},[686]={17941},                   -- Decimation, Molten Core, Nightfall
+}
+-- Spells that become usable after an event (dodge, parry, low health).
+ns.REACTIVE={[7384]=true,[6572]=true,[5308]=true,[53351]=true,[24275]=true,[34428]=true,[14251]=true,[19306]=true,[1495]=true}
+-- Retail cooldown-viewer glow numbering (saved values) and the shared Core index.
+ns.GLOW_NAMES={"Pixel Glow","Shape Glow","Action Button Glow","Auto-Cast Shine","GCD","Modern WoW Glow","Classic WoW Glow"}
+ns.GLOW_ORDER={1,3,4,2,5,6,7}
+ns.GLOW_TO_SHARED={1,4,2,3,5,6,7}
 function ns.SeedLists(class)
     local seed=ns.catalog[class] or {cooldowns={},utility={},buffs={}}
-    local lists={cooldowns={},utility={},buffs={},tracking={}}
+    local lists={cooldowns={},utility={},buffs={},tbb={},barGlows={enabled=true,list={}}}
     for _,key in ipairs({"cooldowns","utility","buffs"}) do
         for _,id in ipairs(seed[key]) do lists[key][#lists[key]+1]={kind=key=="buffs" and "aura" or "spell",id=id,unit="player",filter="HELPFUL",enabled=true} end
     end
-    for _,id in ipairs(ns.racials) do lists.utility[#lists.utility+1]={kind="spell",id=id,enabled=true} end
+    local _,race=UnitRace("player")
+    for _,id in ipairs(ns.RACE_RACIALS[race or ""] or ns.racials) do lists.utility[#lists.utility+1]={kind="spell",id=id,enabled=true} end
     for _,slot in ipairs({13,14}) do lists.utility[#lists.utility+1]={kind="slot",id=slot,enabled=true} end
-    for i=1,math.min(3,#lists.buffs) do local e=lists.buffs[i]; lists.tracking[i]={kind="aura",id=e.id,unit="player",filter="HELPFUL",enabled=true} end
+    lists.utility[#lists.utility+1]={kind="preset",id="healthstone",enabled=true}
+    for i=1,math.min(3,#lists.buffs) do
+        lists.tbb[i]={spellID=lists.buffs[i].id,enabled=true}
+    end
     return lists
 end

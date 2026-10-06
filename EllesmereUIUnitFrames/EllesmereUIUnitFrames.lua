@@ -2591,13 +2591,12 @@ local PLAYER_POWER_ALT = {
 -- UnitPowerType decides). Shared by the bar's GetDisplayPower, the color
 -- resolver and the options preview so all three agree.
 function EllesmereUI.GetPlayerPowerOverride()
-    -- Wrath has no Retail spec-specific power resources.
-    if EUI_WOW_335 then return nil end
     if not (db and db.profile) then return nil end
     local _, classFile = UnitClass("player")
     -- WoW Forever has no retail specs, so the spec tables below never apply
     -- there: only the druid "Power Type: Mana" choice, under its own string key.
-    if EllesmereUI.IS_FOREVER then
+    -- Wrath shares that model (forms swap the druid's power, no spec resources).
+    if EllesmereUI.IS_FOREVER or EUI_WOW_335 then
         if classFile ~= "DRUID" then return nil end
         local ov = db.profile.player and db.profile.player.powerTypeOverride
         return (ov and ov.foreverDruid) and 0 or nil
@@ -4930,6 +4929,7 @@ local function ApplyDetachedPortraitShape(backdrop, uSettings, unitToken)
             PP.Point(backdrop._3d, "TOPLEFT", backdrop, "TOPLEFT", 0, 0)
             PP.Point(backdrop._3d, "BOTTOMRIGHT", backdrop, "BOTTOMRIGHT", 0, 0)
         end
+        if ns.Wrath then ns.Wrath.FitUnmaskedPortrait(backdrop, nil, nil, backdrop._2d) end
         if backdrop._outerRing or backdrop._innerShadow then ns.UF_PortraitExtras(backdrop, nil) end
         return
     end
@@ -4967,6 +4967,7 @@ local function ApplyDetachedPortraitShape(backdrop, uSettings, unitToken)
             PP.Point(backdrop._3d, "TOPLEFT", backdrop, "TOPLEFT", 0, 0)
             PP.Point(backdrop._3d, "BOTTOMRIGHT", backdrop, "BOTTOMRIGHT", 0, 0)
         end
+        if ns.Wrath then ns.Wrath.FitUnmaskedPortrait(backdrop, nil, nil, backdrop._2d) end
         if backdrop._outerRing or backdrop._innerShadow then ns.UF_PortraitExtras(backdrop, nil) end
         return
     end
@@ -5067,6 +5068,7 @@ local function ApplyDetachedPortraitShape(backdrop, uSettings, unitToken)
         PP.Point(backdrop._3d, "TOPLEFT", backdrop, "TOPLEFT", 0, 0)
         PP.Point(backdrop._3d, "BOTTOMRIGHT", backdrop, "BOTTOMRIGHT", 0, 0)
     end
+    if ns.Wrath then ns.Wrath.FitUnmaskedPortrait(backdrop, shape, insetPx, backdrop._2d, backdrop._class) end
 
     -- Outer Ring / Inner Shadow (round shapes); nothing built while off.
     ns.UF_PortraitExtras(backdrop, uSettings, shape)
@@ -7735,7 +7737,7 @@ local function CreatePowerBar(frame, unit, settings)
             -- Percent for mana-based specs, numeric otherwise; resolved at apply
             -- time and re-applied on spec change via ReloadAndUpdate. WoW Forever
             -- passes the player's forced power (druid Mana) so it follows the bar.
-            local isPercent = EUI_IsSmartPowerPercent(unit == "player" and EllesmereUI.IS_FOREVER == true
+            local isPercent = EUI_IsSmartPowerPercent(unit == "player" and (EllesmereUI.IS_FOREVER == true or EUI_WOW_335)
                 and EllesmereUI.GetPlayerPowerOverride() or nil)
             if isPercent then
                 ns.SetTextZoneRaw(frame, ppFS, "%s" .. pctSuffix, { TP.perpp })
@@ -9244,7 +9246,7 @@ end
 --  defines none of it). The watcher carries no events until
 --  SetThreatPctEnabled(true).
 -------------------------------------------------------------------------------
-if EllesmereUI.IS_FOREVER then
+if EllesmereUI.IS_FOREVER or EUI_WOW_335 then
     local POS = {
         RIGHT  = { point = "RIGHT",  x = -4 },
         LEFT   = { point = "LEFT",   x = 4 },
@@ -10053,7 +10055,7 @@ end
 -- WoW Forever pets have power (hunter pet focus, warlock pet mana), so there the
 -- pet frame carries a power bar driven by the pet's own power settings, laid out
 -- like the boss frames'. A plain boolean, fixed per session.
-ns.UF_PetHasPower = (EllesmereUI.IS_FOREVER == true)
+ns.UF_PetHasPower = (EllesmereUI.IS_FOREVER == true or EUI_WOW_335 == true)
 
 local function StyleSimpleFrame(frame, unit)
     local settings = GetSettingsForUnit(unit)
@@ -14927,7 +14929,7 @@ end
 -- options setters reach it through ReloadAndUpdate) and it is safe to call
 -- directly; it returns at once off WoW Forever.
 function ns.UF_ApplyPetHappiness()
-    if EllesmereUI.IS_FOREVER ~= true then return end
+    if EllesmereUI.IS_FOREVER ~= true and not EUI_WOW_335 then return end
     local pf = frames.pet
     local s = db.profile.pet
     local h = pf and pf._petHappy
@@ -16749,7 +16751,7 @@ function InitializeFrames()
             -- Mercenary mode: the player fights for the other faction, so the
             -- player's own badge shows that side (as Blizzard's player frame
             -- does) and "opposite" compares against it.
-            if atlas and unit == "player" and UnitIsMercenary("player") then
+            if atlas and unit == "player" and ns.Wrath.UnitIsMercenary("player") then
                 fac = (fac == "Horde") and "Alliance" or "Horde"
             end
             if atlas and mode == "opposite" and unit ~= "player" then
@@ -16757,7 +16759,7 @@ function InitializeFrames()
                 if issecretvalue(mine) then
                     atlas = nil
                 else
-                    if UnitIsMercenary("player") then
+                    if ns.Wrath.UnitIsMercenary("player") then
                         if mine == "Horde" then mine = "Alliance" elseif mine == "Alliance" then mine = "Horde" end
                     end
                     if mine == fac then atlas = nil end
@@ -16780,7 +16782,7 @@ function InitializeFrames()
                 local style = s.factionIndicatorStyle or "pvp"
                 if tex._facFac ~= fac or tex._facStyle ~= style or tex._facDim ~= dim then
                     tex._facFac, tex._facStyle, tex._facDim = fac, style, dim
-                    EllesmereUI.SetFactionArt(tex, style, fac)
+                    ns.Wrath.SetFactionArt(tex, style, fac)
                     tex:SetDesaturated(dim)
                     tex:SetAlpha(dim and 0.6 or 1)
                 end
@@ -18994,6 +18996,11 @@ do
     local visCount, ticker = 0, nil
 
     local function Known(sid)
+        -- Wrath: GetSpellInfo(name) answers only for spells in the spellbook.
+        if EUI_WOW_335 then
+            local name = GetSpellInfo(sid)
+            return name ~= nil and GetSpellInfo(name) ~= nil
+        end
         if C_SpellBook and C_SpellBook.IsSpellInSpellBook and Enum.SpellBookSpellBank then
             return C_SpellBook.IsSpellInSpellBook(sid, Enum.SpellBookSpellBank.Player, true)
         end
@@ -19003,7 +19010,8 @@ do
     local function ResolveRangeSpells()
         harmSpell, helpSpell = nil, nil
         local _, pClass = UnitClass("player")
-        for _, sid in ipairs(HARM_CHAIN[pClass] or {}) do
+        local chain = (EUI_WOW_335 and ns.Wrath.HarmRangeSpells[pClass]) or HARM_CHAIN[pClass]
+        for _, sid in ipairs(chain or {}) do
             if Known(sid) then harmSpell = sid; break end
         end
         local spec = GetSpecialization and GetSpecialization()
@@ -19011,8 +19019,8 @@ do
         if role == "HEALER" then helpSpell = HELP_HEAL[pClass] end
         -- WoW Forever has no spec roles: a healing class counts as its healing
         -- spec and range-checks with its best heal in the spellbook.
-        if EllesmereUI.IS_FOREVER then
-            local list = EllesmereUI.FOREVER_HEAL_SPELLS[pClass]
+        if EllesmereUI.IS_FOREVER or EUI_WOW_335 then
+            local list = EUI_WOW_335 and ns.Wrath.HealSpells[pClass] or EllesmereUI.FOREVER_HEAL_SPELLS[pClass]
             for i = 1, (list and #list or 0) do
                 if Known(list[i]) then helpSpell = list[i]; break end
             end
@@ -19038,7 +19046,9 @@ do
             -- (unit not range-checkable right now / spell momentarily not
             -- evaluable), which it rejects. issecretvalue runs first so the
             -- nil check never touches a secret.
-            local inRange = C_Spell.IsSpellInRange(spell, unit)
+            local inRange
+            if EUI_WOW_335 then inRange = ns.Wrath.IsSpellInRange(spell, unit)
+            else inRange = C_Spell.IsSpellInRange(spell, unit) end
             if issecretvalue(inRange) or inRange ~= nil then
                 f:SetAlphaFromBoolean(inRange, 1, oor)
             else

@@ -56,11 +56,24 @@ assert(a.cast:IsShown() and a.cast:GetValue()==1/3 and a.castText:GetText()=='' 
 assert(a.cast.barColor[1]==.7 and a.cast.barColor[2]==.4,'Retail purple cast color')
 assert(a.castIcon.point[1]=='TOPRIGHT' and a.castIcon.point[3]=='TOPLEFT' and a.castIcon:GetWidth()==17)
 assert(a.castSpark.texture:find('cast_spark.tga',1,true) and a.castSpark:IsShown() and a.castBg.color[4]==.9)
+-- Smooth fill: anonymous plates mirror the native bar every frame, not only on the throttled refresh.
+assert(a.cast:GetScript('OnUpdate'),'cast fill needs a per-frame OnUpdate while casting')
+a.native.cast:SetValue(1.5); a.cast:RunScript('OnUpdate',.016); assert(a.cast:GetValue()==.5,'native cast not mirrored per frame')
+a.native.cast:SetValue(1)
 units.target={name='Mob',guid='GUID-A',cast=true,auras={HARMFUL={{name='other',caster='party1'},{name='mine',caster='player',stacks=3},{name='pet',caster='pet'}},HELPFUL={{name='buff'}}}}
 NP.Update()
 assert(a.unit=='target' and a.guid=='GUID-A' and a.isTarget and a.root:GetScale()==1)
 assert(a.glow:IsShown() and a.glow.pieces[1].color[1]==.41 and a.glow.pieces[1].texture:find('background.tga',1,true))
 assert(a.castText:GetText()=='Fireball' and a.castTimer:GetText()=='4.0' and math.abs(a.cast:GetValue()-.2)<1e-9)
+-- Identified casts advance from GetTime() each frame between throttled refreshes (no 20 Hz steps).
+local tick=a.cast:GetScript('OnUpdate'); assert(tick,'cast fill needs a per-frame OnUpdate while casting')
+local updates=0; local realUpdate=NP.Update; NP.Update=function(...) updates=updates+1; return realUpdate(...) end
+now=2.016; a.cast:RunScript('OnUpdate',.016); assert(math.abs(a.cast:GetValue()-(1.016/5))<1e-9,'fill stepped instead of following GetTime')
+now=2.033; a.cast:RunScript('OnUpdate',.017); assert(math.abs(a.cast:GetValue()-(1.033/5))<1e-9 and a.castTimer:GetText()=='4.0')
+now=3.5; a.cast:RunScript('OnUpdate',.016); assert(math.abs(a.cast:GetValue()-.5)<1e-9 and a.castTimer:GetText()=='2.5')
+now=6.5; a.cast:RunScript('OnUpdate',.016); assert(a.cast:GetValue()==1 and not a.castSpark:IsShown(),'finished cast clamps full')
+assert(updates==0,'per-frame fill must not run the full plate refresh'); NP.Update=realUpdate
+now=2; NP.Update(); assert(a.cast:GetScript('OnUpdate')==tick and a.castSpark:IsShown() and a.castTimer:GetText()=='4.0')
 assert(a.auras[1]:IsShown() and a.auras[1].count:GetText()==3 and a.auras[2]:IsShown() and not a.auras[3]:IsShown())
 assert(a.auras[1].time:GetText()=='10' and a.auras[1].time.point[1]=='TOPLEFT')
 -- Debuffs centred above the name (2 x 26 + 2 spacing), enemy buffs left of the bar.
@@ -80,11 +93,14 @@ EllesmereUI.GetKickCooldownRemaining=nil
 p.hideEnemyNameWhileCasting=true; NP.Update(); assert(a.name:GetText()=='')
 p.hideEnemyNameWhileCasting=false; NP.Update(); assert(a.name:GetText()=='Mob')
 units.target.cast=false; units.target.channel=true; NP.Update(); assert(a.castText:GetText()=='Drain Life' and a.cast:GetValue()==.8)
+-- Channels drain smoothly per frame.
+now=2.5; a.cast:RunScript('OnUpdate',.016); assert(math.abs(a.cast:GetValue()-.7)<1e-9 and a.castTimer:GetText()=='3.5'); now=2; NP.Update()
 -- Interrupted flash on identified casts.
 units.target.channel=false; a.native.cast:Hide()
 NP.events:RunScript('OnEvent','UNIT_SPELLCAST_INTERRUPTED','target')
 assert(a.cast:IsShown() and a.cast.barColor[1]==.8 and a.cast.barColor[2]==0 and a.castText:GetText()=='Interrupted')
-now=2.7; NP.Update(); assert(not a.cast:IsShown()); now=2; a.flashUntil=nil
+assert(not a.cast:GetScript('OnUpdate'),'interrupted flash keeps a per-frame fill running')
+now=2.7; NP.Update(); assert(not a.cast:IsShown() and not a.cast:GetScript('OnUpdate'),'OnUpdate must stop once the cast ends'); now=2; a.flashUntil=nil
 p.onlyPlayerDebuffs=false; p.maxAuras=2; NP.Apply(); assert(a.auras[2]:IsShown() and not a.auras[3]:IsShown())
 p.maxAuras=8; NP.Apply(); assert(a.auras[3]:IsShown())
 -- Imported settings cannot address more icons than the allocated pool.
@@ -471,4 +487,4 @@ assert(NP.TextString(s,'targetOfTarget').textColor[1]==RAID_CLASS_COLORS.WARRIOR
 p.textSlotTop,p.textSlotLeft,p.textSlotRight,p.textSlotCenter='enemyName','level','healthPercent','none'; NP.PaintPreview()
 assert(s.name:GetText()=='Enemy Name Text' and s.healthText:GetText()=='72%' and not NP.TextString(s,'healthNumber').slot)
 ''')
-print('PASS: real Core Lua 5.1 lifecycle; native plate detection/clicks/alpha, Retail look (size, text slots, palette, glow, arrows, hash line, execute glow, target texture, combo points), casts (tint, shield, spark, kick tick, interrupted flash), unique mappings, top/left aura slots and recycling, threat roles and channels, friendly class colors, profile migration, combat deferral and real module/shared options (live header preview surviving the header cache, click-to-navigate preview elements, inline swatches/cogs, one-per-slot core and text positions, preview eyes, every Retail text element: name/level combos, Target of Target, health %/#/combos with K/M abbreviation, live and preview). Rendering and taint require in-game confirmation.')
+print('PASS: real Core Lua 5.1 lifecycle; native plate detection/clicks/alpha, Retail look (size, text slots, palette, glow, arrows, hash line, execute glow, target texture, combo points), casts (smooth per-frame fill/drain only while casting, tint, shield, spark, kick tick, interrupted flash), unique mappings, top/left aura slots and recycling, threat roles and channels, friendly class colors, profile migration, combat deferral and real module/shared options (live header preview surviving the header cache, click-to-navigate preview elements, inline swatches/cogs, one-per-slot core and text positions, preview eyes, every Retail text element: name/level combos, Target of Target, health %/#/combos with K/M abbreviation, live and preview). Rendering and taint require in-game confirmation.')

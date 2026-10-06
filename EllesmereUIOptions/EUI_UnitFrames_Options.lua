@@ -17,7 +17,7 @@ local PAGE_UNLOCK    = "Unlock Mode"
 
 -- Threat % Position dropdown (WoW Forever only, so nil on retail). On ns: the
 -- Main Frames page builder is near its 60-upvalue cap.
-if EllesmereUI.IS_FOREVER then
+if EllesmereUI.IS_FOREVER or EUI_WOW_335 then
     ns._threatPctPositions = { RIGHT = "Inside Right", LEFT = "Inside Left", CENTER = "Inside Center" }
     ns._threatPctPositionOrder = { "RIGHT", "LEFT", "CENTER" }
 end
@@ -658,7 +658,8 @@ function ns.UFOpt_PreviewPurgeGlow(bf, unitKey, s, w, h)
     if on then
         local AK = EllesmereUI.AuraKit
         local magic, enrage = false, false
-        if AK and AK.OffensiveDispelTypes then magic, enrage = AK.OffensiveDispelTypes() end
+        if AK and AK.OffensiveDispelTypes then magic, enrage = AK.OffensiveDispelTypes()
+        elseif ns.UF_WrathCanPurge then magic = ns.UF_WrathCanPurge() end
         on = magic or enrage
     end
     local host = bf._purgeGlow
@@ -743,6 +744,66 @@ local function AttachDebuffModeWarn(rgn, getS, offFn)
             local s = getS()
             return ns.UF_DebuffFilterMode(s) ~= "tracked" or ns.UF_DebuffHasIncludes(s)
         end)
+end
+-- Wrath: the Retail filter row drives the Player Aura Bars filter registry,
+-- which 3.3.5 does not ship. Same row and cogs over the Wrath Aura Filters
+-- keys (<prefix>FilterMode, <prefix>HasDuration, buffStealable). Returns h.
+function ns.UFOpt_WrathFilterRow(W, parent, y, unitKey, getS, apply, buffOff, debuffOff, unitLabel, purgeDesc)
+    local F = EllesmereUI.WrathAuraFilters
+    local function Edit(prefix)
+        EllesmereUI:NavigateToElementSettings(ADDON_NAME, "Aura Filters",
+            prefix == "buff" and "BUFF FILTERS" or "DEBUFF FILTERS",
+            function() ns.selectedWrathAuraUnit = unitKey end)
+    end
+    local function ModeCfg(prefix, text, off)
+        return { type="dropdown", text=text,
+            values = { __editFilters = { text = "Edit in Aura Filters", action = function() Edit(prefix) end },
+                all = "Show All", own = "Own Only", tracked = "Only Tracked Auras" },
+            order = { "__editFilters", "---", "all", "own", "tracked" },
+            disabled = off, disabledTooltip = (prefix == "buff") and "Buffs" or "Debuffs", requireState = "displayed",
+            getValue = function() local s = getS(); return (F and s) and F.Mode(s, prefix) or "all" end,
+            setValue = function(v)
+                local s = getS()
+                s[prefix .. "FilterMode"] = v
+                if prefix == "buff" then s.onlyPlayerBuffs = (v == "own") else s.onlyPlayerDebuffs = (v == "own") end
+                apply()
+            end }
+    end
+    local debuffCfg
+    if unitKey == "player" then
+        debuffCfg = ModeCfg("debuff", unitLabel .. " Debuff Filter", debuffOff)
+    else
+        debuffCfg = DebuffModeDropdownCfg(unitLabel .. " Debuff Filter", unitKey, getS, apply,
+            { disabled = debuffOff, disabledTooltip = "Debuffs", requireState = "displayed" })
+    end
+    local row, h = W:DualRow(parent, y, ModeCfg("buff", unitLabel .. " Buff Filter", buffOff), debuffCfg)
+    if EllesmereUI._prebuilding then return h end
+    if unitKey ~= "player" then AttachDebuffModeWarn(row._rightRegion, getS, debuffOff) end
+    local buffRows = {
+        { type="toggle", label="Has Duration", tooltip="Only show buffs that have a duration, excluding permanent ones.",
+          get=function() return getS().buffHasDuration == true end,
+          set=function(v) getS().buffHasDuration = v or nil; apply() end },
+    }
+    if unitKey ~= "player" then
+        buffRows[2] = { type="toggle", label="Stealable Only", tooltip="Only show buffs you can spellsteal or purge.",
+          get=function() return getS().buffStealable == true end,
+          set=function(v) getS().buffStealable = v or nil; apply() end }
+    end
+    if (unitKey == "target" or unitKey == "focus") and purgeDesc and EllesmereUI.GlowOptions then
+        local pgRows = EllesmereUI.GlowOptions.PopupRows(purgeDesc(getS), "Purgeable Buff Glow")
+        if pgRows[1] then pgRows[1].tooltip = "Glows the buffs you can purge or spellsteal." end
+        for i = 1, #pgRows do buffRows[#buffRows + 1] = pgRows[i] end
+    end
+    EllesmereUI.BuildInlineCog(row._leftRegion, { title = "Buff Filter", tip = "Buff Filter Options",
+        disabled = buffOff, disabledTooltip = "Buffs", requireState = "displayed", rows = buffRows })
+    EllesmereUI.BuildInlineCog(row._rightRegion, { title = "Debuff Filter", tip = "Debuff Filter Options",
+        disabled = debuffOff, disabledTooltip = "Debuffs", requireState = "displayed",
+        rows = {
+            { type="toggle", label="Has Duration", tooltip="Only show debuffs that have a duration, excluding permanent ones.",
+              get=function() return getS().debuffHasDuration == true end,
+              set=function(v) getS().debuffHasDuration = v or nil; apply() end },
+        } })
+    return h
 end
 
 local initFrame = CreateFrame("Frame")
@@ -1314,6 +1375,7 @@ initFrame:SetScript("OnEvent", function(self)
                 pFrame._previewModel:SetPoint("TOPLEFT", pFrame, "TOPLEFT", 0, 0)
                 pFrame._previewModel:SetPoint("BOTTOMRIGHT", pFrame, "BOTTOMRIGHT", 0, 0)
             end
+            if ns.Wrath then ns.Wrath.FitUnmaskedPortrait(pFrame, nil, nil, (not classInset) and pFrame._previewTex or nil) end
             ns.UF_PortraitExtras(pFrame, nil)
             return
         end
@@ -1345,6 +1407,7 @@ initFrame:SetScript("OnEvent", function(self)
                 pFrame._previewModel:SetPoint("TOPLEFT", pFrame, "TOPLEFT", 0, 0)
                 pFrame._previewModel:SetPoint("BOTTOMRIGHT", pFrame, "BOTTOMRIGHT", 0, 0)
             end
+            if ns.Wrath then ns.Wrath.FitUnmaskedPortrait(pFrame, nil, nil, (not classInset) and pFrame._previewTex or nil) end
             ns.UF_PortraitExtras(pFrame, nil)
             return
         end
@@ -1427,6 +1490,10 @@ initFrame:SetScript("OnEvent", function(self)
             pFrame._previewModel:ClearAllPoints()
             PP.Point(pFrame._previewModel, "TOPLEFT", pFrame, "TOPLEFT", 0, 0)
             PP.Point(pFrame._previewModel, "BOTTOMRIGHT", pFrame, "BOTTOMRIGHT", 0, 0)
+        end
+        if ns.Wrath then
+            ns.Wrath.FitUnmaskedPortrait(pFrame, shape, insetPx,
+                (not classInset) and pFrame._previewTex or nil, classInset and pFrame._previewTex or nil)
         end
 
         -- Outer Ring / Inner Shadow: the live portrait's own helper. A shown
@@ -1572,6 +1639,12 @@ initFrame:SetScript("OnEvent", function(self)
         EVOKER      = { 4622462, 4622460, 4622468, 4622464, 4622466 },
     }
     local FALLBACK_BUFF_ICONS = { 135932, 135981, 136075, 136205, 135987 }
+    if EUI_WOW_335 and ns.Wrath and ns.Wrath.SpellIcons then
+        for k, ids in pairs(ns.Wrath.PreviewBuffSpells) do CLASS_BUFF_ICONS[k] = ns.Wrath.SpellIcons(ids) end
+        FALLBACK_BUFF_ICONS = CLASS_BUFF_ICONS.FALLBACK
+        FALLBACK_CAST_SPELLS = ns.Wrath.PreviewCastSpells
+        UNIVERSAL_CAST_SPELLS = ns.Wrath.PreviewCastSpells
+    end
     local _previewBuffIcons = {}  -- 2 randomized buff icons for player preview
 
     local _previewHealthPct = 0.70  -- randomized health percentage for preview
@@ -3050,6 +3123,9 @@ initFrame:SetScript("OnEvent", function(self)
                 136195, 136133, 136222, 136168, 136205,
                 136186, 136124, 136151, 136210, 136143,
             }
+            if EUI_WOW_335 and ns.Wrath and ns.Wrath.SpellIcons then
+                previewDebuffIcons = ns.Wrath.SpellIcons(ns.Wrath.PreviewDebuffSpells)
+            end
             for i = 1, 20 do
                 local df = CreateFrame("Frame", nil, pf, "BackdropTemplate")
                 PP.Size(df, debuffSize, debuffSize)
@@ -3167,7 +3243,7 @@ initFrame:SetScript("OnEvent", function(self)
         -- WoW Forever: the pet's happiness icon (the happy face as the sample),
         -- placed each Update beside the frame as the live icon is. It sits on
         -- its own frame so the page's click overlay shows and hides with it.
-        if unitKey == "pet" and EllesmereUI.IS_FOREVER == true then
+        if unitKey == "pet" and (EllesmereUI.IS_FOREVER == true or EUI_WOW_335) then
             local happyInd = CreateFrame("Frame", nil, pf)
             happyInd:SetFrameLevel(pf:GetFrameLevel() + 20)
             local happyTex = happyInd:CreateTexture(nil, "OVERLAY")
@@ -4640,7 +4716,7 @@ initFrame:SetScript("OnEvent", function(self)
             local _healWillShow = _healPrev and (s.healAbsorbStyle or "clean") ~= "none"
             if absorbBar then
                 local absS = s.showPlayerAbsorb
-                if (not _healWillShow) and absS and absS ~= "none" then
+                if (not _healWillShow) and absS and absS ~= "none" and not EUI_WOW_335 then
                     local _paTex = {
                         striped         = "Interface\\AddOns\\EllesmereUI\\media\\textures\\shields\\striped3.tga",
                         stripedReversed = "Interface\\AddOns\\EllesmereUI\\media\\textures\\shields\\striped-5-reversed.png",
@@ -5527,7 +5603,8 @@ initFrame:SetScript("OnEvent", function(self)
                     local fSz = s.factionIndicatorSize or 18
                     local fPos = s.factionIndicatorPosition or "topright"
                     local fOx, fOy = s.factionIndicatorX or 0, s.factionIndicatorY or 0
-                    EllesmereUI.SetFactionArt(factionInd, s.factionIndicatorStyle or "pvp", fac)
+                    local setFactionArt = ns.Wrath and ns.Wrath.SetFactionArt or EllesmereUI.SetFactionArt
+                    setFactionArt(factionInd, s.factionIndicatorStyle or "pvp", fac)
                     factionInd:SetSize(fSz, fSz)
                     factionInd:ClearAllPoints()
                     if fPos == "portrait" and portraitFrame and sp then
@@ -7101,7 +7178,7 @@ initFrame:SetScript("OnEvent", function(self)
         -- Threat % text (WoW Forever only): one profile-wide setting for both
         -- frames, drawn on the EllesmereUI frames only. Built before the
         -- half-empty Blizz header row so its blank stays the last slot.
-        if EllesmereUI.IS_FOREVER and (selectedUnit == "target" or selectedUnit == "focus") then
+        if (EllesmereUI.IS_FOREVER or EUI_WOW_335) and (selectedUnit == "target" or selectedUnit == "focus") then
             local NO_FRAMES = "This option requires an EllesmereUI Target or Focus frame."
             local function noFrames() return not (frames.target or frames.focus) end
             local function pctOff() return noFrames() or not db.profile.threatPctEnabled end
@@ -9800,7 +9877,7 @@ initFrame:SetScript("OnEvent", function(self)
             -- offsets (EUI_UnitFrames_ForeverFormBar.lua); unset, they follow
             -- the power text's.
             local _, cpClass = UnitClass("player")
-            if EllesmereUI.IS_FOREVER == true and selectedUnit == "player" and cpClass == "DRUID" then
+            if (EllesmereUI.IS_FOREVER == true or EUI_WOW_335) and selectedUnit == "player" and cpClass == "DRUID" then
                 local function NoFormBar() return not SVal("foreverFormBar", false) end
                 local function FormOffset(key, base)
                     local v = SVal(key, nil)
@@ -10105,7 +10182,7 @@ initFrame:SetScript("OnEvent", function(self)
                 end)
             end
         end
-        if selectedUnit == "player" and EllesmereUI.IS_FOREVER == true then
+        if selectedUnit == "player" and (EllesmereUI.IS_FOREVER == true or EUI_WOW_335) then
             -- Mana Regen Spark (EllesmereUI_ManaRegenSpark.lua), the section's
             -- last row; warriors and rogues get no spark engine, so no row. A
             -- druid's Power Type shares it: one choice for every form, stored
@@ -10179,7 +10256,7 @@ initFrame:SetScript("OnEvent", function(self)
             local classAlts = SPEC_POWER_ALTS[playerClass]
             -- Retail only: these alternatives are retail spec resources, and the
             -- WoW Forever classes have no specs to key them on.
-            if classAlts and not EllesmereUI.IS_FOREVER then
+            if classAlts and not EllesmereUI.IS_FOREVER and not EUI_WOW_335 then
                 local GetSpec = C_SpecializationInfo.GetSpecialization
                 -- Labels follow the CURRENT spec: the page is built once and
                 -- cached, so they are refilled on every spec change (see
@@ -10324,7 +10401,7 @@ initFrame:SetScript("OnEvent", function(self)
             linkBtn:SetScript("OnClick", function()
                 local rb=EllesmereUI._ModuleNS and EllesmereUI._ModuleNS.EllesmereUIResourceBars
                 if rb and rb.IsWrath then
-                    EllesmereUI:NavigateToElementSettings("EllesmereUIResourceBars", "Bars", "BAR SELECTION",function() if rb.SelectWrathBar then rb.SelectWrathBar("castBar",false) end end,"Select Bar")
+                    EllesmereUI:NavigateToElementSettings("EllesmereUIResourceBars", "Cast Bar", "BAR DISPLAY", nil, "Enable Player Cast Bar")
                 else EllesmereUI:NavigateToElementSettings("EllesmereUIResourceBars", "Cast Bar") end
             end)
             linkBtn:SetScript("OnEnter", function(self)
@@ -12193,6 +12270,11 @@ initFrame:SetScript("OnEvent", function(self)
                   if k == "blizzard" and EllesmereUI.IS_FOREVER and not EllesmereUI.BlizzStyle.Forever("unitframes") then
                       return "This option requires the WoW Forever style."
                   end
+                  -- Wrath's only re-parentable class resource frame is the Death Knight RuneFrame.
+                  if k == "blizzard" and EUI_WOW_335 and select(2, UnitClass("player")) ~= "DEATHKNIGHT"
+                      and SValSupported("classPowerStyle", "none") ~= "blizzard" then
+                      return "Wrath only has a Blizzard class resource bar for Death Knight runes."
+                  end
                   -- One owner for Blizzard's class resource frame: while Resource
                   -- Bars' Blizzard Class Resource Art is on, Blizzard is greyed here.
                   -- Only while not already chosen, so it can still be changed away.
@@ -13150,7 +13232,12 @@ initFrame:SetScript("OnEvent", function(self)
         -- (DebuffModeDropdownCfg). HIDDEN only when BOTH displays are None
         -- (either dropdown's DependentSetValue rebuilds on its None flip); with
         -- one side shown, the off side just grays out.
-        if not (BuffDisabled() and DebuffDisabled()) then
+        if EUI_WOW_335 then
+            if not (BuffDisabled() and DebuffDisabled()) then
+                h = ns.UFOpt_WrathFilterRow(W, parent, y, selectedUnit, SDB, ReloadAndUpdate,
+                    BuffDisabled, DebuffDisabled, UNIT_LABELS_SUP[selectedUnit] or "Player", UF_PurgeGlowDesc);  y = y - h
+            end
+        elseif not (BuffDisabled() and DebuffDisabled()) then
         do
             local buffFilterItems, BUFF_FILTER_KEYS, BUFF_NEG_SKEYS
                 -- Two-lane rows: Show narrows the frame to checked classes (legacy
@@ -13781,7 +13868,9 @@ initFrame:SetScript("OnEvent", function(self)
         -- Declared outside the gate: the click-mapping table at the bottom of
         -- this function references them (block-locals would be nil there).
         local sharedAbsorbsHeader, absorbRow
-        local _supportsAbsorbs = (selectedUnit == "player" or selectedUnit == "target" or selectedUnit == "focus")
+        -- Wrath 3.3.5 has no absorb or incoming-heal API, so the section stays out.
+        local _supportsAbsorbs = not EUI_WOW_335
+            and (selectedUnit == "player" or selectedUnit == "target" or selectedUnit == "focus")
         if _supportsAbsorbs then
         sharedAbsorbsHeader, h = W:SectionHeader(parent, "ABSORBS AND HEALS", y); y = y - h
 
@@ -16885,7 +16974,7 @@ initFrame:SetScript("OnEvent", function(self)
         -- hunter pets track happiness (PET HAPPINESS, below the power bar).
         -- Retail builds neither.
         local petOpts, petPower, happyHeader, happyRow
-        if EllesmereUI.IS_FOREVER == true then
+        if EllesmereUI.IS_FOREVER == true or EUI_WOW_335 then
             petPower = ns.UF_PetHasPower and not EllesmereUI.BlizzStyle.Get("unitframes")
             local P = db.profile.pet
             local function happyOff() return P.happinessEnabled == false end

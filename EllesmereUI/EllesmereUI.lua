@@ -689,6 +689,7 @@ local ADDON_ROSTER = {
     { folder = "EllesmereUINameplates",        display = "Nameplates",           search_name = "EllesmereUI Nameplates"              },
     { folder = "EllesmereUIUnitFrames",        display = "Unit Frames",          search_name = "EllesmereUI Unit Frames"             },
     { folder = "EllesmereUIRaidFrames",        display = "Raid Frames",          search_name = "EllesmereUI Raid Frames"             },
+    { folder = "EllesmereUIArena",             display = "Arena Frames",         search_name = "EllesmereUI Arena Frames"            },
     { folder = "EllesmereUICooldownManager",   display = "Cooldown Manager",     search_name = "EllesmereUI Cooldown Manager"        },
     { folder = "EllesmereUIResourceBars",      display = "Resource & Cast Bars", search_name = "EllesmereUI Resource Bars Cast Bars" },
     { folder = "EllesmereUIAuraBuffReminders", display = "AuraBuff Reminders",   search_name = "EllesmereUI AuraBuff Reminders"      },
@@ -723,6 +724,7 @@ EllesmereUI.ADDON_GROUPS = {
             "EllesmereUICooldownManager",
             "EllesmereUIResourceBars",
             "EllesmereUIRaidFrames",
+            "EllesmereUIArena",
         },
     },
     {
@@ -2857,10 +2859,23 @@ do
         self:UnregisterEvent("PLAYER_LOGIN")
         if not EllesmereUIDB then EllesmereUIDB = {} end
         local prev = EllesmereUIDB.lastLoginVersion
-        if prev and prev ~= EllesmereUI.VERSION then
+        -- Wrath: VERSION stays at the Retail base, so the stamp is the installed
+        -- EllesmereUI addons' backport TOC versions (any module update re-arms the dot).
+        local stamp = EllesmereUI.VERSION
+        if _G.EUI_WOW_335 and GetNumAddOns and GetAddOnInfo and GetAddOnMetadata then
+            local parts = { stamp }
+            for i = 1, GetNumAddOns() do
+                local name = GetAddOnInfo(i)
+                if type(name) == "string" and name:find("^EllesmereUI") then
+                    parts[#parts + 1] = name .. "=" .. (GetAddOnMetadata(name, "Version") or "?")
+                end
+            end
+            stamp = table.concat(parts, ";")
+        end
+        if prev and prev ~= stamp then
             EllesmereUIDB.patchDotPending = true
         end
-        EllesmereUIDB.lastLoginVersion = EllesmereUI.VERSION
+        EllesmereUIDB.lastLoginVersion = stamp
         if EllesmereUI._UpdatePatchDot then EllesmereUI._UpdatePatchDot() end
     end)
 end

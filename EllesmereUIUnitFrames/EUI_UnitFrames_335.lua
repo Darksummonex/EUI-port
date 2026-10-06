@@ -5,14 +5,26 @@ local W = ns.Wrath
 -- Wrath has no secret-value type. Define the predicate before the engine/main
 -- capture it, without relying on the load-on-demand Options compatibility layer.
 W.IsSecretValue = _G.issecretvalue or function() return false end
+-- 3.3.5 cannot load file data IDs. The few the engine and the options preview
+-- pass resolve to the same art by path; any other ID shows the question mark.
+W.ICON_FILE_IDS = {
+    [134400] = "Interface\\Icons\\INV_Misc_QuestionMark",
+    [136197] = "Interface\\Icons\\Spell_Shadow_ShadowBolt",
+    [136243] = "Interface\\Icons\\Trade_Engineering",
+}
 function W.ResolveBarTexture(path)
     if type(path) == "string" and W.BarTexturePaths then
         return W.BarTexturePaths[path:lower():gsub("/", "\\")] or path
+    end
+    -- Color components (SetColorTexture) are 0..1; file IDs are large integers.
+    if type(path) == "number" and path > 1 and path % 1 == 0 then
+        return W.ICON_FILE_IDS[path] or W.ICON_FILE_IDS[134400]
     end
     return path
 end
 local nativeCreateFrame = CreateFrame
 local powerEvents = { "UNIT_MANA", "UNIT_RAGE", "UNIT_ENERGY", "UNIT_FOCUS", "UNIT_RUNIC_POWER" }
+local powerTokens = { UNIT_MANA = "MANA", UNIT_RAGE = "RAGE", UNIT_ENERGY = "ENERGY", UNIT_FOCUS = "FOCUS", UNIT_RUNIC_POWER = "RUNIC_POWER" }
 local maxPowerEvents = { "UNIT_MAXMANA", "UNIT_MAXRAGE", "UNIT_MAXENERGY", "UNIT_MAXFOCUS", "UNIT_MAXRUNIC_POWER" }
 local eventMap = {
     UNIT_POWER_UPDATE = powerEvents, UNIT_POWER_FREQUENT = powerEvents,
@@ -127,7 +139,10 @@ C_StringUtil.TruncateWhenZero = C_StringUtil.TruncateWhenZero or function(n) ret
 C_CVar.GetCVarBool = C_CVar.GetCVarBool or function(key) return GetCVar(key) == "1" end
 C_PetInfo = C_PetInfo or {}
 C_PetInfo.GetPetHappiness = C_PetInfo.GetPetHappiness or GetPetHappiness
-C_PetInfo.GetPetFoodTypes = C_PetInfo.GetPetFoodTypes or GetPetFoodTypes
+-- Wrath returns the diet as varargs; the Retail caller expects a list.
+C_PetInfo.GetPetFoodTypes = C_PetInfo.GetPetFoodTypes or function()
+    if GetPetFoodTypes then return { GetPetFoodTypes() } end
+end
 W.UnitIsTapDenied = UnitIsTapDenied or function(u) return UnitIsTapped(u) and not UnitIsTappedByPlayer(u) end
 W.IsInGroup = IsInGroup or function() return GetNumPartyMembers() > 0 or GetNumRaidMembers() > 0 end
 W.IsInRaid = IsInRaid or function() return GetNumRaidMembers() > 0 end
@@ -364,7 +379,11 @@ function W.CreateFrame(kind, name, parent, templates, ...)
                     if accept then
                         if logical == "PLAYER_SPECIALIZATION_CHANGED" then fn(frame, logical, "player")
                         elseif logical == "UNIT_POWER_UPDATE" or logical == "UNIT_POWER_FREQUENT" then
-                            local _, token = UnitPowerType(unit); fn(frame, logical, unit, token)
+                            -- The token names the power that changed (a druid's
+                            -- mana keeps ticking while a form shows rage/energy).
+                            local token = powerTokens[native]
+                            if not token then local _, t = UnitPowerType(unit); token = t end
+                            fn(frame, logical, unit, token)
                         else fn(frame, logical, unit, ...) end
                     end
                 end
@@ -426,3 +445,104 @@ W.UnitIsGroupLeader = UnitIsGroupLeader or function(unit)
     return RaidRank(unit) == 2 or UnitIsPartyLeader(unit)
 end
 W.UnitIsGroupAssistant = UnitIsGroupAssistant or function(unit) return RaidRank(unit) == 1 end
+-- Wrath IsSpellInRange takes a spellbook name and answers 1/0/nil; the core
+-- C_Spell shim forwards numeric IDs, which the 3.3.5 client rejects.
+function W.IsSpellInRange(spell, unit)
+    local name = type(spell) == "number" and GetSpellInfo(spell) or spell
+    if not (name and unit) then return nil end
+    local r = IsSpellInRange(name, unit)
+    if r == nil then return nil end
+    return r == 1
+end
+W.HarmRangeSpells = { SHAMAN = { 403 } }
+W.HealSpells = {
+    PRIEST = { 2061, 2050 }, PALADIN = { 19750, 635 },
+    SHAMAN = { 8004, 331 }, DRUID = { 8936, 5185 },
+}
+W.UnitIsMercenary = UnitIsMercenary or function() return false end
+-- Options preview auras: Retail lists icon file IDs, so Wrath lists spells of
+-- the same kind and takes their icons from the client.
+W.PreviewBuffSpells = {
+    WARRIOR = { 6673, 2687, 871, 1719, 18499 },
+    PALADIN = { 19740, 642, 465, 21084, 31884 },
+    HUNTER = { 13165, 3045, 19506, 5118, 19263 },
+    ROGUE = { 5171, 5277, 2983, 1784, 13750 },
+    PRIEST = { 1243, 17, 139, 588, 15473 },
+    DEATHKNIGHT = { 57330, 49222, 48792, 48707, 51271 },
+    SHAMAN = { 324, 52127, 2825, 974, 2645 },
+    MAGE = { 1459, 11426, 1463, 30482, 12472 },
+    WARLOCK = { 706, 28176, 5697, 6229, 19028 },
+    DRUID = { 1126, 774, 8936, 467, 22812 },
+    FALLBACK = { 1126, 1243, 1459, 20217, 467 },
+}
+W.PreviewDebuffSpells = {
+    589, 172, 980, 122, 348, 770, 8056, 7386, 772, 1715,
+    118, 5782, 8921, 1978, 1943, 703, 702, 1130, 8050, 34914,
+}
+W.PreviewCastSpells = { { name = "Hearthstone", spellID = 8690, castTime = 10.0 } }
+function W.SpellIcons(ids)
+    local out = {}
+    for i, id in ipairs(ids) do
+        local _, _, icon = GetSpellInfo(id)
+        out[i] = icon or W.ICON_FILE_IDS[134400]
+    end
+    return out
+end
+-- Faction badge: the Retail atlas styles (PvP Emblem, Honor Portrait, Map
+-- Flag) are not in the 3.3.5 client; they draw the stock Wrath PvP icon, the
+-- art the Classic Banner style also uses. File styles stay as they are.
+function W.SetFactionArt(tex, style, faction)
+    local art = EllesmereUI.FACTION_ART
+    local entry = art and (art[style] or art.pvp)
+    if entry and entry.atlas then
+        local name = entry.atlas:format(entry.lower and faction:lower() or faction)
+        if not W.AtlasExists(name) then
+            tex:SetTexture("Interface\\TargetingFrame\\UI-PVP-" .. faction)
+            tex:SetTexCoord(0, 0.65625, 0, 0.65625)
+            return
+        end
+    end
+    EllesmereUI.SetFactionArt(tex, style, faction)
+end
+-- Detached portrait shapes: Retail enlarges the art past the shape's opening
+-- and lets the shape mask clip it. 3.3.5 has no mask textures, so the art is
+-- fitted to the opening instead. The client's 2D portrait is already round,
+-- so round shapes show it whole; other shapes keep the square crop.
+local ROUND_SHAPES = { circle = true, pixelsCircle = true, portrait = true }
+local function FitTo(tex, host, ix, iy)
+    if not tex then return end
+    tex:ClearAllPoints()
+    tex:SetPoint("TOPLEFT", host, "TOPLEFT", ix, -iy)
+    tex:SetPoint("BOTTOMRIGHT", host, "BOTTOMRIGHT", -ix, iy)
+end
+-- Mirror Portrait only rewrites the crop when its flip state changes, so the
+-- flip is carried over here.
+local function SetCrop(tex, c)
+    if tex._mirrored then tex:SetTexCoord(c, 1 - c, 1 - c, c) else tex:SetTexCoord(1 - c, c, 1 - c, c) end
+end
+function W.FitUnmaskedPortrait(host, shape, insetPx, tex2d, texClass)
+    if tex2d and ns.UF_Blizz and ns.UF_Blizz() then tex2d._wrathRound = nil; tex2d = nil end
+    if not shape then
+        if tex2d and tex2d._wrathRound then SetCrop(tex2d, .85); tex2d._wrathRound = nil end
+        return
+    end
+    local w, h = host:GetWidth(), host:GetHeight()
+    if w < 1 then w = 46 end
+    if h < 1 then h = 46 end
+    local ix, iy = w * (insetPx or 17) / 128, h * (insetPx or 17) / 128
+    FitTo(tex2d, host, ix, iy)
+    FitTo(texClass, host, ix + w * 0.08, iy + h * 0.08)
+    if tex2d then
+        local round = ROUND_SHAPES[shape] == true
+        SetCrop(tex2d, round and 1 or .85)
+        tex2d._wrathRound = round or nil
+    end
+end
+if EllesmereUI and not EllesmereUI.PaintThreatPct then
+    function EllesmereUI.PaintThreatPct(fs, pct, status, isTanking, colorByThreat)
+        fs:SetFormattedText("%.0f%%", pct)
+        if colorByThreat and type(status) == "number" then fs:SetTextColor(GetThreatStatusColor(status))
+        elseif colorByThreat and isTanking then fs:SetTextColor(GetThreatStatusColor(3))
+        else fs:SetTextColor(1, 1, 1) end
+    end
+end

@@ -43,6 +43,7 @@ local ADDON_DB_MAP = {
     { folder = "EllesmereUICooldownManager",   display = "Cooldown Manager",    svName = "EllesmereUICooldownManagerDB",   suffix = "CooldownManager"   },
     { folder = "EllesmereUIResourceBars",      display = "Resource Bars",       svName = "EllesmereUIResourceBarsDB",      suffix = "ResourceBars"      },
     { folder = "EllesmereUIRaidFrames",       display = "Raid Frames",         svName = "EllesmereUIRaidFramesDB",        suffix = "RaidFrames"        },
+    { folder = "EllesmereUIArena",             display = "Arena Frames",        svName = "EllesmereUIArenaDB",             suffix = "Arena"             },
     { folder = "EllesmereUIAuraBuffReminders", display = "AuraBuff Reminders",  svName = "EllesmereUIAuraBuffRemindersDB", suffix = "AuraBuffReminders" },
     -- v6.6 split-out addons (were previously bundled under the retired
     -- EllesmereUIBasics, removed from the suite v8.7.x).
@@ -1420,6 +1421,8 @@ local REFRESH_ADDON_STEPS = {
     function() if _G._EDM_Apply then _G._EDM_Apply() end end,
     -- DataBars (bar set + blocks + layout + positions are all per-profile)
     function() if _G._EDB_Apply then _G._EDB_Apply() end end,
+    -- Arena Frames (layout, bars and icons are per-profile)
+    function() if _G._EARENA_Apply then _G._EARENA_Apply() end end,
     -- Quickdraw (enable state + palette count drive the override bindings),
     -- Dragon Riding HUD, Minimap (flyout button state)
     function()

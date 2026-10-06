@@ -1,4 +1,43 @@
-# Unit Frames 3.3.5 — 0.8
+# Unit Frames 3.3.5 — 0.10
+
+0.10: paridade visual com o Retail. O indicador de combate (estilos 0-5 e os
+dois personalizados) aparecia vazio: as artes eram PNG ou TGA fora de potência
+de dois. Agora há cópias TGA 64/128/512 em Media/Art_335/combat, geradas por
+backport-tools/prepare_unitframe_media.py e redirecionadas por
+EUI_UnitFrames_335_Media.lua. Ícones por ID numérico (fallback da barra de
+cast, cast falso do Unlock Mode) mostram o ícone certo ou o ponto de
+interrogação, nunca um quadrado vazio. Indicador de facção: os estilos PvP
+Emblem, Honor Portrait e Map Flag (atlas do Retail) usam o ícone PvP do Wrath,
+e o modo mercenário não quebra mais (UnitIsMercenary não existe no 3.3.5).
+Retrato destacado: sem máscaras no 3.3.5, a arte é ajustada à abertura do
+formato em vez de transbordar; Portrait, Circle e Pixels Circle mostram o
+retrato redondo do Wrath inteiro (Mirror Portrait respeitado). Diamond,
+Hexagon, Shield e quadrados mantêm o recorte quadrado. Sem máscara, o recorte
+do zoom de classe e a forma exata não podem ser reproduzidos. Requer Options
+0.63 e o EllesmereUI com o C_Spell.GetSpellInfo corrigido (tempo de cast).
+
+0.9: as faixas de auras do Wrath seguem as chaves do Retail. Âncora,
+crescimento, ícones por linha, espaçamento, recorte (80% da altura) e zoom;
+debuffs presos aos buffs; deslocamento abaixo da barra de cast. Texto de
+duração (tamanho, cor, posição, "Precise Below" em m:ss) e de acúmulos.
+Borda das auras com textura, "Show Behind"/"Behind Unit Frame" e anel por tipo
+de dispel (sólido, ou na textura da borda com "Textured Dispel Ring"). Encantos
+de arma lideram os buffs do jogador no modo Show All. Clique direito cancela
+buff/encanto fora de combate. Em alvo/foco, Purgeable Buff Glow para buffs
+mágicos que a classe remove (Shaman, Priest, Mage, Hunter, Warlock) ou que
+podem ser roubados. Sated/Exhaustion ficam ocultos.
+
+Overlay de dispel do jogador: preenchimento, barra cheia, gradiente e
+gradiente nítido (nova textura gradient-sharp.tga 256x64), "By Me" via
+HARMFUL|RAID e borda personalizada na cor do dispel.
+
+Também como no Forever: Threat %; barra de poder e humor do pet; druida com
+Power Type Mana ou Mana + Form Power (nova barra da forma, em
+EUI_UnitFrames_335_FormBar.lua). O alcance dos chefes usa IsSpellInRange do
+3.3.5 e magias de cura do Wrath. Eventos de poder levam o tipo do evento
+nativo (UNIT_RAGE = RAGE), não o tipo exibido. Dieta do pet devolve lista.
+Absorção/cura recebida, Player Aura Bars e alternativas por spec não existem no
+3.3.5 e não foram portados. Requer Options 0.62.
 
 0.8 adds pooled aura indicators attached to the frame's own health bar.
 Enable Unit Frames > Buffs > Select Frame: Player > Use Indicator Layout.

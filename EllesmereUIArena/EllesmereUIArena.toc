@@ -1,0 +1,16 @@
+## Interface: 30300
+## Title: |cff0cd29fEllesmereUI|r Arena
+## Category: |cff0cd29fEllesmere|rUI
+## Group: EllesmereUI
+## Notes: Arena enemy frames with PvP trinket, crowd control and cast tracking.
+## Author: Ellesmere
+## Version: 9.3.4-335-0.1
+## Dependencies: EllesmereUI
+## X-Part-Of: EllesmereUI
+## SavedVariables: EllesmereUIArenaDB
+## IconTexture: Interface\AddOns\EllesmereUI\media\eg-logo.tga
+
+EUI_Arena_335.lua
+EUI_Arena_335_Display.lua
+
+# Options page lives in the LoadOnDemand EllesmereUIOptions addon.

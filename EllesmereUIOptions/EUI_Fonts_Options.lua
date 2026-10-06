@@ -484,7 +484,7 @@ local function TileQoL(parent, y, W, tile)
         for _,entry in ipairs({{"FPS / Latency Text Size","fpsTextSize"},{"Secondary Stats Text Size","statsTextSize"},
             {"Map Coordinates Text Size","mapCoordsTextSize"},{"Combat Alert Text Size","combatAlertTextSize"},
             {"Group Death Alert Text Size","groupDeathTextSize"},{"Durability Warning Text Size","durWarnTextSize"},
-            {"Cooldown Tracker Text Size","trackerTextSize"}}) do
+            {"Cooldown Tracker Text Size","trackerTextSize"},{"Target Distance Text Size","targetDistanceTextSize"}}) do
             local key=entry[2]
             slots[#slots+1]={type="slider",text=entry[1],min=8,max=40,step=1,
                 getValue=function() local p=ns.GetSettings(); return p and p[key] or 12 end,

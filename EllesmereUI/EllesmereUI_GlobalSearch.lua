@@ -213,6 +213,7 @@ local function BuildModuleAliases()
     local EXTRA_ALIASES = {
         EllesmereUIMythicTimer     = { "m+ timer", "m+", "m+ tools", "mythic+ timer" },
         EllesmereUICooldownManager = { "cdm" },
+        EllesmereUIArena           = { "arena", "pvp frames", "trinket", "gladius" },
         EllesmereUIQuickdraw       = { "radial", "wheel", "ring menu", "palette", "grid", "arc", "fan", "action wheel", "action palette", "action menu" },
     }
     for folder, list in pairs(EXTRA_ALIASES) do
@@ -910,7 +911,11 @@ local function EnsureSearchUI()
     local fontPath = (EllesmereUI.GetFontPath()) or "Fonts\\FRIZQT__.TTF"
 
     -- Results popup, anchored below the existing sidebar search box.
-    popup = CreateFrame("Frame", nil, clickArea)
+    -- Wrath drops a child's own strata back to its parent's on show, which put
+    -- the list under the sidebar/page; parent it outside the panel like the
+    -- dropdown menus and follow the panel's scale and visibility instead.
+    local wrath = EUI335 and EUI335.IsWrath
+    popup = CreateFrame("Frame", nil, wrath and UIParent or clickArea)
     popup:SetSize(380, MAX_VISIBLE_RESULTS * (RESULT_ROW_H + RESULT_ROW_GAP) - RESULT_ROW_GAP + 8)
     popup:SetPoint("TOPLEFT", sidebarSearchBox, "BOTTOMLEFT", 0, -4)
     popup:SetFrameStrata("FULLSCREEN_DIALOG")
@@ -1069,7 +1074,13 @@ local function EnsureSearchUI()
             popup:Hide()
         end
     end)
-    popup:SetScript("OnShow", function() if not (EUI335 and EUI335.IsWrath) then pcall(clickOff.RegisterEvent, clickOff, "GLOBAL_MOUSE_DOWN") end end)
+    popup:SetScript("OnShow", function()
+        if not wrath then pcall(clickOff.RegisterEvent, clickOff, "GLOBAL_MOUSE_DOWN"); return end
+        popup:SetScale(clickArea:GetEffectiveScale() / UIParent:GetEffectiveScale())
+        popup:SetFrameStrata("FULLSCREEN_DIALOG")
+        popup:SetFrameLevel(220)
+    end)
+    if wrath then clickArea:HookScript("OnHide", function() popup:Hide() end) end
     popup:SetScript("OnHide", function() clickOff:UnregisterEvent("GLOBAL_MOUSE_DOWN") end)
 end
 

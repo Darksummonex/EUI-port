@@ -214,6 +214,31 @@ assert(abProfile.bar1.scale == 1, abProfile.bar1.scale)
 assert(prof.condAppliedGid == nil)
 ''')
 
+# Gold-border read tracing: getters that lazily write back what they read
+# (RaidFrames' t.x = t.x or {}) must never store a proxy in a real profile.
+so_src = so_path.read_text(encoding='utf-8-sig')
+proxy_block = so_src.split('local _traceSink = nil', 1)[1].split('local function BeginTrace', 1)[0]
+make_proxy = lua.execute('local PS, FS = "\\30", "\\31"\nlocal _traceSink = nil' + proxy_block
+                         + '\nreturn function(real) return MakeReadProxy(real, "EllesmereUIRaidFrames", nil) end')
+lua.globals().MakeTraceProxy = make_proxy
+lua.execute(r'''
+local real = { raidLayouts = { ["10"] = { hiddenGroups = { [3] = true } } } }
+for _ = 1, 300 do
+    local p = MakeTraceProxy(real)
+    p.raidLayouts = p.raidLayouts or {}
+    local c = p.raidLayouts["10"]
+    c.hiddenGroups = c.hiddenGroups or {}
+    assert(c.hiddenGroups[3] == true)
+end
+assert(getmetatable(real.raidLayouts) == nil and getmetatable(real.raidLayouts["10"].hiddenGroups) == nil)
+assert(real.raidLayouts["10"].hiddenGroups[3] == true and next(real.raidLayouts["10"]) ~= nil)
+-- A proxy already stranded in a real table is unwrapped on the next traced read.
+local inner = { [1] = true }
+real.raidLayouts["10"].hiddenGroups = MakeTraceProxy(MakeTraceProxy(inner))
+assert(MakeTraceProxy(real).raidLayouts["10"].hiddenGroups[1] == true)
+assert(rawequal(real.raidLayouts["10"].hiddenGroups, inner))
+''')
+
 events = lua.eval('''function()
     local found = {}
     for _, f in ipairs(allFrames) do
@@ -226,4 +251,5 @@ events = lua.eval('''function()
 end''')()
 assert events['roster'] and not events['retail']
 print('PASS: overrides TOC/media/static checks; Wrath roster (30 specs, synthetic IDs, localized own trees); '
-      'spec apply/harvest across dual-spec swaps; conditional ladder, keybind toggle and flip apply/restore.')
+      'spec apply/harvest across dual-spec swaps; conditional ladder, keybind toggle and flip apply/restore; '
+      'read-trace proxies never stored in real profiles.')

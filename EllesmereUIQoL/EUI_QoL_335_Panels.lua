@@ -151,6 +151,7 @@ function ns.ApplyPanels()
     if not ns.raidFrame then CreateRaid() end
     local f=ns.raidFrame; local pos=p.positions.raidTools; f:ClearAllPoints()
     if pos then f:SetPoint(pos.point,UIParent,pos.relPoint,pos.x,pos.y) else f:SetPoint("CENTER",UIParent,"CENTER",0,270) end
+    if f.SetScale then f:SetScale(math.max(.5,math.min(2,(tonumber(p.raidTools.scale) or 100)/100))) end
     RegisterStateDriver(f,"visibility",not (p.enabled and p.raidTools.enabled) and "hide" or (p.raidTools.groupOnly and not ns.preview and "[group] show; hide" or "show"))
     ns.pullButton:SetText("Pull "..ns.GetPullSeconds().."s")
     ns.Font(ns.pullFrame.text,p.combatAlertTextSize); ns.UpdatePull()

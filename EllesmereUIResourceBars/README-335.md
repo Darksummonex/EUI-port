@@ -34,3 +34,47 @@ In-game visuals, native taint and modified-client behavior still require testing
 Show Channel Ticks under Bars > Player Cast Bar. Native endpoints account for
 haste; pushback retains initial pulse spacing; unknown spells get no invented
 markers. Core EUI_ChannelTicks_335.lua is shared with UnitFrames.
+
+## 0.3 (pt-BR)
+
+O módulo foi reconstruído sobre o esquema de configurações do Retail
+(`health`, `primary`, `secondary`, `castBar`, `gcdBar`, `swingTimer`,
+`totemBar`, `callTotemBar`, `general`), em cinco arquivos carregados:
+`EUI_ResourceBars_335.lua` (núcleo), `_Bars`, `_Cast`, `_Swing` e `_Totems`.
+Perfis da 0.2 são migrados uma vez (posições viram `unlockPos`).
+
+- Páginas iguais às do Retail: "Class, Power and Health Bars", "Cast Bar",
+  "GCD Bar", "Swing Timer" e "Totem Bar".
+- Unlock Mode usa as chaves do Retail (`ERB_Health`, `ERB_Power`,
+  `ERB_ClassResource`, `ERB_CastBar`, `ERB_GCDBar`, `ERB_SwingTimer`,
+  `ERB_TotemBar`, `ERB_CallTotemBar`). Cada elemento tem mover,
+  redimensionamento (exceto os de ícones) e painel "Element Options"
+  registrado em `_ELEMENT_SETTINGS_MAP`.
+- Vida/Poder: orientação horizontal e vertical (para cima/baixo), textos do
+  Retail, cor de classe/poder/personalizada, gradiente, opacidade do
+  preenchimento, limiar, faixas de cor, linhas de marcação, suavização,
+  visibilidade (modos + opções compartilhadas), esmaecer fora de combate,
+  ocultar por forma de druida, borda sólida/estilos do Retail/estilo Classic.
+- Barra de mana enquanto transformado (druida), faísca de regeneração de mana
+  e previsão de custo de feitiço pelos módulos compartilhados do núcleo.
+- Recurso de classe: pontos de combo (ladino, druida em forma de gato) e as
+  seis runas de DK (ordem do Blizzard ou prontas primeiro, modo simples,
+  cor de recarga, contagem regressiva). Opção de mostrar a arte original do
+  Blizzard (RuneFrame/ComboFrame) no lugar.
+- Cast bar: ícone à esquerda/direita, faísca, textos com posição, ticks de
+  canalização com cor e último tick, latência, duração total, cor de
+  ininterruptível e de interrompido.
+- GCD bar com orientação, esvaziar, faísca, só em instância e só instantâneos.
+- Swing timer (novo): mão principal, secundária e à distância pelo combat log,
+  Heroic Strike/Cleave/Maul na fila, parry haste, mudança de velocidade,
+  alcance e ocultar quando parado.
+- Totem bar com ícones, cooldown, timer, direção de crescimento e opção de
+  esconder o TotemFrame; Call Totem Bar move a MultiCastActionBarFrame só
+  fora de combate.
+
+Não portado: valores secretos e curvas do Retail, arte Blizzard Style
+(atlas), recursos de especializações modernas (poder sagrado, fragmentos,
+chi, cargas arcanas, essência, stagger, maelstrom, Ebon Might, Arcane Soul,
+Ignore Pain, cargas de guerreiro, Devourer), estágios de empower, Eclipse,
+cartões de limiar por especialização, ocultar com gamepad, pings e destruir
+totem com clique. `validate_resourcebars.py` cobre o módulo.

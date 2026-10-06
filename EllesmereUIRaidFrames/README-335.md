@@ -1,3 +1,119 @@
+# Raid Frames 3.3.5 — 0.11
+
+A 0.11 corrige o erro `SecureTemplates.lua:624: bad argument #1 to 'strupper'`
+(repetido ~19x) ao carregar. O header dos pets cria 20 botões (4 colunas de
+5) antes do combate, mas era mostrado antes de receber `columnAnchorPoint`; no
+Wrath esse atributo não tem padrão quando há mais de uma coluna. Agora todos
+os headers seguros (raide, party, tanques e pets) recebem `point` e
+`columnAnchorPoint` válidos (com padrão TOP/LEFT) antes do primeiro `Show`, e
+os atributos de layout só mudam com o header escondido, e só quando algum valor
+mudou de fato. Assim acaba a cadeia recursiva de `SecureGroupPetHeader_Update`.
+Em combate, nada muda: o ajuste espera o `PLAYER_REGEN_ENABLED`. Não precisa de
+nova versão do Options.
+
+A 0.10 faz a prévia do Unlock Mode (e a da página de opções) abrir no layout
+de 25 jogadores em vez do máximo de 40. Fora de raide, o padrão também passou
+a ser o layout de 25, então o seletor "Edit Raid Layout", o tamanho do mover e
+o "Element Options" ficam todos no mesmo layout de 25. A escolha em "Edit Raid
+Layout" continua valendo para a prévia; se "Use Raid Layout" estiver fixo em
+10, 25 ou 40, a prévia mostra esse layout (cuja posição é a usada de verdade).
+Não precisa de nova versão do Options.
+
+A 0.9 traz a seção DISPELS do Retail para as páginas Raid e Party (requer
+Options 0.73):
+- Dispel Overlay: None, Fill Overlay, Full Overlay, Gradient Overlay e
+  Gradient Sharp, com Overlay Opacity (5–100).
+- Frame Border (0–4): borda na cor do tipo em volta da barra de vida. A
+  engrenagem tem Debuff Icon Border (-1 segue a borda de cada indicador, 0
+  tira a cor do tipo) e Color Custom Borders, que é a antiga "Debuff Type
+  Border" (recolore a borda do quadro).
+- Type Icon Position, com tamanho e deslocamento X/Y na engrenagem.
+- Dispel Colors: quatro cores com alfa; alfa 0 desliga aquele tipo.
+- Only Show Dispellable: só destaca o que o seu personagem remove agora
+  (filtro RAID do cliente). Desligado (padrão do Retail), destaca qualquer
+  debuff com tipo.
+As linhas "Color Frame by Debuff Type", "Color Strength" e "Dispel Color
+Style" saíram da página Debuffs. Os valores salvos são convertidos uma única
+vez (`dispelsVersion`): desligado vira None, Gradient continua Gradient e a
+força vira a opacidade.
+Diferenças do Retail: o Wrath não tem o tipo Bleed (sem a quinta cor); os
+ícones de tipo do Retail são atlas que não existem no Wrath, então são
+usados os ícones das magias de dispel (Dispel Magic, Remove Curse, Cure
+Disease, Cure Poison); os gradientes de 256×40 do Core viraram cópias
+256×64 em `Media/Textures_335`, porque o Wrath só carrega texturas em
+potência de dois; o botão de olho do cabeçalho não existe, porque a prévia
+do Wrath já mostra exemplos de dispel.
+
+A 0.8 traz o "Preview Mode" do Retail no topo das páginas Raid e Party
+(requer Options 0.72). A prévia agora abre sozinha enquanto a página está
+aberta e fecha ao sair dela, ao fechar o painel ou ao entrar em combate:
+- Overlay Preview (padrão): um painel "Overlay Preview" encostado à esquerda
+  das opções, com os quatro primeiros grupos visíveis e os números dos grupos;
+  os quadros reais ficam a 20%.
+- Real Preview: os quadros falsos aparecem no lugar dos reais quando não há
+  grupo ao vivo (o mesmo do antigo botão "Preview Frames").
+- No Preview: nada é mostrado.
+Os botões "Preview Frames"/"End Preview" saíram das páginas Raid e Party
+(continuam em Extras). A página Party ganhou a seção LAYOUT com "Horizontal
+Frames" (antes "Horizontal Layout", escondido em Frame Sizes), ao lado de
+Member Sorting, Self Position e Reverse Member Order. Não portado: os ícones
+de olho por grupo da prévia do Retail.
+
+A 0.7 aproxima o visual e as opções do Raid Frames do Retail. Requer Options 0.71.
+
+Aparência (páginas Raid e Party, separadas por layout 10/25/40 e grupo):
+- Cor da vida: Classe, Escuro, Clássico (por % de vida), Personalizada e Personalizada
+  Dinâmica (três cores: 100%, 50% e 0%). Preenchimento vertical opcional.
+- Fundo: cor própria ou cor da classe com escurecimento, e cores próprias para
+  Offline e Morto.
+- Bordas: espessura e cor, borda de ameaça, de alvo e de hover (mouse por cima), cada uma
+  com a sua cor. Prioridade: ameaça, tipo de debuff, alvo, normal.
+- Textos: posição (9 pontos), deslocamento X/Y, cor (Classe, Destaque ou Personalizada)
+  e limite de caracteres do nome; mostrar ou esconder AFK.
+- Ícones: estilo do ícone de função (Modern, Light, Pixels ou o do LFD do Blizzard),
+  tamanho, posição, mostrar tanque/curador e esconder em combate; líder (também em
+  combate), marcador de raide, ready check, indicador de combate e ressurreição a
+  caminho, todos com tamanho e posição.
+- Debuffs: estilo da cor por tipo de debuff (Preencher ou Gradiente), cores Magia,
+  Maldição, Doença e Veneno, e esconder Saciado/Exaustão (57724/57723).
+- Tooltip da unidade: Sempre, Fora de Combate (padrão do Retail) ou Nunca. Os
+  tooltips das auras continuam com a opção própria.
+- Layout: Posição Própria (Ordenado, Primeiro ou Último), inverter ordem dos grupos e
+  dos membros, party na horizontal e camada (strata) do quadro.
+
+Previsão de cura e ressurreição: o Wrath não tem API nativa, por isso o módulo inclui
+LibHealComm-4.0, LibResComm-1.0 e ChatThrottleLib (o LibStub usa a versão mais nova se
+ElvUI, Cell ou WeakAuras trouxerem a sua). Só aparecem curas de jogadores que usam um
+addon com HealComm.
+
+Nova página Extras, cada elemento com mover no Unlock Mode e painel "Element Options":
+- Main Tank Frames: membros marcados como /maintank (e /mainassist, opcional) no raide.
+- Pet Frames: pets da party (incluindo o seu) e/ou do raide, até 20 botões criados
+  antes do combate.
+- Friendly Boss Frames: unidades boss1–4 amigáveis (ex.: Valithria). "Só Curadores"
+  usa a função do LFD e, fora dele, a árvore de talentos principal.
+- Healer Mana: texto com a mana dos curadores (party, raide ou ambos). Fora do LFD o
+  Wrath não tem função de curador, então classes de cura com mana entram como "sem
+  função" (opção "Include Unassigned Healer Classes").
+Todos usam o visual do raide (ou da party fora do raide) com largura e altura extra.
+
+Correções: o menu "Add New" do editor de Buffs/Debuffs abria e fechava no primeiro clique.
+Os painéis "Element Options" do Raid/Party apontavam para rótulos que não existem nas
+páginas do Wrath; agora o módulo registra os seus próprios.
+
+Não portado e porquê:
+- Auras privadas, pings e supressão do Edit Mode só existem no Retail.
+- Absorções, absorção de cura e redução de vida máxima não têm API no Wrath.
+- Invocação pendente depende de C_IncomingSummon, que não existe no Wrath.
+- Esconder grupos no Mítico: o Wrath não tem dificuldade Mítica.
+- Frames dos alvos da party: os headers ordenados trocam unidades em combate e os
+  quadros de alvo teriam de seguir por snippets restritos; ficou para depois.
+- Retratos, barras suaves, texto de nível e barra de nome no topo: adiados.
+- Ícones do tipo de dispel: a arte é do Retail.
+- Buff/Debuff Manager completo e extras do ClickCast do Retail; buffs em falta do WoW
+  Forever (exclusivo do Forever); câmera livre com botão direito; partySmallRaid; e
+  ordem de classes personalizada.
+
 # Raid Frames 3.3.5 — 0.6
 
 0.6 adds Color Frame by Debuff Type (Debuffs tab, Dispel Frame Color). When a debuff your
@@ -79,7 +195,9 @@ edit the same live settings used by the module.
 Raid > RAID LAYOUTS: Use Raid Layout selects Automatic, 10 Players, 25 Players
 or 40 Players. Automatic uses the raid/battleground instance capacity when
 available, otherwise the current raid roster size (10 or fewer, 11–25, 26–40).
-Outside a raid it returns to the 40-player layout. Edit Raid Layout selects
+Outside a raid it returns to the 25-player layout, which is also the default
+Unlock Mode/options preview (Edit Raid Layout, then a forced Use Raid Layout,
+take precedence). Edit Raid Layout selects
 which size to configure without forcing the live layout. Each size stores its
 own dimensions, appearance, auras/filter lists and Unlock position. Global
 Fonts, Textures and Aura Filters have the same layout selector. Existing 0.1
