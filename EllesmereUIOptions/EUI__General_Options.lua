@@ -960,7 +960,7 @@ do
         },
     },
     {
-        version = "Core 0.48",
+        version = "Core 0.49",
         heroes = {
             {
                 title = "Fix Addon Conflicts in One Click",
@@ -1012,10 +1012,11 @@ do
             { text = "Unlock Mode art, options page icons and the Unlock Mode top bar are now visible and readable." },
             { text = "The addon list shows clean module names, grouped under EllesmereUI in addon managers." },
             { text = "Search Features and Search Module Settings accept typing again." },
+            { text = "Clients whose atlas lookup errors on unknown names (such as custom 3.3.5 clients with Retail UI ports) no longer stop EllesmereUI files from loading." },
         },
     },
     {
-        version = "Options 0.84",
+        version = "Options 0.85",
         heroes = {
             {
                 module = "Arena Frames",
@@ -1108,6 +1109,7 @@ do
             { module = "General", text = "Combat damage, healing, periodic and pet damage toggles use Wrath's own combat text settings." },
             { module = "General", text = "Hidden option widgets no longer take keyboard focus after other windows close with Escape." },
             { module = "General", text = "Dragging or typing in a slider no longer errors." },
+            { module = "General", text = "The settings panel opens on clients whose atlas lookup errors on unknown names, instead of failing with an 'NS' error." },
             { module = "Quality of Life", text = "Displays has a ZONE TEXT section with Move Zone Text." },
             { module = "Quality of Life", text = "Raid Tools has a BOSS MOD BARS section with Hide DBM/BigWigs Bars While Timeline Is Active and a status line." },
         },

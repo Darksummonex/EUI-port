@@ -197,6 +197,7 @@ end
 -- no atlas database, so atlas lookup simply reports unavailable and the widget
 -- code falls back to file textures / hides cosmetic icons.
 C_Texture = C_Texture or {}
+if EUI335_SafeAtlasInfo then EUI335_SafeAtlasInfo() end
 C_Texture.GetAtlasInfo = C_Texture.GetAtlasInfo or function() return nil end
 
 -- Retail spell texture helper used by dropdown previews.

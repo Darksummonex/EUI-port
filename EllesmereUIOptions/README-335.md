@@ -1,4 +1,9 @@
-# Options 3.3.5 — 0.84
+# Options 3.3.5 — 0.85
+
+0.85: o compat das opções reaplica o `EUI335_SafeAtlasInfo` do Core antes de
+carregar os widgets, caso outro addon tenha trocado `C_Texture.GetAtlasInfo`
+depois do Core. O painel abre em clientes cuja busca de atlas gera erro (requer
+Core 0.49).
 
 0.84: Action Bars > Bar Display lista as Barras 7 a 10 no seletor de barras e
 mostra, no topo da página da barra, um aviso quando ela divide os botões com

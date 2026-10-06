@@ -118,7 +118,22 @@ C_GamePad.IsEnabled=C_GamePad.IsEnabled or function() return false end
 C_GamePad.GetAllDeviceIDs=C_GamePad.GetAllDeviceIDs or function() return {} end
 C_GamePad.GetDeviceRawState=C_GamePad.GetDeviceRawState or function() return nil end
 C_CVar=C_CVar or {}; C_CVar.GetCVar=C_CVar.GetCVar or GetCVar; C_CVar.SetCVar=C_CVar.SetCVar or SetCVar
-C_Texture=C_Texture or {}; C_Texture.GetAtlasInfo=C_Texture.GetAtlasInfo or function()return nil end
+-- Some custom 3.3.5 clients ship an addon-level C_Texture whose GetAtlasInfo
+-- raises an error for unknown atlases; Retail returns nil, and EUI probes
+-- Retail atlas names at file load. Wrap such a version so a miss is nil.
+C_Texture=C_Texture or {}
+function EUI335_SafeAtlasInfo()
+ local current=C_Texture.GetAtlasInfo
+ if not current then C_Texture.GetAtlasInfo=function() return nil end
+ elseif current~=C_Texture._euiSafeAtlasInfo then
+  local safe=function(atlas,...)
+   local ok,info=pcall(current,atlas,...)
+   if ok then return info end
+  end
+  C_Texture.GetAtlasInfo=safe; C_Texture._euiSafeAtlasInfo=safe
+ end
+end
+EUI335_SafeAtlasInfo()
 -- Modern LibSharedMedia checks media paths through C_UIFileAsset.IsKnownFile.
 -- Wrath 3.3.5 has no equivalent path validator; returning true preserves the
 -- classic behavior where SetFont/SetTexture performs the actual file lookup.

@@ -169,8 +169,40 @@ for i, text in enumerate(lines):
         bad.append('%d: %s' % (i + 1, text.strip()))
 assert not bad, 'Unguarded Retail-only calls in EUI_UnlockMode.lua:\n' + '\n'.join(bad)
 
+# Custom clients (WLk) ship an addon C_Texture.GetAtlasInfo that errors on unknown
+# atlases; Widgets.lua probes "common-icon-sound" at file load.
+THROWING_ATLAS = r'''
+C_Texture={GetAtlasInfo=function(atlas)
+    if atlas=="known" then return {width=8} end
+    error("C_Texture.GetAtlasInfo: Atlas named "..tostring(atlas).." does not exist")
+end}
+'''
+opts_src = (root / 'EllesmereUIOptions/EllesmereUIOptions_3.3.5_Compat.lua').read_text(encoding='utf-8-sig')
+a = opts_src.index('C_Texture = C_Texture or {}')
+b = opts_src.index('\n', opts_src.index('C_Texture.GetAtlasInfo = C_Texture.GetAtlasInfo or'))
+opts_compat = opts_src[a:b]
+assert 'EUI335_SafeAtlasInfo()' in opts_compat
+atl = runtime(True, native=THROWING_ATLAS)
+atl.execute(r'''
+assert(C_Texture.GetAtlasInfo("common-icon-sound")==nil,"unknown atlas must be nil, not an error")
+assert(C_Texture.GetAtlasInfo("known").width==8,"known atlas lost")
+local wrapped=C_Texture.GetAtlasInfo
+EUI335_SafeAtlasInfo(); assert(C_Texture.GetAtlasInfo==wrapped,"rewrapped twice")
+''')
+atl.execute(opts_compat)
+atl.execute(r'''
+assert(pcall(C_Texture.GetAtlasInfo,"common-icon-sound"),"Options compat lost the safe wrapper")
+-- An addon that swaps in a throwing version after Core is wrapped again by Options.
+C_Texture.GetAtlasInfo=function() error("late") end
+''')
+atl.execute(opts_compat)
+assert atl.eval('C_Texture.GetAtlasInfo("x")') is None
+plain = runtime(True)
+assert plain.eval('C_Texture.GetAtlasInfo("common-icon-sound")') is None
+
 print('PASS: Wrath FontStrings get SetMaxLines/GetMaxLines from core compat (1 line = no wrap, '
       'wrap restored when lifted, larger limits leave height alone), EditBoxes get HasFocus without a '
       'focus-stealing probe, native methods are kept; the real Unlock Mode snap dropdown fails on '
       'SetMaxLines without the shim and builds/hovers/refreshes with it; no unguarded Retail-only '
-      'widget calls remain in EUI_UnlockMode.lua.')
+      'widget calls remain in EUI_UnlockMode.lua; a client C_Texture.GetAtlasInfo that errors on unknown '
+      'atlases is wrapped to return nil (known atlases kept, rewrapped by Options if swapped later).')

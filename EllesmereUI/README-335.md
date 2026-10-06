@@ -1,4 +1,12 @@
-# EllesmereUI Wrath Core — 0.48
+# EllesmereUI Wrath Core — 0.49
+
+0.49: alguns clientes 3.3.5 customizados (com ports da UI Retail, como o WLk)
+trazem um addon com `C_Texture.GetAtlasInfo` que gera erro para atlas
+desconhecido, enquanto a Retail devolve nil. O EUI consulta atlas da Retail ao
+carregar arquivos (por exemplo "common-icon-sound" no `EllesmereUI_Widgets.lua`),
+e o erro interrompia o arquivo: as opções falhavam com "attempt to call local
+'NS'". O compat agora envolve essa função (`EUI335_SafeAtlasInfo`): atlas
+desconhecido retorna nil e atlas conhecido continua igual.
 
 0.48: o popup "Incompatible Addon Detected" ganhou uma linha de botões acima de
 Okay / Don't show again: "Disable <addon>" desativa o addon incompatível e

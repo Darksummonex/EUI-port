@@ -9,10 +9,16 @@ the workspace. It holds the 20 real `EllesmereUI*` addon folders,
 and mpyq for Python), `.codex-backups/`, these docs and the EUI ZIPs. The project
 is strictly EllesmereUI: other addons are not part of it or its backups.
 
-The game install is `D:\Jogo\Whitemane\Games\FrostmourneRebuffed`. Its
-`Interface\AddOns` keeps the game's own addons plus one directory junction per
-`EllesmereUI*` folder pointing back here, so the client loads the project files
-directly. Edit files here and `/reload` in game. Do not replace the junctions
+Alex plays on the `D:\Jogo\WLk` client: a customised 3.3.5 (build 12340)
+client that ships Retail UI ports, including an addon-level `C_Texture` whose
+`GetAtlasInfo` errors on unknown atlases (Core wraps it, see Core 0.49). Its
+errors are in `D:\Jogo\WLk\WTF\Account\DARKSUMMON\SavedVariables\!BugGrabber.lua`
+and `D:\Jogo\WLk\Logs\FrameXML.log`. `D:\Jogo\Whitemane\Games\FrostmourneRebuffed`
+is the second install; `game_paths.py` points at it for the reference addons and
+client MPQs. In both installs `Interface\AddOns` keeps the game's own addons plus
+one directory junction per `EllesmereUI*` folder pointing back here, so each
+client loads the project files directly. WLk's previous copies were moved to
+`D:\Jogo\WLk\Interface\EUI-copies-20261006`. Edit files here and `/reload` in game. Do not replace the junctions
 with copies. A new EUI module folder is created here and linked with
 `New-Item -ItemType Junction -Path "<AddOns>\<Name>" -Target "<project>\<Name>"`.
 
@@ -63,10 +69,10 @@ Working-tree backups: `backport-tools/backup_project.py` writes
 
 ## Current versions
 
-Core 0.48; Action Bars 0.18; Arena 0.2; AuraBuff Reminders 0.3; Bags 0.10;
+Core 0.49; Action Bars 0.18; Arena 0.2; AuraBuff Reminders 0.3; Bags 0.10;
 Blizz UI Enhanced (BlizzardSkin) 0.26; Chat 0.42; Cooldown Manager 0.2;
 Damage Meters 0.6; Data Bars 0.4; Friends 0.3; Minimap 0.4; Nameplates 0.12;
-Options 0.84; QoL 0.9; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.12;
+Options 0.85; QoL 0.9; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.12;
 Resource Bars 0.3; Unit Frames 0.10.
 
 Git: branch `cursor/eui-shapes-bars-skins-qol`, built on
