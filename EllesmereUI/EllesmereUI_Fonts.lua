@@ -438,6 +438,32 @@ do
     end
 end
 
+-- Per-element text outline. "module" (or nil) keeps the module's own outline; the other
+-- modes override it for that one FontString. Returns false when the caller should apply
+-- its module default itself.
+EllesmereUI.TEXT_OUTLINE_VALUES = { module = "Module Default", none = "None", outline = "Outline", thick = "Thick Outline", shadow = "Shadow" }
+EllesmereUI.TEXT_OUTLINE_ORDER = { "module", "none", "outline", "thick", "shadow" }
+local TEXT_OUTLINE_FLAGS = { none = "", outline = "OUTLINE", thick = "THICKOUTLINE", shadow = "" }
+function EllesmereUI.ApplyTextOutline(fs, fontPath, size, mode, moduleKey)
+    if not (fs and fs.SetFont) then return true end
+    local flag = TEXT_OUTLINE_FLAGS[mode]
+    -- SetFontObject can reset the instance colour on some clients; keep the painted one.
+    local r, g, b, a = fs:GetTextColor()
+    if flag == nil then
+        if fs._euiTextOutline then
+            fs._euiTextOutline = nil
+            EllesmereUI.PrimeFontShadow(fs, false)
+            if r then fs:SetTextColor(r, g, b, a) end
+        end
+        return false
+    end
+    EllesmereUI.PrimeFontShadow(fs, mode == "shadow")
+    fs:SetFont(fontPath or EllesmereUI.GetFontPath(moduleKey), size, flag)
+    if r then fs:SetTextColor(r, g, b, a) end
+    fs._euiTextOutline = mode
+    return true
+end
+
 -- "Apply to All Game Text" + "Game Text Scale": swaps Blizzard's default game fonts to
 -- the user's global face and/or scales their sizes. Taint-safe: runs once at PLAYER_LOGIN
 -- (out of combat), sets STANDARD_TEXT_FONT, and SetFonts Blizzard's named font OBJECTS

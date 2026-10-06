@@ -1291,6 +1291,10 @@ initFrame:SetScript("OnEvent", function(self)
     ---------------------------------------------------------------------------
     local PREVIEW_FONT = (EllesmereUI.GetFontPath("unitFrames"))
         or "Interface\\AddOns\\EllesmereUI\\media\\fonts\\Expressway.TTF"
+    local function SetPVOutlineFont(fs, size, outline)
+        if outline and EllesmereUI.ApplyTextOutline and EllesmereUI.ApplyTextOutline(fs, PREVIEW_FONT, size, outline, "unitFrames") then return end
+        fs:SetFont(PREVIEW_FONT, size, GetUFOptOutline())
+    end
     local SOLID_BACKDROP = { bgFile = "Interface\\Buttons\\WHITE8X8" }
     local BORDER_BACKDROP = { edgeFile = "Interface\\Buttons\\WHITE8X8", edgeSize = 1 }
 
@@ -2320,7 +2324,7 @@ initFrame:SetScript("OnEvent", function(self)
 
 
             local ec = s.extraTextContent or "none"
-            extraFS:SetFont(PREVIEW_FONT, (s.extraTextSize or s.textSize or 12), GetUFOptOutline())
+            SetPVOutlineFont(extraFS, (s.extraTextSize or s.textSize or 12), s.extraTextOutline)
             extraFS:ClearAllPoints()
             extraFS:SetWidth(0)
             if ec ~= "none" then
@@ -2345,7 +2349,7 @@ initFrame:SetScript("OnEvent", function(self)
             end
 
             -- Each text position renders independently; Center does not hide Left/Right.
-            centerFS:SetFont(PREVIEW_FONT, csz, GetUFOptOutline())
+            SetPVOutlineFont(centerFS, csz, s.centerTextOutline)
             centerFS:ClearAllPoints()
             if cc ~= "none" then
                 centerFS:SetJustifyH("CENTER")
@@ -2357,7 +2361,7 @@ initFrame:SetScript("OnEvent", function(self)
                 centerFS:Hide()
             end
 
-            leftFS:SetFont(PREVIEW_FONT, lsz, GetUFOptOutline())
+            SetPVOutlineFont(leftFS, lsz, s.leftTextOutline)
             leftFS:ClearAllPoints()
             if lc ~= "none" then
                 leftFS:SetJustifyH("LEFT")
@@ -2379,7 +2383,7 @@ initFrame:SetScript("OnEvent", function(self)
                 leftFS:Hide()
             end
 
-            rightFS:SetFont(PREVIEW_FONT, rsz, GetUFOptOutline())
+            SetPVOutlineFont(rightFS, rsz, s.rightTextOutline)
             rightFS:ClearAllPoints()
             if rc ~= "none" then
                 rightFS:SetJustifyH("RIGHT")
@@ -2736,7 +2740,7 @@ initFrame:SetScript("OnEvent", function(self)
                 local rsz = s.btbRightSize or 11
                 local csz = s.btbCenterSize or 11
 
-                btbLeftFS:SetFont(PREVIEW_FONT, lsz, GetUFOptOutline())
+                SetPVOutlineFont(btbLeftFS, lsz, s.btbLeftOutline)
                 btbLeftFS:ClearAllPoints()
                 if lc ~= "none" then
                     btbLeftFS:SetJustifyH("LEFT")
@@ -2747,7 +2751,7 @@ initFrame:SetScript("OnEvent", function(self)
                     PreviewPowerColor(btbLeftFS, lc, s.btbLeftPowerColor)
                 else btbLeftFS:Hide() end
 
-                btbRightFS:SetFont(PREVIEW_FONT, rsz, GetUFOptOutline())
+                SetPVOutlineFont(btbRightFS, rsz, s.btbRightOutline)
                 btbRightFS:ClearAllPoints()
                 if rc ~= "none" then
                     btbRightFS:SetJustifyH("RIGHT")
@@ -2758,7 +2762,7 @@ initFrame:SetScript("OnEvent", function(self)
                     PreviewPowerColor(btbRightFS, rc, s.btbRightPowerColor)
                 else btbRightFS:Hide() end
 
-                btbCenterFS:SetFont(PREVIEW_FONT, csz, GetUFOptOutline())
+                SetPVOutlineFont(btbCenterFS, csz, s.btbCenterOutline)
                 btbCenterFS:ClearAllPoints()
                 if cc ~= "none" then
                     btbCenterFS:SetJustifyH("CENTER")
@@ -4276,7 +4280,7 @@ initFrame:SetScript("OnEvent", function(self)
                     local ppSz = s.powerPercentSize or 9
                     local ppOx = s.powerPercentX or 0
                     local ppOy = s.powerPercentY or 0
-                    ppPreviewFS:SetFont(PREVIEW_FONT, ppSz, GetUFOptOutline())
+                    SetPVOutlineFont(ppPreviewFS, ppSz, s.powerPercentOutline)
                     ppPreviewFS:ClearAllPoints()
                     if ph > 0 then
                         if ppPos == "left" then
@@ -8673,6 +8677,9 @@ initFrame:SetScript("OnEvent", function(self)
                     { type="slider", label="Size", min=8, max=100, step=1,
                       get=function() return SVal("leftTextSize", SDB().textSize or 12) end,
                       set=function(v) SSet("leftTextSize", v); UpdatePreview() end },
+                    { type="dropdown", label="Outline", values=EllesmereUI.TEXT_OUTLINE_VALUES, order=EllesmereUI.TEXT_OUTLINE_ORDER,
+                      get=function() return SVal("leftTextOutline", "module") end,
+                      set=function(v) SSet("leftTextOutline", v); UpdatePreview() end },
                     { type="slider", label="X Offset", min=-150, max=150, step=1,
                       get=function() return SVal("leftTextX", 0) end,
                       set=function(v) SSet("leftTextX", v); UpdatePreview() end },
@@ -8855,6 +8862,9 @@ initFrame:SetScript("OnEvent", function(self)
                     { type="slider", label="Size", min=8, max=100, step=1,
                       get=function() return SVal("rightTextSize", SDB().textSize or 12) end,
                       set=function(v) SSet("rightTextSize", v); UpdatePreview() end },
+                    { type="dropdown", label="Outline", values=EllesmereUI.TEXT_OUTLINE_VALUES, order=EllesmereUI.TEXT_OUTLINE_ORDER,
+                      get=function() return SVal("rightTextOutline", "module") end,
+                      set=function(v) SSet("rightTextOutline", v); UpdatePreview() end },
                     { type="slider", label="X Offset", min=-150, max=150, step=1,
                       get=function() return SVal("rightTextX", 0) end,
                       set=function(v) SSet("rightTextX", v); UpdatePreview() end },
@@ -9043,6 +9053,9 @@ initFrame:SetScript("OnEvent", function(self)
                     { type="slider", label="Size", min=8, max=100, step=1,
                       get=function() return SVal("centerTextSize", SDB().textSize or 12) end,
                       set=function(v) SSet("centerTextSize", v); UpdatePreview() end },
+                    { type="dropdown", label="Outline", values=EllesmereUI.TEXT_OUTLINE_VALUES, order=EllesmereUI.TEXT_OUTLINE_ORDER,
+                      get=function() return SVal("centerTextOutline", "module") end,
+                      set=function(v) SSet("centerTextOutline", v); UpdatePreview() end },
                     { type="slider", label="X Offset", min=-150, max=150, step=1,
                       get=function() return SVal("centerTextX", 0) end,
                       set=function(v) SSet("centerTextX", v); UpdatePreview() end },
@@ -9219,6 +9232,9 @@ initFrame:SetScript("OnEvent", function(self)
                     { type="slider", label="Size", min=8, max=100, step=1,
                       get=function() return SVal("extraTextSize", SDB().textSize or 12) end,
                       set=function(v) SSet("extraTextSize", v); UpdatePreview() end },
+                    { type="dropdown", label="Outline", values=EllesmereUI.TEXT_OUTLINE_VALUES, order=EllesmereUI.TEXT_OUTLINE_ORDER,
+                      get=function() return SVal("extraTextOutline", "module") end,
+                      set=function(v) SSet("extraTextOutline", v); UpdatePreview() end },
                     { type="slider", label="X Offset", min=-150, max=150, step=1,
                       get=function() return SVal("extraTextX", 0) end,
                       set=function(v) SSet("extraTextX", v); UpdatePreview() end },
@@ -9866,6 +9882,9 @@ initFrame:SetScript("OnEvent", function(self)
                 { type="slider", label="Size", min=6, max=100, step=1,
                   get=function() return SVal("powerPercentSize", 9) end,
                   set=function(v) SSet("powerPercentSize", v); UpdatePreview() end },
+                { type="dropdown", label="Outline", values=EllesmereUI.TEXT_OUTLINE_VALUES, order=EllesmereUI.TEXT_OUTLINE_ORDER,
+                  get=function() return SVal("powerPercentOutline", "module") end,
+                  set=function(v) SSet("powerPercentOutline", v); UpdatePreview() end },
                 { type="slider", label="X Offset", min=-50, max=50, step=1,
                   get=function() return SVal("powerPercentX", 0) end,
                   set=function(v) SSet("powerPercentX", v); UpdatePreview() end },
@@ -11758,6 +11777,9 @@ initFrame:SetScript("OnEvent", function(self)
                     { type="slider", label="Size", min=8, max=100, step=1,
                       get=function() return SVal("btbLeftSize", 11) end,
                       set=function(v) SSet("btbLeftSize", v); UpdatePreview() end },
+                    { type="dropdown", label="Outline", values=EllesmereUI.TEXT_OUTLINE_VALUES, order=EllesmereUI.TEXT_OUTLINE_ORDER,
+                      get=function() return SVal("btbLeftOutline", "module") end,
+                      set=function(v) SSet("btbLeftOutline", v); UpdatePreview() end },
                     { type="slider", label="X Offset", min=-50, max=50, step=1,
                       get=function() return SVal("btbLeftX", 0) end,
                       set=function(v) SSet("btbLeftX", v); UpdatePreview() end },
@@ -11891,6 +11913,9 @@ initFrame:SetScript("OnEvent", function(self)
                     { type="slider", label="Size", min=8, max=100, step=1,
                       get=function() return SVal("btbRightSize", 11) end,
                       set=function(v) SSet("btbRightSize", v); UpdatePreview() end },
+                    { type="dropdown", label="Outline", values=EllesmereUI.TEXT_OUTLINE_VALUES, order=EllesmereUI.TEXT_OUTLINE_ORDER,
+                      get=function() return SVal("btbRightOutline", "module") end,
+                      set=function(v) SSet("btbRightOutline", v); UpdatePreview() end },
                     { type="slider", label="X Offset", min=-50, max=50, step=1,
                       get=function() return SVal("btbRightX", 0) end,
                       set=function(v) SSet("btbRightX", v); UpdatePreview() end },
@@ -12105,6 +12130,9 @@ initFrame:SetScript("OnEvent", function(self)
                     { type="slider", label="Size", min=8, max=100, step=1,
                       get=function() return SVal("btbCenterSize", 11) end,
                       set=function(v) SSet("btbCenterSize", v); UpdatePreview() end },
+                    { type="dropdown", label="Outline", values=EllesmereUI.TEXT_OUTLINE_VALUES, order=EllesmereUI.TEXT_OUTLINE_ORDER,
+                      get=function() return SVal("btbCenterOutline", "module") end,
+                      set=function(v) SSet("btbCenterOutline", v); UpdatePreview() end },
                     { type="slider", label="X Offset", min=-50, max=50, step=1,
                       get=function() return SVal("btbCenterX", 0) end,
                       set=function(v) SSet("btbCenterX", v); UpdatePreview() end },
@@ -16022,6 +16050,9 @@ initFrame:SetScript("OnEvent", function(self)
                     { type="slider", label="Size", min=8, max=100, step=1,
                       get=function() return MVal("leftTextSize", settingsTable.textSize or 12) end,
                       set=function(v) MSet("leftTextSize", v) end },
+                    { type="dropdown", label="Outline", values=EllesmereUI.TEXT_OUTLINE_VALUES, order=EllesmereUI.TEXT_OUTLINE_ORDER,
+                      get=function() return MVal("leftTextOutline", "module") end,
+                      set=function(v) MSet("leftTextOutline", v) end },
                     { type="slider", label="X Offset", min=-50, max=50, step=1,
                       get=function() return MVal("leftTextX", 0) end,
                       set=function(v) MSet("leftTextX", v) end },
@@ -16135,6 +16166,9 @@ initFrame:SetScript("OnEvent", function(self)
                     { type="slider", label="Size", min=8, max=100, step=1,
                       get=function() return MVal("rightTextSize", settingsTable.textSize or 12) end,
                       set=function(v) MSet("rightTextSize", v) end },
+                    { type="dropdown", label="Outline", values=EllesmereUI.TEXT_OUTLINE_VALUES, order=EllesmereUI.TEXT_OUTLINE_ORDER,
+                      get=function() return MVal("rightTextOutline", "module") end,
+                      set=function(v) MSet("rightTextOutline", v) end },
                     { type="slider", label="X Offset", min=-50, max=50, step=1,
                       get=function() return MVal("rightTextX", 0) end,
                       set=function(v) MSet("rightTextX", v) end },
@@ -16267,6 +16301,9 @@ initFrame:SetScript("OnEvent", function(self)
                     { type="slider", label="Size", min=8, max=100, step=1,
                       get=function() return MVal("centerTextSize", settingsTable.textSize or 12) end,
                       set=function(v) MSet("centerTextSize", v) end },
+                    { type="dropdown", label="Outline", values=EllesmereUI.TEXT_OUTLINE_VALUES, order=EllesmereUI.TEXT_OUTLINE_ORDER,
+                      get=function() return MVal("centerTextOutline", "module") end,
+                      set=function(v) MSet("centerTextOutline", v) end },
                     { type="slider", label="X Offset", min=-50, max=50, step=1,
                       get=function() return MVal("centerTextX", 0) end,
                       set=function(v) MSet("centerTextX", v) end },
@@ -16387,6 +16424,9 @@ initFrame:SetScript("OnEvent", function(self)
                     { type="slider", label="Size", min=8, max=100, step=1,
                       get=function() return MVal("extraTextSize", settingsTable.textSize or 12) end,
                       set=function(v) MSet("extraTextSize", v) end },
+                    { type="dropdown", label="Outline", values=EllesmereUI.TEXT_OUTLINE_VALUES, order=EllesmereUI.TEXT_OUTLINE_ORDER,
+                      get=function() return MVal("extraTextOutline", "module") end,
+                      set=function(v) MSet("extraTextOutline", v) end },
                     { type="slider", label="X Offset", min=-150, max=150, step=1,
                       get=function() return MVal("extraTextX", 0) end,
                       set=function(v) MSet("extraTextX", v) end },
@@ -16743,6 +16783,9 @@ initFrame:SetScript("OnEvent", function(self)
                         { type="slider", label="Size", min=6, max=100, step=1,
                           get=function() return MVal("powerPercentSize", 9) end,
                           set=function(v) MSet("powerPercentSize", v) end },
+                        { type="dropdown", label="Outline", values=EllesmereUI.TEXT_OUTLINE_VALUES, order=EllesmereUI.TEXT_OUTLINE_ORDER,
+                          get=function() return MVal("powerPercentOutline", "module") end,
+                          set=function(v) MSet("powerPercentOutline", v) end },
                         { type="slider", label="X Offset", min=-50, max=50, step=1,
                           get=function() return MVal("powerPercentX", 0) end,
                           set=function(v) MSet("powerPercentX", v) end },

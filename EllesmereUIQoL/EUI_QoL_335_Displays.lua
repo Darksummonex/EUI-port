@@ -365,6 +365,27 @@ function ns.ApplyZoneText()
     for _,name in ipairs(ZONE_FRAMES) do local z=_G[name]; if z then hooksecurefunc(z,"SetPoint",ZoneReassert); hooksecurefunc(z,"SetAllPoints",ZoneReassert) end end
     for _,fn in ipairs({"SetZoneText","UIParent_ManageFramePositions"}) do if type(_G[fn])=="function" then hooksecurefunc(fn,ZoneReassert) end end
 end
+-- Zone Text outline: "module" keeps Blizzard's own zone fonts; restoring re-applies the
+-- original font object so its native outline and shadow come back.
+local ZONE_STRINGS={"ZoneTextString","SubZoneTextString","PVPInfoTextString","PVPArenaTextString"}
+local zoneFonts={}
+function ns.ApplyZoneOutline()
+    local p=ns.GetSettings(); local mode=p and p.enabled and p.zoneTextOutline
+    if mode=="module" or not E.ApplyTextOutline then mode=nil end
+    for _,name in ipairs(ZONE_STRINGS) do local fs=_G[name]
+        if fs and fs.GetFont then
+            if mode then
+                if not zoneFonts[fs] then local path,size,flags=fs:GetFont(); zoneFonts[fs]={obj=fs.GetFontObject and fs:GetFontObject(),path=path,size=size,flags=flags} end
+                local n=zoneFonts[fs]; E.ApplyTextOutline(fs,n.path,n.size,mode,"extras")
+            elseif zoneFonts[fs] then
+                local n,r,g,b,a=zoneFonts[fs],fs:GetTextColor(); zoneFonts[fs]=nil; fs._euiTextOutline=nil
+                if n.obj then fs:SetFontObject(n.obj) end
+                fs:SetFont(n.path,n.size,n.flags or "")
+                if r then fs:SetTextColor(r,g,b,a) end
+            end
+        end
+    end
+end
 local function Px(v) local PP=E.PP; return PP and PP.FromPixels and PP.FromPixels(v) or v end
 function ns.ApplyDisplays()
     local p=ns.GetSettings()
@@ -379,7 +400,7 @@ function ns.ApplyDisplays()
             if c[1]=="combatAlert" or c[1]=="deathAlert" or c[1]=="durability" or c[1]=="targetDistance" then local s=tonumber(size) or 22; ns.Size(f,math.max(c[3],s*7),s+14) end
         end
     end
-    ns.ApplyZoneText()
+    ns.ApplyZoneText(); ns.ApplyZoneOutline()
     local ch,len,thick=frames.crosshair,math.max(4,tonumber(p.crosshairSize) or 40),math.max(1,tonumber(p.crosshairThickness) or 2)
     ns.Size(ch.horizontal,len,thick); ns.Size(ch.vertical,thick,len); ns.Size(ch,len,len)
     local border=math.max(0,tonumber(p.crosshairBorder) or 0)

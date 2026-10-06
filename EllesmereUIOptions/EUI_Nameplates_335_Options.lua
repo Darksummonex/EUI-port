@@ -107,6 +107,10 @@ init:SetScript("OnEvent",function(self)
     local function CogDropdown(key,label,values,order)
         return {type="dropdown",label=label,values=values,order=order,get=function() return Get(key) end,set=function(v) Set(key,v) end}
     end
+    local function CogOutline(key)
+        return {type="dropdown",label="Outline",values=E.TEXT_OUTLINE_VALUES,order=E.TEXT_OUTLINE_ORDER,
+            get=function() return Get(key) or "module" end,set=function(v) Set(key,v) end}
+    end
     local function Cog(rgn,title,rows,opts)
         if not Inline(rgn) or not E.BuildInlineCog then return end
         opts=opts or {}
@@ -214,10 +218,10 @@ init:SetScript("OnEvent",function(self)
         return cfg
     end
     local function TextRows(element)
-        if ns.IsNameElement(element) then return {CogSlider("nameSize","Size",8,24),CogSlider("nameYOffset","Top Offset",-10,20)} end
-        if element=="level" then return {CogSlider("levelSize","Size",8,20)} end
-        if element=="targetOfTarget" then return {CogSlider("totSize","Size",8,20)} end
-        if ns.IsHealthElement(element) then return {CogSlider("healthTextSize","Size",8,20),CogToggle("healthPctDecimal","Show % Decimal")} end
+        if ns.IsNameElement(element) then return {CogSlider("nameSize","Size",8,24),CogOutline("nameOutline"),CogSlider("nameYOffset","Top Offset",-10,20)} end
+        if element=="level" then return {CogSlider("levelSize","Size",8,20),CogOutline("levelOutline")} end
+        if element=="targetOfTarget" then return {CogSlider("totSize","Size",8,20),CogOutline("totOutline")} end
+        if ns.IsHealthElement(element) then return {CogSlider("healthTextSize","Size",8,20),CogOutline("healthTextOutline"),CogToggle("healthPctDecimal","Show % Decimal")} end
     end
     local function HasText(slot) local element=Get("textSlot"..slot); return element~="none" and ns.TEXT_VALUES[element]~=nil end
     local textPopups={}
@@ -375,8 +379,8 @@ init:SetScript("OnEvent",function(self)
                 refs.castShow=Row(Toggle("showCastBar","Show Cast Bar"),Dropdown("castIconPosition","Spell Icon",{left="Left",right="Right",none="None"},{"left","right","none"},nil,castOff))
                 row=Row(Toggle("showCastName","Spell Name","Spell names appear on identified target and mouseover plates.",castOff),Toggle("showCastTimer","Cast Timer",nil,castOff))
                 refs.castText=row
-                Resize(row and row._leftRegion,"Spell Name",{CogSlider("castNameSize","Size",8,20)})
-                Resize(row and row._rightRegion,"Cast Timer",{CogSlider("castTimerSize","Size",8,20)})
+                Resize(row and row._leftRegion,"Spell Name",{CogSlider("castNameSize","Size",8,20),CogOutline("castNameOutline")})
+                Resize(row and row._rightRegion,"Cast Timer",{CogSlider("castTimerSize","Size",8,20),CogOutline("castTimerOutline")})
                 Row(Slider("yOffset","Vertical Offset",-30,40),SPACER)
 
                 Section("CAST COLORS AND EFFECTS")
@@ -412,6 +416,8 @@ init:SetScript("OnEvent",function(self)
 
                 refs.generalHeader=Section("GENERAL TEXT")
                 refs.auraText=Row(Slider("auraStackTextSize","Aura Stacks",8,20),Slider("auraDurationTextSize","Debuff Duration",8,20))
+                Cog(refs.auraText and refs.auraText._leftRegion,"Aura Stacks",{CogOutline("auraStackTextOutline")})
+                Cog(refs.auraText and refs.auraText._rightRegion,"Debuff Duration",{CogOutline("auraDurationTextOutline")})
                 Row(Dropdown("auraTimerPosition","Duration Position",{topleft="Top Left",center="Center"},{"topleft","center"}),
                     Toggle("classColoredNames","Class Colored Names","Allied names keep their class color without target or mouseover. Group/raid members are identified automatically; other allies are learned from target, mouseover or focus."))
                 Row(Toggle("showHealthText","Health Text","Shows the health text elements placed in Core Text Positions."),Toggle("showLevel","Level & Elite Indicator"))
@@ -447,7 +453,7 @@ init:SetScript("OnEvent",function(self)
                 Section("OTHER NAMEPLATES")
                 Row(CVar("nameplateShowEnemies","Show Enemy Nameplates"),CVar("nameplateShowFriends","Show Friendly Nameplates"))
                 local row=Row(CVar("nameplateShowEnemyPets","Show Enemy Pet Nameplates"),Toggle("friendlyNameOnly","Make Friendly Nameplates Name Only"))
-                Resize(row and row._rightRegion,"Friendly Names",{CogSlider("friendlyNameSize","Friendly Name Size",8,24)},
+                Resize(row and row._rightRegion,"Friendly Names",{CogSlider("friendlyNameSize","Friendly Name Size",8,24),CogOutline("friendlyNameOutline")},
                     {disabled=function() return not Get("friendlyNameOnly") end,disabledTooltip="Make Friendly Nameplates Name Only"})
 
                 Section("NAMEPLATE SPACING")

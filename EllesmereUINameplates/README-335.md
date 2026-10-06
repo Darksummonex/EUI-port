@@ -1,4 +1,11 @@
-# Nameplates 3.3.5 — 0.12
+# Nameplates 3.3.5 — 0.13
+
+0.13: cada texto da placa ganhou o menu "Outline" (Module Default, None,
+Outline, Thick Outline, Shadow) logo abaixo do Size na sua engrenagem: nome
+(e combinações de nome/nível), Level, Target of Target, textos de vida, Spell
+Name, Cast Timer e Friendly Names. Aura Stacks e Debuff Duration (GENERAL TEXT)
+ganharam uma engrenagem só com o contorno. Padrão: Module Default, então nada
+muda até você escolher (requer Core 0.50).
 
 0.12: a barra de lançamento preenche suavemente. Antes o preenchimento só era
 atualizado no refresh das placas (a cada 0,05 s), por isso andava em degraus.

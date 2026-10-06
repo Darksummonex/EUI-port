@@ -1357,7 +1357,8 @@ local function GetSelectedFont(unitKey)
     return cachedFontPath
 end
 
-local function SetFSFont(fs, size, flags)
+local function SetFSFont(fs, size, flags, outline)
+  if outline and EllesmereUI.ApplyTextOutline and EllesmereUI.ApplyTextOutline(fs, GetSelectedFont(), size or 12, outline, "unitFrames") then return end
   EllesmereUI.ApplyModuleFont(fs, GetSelectedFont(), size or 12, "unitFrames", flags)
 end
 
@@ -5108,19 +5109,19 @@ local function CreateBottomTextBar(frame, unit, settings, anchorFrame, xOffset, 
     textOvr:SetFrameLevel(frame:GetFrameLevel() + 15)
 
     local leftFS = textOvr:CreateFontString(nil, "OVERLAY")
-    SetFSFont(leftFS, settings.btbLeftSize or 11)
+    SetFSFont(leftFS, settings.btbLeftSize or 11, nil, settings.btbLeftOutline)
     leftFS:SetWordWrap(false)
     leftFS:SetTextColor(1, 1, 1)
     btb.LeftText = leftFS
 
     local rightFS = textOvr:CreateFontString(nil, "OVERLAY")
-    SetFSFont(rightFS, settings.btbRightSize or 11)
+    SetFSFont(rightFS, settings.btbRightSize or 11, nil, settings.btbRightOutline)
     rightFS:SetWordWrap(false)
     rightFS:SetTextColor(1, 1, 1)
     btb.RightText = rightFS
 
     local centerFS = textOvr:CreateFontString(nil, "OVERLAY")
-    SetFSFont(centerFS, settings.btbCenterSize or 11)
+    SetFSFont(centerFS, settings.btbCenterSize or 11, nil, settings.btbCenterOutline)
     centerFS:SetWordWrap(false)
     centerFS:SetTextColor(1, 1, 1)
     btb.CenterText = centerFS
@@ -5165,7 +5166,7 @@ local function CreateBottomTextBar(frame, unit, settings, anchorFrame, xOffset, 
         local rsz = s.btbRightSize or 11
         local csz = s.btbCenterSize or 11
 
-        SetFSFont(leftFS, lsz)
+        SetFSFont(leftFS, lsz, nil, s.btbLeftOutline)
         leftFS:ClearAllPoints()
         if lc ~= "none" then
             leftFS:SetJustifyH("LEFT")
@@ -5174,7 +5175,7 @@ local function CreateBottomTextBar(frame, unit, settings, anchorFrame, xOffset, 
             leftFS:Show()
         else leftFS:Hide() end
 
-        SetFSFont(rightFS, rsz)
+        SetFSFont(rightFS, rsz, nil, s.btbRightOutline)
         rightFS:ClearAllPoints()
         if rc ~= "none" then
             rightFS:SetJustifyH("RIGHT")
@@ -5183,7 +5184,7 @@ local function CreateBottomTextBar(frame, unit, settings, anchorFrame, xOffset, 
             rightFS:Show()
         else rightFS:Hide() end
 
-        SetFSFont(centerFS, csz)
+        SetFSFont(centerFS, csz, nil, s.btbCenterOutline)
         centerFS:ClearAllPoints()
         if cc ~= "none" then
             centerFS:SetJustifyH("CENTER")
@@ -7647,7 +7648,7 @@ local function CreatePowerBar(frame, unit, settings)
     ppTextOvr:SetAllPoints(power)
     ppTextOvr:SetFrameLevel(frame:GetFrameLevel() + 15)
     local ppFS = ppTextOvr:CreateFontString(nil, "OVERLAY")
-    SetFSFont(ppFS, settings.powerPercentSize or 9)
+    SetFSFont(ppFS, settings.powerPercentSize or 9, nil, settings.powerPercentOutline)
     ppFS:Hide()
     power._ppFS = ppFS
     power._ppTextOvr = ppTextOvr
@@ -7705,7 +7706,7 @@ local function CreatePowerBar(frame, unit, settings)
             ppTextOvr._euiHeight0 = nil
         end
 
-        SetFSFont(ppFS, sz)
+        SetFSFont(ppFS, sz, nil, s.powerPercentOutline)
         ppFS:ClearAllPoints()
 
         if pos == "none" then
@@ -9633,19 +9634,19 @@ local function StyleFullFrame(frame, unit)
     local ets = settings.extraTextSize or settings.textSize or 12
 
     local leftText = textOverlay:CreateFontString(nil, "OVERLAY")
-    SetFSFont(leftText, lts)
+    SetFSFont(leftText, lts, nil, settings.leftTextOutline)
     leftText:SetWordWrap(false)
     leftText:SetTextColor(1, 1, 1)
     frame.LeftText = leftText
 
     local rightText = textOverlay:CreateFontString(nil, "OVERLAY")
-    SetFSFont(rightText, rts)
+    SetFSFont(rightText, rts, nil, settings.rightTextOutline)
     rightText:SetWordWrap(false)
     rightText:SetTextColor(1, 1, 1)
     frame.RightText = rightText
 
     local centerText = textOverlay:CreateFontString(nil, "OVERLAY")
-    SetFSFont(centerText, cts)
+    SetFSFont(centerText, cts, nil, settings.centerTextOutline)
     centerText:SetWordWrap(false)
     centerText:SetTextColor(1, 1, 1)
     frame.CenterText = centerText
@@ -9653,7 +9654,7 @@ local function StyleFullFrame(frame, unit)
     -- Extra Text: a 4th text zone, identical to the others (same tags + absorb gate);
     -- anchors per extraTextAlign, capped at 95% of the bar width (ellipsis truncation).
     local extraText = textOverlay:CreateFontString(nil, "OVERLAY")
-    SetFSFont(extraText, ets)
+    SetFSFont(extraText, ets, nil, settings.extraTextOutline)
     extraText:SetWordWrap(false)
     extraText:SetTextColor(1, 1, 1)
     frame.ExtraText = extraText
@@ -9699,7 +9700,7 @@ local function StyleFullFrame(frame, unit)
         -- Extra Text: anchored per extraTextAlign (left/right/center); ellipsis-
         -- truncated past 95% of health bar width (SetWordWrap(false) + capped width below).
         local ec = s.extraTextContent or "none"
-        SetFSFont(extraText, s.extraTextSize or s.textSize or 12)
+        SetFSFont(extraText, s.extraTextSize or s.textSize or 12, nil, s.extraTextOutline)
         extraText:ClearAllPoints()
         if ec ~= "none" then
             local exo = s.extraTextX or 0
@@ -9721,7 +9722,7 @@ local function StyleFullFrame(frame, unit)
         else extraText:Hide() end
 
         -- Each text position renders independently; Center no longer hides Left/Right.
-        SetFSFont(centerText, csz)
+        SetFSFont(centerText, csz, nil, s.centerTextOutline)
         centerText:ClearAllPoints()
         if cc ~= "none" then
             centerText:SetJustifyH("CENTER")
@@ -9731,7 +9732,7 @@ local function StyleFullFrame(frame, unit)
             ApplyClassColor(centerText, unit, s.centerTextClassColor, s.centerTextColorR, s.centerTextColorG, s.centerTextColorB)
         else centerText:Hide() end
 
-        SetFSFont(leftText, lsz)
+        SetFSFont(leftText, lsz, nil, s.leftTextOutline)
         leftText:ClearAllPoints()
         if lc ~= "none" then
             leftText:SetJustifyH("LEFT")
@@ -9747,7 +9748,7 @@ local function StyleFullFrame(frame, unit)
             ApplyClassColor(leftText, unit, s.leftTextClassColor, s.leftTextColorR, s.leftTextColorG, s.leftTextColorB)
         else leftText:Hide() end
 
-        SetFSFont(rightText, rsz)
+        SetFSFont(rightText, rsz, nil, s.rightTextOutline)
         rightText:ClearAllPoints()
         if rc ~= "none" then
             rightText:SetJustifyH("RIGHT")
@@ -9905,19 +9906,19 @@ local function StyleFocusFrame(frame, unit)
     local ets = settings.extraTextSize or settings.textSize or 12
 
     local leftText = textOverlay:CreateFontString(nil, "OVERLAY")
-    SetFSFont(leftText, lts)
+    SetFSFont(leftText, lts, nil, settings.leftTextOutline)
     leftText:SetWordWrap(false)
     leftText:SetTextColor(1, 1, 1)
     frame.LeftText = leftText
 
     local rightText = textOverlay:CreateFontString(nil, "OVERLAY")
-    SetFSFont(rightText, rts)
+    SetFSFont(rightText, rts, nil, settings.rightTextOutline)
     rightText:SetWordWrap(false)
     rightText:SetTextColor(1, 1, 1)
     frame.RightText = rightText
 
     local centerText = textOverlay:CreateFontString(nil, "OVERLAY")
-    SetFSFont(centerText, cts)
+    SetFSFont(centerText, cts, nil, settings.centerTextOutline)
     centerText:SetWordWrap(false)
     centerText:SetTextColor(1, 1, 1)
     frame.CenterText = centerText
@@ -9925,7 +9926,7 @@ local function StyleFocusFrame(frame, unit)
     -- Extra Text: a 4th text zone, identical to the others (same tags + absorb gate);
     -- anchors per extraTextAlign, capped at 95% of the bar width (ellipsis truncation).
     local extraText = textOverlay:CreateFontString(nil, "OVERLAY")
-    SetFSFont(extraText, ets)
+    SetFSFont(extraText, ets, nil, settings.extraTextOutline)
     extraText:SetWordWrap(false)
     extraText:SetTextColor(1, 1, 1)
     frame.ExtraText = extraText
@@ -9971,7 +9972,7 @@ local function StyleFocusFrame(frame, unit)
         -- Extra Text: anchored per extraTextAlign (left/right/center); ellipsis-
         -- truncated past 95% of health bar width (SetWordWrap(false) + capped width below).
         local ec = s.extraTextContent or "none"
-        SetFSFont(extraText, s.extraTextSize or s.textSize or 12)
+        SetFSFont(extraText, s.extraTextSize or s.textSize or 12, nil, s.extraTextOutline)
         extraText:ClearAllPoints()
         if ec ~= "none" then
             local exo = s.extraTextX or 0
@@ -9993,7 +9994,7 @@ local function StyleFocusFrame(frame, unit)
         else extraText:Hide() end
 
         -- Each text position renders independently; Center no longer hides Left/Right.
-        SetFSFont(centerText, csz)
+        SetFSFont(centerText, csz, nil, s.centerTextOutline)
         centerText:ClearAllPoints()
         if cc ~= "none" then
             centerText:SetJustifyH("CENTER")
@@ -10003,7 +10004,7 @@ local function StyleFocusFrame(frame, unit)
             ApplyClassColor(centerText, unit, s.centerTextClassColor, s.centerTextColorR, s.centerTextColorG, s.centerTextColorB)
         else centerText:Hide() end
 
-        SetFSFont(leftText, lsz)
+        SetFSFont(leftText, lsz, nil, s.leftTextOutline)
         leftText:ClearAllPoints()
         if lc ~= "none" then
             leftText:SetJustifyH("LEFT")
@@ -10018,7 +10019,7 @@ local function StyleFocusFrame(frame, unit)
             ApplyClassColor(leftText, unit, s.leftTextClassColor, s.leftTextColorR, s.leftTextColorG, s.leftTextColorB)
         else leftText:Hide() end
 
-        SetFSFont(rightText, rsz)
+        SetFSFont(rightText, rsz, nil, s.rightTextOutline)
         rightText:ClearAllPoints()
         if rc ~= "none" then
             rightText:SetJustifyH("RIGHT")
@@ -10169,19 +10170,19 @@ local function StyleSimpleFrame(frame, unit)
     local centerContent = settings.centerTextContent or "none"
 
     local leftText = textOverlay:CreateFontString(nil, "OVERLAY")
-    SetFSFont(leftText, settings.leftTextSize or settings.textSize or 12)
+    SetFSFont(leftText, settings.leftTextSize or settings.textSize or 12, nil, settings.leftTextOutline)
     leftText:SetWordWrap(false)
     leftText:SetTextColor(1, 1, 1)
     frame.LeftText = leftText
 
     local rightText = textOverlay:CreateFontString(nil, "OVERLAY")
-    SetFSFont(rightText, settings.rightTextSize or settings.textSize or 12)
+    SetFSFont(rightText, settings.rightTextSize or settings.textSize or 12, nil, settings.rightTextOutline)
     rightText:SetWordWrap(false)
     rightText:SetTextColor(1, 1, 1)
     frame.RightText = rightText
 
     local centerText = textOverlay:CreateFontString(nil, "OVERLAY")
-    SetFSFont(centerText, settings.centerTextSize or settings.textSize or 12)
+    SetFSFont(centerText, settings.centerTextSize or settings.textSize or 12, nil, settings.centerTextOutline)
     centerText:SetWordWrap(false)
     centerText:SetTextColor(1, 1, 1)
     frame.CenterText = centerText
@@ -10217,7 +10218,7 @@ local function StyleSimpleFrame(frame, unit)
         local cyo = s.centerTextY or 0
         local barW = s.frameWidth or 100
         -- Each text position renders independently; Center no longer hides Left/Right.
-        SetFSFont(centerText, csz)
+        SetFSFont(centerText, csz, nil, s.centerTextOutline)
         centerText:ClearAllPoints()
         if cc ~= "none" then
             centerText:SetJustifyH("CENTER")
@@ -10227,7 +10228,7 @@ local function StyleSimpleFrame(frame, unit)
             ApplyClassColor(centerText, unit, s.centerTextClassColor, s.centerTextColorR, s.centerTextColorG, s.centerTextColorB)
         else centerText:Hide() end
 
-        SetFSFont(leftText, lsz)
+        SetFSFont(leftText, lsz, nil, s.leftTextOutline)
         if lc ~= "none" then
             leftText:ClearAllPoints()
             leftText:SetJustifyH("LEFT")
@@ -10241,7 +10242,7 @@ local function StyleSimpleFrame(frame, unit)
             leftText:Show()
             ApplyClassColor(leftText, unit, s.leftTextClassColor, s.leftTextColorR, s.leftTextColorG, s.leftTextColorB)
         else leftText:Hide() end
-        SetFSFont(rightText, rsz)
+        SetFSFont(rightText, rsz, nil, s.rightTextOutline)
         if rc ~= "none" then
             rightText:ClearAllPoints()
             rightText:SetJustifyH("RIGHT")
@@ -10364,19 +10365,19 @@ local function StyleBossFrame(frame, unit)
     local extraContent = settings.extraTextContent or "none"
 
     local leftText = textOverlay:CreateFontString(nil, "OVERLAY")
-    SetFSFont(leftText, settings.leftTextSize or settings.textSize or 12)
+    SetFSFont(leftText, settings.leftTextSize or settings.textSize or 12, nil, settings.leftTextOutline)
     leftText:SetWordWrap(false)
     leftText:SetTextColor(1, 1, 1)
     frame.LeftText = leftText
 
     local rightText = textOverlay:CreateFontString(nil, "OVERLAY")
-    SetFSFont(rightText, settings.rightTextSize or settings.textSize or 12)
+    SetFSFont(rightText, settings.rightTextSize or settings.textSize or 12, nil, settings.rightTextOutline)
     rightText:SetWordWrap(false)
     rightText:SetTextColor(1, 1, 1)
     frame.RightText = rightText
 
     local centerText = textOverlay:CreateFontString(nil, "OVERLAY")
-    SetFSFont(centerText, settings.centerTextSize or settings.textSize or 12)
+    SetFSFont(centerText, settings.centerTextSize or settings.textSize or 12, nil, settings.centerTextOutline)
     centerText:SetWordWrap(false)
     centerText:SetTextColor(1, 1, 1)
     frame.CenterText = centerText
@@ -10385,7 +10386,7 @@ local function StyleBossFrame(frame, unit)
     -- gate); it only anchors per extraTextAlign and is capped at 95% of the bar
     -- width (ellipsis truncation). Mirrors the Main Frames implementation.
     local extraText = textOverlay:CreateFontString(nil, "OVERLAY")
-    SetFSFont(extraText, settings.extraTextSize or settings.textSize or 12)
+    SetFSFont(extraText, settings.extraTextSize or settings.textSize or 12, nil, settings.extraTextOutline)
     extraText:SetWordWrap(false)
     extraText:SetTextColor(1, 1, 1)
     frame.ExtraText = extraText
@@ -10427,7 +10428,7 @@ local function StyleBossFrame(frame, unit)
         -- Extra Text: anchored per extraTextAlign (left/right/center); ellipsis-
         -- truncated past 95% of health bar width (SetWordWrap(false) + capped width below), matching Main Frames.
         local ec = s.extraTextContent or "none"
-        SetFSFont(extraText, s.extraTextSize or s.textSize or 12)
+        SetFSFont(extraText, s.extraTextSize or s.textSize or 12, nil, s.extraTextOutline)
         extraText:ClearAllPoints()
         if ec ~= "none" then
             local exo = s.extraTextX or 0
@@ -10448,7 +10449,7 @@ local function StyleBossFrame(frame, unit)
             ApplyClassColor(extraText, unit, s.extraTextClassColor, s.extraTextColorR, s.extraTextColorG, s.extraTextColorB)
         else extraText:Hide() end
         -- Each text position renders independently; Center no longer hides Left/Right.
-        SetFSFont(centerText, csz)
+        SetFSFont(centerText, csz, nil, s.centerTextOutline)
         centerText:ClearAllPoints()
         if cc ~= "none" then
             centerText:SetJustifyH("CENTER")
@@ -10458,7 +10459,7 @@ local function StyleBossFrame(frame, unit)
             ApplyClassColor(centerText, unit, s.centerTextClassColor, s.centerTextColorR, s.centerTextColorG, s.centerTextColorB)
         else centerText:Hide() end
 
-        SetFSFont(leftText, lsz)
+        SetFSFont(leftText, lsz, nil, s.leftTextOutline)
         if lc ~= "none" then
             leftText:ClearAllPoints()
             leftText:SetJustifyH("LEFT")
@@ -10472,7 +10473,7 @@ local function StyleBossFrame(frame, unit)
             leftText:Show()
             ApplyClassColor(leftText, unit, s.leftTextClassColor, s.leftTextColorR, s.leftTextColorG, s.leftTextColorB)
         else leftText:Hide() end
-        SetFSFont(rightText, rsz)
+        SetFSFont(rightText, rsz, nil, s.rightTextOutline)
         if rc ~= "none" then
             rightText:ClearAllPoints()
             rightText:SetJustifyH("RIGHT")

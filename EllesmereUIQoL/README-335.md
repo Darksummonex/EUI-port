@@ -1,4 +1,9 @@
-# Quality of Life 3.3.5 — 0.9
+# Quality of Life 3.3.5 — 0.10
+
+0.10: Displays > ZONE TEXT ganhou "Zone Text Outline" ao lado de "Move Zone
+Text": Blizzard Default, None, Outline, Thick Outline ou Shadow, aplicado aos
+textos de zona, subzona e status PvP mostrados ao entrar numa área. Blizzard
+Default restaura a fonte original do jogo (requer Core 0.50).
 
 0.9: automação de grupo no estilo do Misc do ElvUI (EUI_QoL_335_Group.lua).
 "Announce Interrupts" (QoL > GROUP) anuncia o feitiço que você ou seu pet

@@ -107,8 +107,12 @@ init:SetScript("OnEvent",function(self)
                     {range="Range (30-35)",plus="Lower Bound (30+)",min="Minimum (30)"},{"range","plus","min"}))
                 Section("ZONE TEXT")
                 local zone=Toggle(nil,"zoneText","Move Zone Text")
-                zone.tooltip="Moves the zone name shown when entering an area to the top of the screen. Off restores Blizzard's position."
-                Row(zone,Label("Fixed at top center, X 9 / Y 322"))
+                zone.tooltip="Moves the zone name shown when entering an area to the top of the screen (top center, X 9 / Y 322). Off restores Blizzard's position."
+                local zoneOutlines={}; for k,v in pairs(E.TEXT_OUTLINE_VALUES or {}) do zoneOutlines[k]=v end; zoneOutlines.module="Blizzard Default"
+                local zoneOutline=Dropdown(nil,"zoneTextOutline","Zone Text Outline",zoneOutlines,E.TEXT_OUTLINE_ORDER)
+                zoneOutline.getValue=function() local p=Store(); return p and p.zoneTextOutline or "module" end
+                zoneOutline.tooltip="Outline for the zone, sub-zone and PvP status text shown when entering an area."
+                Row(zone,zoneOutline)
                 Section("ALERTS")
                 Row(Toggle(nil,"durability","Low Durability Warning"),Slider(nil,"durabilityThreshold","Durability Threshold %",5,90))
                 Row(Color(nil,"durabilityColor","Durability Text Color"),Label("Hidden during combat"))

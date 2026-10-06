@@ -873,8 +873,13 @@ do
         },
     },
     {
-        version = "Nameplates 0.12",
+        version = "Nameplates 0.13",
         heroes = {
+            {
+                title = "Outline per Text",
+                desc  = "Every nameplate text has an Outline choice under its Size: None, Outline, Thick Outline or Shadow, or keep the module default. Covers names, level, health, Target of Target, cast texts, aura text and friendly names.",
+                nav   = Nav("EllesmereUINameplates", "Display", "CORE TEXT POSITIONS"),
+            },
             {
                 title = "Smooth Cast Bars",
                 desc  = "Cast bars now fill every frame instead of stepping with each nameplate refresh. The spark and timer move smoothly too, and the extra work stops when no cast is visible.",
@@ -960,8 +965,12 @@ do
         },
     },
     {
-        version = "Core 0.49",
+        version = "Core 0.50",
         heroes = {
+            {
+                title = "Text Outline Styles",
+                desc  = "A shared outline picker for individual texts: None, Outline, Thick Outline or Shadow, with Module Default following the Fonts page. Text keeps its color when you switch.",
+            },
             {
                 title = "Fix Addon Conflicts in One Click",
                 desc  = "The Incompatible Addon popup can disable the other addon or the affected EllesmereUI module and reload. Okay and Don't show again work as before.",
@@ -1016,8 +1025,14 @@ do
         },
     },
     {
-        version = "Options 0.85",
+        version = "Options 0.86",
         heroes = {
+            {
+                module = "Unit Frames",
+                title  = "Text Outline Choices",
+                desc   = "Outline menus in the Nameplates and Unit Frames text cogs, and Zone Text Outline in Quality of Life. The Unit Frames preview shows each text's outline.",
+                nav    = Nav("EllesmereUIUnitFrames", "Main Frames"),
+            },
             {
                 module = "Arena Frames",
                 title  = "Pets, Diminishing Returns and Range",
@@ -1115,8 +1130,13 @@ do
         },
     },
     {
-        version = "Quality of Life 0.9",
+        version = "Quality of Life 0.10",
         heroes = {
+            {
+                title = "Zone Text Outline",
+                desc  = "Pick None, Outline, Thick Outline or Shadow for the zone, sub-zone and PvP text shown when entering an area. Blizzard Default keeps the game's own font.",
+                nav   = Nav("EllesmereUIQoL", "Displays", "ZONE TEXT"),
+            },
             {
                 title = "Interrupt Announce",
                 desc  = "Posts the spell you or your pet interrupted, with a spell link, to Say, Emote, Party or Raid. Party and Raid switch to the battleground channel inside battlegrounds.",
@@ -1376,8 +1396,13 @@ do
         },
     },
     {
-        version = "Unit Frames 0.10",
+        version = "Unit Frames 0.11",
         heroes = {
+            {
+                title = "Outline per Text",
+                desc  = "Left, Right, Center and Extra Text, the Bottom Text Bar texts and Power Percent each have an Outline choice under Size: None, Outline, Thick Outline or Shadow, or the module default.",
+                nav   = Nav("EllesmereUIUnitFrames", "Main Frames"),
+            },
             {
                 title = "Retail Aura Lanes",
                 desc  = "Anchor, growth, icons per row, duration and stack text, textured borders and dispel rings. Target and focus get Purgeable Buff Glow.",

@@ -1,4 +1,8 @@
-# Options 3.3.5 — 0.85
+# Options 3.3.5 — 0.86
+
+0.86: menus "Outline" por texto nas engrenagens de Nameplates e Unit Frames e
+"Zone Text Outline" em QoL > Displays. A prévia de Unit Frames mostra o
+contorno escolhido em cada texto (requer Core 0.50).
 
 0.85: o compat das opções reaplica o `EUI335_SafeAtlasInfo` do Core antes de
 carregar os widgets, caso outro addon tenha trocado `C_Texture.GetAtlasInfo`

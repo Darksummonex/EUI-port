@@ -69,16 +69,27 @@ Working-tree backups: `backport-tools/backup_project.py` writes
 
 ## Current versions
 
-Core 0.49; Action Bars 0.18; Arena 0.2; AuraBuff Reminders 0.3; Bags 0.10;
+Core 0.50; Action Bars 0.18; Arena 0.2; AuraBuff Reminders 0.3; Bags 0.10;
 Blizz UI Enhanced (BlizzardSkin) 0.26; Chat 0.42; Cooldown Manager 0.2;
-Damage Meters 0.6; Data Bars 0.4; Friends 0.3; Minimap 0.4; Nameplates 0.12;
-Options 0.85; QoL 0.9; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.12;
-Resource Bars 0.3; Unit Frames 0.10.
+Damage Meters 0.6; Data Bars 0.4; Friends 0.3; Minimap 0.4; Nameplates 0.13;
+Options 0.86; QoL 0.10; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.12;
+Resource Bars 0.3; Unit Frames 0.11.
 
 Git: branch `cursor/eui-shapes-bars-skins-qol`, built on
 `cursor/eui-arena-and-fixes`. Neither is merged into `main`; no PR is open.
 
 ## Latest work (2026-10-05 / 06)
+
+- Per-text outline (Core 0.50, Nameplates 0.13, Unit Frames 0.11, QoL 0.10,
+  Options 0.86): `EllesmereUI.ApplyTextOutline(fs, path, size, mode, moduleKey)`
+  in `EllesmereUI_Fonts.lua` maps module/none/outline/thick/shadow; "module"
+  returns false so the caller keeps its own default. Keys: nameplates
+  `<element>Outline` (cog dropdowns), Unit Frames `<slot>Outline` for
+  left/right/center/extraText, btbLeft/Right/Center and powerPercent (38
+  `SetFSFont` call sites, options cogs and preview), QoL `zoneTextOutline`
+  (Blizzard zone strings, restored from their font object). Test:
+  `validate_text_outline.py`. One-off patchers: `add_uf_text_outline.py`,
+  `add_uf_preview_outline.py` (both idempotent).
 
 - Action Bars 0.17: Custom Button Shape per bar (none, square, curved square,
   circle, portrait, diamond, hexagon, shield). Wrath has no mask textures: circle
@@ -107,7 +118,8 @@ Git: branch `cursor/eui-shapes-bars-skins-qol`, built on
 Strip-cropped Diamond/Hexagon/Shield icons (possible seams at UI scales other
 than 1), the conflict popup's disable buttons, Bars 7-10 and their keybinds (if
 they are missing from Key Bindings after `/reload`, `Bindings.xml` may need a
-client restart), the dropdown and Raid Information backgrounds.
+client restart), the dropdown and Raid Information backgrounds, the per-text
+outline dropdowns (Shadow rendering, Zone Text restore to Blizzard Default).
 
 ## Not ported (Wrath limits)
 

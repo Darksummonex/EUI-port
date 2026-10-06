@@ -1,4 +1,10 @@
-# Unit Frames 3.3.5 — 0.10
+# Unit Frames 3.3.5 — 0.11
+
+0.11: contorno por texto. As engrenagens de Left, Right, Center e Extra Text
+(nome, vida, power, etc.), dos três textos da Bottom Text Bar e do Power
+Percent ganharam o menu "Outline" (Module Default, None, Outline, Thick
+Outline, Shadow) logo abaixo do Size, também nos frames menores. Vale ao vivo e
+na prévia das opções. Padrão: Module Default (requer Core 0.50 e Options 0.86).
 
 0.10: paridade visual com o Retail. O indicador de combate (estilos 0-5 e os
 dois personalizados) aparecia vazio: as artes eram PNG ou TGA fora de potência

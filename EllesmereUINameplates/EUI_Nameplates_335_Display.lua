@@ -60,7 +60,8 @@ local function PlayerClass() return select(2,UnitClass("player")) end
 
 local function Size(f,w,h) f:SetWidth(w); f:SetHeight(h) end
 local function RGB(c) return c.r,c.g,c.b end
-local function Font(fs,size)
+local function Font(fs,size,outline)
+    if E.ApplyTextOutline and E.ApplyTextOutline(fs,E.GetFontPath("nameplates"),size,outline,"nameplates") then return end
     local flags=E.GetFontOutlineFlag and E.GetFontOutlineFlag("nameplates") or ""
     fs:SetFont(E.GetFontPath("nameplates"),size,(flags:gsub(",?%s*SLUG","")))
 end
@@ -274,11 +275,17 @@ local function TextSize(p,element)
     if element=="targetOfTarget" then return p.totSize or 10 end
     return p.healthTextSize
 end
+local function TextOutline(p,element)
+    if NAME_FAMILY[element] then return p.nameOutline end
+    if element=="level" then return p.levelOutline end
+    if element=="targetOfTarget" then return p.totOutline end
+    return p.healthTextOutline
+end
 local function PlaceText(s,p,nameOnly)
     for _,fs in pairs(s.texts) do fs:ClearAllPoints(); fs.slot,fs.element=nil,nil; fs:SetText("") end
     s.topText=nil
     if nameOnly then
-        Font(s.name,p.friendlyNameSize)
+        Font(s.name,p.friendlyNameSize,p.friendlyNameOutline)
         s.name:SetPoint("BOTTOM",s.health,"TOP",0,p.nameYOffset); s.name:SetJustifyH("CENTER"); s.name:SetWidth(p.width+40)
         s.name.slot,s.name.element,s.topText="top","enemyName",s.name
         return
@@ -288,7 +295,7 @@ local function PlaceText(s,p,nameOnly)
         local fs=element and element~="none" and ns.TEXT_VALUES[element] and ns.TextString(s,element)
         if fs and not fs.slot then
             fs.slot,fs.element=slot:lower(),element
-            Font(fs,TextSize(p,element))
+            Font(fs,TextSize(p,element),TextOutline(p,element))
             if slot=="Top" then
                 fs:SetPoint("BOTTOM",s.health,"TOP",0,p.nameYOffset); fs:SetJustifyH("CENTER"); fs:SetWidth(p.width); s.topText=fs
             elseif slot=="Left" then
@@ -337,7 +344,7 @@ local function Layout(s,p,nameOnly)
     local shield=math.floor(p.castHeight*.75+.5)
     Size(s.castShield,shield,shield); s.castShield:ClearAllPoints(); s.castShield:SetPoint("LEFT",s.cast,"LEFT",2,0)
     s.castText:ClearAllPoints(); s.castText:SetPoint("LEFT",s.cast,"LEFT",4,0); s.castText:SetWidth(math.max(20,p.width-40))
-    Font(s.castText,p.castNameSize); Font(s.castTimer,p.castTimerSize)
+    Font(s.castText,p.castNameSize,p.castNameOutline); Font(s.castTimer,p.castTimerSize,p.castTimerOutline)
     Size(s.kickTick,2,p.castHeight); s.kickTick:SetVertexColor(RGB(p.kickTickColor))
     Size(s.castIcon,p.castHeight,p.castHeight); s.castIcon:ClearAllPoints()
     if p.castIconPosition=="right" then s.castIcon:SetPoint("TOPLEFT",s.cast,"TOPRIGHT",0,0)
@@ -350,10 +357,10 @@ local function Layout(s,p,nameOnly)
     s.raidPlaced=PlaceSlot(s.raid,s,p.raidMarkerSlot,p.raidMarkerSize)
     s.classPlaced=PlaceSlot(s.class,s,p.classificationSlot,p.classificationSize)
     for _,a in ipairs(s.auras) do
-        Size(a,p.auraSize,p.auraSize); Font(a.count,p.auraStackTextSize); Font(a.time,p.auraDurationTextSize)
+        Size(a,p.auraSize,p.auraSize); Font(a.count,p.auraStackTextSize,p.auraStackTextOutline); Font(a.time,p.auraDurationTextSize,p.auraDurationTextOutline)
     end
     for _,a in ipairs(s.buffs) do
-        Size(a,p.buffSize,p.buffSize); Font(a.count,p.auraStackTextSize); Font(a.time,p.auraDurationTextSize)
+        Size(a,p.buffSize,p.buffSize); Font(a.count,p.auraStackTextSize,p.auraStackTextOutline); Font(a.time,p.auraDurationTextSize,p.auraDurationTextOutline)
     end
     for _,pool in ipairs({s.auras,s.buffs}) do
         for _,a in ipairs(pool) do

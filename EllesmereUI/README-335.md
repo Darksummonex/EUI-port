@@ -1,4 +1,11 @@
-# EllesmereUI Wrath Core — 0.49
+# EllesmereUI Wrath Core — 0.50
+
+0.50: novo helper `EllesmereUI.ApplyTextOutline` (EllesmereUI_Fonts.lua) para
+contorno por elemento de texto: Module Default, None, Outline, Thick Outline ou
+Shadow. "Module Default" mantém o contorno do módulo (página Fonts); os outros
+valem só para aquele texto. A sombra usa o mesmo FontObject do modo Drop Shadow
+e a cor pintada do texto é preservada ao trocar o modo. Usado por Nameplates
+0.13, Unit Frames 0.11 e QoL 0.10. Teste: backport-tools/validate_text_outline.py.
 
 0.49: alguns clientes 3.3.5 customizados (com ports da UI Retail, como o WLk)
 trazem um addon com `C_Texture.GetAtlasInfo` que gera erro para atlas
