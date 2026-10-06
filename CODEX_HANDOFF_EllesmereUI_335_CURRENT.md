@@ -77,7 +77,7 @@ Working-tree backups: `backport-tools/backup_project.py` writes
 Core 0.54; Action Bars 0.18; Arena 0.2; AuraBuff Reminders 0.3; Bags 0.10;
 Blizz UI Enhanced (BlizzardSkin) 0.26; Chat 0.42; Cooldown Manager 0.2;
 Damage Meters 0.6; Data Bars 0.4; Friends 0.3; Minimap 0.4; Nameplates 0.13;
-Options 0.91; QoL 0.10; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.12;
+Options 0.92; QoL 0.10; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.12;
 Resource Bars 0.3; Unit Frames 0.16.
 
 Git: branch `cursor/eui-shapes-bars-skins-qol`, built on

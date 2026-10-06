@@ -1,4 +1,11 @@
-# Options 3.3.5 — 0.91
+# Options 3.3.5 — 0.92
+
+0.92: nas checklists (ex.: Visibility das Unit Frames) as caixas só mudavam
+depois de fechar e reabrir o menu. O clique grava o valor e roda a cadeia de
+atualização do módulo antes de repintar as linhas; um erro nessa cadeia
+interrompia o repaint. `BuildVisOptsCBDropdown` agora chama o `setFn` das
+linhas e das ações via `pcall`, repinta sempre e só então entrega o erro ao
+`geterrorhandler()`.
 
 0.91: as listas de dropdown (ex.: Visibility das DataBars), checklists e
 outros popups das opções mostravam os itens apagados, por baixo do próprio

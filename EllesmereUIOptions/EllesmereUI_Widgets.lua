@@ -8781,7 +8781,7 @@ function EllesmereUI.BuildVisOptsCBDropdown(parentFrame, ddW, fLevel, items, get
                 row:SetScript("OnLeave", function() UpdateActionLocked(); hl:SetColorTexture(1, 1, 1, 0) end)
                 row:SetScript("OnClick", function()
                     if item.lockedFn and item.lockedFn() then return end
-                    setFn(item.key, true)
+                    local ok, err = pcall(setFn, item.key, true)
                     -- Refresh all checkbox visuals + dynamic action labels
                     for _, r in ipairs(_allRows) do
                         if r.frame._updateCheck then r.frame._updateCheck() end
@@ -8790,6 +8790,7 @@ function EllesmereUI.BuildVisOptsCBDropdown(parentFrame, ddW, fLevel, items, get
                     end
                     for i = 1, #_taTints do _taTints[i]() end
                     UpdateLabel()
+                    if not ok then geterrorhandler()(err) end
                 end)
                 _allRows[#_allRows + 1] = { frame = row, isHeader = false, isAction = true, label = item.label, height = ITEM_H }
                 yOff = yOff - ITEM_H
@@ -9001,20 +9002,26 @@ function EllesmereUI.BuildVisOptsCBDropdown(parentFrame, ddW, fLevel, items, get
                     onChanged()
                 end
             end
-            row:SetScript("OnClick", function()
-                if RowLocked() then return end
-                if negBox and ShowLaneLocked() then
-                    setFn(item.key, not getFn(item.key, true), true)
+            -- The caller's write also runs its module refresh chain; an error there must
+            -- not skip the repaint below, or the boxes stay stale until the menu reopens.
+            local function Toggle(neg)
+                local ok, err
+                if neg then
+                    ok, err = pcall(setFn, item.key, not getFn(item.key, true), true)
                 else
-                    setFn(item.key, not getFn(item.key))
+                    ok, err = pcall(setFn, item.key, not getFn(item.key))
                 end
                 AfterToggle()
+                if not ok then geterrorhandler()(err) end
+            end
+            row:SetScript("OnClick", function()
+                if RowLocked() then return end
+                Toggle(negBox and ShowLaneLocked())
             end)
             if negBox then
                 negBox:SetScript("OnClick", function()
                     if RowLocked() then return end
-                    setFn(item.key, not getFn(item.key, true), true)
-                    AfterToggle()
+                    Toggle(true)
                 end)
                 negBox:SetScript("OnEnter", function()
                     if row._isLocked then

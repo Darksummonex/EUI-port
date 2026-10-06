@@ -87,8 +87,17 @@ core = read('EllesmereUI/EllesmereUI_3.3.5_Compat.lua')
 assert 'self._euiR, self._euiG, self._euiB, self._euiA = r, g, b, a' in core, 'SetColorTexture shim must record its colour'
 assert 'name == nil and frame.HookScript' in compat, 'only nameless popups are hooked'
 
+widgets = read('EllesmereUIOptions/EllesmereUI_Widgets.lua')
+toggle = widgets[widgets.index('local function Toggle(neg)'):]
+toggle = toggle[:toggle.index('row:SetScript("OnClick"')]
+assert 'pcall(setFn, item.key, not getFn(item.key))' in toggle, 'checklist writes must be protected'
+assert toggle.index('AfterToggle()') < toggle.index('geterrorhandler()(err)'), 'rows repaint before the error is reported'
+assert 'local ok, err = pcall(setFn, item.key, true)' in widgets, 'action rows must be protected'
+assert 'setFn(item.key, not getFn(item.key, true), true)\n                AfterToggle()' not in widgets
+
 compiled = lua.execute('return function(src) local f, e = loadstring(src) if not f then return e end return true end')
-for rel in ('EllesmereUIOptions/EllesmereUIOptions_3.3.5_Compat.lua', 'EllesmereUI/EllesmereUI_3.3.5_Compat.lua'):
+for rel in ('EllesmereUIOptions/EllesmereUIOptions_3.3.5_Compat.lua', 'EllesmereUI/EllesmereUI_3.3.5_Compat.lua',
+            'EllesmereUIOptions/EllesmereUI_Widgets.lua'):
     res = compiled(read(rel))
     assert res is True, f'{rel}: {res}'
 

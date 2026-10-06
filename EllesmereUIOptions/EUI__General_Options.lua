@@ -1026,7 +1026,7 @@ do
         },
     },
     {
-        version = "Options 0.91",
+        version = "Options 0.92",
         heroes = {
             {
                 module = "Unit Frames",
@@ -1122,6 +1122,7 @@ do
             },
         },
         fixes = {
+            { module = "General", text = "Checklist menus such as Visibility tick and untick their boxes as soon as they are clicked, even when the module's live update runs into a problem, instead of only after closing and reopening the menu." },
             { module = "General", text = "Dropdown lists, checklists and other option popups draw their items above their own background, on a solid background, instead of showing faded items with the page bleeding through." },
             { module = "Style", text = "The Style page now keeps the Unit Frames health colors per look, so switching between Classic WoW UI and the EllesmereUI look keeps each one's colors." },
             { module = "Unit Frames", text = "The Unit Frames preview and power color swatches show the original game power colors under Classic WoW UI." },
