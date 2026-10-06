@@ -5,11 +5,12 @@ The highest-priority archive that carries a file wins.
 """
 from pathlib import Path
 import sys
+from game_paths import ADDONS, DATA, WTF
 root = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(root / '.codex-tools'))
 import mpyq
 
-data = root.parents[1] / 'Data'
+data = DATA
 archives = ['zz-ptbr.mpq', 'rebuffed.mpq', 'patch-6.MPQ', 'patch-3.MPQ', 'patch-2.MPQ', 'patch.MPQ',
             'ptBR/patch-ptBR-3.MPQ', 'ptBR/patch-ptBR-2.MPQ', 'ptBR/patch-ptBR.MPQ', 'ptBR/locale-ptBR.MPQ',
             'enUS/patch-enUS-3.MPQ', 'enUS/patch-enUS-2.MPQ', 'enUS/patch-enUS.MPQ', 'enUS/locale-enUS.MPQ']

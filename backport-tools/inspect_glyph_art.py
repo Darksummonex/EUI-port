@@ -5,13 +5,14 @@ Read-only on the client archives; writes PNG copies into backport-tools/_glyph_a
 from pathlib import Path
 import io
 import sys
+from game_paths import ADDONS, DATA, WTF
 root = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(root / '.codex-tools'))
 import mpyq
 from PIL import Image
 import numpy as np
 
-data = root.parents[1] / 'Data'
+data = DATA
 out = root / 'backport-tools' / '_glyph_art'
 out.mkdir(exist_ok=True)
 archives = ['zz-ptbr.mpq', 'ptBR/patch-ptBR-3.MPQ', 'ptBR/patch-ptBR-2.MPQ', 'ptBR/patch-ptBR.MPQ',

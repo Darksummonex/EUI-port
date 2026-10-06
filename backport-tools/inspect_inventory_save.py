@@ -1,10 +1,11 @@
 """Report EUI inventory save metadata without printing account/character names."""
 from pathlib import Path
 import sys,json,os
+from game_paths import ADDONS, DATA, WTF
 root=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(root/'.codex-tools'))
 from lupa.lua51 import LuaRuntime
-paths=[Path(p) for p in os.environ.get('EUI_INVENTORY_AUDIT_FILES','').split('|') if p] or sorted((root.parents[1]/'WTF/Account').rglob('EllesmereUI*.lua'))
+paths=[Path(p) for p in os.environ.get('EUI_INVENTORY_AUDIT_FILES','').split('|') if p] or sorted((WTF/'Account').rglob('EllesmereUI*.lua'))
 for path in paths:
     if path.name.lower() not in ('ellesmereui.lua','ellesmereuibags.lua'): continue
     lua=LuaRuntime()

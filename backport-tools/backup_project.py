@@ -2,7 +2,7 @@
 
 Writes two archives next to the addons, each verified byte for byte with a SHA-256 file:
   EllesmereUI-3.3.5-HUD-backup-<stamp>.zip      installable EllesmereUI* addon folders
-  EllesmereUI-3.3.5-project-backup-<stamp>.zip  the same plus tools, docs and patched extras
+  EllesmereUI-3.3.5-project-backup-<stamp>.zip  the same plus tools and docs
 and records every addon version in .codex-backups/EllesmereUI-backup-<stamp>.json.
 Existing archives are never overwritten.
 """
@@ -16,7 +16,7 @@ import re
 root = Path(__file__).resolve().parents[1]
 stamp = datetime.now().strftime('%Y%m%d-%H%M')
 addons = sorted(p for p in root.glob('EllesmereUI*') if p.is_dir() and (p / f'{p.name}.toc').is_file())
-extras = ['backport-tools', '.codex-tools', 'Bistooltip']
+extras = ['backport-tools', '.codex-tools']
 docs = ['ELLESMEREUI_335_CURRENT_BUILD.json', 'CODEX_HANDOFF_EllesmereUI_335_CURRENT.md',
         'ELLESMEREUI_335_BACKPORT_STATUS.md', 'ELLESMEREUI_PROJECT_PACK.md']
 
@@ -38,7 +38,7 @@ def write(output, members):
         for name, path in members.items():
             assert z.read(name) == path.read_bytes(), name
     digest = hashlib.sha256(output.read_bytes()).hexdigest()
-    output.with_suffix('.zip.sha256').write_text(f'{digest}  {output.name}\n', encoding='utf-8')
+    (output.parent / f'{output.name}.sha256').write_text(f'{digest}  {output.name}\n', encoding='utf-8')
     print(f'PASS: {output.name}; {output.stat().st_size:,} bytes; {len(members)} files verified; SHA-256 saved.')
 
 

@@ -2,13 +2,14 @@
 from pathlib import Path
 import sys
 import xml.etree.ElementTree as ET
+from game_paths import ADDONS, DATA, WTF
 root=Path(__file__).resolve().parents[1]
-if not (root/'ACP/ACP.lua').exists():
+if not (ADDONS/'ACP/ACP.lua').exists():
     print('SKIP: optional ACP addon is not installed.'); raise SystemExit(0)
 sys.path.insert(0,str(root/'.codex-tools'))
 from lupa.lua51 import LuaRuntime
-source=(root/'ACP/ACP.lua').read_text(encoding='utf-8-sig')
-xml=ET.parse(root/'ACP/ACP.xml').getroot()
+source=(ADDONS/'ACP/ACP.lua').read_text(encoding='utf-8-sig')
+xml=ET.parse(ADDONS/'ACP/ACP.xml').getroot()
 button=next(n for n in xml.iter() if n.attrib.get('name')=='GameMenuButtonAddOns')
 scripts=next(n for n in button if n.tag.split('}')[-1]=='Scripts')
 callbacks={n.tag.split('}')[-1]:n.text for n in scripts}

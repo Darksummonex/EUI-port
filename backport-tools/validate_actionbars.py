@@ -2,6 +2,7 @@
 from pathlib import Path
 import sys
 import xml.etree.ElementTree as ET
+from game_paths import ADDONS, DATA, WTF
 root=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(root/'.codex-tools'))
 from lupa.lua51 import LuaRuntime
@@ -530,7 +531,7 @@ for _,element in ipairs(elements) do
     element.clearPosition(element.key); assert(element.loadPosition(element.key)==nil)
 end
 ''')
-assert (root/'EllesmereUIActionBars/Media/Textures_335/elvui-norm.tga').read_bytes()==(root/'ElvUI/Media/Textures/normTex2.tga').read_bytes()
+assert (root/'EllesmereUIActionBars/Media/Textures_335/elvui-norm.tga').read_bytes()==(ADDONS/'ElvUI/Media/Textures/normTex2.tga').read_bytes()
 # Execute the real Core overlay catalogue/show logic. It must defer to each
 # enabled Wrath aura mover and retire overlays from earlier unlock sessions.
 overlay_defs='local function BlizzAuraOverlayFrame('+unlock_source.split('local function BlizzAuraOverlayFrame(',1)[1].split('local function CreateBlizzOwnedOverlay(',1)[0]

@@ -1,6 +1,7 @@
 """Real Lua 5.1 channel layout, GUID combat-log tracking and filter page contracts."""
 from pathlib import Path
 import sys
+from game_paths import ADDONS, DATA, WTF
 
 root = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(root / '.codex-tools'))
@@ -67,7 +68,7 @@ assert(not F.Allow({buffFilterMode='all',buffStealable=true},'buff',17,false,10,
 ''')
 
 # The vendored library and its Wrath spell catalogue stay byte-for-byte intact.
-source = root / 'ElvUI/Libraries/LibAuraInfo-1.0'
+source = ADDONS / 'ElvUI/Libraries/LibAuraInfo-1.0'
 for file in source.iterdir():
     if file.is_file():
         assert file.read_bytes() == (root / 'EllesmereUINameplates/Libs/LibAuraInfo-1.0' / file.name).read_bytes()

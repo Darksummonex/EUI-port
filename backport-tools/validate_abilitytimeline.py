@@ -5,8 +5,9 @@ needs in-game review."""
 from pathlib import Path
 import re
 import sys
+from game_paths import ADDONS, DATA, WTF
 root=Path(__file__).resolve().parents[1]
-addon=root/'AbilityTimeline'
+addon=ADDONS/'AbilityTimeline'
 sys.path.insert(0,str(root/'.codex-tools'))
 from lupa.lua51 import LuaRuntime
 

@@ -1,4 +1,116 @@
-# EllesmereUI 3.3.5a — Current checkpoint — 2026-10-01
+# EllesmereUI 3.3.5a — Handoff — 2026-10-06
+
+## Project layout (changed 2026-10-06)
+
+The project lives in `C:\Users\Gaming\Desktop\EUI backport`, which is the git
+repo (remote `https://github.com/Darksummonex/EUI-port.git`). Open this folder as
+the workspace. It holds the 20 real `EllesmereUI*` addon folders,
+`backport-tools/` (validators, mocks, extractors, packers), `.codex-tools/` (lupa
+and mpyq for Python), `.codex-backups/`, these docs and the EUI ZIPs. The project
+is strictly EllesmereUI: other addons are not part of it or its backups.
+
+The game install is `D:\Jogo\Whitemane\Games\FrostmourneRebuffed`. Its
+`Interface\AddOns` keeps the game's own addons plus one directory junction per
+`EllesmereUI*` folder pointing back here, so the client loads the project files
+directly. Edit files here and `/reload` in game. Do not replace the junctions
+with copies. A new EUI module folder is created here and linked with
+`New-Item -ItemType Junction -Path "<AddOns>\<Name>" -Target "<project>\<Name>"`.
+
+Anything the tools read from the game install goes through
+`backport-tools/game_paths.py` (`GAME`, `ADDONS`, `DATA`, `WTF`; override with
+`EUI_GAME_DIR`): other addons used only as read-only test references (ElvUI, DBM,
+AbilityTimeline, Questie, ACP), the client MPQs in `Data`, and `WTF`. Retail
+sources stay at `D:/World of Warcraft/_retail_` (read only, never modify).
+
+Blizzard files extracted from the client (`backport-tools/framexml-worldmap/`,
+`framexml-skins/`, `_glyph_art/`) are listed in `.git/info/exclude`. Never commit
+them. The project ZIP contains them, so keep it private.
+
+## Workflow and rules
+
+- Per module: compare Retail against Wrath, port, validate, bump the TOC
+  version (no BOM), add a Portuguese entry to the module `README-335.md`, update
+  the in-game patch notes in `EllesmereUIOptions/EUI__General_Options.lua` (one
+  header per module, `version = "<Module> X.Y"` matching the TOC, with
+  `heroes`/`features`/`fixes`), then report what was not ported.
+- Every module needs Unlock Mode movers plus Element Options (Zone Text excepted).
+- Never restart WoW; ask for `/reload`.
+- Do not edit the byte-identical Retail copies kept in module folders (for example
+  `EllesmereUIActionBars/EllesmereUIActionBars.lua`,
+  `EllesmereUIOptions/EUI_ActionBars_Options.lua`); validators compare them.
+- Keep Options EditBox autofocus and focus cleanup; no fake keyboard propagation.
+  Avoid `SetRotatesTexture`.
+- Do not rerun `update_*_checkpoint.py`, `scope_options_factory.py`,
+  `connect_indicator_editor.py` or `prepare_raidframe_textures.py`.
+  `package_project.py` is the old 0.38 checkpoint packer and still expects the
+  0.38 archives.
+- Keep old backups, `.codex-backups` and checkpoint scripts.
+- Commits: `cursor/` branch, stage only related files, concise message, push only
+  when asked. Keep the exact addon folder names at the top level of ZIPs.
+
+Python: `C:/Users/Gaming/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe`.
+Git: `C:\Program Files\Git\cmd\git.exe`. Full validator loop (55 validators, all
+pass), run from the project folder:
+
+```
+$py='C:/Users/Gaming/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe'; $all=Get-ChildItem backport-tools\validate_*.py; $fail=@(); $all | ForEach-Object { $out = & $py $_.FullName 2>&1 | Out-String; if ($LASTEXITCODE -ne 0) { $fail += $_.Name; $_.Name; ($out.Trim() -split "`n" | Select-Object -Last 6) } }; "Ran $($all.Count). Failures: $($fail.Count) -> $($fail -join ', ')"
+```
+
+Working-tree backups: `backport-tools/backup_project.py` writes
+`EllesmereUI-3.3.5-HUD-backup-<stamp>.zip` (installable addon folders) and
+`EllesmereUI-3.3.5-project-backup-<stamp>.zip` (plus tools and docs), each with a
+`.sha256`, and records versions in `.codex-backups/`. Latest: `20261006-1240`.
+
+## Current versions
+
+Core 0.48; Action Bars 0.18; Arena 0.2; AuraBuff Reminders 0.3; Bags 0.10;
+Blizz UI Enhanced (BlizzardSkin) 0.26; Chat 0.42; Cooldown Manager 0.2;
+Damage Meters 0.6; Data Bars 0.4; Friends 0.3; Minimap 0.4; Nameplates 0.12;
+Options 0.84; QoL 0.9; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.12;
+Resource Bars 0.3; Unit Frames 0.10.
+
+Git: branch `cursor/eui-shapes-bars-skins-qol`, built on
+`cursor/eui-arena-and-fixes`. Neither is merged into `main`; no PR is open.
+
+## Latest work (2026-10-05 / 06)
+
+- Action Bars 0.17: Custom Button Shape per bar (none, square, curved square,
+  circle, portrait, diamond, hexagon, shield). Wrath has no mask textures: circle
+  and portrait use `SetPortraitToTexture`; diamond, hexagon and shield crop the
+  icon into horizontal strips cut from the mask rows (`SHAPE_ROWS`), with the icon
+  as the first strip and the rest mirrored by hooks; square and curved square are
+  outline only. The cooldown swipe is always square, so it shrinks to the
+  inscribed square or the shape's `SHAPE_SWIPE` rectangle.
+- Action Bars 0.18: Bars 7-10 on action pages 7-10 (slots 73-120), off by default,
+  with bindings (`Bindings.xml`, 60 entries for bars 6-10), Unlock Mode and full
+  Bar Display settings. Pages 7-10 are also stance/form pages for Warrior, Druid,
+  Rogue (7) and Priest (7); `ns.PageShare` drives a warning in Bar Display unless
+  Bar 1 has Disable Form Paging on.
+- Core 0.48: the Incompatible Addon popup offers "Disable <addon>" and, where it
+  applies, "Disable EUI <module>", then reloads (`ShowConfirmPopup` `extraButtons`).
+- Blizz UI Enhanced 0.26: native dropdown panels inset to the visible box (ending
+  at the arrow button); Raid Information uses its own inset instead of the Friends
+  window's classic one.
+- Earlier in this period: Arena module (pets, DR tracking, out-of-range fade),
+  raid debuff highlight in Raid Frames, battleground capture bar and GM chat
+  status skins, loot roll choices, QoL interrupt announce, auto-accept invites
+  from guild and friends, disband raid.
+
+## Waiting for in-game confirmation
+
+Strip-cropped Diamond/Hexagon/Shield icons (possible seams at UI scales other
+than 1), the conflict popup's disable buttons, Bars 7-10 and their keybinds (if
+they are missing from Key Bindings after `/reload`, `Bindings.xml` may need a
+client restart), the dropdown and Raid Information backgrounds.
+
+## Not ported (Wrath limits)
+
+Masked button shapes: square and curved square stay outline only, and the swipe
+stays square. Extra action bars cannot get their own slots on stance/form pages.
+
+---
+
+# Previous log — checkpoint 2026-10-01
 
 Latest build: HUD-test-0.38. Friends 0.1 and Quest Tracker 0.1 added.
 Options 0.43; Blizzard Skin 0.7; Core 0.28 and other runtimes unchanged.

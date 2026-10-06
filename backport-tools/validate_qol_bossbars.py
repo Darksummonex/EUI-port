@@ -8,6 +8,7 @@ timeline, its source or the EUI option goes off, follow late/on-demand loading,
 never touch DBM saved options, and do nothing at all without the timeline."""
 from pathlib import Path
 import sys
+from game_paths import ADDONS, DATA, WTF
 root = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(root / '.codex-tools'))
 from lupa.lua51 import LuaRuntime
@@ -17,7 +18,8 @@ QOL_FILES = ['EUI_QoL_335.lua', 'EUI_QoL_335_Displays.lua', 'EUI_QoL_335_Panels.
 
 
 def read(rel):
-    return (root / rel).read_text(encoding='utf-8-sig', errors='replace')
+    path = ADDONS / rel if rel.startswith(('DBM-', 'AbilityTimeline')) else root / rel
+    return path.read_text(encoding='utf-8-sig', errors='replace')
 
 
 MOCK = r'''

@@ -6,6 +6,7 @@ tinted to the marker colour), so instance markers stay see-through in the middle
 """
 import math
 from pathlib import Path
+from game_paths import ADDONS, DATA, WTF
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -56,7 +57,7 @@ def flight_icon():
     import io, sys
     sys.path.insert(0, str(ROOT / '.codex-tools'))
     import mpyq
-    archive = ROOT.parents[1] / 'Data' / 'enUS' / 'locale-enUS.MPQ'
+    archive = DATA / 'enUS' / 'locale-enUS.MPQ'
     data = mpyq.MPQArchive(str(archive), listfile=False).read_file('Interface\\Minimap\\Tracking\\FlightMaster.blp')
     src = Image.open(io.BytesIO(data)).convert('RGBA').resize((SIZE, SIZE), Image.LANCZOS)
     px = src.load()

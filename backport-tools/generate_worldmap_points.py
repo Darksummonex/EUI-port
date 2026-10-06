@@ -5,11 +5,12 @@ zone-map percentages. Run again only to refresh the data file.
 """
 from pathlib import Path
 import sys
+from game_paths import ADDONS, DATA, WTF
 root = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(root / '.codex-tools'))
 from lupa.lua51 import LuaRuntime
 
-questie = root / 'Questie-335'
+questie = ADDONS / 'Questie-335'
 lua = LuaRuntime(unpack_returned_tuples=True)
 lua.execute('''
 Questie={IsWotlk=true,IsTBC=false,IsClassic=false,IsEra=false}
@@ -77,7 +78,7 @@ for area, entry in private.dungeons.items():
 def read_taxi_nodes():
     """TaxiNodes.dbc from the client: rebuffed.mpq carries English names, patch-6.MPQ Portuguese ones."""
     import math, struct, mpyq
-    data_dir = root.parents[1] / 'Data'
+    data_dir = DATA
 
     def parse(rel):
         d = mpyq.MPQArchive(str(data_dir / rel), listfile=False).read_file('DBFilesClient\\TaxiNodes.dbc')
