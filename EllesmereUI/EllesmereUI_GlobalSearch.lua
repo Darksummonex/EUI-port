@@ -938,6 +938,12 @@ local function EnsureSearchUI()
     local popupBg = popup:CreateTexture(nil, "BACKGROUND")
     popupBg:SetAllPoints()
     popupBg:SetColorTexture(0.10, 0.10, 0.12, 0.97)
+    -- Solid colour textures render see-through on some 3.3.5 clients, letting
+    -- the sidebar and page text bleed into the list: a tinted white file, opaque.
+    if wrath then
+        popupBg:SetTexture("Interface\\Buttons\\WHITE8X8")
+        popupBg:SetVertexColor(0.10, 0.10, 0.12, 1)
+    end
     EllesmereUI.MakeBorder(popup, 1, 1, 1, 0.12, PP)
 
     local resultsFrame = CreateFrame("Frame", nil, popup)

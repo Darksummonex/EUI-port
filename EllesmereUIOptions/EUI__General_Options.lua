@@ -965,7 +965,7 @@ do
         },
     },
     {
-        version = "Core 0.51",
+        version = "Core 0.52",
         heroes = {
             {
                 title = "Text Outline Styles",
@@ -1013,7 +1013,7 @@ do
             },
         },
         fixes = {
-            { text = "The options search results list re-raises itself after it opens, so it no longer slips behind the sidebar and page on clients that reset its layer." },
+            { text = "The options search results list has a fully opaque background and re-raises itself after it opens, so sidebar and page text no longer bleeds into the results." },
             { text = "Unlock Mode no longer errors on SetMaxLines when it first opens, so element movers appear again." },
             { text = "The Patch Notes reminder dot now lights after each backport update." },
             { text = "The options search results now draw above the sidebar and page instead of behind them." },

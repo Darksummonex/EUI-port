@@ -170,6 +170,8 @@ local popup=found:GetParent():GetParent()
 assert(popup:GetParent()==UIParent and popup:IsShown(),'search popup still parented inside the panel')
 popup.strata=nil; popup:Run("OnShow"); assert(popup.strata=="FULLSCREEN_DIALOG",'strata not reapplied on show')
 assert(E._searchPopup==popup,'search popup not exposed for in-game checks')
+local bg; for _,c in ipairs(popup.children) do if c.kind=="Texture" then bg=c; break end end
+assert(bg and bg.texture=="Interface\\\\Buttons\\\\WHITE8X8",'search list background not a file texture on Wrath')
 assert(popup.scripts.OnUpdate,'no next-frame strata lift')
 popup.strata=nil; popup:Run("OnUpdate")
 assert(popup.strata=="FULLSCREEN_DIALOG" and not popup.scripts.OnUpdate,'next-frame lift did not run once')

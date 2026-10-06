@@ -1,4 +1,11 @@
-# EllesmereUI Wrath Core — 0.51
+# EllesmereUI Wrath Core — 0.52
+
+0.52: o teste no jogo mostrou a lista de busca na camada certa
+(FULLSCREEN_DIALOG 220, acima da barra lateral em DIALOG 104-106), mas o fundo
+deixava passar cerca de um quinto do que estava atrás: a textura de cor sólida
+(`SetTexture(r,g,b,a)`, 0.97) sai translúcida nesse cliente. No 3.3.5 o fundo
+agora é `Interface\Buttons\WHITE8X8` tingido com `SetVertexColor(..., 1)`,
+opaco, e o texto da barra lateral e da página não aparece mais na lista.
 
 0.51: a lista de resultados da busca das opções voltou a ficar atrás da barra
 lateral e da página (texto apagado, misturado com o do painel). Alguns clientes
