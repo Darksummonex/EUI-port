@@ -68,10 +68,11 @@ assert(not F.Allow({buffFilterMode='all',buffStealable=true},'buff',17,false,10,
 ''')
 
 # The vendored library and its Wrath spell catalogue stay byte-for-byte intact.
-source = ADDONS / 'ElvUI/Libraries/LibAuraInfo-1.0'
-for file in source.iterdir():
-    if file.is_file():
-        assert file.read_bytes() == (root / 'EllesmereUINameplates/Libs/LibAuraInfo-1.0' / file.name).read_bytes()
+source = ADDONS / 'ElvUI/Libraries/LibAuraInfo-1.0' if ADDONS else None
+if source and source.is_dir():
+    for file in source.iterdir():
+        if file.is_file():
+            assert file.read_bytes() == (root / 'EllesmereUINameplates/Libs/LibAuraInfo-1.0' / file.name).read_bytes()
 execute('EllesmereUINameplates/Libs/LibAuraInfo-1.0/LibAuraInfo-1.0.lua')
 execute('EllesmereUINameplates/Libs/LibAuraInfo-1.0/spellIdData.lua')
 ns = lua.table()

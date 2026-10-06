@@ -82,8 +82,8 @@ FindRow('Chat Countdown').setValue(false); assert(not p.raidTools.pullChat)
 print('PASS: pull duration/options, local countdown, 10 + 5..1 chat checkpoints, deduplication/lag, warning/raid/party/solo permissions, protocol packets, cancel/combat/disable/profile/group safety; no boss mod dependency or actual messages sent.')
 # Optional extra check against the locally installed receiver, never loaded
 # or consulted by the addon. The project remains testable without DBM.
-dbm_path=ADDONS/'DBM-Core/DBM-Core.lua'
-if dbm_path.exists():
+dbm_path=ADDONS/'DBM-Core/DBM-Core.lua' if ADDONS else None
+if dbm_path and dbm_path.exists():
     source=dbm_path.read_text(encoding='utf-8-sig')
     receiver='function(sender, timer, senderMapID, target)'+source.split('syncHandlers["DBMv4-PT"] = function(sender, timer, senderMapID, target)',1)[1].split('\n\tdo\n\t\tlocal dummyMod2',1)[0]
     handler=lua.execute('''

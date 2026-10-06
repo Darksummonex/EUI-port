@@ -74,7 +74,7 @@ np_options = read('EllesmereUIOptions/EUI_Nameplates_335_Options.lua')
 for key in NP_KEYS:
     assert f'{key}="module"' in np_core, key
     assert f'p.{key}' in np_display, key
-    assert f'CogOutline("{key}")' in np_options, key
+    assert f'CogOutline("{key}")' in np_options or f'return "{key}"' in np_options, key
 assert 'local function Font(fs,size,outline)' in np_display and 'E.ApplyTextOutline(fs,' in np_display
 assert not re.search(r'\bFont\((s\.castText|s\.castTimer|a\.count|a\.time|s\.name),[^,()]+\)', np_display), 'nameplate text without outline'
 
@@ -89,6 +89,13 @@ for m in re.finditer(r'SetFSFont\((\w+), (.+)\)', uf):
         assert re.search(r', nil, \w+\.' + SLOT_FS[m.group(1)] + r'Outline$', m.group(2)), m.group(0)
         calls += 1
 assert calls == 38, calls
+# The settings-reload pass re-fonts name/health/center text after layout: it must keep the outline.
+assert 'local function SetMiniFont(fs, sz, outline)' in uf
+for fs, slot in (('NameText', 'leftText'), ('HealthValue', 'rightText'), ('CenterText', 'centerText')):
+    assert f'SetMiniFont(frame.{fs}, ' in uf and re.search(r'SetMiniFont\(frame\.' + fs + r', \w+, settings\.' + slot + r'Outline\)', uf), fs
+form_bar = read('EllesmereUIUnitFrames/EUI_UnitFrames_335_FormBar.lua')
+assert 's.powerPercentOutline, "unitFrames"' in form_bar
+assert 'CogOutline(key)' in np_options and 'title="Outline"' in np_options
 uf_opt = read('EllesmereUIOptions/EUI_UnitFrames_Options.lua')
 for slot in ('leftText', 'rightText', 'centerText', 'extraText', 'btbLeft', 'btbRight', 'btbCenter', 'powerPercent'):
     assert f'SVal("{slot}Outline", "module")' in uf_opt, slot

@@ -22,11 +22,12 @@ client loads the project files directly. WLk's previous copies were moved to
 with copies. A new EUI module folder is created here and linked with
 `New-Item -ItemType Junction -Path "<AddOns>\<Name>" -Target "<project>\<Name>"`.
 
-Anything the tools read from the game install goes through
-`backport-tools/game_paths.py` (`GAME`, `ADDONS`, `DATA`, `WTF`; override with
-`EUI_GAME_DIR`): other addons used only as read-only test references (ElvUI, DBM,
-AbilityTimeline, Questie, ACP), the client MPQs in `Data`, and `WTF`. Retail
-sources stay at `D:/World of Warcraft/_retail_` (read only, never modify).
+**Do not use the game client folders** (Alex, 2026-10-06): no reading, copying,
+syncing or inspecting `D:\Jogo\...` installs, their WTF/BugGrabber, logs or MPQs.
+Ask Alex to paste in-game errors instead. `backport-tools/game_paths.py` is `None`
+unless `EUI_GAME_DIR` is set explicitly; without it the checks against other
+addons (ElvUI, DBM, AbilityTimeline, ACP) skip. Retail sources stay at
+`D:/World of Warcraft/_retail_` (read only, never modify).
 
 Blizzard files extracted from the client (`backport-tools/framexml-worldmap/`,
 `framexml-skins/`, `_glyph_art/`) are listed in `.git/info/exclude`. Never commit
@@ -46,6 +47,10 @@ them. The project ZIP contains them, so keep it private.
   `EllesmereUIOptions/EUI_ActionBars_Options.lua`); validators compare them.
 - Keep Options EditBox autofocus and focus cleanup; no fake keyboard propagation.
   Avoid `SetRotatesTexture`.
+- Compat shims only fill methods the client lacks. Never replace an existing method
+  on a shared widget metatable: Blizzard frames share it and get tainted (Options
+  0.87 did this and Esc showed "EllesmereUIOptions has been blocked"). Per-instance
+  patches on EUI-owned objects (Unit Frames `PatchRegion`) are fine.
 - Do not rerun `update_*_checkpoint.py`, `scope_options_factory.py`,
   `connect_indicator_editor.py` or `prepare_raidframe_textures.py`.
   `package_project.py` is the old 0.38 checkpoint packer and still expects the
@@ -72,8 +77,8 @@ Working-tree backups: `backport-tools/backup_project.py` writes
 Core 0.50; Action Bars 0.18; Arena 0.2; AuraBuff Reminders 0.3; Bags 0.10;
 Blizz UI Enhanced (BlizzardSkin) 0.26; Chat 0.42; Cooldown Manager 0.2;
 Damage Meters 0.6; Data Bars 0.4; Friends 0.3; Minimap 0.4; Nameplates 0.13;
-Options 0.87; QoL 0.10; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.12;
-Resource Bars 0.3; Unit Frames 0.12.
+Options 0.88; QoL 0.10; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.12;
+Resource Bars 0.3; Unit Frames 0.13.
 
 Git: branch `cursor/eui-shapes-bars-skins-qol`, built on
 `cursor/eui-arena-and-fixes`. Neither is merged into `main`; no PR is open.

@@ -137,7 +137,10 @@ local function StyleText(s)
     S.text = (fmt == "curpp" or fmt == "smart") and "cur" or (fmt == "both" and "both") or "pct"
     local sign = (s.powerShowPercent ~= false) and "%%" or ""
     S.fmtPct, S.fmtBoth = "%d" .. sign, "%d | %d" .. sign
-    EllesmereUI.ApplyModuleFont(fs, nil, s.powerPercentSize or 9, "unitFrames")
+    if not (s.powerPercentOutline and EllesmereUI.ApplyTextOutline
+        and EllesmereUI.ApplyTextOutline(fs, nil, s.powerPercentSize or 9, s.powerPercentOutline, "unitFrames")) then
+        EllesmereUI.ApplyModuleFont(fs, nil, s.powerPercentSize or 9, "unitFrames")
+    end
     local ox, oy = s.foreverFormTextX, s.foreverFormTextY
     if ox == nil then ox = s.powerPercentX or 0 end
     if oy == nil then oy = s.powerPercentY or 0 end

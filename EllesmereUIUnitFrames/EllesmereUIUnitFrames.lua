@@ -14654,8 +14654,12 @@ ReloadFramesBody = function()
             end
 
             -- Helper: set font on a FontString, using donor font for mini frames
-            local function SetMiniFont(fs, sz)
+            local function SetMiniFont(fs, sz, outline)
                 if not fs or not fs.SetFont then return end
+                if outline and EllesmereUI.ApplyTextOutline and EllesmereUI.ApplyTextOutline(fs,
+                    isMiniFrame and donorFontPath or GetSelectedFont(), sz or 12, outline, "unitFrames") then
+                    return
+                end
                 if isMiniFrame then
                     EllesmereUI.ApplyModuleFont(fs, donorFontPath, sz or 12, "unitFrames")
                 else
@@ -14666,19 +14670,19 @@ ReloadFramesBody = function()
             if frame.NameText then
                 local s = isMiniFrame and donorSettings or GetSettingsForUnit(unit)
                 local rts = s.leftTextSize or s.textSize or 12
-                SetMiniFont(frame.NameText, rts)
+                SetMiniFont(frame.NameText, rts, settings.leftTextOutline)
                 frame.NameText:SetWordWrap(false)
             end
             if frame.HealthValue then
                 local s = isMiniFrame and donorSettings or GetSettingsForUnit(unit)
                 local rts = s.rightTextSize or s.textSize or 12
-                SetMiniFont(frame.HealthValue, rts)
+                SetMiniFont(frame.HealthValue, rts, settings.rightTextOutline)
                 frame.HealthValue:SetWordWrap(false)
             end
             if frame.CenterText then
                 local s = isMiniFrame and donorSettings or GetSettingsForUnit(unit)
                 local cts = s.centerTextSize or s.textSize or 12
-                SetMiniFont(frame.CenterText, cts)
+                SetMiniFont(frame.CenterText, cts, settings.centerTextOutline)
                 frame.CenterText:SetWordWrap(false)
             end
 

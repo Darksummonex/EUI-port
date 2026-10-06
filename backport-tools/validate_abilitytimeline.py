@@ -7,6 +7,8 @@ import re
 import sys
 from game_paths import ADDONS, DATA, WTF
 root=Path(__file__).resolve().parents[1]
+if not ADDONS:
+    print('SKIP: AbilityTimeline lives in the game install; set EUI_GAME_DIR to check it.'); raise SystemExit(0)
 addon=ADDONS/'AbilityTimeline'
 sys.path.insert(0,str(root/'.codex-tools'))
 from lupa.lua51 import LuaRuntime

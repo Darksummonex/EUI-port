@@ -10,6 +10,8 @@ from pathlib import Path
 import sys
 from game_paths import ADDONS, DATA, WTF
 root = Path(__file__).resolve().parents[1]
+if not ADDONS:
+    print('SKIP: needs the real DBM and AbilityTimeline from a game install; set EUI_GAME_DIR.'); raise SystemExit(0)
 sys.path.insert(0, str(root / '.codex-tools'))
 from lupa.lua51 import LuaRuntime
 

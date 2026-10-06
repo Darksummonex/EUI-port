@@ -200,6 +200,12 @@ assert atl.eval('C_Texture.GetAtlasInfo("x")') is None
 plain = runtime(True)
 assert plain.eval('C_Texture.GetAtlasInfo("common-icon-sound")') is None
 
+# Options compat fills widget methods only when missing: the method tables are shared with
+# Blizzard frames, so replacing a native one taints secure code (blocked action on Esc).
+options_compat = (root / 'EllesmereUIOptions/EllesmereUIOptions_3.3.5_Compat.lua').read_text(encoding='utf-8-sig')
+assert 'if not fmt.CreateMaskTexture then' in options_compat
+assert '_euiSafeMask' not in options_compat and '_eui335FakeMask' not in options_compat
+
 print('PASS: Wrath FontStrings get SetMaxLines/GetMaxLines from core compat (1 line = no wrap, '
       'wrap restored when lifted, larger limits leave height alone), EditBoxes get HasFocus without a '
       'focus-stealing probe, native methods are kept; the real Unlock Mode snap dropdown fails on '

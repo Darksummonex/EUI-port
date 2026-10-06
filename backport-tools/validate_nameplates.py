@@ -384,7 +384,12 @@ assert(totCenter and totCenter~=nameTop and totCenter~=hpNum)
 local textCogs={}; for _,b in ipairs(cogs) do if b.opts.title=='Text' then textCogs[#textCogs+1]=b end end
 assert(#textCogs==4 and textCogs[4].opts.disabled() and not textCogs[2].opts.disabled())
 p.textSlotRight='healthNumPct'; textCogs[2].opts.show(textCogs[2])
-assert(popups[#popups].title=='Health # | %' and popups[#popups].rows[2].label=='Outline' and popups[#popups].rows[3].label=='Show % Decimal')
+assert(popups[#popups].title=='Health # | %' and popups[#popups].rows[2].label=='Show % Decimal')
+-- Each text slot also has a gear cog for the outline of the text it holds.
+local outlineCogs={}; for _,b in ipairs(cogs) do if b.opts.title=='Outline' then outlineCogs[#outlineCogs+1]=b end end
+assert(#outlineCogs==4 and outlineCogs[4].opts.disabled() and not outlineCogs[2].opts.disabled())
+outlineCogs[2].opts.show(outlineCogs[2]); local ol=popups[#popups].rows[1]
+assert(ol.label=='Outline' and ol.get()=='module'); ol.set('thick'); assert(p.healthTextOutline=='thick'); ol.set('module')
 p.textSlotRight='healthPercent'
 p.textSlotCenter='targetOfTarget'; textCogs[4].opts.show(textCogs[4]); assert(popups[#popups].title=='Target of Target' and popups[#popups].rows[1].label=='Size')
 p.textSlotCenter='none'

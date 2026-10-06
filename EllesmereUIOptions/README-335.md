@@ -1,4 +1,14 @@
-# Options 3.3.5 — 0.87
+# Options 3.3.5 — 0.88
+
+0.88: Nameplates: o contorno saiu do popup de tamanho (ícone de redimensionar)
+e ganhou uma engrenagem própria em cada linha de CORE TEXT POSITIONS (segue o
+texto escolhido no slot), em Spell Name, Cast Timer e Friendly Names.
+Desfeita a proteção da 0.87: ela substituía `CreateMaskTexture` /
+`AddMaskTexture` que o cliente já tinha, nas tabelas de métodos compartilhadas
+com os frames da Blizzard, e isso contaminava o código seguro: fechar janelas
+da Blizzard com Esc mostrava "EllesmereUIOptions has been blocked from an
+action". O compat volta a só preencher métodos ausentes (a correção do Unit
+Frames 0.12 continua, por ser só nos frames do EUI).
 
 0.87: o compat das opções aplica a mesma proteção: `CreateMaskTexture` nativo
 que devolve nil vira uma textura escondida, ignorada por `AddMaskTexture` e

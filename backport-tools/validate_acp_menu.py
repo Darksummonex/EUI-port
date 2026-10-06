@@ -4,7 +4,7 @@ import sys
 import xml.etree.ElementTree as ET
 from game_paths import ADDONS, DATA, WTF
 root=Path(__file__).resolve().parents[1]
-if not (ADDONS/'ACP/ACP.lua').exists():
+if not ADDONS or not (ADDONS/'ACP/ACP.lua').exists():
     print('SKIP: optional ACP addon is not installed.'); raise SystemExit(0)
 sys.path.insert(0,str(root/'.codex-tools'))
 from lupa.lua51 import LuaRuntime

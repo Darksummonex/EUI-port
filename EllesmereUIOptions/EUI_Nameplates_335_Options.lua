@@ -218,19 +218,32 @@ init:SetScript("OnEvent",function(self)
         return cfg
     end
     local function TextRows(element)
-        if ns.IsNameElement(element) then return {CogSlider("nameSize","Size",8,24),CogOutline("nameOutline"),CogSlider("nameYOffset","Top Offset",-10,20)} end
-        if element=="level" then return {CogSlider("levelSize","Size",8,20),CogOutline("levelOutline")} end
-        if element=="targetOfTarget" then return {CogSlider("totSize","Size",8,20),CogOutline("totOutline")} end
-        if ns.IsHealthElement(element) then return {CogSlider("healthTextSize","Size",8,20),CogOutline("healthTextOutline"),CogToggle("healthPctDecimal","Show % Decimal")} end
+        if ns.IsNameElement(element) then return {CogSlider("nameSize","Size",8,24),CogSlider("nameYOffset","Top Offset",-10,20)} end
+        if element=="level" then return {CogSlider("levelSize","Size",8,20)} end
+        if element=="targetOfTarget" then return {CogSlider("totSize","Size",8,20)} end
+        if ns.IsHealthElement(element) then return {CogSlider("healthTextSize","Size",8,20),CogToggle("healthPctDecimal","Show % Decimal")} end
+    end
+    local function OutlineKey(element)
+        if ns.IsNameElement(element) then return "nameOutline" end
+        if element=="level" then return "levelOutline" end
+        if element=="targetOfTarget" then return "totOutline" end
+        if ns.IsHealthElement(element) then return "healthTextOutline" end
     end
     local function HasText(slot) local element=Get("textSlot"..slot); return element~="none" and ns.TEXT_VALUES[element]~=nil end
-    local textPopups={}
+    local textPopups,outlinePopups={},{}
     local function TextCog(rgn,slot)
         Resize(rgn,"Text",nil,{show=function(btn)
             local element=Get("textSlot"..slot)
             if not HasText(slot) or not E.BuildCogPopup then return end
             if not textPopups[element] then textPopups[element]=select(2,E.BuildCogPopup({title=ns.TEXT_VALUES[element],rows=TextRows(element)})) end
             textPopups[element](btn)
+        end,disabled=function() return not HasText(slot) end,
+        disabledTooltip="Choose a text for this slot first.",rawTooltip=true})
+        Cog(rgn,"Outline",nil,{show=function(btn)
+            local key=OutlineKey(Get("textSlot"..slot))
+            if not key or not E.BuildCogPopup then return end
+            if not outlinePopups[key] then outlinePopups[key]=select(2,E.BuildCogPopup({title="Outline",rows={CogOutline(key)}})) end
+            outlinePopups[key](btn)
         end,disabled=function() return not HasText(slot) end,
         disabledTooltip="Choose a text for this slot first.",rawTooltip=true})
     end
@@ -379,8 +392,10 @@ init:SetScript("OnEvent",function(self)
                 refs.castShow=Row(Toggle("showCastBar","Show Cast Bar"),Dropdown("castIconPosition","Spell Icon",{left="Left",right="Right",none="None"},{"left","right","none"},nil,castOff))
                 row=Row(Toggle("showCastName","Spell Name","Spell names appear on identified target and mouseover plates.",castOff),Toggle("showCastTimer","Cast Timer",nil,castOff))
                 refs.castText=row
-                Resize(row and row._leftRegion,"Spell Name",{CogSlider("castNameSize","Size",8,20),CogOutline("castNameOutline")})
-                Resize(row and row._rightRegion,"Cast Timer",{CogSlider("castTimerSize","Size",8,20),CogOutline("castTimerOutline")})
+                Resize(row and row._leftRegion,"Spell Name",{CogSlider("castNameSize","Size",8,20)})
+                Cog(row and row._leftRegion,"Spell Name Outline",{CogOutline("castNameOutline")})
+                Resize(row and row._rightRegion,"Cast Timer",{CogSlider("castTimerSize","Size",8,20)})
+                Cog(row and row._rightRegion,"Cast Timer Outline",{CogOutline("castTimerOutline")})
                 Row(Slider("yOffset","Vertical Offset",-30,40),SPACER)
 
                 Section("CAST COLORS AND EFFECTS")
@@ -453,7 +468,9 @@ init:SetScript("OnEvent",function(self)
                 Section("OTHER NAMEPLATES")
                 Row(CVar("nameplateShowEnemies","Show Enemy Nameplates"),CVar("nameplateShowFriends","Show Friendly Nameplates"))
                 local row=Row(CVar("nameplateShowEnemyPets","Show Enemy Pet Nameplates"),Toggle("friendlyNameOnly","Make Friendly Nameplates Name Only"))
-                Resize(row and row._rightRegion,"Friendly Names",{CogSlider("friendlyNameSize","Friendly Name Size",8,24),CogOutline("friendlyNameOutline")},
+                Resize(row and row._rightRegion,"Friendly Names",{CogSlider("friendlyNameSize","Friendly Name Size",8,24)},
+                    {disabled=function() return not Get("friendlyNameOnly") end,disabledTooltip="Make Friendly Nameplates Name Only"})
+                Cog(row and row._rightRegion,"Friendly Name Outline",{CogOutline("friendlyNameOutline")},
                     {disabled=function() return not Get("friendlyNameOnly") end,disabledTooltip="Make Friendly Nameplates Name Only"})
 
                 Section("NAMEPLATE SPACING")

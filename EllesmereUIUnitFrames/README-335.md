@@ -1,4 +1,10 @@
-# Unit Frames 3.3.5 — 0.12
+# Unit Frames 3.3.5 — 0.13
+
+0.13: o contorno por texto só aparecia na prévia. Ao salvar uma opção, o
+recarregamento dos frames principais refazia a fonte de Left, Right e Center
+Text (`SetMiniFont`) depois do layout, sem o contorno; agora ele recebe o
+contorno do slot. O texto de power da barra de forma do druida segue o
+contorno do Power Percent.
 
 0.12: correção para outro jogador: em alguns clientes/addons o
 `CreateMaskTexture` existe mas devolve nil, e um `UnitGetTotalAbsorbs` global
