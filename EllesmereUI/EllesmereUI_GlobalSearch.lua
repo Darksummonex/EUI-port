@@ -922,6 +922,19 @@ local function EnsureSearchUI()
     popup:SetFrameLevel(220)
     popup:SetClampedToScreen(true)
     popup:Hide()
+    EllesmereUI._searchPopup = popup
+    -- Some 3.3.5 clients re-seat a shown frame's strata and level after its
+    -- OnShow ran, which left the list under the panel; re-assert them once the
+    -- show has settled.
+    local function Lift()
+        popup:SetFrameStrata("FULLSCREEN_DIALOG")
+        popup:SetFrameLevel(220)
+        if popup.Raise then popup:Raise() end
+    end
+    local function LiftNextFrame(self)
+        self:SetScript("OnUpdate", nil)
+        Lift()
+    end
     local popupBg = popup:CreateTexture(nil, "BACKGROUND")
     popupBg:SetAllPoints()
     popupBg:SetColorTexture(0.10, 0.10, 0.12, 0.97)
@@ -1032,6 +1045,7 @@ local function EnsureSearchUI()
             local n = math.min(#results, MAX_VISIBLE_RESULTS)
             popup:SetHeight(n * (RESULT_ROW_H + RESULT_ROW_GAP) - RESULT_ROW_GAP + 8)
             popup:Show()
+            if wrath then Lift() end
         else
             popup:Hide()
         end
@@ -1077,8 +1091,8 @@ local function EnsureSearchUI()
     popup:SetScript("OnShow", function()
         if not wrath then pcall(clickOff.RegisterEvent, clickOff, "GLOBAL_MOUSE_DOWN"); return end
         popup:SetScale(clickArea:GetEffectiveScale() / UIParent:GetEffectiveScale())
-        popup:SetFrameStrata("FULLSCREEN_DIALOG")
-        popup:SetFrameLevel(220)
+        Lift()
+        popup:SetScript("OnUpdate", LiftNextFrame)
     end)
     if wrath then clickArea:HookScript("OnHide", function() popup:Hide() end) end
     popup:SetScript("OnHide", function() clickOff:UnregisterEvent("GLOBAL_MOUSE_DOWN") end)

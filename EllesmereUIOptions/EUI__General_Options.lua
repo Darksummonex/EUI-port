@@ -965,7 +965,7 @@ do
         },
     },
     {
-        version = "Core 0.50",
+        version = "Core 0.51",
         heroes = {
             {
                 title = "Text Outline Styles",
@@ -1013,8 +1013,7 @@ do
             },
         },
         fixes = {
-            { text = "The Style page now keeps the Unit Frames health colors per look, so switching between Classic WoW UI and the EllesmereUI look keeps each one's colors." },
-            { text = "The Unit Frames preview and power color swatches show the original game power colors under Classic WoW UI." },
+            { text = "The options search results list re-raises itself after it opens, so it no longer slips behind the sidebar and page on clients that reset its layer." },
             { text = "Unlock Mode no longer errors on SetMaxLines when it first opens, so element movers appear again." },
             { text = "The Patch Notes reminder dot now lights after each backport update." },
             { text = "The options search results now draw above the sidebar and page instead of behind them." },
@@ -1123,6 +1122,8 @@ do
             },
         },
         fixes = {
+            { module = "Style", text = "The Style page now keeps the Unit Frames health colors per look, so switching between Classic WoW UI and the EllesmereUI look keeps each one's colors." },
+            { module = "Unit Frames", text = "The Unit Frames preview and power color swatches show the original game power colors under Classic WoW UI." },
             { module = "Nameplates", text = "Each Core Text Position row, Spell Name, Cast Timer and Friendly Names now has its own gear for the outline instead of hiding it in the size popup." },
             { module = "General", text = "Pressing Esc to close Blizzard windows no longer shows \"EllesmereUIOptions has been blocked from an action\"." },
             { module = "General", text = "Combat damage, healing, periodic and pet damage toggles use Wrath's own combat text settings." },

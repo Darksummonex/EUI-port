@@ -1,4 +1,11 @@
-# EllesmereUI Wrath Core — 0.50
+# EllesmereUI Wrath Core — 0.51
+
+0.51: a lista de resultados da busca das opções voltou a ficar atrás da barra
+lateral e da página (texto apagado, misturado com o do painel). Alguns clientes
+3.3.5 recolocam a camada (strata/nível) de um frame depois do OnShow; agora a
+lista reaplica `FULLSCREEN_DIALOG` / 220 e chama `Raise` logo após o `Show` e
+de novo no frame seguinte (OnUpdate de uma vez). A lista fica em
+`EllesmereUI._searchPopup` para conferir a camada no jogo.
 
 0.50: novo helper `EllesmereUI.ApplyTextOutline` (EllesmereUI_Fonts.lua) para
 contorno por elemento de texto: Module Default, None, Outline, Thick Outline ou
