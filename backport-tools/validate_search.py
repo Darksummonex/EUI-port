@@ -182,4 +182,8 @@ E:Show(); E:Toggle(); assert(#box.hooks.OnTextChanged==1)
 box:SetText("zzzzzzzz"); Drain()
 box:Run("OnEscapePressed"); assert(box:GetText()=="")
 ''')
+gs = (root / 'EllesmereUI/EllesmereUI_GlobalSearch.lua').read_text(encoding='utf-8-sig')
+lift = gs[gs.index('local function Lift()'):gs.index('local function LiftNextFrame')]
+assert 'resultsFrame:SetFrameLevel(221)' in lift and 'resultRows[i]:SetFrameLevel(222)' in lift, 'search rows not lifted above the list background'
+assert 'Raise()' not in lift, 'Raise can lift the list above its own rows'
 print('PASS: Wrath keyboard/focus cleanup and reopen; feature popup/hidden indexing/result navigation and module filtering/restoration')

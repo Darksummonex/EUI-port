@@ -1,4 +1,9 @@
-# EllesmereUI Wrath Core — 0.52
+# EllesmereUI Wrath Core — 0.53
+
+0.53: com o fundo opaco a lista de busca ficou vazia: as linhas de resultado
+estavam abaixo do próprio fundo da lista (por isso pareciam apagadas antes,
+com o fundo translúcido). A cada exibição a lista agora fixa os níveis: lista
+220, área de resultados 221, linhas 222; o `Raise()` da 0.51 saiu.
 
 0.52: o teste no jogo mostrou a lista de busca na camada certa
 (FULLSCREEN_DIALOG 220, acima da barra lateral em DIALOG 104-106), mas o fundo

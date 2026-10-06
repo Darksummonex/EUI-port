@@ -924,12 +924,16 @@ local function EnsureSearchUI()
     popup:Hide()
     EllesmereUI._searchPopup = popup
     -- Some 3.3.5 clients re-seat a shown frame's strata and level after its
-    -- OnShow ran, which left the list under the panel; re-assert them once the
-    -- show has settled.
+    -- OnShow ran, which left the list under the panel, and drew the rows under
+    -- the list's own background; re-assert the list, then its rows above it.
+    local resultsFrame
     local function Lift()
         popup:SetFrameStrata("FULLSCREEN_DIALOG")
         popup:SetFrameLevel(220)
-        if popup.Raise then popup:Raise() end
+        if resultsFrame then resultsFrame:SetFrameLevel(221) end
+        if resultRows then
+            for i = 1, #resultRows do resultRows[i]:SetFrameLevel(222) end
+        end
     end
     local function LiftNextFrame(self)
         self:SetScript("OnUpdate", nil)
@@ -946,7 +950,7 @@ local function EnsureSearchUI()
     end
     EllesmereUI.MakeBorder(popup, 1, 1, 1, 0.12, PP)
 
-    local resultsFrame = CreateFrame("Frame", nil, popup)
+    resultsFrame = CreateFrame("Frame", nil, popup)
     resultsFrame:SetPoint("TOPLEFT", popup, "TOPLEFT", 4, -4)
     resultsFrame:SetPoint("BOTTOMRIGHT", popup, "BOTTOMRIGHT", -4, 4)
 
