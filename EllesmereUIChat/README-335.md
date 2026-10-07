@@ -1,4 +1,23 @@
-# EllesmereUI Chat — 3.3.5 — 0.42
+# EllesmereUI Chat — 3.3.5 — 0.45
+
+0.45: correções do filtro de spam. O preset de recrutamento não esconde mais
+anúncios de raide com tag de guilda ("<Frost> LF 1 heal ICC25"); só "LF guild"
+conta. Sussurros e mensagens de GM (flag GM) sempre aparecem. Palavras-chave
+ignoram maiúsculas acentuadas (PROMOÇÃO = promoção) sem depender do locale. Os
+presets de comércio e recrutamento seguem a opção Public Chat. Com todos os
+filtros desligados, nenhuma mensagem é processada.
+
+0.44: filtros opcionais de conquistas, anúncios de comércio (WTS/WTB/WTT)
+e recrutamento de guilda, além de palavras/frases personalizadas separadas
+por vírgulas ou ponto e vírgula. Funcionam sem ativar o filtro de repetição;
+mensagens próprias são preservadas. Presets de anúncios atuam no chat público.
+
+0.43: nova página Spam Filter nas opções do Chat. Filtro opcional de mensagens
+repetidas com janela de 1–120 segundos, comparação por remetente ou entre
+remetentes e seleção de chat público, grupos/guilda e sussurros recebidos.
+Ignora maiúsculas e espaços extras; preserva mensagens próprias, sistemas e
+NPCs. Decisão consistente entre abas, histórico limitado e limpeza imediata
+ao alterar as opções. Desativado por padrão.
 
 0.42: no Unlock Mode, clique direito (ou engrenagem) no chat mostra "Element
 Options", que abre /echat > Chat na seção DISPLAY destacando Main Chat Width.

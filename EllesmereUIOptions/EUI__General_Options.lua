@@ -1043,8 +1043,18 @@ do
         },
     },
     {
-        version = "Options 0.94",
+        version = "Options 0.97",
         heroes = {
+            {
+                title = "Spam Filter Presets and Keywords",
+                desc = "Optional achievement, trade and guild recruitment filters, plus your own blocked words and phrases.",
+                nav = Nav("EllesmereUIChat", "Spam Filter"),
+            },
+            {
+                title = "Chat Spam Filter Options",
+                desc = "Configure repeat timing, sender matching and chat scopes from the new Spam Filter page.",
+                nav = Nav("EllesmereUIChat", "Spam Filter"),
+            },
             {
                 module = "Unit Frames",
                 title  = "Text Outline Choices",
@@ -1144,6 +1154,7 @@ do
             },
         },
         fixes = {
+            { module = "Chat", text = "Chat > Spam Filter: the chat type settings stay usable when only the trade or recruitment filter is on, and the tooltips explain what each one covers." },
             { module = "General", text = "Opening the options no longer makes later Blizzard actions risk being blocked in EllesmereUI's name." },
             { module = "General", text = "Checklist menus such as Visibility tick and untick their boxes as soon as they are clicked, even when the module's live update runs into a problem, instead of only after closing and reopening the menu." },
             { module = "General", text = "Dropdown lists, checklists and other option popups draw their items above their own background, on a solid background, instead of showing faded items with the page bleeding through." },
@@ -1608,8 +1619,18 @@ do
         },
     },
     {
-        version = "Chat 0.42",
+        version = "Chat 0.45",
         heroes = {
+            {
+                title = "Spam Filter Presets and Keywords",
+                desc = "Optional achievement, trade and guild recruitment filters, plus your own blocked words and phrases.",
+                nav = Nav("EllesmereUIChat", "Spam Filter"),
+            },
+            {
+                title = "Repeated Message Filter",
+                desc = "Optional spam filtering with a repeat window, sender matching and public, group or whisper controls.",
+                nav = Nav("EllesmereUIChat", "Spam Filter"),
+            },
             {
                 title = "Retail Chat Panel",
                 desc  = "Background, divider, input position, Retail border and tabs over the native dock, plus a sidebar with friends, guild, copy, channels and settings.",
@@ -1636,6 +1657,10 @@ do
             },
         },
         fixes = {
+            { text = "The guild recruitment filter no longer hides raid ads that mention a guild, such as \"<Frost> LF 1 heal ICC25\"; only LF guild phrases count." },
+            { text = "GM whispers and messages are never hidden by the spam filter." },
+            { text = "Spam filter keywords ignore case for accented letters too, so promoção also hides PROMOÇÃO." },
+            { text = "The trade ad and guild recruitment filters follow the Public Chat setting, and the spam filter does no work while every filter is off." },
             { text = "The sidebar shows on first load, and tabs and toggles update right away." },
             { text = "The main chat keeps its Unlock Mode position instead of being reset by the dock." },
             { text = "A saved chat opacity of 0 resets once to the Retail default." },

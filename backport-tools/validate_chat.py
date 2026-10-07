@@ -37,6 +37,7 @@ def boot(saved=''):
     ns=lua.table()
     loader=lua.eval('function(s,n) return assert(loadstring(s,n)) end')
     loader((root/'EllesmereUIChat/EUI_Chat_335.lua').read_text(),'EUI_Chat_335.lua')('EllesmereUIChat',ns)
+    loader((root/'EllesmereUIChat/EUI_Chat_SpamFilter_335.lua').read_text(),'EUI_Chat_SpamFilter_335.lua')('EllesmereUIChat',ns)
     lua.globals().CHAT=ns
     safe(ns.addon.OnInitialize,ns.addon); safe(ns.addon.OnEnable,ns.addon)
     lua.execute('assert(#lifecycleErrors==0,lifecycleErrors[1])')
@@ -83,7 +84,7 @@ assert(CHAT.PlainText(originalLink)=="[www.item-name.com]")
 assert(CHAT.AbbreviateChannels("|Hchannel:channel:2|h[2. Trade - City]|h Bob: hi")=="|Hchannel:channel:2|h[2]|h Bob: hi")
 assert(CHAT.AbbreviateChannels("|Hchannel:channel:2|h[2. Trade - City]|h Bob",true)=="|Hchannel:channel:2|h[T]|h Bob")
 assert(CHAT.AbbreviateChannels("|Hchannel:PARTY|h[Party]|h Bob")=="|Hchannel:PARTY|h[P]|h Bob")
-assert(#chatFilters.CHAT_MSG_SAY==2 and chatFilters.CHAT_MSG_SYSTEM==nil)
+assert(#chatFilters.CHAT_MSG_SAY==3 and chatFilters.CHAT_MSG_SYSTEM==nil)
 local keep,msg,extra=CHAT.NameFilter(ChatFrame1,"CHAT_MSG_SAY","hi player","Bob")
 assert(keep==false and msg=="hi |cffff8033player|r" and extra=="Bob")
 assert(CHAT.NameFilter(ChatFrame1,"CHAT_MSG_SAY","nobody here")==false and select(2,CHAT.NameFilter(ChatFrame1,"CHAT_MSG_SAY","nobody"))==nil)
@@ -342,7 +343,7 @@ end
 lua.execute((root/'EllesmereUIOptions/EUI_Chat_335_Options.lua').read_text())
 lua.execute('''
 local p=CHAT.GetSettings(); local s1=CHAT.states[ChatFrame1]
-assert(testModule and #testModule.pages==4)
+assert(testModule and #testModule.pages==5)
 for _,page in ipairs(testModule.pages) do rows={}; assert(testModule.buildPage(page,UIParent,0)>0) end
 rows={}; testModule.buildPage("Chat",UIParent,0)
 local link=EllesmereUI._ELEMENT_SETTINGS_MAP.ECHAT_MainChat
@@ -423,4 +424,4 @@ EllesmereUI.Widgets={DualRow=function(_,parent,y,left,right) rows[#rows+1]={left
 ''')
 lua.execute((root/'EllesmereUIOptions/EUI_Chat_335_Options.lua').read_text())
 lua.execute('rows={}; testModule.buildPage("Tabs",UIParent,0); assert(rows[1][1].type=="label" and rows[1][1].text:find("stock chat style",1,true))')
-print('PASS: real Core Lite/Chat and native Wrath entry points; Retail panel/tab strip/dock layout, sidebar icons/counts/order/free-move/clicks, borders, lock size, idle fade/visibility/click-through; URL popup, filter stamps/Timestamp All, channel abbreviations, class names, link tooltips, whisper sound, history save/replay; chat bubbles/CVars; Y=0 drag/clamps, combat deferral, unlock, restore/re-enable/external wrappers; 0.3 migration and latched stock style; four option pages plus Fonts/Textures cards. Native rendering and taint require in-game confirmation.')
+print('PASS: real Core Lite/Chat and native Wrath entry points; Retail panel/tab strip/dock layout, sidebar icons/counts/order/free-move/clicks, borders, lock size, idle fade/visibility/click-through; URL popup, filter stamps/Timestamp All, channel abbreviations, class names, link tooltips, whisper sound, history save/replay; chat bubbles/CVars; Y=0 drag/clamps, combat deferral, unlock, restore/re-enable/external wrappers; 0.3 migration and latched stock style; five option pages plus Fonts/Textures cards. Native rendering and taint require in-game confirmation.')

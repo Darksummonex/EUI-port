@@ -1,4 +1,16 @@
-# Options 3.3.5 — 0.94
+# Options 3.3.5 — 0.97
+
+0.97: Chat > Spam Filter: as opções de escopo ficam ativas também com os
+presets de comércio/recrutamento ligados, e as dicas explicam que eles seguem
+Public Chat, que GMs sempre aparecem e que acentos são ignorados.
+
+0.96: filtros opcionais de conquistas, anúncios de comércio (WTS/WTB/WTT)
+e recrutamento de guilda, além de palavras/frases personalizadas separadas
+por vírgulas ou ponto e vírgula. Funcionam sem ativar o filtro de repetição;
+mensagens próprias são preservadas. Presets de anúncios atuam no chat público.
+
+0.95: nova página Chat > Spam Filter com ativação, janela de repetição,
+comparação entre remetentes, seleção de canais e limpeza do histórico.
 
 0.94: no Textures, o bloco Damage Meters leva à Bar Texture de cada janela.
 O Cast Sound do FocusKick e os sons do Chat usam a lista compartilhada de

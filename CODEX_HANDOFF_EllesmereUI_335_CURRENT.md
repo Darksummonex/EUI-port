@@ -60,7 +60,7 @@ them. The project ZIP contains them, so keep it private.
   when asked. Keep the exact addon folder names at the top level of ZIPs.
 
 Python: `C:/Users/Gaming/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe`.
-Git: `C:\Program Files\Git\cmd\git.exe`. Full validator loop (55 validators, all
+Git: `C:\Program Files\Git\cmd\git.exe`. Full validator loop (62 validators, all
 pass), run from the project folder:
 
 ```
@@ -75,15 +75,31 @@ Working-tree backups: `backport-tools/backup_project.py` writes
 ## Current versions
 
 Core 0.55; Action Bars 0.19; Arena 0.3; AuraBuff Reminders 0.4; Bags 0.10;
-Blizz UI Enhanced (BlizzardSkin) 0.26; Chat 0.42; Cooldown Manager 0.3;
+Blizz UI Enhanced (BlizzardSkin) 0.26; Chat 0.45; Cooldown Manager 0.3;
 Damage Meters 0.7; Data Bars 0.4; Friends 0.3; Minimap 0.4; Nameplates 0.14;
-Options 0.94; QoL 0.12; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.13;
+Options 0.97; QoL 0.12; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.13;
 Resource Bars 0.4; Unit Frames 0.17.
 
 Git: branch `cursor/eui-shapes-bars-skins-qol`, built on
 `cursor/eui-arena-and-fixes`. Neither is merged into `main`; no PR is open.
 
 ## Latest work (2026-10-05 / 06)
+
+- Chat 0.44 / Options 0.96: independent optional achievement (player/guild),
+  public Trade-ad and guild-recruitment presets plus literal custom keyword/phrase
+  filtering. Keywords use repeat scope selectors and comma/semicolon/newline lists;
+  visible text only, case/space normalized. Own messages and achievements remain
+  visible. All additions default off. Presets match common English/Portuguese text,
+  not every locale or obfuscation. Native in-game review pending.
+
+- Chat 0.43: optional repeated-message filtering in Chat > Spam Filter. Default
+  off; public chat enabled as the initial scope, group/guild and incoming whispers
+  opt in. Repeat window 1–120 seconds (15 default), same sender by default or
+  across senders. Case/whitespace normalization, per-channel matching, own-message
+  bypass, bounded caches and consistent per-line-ID decisions across chat windows.
+  Clients without line IDs use independent window histories. Hidden repeats do
+  not extend the window; settings changes reset history. All 62 validators pass, including
+  validate_chat_spam_filter.py. Options 0.95 adds the controls. Native in-game review pending.
 
 - Classic WoW UI green health (Unit Frames 0.14, Options 0.89):
   `ns.UF_SeedStock` sets `healthClassColored=false` and

@@ -52,6 +52,10 @@ local defaults = {profile={
         abbreviateChannels=true, abbreviateChannelLetters=false, classColorNames=true,
         persistChatHistory=true, persistChatHistoryMaxLines=100,
         whisperSoundKey="none",
+        spamFilterEnabled=false, spamFilterWindow=15, spamFilterAnySender=false,
+        spamFilterPublic=true, spamFilterGroup=false, spamFilterWhispers=false,
+        spamFilterAchievements=false, spamFilterTrade=false, spamFilterRecruitment=false,
+        spamFilterKeywordsEnabled=false, spamFilterKeywords="",
         clickableURLs=true, copyLines=500, mouseWheel=true, fadeMessages=false, fadeSeconds=120,
         width=420, height=180,
     },
@@ -1149,6 +1153,7 @@ end
 function ns.Apply()
     local p=ns.GetSettings(); if not p then return end
     ns.ApplyBubbles()
+    if ns.SyncSpamFilter then ns.SyncSpamFilter() end
     if InCombatLockdown() then pending=true; return end
     pending=false; if not p.enabled then ns.Restore(); return end
     ns.Migrate(p)
@@ -1217,6 +1222,7 @@ function addon:OnInitialize()
     SlashCmdList.EUI335COPYCHAT=function() local p=ns.GetSettings(); if p and p.enabled then ns.CopyChat() end end
 end
 function addon:OnEnable()
+    if ns.RegisterSpamFilters then ns.RegisterSpamFilters() end
     if not addon.db then return end
     if ChatFrame_AddMessageEventFilter then
         for _,kind in ipairs(STAMP_EVENTS) do ChatFrame_AddMessageEventFilter("CHAT_MSG_"..kind,StampFilter) end

@@ -2,7 +2,7 @@
 ## Title: |cff0cd29fEllesmereUI|r Chat
 ## Notes: Wrath chat with the Retail EUI panel, tabs, sidebar, idle fade, timestamps, channel names, history and bubbles.
 ## Author: Ellesmere / 3.3.5 backport
-## Version: 9.3.4-335-0.42
+## Version: 9.3.4-335-0.45
 ## Dependencies: EllesmereUI
 ## X-Part-Of: EllesmereUI
 ## SavedVariables: EllesmereUIChatDB
@@ -11,3 +11,4 @@
 
 # Retail engines stay in the folder as reference only.
 EUI_Chat_335.lua
+EUI_Chat_SpamFilter_335.lua

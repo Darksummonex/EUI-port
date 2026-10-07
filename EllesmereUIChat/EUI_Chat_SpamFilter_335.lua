@@ -1,0 +1,138 @@
+-- Player-chat spam filtering through Wrath's native event filters.
+local _, ns = ...
+local scopes = {
+    CHAT_MSG_SAY="public", CHAT_MSG_YELL="public", CHAT_MSG_CHANNEL="public",
+    CHAT_MSG_PARTY="group", CHAT_MSG_PARTY_LEADER="group", CHAT_MSG_RAID="group",
+    CHAT_MSG_RAID_LEADER="group", CHAT_MSG_RAID_WARNING="group",
+    CHAT_MSG_GUILD="group", CHAT_MSG_OFFICER="group",
+    CHAT_MSG_BATTLEGROUND="group", CHAT_MSG_BATTLEGROUND_LEADER="group",
+    CHAT_MSG_WHISPER="whispers",
+}
+local histories, decisions = {}, {entries={}, count=0}
+local signature, registered
+local keywordSource, keywords = nil, {}
+local LIMIT = 500
+function ns.ResetSpamFilter()
+    histories, decisions = {}, {entries={}, count=0}
+end
+function ns.SyncSpamFilter()
+    local p = ns.GetSettings()
+    if not p then return end
+    local current = table.concat({tostring(p.enabled), tostring(p.spamFilterEnabled),
+        tostring(p.spamFilterWindow), tostring(p.spamFilterAnySender),
+        tostring(p.spamFilterPublic), tostring(p.spamFilterGroup), tostring(p.spamFilterWhispers),
+        tostring(p.spamFilterAchievements), tostring(p.spamFilterTrade), tostring(p.spamFilterRecruitment),
+        tostring(p.spamFilterKeywordsEnabled), tostring(p.spamFilterKeywords)}, ":")
+    if current ~= signature then signature=current; ns.ResetSpamFilter() end
+end
+local function Put(cache, key, entry, now)
+    -- Bound memory even in very busy channels; expired/oldest records go first.
+    if not cache.entries[key] then
+        if cache.count >= LIMIT then
+            local oldestKey, oldestTime
+            for k, value in pairs(cache.entries) do
+                if value.expires <= now then cache.entries[k]=nil; cache.count=cache.count-1
+                elseif not oldestTime or value.expires < oldestTime then oldestKey,oldestTime=k,value.expires end
+            end
+            if cache.count >= LIMIT and oldestKey then cache.entries[oldestKey]=nil; cache.count=cache.count-1 end
+        end
+        cache.count=cache.count+1
+    end
+    cache.entries[key]=entry
+end
+-- Byte ranges instead of string.lower/%s, whose results depend on the C locale and can
+-- rewrite UTF-8 bytes. Accented capitals (UTF-8 C3 80-9E, e.g. Ç Ã É) sit 0x20 below
+-- their lowercase forms; C3 97 is the multiplication sign.
+local function LowerASCII(c) return string.char(c:byte() + 32) end
+local function LowerAccent(c)
+    local b = c:byte()
+    if b ~= 0x97 then return "\195"..string.char(b + 32) end
+end
+local function Normalize(text)
+    text = text:gsub("[A-Z]", LowerASCII):gsub("\195([\128-\158])", LowerAccent):gsub("[ \t\r\n]+", " ")
+    return text:match("^ ?(.-) ?$")
+end
+local function Word(text, word)
+    return text:find("%f[%w]"..word.."%f[%W]") ~= nil
+end
+local function Trade(text)
+    return Word(text,"wts") or Word(text,"wtb") or Word(text,"wtt") or
+        Word(text,"selling") or Word(text,"buying") or Word(text,"vendo") or Word(text,"compro")
+end
+local function Recruitment(text)
+    local guild = Word(text,"guild") or Word(text,"guilda") or text:find("<[^>]+>") ~= nil
+    return text:find("guild recruitment",1,true) ~= nil or
+        (guild and (Word(text,"recruiting") or Word(text,"recruitment") or
+        Word(text,"recrutando") or Word(text,"recrutamento") or Word(text,"recruta") or
+        text:find("looking for members",1,true) ~= nil or text:find("looking for players",1,true) ~= nil)) or
+        text:find("%f[%w]lf%s*guilda?%f[%W]") ~= nil or text:find("looking for a guild",1,true) ~= nil
+end
+local function KeywordMatch(p, text)
+    local source = type(p.spamFilterKeywords)=="string" and p.spamFilterKeywords or ""
+    if source ~= keywordSource then
+        keywordSource, keywords = source, {}
+        -- Literal phrases, not Lua patterns. Empty entries never match everything.
+        for entry in source:gmatch("[^,;\r\n]+") do
+            local word = Normalize(entry)
+            if word~="" then keywords[#keywords+1]=word end
+        end
+    end
+    for _,word in ipairs(keywords) do if text:find(word,1,true) then return true end end
+    return false
+end
+function ns.SpamFilter(self, event, msg, author, ...)
+    local p = ns.GetSettings()
+    if not p or not p.enabled then return false end
+    if not (p.spamFilterEnabled or p.spamFilterKeywordsEnabled or p.spamFilterAchievements or
+        p.spamFilterTrade or p.spamFilterRecruitment) then return false end
+    local player, realm = UnitName("player")
+    if player and (author==player or (realm and author==player.."-"..realm)) then return false end
+    -- arg6 is the sender flag: GM messages are always shown.
+    if select(4, ...)=="GM" then return false end
+    if event=="CHAT_MSG_ACHIEVEMENT" or event=="CHAT_MSG_GUILD_ACHIEVEMENT" then
+        return p.spamFilterAchievements and true or false
+    end
+    local scope = scopes[event]
+    if not scope or type(msg)~="string" or type(author)~="string" or author=="" then return false end
+    -- Match visible labels, never hyperlink IDs or invisible colour/texture codes.
+    if (scope=="public" and not p.spamFilterPublic) or
+       (scope=="group" and not p.spamFilterGroup) or
+       (scope=="whispers" and not p.spamFilterWhispers) then return false end
+    local visible = Normalize(ns.PlainText(msg))
+    if scope=="public" and ((p.spamFilterTrade and Trade(visible)) or
+        (p.spamFilterRecruitment and Recruitment(visible))) then return true end
+    if p.spamFilterKeywordsEnabled and KeywordMatch(p,visible) then return true end
+    if not p.spamFilterEnabled then return false end
+    local text = Normalize(msg)
+    if text=="" then return false end
+    local now = GetTime()
+    local window = math.max(1, math.min(120, tonumber(p.spamFilterWindow) or 15))
+    -- arg8 is the channel index; arg11 is Wrath's message line ID.
+    local channel, lineID = select(6, ...), select(9, ...)
+    local key = event.."\031"..tostring(channel or "").."\031"..
+        (p.spamFilterAnySender and "" or author:lower()).."\031"..text
+    local decisionKey
+    if type(lineID)=="number" and lineID>0 then
+        decisionKey=event.."\031"..author.."\031"..tostring(channel or "").."\031"..lineID.."\031"..text
+        local prior=decisions.entries[decisionKey]
+        -- Each chat window must receive the same decision for one server message.
+        if prior and prior.expires>now then return prior.blocked end
+    end
+    -- Clients without usable line IDs keep independent window histories.
+    local owner=decisionKey and "server" or (self or "fallback")
+    local cache=histories[owner]
+    if not cache then cache={entries={},count=0}; histories[owner]=cache end
+    local previous=cache.entries[key]
+    local blocked=previous and previous.expires>now or false
+    -- Hidden repeats do not extend the window indefinitely.
+    if not blocked then Put(cache,key,{expires=now+window},now) end
+    if decisionKey then Put(decisions,decisionKey,{expires=now+window,blocked=blocked},now) end
+    return blocked
+end
+function ns.RegisterSpamFilters()
+    if registered or not ChatFrame_AddMessageEventFilter then return end
+    registered=true
+    ChatFrame_AddMessageEventFilter("CHAT_MSG_ACHIEVEMENT",ns.SpamFilter)
+    ChatFrame_AddMessageEventFilter("CHAT_MSG_GUILD_ACHIEVEMENT",ns.SpamFilter)
+    for event in pairs(scopes) do ChatFrame_AddMessageEventFilter(event,ns.SpamFilter) end
+end

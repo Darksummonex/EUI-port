@@ -37,6 +37,12 @@ init:SetScript("OnEvent",function(self)
     end
     local spacer={type="spacer"}
     local function Off(key) return function() return not Get(key,false) end end
+    local function FilterScopesOff()
+        for _,key in ipairs({"spamFilterEnabled","spamFilterKeywordsEnabled","spamFilterTrade","spamFilterRecruitment"}) do
+            if Get(key,false) then return false end
+        end
+        return true
+    end
     local function Stock() return ns.ChatStyle()~="eui" end
     local sources={custom="Custom",accent="Accent Color",class="Class Color"}
     local sourceOrder={"custom","accent","class"}
@@ -79,8 +85,8 @@ init:SetScript("OnEvent",function(self)
         showVoice="Voice/Channels",showSettings="Settings",showScroll="Scroll to Bottom"}
     E:RegisterModule("EllesmereUIChat",{
         title="Chat",description="Wrath chat windows with the EllesmereUI panel, tabs, sidebar and chat bubbles.",
-        pages={"Chat","Tabs","Sidebar","Chat Bubbles"},
-        searchTerms="chat copy url timestamp font tabs edit input scroll wheel background border position sidebar friends guild durability idle fade whisper sound history channel abbreviate class color bubbles",
+        pages={"Chat","Tabs","Sidebar","Chat Bubbles","Spam Filter"},
+        searchTerms="chat copy url timestamp font tabs edit input scroll wheel background border position sidebar friends guild durability idle fade whisper sound history channel abbreviate class color bubbles spam filter repeated duplicate messages",
         buildPage=function(page,parent,y)
             local W=E.Widgets
             local PP=E.PP or E.PanelPP
@@ -163,6 +169,28 @@ init:SetScript("OnEvent",function(self)
                 Button("Copy Current Chat Window",function() ns.CopyChat() end)
                 Button("Reset Position",function() ns.ResetPosition() end)
                 Button("Unlock Mode",function() if E.ToggleUnlockMode then E:ToggleUnlockMode() end end)
+            elseif page=="Spam Filter" then
+                Section("REPEATED MESSAGES")
+                Row(Toggle("spamFilterEnabled","Filter Repeated Messages",false,"Hide repeated messages within the repeat window. Your own messages are always shown. Requires Enable Chat."),
+                    Slider("spamFilterWindow","Repeat Window (seconds)",1,120,1,15,"Time from the last displayed matching message. Hidden repeats do not extend the window.",Off("spamFilterEnabled")))
+                Row(Toggle("spamFilterAnySender","Match Across Senders",false,"Off: match repeats from the same sender. On: also hide matching messages sent by other players in the same channel.",Off("spamFilterEnabled")),spacer)
+                Section("REPEATS AND KEYWORDS IN")
+                Row(Toggle("spamFilterPublic","Public Chat",true,"Say, Yell and numbered channels such as General, Trade and World. Scopes repeat, keyword, trade ad and recruitment filters.",FilterScopesOff),
+                    Toggle("spamFilterGroup","Group and Guild Chat",false,"Party, raid (including warnings), battleground, guild and officer chat. Scopes repeat and keyword filters.",FilterScopesOff))
+                Row(Toggle("spamFilterWhispers","Incoming Whispers",false,"Outgoing whispers and GM whispers are always shown. Scopes repeat and keyword filters.",FilterScopesOff),spacer)
+                Row({type="label",text="Matches text ignoring letter case and extra spaces, within the same chat type and channel. NPC dialogue and other system messages are always shown."},spacer)
+                Button("Clear Filter History",function() ns.ResetSpamFilter() end)
+                Section("PRESET FILTERS")
+                Row(Toggle("spamFilterAchievements","Filter Achievements",false,"Hide player and guild achievement announcements. Your own achievements remain visible."),spacer)
+                Row(Toggle("spamFilterTrade","Filter Trade Ads",false,"Hide public chat ads containing whole words such as WTS, WTB, WTT, selling, buying, vendo or compro. Needs Public Chat above. Does not hide the entire Trade channel."),
+                    Toggle("spamFilterRecruitment","Filter Guild Recruitment",false,"Hide common English and Portuguese guild recruitment or looking-for-guild phrases in public chat. Raid ads such as <Guild> LF heal ICC are kept. Needs Public Chat above."))
+                Section("CUSTOM KEYWORDS")
+                Row(Toggle("spamFilterKeywordsEnabled","Filter Keywords",false,"Hide messages containing any custom word or phrase, in the scopes selected above. Works independently of repeated-message filtering."),
+                    {type="input",text="Blocked Keywords",inputStyle="popup",inputWidth=180,placeholder="boost, gold seller",tooltip="Separate words or phrases with commas or semicolons. Case insensitive, including accented letters, literal substring matching. Empty entries are ignored.",
+                        getValue=function() return Get("spamFilterKeywords","") end,
+                        setValue=function(v) Set("spamFilterKeywords",type(v)=="string" and v or "") end,
+                        disabled=Off("spamFilterKeywordsEnabled")})
+                Row({type="label",text="Preset filters work independently of repeats. Your own messages are preserved. Keyword and recruitment matches can hide legitimate messages; enable only the filters you want."},spacer)
             elseif page=="Tabs" then
                 StockNote()
                 Section("LAYOUT")
