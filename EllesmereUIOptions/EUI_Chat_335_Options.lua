@@ -86,7 +86,7 @@ init:SetScript("OnEvent",function(self)
     E:RegisterModule("EllesmereUIChat",{
         title="Chat",description="Wrath chat windows with the EllesmereUI panel, tabs, sidebar and chat bubbles.",
         pages={"Chat","Tabs","Sidebar","Chat Bubbles","Spam Filter"},
-        searchTerms="chat copy url timestamp font tabs edit input scroll wheel background border position sidebar friends guild durability idle fade whisper sound history channel abbreviate class color bubbles spam filter repeated duplicate messages",
+        searchTerms="chat copy url timestamp font tabs edit input scroll wheel background border position sidebar friends guild durability idle fade whisper sound history channel abbreviate class color bubbles spam filter repeated duplicate messages hardcore deaths slain hidden messages log",
         buildPage=function(page,parent,y)
             local W=E.Widgets
             local PP=E.PP or E.PanelPP
@@ -179,11 +179,15 @@ init:SetScript("OnEvent",function(self)
                     Toggle("spamFilterGroup","Group and Guild Chat",false,"Party, raid (including warnings), battleground, guild and officer chat. Scopes repeat and keyword filters.",FilterScopesOff))
                 Row(Toggle("spamFilterWhispers","Incoming Whispers",false,"Outgoing whispers and GM whispers are always shown. Scopes repeat and keyword filters.",FilterScopesOff),spacer)
                 Row({type="label",text="Matches text ignoring letter case and extra spaces, within the same chat type and channel. NPC dialogue and other system messages are always shown."},spacer)
-                Button("Clear Filter History",function() ns.ResetSpamFilter() end)
+                Button("Show Hidden Messages",function() if ns.ShowHiddenLog then ns.ShowHiddenLog() end end)
+                Button("Reset Repeat Memory",function() ns.ResetSpamFilter() end)
                 Section("PRESET FILTERS")
                 Row(Toggle("spamFilterAchievements","Filter Achievements",false,"Hide player and guild achievement announcements. Your own achievements remain visible."),spacer)
-                Row(Toggle("spamFilterTrade","Filter Trade Ads",false,"Hide public chat ads containing whole words such as WTS, WTB, WTT, selling, buying, vendo or compro. Needs Public Chat above. Does not hide the entire Trade channel."),
+                Row(Toggle("spamFilterTrade","Filter Trade Ads",false,"Hide public chat ads containing whole words such as WTS, WTB, WTT, LFW, selling, buying, vendo or compro. Needs Public Chat above. Does not hide the entire Trade channel."),
                     Toggle("spamFilterRecruitment","Filter Guild Recruitment",false,"Hide common English and Portuguese guild recruitment or looking-for-guild phrases in public chat. Raid ads such as <Guild> LF heal ICC are kept. Needs Public Chat above."))
+                Section("HARDCORE")
+                Row(Toggle("spamFilterHardcoreDeaths","Filter Hardcore Deaths",false,"Hide server death announcements such as \"Name the level 11 Gnome Warrior has been slain by ... in Westfall\". Works in every chat window, independent of the chat types above."),
+                    Slider("spamFilterHardcoreKeepLevel","Keep Deaths From Level",1,81,1,81,"Deaths at this level or higher stay visible, for example 80 to still see max level deaths. 81 hides every death.",Off("spamFilterHardcoreDeaths")))
                 Section("CUSTOM KEYWORDS")
                 Row(Toggle("spamFilterKeywordsEnabled","Filter Keywords",false,"Hide messages containing any custom word or phrase, in the scopes selected above. Works independently of repeated-message filtering."),
                     {type="input",text="Blocked Keywords",inputStyle="popup",inputWidth=180,placeholder="boost, gold seller",tooltip="Separate words or phrases with commas or semicolons. Case insensitive, including accented letters, literal substring matching. Empty entries are ignored.",

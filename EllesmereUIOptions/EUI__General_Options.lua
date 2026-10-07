@@ -1043,7 +1043,7 @@ do
         },
     },
     {
-        version = "Options 0.97",
+        version = "Options 0.98",
         heroes = {
             {
                 title = "Spam Filter Presets and Keywords",
@@ -1087,6 +1087,12 @@ do
             },
         },
         features = {
+            {
+                module = "Chat",
+                title  = "Hardcore Death Filter",
+                desc   = "Hide server announcements such as \"Name the level 11 Gnome Warrior has been slain by ... in Westfall\", optionally keeping deaths from a chosen level up visible.",
+                nav    = Nav("EllesmereUIChat", "Spam Filter"),
+            },
             {
                 module = "SharedMedia",
                 title  = "SharedMedia in Sound Menus",
@@ -1619,7 +1625,7 @@ do
         },
     },
     {
-        version = "Chat 0.45",
+        version = "Chat 0.46",
         heroes = {
             {
                 title = "Spam Filter Presets and Keywords",
@@ -1643,6 +1649,21 @@ do
         },
         features = {
             {
+                title = "Hardcore Death Filter",
+                desc  = "Hide server announcements such as \"Name the level 11 Gnome Warrior has been slain by ... in Westfall\", optionally keeping deaths from a chosen level up visible.",
+                nav   = Nav("EllesmereUIChat", "Spam Filter"),
+            },
+            {
+                title = "Hidden Messages Log",
+                desc  = "Show Hidden Messages lists the last 200 lines the spam filter hid this session, with time, reason, channel and sender. Clear Filter History is now Reset Repeat Memory.",
+                nav   = Nav("EllesmereUIChat", "Spam Filter"),
+            },
+            {
+                title = "Trade Ads Include LFW",
+                desc  = "The trade ad preset also hides LFW (looking for work) crafting ads.",
+                nav   = Nav("EllesmereUIChat", "Spam Filter"),
+            },
+            {
                 title = "Element Options",
                 desc  = "Right-click the chat in Unlock Mode to open its Display settings",
             },
@@ -1657,6 +1678,7 @@ do
             },
         },
         fixes = {
+            { text = "Fixed a \"SetPoint(): is dependent on this\" error when styling some NPC chat bubbles." },
             { text = "The guild recruitment filter no longer hides raid ads that mention a guild, such as \"<Frost> LF 1 heal ICC25\"; only LF guild phrases count." },
             { text = "GM whispers and messages are never hidden by the spam filter." },
             { text = "Spam filter keywords ignore case for accented letters too, so promoção also hides PROMOÇÃO." },

@@ -1,4 +1,8 @@
-# Options 3.3.5 — 0.97
+# Options 3.3.5 — 0.98
+
+0.98: seção HARDCORE em Chat > Spam Filter com "Filter Hardcore Deaths" e
+"Keep Deaths From Level". Botão "Show Hidden Messages" e "Clear Filter History"
+renomeado para "Reset Repeat Memory".
 
 0.97: Chat > Spam Filter: as opções de escopo ficam ativas também com os
 presets de comércio/recrutamento ligados, e as dicas explicam que eles seguem

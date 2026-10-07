@@ -75,9 +75,9 @@ Working-tree backups: `backport-tools/backup_project.py` writes
 ## Current versions
 
 Core 0.55; Action Bars 0.19; Arena 0.3; AuraBuff Reminders 0.4; Bags 0.10;
-Blizz UI Enhanced (BlizzardSkin) 0.26; Chat 0.45; Cooldown Manager 0.3;
+Blizz UI Enhanced (BlizzardSkin) 0.26; Chat 0.46; Cooldown Manager 0.3;
 Damage Meters 0.7; Data Bars 0.4; Friends 0.3; Minimap 0.4; Nameplates 0.14;
-Options 0.97; QoL 0.12; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.13;
+Options 0.98; QoL 0.12; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.13;
 Resource Bars 0.4; Unit Frames 0.17.
 
 Git: branch `cursor/eui-shapes-bars-skins-qol`, built on

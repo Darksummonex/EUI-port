@@ -84,7 +84,7 @@ cfg("Repeat Window (seconds)").setValue(30); assert(CHAT.GetSettings().spamFilte
 cfg("Match Across Senders").setValue(false); assert(not CHAT.GetSettings().spamFilterAnySender)
 assert(not CHAT.SpamFilter(ChatFrame1,"CHAT_MSG_SAY","reset","Bob"))
 assert(CHAT.SpamFilter(ChatFrame1,"CHAT_MSG_SAY","reset","Bob"))
-buttons["Clear Filter History"]()
+buttons["Reset Repeat Memory"]()
 assert(not CHAT.SpamFilter(ChatFrame1,"CHAT_MSG_SAY","reset","Bob"))
 ''')
 print('PASS: spam scopes, normalization, sender/channel separation, multi-window line IDs, missing IDs, expiry, own messages, toggles/combat, cache limits and real options controls')
@@ -107,11 +107,12 @@ assert(not blocked("CHAT_MSG_SYSTEM","earned"))
 p.spamFilterTrade=true; p.spamFilterPublic=false; CHAT.Apply()
 assert(not blocked("CHAT_MSG_CHANNEL","WTS [Sword]"),"presets follow the Public Chat scope")
 p.spamFilterPublic=true; CHAT.Apply()
-for _,text in ipairs({"WTS [Sword]", "WTB gems", "WTT cloth", "Selling enchants", "vendo itens", "compro ouro"}) do
+for _,text in ipairs({"WTS [Sword]", "WTB gems", "WTT cloth", "LFW JC, have all cuts", "Enchanter LFW", "Selling enchants", "vendo itens", "compro ouro"}) do
  assert(blocked("CHAT_MSG_CHANNEL",text),text)
 end
 assert(not blocked("CHAT_MSG_CHANNEL","Who wants to run a dungeon?"))
 assert(not blocked("CHAT_MSG_CHANNEL","wtsfoo is my name"))
+assert(not blocked("CHAT_MSG_CHANNEL","lfwarrior tank"))
 assert(not blocked("CHAT_MSG_GUILD","WTS cloth"))
 assert(not blocked("CHAT_MSG_WHISPER","WTS cloth"))
 assert(not blocked("CHAT_MSG_CHANNEL","WTS cloth","player"))
@@ -175,3 +176,69 @@ cfg("Filter Guild Recruitment").setValue(true); assert(blocked("CHAT_MSG_CHANNEL
 cfg("Filter Achievements").setValue(false); assert(not blocked("CHAT_MSG_ACHIEVEMENT","earned"))
 ''')
 print('PASS: independent achievement/trade/recruitment presets, whole-word guards, custom literal keyword phrases/separators/visible links, scopes, own messages and options')
+lua.execute(r'''
+local p=CHAT.GetSettings()
+for _,k in ipairs({"spamFilterEnabled","spamFilterKeywordsEnabled","spamFilterTrade","spamFilterRecruitment","spamFilterAchievements"}) do p[k]=false end
+p.spamFilterPublic=false; CHAT.Apply()
+assert(p.spamFilterHardcoreDeaths==false and p.spamFilterHardcoreKeepLevel==81)
+for _,e in ipairs({"CHAT_MSG_SYSTEM","CHAT_MSG_RAID_BOSS_EMOTE","CHAT_MSG_MONSTER_EMOTE","CHAT_MSG_BG_SYSTEM_NEUTRAL","CHAT_MSG_CHANNEL"}) do
+ local n=0; for _,f in ipairs(chatFilters[e] or {}) do if f==CHAT.SpamFilter then n=n+1 end end
+ assert(n==1 and chatFilters[e][1]==CHAT.SpamFilter,"spam filter registered once and first on "..e)
+end
+local death="|cffff0000Warrash the level 11 Gnome Warrior has been slain by Sergeant Brashclaw in Westfall|r"
+local function hidden(event,text,author) return CHAT.SpamFilter(ChatFrame1,event,text,author or "") end
+assert(not hidden("CHAT_MSG_SYSTEM",death),"off by default")
+p.spamFilterHardcoreDeaths=true; CHAT.Apply()
+assert(hidden("CHAT_MSG_SYSTEM",death),"system death announcement")
+assert(hidden("CHAT_MSG_RAID_BOSS_EMOTE",death) and hidden("CHAT_MSG_BG_SYSTEM_NEUTRAL",death))
+assert(hidden("CHAT_MSG_CHANNEL",death,"Server"),"channel announcement, even with Public Chat off")
+for _,text in ipairs({"[Hardcore] Bob the level 60 Human Mage has died of falling in Ironforge",
+    "Ana the level 34 Night Elf Druid has drowned in Ashenvale", "Zed the level 5 Orc Rogue was slain by a Kobold"}) do
+ assert(hidden("CHAT_MSG_SYSTEM",text),text)
+end
+for _,text in ipairs({"Bob the level 60 Human Mage has reached level 60!", "You have been slain.",
+    "Warrash has been slain by Sergeant Brashclaw", "the level 11 boss has been slain"}) do
+ assert(not hidden("CHAT_MSG_SYSTEM",text),text)
+end
+assert(not hidden("CHAT_MSG_SAY",death,"Bob"),"player chat quoting a death is not a system announcement")
+p.spamFilterHardcoreKeepLevel=80; CHAT.Apply()
+assert(hidden("CHAT_MSG_SYSTEM",death) and not hidden("CHAT_MSG_SYSTEM",(death:gsub("level 11","level 80"))),"keep level shows max level deaths")
+p.spamFilterHardcoreDeaths=false; CHAT.Apply(); assert(not hidden("CHAT_MSG_SYSTEM",death))
+rows={}; testModule.buildPage("Spam Filter",UIParent,0)
+assert(cfg("Keep Deaths From Level").disabled())
+cfg("Filter Hardcore Deaths").setValue(true); assert(p.spamFilterHardcoreDeaths and not cfg("Keep Deaths From Level").disabled())
+cfg("Keep Deaths From Level").setValue(70); assert(p.spamFilterHardcoreKeepLevel==70 and hidden("CHAT_MSG_SYSTEM",death))
+''')
+print('PASS: hardcore death announcements (system/emote/channel, prefixed, death verbs), non-death look-alikes, player chat, keep level and options')
+lua.execute(r'''
+local p=CHAT.GetSettings()
+local log=CHAT.GetHiddenLog()
+local function filter(frame,event,text,author,id,where)
+    return CHAT.SpamFilter(frame,event,text,author,"Common",where or "2. Trade - City","","",0,2,"Trade","",id,"guid")
+end
+for _,k in ipairs({"spamFilterEnabled","spamFilterKeywordsEnabled","spamFilterRecruitment","spamFilterAchievements","spamFilterHardcoreDeaths"}) do p[k]=false end
+p.spamFilterTrade=true; p.spamFilterPublic=true; CHAT.Apply()
+local before=#log
+assert(filter(ChatFrame1,"CHAT_MSG_CHANNEL","WTS |cffa335ee|Hitem:1|h[Sword]|h|r","Bob",9001))
+assert(filter(ChatFrame2,"CHAT_MSG_CHANNEL","WTS |cffa335ee|Hitem:1|h[Sword]|h|r","Bob",9001))
+assert(#log==before+1,"one entry per server message across chat windows")
+local e=log[#log]
+assert(e.reason=="Trade" and e.where=="2. Trade - City" and e.author=="Bob" and e.text=="WTS [Sword]")
+assert(not filter(ChatFrame1,"CHAT_MSG_CHANNEL","LF tank","Bob",9002) and #log==before+1,"shown lines are not logged")
+p.spamFilterAchievements=true; CHAT.Apply()
+assert(CHAT.SpamFilter(ChatFrame1,"CHAT_MSG_ACHIEVEMENT","%s has earned [Explorer]!","Ana"))
+assert(log[#log].reason=="Achievement" and log[#log].where=="ACHIEVEMENT" and log[#log].text=="Ana has earned [Explorer]!")
+p.spamFilterEnabled=true; CHAT.ResetSpamFilter(); CHAT.Apply()
+assert(not filter(ChatFrame1,"CHAT_MSG_CHANNEL","need heals","Bob",9003))
+assert(filter(ChatFrame1,"CHAT_MSG_CHANNEL","need heals","Bob",9004) and log[#log].reason=="Repeat")
+for i=1,250 do filter(ChatFrame1,"CHAT_MSG_CHANNEL","WTS cap "..i,"Bob",10000+i) end
+assert(#log==200 and log[#log].text=="WTS cap 250","log keeps the latest 200 lines")
+rows={}; buttons={}; testModule.buildPage("Spam Filter",UIParent,0)
+buttons["Show Hidden Messages"]()
+assert(CHAT.copyWindow:IsShown() and CHAT.copyWindow.title:GetText()=="Hidden Messages (200)")
+local shown=CHAT.copyWindow.box:GetText()
+assert(shown:find("^[%d:]+ %[Trade%] %[2%. Trade %- City%] Bob: WTS cap 250\n"),shown:sub(1,80))
+CHAT.copyWindow:Hide()
+CHAT.CopyChat(ChatFrame1); assert(CHAT.copyWindow.title:GetText()=="Copy Chat"); CHAT.copyWindow:Hide()
+''')
+print('PASS: hidden message log (one entry per server message, reasons, channel/sender/plain text, achievements, repeats, 200-line cap, Show Hidden Messages window)')

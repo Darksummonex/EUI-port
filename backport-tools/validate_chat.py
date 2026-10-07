@@ -84,7 +84,7 @@ assert(CHAT.PlainText(originalLink)=="[www.item-name.com]")
 assert(CHAT.AbbreviateChannels("|Hchannel:channel:2|h[2. Trade - City]|h Bob: hi")=="|Hchannel:channel:2|h[2]|h Bob: hi")
 assert(CHAT.AbbreviateChannels("|Hchannel:channel:2|h[2. Trade - City]|h Bob",true)=="|Hchannel:channel:2|h[T]|h Bob")
 assert(CHAT.AbbreviateChannels("|Hchannel:PARTY|h[Party]|h Bob")=="|Hchannel:PARTY|h[P]|h Bob")
-assert(#chatFilters.CHAT_MSG_SAY==3 and chatFilters.CHAT_MSG_SYSTEM==nil)
+assert(#chatFilters.CHAT_MSG_SAY==3 and #chatFilters.CHAT_MSG_SYSTEM==1 and chatFilters.CHAT_MSG_SYSTEM[1]==CHAT.SpamFilter)
 local keep,msg,extra=CHAT.NameFilter(ChatFrame1,"CHAT_MSG_SAY","hi player","Bob")
 assert(keep==false and msg=="hi |cffff8033player|r" and extra=="Bob")
 assert(CHAT.NameFilter(ChatFrame1,"CHAT_MSG_SAY","nobody here")==false and select(2,CHAT.NameFilter(ChatFrame1,"CHAT_MSG_SAY","nobody"))==nil)
@@ -247,6 +247,20 @@ assert(cvars.chatBubbles=="0" and cvars.chatBubblesParty=="0")
 inInstance=false; CHAT.ApplyBubbles(); assert(cvars.chatBubbles=="1")
 b.enabled=false; CHAT.ApplyBubbles()
 assert(cvars.chatBubbles=="0" and cvars.chatBubblesParty=="0" and b._savedCVars==nil and not d.styled and bubble:GetBackdrop())
+-- NPC bubbles that anchor the frame to its own text must not get the text anchored back.
+local npc=CreateFrame("Frame",nil,WorldFrame); npc:SetBackdrop({bgFile="Interface\\\\Tooltips\\\\ChatBubble-Background"})
+local nfs=npc:CreateFontString(); nfs:SetFont("bubble.ttf",14,""); nfs:SetText("Firalaine ruftos")
+nfs:SetPoint("TOPLEFT",npc,"TOPLEFT",8,-8); npc:SetPoint("CENTER",nfs,"CENTER",0,0)
+local setPoint=nfs.SetPoint
+nfs.SetPoint=function(self,point,rel,...)
+    for i=1,rel and rel.GetNumPoints and rel:GetNumPoints() or 0 do
+        assert(select(2,rel:GetPoint(i))~=self,"circular bubble anchor")
+    end
+    return setPoint(self,point,rel,...)
+end
+b.enabled=true; CHAT.ApplyBubbles()
+local nd=CHAT.bubbles[npc]; assert(nd and nd.styled and npc:GetBackdrop()==nil and nd.bg:IsShown())
+b.enabled=false; CHAT.ApplyBubbles(); assert(not nd.styled and npc:GetBackdrop())
 ''')
 # Unlock, clamps, combat deferral, restore/re-enable and external wrappers.
 lua.execute('''

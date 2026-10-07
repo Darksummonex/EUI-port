@@ -56,6 +56,7 @@ local defaults = {profile={
         spamFilterPublic=true, spamFilterGroup=false, spamFilterWhispers=false,
         spamFilterAchievements=false, spamFilterTrade=false, spamFilterRecruitment=false,
         spamFilterKeywordsEnabled=false, spamFilterKeywords="",
+        spamFilterHardcoreDeaths=false, spamFilterHardcoreKeepLevel=81,
         clickableURLs=true, copyLines=500, mouseWheel=true, fadeMessages=false, fadeSeconds=120,
         width=420, height=180,
     },
@@ -346,13 +347,15 @@ local function EnsureCopyWindow()
     close:SetScript("OnLeave",function() clabel:SetTextColor(1,1,1,.75); EdgeColor(cedges,1,1,1,.15) end)
     close:SetScript("OnClick",function() f:Hide() end)
     f:SetScript("OnHide",function() box:ClearFocus(); copyDimmer:Hide() end)
-    f.box,f.scroll,f.close=box,scroll,close; f:Hide(); copyWindow=f; ns.copyWindow=f
+    f.box,f.scroll,f.close,f.title=box,scroll,close,title; f:Hide(); copyWindow=f; ns.copyWindow=f
     return f
 end
-local function ShowCopy(text)
-    local f=EnsureCopyWindow(); copyDimmer:Show(); f:Show(); f.box:SetText(text); f.scroll:SetVerticalScroll(0)
+local function ShowCopy(text, heading)
+    local f=EnsureCopyWindow(); f.title:SetText(heading or "Copy Chat")
+    copyDimmer:Show(); f:Show(); f.box:SetText(text); f.scroll:SetVerticalScroll(0)
     f.box:HighlightText(); f.box:SetFocus() -- explicit copy click only
 end
+ns.ShowCopy=ShowCopy
 local urlPopup, urlDimmer
 local function HideURL() if urlPopup then urlPopup:Hide() end end
 local function EnsureURLPopup()
@@ -1040,12 +1043,21 @@ local function CaptureBubble(f)
     d.edges=Edges(f,"BORDER",d.bg); ShowEdges(d.edges,false)
     return d
 end
+-- Some bubbles (NPC speech) anchor the frame to its own text; anchoring that
+-- text back to the frame is a circular SetPoint error.
+local function AnchoredTo(f,target)
+    for i=1,(f.GetNumPoints and f:GetNumPoints() or 0) do
+        local _,rel=f:GetPoint(i); if rel==target then return true end
+    end
+    return false
+end
 local function RestoreBubble(f,d)
     if not d.styled then return end
     d.styled=false
     f:SetBackdrop(d.backdrop); f:SetBackdropColor(unpack(d.bgColor)); f:SetBackdropBorderColor(unpack(d.borderColor))
     if d.tail then d.tail:SetAlpha(1) end
-    d.fs:SetFont(unpack(d.font)); d.fs:SetTextColor(unpack(d.color)); d.fs:SetWidth(d.width); SetPoints(d.fs,d.points)
+    d.fs:SetFont(unpack(d.font)); d.fs:SetTextColor(unpack(d.color)); d.fs:SetWidth(d.width)
+    if not AnchoredTo(f,d.fs) then SetPoints(d.fs,d.points) end
     d.bg:Hide(); ShowEdges(d.edges,false)
 end
 local function StyleBubble(f,d,cfg,channel)
@@ -1056,7 +1068,7 @@ local function StyleBubble(f,d,cfg,channel)
     if cfg.followBlizzardColor then fs:SetTextColor(unpack(d.color))
     else local c=cfg.textColor or {}; fs:SetTextColor(c.r or 1,c.g or 1,c.b or 1) end
     fs:SetWidth(min(cfg.maxWidth or 260,fs:GetStringWidth()+2))
-    fs:ClearAllPoints(); fs:SetPoint("CENTER",f,"CENTER",0,cfg.offsetY or 0)
+    if not AnchoredTo(f,fs) then fs:ClearAllPoints(); fs:SetPoint("CENTER",f,"CENTER",0,cfg.offsetY or 0) end
     local pad=cfg.padding or 8
     d.bg:ClearAllPoints(); d.bg:SetPoint("TOPLEFT",fs,"TOPLEFT",-pad,pad); d.bg:SetPoint("BOTTOMRIGHT",fs,"BOTTOMRIGHT",pad,-pad)
     local bc=cfg.bgColor or {}

@@ -1,4 +1,17 @@
-# EllesmereUI Chat — 3.3.5 — 0.45
+# EllesmereUI Chat — 3.3.5 — 0.46
+
+0.46: filtro de mortes do Hardcore em Chat > Spam Filter > HARDCORE. Esconde
+anúncios do servidor como "Warrash the level 11 Gnome Warrior has been slain
+by Sergeant Brashclaw in Westfall" (mensagens de sistema, emotes, BG e canais;
+has been slain/killed, has died, has drowned, has fallen, has burned, was
+slain/killed). "Keep Deaths From Level" mantém visíveis mortes a partir de um
+nível (81 esconde todas). Desligado por padrão; chat de jogadores não é afetado.
+O preset de anúncios de comércio também esconde LFW (looking for work).
+Registro de mensagens escondidas na sessão (últimas 200 linhas, com hora, motivo,
+canal e autor), aberto pelo botão "Show Hidden Messages"; "Clear Filter History"
+virou "Reset Repeat Memory", que só zera a memória do filtro de repetição.
+Corrigido erro "SetPoint(): is dependent on this" em balões de fala de NPC
+ancorados ao próprio texto.
 
 0.45: correções do filtro de spam. O preset de recrutamento não esconde mais
 anúncios de raide com tag de guilda ("<Frost> LF 1 heal ICC25"); só "LF guild"
