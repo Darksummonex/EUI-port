@@ -22,6 +22,17 @@ client loads the project files directly. WLk's previous copies were moved to
 with copies. A new EUI module folder is created here and linked with
 `New-Item -ItemType Junction -Path "<AddOns>\<Name>" -Target "<project>\<Name>"`.
 
+**Test and Production installs** (Alex, 2026-10-06; supersedes the junction note
+above for these two installs, which hold real folder copies):
+`D:\Jogo\Whitemane\Games\FrostmourneRebuffed` is **Test** (launch its `Wow.exe`) and
+`D:\Jogo\FrostmourneRebuffed` is **Production**. "send updates to test" backs up and
+mirrors the `EllesmereUI*` folders and `AbilityTimeline` into Test only
+(`.codex-backups\test-addons-before-copy-<stamp>`). Production is updated only when
+Alex asks, after the same backup (`production-addons-before-copy-<stamp>`).
+AbilityTimeline lives outside the project; its working copy is now the Test one.
+DBM is only in Production, so the AbilityTimeline validators read Production through
+`EUI_GAME_DIR=D:\Jogo\FrostmourneRebuffed`.
+
 **Do not use the game client folders** (Alex, 2026-10-06): no reading, copying,
 syncing or inspecting `D:\Jogo\...` installs, their WTF/BugGrabber, logs or MPQs.
 Ask Alex to paste in-game errors instead. `backport-tools/game_paths.py` is `None`
@@ -59,9 +70,10 @@ them. The project ZIP contains them, so keep it private.
 - Commits: `cursor/` branch, stage only related files, concise message, push only
   when asked. Keep the exact addon folder names at the top level of ZIPs.
 
-Python: `C:/Users/Gaming/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe`.
-Git: `C:\Program Files\Git\cmd\git.exe`. Full validator loop (62 validators, all
-pass), run from the project folder:
+Python: `C:/Users/Gaming/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe`
+(missing since 2026-10-06 19:00; any 64-bit Python 3.12 works with `.codex-tools`,
+see `AGENTS.md`). Git: `C:\Program Files\Git\cmd\git.exe`. Full validator loop
+(62 validators, all pass), run from the project folder:
 
 ```
 $py='C:/Users/Gaming/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe'; $all=Get-ChildItem backport-tools\validate_*.py; $fail=@(); $all | ForEach-Object { $out = & $py $_.FullName 2>&1 | Out-String; if ($LASTEXITCODE -ne 0) { $fail += $_.Name; $_.Name; ($out.Trim() -split "`n" | Select-Object -Last 6) } }; "Ran $($all.Count). Failures: $($fail.Count) -> $($fail -join ', ')"
@@ -77,7 +89,7 @@ Working-tree backups: `backport-tools/backup_project.py` writes
 Core 0.55; Action Bars 0.19; Arena 0.3; AuraBuff Reminders 0.4; Bags 0.10;
 Blizz UI Enhanced (BlizzardSkin) 0.26; Chat 0.46; Cooldown Manager 0.3;
 Damage Meters 0.7; Data Bars 0.4; Friends 0.3; Minimap 0.4; Nameplates 0.14;
-Options 0.98; QoL 0.12; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.13;
+Options 0.98; QoL 0.13; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.13;
 Resource Bars 0.4; Unit Frames 0.17.
 
 Git: branch `cursor/eui-shapes-bars-skins-qol`, built on

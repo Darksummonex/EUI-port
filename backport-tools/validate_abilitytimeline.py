@@ -17,7 +17,7 @@ toc=(addon/'AbilityTimeline.toc').read_text(encoding='utf-8-sig')
 assert '## Interface: 30300' in toc
 assert '## SavedVariables: AbilityTimeline335DB' in toc
 files=[l.strip() for l in toc.splitlines() if l.strip().endswith('.lua') and not l.startswith('#')]
-assert files==['Core.lua','Sound.lua','Timeline.lua','Highlights.lua','Sources.lua','Options.lua'],files
+assert files==['Core.lua','Sound.lua','Timeline.lua','Highlights.lua','Sources.lua','BossBars.lua','Options.lua'],files
 for name in files:
     source=re.sub(r'--[^\n]*','',(addon/name).read_text(encoding='utf-8-sig'))
     for banned in ['C_Timer','C_EncounterTimeline','C_Spell','SetRotatesTexture','BackdropTemplate','SetSize(','SetAtlas','.png"']:
@@ -168,7 +168,7 @@ assert(AT.ResolveIcon(69057)=="Interface\\Icons\\Ability_Warrior_BoneSpike" and 
 
 local byKey={}
 for i=1,40 do local w=_G["AbilityTimeline335Option"..i]; if w and w.key then byKey[w.key]=w end end
-for _,k in ipairs({"enabled","vertical","inverse","ticks","showNames","showQueued","textSide","window","length","width","iconSize","margin","maxQueued","bgAlpha","bigIcon","bigIconGrow","textHighlight","textGrow","sound","voice","bigIconSize","bigIconTime","textSize","textTime","dbm","bigwigs","pull"}) do
+for _,k in ipairs({"enabled","vertical","inverse","ticks","showNames","showQueued","textSide","window","length","width","iconSize","margin","maxQueued","bgAlpha","bigIcon","bigIconGrow","textHighlight","textGrow","sound","voice","bigIconSize","bigIconTime","textSize","textTime","dbm","bigwigs","pull","hideDBMBars","hideBigWigsBars"}) do
     assert(byKey[k],"option for "..k)
 end
 categories[1].refresh()
@@ -222,7 +222,7 @@ SlashCmdList.ABILITYTIMELINE("lock")
 assert(AT.db.locked and not AbilityTimeline335Frame.shown and AbilityTimeline335Frame.point[4]==123)
 SlashCmdList.ABILITYTIMELINE("reset"); assert(AT.db.positions.timeline.x==410)
 SlashCmdList.ABILITYTIMELINE("test"); assert(#AT.List()==4)
-SlashCmdList.ABILITYTIMELINE("status"); assert(chat[#chat]:find("timers: 4",1,true))
+SlashCmdList.ABILITYTIMELINE("status"); assert(chat[#chat]:find("no boss mod bars hidden, timers: 4",1,true))
 SlashCmdList.ABILITYTIMELINE("clear"); assert(#AT.List()==0)
 SlashCmdList.ABILITYTIMELINE(""); assert(opened==2)
 ''')
@@ -274,7 +274,10 @@ AT.Sources.Attach(); DBM.Bars:CreateBar(30,"Once"); assert(#AT.List()==2,"hooks 
 # Newer BigWigs: loader message API.
 lua=runtime(r'''
 msgs={}
-BigWigsLoader={RegisterMessage=function(owner,msg,f) assert(owner==AbilityTimeline335.Sources); msgs[msg]=f end}
+BigWigsLoader={RegisterMessage=function(owner,msg,f)
+    if owner==AbilityTimeline335.BossBars then return end
+    assert(owner==AbilityTimeline335.Sources); msgs[msg]=f
+end}
 ''')
 lua.execute(r'''
 local AT=AbilityTimeline335

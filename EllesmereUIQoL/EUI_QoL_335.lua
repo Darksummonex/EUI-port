@@ -11,7 +11,7 @@ local defaults={profile={enabled=true,autoRepair=false,guildRepair=false,autoSel
     rightClickEnemy=false,rightClickAlly=false,hideTransforms=false,flyoutIlvl=false,
     fps=false,stats=false,coordinates=false,crosshair=false,durability=false,durabilityThreshold=40,
     combatAlert=false,deathAlert=false,bloodlust=false,battleRes=false,movement=false,movementSpellID=0,targetDistance=false,
-    zoneText=true,zoneTextOutline="module",hideBossModBars=true,
+    zoneText=true,zoneTextOutline="module",
     fpsTextSize=12,statsTextSize=12,mapCoordsTextSize=12,combatAlertTextSize=22,groupDeathTextSize=26,
     durWarnTextSize=30,trackerTextSize=12,targetDistanceTextSize=18,crosshairSize=40,showReady=false,
     fpsWorld=false,fpsLocal=true,fpsLabels=true,fpsColorMode="custom",fpsColor={r=1,g=1,b=1},fpsInterval=1,fpsKey="",
@@ -181,7 +181,6 @@ function ns.UpdateLogging()
 end
 function ns.Apply()
     local p=ns.GetSettings(); if not p then return end
-    if ns.ApplyBossBars then ns.ApplyBossBars() end
     if InCombatLockdown() then pending=true; return end; pending=false
     InstallTrainer(); InstallDelete()
     if ns.trainButton and not Enabled("trainAll") then trainerUntil=0 end

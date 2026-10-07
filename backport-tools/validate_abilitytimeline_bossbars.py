@@ -1,11 +1,12 @@
-"""QoL: hide DBM / BigWigs bars while AbilityTimeline shows their timers.
+"""AbilityTimeline BossBars.lua: hide DBM / BigWigs bars while the timeline shows
+their timers (Retail AbilityTimeline's "disable boss mod bars").
 
-Runs the real DBM-StatusBarTimers DBT.lua and the real AbilityTimeline Core.lua
-and Sources.lua in Lua 5.1, with mocked DBM-Core callbacks, BigWigs messages and
-LibCandyBar. Bars must turn invisible and click-through while the timeline is
-active, keep counting (and expiring) while invisible, come back when the
-timeline, its source or the EUI option goes off, follow late/on-demand loading,
-never touch DBM saved options, and do nothing at all without the timeline."""
+Runs the real DBM-StatusBarTimers DBT.lua and the real AbilityTimeline Core.lua,
+Sources.lua and BossBars.lua in Lua 5.1, with mocked DBM-Core callbacks, BigWigs
+messages and LibCandyBar. Bars must turn invisible and click-through while the
+timeline is active, keep counting (and expiring) while invisible, come back when
+the timeline, its source or its Hide option goes off, follow late/on-demand
+loading, never touch DBM saved options, and stay untouched with both options off."""
 from pathlib import Path
 import sys
 from game_paths import ADDONS, DATA, WTF
@@ -14,9 +15,6 @@ if not ADDONS:
     print('SKIP: needs the real DBM and AbilityTimeline from a game install; set EUI_GAME_DIR.'); raise SystemExit(0)
 sys.path.insert(0, str(root / '.codex-tools'))
 from lupa.lua51 import LuaRuntime
-
-QOL_FILES = ['EUI_QoL_335.lua', 'EUI_QoL_335_Displays.lua', 'EUI_QoL_335_Panels.lua', 'EUI_QoL_335_Mail.lua',
-             'EUI_QoL_335_Extras.lua', 'EUI_QoL_335_BossBars.lua']
 
 
 def read(rel):
@@ -132,66 +130,59 @@ function SameTable(a,b) for k,v in pairs(a) do if b[k]~=v then return false,k en
 def runtime():
     lua = LuaRuntime(unpack_returned_tuples=True)
     for source in ['backport-tools/wrath_mock.lua', 'backport-tools/inventory_resources_mock.lua',
-                   'backport-tools/qol_mock.lua', 'EllesmereUI/EllesmereUI_Lite.lua']:
+                   'backport-tools/qol_mock.lua']:
         lua.execute(read(source))
     lua.execute(MOCK)
-    # DBM loads before EUI (folder order); the timeline is loaded later on purpose.
+    # DBM loads first (folder order); the timeline is loaded later on purpose.
     lua.execute(read('DBM-StatusBarTimers/DBT.lua'))
     lua.execute("DBT:LoadOptions('DBM')")
-    ns = lua.table()
-    lua.execute("ERR_INV_FULL='Inventory is full.'")
-    for name in QOL_FILES:
-        lua.execute(read('EllesmereUIQoL/' + name), 'EllesmereUIQoL', ns)
-    lua.globals().Q = ns
-    core = read('EllesmereUI/EllesmereUI_Lite.lua')
-    safe = lua.execute('local function errorhandler(' + core.split('local function errorhandler(', 1)[1].split(
-        '\n-------------------------------------------------------------------------------', 1)[0] + '\nreturn safecall')
-    safe(ns.addon.OnInitialize, ns.addon)
-    safe(ns.addon.OnEnable, ns.addon)
     return lua
 
 
 def load_timeline(lua):
     at = lua.table()
-    for name in ['Core.lua', 'Sources.lua']:
+    for name in ['Core.lua', 'Sources.lua', 'BossBars.lua']:
         lua.execute(read('AbilityTimeline/' + name), 'AbilityTimeline', at)
     lua.globals().AT = at
+    lua.globals().B = at.BossBars
 
 
-# 1) No timeline installed: nothing is hooked, hidden or registered.
+# 1) Both Hide options off (saved): the timeline still gets timers, the bars stay as they are.
 lua = runtime()
 lua.execute('''
 LoadBigWigsPlugins(); sendBarCreated=true
-local B=Q.bossBars; local p=Q.GetSettings()
-assert(p.hideBossModBars==true,'Option must default on')
-local create,start,handlers=DBT.CreateBar,candy.barPrototype.Start,#bwHandlers
+AbilityTimeline335DB={hideDBMBars=false,hideBigWigsBars=false}
+''')
+load_timeline(lua)
+lua.execute('''
+AT.events.scripts.OnEvent(AT.events,'ADDON_LOADED','AbilityTimeline')
+B.events.scripts.OnEvent(B.events,'ADDON_LOADED','AbilityTimeline'); B.events.scripts.OnUpdate(B.events,0)
 local bar=StartDBM('Boss Ability',30); BWSend('BigWigs_StartBar','Boss','k1','Breath',40)
-Q.Apply(); B.events.scripts.OnEvent(B.events,'ADDON_LOADED','BigWigs_Plugins'); B.events.scripts.OnUpdate(B.events,0)
-assert(Own(bar.frame) and bar.frame:IsMouseEnabled(),'DBM bar touched without the timeline')
-assert(bwBars.Breath:GetParent()==UIParent and EffAlpha(bwBars.Breath)==1,'BigWigs bar touched without the timeline')
-assert(DBT.CreateBar==create and candy.barPrototype.Start==start and #bwHandlers==handlers,'Hooks installed without the timeline')
-assert(not B.hidden.dbm and not B.hidden.bigwigs and Q.BossBarsStatus()=='AbilityTimeline is not loaded')
+assert(AT.timers['DBM:Boss Ability'] and AT.timers['BW:Breath'],'Timeline must still receive timers')
+assert(Own(bar.frame) and bar.frame:IsMouseEnabled(),'DBM bar touched with Hide DBM bars off')
+assert(bwBars.Breath:GetParent()==UIParent and EffAlpha(bwBars.Breath)==1,'BigWigs bar touched with Hide BigWigs bars off')
+assert(not B.hidden.dbm and not B.hidden.bigwigs and B.Status()=='no boss mod bars hidden')
 ''')
 
-# 2) Full flow: DBM loaded, BigWigs loader only, timeline loads late.
+# 2) Full flow: DBM loaded with a running bar, BigWigs loader only, timeline loads late.
 lua = runtime()
 lua.execute('''
-B=Q.bossBars; p=Q.GetSettings()
 optionsBefore=Snapshot(DBT.Options); createBefore=DBT.CreateBar
 long=StartDBM('Boss Ability',120)
 assert(Own(long.frame) and long.frame:IsMouseEnabled())
 ''')
 load_timeline(lua)
 lua.execute('''
--- QoL's ADDON_LOADED handler runs before the timeline's own: AT.db is not set yet.
-B.events.scripts.OnEvent(B.events,'ADDON_LOADED','AbilityTimeline')
-assert(not B.hidden.dbm and DBT.CreateBar==createBefore,'Acted before the timeline initialized')
+-- Before the timeline's ADDON_LOADED, AT.db is not set yet.
+B.Apply(); assert(not B.hidden.dbm and DBT.CreateBar==createBefore,'Acted before the timeline initialized')
 AT.events.scripts.OnEvent(AT.events,'ADDON_LOADED','AbilityTimeline')
+assert(AT.db.hideDBMBars==true and AT.db.hideBigWigsBars==true,'Hide options must default on')
 assert(AT.Sources.dbm=='callbacks' and AT.Sources.bigwigs=='loader')
+B.events.scripts.OnEvent(B.events,'ADDON_LOADED','AbilityTimeline')
 assert(B.events:IsShown(),'Deferred re-check not armed'); B.events.scripts.OnUpdate(B.events,0); assert(not B.events:IsShown())
 assert(B.hidden.dbm and B.hidden.bigwigs,'Timeline active but bars not hidden')
 assert(EffAlpha(long.frame)==0 and long.frame:IsVisible() and not long.frame:IsMouseEnabled(),'Existing DBM bar must be invisible, shown and click-through')
-assert(Q.BossBarsStatus()=='AbilityTimeline active: DBM and BigWigs bars hidden')
+assert(B.Status()=='DBM and BigWigs bars hidden')
 -- New bars while active: hidden on creation, enlarged ones too; the timeline still gets the timer.
 local short=StartDBM('Short',8)
 assert(short.enlarged and EffAlpha(short.frame)==0 and not short.frame:IsMouseEnabled(),'New DBM bar visible')
@@ -232,7 +223,7 @@ BWSend('BigWigs_StartBar','Boss','k3','Fireball',25)
 assert((bwBars.Fireball==breath or bwBars.Fireball==other) and bwBars.Fireball:GetParent()==B.holder,'Recycled BigWigs bar visible')
 ''')
 
-# 4) Reversible: timeline source toggles, timeline toggle, EUI option, QoL master switch.
+# 4) Reversible: source toggles, timeline toggle, the two Hide options, combat.
 lua.execute('''
 local function DBMShown() return Own(long.frame) and long.frame:IsMouseEnabled() end
 local function DBMHidden() return EffAlpha(long.frame)==0 and not long.frame:IsMouseEnabled() end
@@ -245,19 +236,21 @@ AT.db.dbm=true; AT.Refresh(); assert(DBMHidden())
 AT.db.bigwigs=false; AT.Refresh(); assert(BWShown() and DBMHidden(),'BigWigs source off must restore BigWigs bars only')
 AT.db.bigwigs=true; AT.Refresh(); assert(BWHidden(),'Running BigWigs bars not re-hidden')
 AT.db.enabled=false; AT.Refresh(); assert(DBMShown() and BWShown() and not B.hidden.dbm and not B.hidden.bigwigs,'Timeline off must restore everything')
-assert(Q.BossBarsStatus()=='AbilityTimeline loaded: no boss mod bars hidden')
+assert(B.Status()=='no boss mod bars hidden')
 local visible=StartDBM('Visible',20); assert(Own(visible.frame) and visible.frame:IsMouseEnabled(),'Bar hidden while timeline off')
 AT.db.enabled=true; AT.Refresh(); assert(DBMHidden() and BWHidden() and EffAlpha(visible.frame)==0)
-p.hideBossModBars=false; Q.Apply(); assert(DBMShown() and BWShown(),'EUI option off must restore')
-p.hideBossModBars=true; Q.Apply(); assert(DBMHidden() and BWHidden())
-p.enabled=false; Q.Apply(); assert(DBMShown() and BWShown(),'QoL master switch off must restore'); p.enabled=true; Q.Apply(); assert(DBMHidden())
--- Combat: QoL defers its other work, the bars still follow (no frames created).
+AT.db.hideDBMBars=false; AT.Refresh(); assert(DBMShown() and BWHidden(),'Hide DBM bars off must restore DBM bars only')
+assert(B.Status()=='BigWigs bars hidden')
+AT.db.hideDBMBars=true; AT.Refresh(); assert(DBMHidden())
+AT.db.hideBigWigsBars=false; AT.Refresh(); assert(BWShown() and DBMHidden(),'Hide BigWigs bars off must restore BigWigs bars only')
+AT.db.hideBigWigsBars=true; AT.Refresh(); assert(BWHidden())
+-- Combat: only alpha, mouse and parents of boss mod frames change, so the bars still follow.
 combat=true
 AT.db.enabled=false; AT.Refresh(); assert(DBMShown() and BWShown(),'Restore blocked in combat')
 AT.db.enabled=true; AT.Refresh(); assert(DBMHidden() and BWHidden(),'Hide blocked in combat')
-p.hideBossModBars=false; Q.Apply(); assert(DBMShown(),'EUI option ignored in combat')
-p.hideBossModBars=true; Q.Apply(); assert(DBMHidden())
-combat=false; Q.events.scripts.OnEvent(Q.events,'PLAYER_REGEN_ENABLED'); assert(DBMHidden())
+AT.db.hideDBMBars=false; AT.Refresh(); assert(DBMShown(),'Hide DBM bars ignored in combat')
+AT.db.hideDBMBars=true; AT.Refresh(); assert(DBMHidden())
+combat=false
 -- ClickThrough changes while hidden keep bars click-through; restore follows the option.
 DBT:SetOption('ClickThrough',false); assert(DBMHidden(),'SetOption re-enabled the mouse on a hidden bar')
 DBT:SetOption('ClickThrough',true); AT.db.enabled=false; AT.Refresh(); assert(Own(long.frame) and not long.frame:IsMouseEnabled(),'ClickThrough not honoured on restore')
@@ -271,26 +264,16 @@ local dummy=DBT:CreateDummyBar(nil,nil,'Preview'); assert(dummy.frame:GetParent(
 local same,key=SameTable(optionsBefore,DBT.Options); assert(same,'DBT option changed: '..tostring(key))
 ''')
 
-# 5) Options: Raid Tools > BOSS MOD BARS toggle with tooltip and live status.
-lua.execute(read('EllesmereUIOptions/EUI_QoL_335_Options.lua'))
-lua.execute("allFrames[#allFrames]:RunScript('OnEvent','PLAYER_LOGIN')")
-lua.execute('''
-local module=modules.EllesmereUIQoL; rows={}; module.buildPage('Raid Tools',UIParent,0)
-local row=FindRow('Hide DBM/BigWigs Bars While Timeline Is Active')
-assert(row.getValue()==true and row.tooltip:find('timers keep running',1,true))
-FindRow('AbilityTimeline active: DBM and BigWigs bars hidden')
-row.setValue(false); assert(p.hideBossModBars==false and Own(long.frame) and not B.hidden.bigwigs)
-row.setValue(true); assert(EffAlpha(long.frame)==0 and B.hidden.bigwigs)
-assert(module.searchTerms:find('bigwigs',1,true) and #module.pages==6)
-''')
-
-src = read('EllesmereUIQoL/EUI_QoL_335_BossBars.lua')
-assert 'SetRotatesTexture' not in src
-assert sum(1 for line in src.splitlines() if line.startswith('local ')) < 200
-toc = read('EllesmereUIQoL/EllesmereUIQoL.toc')
-assert 'EUI_QoL_335_Extras.lua\nEUI_QoL_335_BossBars.lua' in toc
-assert 'hideBossModBars=true' in read('EllesmereUIQoL/EUI_QoL_335.lua')
+# 5) The feature lives in AbilityTimeline only; EUI QoL no longer hides the bars.
+src = read('AbilityTimeline/BossBars.lua')
+assert 'SetRotatesTexture' not in src and 'EllesmereUI' not in src
+toc = read('AbilityTimeline/AbilityTimeline.toc')
+assert 'Sources.lua\nBossBars.lua\nOptions.lua' in toc.replace('\r\n', '\n')
+assert not (root / 'EllesmereUIQoL' / 'EUI_QoL_335_BossBars.lua').exists()
+assert 'BossBars' not in read('EllesmereUIQoL/EllesmereUIQoL.toc')
+for rel in ['EllesmereUIQoL/EUI_QoL_335.lua', 'EllesmereUIOptions/EUI_QoL_335_Options.lua']:
+    assert 'hideBossModBars' not in read(rel) and 'BossBars' not in read(rel), rel
 print('PASS: with AbilityTimeline active, real DBT bars (existing, new, enlarged) go alpha 0 via their anchor and click-through '
       'while still counting down, expiring and feeding the timeline; BigWigs bars (message and LibCandyBar Start paths, '
-      'on-demand load) park under a transparent holder that survives SetAlpha(1); late timeline load, source/timeline/EUI/QoL '
-      'toggles, combat, ClickThrough and Move Bars all restore correctly; DBT saved options untouched; nothing happens without the timeline.')
+      'on-demand load) park under a transparent holder that survives SetAlpha(1); late timeline load, source/timeline/Hide '
+      'option toggles, combat, ClickThrough and Move Bars all restore correctly; DBT saved options untouched; both Hide options off leaves the bars alone.')

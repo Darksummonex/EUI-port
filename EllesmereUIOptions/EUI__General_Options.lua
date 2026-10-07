@@ -1173,11 +1173,11 @@ do
             { module = "General", text = "Dragging or typing in a slider no longer errors." },
             { module = "General", text = "The settings panel opens on clients whose atlas lookup errors on unknown names, instead of failing with an 'NS' error." },
             { module = "Quality of Life", text = "Displays has a ZONE TEXT section with Move Zone Text." },
-            { module = "Quality of Life", text = "Raid Tools has a BOSS MOD BARS section with Hide DBM/BigWigs Bars While Timeline Is Active and a status line." },
+            { module = "Quality of Life", text = "Raid Tools no longer has a BOSS MOD BARS section: AbilityTimeline's Sources options hide DBM and BigWigs bars." },
         },
     },
     {
-        version = "Quality of Life 0.12",
+        version = "Quality of Life 0.13",
         heroes = {
             {
                 title = "Zone Text Outline",
@@ -1197,11 +1197,6 @@ do
             {
                 title = "Disband Group",
                 desc  = "A Disband button on Raid Tools removes everyone from your raid or party after a confirmation. Leader only, never in combat.",
-                nav   = Nav("EllesmereUIQoL", "Raid Tools"),
-            },
-            {
-                title = "Hide Boss Mod Bars Under AbilityTimeline",
-                desc  = "While AbilityTimeline shows DBM or BigWigs timers, their own bars turn invisible and click-through. Timers keep running, nothing in DBM or BigWigs settings changes, and the bars return when the timeline or the option is turned off.",
                 nav   = Nav("EllesmereUIQoL", "Raid Tools"),
             },
             {
@@ -1243,6 +1238,7 @@ do
             },
         },
         fixes = {
+            { text = "Hiding DBM and BigWigs bars while AbilityTimeline is active moved to AbilityTimeline itself, as on Retail: Hide DBM bars and Hide BigWigs bars on its Sources page. The Raid Tools option is gone." },
             { text = "Logging out, exiting, releasing spirit and other Blizzard confirmation popups no longer trigger the \"EllesmereUIQoL has been blocked from an action only available to the Blizzard UI\" message." },
             { text = "The zone name no longer appears in the middle of the screen at small UI scales. It now sits fixed at the top (X 9 / Y 322 from screen center), with no Unlock Mode mover." },
         },

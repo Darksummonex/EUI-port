@@ -1,4 +1,10 @@
-# Quality of Life 3.3.5 — 0.12
+# Quality of Life 3.3.5 — 0.13
+
+0.13: esconder as barras do DBM/BigWigs com o AbilityTimeline ativo saiu do
+EUI (seção BOSS MOD BARS do Raid Tools e `EUI_QoL_335_BossBars.lua`) e foi
+para o próprio AbilityTimeline, como no Retail: AbilityTimeline > Sources >
+"Hide DBM bars" / "Hide BigWigs bars" (`BossBars.lua`, AbilityTimeline
+335-0.2). Teste: `validate_abilitytimeline_bossbars.py`.
 
 0.12: sons de alerta tocam chaves `sm:` de pacotes SharedMedia carregados
 depois do QoL.

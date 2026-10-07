@@ -6,7 +6,7 @@ root=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(root/'.codex-tools'))
 from lupa.lua51 import LuaRuntime
 toc=(root/'EllesmereUIQoL/EllesmereUIQoL.toc').read_text(encoding='utf-8-sig')
-assert 'EUI_QoL_335_BossBars.lua\nEUI_QoL_335_Group.lua' in toc
+assert 'EUI_QoL_335_Extras.lua\nEUI_QoL_335_Group.lua' in toc
 lua=LuaRuntime(unpack_returned_tuples=True)
 for source in ['backport-tools/wrath_mock.lua','backport-tools/inventory_resources_mock.lua','backport-tools/qol_mock.lua','EllesmereUI/EllesmereUI_Lite.lua']:
     lua.execute((root/source).read_text(encoding='utf-8-sig'))

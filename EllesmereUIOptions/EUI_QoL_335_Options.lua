@@ -40,7 +40,7 @@ init:SetScript("OnEvent",function(self)
     if ns.RegisterElementSettings then ns.RegisterElementSettings() end
     local unlock=function() if E.ToggleUnlockMode then E:ToggleUnlockMode() end end
     E:RegisterModule("EllesmereUIQoL",{title="Quality of Life",description="Native Wrath conveniences, displays, cursor, window dragging and raid tools.",pages={"QoL","Displays","Cursor","Shifter","Raid Tools","Logging"},
-        searchTerms="qol repair junk sell loot mail open all attach delete cinematic train screenshot containers reset role check map coordinates right click rested transform flyout item level fps latency stats crit haste hit coordinates crosshair durability death combat alert sound distance zone text rebirth bloodlust sated movement cursor shifter raid ready markers pull disband interrupt announce invite accept guild friends dbm bigwigs boss mod bars ability timeline logging",
+        searchTerms="qol repair junk sell loot mail open all attach delete cinematic train screenshot containers reset role check map coordinates right click rested transform flyout item level fps latency stats crit haste hit coordinates crosshair durability death combat alert sound distance zone text rebirth bloodlust sated movement cursor shifter raid ready markers pull disband interrupt announce invite accept guild friends dbm bigwigs logging",
         buildPage=function(page,parent,y)
             local W=E.Widgets
             local function Row(a,b) local row,h=W:DualRow(parent,y,a,b or Label("")); y=y-h; return row end
@@ -151,10 +151,6 @@ init:SetScript("OnEvent",function(self)
                 Row(Label("Boss mod sync: raid leader / assistant or party leader"),Label(""))
                 Button("Move Raid Tools",unlock)
                 Button("Disband Group",function() if ns.ConfirmDisband then ns.ConfirmDisband() end end)
-                Section("BOSS MOD BARS")
-                local bossBars=Toggle(nil,"hideBossModBars","Hide DBM/BigWigs Bars While Timeline Is Active")
-                bossBars.tooltip="While AbilityTimeline shows DBM or BigWigs timers, that boss mod's own bars turn invisible and click-through. The timers keep running, and the bars come back when the timeline, its source or this option is turned off."
-                Row(bossBars,Label(ns.BossBarsStatus and ns.BossBarsStatus() or ""))
             elseif page=="Logging" then
                 Section("COMBAT LOGGING")
                 Row(Toggle("logging","enabled","Automatic Combat Logging"),Toggle("logging","raids","Log Raids"))
