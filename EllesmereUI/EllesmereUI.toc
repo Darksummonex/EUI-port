@@ -3,7 +3,7 @@
 ## Notes: Core UI backport for World of Warcraft 3.3.5
 ## Author: Ellesmere / 3.3.5 backport
 ## Version: 3.3.5-core-0.61
-## X-EUI-Release: 2026100902
+## X-EUI-Release: 2026100903
 ## SavedVariables: EllesmereUIDB
 ## IconTexture: Interface\AddOns\EllesmereUI\media\eg-logo.tga
 EllesmereUI_3.3.5_Compat.lua
