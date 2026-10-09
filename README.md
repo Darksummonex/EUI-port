@@ -145,4 +145,6 @@ EllesmereUI is distributed under its original custom license ([LICENSE-Ellesmere
 >
 > All rights not explicitly addressed in this license are reserved by the copyright holders.
 
+The 3.3.5a backport work (the Wrath port files and `backport-tools`) is released under the [MIT License](LICENSE).
+
 Third-party libraries (LibStub, CallbackHandler, LibDataBroker, LibSharedMedia, LibDeflate) keep their own licenses.
