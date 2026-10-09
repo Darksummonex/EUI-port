@@ -161,13 +161,14 @@ function T.LayoutCall(p)
     local holder = ns.frames.callTotemBar
     if not holder then holder = CreateFrame("Frame", "ERB_CallTotemBar", UIParent); holder._erbKey = "callTotemBar"; ns.frames.callTotemBar = holder end
     local bar = _G.MultiCastActionBarFrame
+    -- The holder parents the protected totem buttons, so it can't move in combat either.
+    if bar and InCombatLockdown() then ns.pending = true; return end
     local scale = max(0.5, min(2, (c.iconSize or 30) / 30))
     local bw, bh = bar and bar:GetWidth() or 230, bar and bar:GetHeight() or 38
     ns.Size(holder, max(30, bw * scale), max(30, bh * scale))
     ns.Position("callTotemBar")
     local want = p.enabled and c.enabled and CLASS == "SHAMAN" and bar ~= nil
     if not bar then return end
-    if InCombatLockdown() then ns.pending = true; return end
     if not call.hooked then
         call.hooked = true
         hooksecurefunc(bar, "SetPoint", function() if call.active and not call.busy then T.PinCall() end end)

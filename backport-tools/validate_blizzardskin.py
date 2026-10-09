@@ -185,6 +185,16 @@ enhanced[1].setValue(false); assert(CharacterFrame:GetWidth()==384)
 enhanced[1].setValue(true); assert(CharacterFrame:GetWidth()==660)
 enhanced[2].setValue(false); assert(not BS.states[CharacterFrame].character.itemLabels.Head:IsShown())
 enhanced[2].setValue(true); assert(BS.states[CharacterFrame].character.itemLabels.Head:IsShown())
+-- AddOn List toggle only when the client actually has an AddonList frame.
+local function HasAddonListRow()
+    for _,row in ipairs(rows) do for _,c in ipairs(row) do if c.text=='AddOn List' then return true end end end
+end
+local savedAddonList=AddonList
+AddonList=nil; rows={}; testModule.buildPage('Blizzard Window Skins',UIParent,0)
+assert(not HasAddonListRow(),'AddOn List toggle shown without an AddonList frame')
+AddonList={}; rows={}; testModule.buildPage('Blizzard Window Skins',UIParent,0)
+assert(HasAddonListRow(),'AddOn List toggle missing although AddonList exists')
+AddonList=savedAddonList
 ''')
 for file,next_card in [('EUI_Fonts_Options.lua','TileDataBars'),('EUI_Textures_Options.lua','TileMinimap')]:
     source=(root/'EllesmereUIOptions'/file).read_text(encoding='utf-8-sig')

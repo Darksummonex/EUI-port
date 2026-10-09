@@ -85,7 +85,7 @@ function UnitPower() return 50 end
 function UnitPowerMax() return 100 end
 function UnitPowerType() return 0,"MANA" end
 function UnitCastingInfo() if castingMock==false then return end; return "Fireball","Rank 1","Fireball","fire-icon",1000,4000,false,19,false end
-function UnitChannelInfo() return channelName or "Drain Life","Rank 1",channelName or "Drain Life","drain-icon",channelStart or 1000,channelEnd or 6000,false,true end
+function UnitChannelInfo() return channelName or "Drain Life","Rank 1","Channeling","drain-icon",channelStart or 1000,channelEnd or 6000,false,true end
 function GetSpellCooldown() return 1,10,1 end
 function UnitClass() return "Warrior","WARRIOR" end
 function UnitRace() return "Human","Human" end

@@ -123,9 +123,10 @@ function W.UnitCastingInfo(unit)
     return name, text or name, icon, startMS, endMS, trade, castID, protected, info and info.spellID, castID
 end
 function W.UnitChannelInfo(unit)
+    -- Wrath's third return for channels is the literal "Channeling", not the spell.
     local name, rank, text, icon, startMS, endMS, trade, protected = UnitChannelInfo(unit)
     local info = name and C_Spell.GetSpellInfo(name)
-    return name, text or name, icon, startMS, endMS, trade, protected, info and info.spellID, false
+    return name, name, icon, startMS, endMS, trade, protected, info and info.spellID, false
 end
 function W.Duration(startTime, endTime)
     local d = { startTime=startTime, endTime=endTime }

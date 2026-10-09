@@ -172,4 +172,17 @@ FindRow('Set Name Text Size').setValue(12); assert(BAGS.GetSettings().bagSetName
 FindRow('BoE Text Size'); for _,row in ipairs(rows) do assert(row.text~='BoE / Warbound Text Size') end
 ''')
 print('PASS: real Global Fonts Bags tile writes live item counts, set name and BoE sizes without the Warbound label')
+off,_=runtime()
+off_bags=load(off,'EllesmereUIBags',BAG_FILES[0]); off.globals().BAGS=off_bags
+for bag_file in BAG_FILES[1:]: load(off,'EllesmereUIBags',bag_file,off_bags)
+off.execute('nativeToggle=ToggleBackpack; nativeIsOpen=IsBagOpen')
+off_bags.addon.OnInitialize(off_bags.addon); off.execute('BAGS.GetSettings().enhancedBags=false')
+off_bags.addon.OnEnable(off_bags.addon)
+off.execute('''
+assert(ToggleBackpack==nativeToggle and IsBagOpen==nativeIsOpen,'Bags off: native bag globals must stay untouched')
+BAGS.GetSettings().enhancedBags=true; BAGS.Apply()
+assert(ToggleBackpack~=nativeToggle and BAGS.bagsTakenOver,'Enabling Bags later installs the bag hooks')
+local hooked=ToggleBackpack; BAGS.Apply(); assert(ToggleBackpack==hooked,'Bag hooks install once')
+''')
+print('PASS: Bags leaves the native bag globals untouched while Enable Bags is off')
 # Resource Bars behaviour lives in validate_resourcebars.py.

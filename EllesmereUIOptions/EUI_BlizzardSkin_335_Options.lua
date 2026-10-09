@@ -32,8 +32,12 @@ init:SetScript("OnEvent",function(self)
                 Row({type="toggle",text="Enable Window Skins",tooltip="Applies to this profile. Keeps your individual window choices.",getValue=ns.WindowsEnabled,setValue=ns.SetWindowsEnabled},
                     {type="toggle",text="Accent Header",getValue=function() local c=ns.GetSettings().blizzWinAccentBar; return type(c)~="table" or c.enabled~=false end,
                     setValue=function(v) local p=ns.GetSettings(); p.blizzWinAccentBar=type(p.blizzWinAccentBar)=="table" and p.blizzWinAccentBar or {}; p.blizzWinAccentBar.enabled=v; ns.Apply() end})
-                for i=1,#ns.windows,2 do
-                    local left,right=ns.windows[i],ns.windows[i+1]
+                local shownWindows={}
+                for _,spec in ipairs(ns.windows) do
+                    if not spec.optional or _G[spec.frames[1]] then shownWindows[#shownWindows+1]=spec end
+                end
+                for i=1,#shownWindows,2 do
+                    local left,right=shownWindows[i],shownWindows[i+1]
                     Row(Toggle(left.key,left.label),right and Toggle(right.key,right.label) or {type="label",text=""})
                 end
                 Section("CHARACTER ENHANCEMENT")

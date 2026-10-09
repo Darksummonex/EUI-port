@@ -207,6 +207,8 @@ petActions={}; present.pet=false; petBook={}
 -- Death Knight: bare weapon needs a rune.
 D._class='DEATHKNIGHT'; book={'Runeforging'}; D.ScanSpellbook(); weapons={[16]='item:2000:0:0'}; D.Refresh()
 assert(Missing('consumable:runeforge').spellID==53428)
+p.consumables.enabled.runeforge=false; D.Refresh(); assert(not Missing('consumable:runeforge'),'Runeforging toggle off must hide the reminder')
+p.consumables.enabled.runeforge=nil; D.Refresh(); assert(Missing('consumable:runeforge'))
 weapons[16]='item:2000:3368:0'; D.Refresh(); assert(not Missing('consumable:runeforge'))
 
 -- Talent reminders by instance name, with synthetic talent keys.

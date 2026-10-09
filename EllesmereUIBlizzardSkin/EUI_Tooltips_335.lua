@@ -211,7 +211,9 @@ function T.ApplyHealthStrip()
     bar:SetAlpha(ns.GetValue("customTooltips")~=false and ns.GetValue("tooltipHideHealthStrip") and 0 or 1)
 end
 function T.Apply()
-    T.ApplyHealthStrip(); T.UpdateVisibility(); T.PositionFixed()
+    T.ApplyHealthStrip(); T.UpdateVisibility()
+    -- ns.Apply runs this on every skin refresh; in Unlock Mode the mover owns the anchor.
+    if not E._unlockActive then T.PositionFixed() end
     if ns.GetValue("uberTooltipsManual") and SetCVar then SetCVar("UberTooltips",ns.GetValue("uberTooltips") and "1" or "0") end
 end
 local function InspectTick()

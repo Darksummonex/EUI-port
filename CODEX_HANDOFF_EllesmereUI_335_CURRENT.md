@@ -1,5 +1,47 @@
 # EllesmereUI 3.3.5a — Handoff — 2026-10-06
 
+## Latest (2026-10-09) — Hidden 3.3.5 dead options (no bumps)
+
+- Global Settings Reset: `EllesmereUI._applyHideBlizzardPartyFrame` (Retail-only) is called only if defined; the reset now finishes and reloads.
+- Hidden when `_G.EUI_WOW_335` (Retail unchanged), in `EUI__General_Options.lua`: Increase Game Image Quality and Lag Tolerance (Combat row is now Max Camera Distance | Cast Actions on Key Down), Combat Text Size (Combat Text Font moves left), Prevent Swiftmend Icon Dim, Dark Mode (Class Resource Bar) (blank slot), CLASS RESOURCE COLORS section (gate 3 skipped), and Monk/Demon Hunter/Evoker + Fury/Lunar Power/Insanity/Maelstrom/Ebon Might swatches (`WithoutWrathMissing`, color tables untouched).
+- `EUI_Fonts_Options.lua`: Combat & World Text card keeps only the font link; Disable Slug Outline hidden (Name Font moves left).
+- `EUI_Textures_Options.lua`: QoL card drops cursor/GCD/cast ring textures (`_ECL_*` does not load); the card is removed unless `EllesmereUI._MovementBarTextures` exists.
+- `EUI_UnitFrames_Options.lua`: Important Cast Glow row (cog/sync) and its two Glows-page sites hidden (no `C_Spell.IsSpellImportant`).
+- Blizz UI Enhanced: window spec `addonlist` has `optional=true`; the options page skips optional specs whose first frame is missing (`_G.AddonList`).
+- ABR: `CollectRuneforge` returns when `consumables.enabled.runeforge == false`.
+- Validators: `validate_combat_text_settings.py` (static + swatch filter behaviour), `validate_blizzardskin.py` (AddOn List row with/without frame), `validate_unitframes.py`, `validate_aurabuffreminders.py` (runeforge off -> no reminder).
+
+## Latest (2026-10-08) — Mail boxes and tooltip anchor (small fixes, Blizz UI Enhanced stays 0.28)
+
+- `InnerPanel` puts the border frame at its owner's level (not -1), except sheet frames; at -1 it tied with SendMailFrame, whose BACKGROUND sheet fill hid the To/Subject/body borders. Edit boxes get a lighter fill (.06) and a .25 border.
+- An EditBox whose parent is a chromeFrames ScrollFrame (SendMailBodyEditBox) gets no box; the scroll frame's box frames it.
+- Tooltips: `T` is an `ns.extras` module, so `ns.Apply` (every 0.2 s when dirty) ran `T.PositionFixed` and snapped the dragged anchor back. `T.Apply` skips it while `E._unlockActive`.
+- Collapsed options mini window: no cause found (code and art unchanged since `4654752`); waiting for a screenshot.
+
+## Latest (2026-10-08) — Send Mail recipient list (QoL 0.15) and edit box cursor
+
+- `EUI_QoL_335_Mail.lua`: `mailRecipients` (default on) adds `EUI335QoLMailRecipientsButton` right of `SendMailNameEditBox` and a custom popup `EUI335QoLMailRecipients` (no UIDropDownMenu, avoids taint) with Alts/Guild/Recent tabs, 12 rows, mouse-wheel scroll.
+- `EUI_QoL_335.lua` `ns.InstallMerchantWheel` (`merchantWheel`, default on, same QoL 0.15): MerchantFrame mouse wheel clicks the native `MerchantPrevPageButton`/`MerchantNextPageButton` when shown and enabled.
+- Data in `EllesmereUIDB.mailRecipients`: `alts[realm][name]={class,level,faction}` recorded on every `ApplyMail`; `recent[realm]` = last 15 names, saved on `MAIL_SEND_SUCCESS` from a `hooksecurefunc("SendMail")` post-hook. Alts filtered by faction; guild via `GetGuildRosterInfo`, `GuildRoster()` on tab open.
+- Blizz UI Enhanced 0.28 (no bump): `Font()` only calls `SetFont` when path/size/flags differ and `InnerPanel` only clears a backdrop that exists, so refreshes no longer hide the edit box cursor (unconfirmed in game).
+- Collapsed menu (Core 0.60, no bump): on Wrath the E logo `badgeOv` is on OVERLAY, above the black disc.
+
+## Latest (2026-10-08) — Code review: taint and error fixes (small fixes, no bumps)
+
+- Bags: `ns.TakeOverBags` (called from `ns.Apply`) replaces the 10 bag globals only once `enhancedBags` is on (`ns.bagsTakenOver`); with it off they stay native. Turning it off afterwards still passes through until /reload (tooltip says so).
+- QoL Mail: bulk attach is a `hooksecurefunc` post-hook on `ContainerFrameItemButton_OnModifiedClick`; it hides `StackSplitFrame` when the click attached items.
+- Resource Bars Totems: `T.LayoutCall` checks combat before sizing/positioning the call bar holder (it parents protected buttons).
+- Core Tooltip IDs: `SetAction` uses the 4th `GetActionInfo` return (spell ID), falling back to `GetSpellLink(slot, bookType)`.
+- ABR options: zone merge creates `zoneNames` from `zone`/`zoneName` on old reminders and clears the saved `_nameSet` cache.
+- Validators: `validate_inventory_resources.py`, `validate_qol.py`, `validate_resourcebars.py`, `validate_tooltip_ids.py`.
+
+## Latest (2026-10-08) — Channel cast text (small fix, no bump: Unit Frames 0.18, Resource Bars 0.5)
+
+- Wrath `UnitChannelInfo` returns name, rank, "Channeling", icon, ...; the third
+  value is a fixed label. `W.UnitChannelInfo` and `C.ReadCast` used it as the
+  display text; both now use the name. `wrath_mock.lua` returns "Channeling" there
+  like the client, and the UF/RB validators assert the spell name.
+
 ## Latest (2026-10-08) — Auction House vs AH addons (Blizz UI Enhanced 0.28)
 
 - The AH skin is the generic window walk. It restyled Auctionator's own frames
@@ -239,7 +281,7 @@ Working-tree backups: `backport-tools/backup_project.py` writes
 Core 0.60; Action Bars 0.19; Arena 0.3; AuraBuff Reminders 0.7; Bags 0.11;
 Blizz UI Enhanced (BlizzardSkin) 0.28; Chat 0.49; Cooldown Manager 0.7;
 Damage Meters 0.8; Data Bars 0.5; Friends 0.3; Minimap 0.4; Nameplates 0.14;
-Options 0.112; Locales 0.1; QoL 0.14; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.18;
+Options 0.112; Locales 0.1; QoL 0.15; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.18;
 Resource Bars 0.5; Unit Frames 0.18.
 
 Git: branch `cursor/eui-shapes-bars-skins-qol`, built on

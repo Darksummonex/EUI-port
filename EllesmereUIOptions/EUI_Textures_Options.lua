@@ -754,6 +754,12 @@ local function TileQoL(parent, y, W, tile)
             if _G._ECL_RegisterUnlock then _G._ECL_RegisterUnlock() end
         end }
 
+    -- The cursor ring module (_ECL_*) does not load on 3.3.5.
+    if _G.EUI_WOW_335 then
+        if not maCfg then return y end
+        local _, h = W:DualRow(parent, y, maCfg, BLANK());  y = y - h
+        return y
+    end
     local _, h = W:DualRow(parent, y, maCfg or BLANK(), cursorCfg);  y = y - h
     _, h = W:DualRow(parent, y, gcdRingCfg, castRingCfg);  y = y - h
     return y
@@ -934,6 +940,14 @@ if NS("EllesmereUINameplates") and NS("EllesmereUINameplates").IsWrath then
 end
 if NS("EllesmereUIBlizzardSkin") and NS("EllesmereUIBlizzardSkin").IsWrath then
     TILE_BUILDERS.EllesmereUIBlizzardSkin[2] = "Tooltip border and background"
+end
+-- Wrath QoL has no cursor rings; the card stays only if the movement alert textures exist.
+if _G.EUI_WOW_335 then
+    if EllesmereUI._MovementBarTextures then
+        TILE_BUILDERS.EllesmereUIQoL[2] = "Movement alert bar texture"
+    else
+        TILE_BUILDERS.EllesmereUIQoL = nil
+    end
 end
 
 local function BuildTileList()

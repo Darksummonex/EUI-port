@@ -135,7 +135,8 @@ assert(not edit.SetPropagateKeyboardInput and not edit.scripts.OnKeyDown)
 local name,text,icon,startMS,endMS,trade,_,protected = W.UnitCastingInfo("player")
 assert(name == "Fireball" and text == "Fireball" and icon == "fire-icon" and startMS == 1000 and endMS == 4000)
 assert(protected == false and trade == false)
-local channel,_,channelIcon,cs,ce,_,locked = W.UnitChannelInfo("target")
+local channel,channelText,channelIcon,cs,ce,_,locked = W.UnitChannelInfo("target")
+assert(channelText == "Drain Life", "channel text is the native 'Channeling' label: "..tostring(channelText))
 assert(channel == "Drain Life" and channelIcon == "drain-icon" and cs == 1000 and ce == 6000 and locked == true)
 local duration = W.UnitCastingDuration("player")
 assert(duration:GetTotalDuration() == 3 and duration:GetElapsedDuration() == 1 and duration:GetRemainingDuration() == 2)
@@ -713,6 +714,8 @@ assert info.castTime == 10000 and info.iconID == 'hs-icon' and info.maxRange == 
 assert compat_lua.eval('C_Spell.GetSpellInfo(8690)').spellID == 8690
 # Live detached portrait and the options preview use the same unmasked fit.
 opts_src = (root/'EllesmereUIOptions/EUI_UnitFrames_Options.lua').read_text(encoding='utf-8-sig')
+assert 'if (selectedUnit == "target" or selectedUnit == "focus") and not _G.EUI_WOW_335 then' in opts_src, 'Important Cast Glow needs C_Spell.IsSpellImportant; hide it on Wrath'
+assert 'if not _G.EUI_WOW_335 then\n            GO.RegisterSite({ id = "uf_importantcast_target"' in opts_src.replace('\r\n', '\n')
 live_fn = uf_src.split('function ApplyDetachedPortraitShape(', 1)[1].split('\nend\n', 1)[0]
 pv_fn = opts_src.split('local function ApplyPreviewPortraitShape(', 1)[1].split('\n    end\n\n', 1)[0]
 assert live_fn.count('FitUnmaskedPortrait(') == 3, live_fn.count('FitUnmaskedPortrait(')

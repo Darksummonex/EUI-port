@@ -2829,8 +2829,9 @@ initFrame:SetScript("OnEvent", function(self)
             for _, r in ipairs(p.talentReminders) do
                 if r.spellID == selectedTalentSpellID then
                     -- Merge new zones into existing reminder
+                    if not r.zoneNames then r.zoneNames = { r.zone or r.zoneName } end
                     local existingSet = {}
-                    for _, zn in ipairs(r.zoneNames or {}) do existingSet[zn] = true end
+                    for _, zn in ipairs(r.zoneNames) do existingSet[zn] = true end
                     local added = 0
                     for _, zn in ipairs(selZoneNames) do
                         if not existingSet[zn] then
@@ -2839,6 +2840,7 @@ initFrame:SetScript("OnEvent", function(self)
                         end
                     end
                     table.sort(r.zoneNames)
+                    r._nameSet = nil
                     -- Reset selection
                     wipe(selectedZoneMap)
                     selectedTalentSpellID = nil

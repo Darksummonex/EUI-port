@@ -369,6 +369,7 @@ end
 
 function EABR.CollectRuneforge(out)
     if EABR._class ~= "DEATHKNIGHT" or not EABR.Known(EABR.RUNEFORGING_SPELL) then return end
+    if P().consumables.enabled.runeforge == false then return end
     local mhLink, ohLink = EABR.WeaponSlots()
     local function Bare(link)
         local enchant = link and link:match("item:%d+:(%d+)")

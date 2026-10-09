@@ -68,9 +68,11 @@ local function Register(tooltip)
     end
     Hook(tooltip, "SetAction", function(self, slot)
         if not GetActionInfo then return end
-        local kind, id = GetActionInfo(slot)
+        -- For spells id is the spellbook slot; the spell ID is the fourth return.
+        local kind, id, subType, spellID = GetActionInfo(slot)
         if kind == "spell" then
-            A.Add(self, id)
+            if not tonumber(spellID) and GetSpellLink then spellID = LinkID(GetSpellLink(id, subType or "spell")) end
+            A.Add(self, tonumber(spellID))
         elseif kind == "macro" and GetMacroSpell and GetSpellLink then
             local spell, rank = GetMacroSpell(id)
             if spell then A.Add(self, LinkID(GetSpellLink(spell, rank))) end

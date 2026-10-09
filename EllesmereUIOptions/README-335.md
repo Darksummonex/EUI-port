@@ -3,6 +3,19 @@
 0.112: seção TARGETED SPELLS em Raid Frames (Party/Raid): Show Targeted Spells,
 prévia, tamanho, máximo de ícones, posição, direção, offsets, varredura, timer e
 cores de interrompível.
+Max Camera Distance usa o CVar do Wrath `cameraDistanceMaxFactor` (o nome do
+Retail não existe no 3.3.5, então o valor não salvava e voltava para 1.0). O
+slider vai até 4, o máximo aceito pelo cliente Wrath. A página Gamepad de
+Global Settings fica oculta no 3.3.5: o cliente não tem modo gamepad e os
+módulos Wrath não têm os ganchos que ela chama (evita erros ao clicar).
+O Reset de Global Settings não para mais no meio (chamava um gancho de party
+frame que só existe no Retail) e volta a recarregar a UI. Ficam ocultas no
+3.3.5 as opções sem efeito no cliente: Increase Game Image Quality, Lag
+Tolerance, Combat Text Size (General e Fonts), Prevent Swiftmend Icon Dim,
+Disable Slug Outline, Dark Mode (Class Resource Bar), a seção Class Resource
+Colors, as cores de Monk, Demon Hunter e Evoker e dos poderes Fury, Astral
+Power, Insanity, Maelstrom e Ebon Might, e as texturas de cursor/anel (GCD e
+cast) do card Quality of Life em Textures (o card some quando fica vazio).
 
 0.111: seção ABSORBS em Raid Frames (Party/Raid) e Unit Frames (player, target,
 focus) para os escudos estimados no 3.3.5; prévia do escudo na janela de Unit

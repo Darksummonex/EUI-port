@@ -156,8 +156,9 @@ nativeCast=nil; RB.events:RunScript('OnEvent','UNIT_SPELLCAST_INTERRUPTED','play
 assert(f.castBar:IsShown() and f.castBar.spell:GetText()=='Interrupted')
 now=11; RB.events:RunScript('OnUpdate',.016); assert(not f.castBar:IsShown())
 p.castBar.showTotalDuration=false; p.castBar.latencyEnabled=false; now=10
-nativeChannel={'Drain Life','Rank 1','Drain Life','drain-icon',9000,13000}
+nativeChannel={'Drain Life','Rank 1','Channeling','drain-icon',9000,13000}
 RB.events:RunScript('OnEvent','UNIT_SPELLCAST_CHANNEL_START','player'); assert(RB.CastPart.state.mode=='channel' and cb._value==3)
+assert(RB.CastPart.state.text=='Drain Life' and RB.CastPart.state.icon=='drain-icon','channel bar shows the native Channeling label')
 local tick=cb._euiChannelTicks[1]
 assert(#cb._euiChannelTicks==4 and cb._euiChannelTicks[4]:IsShown() and near(select(4,tick:GetPoint(1)),cb:GetWidth()*.8))
 p.castBar.showLastTick=true; RB.CastPart.UpdateCast(); assert(cb._euiChannelTicks[4].vc[3]==0 and cb._euiChannelTicks[1].vc[3]==1)
@@ -224,8 +225,11 @@ totems[2]=nil; now=41; RB.events:RunScript('OnUpdate',.1); assert(not t:IsShown(
 local bar=MultiCastActionBarFrame
 p.callTotemBar.enabled=true; RB.Apply(); assert(bar:GetParent()==f.callTotemBar and f.callTotemBar:IsShown())
 bar:SetPoint('BOTTOMLEFT',UIParent,'BOTTOMLEFT',0,0); assert(bar:GetPoint(1)=='CENTER')
-combat=true; p.callTotemBar.enabled=false; RB.Apply(); assert(bar:GetParent()==f.callTotemBar)
+local callWidth=f.callTotemBar:GetWidth()
+combat=true; p.callTotemBar.enabled=false; p.callTotemBar.iconSize=60; RB.Apply(); assert(bar:GetParent()==f.callTotemBar)
+assert(f.callTotemBar:GetWidth()==callWidth,'Call bar holder must not resize in combat')
 combat=false; RB.events:RunScript('OnEvent','PLAYER_REGEN_ENABLED'); assert(bar:GetParent()==UIParent)
+assert(f.callTotemBar:GetWidth()~=callWidth,'Deferred call bar resize runs after combat'); p.callTotemBar.iconSize=nil
 ''',
 'WARRIOR':'''
 assert(not f.secondary:IsShown() and not f.totemBar:IsShown())

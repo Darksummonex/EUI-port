@@ -163,10 +163,15 @@ function ns.Apply()
         ns.Refresh(kind)
     end
     if bankOpen and p.enhancedBank and not nativeBank then SuppressBank(); ns.Show("bank",true) else RestoreBank() end
+    if ns.TakeOverBags then ns.TakeOverBags() end
 end
 function ns.ResetPositions() local p=ns.GetSettings(); if p then p.positions={}; ns.Apply() end end
-local function TakeOverBags()
+-- The replaced globals stay insecure until /reload, so they are only installed
+-- once Enable Bags is on; with it off the native bag functions stay untouched.
+function ns.TakeOverBags()
     local function Active() local p=ns.GetSettings(); return p and p.enhancedBags end
+    if ns.bagsTakenOver or not Active() then return end
+    ns.bagsTakenOver=true
     for _,name in ipairs({"ToggleAllBags","ToggleBackpack","OpenAllBags","OpenBackpack","CloseAllBags","CloseBackpack","ToggleBag","OpenBag","CloseBag","IsBagOpen"}) do
         local native=_G[name]
         if type(native)=="function" then
@@ -190,7 +195,7 @@ function addon:OnInitialize()
     SLASH_EUI335BAGS1="/ebags"; SlashCmdList.EUI335BAGS=function() ns.Toggle() end
 end
 function addon:OnEnable()
-    ns.CM:Seed(); ns.InventoryStore(); ns.CaptureInventory("bags"); ns.TrackRecent(); ns.InitializeBroker(); ns.Apply(); TakeOverBags()
+    ns.CM:Seed(); ns.InventoryStore(); ns.CaptureInventory("bags"); ns.TrackRecent(); ns.InitializeBroker(); ns.Apply()
     if UISpecialFrames then for _,kind in ipairs({"bags","bank"}) do UISpecialFrames[#UISpecialFrames+1]="EUI335Inventory_"..kind end end
     if E.RegisterUnlockElements and E.MakeUnlockElement then
         local elements={}

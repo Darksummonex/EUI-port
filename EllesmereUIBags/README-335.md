@@ -2,6 +2,9 @@
 
 0.11 permite abrir e fechar as bolsas em combate pelos atalhos normais.
 Atualizações do layout e operações restritas continuam adiadas até sair do combate.
+Com Enable Bags desligado as funções nativas das bolsas (ToggleBackpack,
+OpenAllBags...) não são mais substituídas, evitando taint; ao ligar a opção elas
+passam a ser assumidas, e para devolvê-las ao padrão depois é preciso /reload.
 
 0.10 corrige o erro ao abrir a lista Characters (UIPanelTemplates.lua:255):
 no Wrath o UIPanelScrollFrameTemplate monta a barra de rolagem pelo nome do

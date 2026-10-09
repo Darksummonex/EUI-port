@@ -1,8 +1,19 @@
-# Quality of Life 3.3.5 — 0.14
+# Quality of Life 3.3.5 — 0.15
+
+0.15: Send Mail ganha uma seta ao lado do campo "To" com a lista de destinatários:
+Alts (personagens deste reino e facção, salvos na conta ao logar em cada um),
+Guild (roster da guilda, online primeiro) e Recent (últimos 15 nomes enviados
+com sucesso). Clicar preenche o nome e passa o foco para o assunto. Opção
+"Send Mail: Recipient List" na seção MAIL; painel próprio, sem o UIDropDownMenu
+da Blizzard (evita taint).
+Merchant: a roda do mouse sobre a janela do vendedor vira as páginas de itens
+(pelos botões nativos Prev/Next). Opção "Merchant: Mouse Wheel Pages".
 
 0.14: contador de FPS com nova cor padrão "Quality": FPS e cada latência ficam
 verde, amarelo ou vermelho (60/30 fps, 100/250 ms), e os rótulos seguem a cor do
 valor. Custom e Class Color continuam disponíveis em Text Color.
+Shift-clique para anexar itens no correio usa `hooksecurefunc` em vez de
+substituir `ContainerFrameItemButton_OnModifiedClick` (sem taint nas bolsas).
 
 0.13: esconder as barras do DBM/BigWigs com o AbilityTimeline ativo saiu do
 EUI (seção BOSS MOD BARS do Raid Tools e `EUI_QoL_335_BossBars.lua`) e foi

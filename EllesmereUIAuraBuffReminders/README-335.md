@@ -2,6 +2,10 @@
 
 0.7: Create Soulstone é exclusivo para Bruxos, inclusive nos lembretes
 customizados e em outros ranks com o mesmo nome localizado.
+Juntar zonas num lembrete de talento antigo (sem `zoneNames`) não dá mais erro,
+e as zonas novas valem na hora.
+Desligar "Runeforging" esconde de fato o lembrete de runa do Cavaleiro da Morte
+(a opção era ignorada).
 
 0.6: lembretes customizados (IDs, visibilidade e som) ficam por personagem,
 em SavedVariablesPerCharacter, independentes dos perfis compartilhados. A lista

@@ -1135,18 +1135,21 @@ end
 -- pages (curated list + logout flow); this card mirrors the size and links
 -- to the rest.
 local function TileCombatText(parent, y, W, tile)
-    local _, h = W:DualRow(parent, y,
-        { type = "slider", text = "Combat Text Size", min = 0.5, max = 2.5, step = 0.1,
-          getValue = function()
-              local ok, value = pcall(GetCVar, "WorldTextScale_v2")
-              return (ok and tonumber(value)) or 1
-          end,
-          setValue = function(v)
-              if InCombatLockdown() then return end
-              v = math.floor(v * 10 + 0.5) / 10
-              pcall(SetCVar, "WorldTextScale_v2", v)
-          end },
-        BLANK());  y = y - h
+    -- WorldTextScale has no 3.3.5 equivalent; only the font link remains there.
+    if not _G.EUI_WOW_335 then
+        local _, h = W:DualRow(parent, y,
+            { type = "slider", text = "Combat Text Size", min = 0.5, max = 2.5, step = 0.1,
+              getValue = function()
+                  local ok, value = pcall(GetCVar, "WorldTextScale_v2")
+                  return (ok and tonumber(value)) or 1
+              end,
+              setValue = function(v)
+                  if InCombatLockdown() then return end
+                  v = math.floor(v * 10 + 0.5) / 10
+                  pcall(SetCVar, "WorldTextScale_v2", v)
+              end },
+            BLANK());  y = y - h
+    end
     y = LinkRow(parent, y, "Combat Text Font (logout required)",
         GLOBAL_KEY, "General", "COMBAT", "Combat Text Font")
     return y
@@ -1509,15 +1512,16 @@ function _G._EUI_BuildFontsPage(pageName, parent, yOffset)
     -- Never Show Slug: per-profile toggle (rides profile export/import) dropping the SLUG token from every outline (body/icon/aura text,
     -- Outline Mode itself). Off by default; needs reload.
     do
-        local nssRow
-        nssRow, h = W:DualRow(parent, y,
+        -- The SLUG outline flag does not exist on 3.3.5: Name Font takes the left slot there.
+        local slugCfg = not _G.EUI_WOW_335 and
             { type="toggle", text="Disable Slug Outline",
               tooltip="Slug outline renders higher quality outlines compared to the base WoW outline mode but may make outline effects appear slightly thicker.",
               getValue=function() return EllesmereUI.IsSlugDisabled() end,
               setValue=function(v)
                   EllesmereUI.GetFontsDB().neverShowSlug = v and true or false
                   FontReload()
-              end },
+              end } or nil
+        local nameFontCfg =
             { type="dropdown", text="Name Font",
               -- Coloured inline rather than via tooltipOpts.color, which would tint the explanation red along with the warning.
               tooltip="Sets the font for the names that float above players, NPCs and enemies in the world.\n\nSeparate from Global Font - changing this does not affect the rest of the UI, and Global Font does not affect it.\n\nBlizzard Default leaves the name text completely untouched.\n\n|cffff4d4dRequires a re-log or restart of WoW to take effect.|r",
@@ -1541,7 +1545,11 @@ function _G._EUI_BuildFontsPage(pageName, parent, yOffset)
                       cancelText  = "Later",
                   })
               end }
-        );  y = y - h
+        if slugCfg then
+            _, h = W:DualRow(parent, y, slugCfg, nameFontCfg);  y = y - h
+        else
+            _, h = W:DualRow(parent, y, nameFontCfg, { type="label", text="" });  y = y - h
+        end
     end
 
     -- Game Text Scale: multiplies Blizzard font-object sizes in the same

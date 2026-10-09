@@ -40,7 +40,7 @@ init:SetScript("OnEvent",function(self)
     if ns.RegisterElementSettings then ns.RegisterElementSettings() end
     local unlock=function() if E.ToggleUnlockMode then E:ToggleUnlockMode() end end
     E:RegisterModule("EllesmereUIQoL",{title="Quality of Life",description="Native Wrath conveniences, displays, cursor, window dragging and raid tools.",pages={"QoL","Displays","Cursor","Shifter","Raid Tools","Logging"},
-        searchTerms="qol repair junk sell loot mail open all attach delete cinematic train screenshot containers reset role check map coordinates right click rested transform flyout item level fps latency stats crit haste hit coordinates crosshair durability death combat alert sound distance zone text rebirth bloodlust sated movement cursor shifter raid ready markers pull disband interrupt announce invite accept guild friends dbm bigwigs logging",
+        searchTerms="qol repair junk sell loot mail open all attach recipient alts merchant vendor wheel pages delete cinematic train screenshot containers reset role check map coordinates right click rested transform flyout item level fps latency stats crit haste hit coordinates crosshair durability death combat alert sound distance zone text rebirth bloodlust sated movement cursor shifter raid ready markers pull disband interrupt announce invite accept guild friends dbm bigwigs logging",
         buildPage=function(page,parent,y)
             local W=E.Widgets
             local function Row(a,b) local row,h=W:DualRow(parent,y,a,b or Label("")); y=y-h; return row end
@@ -67,9 +67,15 @@ init:SetScript("OnEvent",function(self)
                 end
                 Row(Toggle(nil,"trainAll","Trainer: Train All Button"),Toggle(nil,"skipCinematics","Skip Cinematics"))
                 Row(Toggle(nil,"autoOpen","Auto Open Containers"),Label("Containers wait for vendors, mail, bank and trade"))
+                local wheel=Toggle(nil,"merchantWheel","Merchant: Mouse Wheel Pages")
+                wheel.tooltip="Scroll the mouse wheel over a vendor window to turn its item pages."
+                Row(wheel,Label(""))
                 Section("MAIL")
                 Row(Toggle(nil,"mailOpenAll","Mailbox: Open All Button"),Toggle(nil,"mailBulkAttach","Shift-Click: Attach Same Category"))
                 Row(Label("Open All skips COD and GM mail"),Label("Ore, herbs, cloth... BoE gear by quality"))
+                local recipients=Toggle(nil,"mailRecipients","Send Mail: Recipient List")
+                recipients.tooltip="An arrow next to the To box lists your alts on this realm and faction, guild members and the last names you mailed."
+                Row(recipients,Label("Alts appear after logging in on each one"))
                 Section("INTERFACE")
                 Row(Toggle(nil,"hideErrors","Hide Error Messages"),Toggle(nil,"hideTutorials","Hide Tutorials"))
                 Row(Toggle(nil,"hideScreenshot","Hide Screenshot Status"),Toggle(nil,"mapCoords","Show Coordinates on World Map"))

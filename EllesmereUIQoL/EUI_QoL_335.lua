@@ -6,7 +6,7 @@ local addon=E.Lite.NewAddon(ADDON_NAME)
 E._ModuleNS[ADDON_NAME]=ns
 ns.addon,ns.EQOL,ns.IsWrath=addon,addon,true
 local defaults={profile={enabled=true,autoRepair=false,guildRepair=false,autoSellJunk=false,quickLoot=false,
-    trainAll=false,fillDelete=false,skipCinematics=false,hideErrors=false,hideTutorials=false,mailOpenAll=true,mailBulkAttach=true,
+    trainAll=false,fillDelete=false,skipCinematics=false,hideErrors=false,hideTutorials=false,mailOpenAll=true,mailBulkAttach=true,mailRecipients=true,merchantWheel=true,
     hideScreenshot=false,autoOpen=false,resetAnnounce=false,resetMessage="",roleCheck=false,mapCoords=false,
     rightClickEnemy=false,rightClickAlly=false,hideTransforms=false,flyoutIlvl=false,
     fps=false,stats=false,coordinates=false,crosshair=false,durability=false,durabilityThreshold=40,
@@ -158,6 +158,18 @@ local function InstallDelete()
         end
     end
 end
+-- Mouse wheel over the merchant window turns its item pages (buyback has none).
+function ns.InstallMerchantWheel()
+    local frame=_G.MerchantFrame
+    if ns.merchantWheel or not frame then return end
+    ns.merchantWheel=true
+    frame:EnableMouseWheel(true)
+    frame:HookScript("OnMouseWheel",function(_,delta)
+        if not Enabled("merchantWheel") then return end
+        local button=delta>0 and _G.MerchantPrevPageButton or _G.MerchantNextPageButton
+        if button and button:IsShown() and button:IsEnabled() then button:Click() end
+    end)
+end
 -- Retail keeps these red errors visible while the rest are hidden.
 local keepErrors
 local function KeepError(message)
@@ -182,7 +194,7 @@ end
 function ns.Apply()
     local p=ns.GetSettings(); if not p then return end
     if InCombatLockdown() then pending=true; return end; pending=false
-    InstallTrainer(); InstallDelete()
+    InstallTrainer(); InstallDelete(); ns.InstallMerchantWheel()
     if ns.trainButton and not Enabled("trainAll") then trainerUntil=0 end
     RefreshTrainButton()
     if UIErrorsFrame then

@@ -125,8 +125,9 @@ function C.ReadCast()
     local name, _, text, icon, startMS, endMS, _, _, notInt = UnitCastingInfo("player")
     local mode = "cast"
     if not name then
-        local cn, _, ct, ci, cs, ce, _, cni = UnitChannelInfo("player")
-        name, text, icon, startMS, endMS, notInt, mode = cn, ct, ci, cs, ce, cni, "channel"
+        -- Wrath's third channel return is the literal "Channeling", not the spell.
+        local cn, _, _, ci, cs, ce, _, cni = UnitChannelInfo("player")
+        name, text, icon, startMS, endMS, notInt, mode = cn, cn, ci, cs, ce, cni, "channel"
     end
     if name and startMS and endMS then
         local start, finish = startMS / 1000, endMS / 1000

@@ -1048,6 +1048,8 @@ do
             },
         },
         fixes = {
+            { text = "The collapsed menu shows the Ellesmere E logo again instead of a plain black circle." },
+            { text = "Action button tooltips show the real spell ID instead of the spellbook slot." },
             { text = "Fixed an \"attempt to call global 'issecretvalue'\" error from Cooldown Manager glows before the options panel was first opened." },
             { text = "Unlock Mode widget tooltips use Wrath-compatible alpha fades, fixing the SetFromAlpha error on Grow Right." },
             { text = "The options search results list has a fully opaque background with its results drawn above it, so sidebar and page text no longer bleeds into the results." },
@@ -1201,6 +1203,10 @@ do
             },
         },
         fixes = {
+            { text = "Resetting Global Settings no longer stops partway with an error and reloads the UI again." },
+            { text = "Options that do nothing on the Wrath client are hidden: image sharpening, Lag Tolerance, Combat Text Size, Swiftmend dim, Slug outline, class resource dark mode and colors, Retail-only class and power colors, and cursor ring textures." },
+            { text = "Global Settings no longer shows the Gamepad page, which has nothing to control on the Wrath client." },
+            { text = "Max Camera Distance saves and keeps its value instead of resetting to 1.0, and goes up to 4 like the Wrath client allows." },
             { module = "Cooldown Manager", text = "CDM Bars and Tracking Bars open without an \"attempt to call field 'disabled'\" error, and nine toggles show their tooltips again." },
             { module = "Chat", text = "Chat > Spam Filter: the chat type settings stay usable when only the trade or recruitment filter is on, and the tooltips explain what each one covers." },
             { module = "General", text = "Opening the options no longer makes later Blizzard actions risk being blocked in EllesmereUI's name." },
@@ -1219,8 +1225,18 @@ do
         },
     },
     {
-        version = "Quality of Life 0.14",
+        version = "Quality of Life 0.15",
         heroes = {
+            {
+                title = "Send Mail Recipients",
+                desc  = "An arrow next to the To box lists your alts on this realm and faction, guild members and the last names you mailed. Click a name to fill it in.",
+                nav   = Nav("EllesmereUIQoL", "QoL", "MAIL"),
+            },
+            {
+                title = "Merchant Mouse Wheel",
+                desc  = "Scroll the mouse wheel over a vendor window to turn its item pages.",
+                nav   = Nav("EllesmereUIQoL", "QoL", "AUTOMATION"),
+            },
             {
                 title = "Zone Text Outline",
                 desc  = "Pick None, Outline, Thick Outline or Shadow for the zone, sub-zone and PvP text shown when entering an area. Blizzard Default keeps the game's own font.",
@@ -1285,6 +1301,7 @@ do
             },
         },
         fixes = {
+            { text = "Shift-click mail attach no longer replaces the bag item click handler, so bag clicks stay free of taint." },
             { text = "Hiding DBM and BigWigs bars while AbilityTimeline is active moved to AbilityTimeline itself, as on Retail: Hide DBM bars and Hide BigWigs bars on its Sources page. The Raid Tools option is gone." },
             { text = "Logging out, exiting, releasing spirit and other Blizzard confirmation popups no longer trigger the \"EllesmereUIQoL has been blocked from an action only available to the Blizzard UI\" message." },
             { text = "The zone name no longer appears in the middle of the screen at small UI scales. It now sits fixed at the top (X 9 / Y 322 from screen center), with no Unlock Mode mover." },
@@ -1333,6 +1350,9 @@ do
             },
         },
         fixes = {
+            { text = "The AddOn List window skin toggle only shows when the client has an AddOn List window." },
+            { text = "Send Mail shows the To, Subject and message boxes again, and the typing cursor stays visible in skinned edit boxes." },
+            { text = "The fixed tooltip anchor no longer snaps back to its saved spot while you drag it in Unlock Mode." },
             { text = "Auction House: panels and tabs added by Auctionator and other auction addons keep their own look and layout, and the footer Close buttons no longer get an \"x\" over their text." },
             { text = "Talents: the close button and the points footer end at the scroll bar instead of past the window edge." },
             { text = "Window tabs keep their dark background instead of showing through." },
@@ -1471,6 +1491,10 @@ do
                 nav   = Nav("EllesmereUIResourceBars", "Totem Bar"),
             },
         },
+        fixes = {
+            { text = "The Call Totem Bar no longer resizes or moves during combat; changes apply when combat ends." },
+            { text = "The player cast bar shows the channeled spell's name instead of \"Channeling\"." },
+        },
     },
     {
         version = "Friends List 0.3",
@@ -1562,6 +1586,8 @@ do
             },
         },
         fixes = {
+            { text = "Important Cast Glow is hidden for target and focus cast bars; the Wrath client cannot tell which spells are important." },
+            { text = "Channel cast bars show the spell's name instead of \"Channeling\"." },
             { text = "Boss frames now update health, power and text while the boss is not your target or focus." },
             { text = "Visibility conditions (combat, group, and hiding without a target) now apply to the frames instead of stopping with an error, so the Visibility menu's boxes also tick right away." },
             { text = "Classic WoW UI power bars now stay inside the frame art: the art's rim draws over the power bar as it does over the health bar." },
@@ -1668,6 +1694,10 @@ do
                 desc  = "Middle-click hides a reminder until the next loading screen",
             },
         },
+        fixes = {
+            { text = "Turning off Runeforging now hides the Death Knight rune reminder." },
+            { text = "Adding zones to an older talent reminder no longer errors, and the new zones apply right away." },
+        },
     },
     {
         version = "Bags 0.11",
@@ -1703,6 +1733,7 @@ do
             },
         },
         fixes = {
+            { text = "With Enable Bags off, the default bag functions are no longer replaced, avoiding blocked action errors from tainted bag code." },
             { text = "Opening the Characters list no longer errors." },
         },
     },
@@ -1910,6 +1941,7 @@ initFrame:SetScript("OnEvent", function(self)
         floatingCombatTextCombatLogPeriodicSpells_v2 = "CombatLogPeriodicSpells",
         floatingCombatTextPetMeleeDamage_v2 = "PetMeleeDamage",
         floatingCombatTextPetSpellDamage_v2 = "PetSpellDamage",
+        cameraDistanceMaxZoomFactor = "cameraDistanceMaxFactor",
     } or {}
     -- 3.3.5 throws Lua errors for some unknown Retail-only CVar names.
     -- Probe through pcall so unsupported settings simply remain unavailable.
@@ -1938,7 +1970,7 @@ initFrame:SetScript("OnEvent", function(self)
 
     --- Returns current, default as strings (nil-safe)
     local function CVarInfo(cvar)
-        local cur, def = C_CVar.GetCVarInfo(cvar)
+        local cur, def = C_CVar.GetCVarInfo(combatTextCVars[cvar] or cvar)
         return cur or "", def or ""
     end
 
@@ -2534,36 +2566,43 @@ initFrame:SetScript("OnEvent", function(self)
 
         _, h = W:SectionHeader(parent, "COMBAT", y);  y = y - h
 
-        _, h = W:DualRow(parent, y,
-            { type="slider", text="Max Camera Distance",
-              min=1, max=2.6, step=0.1,
+        local cameraCfg = { type="slider", text="Max Camera Distance",
+              min=1, max=_G.EUI_WOW_335 and 4 or 2.6, step=0.1,
               getValue=function() return GetCVarNum("cameraDistanceMaxZoomFactor") end,
               setValue=function(v)
                 v = floor(v * 10 + 0.5) / 10
                 SetCVarSafe("cameraDistanceMaxZoomFactor", v)
-              end },
-            { type="toggle", text="Increase Game Image Quality",
-              tooltip="Enables sharpening to improve image clarity. Especially noticeable at lower render scales.",
-              getValue=function() return SafeGetCVarBool("ResampleAlwaysSharpen") end,
-              setValue=function(v)
-                SetCVarSafe("ResampleAlwaysSharpen", v and "1" or "0")
-              end });  y = y - h
-
-        _, h = W:DualRow(parent, y,
-            { type="toggle", text="Cast Actions on Key Down",
+              end }
+        local keyDownCfg = { type="toggle", text="Cast Actions on Key Down",
               tooltip="Keybinds respond on key down instead of key up. This helps make your abilities feel more responsive.",
               getValue=function() return SafeGetCVarBool("ActionButtonUseKeyDown") end,
               setValue=function(v)
                 SetCVarSafe("ActionButtonUseKeyDown", v and "1" or "0")
                 if _G._EAB_ApplyKeyDown then _G._EAB_ApplyKeyDown() end
-              end },
-            { type="slider", text="Lag Tolerance",
-              tooltip="This is the Spell Queue Window, it helps with making sure you can't queue up too many spells at once which makes the game feel laggy. Recommended settings are generally a minimum of 200 + your local ping. If you are unsure of exactly what this setting does, leave it at 400.",
-              min=0, max=400, step=1,
-              getValue=function() return GetCVarNum("SpellQueueWindow") end,
-              setValue=function(v)
-                SetCVarSafe("SpellQueueWindow", v)
-              end });  y = y - h
+              end }
+        -- Image sharpening and the Spell Queue Window do not exist on the 3.3.5 client.
+        if _G.EUI_WOW_335 then
+            _, h = W:DualRow(parent, y, cameraCfg, keyDownCfg);  y = y - h
+        else
+            _, h = W:DualRow(parent, y,
+                cameraCfg,
+                { type="toggle", text="Increase Game Image Quality",
+                  tooltip="Enables sharpening to improve image clarity. Especially noticeable at lower render scales.",
+                  getValue=function() return SafeGetCVarBool("ResampleAlwaysSharpen") end,
+                  setValue=function(v)
+                    SetCVarSafe("ResampleAlwaysSharpen", v and "1" or "0")
+                  end });  y = y - h
+
+            _, h = W:DualRow(parent, y,
+                keyDownCfg,
+                { type="slider", text="Lag Tolerance",
+                  tooltip="This is the Spell Queue Window, it helps with making sure you can't queue up too many spells at once which makes the game feel laggy. Recommended settings are generally a minimum of 200 + your local ping. If you are unsure of exactly what this setting does, leave it at 400.",
+                  min=0, max=400, step=1,
+                  getValue=function() return GetCVarNum("SpellQueueWindow") end,
+                  setValue=function(v)
+                    SetCVarSafe("SpellQueueWindow", v)
+                  end });  y = y - h
+        end
 
         local FCT_FONT_DIR = "Interface\\AddOns\\EllesmereUI\\media\\fonts\\"
         local fctFontValues = {
@@ -2620,14 +2659,16 @@ initFrame:SetScript("OnEvent", function(self)
             "Fonts\\skurri.ttf",
         }
         EllesmereUI.AppendSharedMediaFonts(fctFontValues, fctFontOrder)
-        _, h = W:DualRow(parent, y,
+        -- WorldTextScale has no 3.3.5 equivalent: the font takes the left slot and the right stays blank.
+        local combatTextSizeCfg = not _G.EUI_WOW_335 and
             { type="slider", text="Combat Text Size",
               min=0.5, max=2.5, step=0.1,
               getValue=function() return GetCVarNum("WorldTextScale_v2") end,
               setValue=function(v)
                 v = floor(v * 10 + 0.5) / 10
                 SetCVarSafe("WorldTextScale_v2", v)
-              end },
+              end } or nil
+        local combatTextFontCfg =
             { type="dropdown", text="Combat Text Font",
               tooltip="WARNING: This feature requires you to re-log or restart WoW to take effect.",
               tooltipOpts={ color={1, 0.3, 0.3} },
@@ -2655,7 +2696,12 @@ initFrame:SetScript("OnEvent", function(self)
                     confirmText = "Okay",
                     cancelText  = "Later",
                 })
-              end });  y = y - h
+              end }
+        if combatTextSizeCfg then
+            _, h = W:DualRow(parent, y, combatTextSizeCfg, combatTextFontCfg);  y = y - h
+        else
+            _, h = W:DualRow(parent, y, combatTextFontCfg, { type="label", text="" });  y = y - h
+        end
 
         local showDmgRow
         showDmgRow, h = W:DualRow(parent, y,
@@ -2695,9 +2741,9 @@ initFrame:SetScript("OnEvent", function(self)
             })
         end
 
-        -- Swiftmend Brightness Fix (Druid only)
+        -- Swiftmend Brightness Fix (Druid only; Efflorescence dimming is Retail-only)
         local _, playerClass = UnitClass("player")
-        if playerClass == "DRUID" then
+        if playerClass == "DRUID" and not _G.EUI_WOW_335 then
             _, h = W:DualRow(parent, y,
                 { type="toggle", text="Prevent Swiftmend Icon Dim",
                   tooltip="Prevents Blizzard from dimming Swiftmend on action bars and CDM based on Efflorescence state.",
@@ -3052,6 +3098,8 @@ initFrame:SetScript("OnEvent", function(self)
                       EllesmereUI.SetDarkModeAll(v, _dmNotRB)
                       EllesmereUI:RefreshPage()
                   end },
+                -- No class resource bar on 3.3.5.
+                _G.EUI_WOW_335 and { type = "label", text = "" } or
                 { type = "toggle", text = "Dark Mode (Class Resource Bar)",
                   tooltip = "Turns Dark Mode on or off for the class resource bar.",
                   getValue = function() return EllesmereUI.IsDarkModeAllOn(_dmIsRB) end,
@@ -3141,7 +3189,8 @@ initFrame:SetScript("OnEvent", function(self)
 
             -- Row 4: Resource Color Darken | BG Power Color Darken
             _, h = W:DualRow(parent, y,
-                { type = "slider", text = "Resource Color Darken",
+                -- Wrath resource bars do not read the class-resource colours.
+                _G.EUI_WOW_335 and { type = "label", text = "" } or { type = "slider", text = "Resource Color Darken",
                   min = 0, max = 100, step = 5,
                   tooltip = "Blackens every class-resource colour by this amount, everywhere class-resource colours are used.",
                   getValue = function() return EllesmereUI.GetDarkModeDB().resourceDarken or 0 end,
@@ -3203,8 +3252,21 @@ initFrame:SetScript("OnEvent", function(self)
         _, h = W:SectionHeader(parent, "CLASS COLORS", y);  y = y - h
         _colorGates[1] = { top = y }
 
+        -- Classes and power types the 3.3.5 client does not have are left out of the swatch grids there.
+        local function WithoutWrathMissing(order)
+            if not _G.EUI_WOW_335 then return order end
+            local missing = {
+                MONK = true, DEMONHUNTER = true, EVOKER = true,
+                FURY = true, LUNAR_POWER = true, INSANITY = true, MAELSTROM = true, EBON_MIGHT = true,
+            }
+            local out = {}
+            for _, key in ipairs(order) do
+                if not missing[key] then out[#out + 1] = key end
+            end
+            return out
+        end
         local classItems = {}
-        for _, token in ipairs(CLASS_ORDER) do
+        for _, token in ipairs(WithoutWrathMissing(CLASS_ORDER)) do
             -- Class names are Blizzard-localized in every client language; use the client's own names, falling back to our English labels.
             local lbl = (LOCALIZED_CLASS_NAMES_MALE and LOCALIZED_CLASS_NAMES_MALE[token]) or CLASS_LABELS[token]
             local def = CLASS_COLOR_MAP[token] or { r = 1, g = 1, b = 1 }
@@ -3243,7 +3305,7 @@ initFrame:SetScript("OnEvent", function(self)
             "LUNAR_POWER", "INSANITY", "MAELSTROM", "EBON_MIGHT",
         }
         local powerItems = {}
-        for _, pk in ipairs(POWER_ORDER) do
+        for _, pk in ipairs(WithoutWrathMissing(POWER_ORDER)) do
             -- Power names are Blizzard global strings (already localized); fall back to our English labels for non-standard entries (e.g. Ebon Might).
             local lbl = _G[pk] or POWER_LABELS[pk] or pk
             local def = DEFAULT_POWER_COLORS[pk] or { r = 1, g = 1, b = 1 }
@@ -3274,9 +3336,10 @@ initFrame:SetScript("OnEvent", function(self)
         --  CLASS RESOURCE COLORS section -- standalone swatches mirroring the
         --  POWER COLORS pattern, saved under the "classResource" custom-colors category (not yet consumed).
         -------------------------------------------------------------------
-        _, h = W:SectionHeader(parent, "CLASS RESOURCE COLORS", y);  y = y - h
-        _colorGates[3] = { top = y }
-        do
+        -- Wrath has no class resource bar to read these, so the section is skipped there.
+        if not _G.EUI_WOW_335 then
+            _, h = W:SectionHeader(parent, "CLASS RESOURCE COLORS", y);  y = y - h
+            _colorGates[3] = { top = y }
             -- Order + labels only; defaults live in the shared DEFAULT_CLASS_RESOURCE_COLORS, the source the resource bar's "Class Resource
             -- Color" fill mode reads.
             local items = {
@@ -3313,11 +3376,11 @@ initFrame:SetScript("OnEvent", function(self)
                 }
             end
             h = BuildColorGrid(parent, y, resourceItems)
-        end
-        y = y - h
-        _colorGates[3].bot = y
+            y = y - h
+            _colorGates[3].bot = y
 
-        _, h = W:Spacer(parent, y, 20);  y = y - h
+            _, h = W:Spacer(parent, y, 20);  y = y - h
+        end
 
         -- Colour-edit gate: in GLOBAL mode the shared palette comes from ONE profile, so editing is blocked while viewing any other. ONE overlay
         -- PER SECTION, sized to that section's grid. Always created; a shared refresh callback shows/hides them and updates the message, so they
@@ -5967,8 +6030,9 @@ initFrame:SetScript("OnEvent", function(self)
 
     -- Profiles and Patch Notes are their own sidebar pages (registered below), so Global Settings owns General + Style + Fonts + Textures + Glows + Colors (Style second, beside General), plus Gamepad while a module it configures is loaded.
     local globalPages = { PAGE_GENERAL, PAGE_STYLE, PAGE_FONTS, PAGE_TEXTURES, PAGE_GLOWS, PAGE_COLORS }
-    if EllesmereUI.ModuleNS("EllesmereUIActionBars") or EllesmereUI.ModuleNS("EllesmereUIUnitFrames")
-       or EllesmereUI.ModuleNS("EllesmereUIResourceBars") then
+    -- Wrath has no gamepad mode, and its modules have no gamepad hide hooks.
+    if not _G.EUI_WOW_335 and (EllesmereUI.ModuleNS("EllesmereUIActionBars") or EllesmereUI.ModuleNS("EllesmereUIUnitFrames")
+       or EllesmereUI.ModuleNS("EllesmereUIResourceBars")) then
         globalPages[#globalPages + 1] = PAGE_GAMEPAD
     end
 
@@ -6098,7 +6162,9 @@ initFrame:SetScript("OnEvent", function(self)
             if EllesmereUI._applyRightClickTarget then
                 EllesmereUI._applyRightClickTarget()
             end
-            EllesmereUI._applyHideBlizzardPartyFrame()
+            if EllesmereUI._applyHideBlizzardPartyFrame then
+                EllesmereUI._applyHideBlizzardPartyFrame()
+            end
             -- One call for both: the FPS readout may be drawn by the Secondary
             -- Stats block, so the two owners have to re-evaluate together.
             if EllesmereUI._applyFPSDisplay then

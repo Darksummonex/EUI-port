@@ -28,7 +28,8 @@ local windows={
     {id="dressup",key="reskinDressUp",label="Dressing Room",frames={"DressUpFrame"},classic=true},
     {id="macros",key="reskinMacros",label="Macros",frames={"MacroFrame"}},
     {id="settings",key="reskinSettings",label="Options & Key Bindings",frames={"InterfaceOptionsFrame","VideoOptionsFrame","AudioOptionsFrame","KeyBindingFrame"}},
-    {id="addonlist",key="reskinAddonList",label="AddOn List",frames={"AddonList"}},
+    -- optional: the toggle is hidden when the frame does not exist (stock 3.3.5 has no AddonList).
+    {id="addonlist",key="reskinAddonList",label="AddOn List",frames={"AddonList"},optional=true},
     {id="achievements",key="reskinAchievements",label="Achievements",frames={"AchievementFrame"}},
     {id="calendar",key="reskinCalendar",label="Calendar",frames={"CalendarFrame"}},
     {id="lfg",key="reskinLFGMenu",label="Dungeon & Raid Finder",frames={"LFDParentFrame","LFRParentFrame","LFGParentFrame"}},
@@ -119,7 +120,10 @@ local function Font(s,fs,scale)
         local path,size,flags=fs:GetFont(); if not path or not size then return end
         saved={path,size,flags,color=fs.GetTextColor and {fs:GetTextColor()}}; s.fonts[fs]=saved
     end
-    fs:SetFont(E.GetFontPath("blizzardSkin"),saved[2]*(scale or 1),FontFlags())
+    -- Re-setting an EditBox's font on every refresh hides its blinking cursor.
+    local path,size,flags=E.GetFontPath("blizzardSkin"),saved[2]*(scale or 1),FontFlags()
+    local curPath,curSize,curFlags=fs:GetFont()
+    if curPath~=path or math.abs((curSize or 0)-size)>.01 or (curFlags or "")~=flags then fs:SetFont(path,size,flags) end
     if (s.spec.id=="quest" or s.spec.id=="gossip") and fs.GetText then
         local text=fs:GetText()
         if type(text)=="string" then
@@ -254,8 +258,16 @@ local function InnerPanel(s,frame)
         frame:HookScript("OnShow",function() dirty=true end)
         frame:HookScript("OnHide",function() dirty=true end)
     end
-    frame:SetBackdrop(nil)
-    d.panel:SetBackdropColor(.035,.035,.035,.9); d.panel:SetBackdropBorderColor(.18,.18,.18,1); d.panel:Show()
+    if frame:GetBackdrop() then frame:SetBackdrop(nil) end
+    -- The border frame carries no fill. One level below its owner it can tie with
+    -- the sheet whose BACKGROUND fill covers it (Send Mail's To/Subject boxes).
+    if not (s.panel and sheetFrames[frame:GetName()]) then d.panel:SetFrameLevel(frame:GetFrameLevel()) end
+    if Kind(frame,"EditBox") then
+        d.panel:SetBackdropColor(.06,.06,.06,.95); d.panel:SetBackdropBorderColor(.25,.25,.25,1)
+    else
+        d.panel:SetBackdropColor(.035,.035,.035,.9); d.panel:SetBackdropBorderColor(.18,.18,.18,1)
+    end
+    d.panel:Show()
 end
 local function Icon(s,button,icon)
     if not icon or not icon.GetTexCoord then return end
@@ -368,9 +380,15 @@ local function Walk(s,frame,depth,root)
     if s.spec.nativeOnly and not root and Foreign(frame) then WalkForeign(s,frame,depth); return end
     local name=frame.GetName and frame:GetName() or ""
     local chrome=chromeFrames[name] or Kind(frame,"EditBox") or name and name:find("DropDown$")
-    if not s.spec.tooltip and (Kind(frame,"EditBox") or chrome or name and (name:find("DropDown$") or name:find("ScrollBar$"))) then
+    -- A text body scrolled inside a boxed scroll frame (Send Mail) is one line
+    -- tall when empty; the scroll frame's box already frames it.
+    local scroller=Kind(frame,"EditBox") and frame:GetParent()
+    local scrolled=scroller and Kind(scroller,"ScrollFrame") and chromeFrames[scroller:GetName() or ""]
+    if s.spec.tooltip or scrolled then
+        -- Tooltips and scrolled text bodies get no inner box.
+    elseif Kind(frame,"EditBox") or chrome or name and (name:find("DropDown$") or name:find("ScrollBar$")) then
         InnerPanel(s,frame)
-    elseif not s.spec.tooltip and frame~=s.frame and frame.GetBackdrop then
+    elseif frame~=s.frame and frame.GetBackdrop then
         local backdrop=frame:GetBackdrop()
         if backdrop and (backdrop.bgFile or backdrop.edgeFile) then InnerPanel(s,frame) end
     end

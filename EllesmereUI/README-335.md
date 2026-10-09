@@ -8,6 +8,10 @@ AMS = 50% da vida máxima) e limpa no fim da aura. Um escudo quebrado logo após
 absorver dano ensina o valor real para o próximo cast do mesmo autor. Clientes
 com `UnitGetTotalAbsorbs` nativo usam a API direto. Texturas do Retail em TGA
 potência de dois em `media/textures/shields_335`.
+Tooltip IDs em botões de ação mostram o ID real do feitiço (quarto retorno de
+`GetActionInfo`, com fallback pelo link), não o slot do grimório.
+O menu recolhido volta a mostrar o logo E: ele fica na camada OVERLAY, acima do
+disco preto (o 3.3.5 podia desenhar o disco por cima).
 
 0.59: issecretvalue/issecrettable existem desde o carregamento do Core. Corrige o
 erro "attempt to call global 'issecretvalue'" nos brilhos do Cooldown Manager

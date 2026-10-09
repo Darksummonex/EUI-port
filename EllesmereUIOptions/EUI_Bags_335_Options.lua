@@ -146,7 +146,7 @@ init:SetScript("OnEvent",function(self)
             Row(Toggle("bagStackSplitter","Stack Splitter","Replace Blizzard's split popup for bag and bank items with the split dialog that also offers Auto Split."),
                 {type="label",text="Middle-click an item to pin it. Drag categories on the sidebar to reorder; right-click them to rename or group."})
             Section("WRATH INVENTORY")
-            Row(Toggle("enhancedBags","Enable Bags","Use the EllesmereUI bag window instead of the default bags."),
+            Row(Toggle("enhancedBags","Enable Bags","Use the EllesmereUI bag window instead of the default bags. After turning it off, /reload to hand the bag keys fully back to the default bags."),
                 Slider("bagColumns","Columns",4,24,1,"Item columns in the bag window."))
             Row(Toggle("bagIncludeKeyring","Include Keyring","Show the keyring in the bag window."),
                 Toggle("bagShowSlots","Show Bag Slot Bar","Show the equipped bag slots above the window (also toggled by the Bags header button)."))

@@ -18,9 +18,14 @@ IsAltKeyDown=function() return alt end
 UnitBuff=function() return "Buff","Rank 1","icon",1,nil,10,20,"player",false,false,111 end
 UnitDebuff=function() return "Debuff","Rank 2","icon",1,nil,10,20,"target",false,false,222 end
 UnitAura=function() return "Aura","Rank 3","icon",1,nil,10,20,"player",false,false,333 end
-GetActionInfo=function(slot) if slot==1 then return "spell",444 elseif slot==2 then return "macro",5 else return "item",999 end end
+GetActionInfo=function(slot)
+ if slot==1 then return "spell",7,"spell",444 elseif slot==2 then return "macro",5 elseif slot==4 then return "spell",9,"spell" else return "item",999 end
+end
 GetMacroSpell=function() return "Fireball","Rank 2" end
-GetSpellLink=function(name,rank) assert(name=="Fireball" and rank=="Rank 2"); return "|Hspell:555|h[Fireball]|h" end
+GetSpellLink=function(name,rank)
+ if name==9 then assert(rank=="spell"); return "|Hspell:666|h[Frostbolt]|h" end
+ assert(name=="Fireball" and rank=="Rank 2"); return "|Hspell:555|h[Fireball]|h"
+end
 hooksecurefunc=function(obj,key,fn)
  local old=obj[key]
  obj[key]=function(self,...) old(self,...); fn(self,...) end
@@ -72,6 +77,7 @@ t:SetHyperlink("item:777"); assert(t:NumLines()==0)
 t:SetAction(1); assert(t.lines[1][2]=="444" and t:NumLines()==1)
 t:SetAction(2); assert(t.lines[1][2]=="555")
 t:SetAction(3); assert(t:NumLines()==0)
+t:SetAction(4); assert(t.lines[1][2]=="666","Spellbook slot falls back to the spell link ID")
 EllesmereUIDB.spellIDModifier="shift"; t:SetSpellByID(123); assert(t:NumLines()==0)
 shift=true; t:SetSpellByID(123); assert(t:NumLines()==1)
 EllesmereUIDB.spellIDModifier="control"; t:SetSpellByID(123); assert(t:NumLines()==0)

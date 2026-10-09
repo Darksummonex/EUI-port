@@ -3,6 +3,10 @@
 0.5: Latency (Spell Queue) Overlay funciona sem evento SENT, usa latência
 world quando disponível e mantém a zona visível nos canais. Wrath usa a
 latência nativa como fallback; cor e texto em ms continuam configuráveis.
+A barra de cast mostra o nome do feitiço canalizado em vez de "Channeling"
+(terceiro retorno de `UnitChannelInfo` no 3.3.5).
+A Call Totem Bar não redimensiona nem move o holder em combate (os botões
+de totem são protegidos); o ajuste espera o fim do combate.
 
 0.4: as texturas das barras incluem a LibSharedMedia e chaves `sm:` são
 resolvidas em jogo.

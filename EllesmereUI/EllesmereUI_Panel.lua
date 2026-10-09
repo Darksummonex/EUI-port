@@ -810,7 +810,10 @@ local function CreateMainFrame()
         local badge = badgeHost:CreateTexture(nil, "ARTWORK", nil, 1)
         badge:SetSize(H, H)
         badge:SetPoint("TOPLEFT", mini, "TOPLEFT", 0, 0)
-        local badgeOv = badgeHost:CreateTexture(nil, "ARTWORK", nil, 2)
+        -- Wrath can draw same-layer textures out of sublevel order, which hid
+        -- the logo under the black disc; OVERLAY always draws above it.
+        local badgeOv = _G.EUI_WOW_335 and badgeHost:CreateTexture(nil, "OVERLAY")
+            or badgeHost:CreateTexture(nil, "ARTWORK", nil, 2)
         if mini.CreateMaskTexture and badge.AddMaskTexture and badgeOv.AddMaskTexture then
             local badgeMask = mini:CreateMaskTexture()
             badgeMask:SetTexture(MASK, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")

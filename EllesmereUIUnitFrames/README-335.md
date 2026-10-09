@@ -7,7 +7,12 @@ opções. O valor é estimado pelo Core a partir do combat log. Ligado uma vez p
 padrão (Striped). Heal absorbs, barras de faixa e Glow Line não existem no 3.3.5.
 Boss frames atualizam vida, poder e texto sem o boss estar no target/focus: o
 cliente Wrath só manda `UNIT_HEALTH` pelo token do target/focus, não por `bossN`,
-então os boss frames visíveis são lidos a cada 0,2 s.
+então os boss frames visíveis são lidos a cada 0,2 s. Barras de cast mostram o
+nome do feitiço canalizado em vez de "Channeling" (terceiro retorno de
+`UnitChannelInfo` no 3.3.5).
+"Important Cast Glow" (barra de cast de target/focus, com cog e sync) fica
+oculto no 3.3.5, também na página de Glows: depende de
+`C_Spell.IsSpellImportant`, que o cliente não tem.
 
 0.17: as condições de Visibility (combate, grupo, esconder sem alvo) davam
 erro `RegisterAttributeDriver` (nil): essa API não existe no 3.3.5. As 7

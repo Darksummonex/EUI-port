@@ -266,7 +266,14 @@ chat={}; DEFAULT_CHAT_FRAME={AddMessage=function(_,text) chat[#chat+1]=text end}
 ITEM_SOULBOUND,ITEM_BIND_ON_EQUIP,ITEM_BIND_QUEST,ITEM_BIND_ON_USE,ITEM_BIND_TO_ACCOUNT='Soulbound','Binds when equipped','Quest Item','Binds when used','Binds to account'
 ERR_INV_FULL,ERR_ITEM_MAX_COUNT='Inventory is full.','You cannot carry any more of those items.'
 nativeModified=0
-ContainerFrameItemButton_OnModifiedClick=function() nativeModified=nativeModified+1 end
+local tableHook=hooksecurefunc
+function hooksecurefunc(target,key,fn)
+    if type(target)~='string' then return tableHook(target,key,fn) end
+    local original=_G[target]; _G[target]=function(...) original(...); key(...) end
+end
+StackSplitFrame=CreateFrame('Frame','StackSplitFrame',UIParent); StackSplitFrame:Hide()
+local nativeModifiedClick=function(self) nativeModified=nativeModified+1; StackSplitFrame.owner=self; StackSplitFrame:Show() end
+ContainerFrameItemButton_OnModifiedClick=nativeModifiedClick
 InboxFrame=CreateFrame('Frame','InboxFrame',UIParent); SendMailFrame=CreateFrame('Frame','SendMailFrame',UIParent); SendMailFrame:Hide()
 mail={}; takes={}; invFull=false; stuck=false
 local function Cleanup(i) local mm=mail[i]; if mm.money==0 and not next(mm.items) and not mm.text then table.remove(mail,i) end end
@@ -318,23 +325,69 @@ EUI335QoLMailScan={SetOwner=function() end,ClearLines=function(self) self.n=0 en
     SetBagItem=function(self,bag,slot) local i=items[bag..':'..slot]; self.n=(i and i.bind) and 2 or 1; EUI335QoLMailScanTextLeft2.text=i and i.bind end}
 local function Btn(bag,slot) return {GetParent=function() return {GetID=function() return bag end} end,GetID=function() return slot end} end
 local click=ContainerFrameItemButton_OnModifiedClick
-shift=true; click(Btn(0,1),'LeftButton'); assert(nativeModified==1 and not next(sendSlots),'Mailbox closed: native split/link')
-SendMailFrame:Show(); click(Btn(0,1),'LeftButton')
-assert(nativeModified==1 and sendSlots[1]=='ore1' and sendSlots[2]=='ore2' and sendSlots[3]=='ore3' and not sendSlots[4],'Ore category')
+assert(click~=nativeModifiedClick,'Bulk attach must post-hook the native click')
+shift=true; click(Btn(0,1),'LeftButton'); assert(nativeModified==1 and not next(sendSlots) and StackSplitFrame:IsShown(),'Mailbox closed: native split/link')
+SendMailFrame:Show(); local ore=Btn(0,1); click(ore,'LeftButton')
+assert(nativeModified==2 and sendSlots[1]=='ore1' and sendSlots[2]=='ore2' and sendSlots[3]=='ore3' and not sendSlots[4],'Ore category')
+assert(not StackSplitFrame:IsShown(),'Attached click closes the native split-stack box')
 click(Btn(0,4),'LeftButton'); assert(sendSlots[4]=='boe2' and sendSlots[5]=='boeSword' and not sendSlots[6],'BoE gear of the same quality only')
-click(Btn(0,6),'LeftButton'); assert(nativeModified==2 and not sendSlots[6],'Soulbound falls back to native')
-ChatEdit_GetActiveWindow=function() return {} end; click(Btn(0,2),'LeftButton'); assert(nativeModified==3 and not sendSlots[6],'Open chat keeps link insert'); ChatEdit_GetActiveWindow=nil
-click(Btn(0,2),'RightButton'); assert(nativeModified==4)
-shift=false; click(Btn(0,2),'LeftButton'); assert(nativeModified==5); shift=true
-p.mailBulkAttach=false; click(Btn(0,2),'LeftButton'); assert(nativeModified==6); p.mailBulkAttach=true
-items['0:7'].unmailable=true; click(Btn(0,7),'LeftButton'); assert(nativeModified==6 and cleared==1 and not held and not sendSlots[6],'Rejected attach must not keep the item on the cursor')
-for i=6,12 do sendSlots[i]='filler' end; click(Btn(0,2),'LeftButton'); assert(nativeModified==6 and not items['0:2'].locked,'No free slot: nothing picked up')
+click(Btn(0,6),'LeftButton'); assert(nativeModified==4 and not sendSlots[6] and StackSplitFrame:IsShown(),'Soulbound keeps the native split box')
+ChatEdit_GetActiveWindow=function() return {} end; click(Btn(0,2),'LeftButton'); assert(nativeModified==5 and not sendSlots[6],'Open chat keeps link insert'); ChatEdit_GetActiveWindow=nil
+click(Btn(0,2),'RightButton'); assert(nativeModified==6 and not sendSlots[6])
+shift=false; click(Btn(0,2),'LeftButton'); assert(nativeModified==7 and not sendSlots[6]); shift=true
+p.mailBulkAttach=false; click(Btn(0,2),'LeftButton'); assert(nativeModified==8 and not sendSlots[6]); p.mailBulkAttach=true
+items['0:7'].unmailable=true; click(Btn(0,7),'LeftButton'); assert(nativeModified==9 and cleared==1 and not held and not sendSlots[6],'Rejected attach must not keep the item on the cursor')
+for i=6,12 do sendSlots[i]='filler' end; click(Btn(0,2),'LeftButton'); assert(nativeModified==10 and not items['0:2'].locked,'No free slot: nothing picked up')
 for i=6,12 do sendSlots[i]=nil end; click(Btn(0,2),'LeftButton'); assert(sendSlots[6]=='herb')
 sendSlots={}; for k,i in pairs(items) do i.locked=nil; i.unmailable=nil end
 for n=2,11 do items['1:'..n]=nil end; bagSlots[1]=12; for n=3,12 do items['1:'..n]={link='ore'..(n+1),class='Trade Goods',sub='Metal & Stone',q=1} end
 click(Btn(0,1),'LeftButton'); local count=0; for i=1,12 do if sendSlots[i] then count=count+1 end end
 assert(count==12 and not items['1:12'].locked,'Attach stops at the 12 send slots')
 shift=false; SendMailFrame:Hide()
+-- Send Mail recipient list: alts (realm + faction), guild roster and recent successful sends.
+local m=getmetatable(UIParent).__index
+for _,k in ipairs({'SetBackdrop','SetBackdropColor','SetBackdropBorderColor','EnableMouseWheel','SetNormalTexture','SetPushedTexture','SetHighlightTexture'}) do if not m[k] then m[k]=function() end end end
+if not m.SetFocus then m.SetFocus=function(self) self.focus=true end end
+local createFont=m.CreateFontString
+m.CreateFontString=function(self,name,layer,template) local fs=createFont(self,name,layer,template); if template then fs:SetFont('Fonts\\\\FRIZQT__.TTF',10,'') end; return fs end
+function SendMail(name) end
+SendMailNameEditBox=CreateFrame('EditBox','SendMailNameEditBox',SendMailFrame); SendMailSubjectEditBox=CreateFrame('EditBox','SendMailSubjectEditBox',SendMailFrame)
+SendMailNameEditBox:SetFont('Fonts\\\\FRIZQT__.TTF',12,'')
+roster={{'Zed',80,true,'MAGE'},{'player',80,true,'WARRIOR'},{'Abe',70,false,'PRIEST'},{'Bob',75,true,'ROGUE'}}
+function IsInGuild() return true end
+function GetNumGuildMembers() return #roster end
+function GetGuildRosterInfo(i) local r=roster[i]; return r[1],'Rank',1,r[2],'Class','Zone','','',r[3] and 1 or nil,0,r[4] end
+rosterRequests=0; function GuildRoster() rosterRequests=rosterRequests+1 end
+EllesmereUIDB.mailRecipients={alts={['Test Realm']={Alt={class='PALADIN',level=80,faction='Alliance'},Enemy={class='MAGE',level=80,faction='Horde'}}}}
+Q.Apply()
+local db=EllesmereUIDB.mailRecipients
+assert(db.alts['Test Realm'].player and db.alts['Test Realm'].player.faction=='Alliance' and db.alts['Test Realm'].player.level==80,'Current character recorded as an alt')
+local alts=Q.MailRecipients('alts'); assert(#alts==1 and alts[1].name=='Alt','Alts: same faction, not yourself')
+local guild=Q.MailRecipients('guild')
+assert(#guild==3 and guild[1].name=='Bob' and guild[2].name=='Zed' and guild[3].name=='Abe','Guild: online first, then by name, without yourself')
+local rb=Q.mailRecipientsButton; assert(rb and rb:IsShown())
+Q.ToggleMailRecipients(); local f=Q.mailPicker; assert(f:IsShown() and f.rows[1].name=='Alt' and not f.rows[2]:IsShown())
+f.tabs[2]:GetScript('OnClick')(); assert(rosterRequests==1 and f.rows[1].name=='Bob')
+f.rows[2]:GetScript('OnClick')(f.rows[2]); assert(SendMailNameEditBox:GetText()=='Zed' and SendMailSubjectEditBox.focus and not f:IsShown())
+local ev=Q.mailRecipientEvents
+SendMail('  Carol ','Hi',''); ev:GetScript('OnEvent')(ev,'MAIL_SEND_SUCCESS')
+SendMail('Dave','x',''); ev:GetScript('OnEvent')(ev,'MAIL_FAILED')
+SendMail('carol','x',''); ev:GetScript('OnEvent')(ev,'MAIL_SEND_SUCCESS')
+local recent=Q.MailRecipients('recent'); assert(#recent==1 and recent[1].name=='carol','Recent: successful sends only, newest first, no duplicates')
+for i=1,20 do Q.MailRemember('N'..i) end; assert(#db.recent['Test Realm']==15 and db.recent['Test Realm'][1]=='N20','Recent keeps 15')
+p.mailRecipients=false; Q.Apply(); assert(not rb:IsShown()); p.mailRecipients=true; Q.Apply(); assert(rb:IsShown())
+-- Merchant mouse wheel turns pages through the native Prev/Next buttons.
+MerchantFrame=CreateFrame('Frame','MerchantFrame',UIParent)
+local turns={}
+for _,name in ipairs({'MerchantPrevPageButton','MerchantNextPageButton'}) do
+    local b=CreateFrame('Button',name,MerchantFrame); b:Enable(); b.Click=function() turns[#turns+1]=name end
+end
+Q.Apply(); Q.Apply(); local wheel=MerchantFrame.hooks.OnMouseWheel; assert(wheel,'Merchant wheel hook installed')
+wheel(MerchantFrame,-1); wheel(MerchantFrame,1)
+assert(turns[1]=='MerchantNextPageButton' and turns[2]=='MerchantPrevPageButton' and #turns==2,'Wheel down = next, up = previous')
+MerchantPrevPageButton:Disable(); wheel(MerchantFrame,1); assert(#turns==2,'First page: no previous')
+MerchantNextPageButton:Hide(); wheel(MerchantFrame,-1); assert(#turns==2,'Buyback tab hides the page buttons')
+MerchantNextPageButton:Show(); p.merchantWheel=false; wheel(MerchantFrame,-1); assert(#turns==2,'Option off'); p.merchantWheel=true
 ''')
 lua.execute((root/'EllesmereUIOptions/EUI_QoL_335_Options.lua').read_text(encoding='utf-8-sig'))
 lua.execute("allFrames[#allFrames]:RunScript('OnEvent','PLAYER_LOGIN')")

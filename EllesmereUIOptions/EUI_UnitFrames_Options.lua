@@ -1066,14 +1066,16 @@ initFrame:SetScript("OnEvent", function(self)
             preSelect = SelectUnit("focus"),
             highlight = "Buff Filter",
             desc = UF_PurgeGlowDesc(UNIT_DB_MAP.focus) })
-        GO.RegisterSite({ id = "uf_importantcast_target", label = "Target Important Cast Glow", group = "module",
-            module = "EllesmereUIUnitFrames", page = PAGE_DISPLAY, section = "CAST BAR",
-            preSelect = SelectUnit("target"), highlight = "Important Cast Glow",
-            desc = UF_ImpCastGlowDesc(UNIT_DB_MAP.target) })
-        GO.RegisterSite({ id = "uf_importantcast_focus", label = "Focus Important Cast Glow", group = "module",
-            module = "EllesmereUIUnitFrames", page = PAGE_DISPLAY, section = "CAST BAR",
-            preSelect = SelectUnit("focus"), highlight = "Important Cast Glow",
-            desc = UF_ImpCastGlowDesc(UNIT_DB_MAP.focus) })
+        if not _G.EUI_WOW_335 then
+            GO.RegisterSite({ id = "uf_importantcast_target", label = "Target Important Cast Glow", group = "module",
+                module = "EllesmereUIUnitFrames", page = PAGE_DISPLAY, section = "CAST BAR",
+                preSelect = SelectUnit("target"), highlight = "Important Cast Glow",
+                desc = UF_ImpCastGlowDesc(UNIT_DB_MAP.target) })
+            GO.RegisterSite({ id = "uf_importantcast_focus", label = "Focus Important Cast Glow", group = "module",
+                module = "EllesmereUIUnitFrames", page = PAGE_DISPLAY, section = "CAST BAR",
+                preSelect = SelectUnit("focus"), highlight = "Important Cast Glow",
+                desc = UF_ImpCastGlowDesc(UNIT_DB_MAP.focus) })
+        end
     end
 
     local GROUP_UNIT_ORDER = { "player", "target", "focus" }
@@ -11332,8 +11334,9 @@ initFrame:SetScript("OnEvent", function(self)
                   db = function(u) local f = UNIT_DB_MAP[u]; return f and f() end })
         end
         -- Important Cast Glow (target/focus); in Classic WoW UI it fills the Border Size row's free slot.
+        -- Needs C_Spell.IsSpellImportant, which the 3.3.5 client lacks.
         local impGlowCfg, impGlowDesc
-        if selectedUnit == "target" or selectedUnit == "focus" then
+        if (selectedUnit == "target" or selectedUnit == "focus") and not _G.EUI_WOW_335 then
             impGlowDesc = UF_ImpCastGlowDesc(function() return UNIT_DB_MAP[selectedUnit]() end,
                 function() ReloadAndUpdate(); UpdatePreview() end)
             impGlowCfg = EllesmereUI.GlowOptions.DropdownSpec(impGlowDesc, "Important Cast Glow",

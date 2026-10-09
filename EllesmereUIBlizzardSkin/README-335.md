@@ -4,6 +4,14 @@
 abas e artes que o addon cria dentro do AuctionFrame mantêm o visual e o
 layout do addon; só fontes e botões de texto padrão seguem o skin. Os botões
 "Close" do rodapé não ganham mais um "x" por cima do texto.
+Correio: as caixas To, Subject e do texto da carta voltam a aparecer (a borda
+ficava sob o fundo da página Send Mail). A âncora fixa do tooltip não volta
+mais para a posição salva enquanto é arrastada no Unlock Mode. Fonte e backdrop
+das caixas de texto só são reaplicados quando mudam, para o cursor de digitação
+não sumir com o refresh do skin.
+A opção "AddOn List" em Blizzard Window Skins só aparece se o cliente tiver o
+frame `AddonList` (o 3.3.5 padrão não tem; servidores que o incluem continuam
+com a opção).
 
 0.27: Save de equipamentos inicializa a lista de ícones mesmo com o popup
 aberto, evitando comparar números com nil. New Set limpa a seleção anterior.
