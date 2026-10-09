@@ -85,6 +85,22 @@ c.equipment.equip:RunScript('OnClick'); assert(equipped[1]=='PvP')
 rows[1]:RunScript('OnDoubleClick'); assert(equipped[2]=='Raid')
 GearManagerDialogPopup=NativeWindow('GearManagerDialogPopup'); GearManagerDialogPopup:Hide()
 popupParent=GearManagerDialogPopup:GetParent()
+-- Wrath's already-shown Save path updates without initializing icon totals.
+local iconTotal; local rebuilds=0
+function RecalculateGearManagerDialogPopup()
+ iconTotal=20; rebuilds=rebuilds+1
+ local selected=GearManagerDialog.selectedSet
+ GearManagerDialogPopup.selectedTexture=selected and selected.icon:GetTexture() or nil
+ assert(iconTotal>0)
+end
+function GearManagerDialogSaveSet_OnClick()
+ assert(iconTotal and iconTotal>0,'Uninitialized icon list')
+end
+GearManagerDialogPopup:Show(); iconTotal=nil
+c.equipment.save:RunScript('OnClick')
+assert(rebuilds==1 and GearManagerDialog.selectedSet==rows[2] and GearManagerDialogPopup.selectedTexture==rows[2].icon:GetTexture(),'Save did not rebuild already-shown popup')
+c.equipment.save:RunScript('OnClick'); assert(rebuilds==2)
+
 rows[3]:RunScript('OnClick')
 assert(GearManagerDialogPopup:IsShown() and GearManagerDialogPopup:GetParent()==CharacterFrame and c.selectedSet==nil)
 assert(c.popupBg and c.popupBg:IsShown(),'icon picker not skinned')

@@ -501,12 +501,20 @@ local function OpenSetPopup(c,editName,editTexture)
     Place(c,popup,"TOPLEFT",c.frame,"TOPRIGHT",-6,-40)
     popup:SetFrameLevel(c.frame:GetFrameLevel()+20)
     SkinSetPopup(c,popup)
-    popup.selectedSetName=nil
-    popup:Show()
-    if editName then
-        popup.isEdit,popup.origName=true,editName
-        if RecalculateGearManagerDialogPopup then RecalculateGearManagerDialogPopup(editName,editTexture) end
+    -- Native recalculation reads GearManagerDialog.selectedSet, not arguments.
+    -- Set it before Show (OnShow may run), and rebuild even if already visible.
+    if _G.GearManagerDialog then
+        GearManagerDialog.selectedSet=nil
+        GearManagerDialog.selectedSetName=editName
+        for _,row in ipairs(c.equipment and c.equipment.rows or {}) do
+            if editName and row.name==editName then GearManagerDialog.selectedSet=row; break end
+        end
     end
+    popup.selectedSetName=nil
+    popup.isEdit,popup.origName=editName~=nil,editName
+    if not editName and popup.SetSelection then popup:SetSelection(true,nil) end
+    popup:Show()
+    if RecalculateGearManagerDialogPopup then RecalculateGearManagerDialogPopup() end
 end
 local function UpdateEquipment(c)
     local eq=c.equipment; if not eq then return end
@@ -559,8 +567,7 @@ local function BuildEquipment(c)
         if not c.selectedSet or not _G.GearManagerDialog then return end
         for _,row in ipairs(eq.rows) do
             if row.name==c.selectedSet then
-                GearManagerDialog.selectedSet=row
-                if GearManagerDialogSaveSet_OnClick then GearManagerDialogSaveSet_OnClick(self) end
+                OpenSetPopup(c,row.name,row.icon:GetTexture())
                 return
             end
         end

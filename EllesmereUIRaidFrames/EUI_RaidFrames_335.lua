@@ -470,8 +470,16 @@ local function OnEvent(_,event,unit,duration)
         if ns.HideExtraPreviews then ns.HideExtraPreviews() end; ns.UpdateAll(false)
     elseif event=="PLAYER_REGEN_ENABLED" then ns.inCombat=false; ns.UpdateAll(false)
     elseif event=="RAID_ROSTER_UPDATE" or event=="PARTY_MEMBERS_CHANGED" then if InCombatLockdown() then pending=true; ns.UpdateAll(true) else ns.Apply() end
-    elseif event=="READY_CHECK" then ns.readyUntil=GetTime()+(tonumber(duration) or 35)+10; ns.UpdateAll(false)
-    elseif event=="READY_CHECK_FINISHED" then ns.readyUntil=GetTime()+10; ns.UpdateAll(false)
+    elseif event=="READY_CHECK" then
+        ns.readyResults={}; ns.readyFinished=false; ns.readyUntil=GetTime()+(tonumber(duration) or 35)+10; ns.UpdateAll(false)
+    elseif event=="READY_CHECK_CONFIRM" then
+        local guid=unit and UnitGUID(unit)
+        if guid and ns.readyResults and not ns.readyFinished then ns.readyResults[guid]=(duration==true or duration==1) and "ready" or "notready" end
+        ns.UpdateAll(false)
+    elseif event=="READY_CHECK_FINISHED" then
+        ns.readyFinished=true; ns.readyUntil=GetTime()+10
+        for guid,status in pairs(ns.readyResults or {}) do if status=="waiting" then ns.readyResults[guid]="notready" end end
+        ns.UpdateAll(false)
     elseif event:find("UNIT_",1,true)==1 then
         for _,b in ipairs(ns.buttons) do if b:IsShown() and (b:GetAttribute("unit")==unit or b.unit==unit) then ns.UpdateFrame(b,event=="UNIT_AURA" or event=="UNIT_PET" or event:find("VEHICLE",1,true)) end end
         if ns.UpdateHealerMana and (event=="UNIT_MANA" or event=="UNIT_MAXMANA" or event=="UNIT_DISPLAYPOWER") then ns.UpdateHealerMana() end

@@ -2,6 +2,8 @@
 -- Attribute names and startingIndex allocation follow native header comments
 -- preserved in the installed Cell RaidFrames/Groups/RaidFrame.lua.
 local m=getmetatable(UIParent).__index
+function m:SetFrameLevel(level) self.frameLevel=level end
+function m:GetFrameLevel() return self.frameLevel or 1 end
 local create=CreateFrame
 local set=m.SetAttribute; local show=m.Show; local hide=m.Hide
 raidCount,partyCount=0,0; units={}; headers={}; drivers={}; nativeSecure=false

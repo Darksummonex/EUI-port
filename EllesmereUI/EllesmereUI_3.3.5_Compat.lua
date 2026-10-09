@@ -228,6 +228,10 @@ end
 if not UnitEffectiveLevel then UnitEffectiveLevel = UnitLevel end
 if not IsPlayerSpell then IsPlayerSpell = IsSpellKnown or function() return false end end
 if not PlayerHasToy then PlayerHasToy = function() return false end end
+-- Wrath has no secret values. Options defines these too, but it loads on demand and
+-- Core code (glows, unit names) runs before the panel is first opened.
+if not issecretvalue then issecretvalue = function() return false end end
+if not issecrettable then issecrettable = function() return false end end
 if not GetRelativeDifficultyColor then
  GetRelativeDifficultyColor = function(_, level) return GetQuestDifficultyColor and GetQuestDifficultyColor(level) end
 end

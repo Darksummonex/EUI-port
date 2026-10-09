@@ -279,7 +279,7 @@ init:SetScript("OnEvent",function(self)
         B.Row(O.Toggle(bar,"showChannelTicks","Channel Ticks","Wrath channel pulse positions.",dis),O.Color(bar,"tickMarks","Tick Color",true,td))
         B.Row(O.Toggle(bar,"showLastTick","Highlight Last Tick",nil,td),O.Color(bar,"lastTick","Last Tick Color",true,function() return td() or not O.Get(bar,"showLastTick") end))
         local ld=function() return dis() or not O.Get(bar,"latencyEnabled") end
-        B.Row(O.Toggle(bar,"latencyEnabled","Show Latency",nil,dis),O.Color(bar,"latency","Latency Color",true,ld))
+        B.Row(O.Toggle(bar,"latencyEnabled","Latency (Spell Queue) Overlay","Shows the network latency zone at the end of casts or channels, including queued spells.",dis),O.Color(bar,"latency","Latency Color",true,ld))
         B.Row(O.Toggle(bar,"latencyShowText","Latency Text",nil,ld),O.spacer)
         B.Section("BORDER")
         B.Border(bar,dis)

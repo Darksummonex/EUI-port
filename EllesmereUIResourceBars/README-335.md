@@ -1,4 +1,8 @@
-# Resource Bars 3.3.5a — 0.4
+# Resource Bars 3.3.5a — 0.5
+
+0.5: Latency (Spell Queue) Overlay funciona sem evento SENT, usa latência
+world quando disponível e mantém a zona visível nos canais. Wrath usa a
+latência nativa como fallback; cor e texto em ms continuam configuráveis.
 
 0.4: as texturas das barras incluem a LibSharedMedia e chaves `sm:` são
 resolvidas em jogo.

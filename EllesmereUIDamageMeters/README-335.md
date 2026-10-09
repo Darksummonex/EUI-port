@@ -1,4 +1,13 @@
-# EllesmereUI Damage Meters — Wrath 3.3.5a — 0.7
+# EllesmereUI Damage Meters — Wrath 3.3.5a — 0.8
+
+0.8: absorções consumidas por escudos observados contam em Healing Done/HPS
+para o dono identificado, com métrica Absorbs Done e detalhes por alvo/magia.
+Rastreia Power Word: Shield, Divine Aegis, proc de Sacred Shield, escudos pessoais
+e wards comuns, inclusive antes do combate. Absorbs Received permanece intacto.
+Escudos de donos diferentes, caster desconhecido, escudos não suportados e
+misses sem quantidade não recebem atribuição inventada. Escudos do mesmo dono
+sem divisão confiável usam a magia agregada Absorbs (combined shields).
+Expiração/remoção/morte/reset limpam os escudos. Combate pode começar por miss.
 
 0.7: a textura das barras aceita chaves `sm:` (formato do resto do EUI)
 além de `lsm:`, então perfis com texturas da SharedMedia carregam certo.

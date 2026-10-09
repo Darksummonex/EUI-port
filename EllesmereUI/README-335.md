@@ -1,4 +1,20 @@
-# EllesmereUI Wrath Core — 0.55
+# EllesmereUI Wrath Core — 0.59
+
+0.59: issecretvalue/issecrettable existem desde o carregamento do Core. Corrige o
+erro "attempt to call global 'issecretvalue'" nos brilhos do Cooldown Manager
+antes de abrir o painel de opções (Options carrega sob demanda).
+
+0.58: idiomas nativos do Wrath com Locales 0.1; formatos posicionais
+compatíveis com Lua 5.1 e fonte nativa no cliente localizado.
+
+0.57: menu recolhido usa o logo E original do Ellesmere sobre um disco
+preto com transparência circular nativa, cor de destaque do UI e
+ícone de fechar explícito no Wrath; corrige o quadrado de cor sobre o logo.
+
+0.56: tooltip dos widgets/Unlock Mode usa SetChange nas animações Alpha do
+Wrath quando SetFromAlpha/SetToAlpha não existem. Corrige o erro ao passar o
+mouse em Grow Right e preserva o fade de entrada/saída, interrupção e reset
+de escala, sem substituir métodos nativos ou metatables compartilhadas.
 
 0.55: SharedMedia completo. Fontes, texturas de barra e sons registrados na
 LibSharedMedia-3.0 por outros addons aparecem nos menus do EUI, inclusive os

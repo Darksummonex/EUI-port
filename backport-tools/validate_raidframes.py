@@ -46,7 +46,7 @@ assert(member.Health.value==8000 and member.healthText:GetText()=='80%' and memb
 assert(member.Power.value==800 and member:GetAlpha()==.4 and member.borderColor[1]==1 and member.borderColor[2]==.15)
 assert(tostring(member.role:GetTexture()):find('Icons_335\\\\healer-modern.tga',1,true) and member.raidMarker.marker==4,tostring(member.role:GetTexture())..' '..tostring(member.raidMarker.marker))
 assert(member.buffs[1]:IsShown() and member.buffs[1].spellID==139 and not member.buffs[2]:IsShown())
-assert(member.debuffs[1]:IsShown() and member.debuffs[1].count:GetText()=='2' and not other.debuffs[1]:IsShown())
+assert(not member.debuffs[1]:IsShown() and not other.debuffs[1]:IsShown(),'Highlighted debuff duplicated in bar')
 -- Raid debuffs: no listed boss debuff, so the dispellable curse fills the centre icon.
 assert(member.raidDebuff:IsShown() and member.raidDebuff.filter=='HARMFUL|RAID' and member.raidDebuff.icon:GetTexture()=='aura-172','dispellable fallback')
 assert(not other.raidDebuff:IsShown())
@@ -59,6 +59,8 @@ R.GetSettings().party.raidDebuffs=false; R.UpdateFrame(member,true); assert(not 
 R.GetSettings().party.raidDebuffs=nil; R.UpdateFrame(member,true); assert(member.raidDebuff:IsShown(),'old profiles default on')
 table.remove(units.party1.debuffs); table.remove(units.party1.debuffs); R.UpdateFrame(member,true)
 assert(member.raidDebuff.icon:GetTexture()=='aura-172')
+-- Remaining assertions exercise the regular debuff bar independently.
+p.party.raidDebuffs=false; p.raid.raidDebuffs=false; R.UpdateFrame(member,true)
 assert(not member.buffs[1]:IsMouseEnabled() and member:GetAttribute('*type1')=='target' and ClickCastFrames[member])
 local savedFrames=#allFrames; R.SetPreview(true)
 assert(not R.previewHolders.party:IsShown() and R.previewHolders.raid:IsShown() and R.holders.party:IsShown(),'Preview covered live group members')
@@ -97,7 +99,7 @@ event:RunScript('OnEvent','READY_CHECK_FINISHED'); now=13; R.UpdateAll(false); a
 units.raid1={name='Raid one',guid='R1',group=1,rank=2,class='DRUID',health=100,maxHealth=100,power=100,maxPower=100}
 units.raid2={name='Raid two',guid='R2',group=1,class='PRIEST',health=75,maxHealth=100,power=50,maxPower=100,debuffs={{name='Mine',id=172,caster='player',dispel='Magic',duration=5,expires=18}}}
 units.raid3={name='Raid three',guid='R3',group=2,class='WARRIOR',health=25,maxHealth=100,power=10,maxPower=100}
-raidCount=3; R.GetSettings('raid').sortMethod='INDEX'; R.Apply(); TickHeaders(); event:RunScript('OnEvent','RAID_ROSTER_UPDATE')
+raidCount=3; R.GetSettings('raid').raidDebuffs=false; R.GetSettings('raid').sortMethod='INDEX'; R.Apply(); TickHeaders(); event:RunScript('OnEvent','RAID_ROSTER_UPDATE')
 assert(R.holders.raid:IsShown() and not R.holders.party:IsShown() and R.headers.raid[1].label:GetText()=='Group 1' and R.headers.raid[3].label:GetText()=='')
 local raid=R.headers.raid[1].nativeButtons[2]; assert(raid:GetAttribute('unit')=='raid2' and raid.debuffs[1]:IsShown())
 R.headers.raid[1].nativeButtons[1].menu(R.headers.raid[1].nativeButtons[1],'raid1'); assert(lastUnitMenu[1]=='RAID_PLAYER')

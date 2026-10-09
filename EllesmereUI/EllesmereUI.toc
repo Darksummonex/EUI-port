@@ -2,7 +2,7 @@
 ## Title: |cff0cd29fEllesmereUI|r
 ## Notes: Core UI backport for World of Warcraft 3.3.5
 ## Author: Ellesmere / 3.3.5 backport
-## Version: 3.3.5-core-0.55
+## Version: 3.3.5-core-0.59
 ## SavedVariables: EllesmereUIDB
 ## IconTexture: Interface\AddOns\EllesmereUI\media\eg-logo.tga
 EllesmereUI_3.3.5_Compat.lua
@@ -12,7 +12,7 @@ Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 Libs\LibSharedMedia-3.0\LibSharedMedia-3.0.lua
 Libs\LibDeflate\LibDeflate.lua
 EllesmereUI_Lite.lua
-EllesmereUI_Locale.lua
+EUI_Locale_335.lua
 EllesmereUI_NumberFormat.lua
 EllesmereUI_Migration.lua
 EllesmereUI_Startup.lua

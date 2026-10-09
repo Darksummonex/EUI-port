@@ -1,0 +1,16 @@
+## Interface: 30300
+## Title: |cff0cd29fEllesmereUI|r Locales
+## Notes: Community translations for native WoW 3.3.5 languages; untranslated text falls back to English.
+## Author: Ellesmere / community translators / 3.3.5 backport
+## Version: 3.3.5-locales-0.1
+## Dependencies: EllesmereUI
+## LoadOnDemand: 1
+## IconTexture: Interface\AddOns\EllesmereUI\media\eg-logo.tga
+deDE.lua
+esES.lua
+esMX.lua
+frFR.lua
+koKR.lua
+ruRU.lua
+zhCN.lua
+zhTW.lua

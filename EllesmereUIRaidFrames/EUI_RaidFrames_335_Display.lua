@@ -93,7 +93,9 @@ function ns.InitButton(b)
     local textHost=CreateFrame("Frame",nil,b); textHost:SetFrameLevel(b:GetFrameLevel()+5); textHost:EnableMouse(false); textHost:SetAllPoints(b); b.textHost=textHost
     b.hover=CreateFrame("Frame",nil,textHost); b.hover:SetAllPoints(b); b.hover:EnableMouse(false); b.hover:SetBackdrop({edgeFile=white,edgeSize=1}); b.hover:Hide()
     b.name,b.healthText,b.powerText,b.status=NewText(textHost),NewText(textHost),NewText(textHost),NewText(textHost)
-    b.role,b.leader,b.raidMarker,b.ready=NewIcon(textHost,12),NewIcon(textHost,12),NewIcon(textHost,18),NewIcon(textHost,22)
+    b.role,b.leader,b.raidMarker=NewIcon(textHost,12),NewIcon(textHost,12),NewIcon(textHost,18)
+    b.readyHost=CreateFrame("Frame",nil,textHost); b.readyHost:SetAllPoints(b); b.readyHost:SetFrameLevel(textHost:GetFrameLevel()+5); b.readyHost:EnableMouse(false)
+    b.ready=NewIcon(b.readyHost,22)
     b.combat,b.rez=NewIcon(textHost,16),NewIcon(textHost,20)
     b.dispelIcon=NewIcon(textHost,16); b.dispelIcon:SetTexCoord(.08,.92,.08,.92)
     b.leader:SetTexture("Interface\\GroupFrame\\UI-Group-LeaderIcon")
@@ -206,14 +208,14 @@ local function RaidDebuff(b,unit,c)
         local name,_,icon,stacks,dtype,duration,expiry,_,_,_,id=UnitAura(unit,i,"HARMFUL")
         if not name then break end
         local p=id and list[id]
-        if p and (not rank or p>rank) then best,rank={index=i,filter="HARMFUL",icon=icon,stacks=stacks,dtype=dtype,duration=duration,expiry=expiry},p end
+        if p and (not rank or p>rank) then best,rank={index=i,filter="HARMFUL",icon=icon,stacks=stacks,dtype=dtype,duration=duration,expiry=expiry,id=id},p end
     end
     if not best and c.raidDebuffDispellable~=false then
-        local name,_,icon,stacks,dtype,duration,expiry=UnitAura(unit,1,"HARMFUL|RAID")
-        if name then best={index=1,filter="HARMFUL|RAID",icon=icon,stacks=stacks,dtype=dtype,duration=duration,expiry=expiry} end
+        local name,_,icon,stacks,dtype,duration,expiry,_,_,_,id=UnitAura(unit,1,"HARMFUL|RAID")
+        if name then best={index=1,filter="HARMFUL|RAID",icon=icon,stacks=stacks,dtype=dtype,duration=duration,expiry=expiry,id=id} end
     end
     if not best then return end
-    rd.unit,rd.index,rd.filter,rd.indicator=unit,best.index,best.filter,nil
+    rd.unit,rd.index,rd.filter,rd.indicator,rd.spellID=unit,best.index,best.filter,nil,best.id
     rd.duration,rd.expiry=best.duration or 0,best.expiry or 0
     rd.icon:SetTexture(best.icon); rd.icon:Show()
     Text(rd.count,best.stacks and best.stacks>1 and tostring(best.stacks) or "")
@@ -227,6 +229,8 @@ local lustDebuffs={[57724]=true,[57723]=true}
 function ns.UpdateAuras(b,unit,c)
     ClearAuras(b); b.dispelColorCandidates=nil
     if not unit or not UnitExists(unit) then return end
+    RaidDebuff(b,unit,c)
+    local highlighted=b.raidDebuff and b.raidDebuff:IsShown() and b.raidDebuff.spellID
     for _,entry in ipairs({{"buff",b.buffs,c.showBuffs,math.min(8,c.maxBuffs or 3),"HELPFUL"},{"debuff",b.debuffs,c.showDebuffs,math.min(8,c.maxDebuffs or 3),c.onlyDispellable and "HARMFUL|RAID" or "HARMFUL"}}) do
         local prefix,pool,show,limit,filter=unpack(entry)
         local records={}
@@ -235,7 +239,7 @@ function ns.UpdateAuras(b,unit,c)
             if not name then break end
             local mine=caster and (UnitIsUnit(caster,"player") or UnitIsUnit(caster,"pet") or UnitIsUnit(caster,"vehicle"))
             local allow=E.WrathAuraIndicators.Allows(c,prefix,id,mine,duration,stealable) and not (prefix=="debuff" and c.hideLustDebuff and lustDebuffs[id])
-            if show and allow then records[#records+1]={index=i,id=id,icon=icon,stacks=stacks,dtype=dtype,duration=duration or 0,expiry=expiry or 0,mine=mine} end
+            if show and allow and not (prefix=="debuff" and highlighted and id==highlighted) then records[#records+1]={index=i,id=id,icon=icon,stacks=stacks,dtype=dtype,duration=duration or 0,expiry=expiry or 0,mine=mine} end
         end
         local allocated=0
         for _,d in ipairs(ns.AuraIndicators(c,prefix)) do
@@ -281,7 +285,6 @@ function ns.UpdateAuras(b,unit,c)
         end
         if #list>0 then b.dispelColorCandidates=list end
     end
-    RaidDebuff(b,unit,c)
 end
 -- Highest priority first; a type whose swatch alpha is 0 is opted out.
 local function DispelColorType(b,c)
@@ -430,7 +433,18 @@ local function Indicators(b,c,base,unit,connected,status)
     if c.showLeader and leader and (c.showLeaderIconInCombat~=false or not combat) then b.leader:Show() else b.leader:Hide() end
     local marker=not preview and GetRaidTargetIndex(base or unit)
     if c.showRaidMarker and marker then SetRaidTargetIconTexture(b.raidMarker,marker); b.raidMarker:Show() else b.raidMarker:Hide() end
-    local ready=not preview and ns.readyUntil and GetTime()<ns.readyUntil and GetReadyCheckStatus(base or unit)
+    local ready
+    if not preview and ns.readyUntil and GetTime()<ns.readyUntil then
+        local token=base or unit; local guid=UnitGUID(token)
+        local results=ns.readyResults or {}; ns.readyResults=results
+        ready=guid and results[guid]
+        if not ns.readyFinished then
+            local live=GetReadyCheckStatus(token)
+            if live=="ready" or live=="notready" then ready=live
+            elseif not ready and (live=="waiting" or token=="player" or token:match("^party%d+$") or token:match("^raid%d+$")) then ready=connected and "waiting" or "notready" end
+            if guid and ready then results[guid]=ready end
+        end
+    end
     if c.showReadyCheck and ready then b.ready:SetTexture("Interface\\RaidFrame\\UI-ReadyCheck-"..(ready=="ready" and "Ready" or ready=="notready" and "NotReady" or "Waiting")); b.ready:Show() else b.ready:Hide() end
     local inCombat=preview and preview%4==3 or not preview and UnitAffectingCombat and UnitAffectingCombat(base or unit)
     if c.showCombatIndicator and connected and inCombat then b.combat:Show() else b.combat:Hide() end
@@ -495,8 +509,14 @@ function ns.UpdateFrame(b,auras)
         or dispel or c.showTargetBorder and base and UnitIsUnit(base,"target") and (c.targetBorderColor or {r=.05,g=.82,b=.61}) or c.borderColor or {r=0,g=0,b=0}
     b:SetBackdropBorderColor(border.r,border.g,border.b,(tonumber(c.borderSize) or 1)>0 and 1 or 0)
     local range,checked=true,false
-    if c.rangeFade and not b._euiPreview and not UnitIsUnit(base or unit,"player") and UnitInRange then range,checked=UnitInRange(base or unit) end
-    b:SetAlpha(checked and (range==false or range==0) and c.outOfRangeAlpha or 1)
+    if c.rangeFade and connected and not b._euiPreview and not UnitIsUnit(base or unit,"player") and UnitInRange then
+        range,checked=UnitInRange(base or unit)
+        -- Wrath returns only inRange (nil means out of range). Newer clients
+        -- may supply checkedRange; respect an explicit unavailable result.
+        if checked==nil then checked=b._euiKind=="raid" or b._euiKind=="party" or range~=nil end
+    end
+    local opacity=math.max(.1,math.min(1,tonumber(c.outOfRangeAlpha) or .4))
+    b:SetAlpha(checked and (not range or range==0) and opacity or 1)
     Indicators(b,c,base,unit,connected,status)
 end
 -- Unit tooltip follows Tooltip Mode; aura icon tooltips keep their own toggle.

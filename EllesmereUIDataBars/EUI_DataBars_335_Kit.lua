@@ -101,6 +101,7 @@ local function BlockColorOf(b)
     end
     local c = b.color
     if c then return c.r or 1, c.g or 1, c.b or 1 end
+    if ns.TEXT_DYNAMIC_DEFAULT[b.type] then return ns.BlockTextDynamic(b.type) end
     return 1, 1, 1
 end
 
@@ -155,7 +156,13 @@ local TEXT_DYNAMIC = {
         end
         return 1, 1, 1
     end,
+    ms = function()
+        if ns.LatencyTextColor then return ns.LatencyTextColor() end
+        return 1, 1, 1
+    end,
 }
+-- Blocks whose text takes the state-driven color while no text color is chosen.
+ns.TEXT_DYNAMIC_DEFAULT = { ms = true }
 function ns.BlockTextDynamic(bType)
     local fn = TEXT_DYNAMIC[bType]
     if fn then return fn() end

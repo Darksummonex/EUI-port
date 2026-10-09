@@ -176,6 +176,7 @@ function ns.Segment(key)
 end
 function ns.Reset()
     if InCombatLockdown() or ns.current then return false end
+    if ns.ClearShields then ns.ClearShields() end
     ns.history={version=1,nextID=0,segments={},overall=ns.NewSegment(0,"Overall")}
     EllesmereUIDamageMetersHistory=ns.history
     for _,w in ipairs(ns.Profile().windows) do w.segment="current" end

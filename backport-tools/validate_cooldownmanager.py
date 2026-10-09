@@ -9,9 +9,9 @@ sys.path.insert(0,str(root/'.codex-tools'))
 from lupa.lua51 import LuaRuntime
 module=root/'EllesmereUICooldownManager'
 toc=(module/'EllesmereUICooldownManager.toc').read_text(encoding='utf-8-sig')
-assert '## Version: 9.3.4-335-0.3' in toc
+assert '## Version: 9.3.4-335-0.7' in toc
 files=[l.strip() for l in toc.splitlines() if l.strip().endswith('.lua')]
-assert files==['EUI_CooldownManager_335_Catalog.lua','EUI_CooldownManager_335.lua','EUI_CooldownManager_335_Display.lua',
+assert files==['EUI_CooldownManager_335_Catalog.lua','EUI_CooldownManager_335_TrinketData.lua','EUI_CooldownManager_335.lua','EUI_CooldownManager_335_Display.lua',
     'EUI_CooldownManager_335_TrackingBars.lua','EUI_CooldownManager_335_Glows.lua'],files
 options_toc=(root/'EllesmereUIOptions/EllesmereUIOptions.toc').read_text(encoding='utf-8-sig')
 version=re.search(r'## Version: 9\.3\.4-335-0\.(\d+)',options_toc)
@@ -23,6 +23,7 @@ sources['Options']=(root/'EllesmereUIOptions/EUI_CooldownManager_335_Options.lua
 for name,src in sources.items():
     for banned in ('C_CooldownViewer','C_Spell.','C_Timer','SetRotatesTexture','SetColorTexture','SetAtlas','SetShown','SetSwipeColor','CreateMaskTexture','.png'):
         assert banned not in src,(name,banned)
+assert '_dbg' not in sources['Options'] and 'message=="debug"' not in sources['EUI_CooldownManager_335_Display.lua'],'temporary debug code'
 lua=LuaRuntime()
 # Lua 5.1 compile of every chunk, and the 200-locals limit per function.
 for name,src in sources.items():
@@ -240,13 +241,31 @@ local b1=old.cdmBars.bars[1]
 assert(#old.cdmBars.bars==3 and b1.barType=='cooldowns' and b1.iconSize==50 and b1.rowGrowDirection=='UP' and b1.growDirection=='RIGHT')
 assert(old.cdmBars.bars[3].showInactiveBuffIcons==true and old.positions.TBB_1.y==2 and old.tbbLegacy.width==300)
 local fresh={cdmBars={enabled=true}}; D.Migrate(fresh); assert(type(fresh.cdmBars.bars)=='table' and #fresh.cdmBars.bars==0)
+-- Broken saves: a built-in key used twice, or Cooldowns saved with the Buffs type/name.
+local dup={{key='utility',barType='buffs',name='Buffs'},{key='utility',barType='utility',name='Utility'},{key='buffs',barType='buffs',name='Buffs'},{key='custom_1',barType='buffs',name='Buffs'}}
+D.RepairBuiltins(dup)
+assert(dup[1].key=='cooldowns' and dup[1].barType=='cooldowns' and dup[1].name=='Cooldowns', 'duplicate utility -> cooldowns')
+assert(dup[2].key=='utility' and dup[2].name=='Utility' and dup[3].key=='buffs' and dup[4].key=='custom_1' and dup[4].name=='Buffs')
+local wrong={{key='cooldowns',barType='buffs',name='Buffs'},{key='utility',barType='utility',name='Utility'},{key='buffs',barType='buffs',name='Buffs'}}
+D.RepairBuiltins(wrong); assert(wrong[1].barType=='cooldowns' and wrong[1].name=='Cooldowns' and wrong[3].name=='Buffs')
+local twice={{key='buffs',barType='buffs',name='Buffs'},{key='cooldowns',barType='cooldowns',name='Cooldowns'},{key='buffs',barType='buffs',name='Buffs'}}
+D.RepairBuiltins(twice); assert(twice[1].key=='utility' and twice[1].barType=='utility' and twice[1].name=='Utility' and twice[3].key=='buffs', 'one buffs -> utility')
+local three={{key='buffs',barType='buffs',name='Buffs'},{key='cooldowns',barType='cooldowns',name='Cooldowns'},{key='utility',barType='utility',name='Utility'},{key='buffs',barType='buffs',name='Buffs'}}
+D.RepairBuiltins(three); assert(three[1].key=='buffs' and three[4].key=='custom_1' and three[4].barType=='buffs', 'extra buffs -> custom')
 local v1lists={cooldowns={},utility={},buffs={{kind='aura',id=700,highlightSpellID=200}},tracking={{kind='aura',id=701,unit='player'}}}
 D.Profile().wrathSpecLists['TEST:1']=v1lists; local conv=D.ListsFor('TEST:1')
 assert(conv.tbb[1].spellID==701 and conv.tbb[1].width==270 and conv.barGlows.list[1].spellID==200 and conv.tracking==nil)
 
 -- Options widgets
 rows={}; buttons={}; EllesmereUI.Widgets={}
-function EllesmereUI.Widgets:DualRow(parent,y,a,b) rows[#rows+1]=a; rows[#rows+1]=b; return {},40 end
+function EllesmereUI.Widgets:DualRow(parent,y,a,b)
+    -- The real widget calls cfg.disabled(); a tooltip string in that slot errors in game.
+    for _,c in ipairs({a,b}) do
+        assert(type(c)~='table' or c.disabled==nil or type(c.disabled)=='function',
+            'disabled must be a function: '..tostring(c.text))
+    end
+    rows[#rows+1]=a; rows[#rows+1]=b; return {},40
+end
 function EllesmereUI.Widgets:SectionHeader(parent,text) rows[#rows+1]={type='section',text=text}; return {},30 end
 function EllesmereUI.Widgets:WideButton(parent,text,y,fn) buttons[text]=fn; return {},30 end
 function Find(text) for _,r in ipairs(rows) do if r.text==text then return r end end end
@@ -276,10 +295,126 @@ Find('Talent Must Be').setValue('missing'); assert(D.Lists().cooldowns[1].talent
 Find('Add Item Preset').setValue('runic_mana'); assert(D.Lists().cooldowns[3].kind=='preset')
 Find('Add Buff Preset').setValue('bloodlust'); assert(D.Lists().cooldowns[4].preset=='bloodlust' and D.Lists().cooldowns[4].kind=='aura')
 buttons['Copy This Bar to Other Talent Group'](); assert(#D.ListsFor(D.OtherSpecKey()).cooldowns==4)
-Find('New Bar Type').setValue('focuskick'); buttons['Add Bar'](); assert(D.selectedBar=='focuskick')
+-- Retail header: bar dropdown (select, add, rename, delete) and the icon row.
+local header,confirm,input
+local fm=getmetatable(UIParent).__index
+for k,v in pairs({GetStringHeight=function() return 14 end,SetHighlightTexture=function() end,RegisterForClicks=function() end,
+    SetDesaturated=function(self,d) self.desaturated=d end,SetTexCoord=function() end,EnableMouse=function() end,SetJustifyH=function() end,
+    GetCenter=function() return 0,0 end,GetEffectiveScale=function() return 1 end,IsMouseOver=function() return false end}) do
+    if not fm[k] then fm[k]=v end
+end
+if not strtrim then function strtrim(s) return (s:gsub('^%s+',''):gsub('%s+$','')) end end
+function EllesmereUI:SetContentHeader(fn) header=fn end
+function EllesmereUI:ShowConfirmPopup(o) confirm=o end
+function EllesmereUI:ShowInputPopup(o) input=o end
+rows={}; c.buildPage('CDM Bars',UIParent,0)
+assert(header and c.getHeaderBuilder('CDM Bars')==header and c.getHeaderBuilder('Bar Glows')==nil)
+assert(not Find('Select Bar') and not Find('New Bar Type') and Find('Show This Bar'))
+local O=D.Options; local hdr=CreateFrame('Frame',nil,UIParent)
+assert(header(hdr)>64 and #O.slots==#D.Lists().cooldowns+2 and O.slots[1].index==1 and O.slots[#O.slots].add=='buff')
+O.slots[2]:RunScript('OnClick','LeftButton'); assert(O.entry==2)
+local first=D.Lists().cooldowns[1]; O.MoveEntry(1,4); assert(D.Lists().cooldowns[3]==first and O.entry==3)
+local n=#D.Lists().cooldowns; header(hdr); O.slots[1]:RunScript('OnClick','MiddleButton'); assert(#D.Lists().cooldowns==n-1)
+-- 0.7: Retail add pickers under the '+' slots.
+do
+  local scroll=getmetatable(UIParent).__index
+  for k,v in pairs({SetScrollChild=function(self,c) self.scrollChild=c end,SetVerticalScroll=function(self,v) self.vscroll=v end,
+      GetVerticalScroll=function(self) return self.vscroll or 0 end,EnableMouseWheel=function() end}) do if not scroll[k] then scroll[k]=v end end
+  local keepList,stubRefresh=D.Lists().cooldowns,EllesmereUI.RefreshPage
+  function EllesmereUI:RefreshPage() rows={}; c.buildPage('CDM Bars',UIParent,0); header(hdr) end
+  D.Lists().cooldowns={{kind='spell',id=100,enabled=true}}
+  local function L() local l=D.Lists().cooldowns; return l[#l],#l end
+  header(hdr); local main=O.slots[#O.slots-1]; assert(main.add=='main' and O.slots[#O.slots].add=='buff')
+  main:RunScript('OnClick','LeftButton'); local p=O.picker
+  assert(p and p:IsShown() and not p.buff and p.anchor==main and p.strata=='FULLSCREEN_DIALOG')
+  for _,k in ipairs({'Custom Spell ID','Custom Item ID','Equipment Slot','Trinket Slot 1','Trinket Slot 2','Racial','Potions & Healthstone','Charge','Kick'}) do assert(p.items[k],'main picker: '..k) end
+  assert(not p.items.Passive and not p.items['Bloodlust / Heroism'])
+  assert(p.items.Charge.used and not p.items.Charge:GetScript('OnClick'),'spell already on the bar is disabled')
+  main:RunScript('OnClick','LeftButton'); assert(not p:IsShown(),'second click closes')
+  main:RunScript('OnClick','LeftButton'); p=O.picker
+  p.items.Kick:RunScript('OnClick'); local e=L(); assert(e.kind=='spell' and e.id==600)
+  assert(O.picker~=p and O.picker:IsShown() and O.picker.anchor==O.slots[#O.slots-1] and O.picker.anchor~=main,'picker reopens on the rebuilt +')
+  assert(O.picker.items.Kick.used,'added spell greys out')
+  p=O.picker; p.items['Trinket Slot 1']:RunScript('OnClick'); e=L(); assert(e.kind=='slot' and e.id==13 and not p:IsShown())
+  O.slots[#O.slots-1]:RunScript('OnClick','LeftButton'); p=O.picker; assert(p.items['Trinket Slot 1'].used)
+  p.items['Potions & Healthstone']:RunScript('OnClick'); assert(p.sub and p.items.Healthstone and p.items['Runic Mana Potion'])
+  p.items.Healthstone:RunScript('OnClick'); e=L(); assert(e.kind=='preset' and e.id=='healthstone')
+  O.slots[#O.slots-1]:RunScript('OnClick','LeftButton'); O.picker.items.Racial:RunScript('OnClick'); e=L(); assert(e.kind=='spell' and e.id==59752)
+  O.slots[#O.slots-1]:RunScript('OnClick','LeftButton'); assert(O.picker.items.Racial.used)
+  O.picker.items['Custom Spell ID']:RunScript('OnClick'); assert(input.title=='Custom Spell ID' and not O.picker:IsShown())
+  input.onConfirm(' 702 '); e=L(); assert(e.kind=='spell' and e.id==702)
+  O.slots[#O.slots-1]:RunScript('OnClick','LeftButton'); O.picker.items['Custom Item ID']:RunScript('OnClick'); input.onConfirm('500'); e=L(); assert(e.kind=='item' and e.id==500)
+  O.slots[#O.slots-1]:RunScript('OnClick','LeftButton'); O.picker.items['Equipment Slot']:RunScript('OnClick'); input.onConfirm('5'); e=L(); assert(e.kind=='slot' and e.id==5)
+  -- Gold '+': buff picker adds auras and buff presets.
+  local gold=O.slots[#O.slots]; gold:RunScript('OnClick','LeftButton'); p=O.picker
+  assert(p.buff and p.anchor==gold and p.items['Custom Spell ID'] and p.items['Bloodlust / Heroism'] and p.items.Charge and p.items['Spell 46916'])
+  assert(not p.items['Custom Item ID'] and not p.items['Trinket Slot 1'] and not p.items.Charge.used,'aura Charge is not on the bar yet')
+  p.items.Charge:RunScript('OnClick'); e=L(); assert(e.kind=='aura' and e.id==200 and e.filter=='HELPFUL')
+  assert(O.picker.buff and O.picker.anchor==O.slots[#O.slots] and O.picker.items.Charge.used)
+  O.picker.items['Bloodlust / Heroism']:RunScript('OnClick'); e=L(); assert(e.kind=='aura' and e.preset=='bloodlust')
+  assert(O.picker.items['Bloodlust / Heroism'].used)
+  O.picker.items['Custom Spell ID']:RunScript('OnClick'); input.onConfirm('701'); e=L(); assert(e.kind=='aura' and e.id==701)
+  -- Long lists scroll with the wheel; a click outside closes.
+  local maxH=O.PICK_MAX_H; O.PICK_MAX_H=100
+  O.slots[#O.slots-1]:RunScript('OnClick','LeftButton'); p=O.picker; assert(p.height==100)
+  assert(p.items['Custom Spell ID']:IsShown() and not p.items.Kick:IsShown(), 'rows outside the view are hidden')
+  p:RunScript('OnMouseWheel',-1); assert(p.offset==40 and not p.items['Custom Spell ID']:IsShown(), 'wheel scrolls the rows')
+  O.PICK_MAX_H=maxH
+  local oldDown=IsMouseButtonDown; function IsMouseButtonDown() return true end; p:RunScript('OnUpdate',.1); assert(not p:IsShown()); IsMouseButtonDown=oldDown
+  D.selectedBar='utility'; header(hdr); O.slots[#O.slots]:RunScript('OnClick','LeftButton')
+  assert(O.picker.buff and D.selectedBar=='utility' and O.Bar().key=='utility','gold + keeps Utility selected'); O.picker:Hide()
+  -- A Buffs bar's single '+' opens the buff picker; the cap stays at 40.
+  D.selectedBar='buffs'; header(hdr); assert(O.slots[#O.slots].add=='main')
+  O.slots[#O.slots]:RunScript('OnClick','LeftButton'); assert(O.picker.buff and O.picker.items['Bloodlust / Heroism'])
+  O.picker:Hide(); D.selectedBar='cooldowns'
+  local full={}; for i=1,40 do full[i]={kind='spell',id=100} end; D.Lists().cooldowns=full; header(hdr)
+  O.slots[#O.slots-1]:RunScript('OnClick','LeftButton'); O.picker.items['Trinket Slot 2']:RunScript('OnClick'); assert(#D.Lists().cooldowns==40)
+  if O.picker then O.picker:Hide() end
+  EllesmereUI.RefreshPage=stubRefresh; D.Lists().cooldowns=keepList; D.Apply(); header(hdr)
+end
+-- Spec Overrides read-trace swaps db.profile for proxies (# and ipairs see them empty).
+do
+  local unwrap=setmetatable({}, {__mode='k'})
+  local function Proxy(real)
+    local p=setmetatable({}, {__index=function(_,k) local v=real[k]; if type(v)=='table' then return Proxy(v) end; return v end,
+      __newindex=function(_,k,v) real[k]=unwrap[v] or v end})
+    unwrap[p]=real; return p
+  end
+  local db=D.addon.db; local real=db.profile; local before={}
+  for i,b in ipairs(real.cdmBars.bars) do before[i]=b.key end
+  D.selectedBar='utility'; db.profile=Proxy(real)
+  local ok,err=pcall(function() assert(O.Bar().key=='utility' and #D.Bars()==#before) end)
+  db.profile=real; assert(ok, err)
+  assert(D.selectedBar=='utility', 'trace keeps Utility selected')
+  for i,k in ipairs(before) do assert(real.cdmBars.bars[i].key==k, 'trace must not reseed bars') end
+  assert(#real.cdmBars.bars==#before, 'bars '..#real.cdmBars.bars..' vs '..#before)
+  D.selectedBar='cooldowns'
+end
+O.dropdown:RunScript('OnClick'); local m=O.menu
+assert(m.items.Cooldowns and not m.items.Cooldowns.del and m.items['+ Add New Buff Bar'] and m.items.FocusKick and not m.items['+ Add FocusKick Bar'])
+m.items.FocusKick.edit:RunScript('OnClick'); input.onConfirm('  Kicks  '); assert(D.BarByKey('focuskick').name=='Kicks')
+O.dropdown:RunScript('OnClick'); O.menu.items.Kicks.del:RunScript('OnClick'); confirm.onConfirm()
+assert(not D.BarByKey('focuskick') and D.selectedBar=='cooldowns')
+O.dropdown:RunScript('OnClick'); O.menu.items['+ Add FocusKick Bar']:RunScript('OnClick'); assert(D.selectedBar=='focuskick')
 rows={}; c.buildPage('CDM Bars',UIParent,0); assert(Find('FOCUSKICK OPTIONS') and Find(MAP.CDM_focuskick.highlightText))
 Find('Interrupt Spell').setValue('600'); assert(D.Config('focuskick').focusKickInterruptSpellID==600)
-buttons['Remove Selected Bar'](); assert(not D.BarByKey('focuskick') and D.selectedBar=='cooldowns')
+header(hdr); assert(#O.slots==1 and not O.slots[1].index)
+D.RemoveBar('focuskick'); D.selectedBar='cooldowns'
+O.dropdown:RunScript('OnClick'); O.menu.items['+ Add New Utility Bar']:RunScript('OnClick')
+local added=D.BarByKey(D.selectedBar); assert(added.barType=='utility' and not D.IsBuffBar(added))
+O.SelectBar('utility'); rows={}; c.buildPage('CDM Bars',UIParent,0); header(hdr)
+local cx,cy=0,0; function GetCursorPosition() return cx,cy end
+local stubRefresh=EllesmereUI.RefreshPage
+function EllesmereUI:RefreshPage() rows={}; c.buildPage('CDM Bars',UIParent,0); header(hdr) end
+O.slots[1]:RunScript('OnMouseDown','LeftButton'); O.slots[1]:RunScript('OnMouseUp','LeftButton'); O.slots[1]:RunScript('OnClick','LeftButton')
+assert(D.selectedBar=='utility','after rebuild: '..tostring(D.selectedBar))
+EllesmereUI.RefreshPage=stubRefresh
+assert(D.selectedBar=='utility',tostring(D.selectedBar))
+rows={}; c.buildPage('CDM Bars',UIParent,0); header(hdr); assert(D.selectedBar=='utility',tostring(D.selectedBar))
+O.slots[1]:RunScript('OnMouseDown','LeftButton'); cx=10; O.slots[1]:RunScript('OnUpdate'); O.slots[1]:RunScript('OnMouseUp','LeftButton')
+assert(D.selectedBar=='utility',tostring(D.selectedBar))
+D.RemoveBar(added.key); D.selectedBar='cooldowns'
+rows={}; c.buildPage('CDM Bars',UIParent,0)
 Find('Preview').setValue(true); assert(D.preview); hideOptions(); assert(not D.preview)
 
 rows={}; c.buildPage('Tracking Bars',UIParent,0)
@@ -299,7 +434,71 @@ assert(g.auraID==701 and g.mode=='missing')
 Find('Glow Color').setValue(.2,.3,.4); assert(g.glowR==.2)
 buttons['Remove Glow'](); assert(D.Lists().barGlows.list[#D.Lists().barGlows.list]~=g)
 SlashCmdList.EUI335CDM(''); assert(shownModule=='EllesmereUICooldownManager')
+shownModule=nil; SlashCmdList.EUI335CDM('debug')
+assert(shownModule=='EllesmereUICooldownManager' and rawget(D,'_dbg')==nil and rawget(D,'_selLog')==nil,'/ecdm debug is gone')
 c.onReset(); assert(#D.Bars()==3 and D.Config('cooldowns').iconSize==42)
+assert(#lifecycleErrors==0,lifecycleErrors[1])
+''')
+# 0.5: racial variants (three Arcane Torrents) and passive proc trinkets with internal cooldowns.
+lua.execute('''
+local c=modules.EllesmereUICooldownManager; local O=D.Options
+local oldInfo,oldRace=GetSpellInfo,UnitRace
+function GetSpellInfo(id) id=tonumber(id); if id==28730 or id==25046 or id==50613 then return 'Arcane Torrent',nil,'icon-at' end; return oldInfo(id) end
+function UnitRace() return 'Blood Elf','BloodElf' end
+local n=0; for _,e in ipairs(D.SeedLists('PALADIN').utility) do if D.RACIAL_GROUP[e.id] then n=n+1 end end
+assert(n==1,'one racial seed per race: '..n)
+function UnitRace() return 'Unknown','Unknown' end
+local groups={}; for _,e in ipairs(D.SeedLists('PALADIN').utility) do local g=D.RACIAL_GROUP[e.id]; if g then assert(not groups[g],'duplicate racial group'); groups[g]=true end end
+UnitRace=oldRace
+D.Profile().wrathSpecLists['RACE:1']={utility={{kind='spell',id=28730,enabled=false},{kind='spell',id=100},{kind='spell',id=25046},{kind='spell',id=50613},{kind='aura',id=25046}},
+    cooldowns={},buffs={}}
+local saved=D.ListsFor('RACE:1').utility
+assert(#saved==3 and saved[1].id==28730 and saved[1].enabled==true and saved[2].id==100 and saved[3].kind=='aura','saved racial variants collapse')
+spells[5]={id=28730,name='Arcane Torrent'}
+local lists=D.Lists(); local keepUtility=lists.utility
+lists.utility={{kind='spell',id=28730},{kind='spell',id=25046},{kind='spell',id=50613},{kind='spell',id=100}}
+D.Apply(); assert(#D.compiled.utility==2 and D.compiled.utility[1].meta.name=='Arcane Torrent' and D.compiled.utility[2].meta.name=='Charge')
+rows={}; c.buildPage('CDM Bars',UIParent,0)
+local at=0; for _,r in ipairs(rows) do if r.text=='Add Racial' then for _,v in pairs(r.values) do if v=='Arcane Torrent' then at=at+1 end end end end
+assert(at==1,'Add Racial lists Arcane Torrent once: '..at)
+spells[5]=nil; GetSpellInfo=oldInfo
+
+-- Trinkets: on-use slot uses the item cooldown, a passive proc trinket shows its icon and internal cooldown.
+local oldID,oldCD,oldSpell=GetInventoryItemID,GetInventoryItemCooldown,GetItemSpell
+equipped={[13]=500,[14]=27683}
+function GetInventoryItemID(_,slot) return equipped[slot] end
+function GetInventoryItemCooldown(_,slot) if slot==13 then return 5,20,1 end; return 0,0,0 end
+function GetItemSpell(id) if id==500 then return 'Use Trinket' end end
+D.Config('utility').showPassiveTrinkets=false
+lists.utility={{kind='slot',id=13},{kind='slot',id=14}}
+now=40; D.Apply()
+local st=D.compiled.utility[2]
+assert(#D.compiled.utility==2 and D.compiled.utility[1].meta.useSpell=='Use Trinket' and not D.compiled.utility[1].meta.procs)
+assert(st.meta.procs and st.meta.procs.icd==45 and st.icon=='item-icon-27683' and not st.onCD)
+assert(D.events.events.COMBAT_LOG_EVENT_UNFILTERED,'combat log registered while a proc trinket is tracked')
+local frames=#allFrames
+D.OnEvent(nil,'COMBAT_LOG_EVENT_UNFILTERED',1,'SPELL_DAMAGE','other','X',0,'target','T',0,33370); assert(not st.onCD,'other players do not start the ICD')
+now=50; D.OnEvent(nil,'COMBAT_LOG_EVENT_UNFILTERED',1,'SPELL_AURA_APPLIED','player','Me',0,'player','Me',0,33370)
+assert(st.onCD and st.remaining==45 and st.duration==45)
+auras.player.HELPFUL={{id=33370,name='Spell 33370',icon='proc',count=0,duration=10,expires=60,caster='player'}}
+D.ScanAuras(); D.Update(); assert(st.activeAura and st.activeAura.expires==60,'proc buff shows while active')
+now=70; auras.player.HELPFUL={}; D.ScanAuras(); D.Update(); assert(st.onCD and st.remaining==25 and not st.activeAura)
+assert(D.frames.utility.pool[2].timer.text=='25')
+now=96; D.Update(); assert(not st.onCD)
+auras.player.HELPFUL={{id=33370,name='Spell 33370',icon='proc',count=0,duration=10,expires=104,caster='player'}}
+D.ScanAuras(); D.Update(); assert(st.start==94 and math.abs(st.remaining-43)<.001,'aura start after /reload')
+assert(#allFrames==frames,'no frames created by ICD updates')
+auras.player.HELPFUL={}
+-- No-cooldown procs show the trinket without a timer; unknown passives stay hidden unless enabled.
+equipped[14]=40432; D.Apply(); st=D.compiled.utility[2]
+assert(st.meta.procs.nocd and not st.onCD and st.remaining==0 and not D.events.events.COMBAT_LOG_EVENT_UNFILTERED)
+equipped[14]=502; D.Apply(); assert(#D.compiled.utility==1)
+O.SelectBar('utility'); rows={}; c.buildPage('CDM Bars',UIParent,0)
+local hdr=CreateFrame('Frame',nil,UIParent); c.getHeaderBuilder('CDM Bars')(hdr)
+assert(O.slots[2].icon.texture=='bag-icon:14' and O.slots[2].icon.desaturated,'hidden passive trinket shows its icon, not ?')
+D.Config('utility').showPassiveTrinkets=true; D.Apply(); assert(#D.compiled.utility==2 and D.compiled.utility[2].icon=='item-icon-502')
+GetInventoryItemID,GetInventoryItemCooldown,GetItemSpell=oldID,oldCD,oldSpell
+lists.utility=keepUtility; D.Config('utility').showPassiveTrinkets=false; D.Apply()
 assert(#lifecycleErrors==0,lifecycleErrors[1])
 ''')
 panel=(root/'EllesmereUI/EllesmereUI_Panel.lua').read_text(encoding='utf-8-sig')
@@ -319,5 +518,6 @@ for p in original.rglob('*.lua'):
     assert p.read_bytes()==(module/p.name).read_bytes(),p
 print('PASS: cooldown manager 0.2 - Retail bar model and 0.1 migration, CDM/TBB/group movers with Element Options targets, '
       'spell/item/aura/preset resolution, timers/GCD/stacks/states/glows/talent conditions/overflow/anchors/FocusKick, '
-      'tracking bars (fill, reverse, stacks, pandemic, groups), bar glows and keybinds, options pages, no combat frame '
+      'tracking bars (fill, reverse, stacks, pandemic, groups), bar glows and keybinds, options pages, one entry per racial, '
+      'passive trinket icons and internal cooldowns, Retail add/buff picker menus, no combat frame '
       'allocation, Lua 5.1 compile, combined EUI memory, unchanged Retail references.')

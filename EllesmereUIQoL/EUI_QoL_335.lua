@@ -14,7 +14,7 @@ local defaults={profile={enabled=true,autoRepair=false,guildRepair=false,autoSel
     zoneText=true,zoneTextOutline="module",
     fpsTextSize=12,statsTextSize=12,mapCoordsTextSize=12,combatAlertTextSize=22,groupDeathTextSize=26,
     durWarnTextSize=30,trackerTextSize=12,targetDistanceTextSize=18,crosshairSize=40,showReady=false,
-    fpsWorld=false,fpsLocal=true,fpsLabels=true,fpsColorMode="custom",fpsColor={r=1,g=1,b=1},fpsInterval=1,fpsKey="",
+    fpsWorld=false,fpsLocal=true,fpsLabels=true,fpsColorMode="quality",fpsColor={r=1,g=1,b=1},fpsInterval=1,fpsKey="",
     statsExtra=false,durabilityColor={r=1,g=.27,b=.27},
     combatAlertMode="both",combatEnterText="+Combat",combatLeaveText="-Combat",combatClassColor=false,
     combatEnterColor={r=1,g=1,b=1},combatLeaveColor={r=1,g=1,b=1},deathSound="none",

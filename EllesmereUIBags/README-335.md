@@ -1,4 +1,7 @@
-# Bags 3.3.5a — 0.10
+# Bags 3.3.5a — 0.11
+
+0.11 permite abrir e fechar as bolsas em combate pelos atalhos normais.
+Atualizações do layout e operações restritas continuam adiadas até sair do combate.
 
 0.10 corrige o erro ao abrir a lista Characters (UIPanelTemplates.lua:255):
 no Wrath o UIPanelScrollFrameTemplate monta a barra de rolagem pelo nome do

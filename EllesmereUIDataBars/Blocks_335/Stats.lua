@@ -89,6 +89,11 @@ local function GetLatColor(lat)
     if lat <= LAT_FAIR then return BandColor(YELLOW_FONT_COLOR, 1.0, 0.82, 0.0) end
     return BandColor(RED_FONT_COLOR, 1.0, 0.1, 0.1)
 end
+-- Latency text "Latency" color: the same good/fair/poor bands as the tooltip.
+function ns.LatencyTextColor()
+    local _, _, home = NetStats()
+    return GetLatColor(home)
+end
 
 -- Shared single-line stat block (icon + value text). opts:
 --   hbPrefix   heartbeat key prefix

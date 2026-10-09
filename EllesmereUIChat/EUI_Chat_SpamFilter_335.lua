@@ -21,7 +21,7 @@ function ns.SyncSpamFilter()
     local current = table.concat({tostring(p.enabled), tostring(p.spamFilterEnabled),
         tostring(p.spamFilterWindow), tostring(p.spamFilterAnySender),
         tostring(p.spamFilterPublic), tostring(p.spamFilterGroup), tostring(p.spamFilterWhispers),
-        tostring(p.spamFilterAchievements), tostring(p.spamFilterTrade), tostring(p.spamFilterRecruitment),
+        tostring(p.spamFilterGoldSellers), tostring(p.spamFilterAchievements), tostring(p.spamFilterTrade), tostring(p.spamFilterRecruitment),
         tostring(p.spamFilterKeywordsEnabled), tostring(p.spamFilterKeywords)}, ":")
     if current ~= signature then signature=current; ns.ResetSpamFilter() end
 end
@@ -58,6 +58,20 @@ end
 local function Trade(text)
     return Word(text,"wts") or Word(text,"wtb") or Word(text,"wtt") or Word(text,"lfw") or
         Word(text,"selling") or Word(text,"buying") or Word(text,"vendo") or Word(text,"compro")
+end
+local function GoldSeller(text)
+    -- Require a sale, gold quantity/name and a commercial signal together.
+    local sale = Word(text,"sell") or Word(text,"selling") or Word(text,"wts") or
+        Word(text,"buy") or Word(text,"buying") or Word(text,"vendo") or Word(text,"compro")
+    local gold = Word(text,"gold") or Word(text,"ouro") or text:find("%d[%d,. ]*%s*g%f[%W]") ~= nil
+    if not gold then return false end
+    local compact = text:gsub("[^a-z0-9]", "")
+    local website = compact:find("www",1,true) or Word(text,"web") or text:find("www.",1,true) or text:find("https?://") or
+        text:find("[%w%-]+%.com%f[%W]") or text:find("[%w%-]+%.net%f[%W]")
+    local cash = text:find("%$%s*%d") or text:find("%d%s*%$") or Word(text,"usd") or Word(text,"eur")
+    local bucks = text:find("%d[%d,.]*%s*bucks?%f[%W]") ~= nil
+    local goldPrice = text:find("%d[%d,. ]*%s*g%f[%W]%s*=%s*%d[%d,.]*%s*bucks?%f[%W]") ~= nil
+    return ((sale and (website or cash)) or goldPrice or (bucks and website)) and true or false
 end
 local function Recruitment(text)
     local guild = Word(text,"guild") or Word(text,"guilda") or text:find("<[^>]+>") ~= nil
@@ -98,7 +112,7 @@ local function Decide(self, event, msg, author, ...)
     local p = ns.GetSettings()
     if not p or not p.enabled then return false end
     if not (p.spamFilterEnabled or p.spamFilterKeywordsEnabled or p.spamFilterAchievements or
-        p.spamFilterTrade or p.spamFilterRecruitment or p.spamFilterHardcoreDeaths) then return false end
+        p.spamFilterGoldSellers or p.spamFilterTrade or p.spamFilterRecruitment or p.spamFilterHardcoreDeaths) then return false end
     local player, realm = UnitName("player")
     if player and (author==player or (realm and author==player.."-"..realm)) then return false end
     -- arg6 is the sender flag: GM messages are always shown.
@@ -118,6 +132,7 @@ local function Decide(self, event, msg, author, ...)
        (scope=="group" and not p.spamFilterGroup) or
        (scope=="whispers" and not p.spamFilterWhispers) then return false end
     local visible = Normalize(ns.PlainText(msg))
+    if p.spamFilterGoldSellers and GoldSeller(visible) then return true, "Gold Seller" end
     if scope=="public" and p.spamFilterTrade and Trade(visible) then return true, "Trade" end
     if scope=="public" and p.spamFilterRecruitment and Recruitment(visible) then return true, "Recruitment" end
     if p.spamFilterKeywordsEnabled and KeywordMatch(p,visible) then return true, "Keyword" end

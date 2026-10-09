@@ -4,7 +4,7 @@
 ## Group: EllesmereUI
 ## Notes: A CDM replacement focused on performance, customizations and alerts.
 ## Author: Ellesmere
-## Version: 9.3.4-335-0.3
+## Version: 9.3.4-335-0.7
 ## Dependencies: EllesmereUI
 ## X-Part-Of: EllesmereUI
 ## OptionalDeps: EllesmereUIActionBars
@@ -13,6 +13,7 @@
 
 # Native Wrath implementation; Retail Lua retained as unloaded references.
 EUI_CooldownManager_335_Catalog.lua
+EUI_CooldownManager_335_TrinketData.lua
 EUI_CooldownManager_335.lua
 EUI_CooldownManager_335_Display.lua
 EUI_CooldownManager_335_TrackingBars.lua

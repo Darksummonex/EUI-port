@@ -19,9 +19,28 @@ ns.RACE_RACIALS={
  Orc={20572,33697,33702},Scourge={7744},Tauren={20549},Troll={26297},
  BloodElf={28730,25046,50613},
 }
-ns.racials={}
-for _,list in pairs(ns.RACE_RACIALS) do for _,id in ipairs(list) do ns.racials[#ns.racials+1]=id end end
+ns.racials,ns.RACIAL_GROUP={},{}
+for _,list in pairs(ns.RACE_RACIALS) do for _,id in ipairs(list) do ns.racials[#ns.racials+1]=id; ns.RACIAL_GROUP[id]=list[1] end end
 table.sort(ns.racials)
+-- Variants resolve by name to the one spell the character knows, so a bar keeps a
+-- single entry per racial (older seeds added every variant: three Arcane Torrents).
+function ns.CollapseRacials(lists)
+    for _,list in pairs(lists) do
+        if type(list)=="table" and list[1]~=nil then
+            local seen,i={},1
+            while list[i] do
+                local e=list[i]; local g=type(e)=="table" and (e.kind or "spell")=="spell" and ns.RACIAL_GROUP[tonumber(e.id) or 0]
+                if g and seen[g] then
+                    if e.enabled~=false then seen[g].enabled=true end
+                    table.remove(list,i)
+                else
+                    if g then seen[g]=e end
+                    i=i+1
+                end
+            end
+        end
+    end
+end
 -- Retail CDM_ITEM_PRESETS with Wrath consumables. items is the display order:
 -- the first one in the bags is shown; swapWith follows when a family runs out.
 ns.ITEM_PRESETS={
@@ -75,7 +94,9 @@ function ns.SeedLists(class)
         for _,id in ipairs(seed[key]) do lists[key][#lists[key]+1]={kind=key=="buffs" and "aura" or "spell",id=id,unit="player",filter="HELPFUL",enabled=true} end
     end
     local _,race=UnitRace("player")
-    for _,id in ipairs(ns.RACE_RACIALS[race or ""] or ns.racials) do lists.utility[#lists.utility+1]={kind="spell",id=id,enabled=true} end
+    local racial=ns.RACE_RACIALS[race or ""]
+    if racial then lists.utility[#lists.utility+1]={kind="spell",id=racial[1],enabled=true}
+    else for _,list in pairs(ns.RACE_RACIALS) do lists.utility[#lists.utility+1]={kind="spell",id=list[1],enabled=true} end end
     for _,slot in ipairs({13,14}) do lists.utility[#lists.utility+1]={kind="slot",id=slot,enabled=true} end
     lists.utility[#lists.utility+1]={kind="preset",id="healthstone",enabled=true}
     for i=1,math.min(3,#lists.buffs) do

@@ -54,7 +54,7 @@ local defaults = {profile={
         whisperSoundKey="none",
         spamFilterEnabled=false, spamFilterWindow=15, spamFilterAnySender=false,
         spamFilterPublic=true, spamFilterGroup=false, spamFilterWhispers=false,
-        spamFilterAchievements=false, spamFilterTrade=false, spamFilterRecruitment=false,
+        spamFilterGoldSellers=true, spamFilterAchievements=false, spamFilterTrade=false, spamFilterRecruitment=false,
         spamFilterKeywordsEnabled=false, spamFilterKeywords="",
         spamFilterHardcoreDeaths=false, spamFilterHardcoreKeepLevel=81,
         clickableURLs=true, copyLines=500, mouseWheel=true, fadeMessages=false, fadeSeconds=120,
@@ -386,7 +386,8 @@ local function ShowURL(url)
     urlDimmer:Show(); f:Show(); f.box:SetText(url); f.box:HighlightText(); f.box:SetFocus() -- explicit URL click only
 end
 function ns.CopyChat(cf)
-    cf=cf or (FCF_GetCurrentChatFrame and FCF_GetCurrentChatFrame()) or ChatFrame1
+    -- FCF_GetCurrentChatFrame is the last right-clicked tab (CURRENT_CHAT_FRAME_ID) on 3.3.5, not the shown one.
+    cf=cf or (FCFDock_GetSelectedWindow and GENERAL_CHAT_DOCK and FCFDock_GetSelectedWindow(GENERAL_CHAT_DOCK)) or SELECTED_CHAT_FRAME or DEFAULT_CHAT_FRAME or ChatFrame1
     local p=ns.GetSettings(); if not p then return end
     local lines={}
     local s=states[cf]
@@ -946,6 +947,14 @@ local STAMP_EVENTS = {"SAY","YELL","EMOTE","TEXT_EMOTE","WHISPER","WHISPER_INFOR
     "GUILD","OFFICER","CHANNEL","MONSTER_SAY","MONSTER_YELL","MONSTER_EMOTE","MONSTER_WHISPER","MONSTER_PARTY",
     "RAID_BOSS_EMOTE","RAID_BOSS_WHISPER","AFK","DND"}
 local NAME_EVENTS = {"SAY","YELL","PARTY","PARTY_LEADER","RAID","RAID_LEADER","RAID_WARNING"}
+-- Custom servers may send notice codes absent from Wrath GlobalStrings.
+-- The native handler formats these without a nil check; filter before it runs.
+function ns.ChannelNoticeFilter(_,event,code)
+    if event~="CHAT_MSG_CHANNEL_NOTICE" and event~="CHAT_MSG_CHANNEL_NOTICE_USER" then return false end
+    if type(code)~="string" then return true end
+    local text=_G["CHAT_"..code.."_NOTICE_BN"] or _G["CHAT_"..code.."_NOTICE"]
+    return type(text)~="string"
+end
 local function StampFilter(self) stampFrame,stampTime=self,GetTime(); return false end
 local function NameFilter(self,event,msg,...)
     local p=ns.GetSettings()
@@ -1237,6 +1246,8 @@ function addon:OnEnable()
     if ns.RegisterSpamFilters then ns.RegisterSpamFilters() end
     if not addon.db then return end
     if ChatFrame_AddMessageEventFilter then
+        ChatFrame_AddMessageEventFilter("CHAT_MSG_CHANNEL_NOTICE",ns.ChannelNoticeFilter)
+        ChatFrame_AddMessageEventFilter("CHAT_MSG_CHANNEL_NOTICE_USER",ns.ChannelNoticeFilter)
         for _,kind in ipairs(STAMP_EVENTS) do ChatFrame_AddMessageEventFilter("CHAT_MSG_"..kind,StampFilter) end
         for _,kind in ipairs(NAME_EVENTS) do ChatFrame_AddMessageEventFilter("CHAT_MSG_"..kind,NameFilter) end
     end

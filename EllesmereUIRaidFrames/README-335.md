@@ -1,4 +1,15 @@
-# Raid Frames 3.3.5 — 0.13
+# Raid Frames 3.3.5 — 0.16
+
+0.16: ícones de ready check acima dos debuffs; respostas por GUID permanecem
+por 10 segundos após terminar. Pendentes viram não prontos ao fim da checagem.
+
+0.15: o debuff destacado no ícone central não se repete na barra de debuffs.
+Os outros debuffs ocupam os espaços livres; desativar o ícone central devolve
+o debuff à barra.
+
+0.14 corrige o fade de membros fora de alcance no Wrath, inclusive em combate.
+Dim Out of Range usa Out of Range Alpha (40% por padrão); volta a 100% ao
+entrar no alcance. Jogador, prévias e desconectados não recebem esse fade.
 
 0.13: a textura de vida lista a LibSharedMedia e as resolve nos quadros e
 na prévia dos indicadores de aura.

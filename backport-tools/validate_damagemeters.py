@@ -92,7 +92,7 @@ _detalhes=setmetatable({},{__index=function() error('Details dependency') end})
 DetailsFramework=nil; LibStub=function() error('External library dependency') end
 ''')
 ns=lua.table()
-for file in ['EUI_DamageMeters_335.lua','EUI_DamageMeters_335_Parser.lua','EUI_DamageMeters_335_Specs.lua','EUI_DamageMeters_335_Display.lua','EUI_DamageMeters_335_Breakdown.lua','EUI_DamageMeters_335_Home.lua','EUI_DamageMeters_335_Extras.lua','EUI_DamageMeters_335_SpellHistory.lua']:
+for file in ['EUI_DamageMeters_335.lua','EUI_DamageMeters_335_Absorbs.lua','EUI_DamageMeters_335_Parser.lua','EUI_DamageMeters_335_Specs.lua','EUI_DamageMeters_335_Display.lua','EUI_DamageMeters_335_Breakdown.lua','EUI_DamageMeters_335_Home.lua','EUI_DamageMeters_335_Extras.lua','EUI_DamageMeters_335_SpellHistory.lua']:
     lua.execute((root/'EllesmereUIDamageMeters'/file).read_text(encoding='utf-8-sig'),'EllesmereUIDamageMeters',ns)
 lua.globals().D=ns
 lua.execute('''

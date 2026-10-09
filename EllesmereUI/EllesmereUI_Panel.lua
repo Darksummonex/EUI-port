@@ -780,6 +780,14 @@ local function CreateMainFrame()
         miniClose:SetScript("OnClick", function() EllesmereUI:Hide() end)
         tbox.Hover(miniClose, mini, MX, MY, 0)
 
+        local closeIcon
+        if _G.EUI_WOW_335 then
+            closeIcon = miniClose:CreateTexture(nil, "OVERLAY")
+            closeIcon:SetTexture(MEDIA_PATH .. "icons_335\\close-popup-4.tga")
+            closeIcon:SetSize(16, 16)
+            closeIcon:SetPoint("CENTER", miniClose, "CENTER")
+        end
+
         -- Badge: a thin ring (a disc 2 units wider behind it) and the emblem square.
         local ring = mini:CreateTexture(nil, "ARTWORK", nil, 0)
         ring:SetSize(H + 4, H + 4)
@@ -791,10 +799,18 @@ local function CreateMainFrame()
             ringMask:SetPoint("CENTER", ring, "CENTER")
             ring:AddMaskTexture(ringMask)
         end
-        local badge = mini:CreateTexture(nil, "ARTWORK", nil, 1)
+        -- Wrath cannot mask textures; baked alpha and a separate frame keep
+        -- the solid ring from covering the emblem in its texture batching.
+        local badgeHost = mini
+        if _G.EUI_WOW_335 then
+            badgeHost = CreateFrame("Frame", nil, mini)
+            badgeHost:SetAllPoints(mini)
+            badgeHost:SetFrameLevel(mini:GetFrameLevel() + 3)
+        end
+        local badge = badgeHost:CreateTexture(nil, "ARTWORK", nil, 1)
         badge:SetSize(H, H)
         badge:SetPoint("TOPLEFT", mini, "TOPLEFT", 0, 0)
-        local badgeOv = mini:CreateTexture(nil, "ARTWORK", nil, 2)
+        local badgeOv = badgeHost:CreateTexture(nil, "ARTWORK", nil, 2)
         if mini.CreateMaskTexture and badge.AddMaskTexture and badgeOv.AddMaskTexture then
             local badgeMask = mini:CreateMaskTexture()
             badgeMask:SetTexture(MASK, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
@@ -844,6 +860,23 @@ local function CreateMainFrame()
             local ov = EllesmereUI.THEME_ACCENT_OVERLAYS[theme]
             CutOverlay(barOv, ov, 1244, 101, 1403, 158, MX, MY)
             CutOverlay(badgeOv, ov, ex, ey, ex + H, ey + H, ex, ey)
+            if _G.EUI_WOW_335 then
+                badge:SetTexture(MEDIA_PATH .. "mini_335\\ring.tga")
+                badge:SetTexCoord(0, 1, 0, 1)
+                badge:SetDesaturated(false)
+                badge:SetVertexColor(0, 0, 0, 1)
+                ring:SetTexture(MEDIA_PATH .. "mini_335\\ring.tga")
+                ring:SetVertexColor(rr, rg, rb, 1)
+                badgeOv:SetTexture(MEDIA_PATH .. "eg-logo.tga")
+                badgeOv:SetTexCoord(0, 1, 0, 1)
+                badgeOv:SetDesaturated(true)
+                badgeOv:SetSize(H * 0.8, H * 0.8)
+                badgeOv:ClearAllPoints()
+                badgeOv:SetPoint("CENTER", badge, "CENTER")
+                badgeOv:SetVertexColor(ELLESMERE_GREEN.r, ELLESMERE_GREEN.g, ELLESMERE_GREEN.b, 1)
+                badgeOv:Show()
+                closeIcon:SetVertexColor(spec.r, spec.g, spec.b, 1)
+            end
             tbox.Paint(expandBox, theme, tr, tg, tb)
         end
         return mini

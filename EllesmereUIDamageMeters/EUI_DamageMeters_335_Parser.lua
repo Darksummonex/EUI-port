@@ -80,6 +80,8 @@ function ns.SeedAuras()
             if not name then break end
             ns.Aura("SPELL_AURA_APPLIED",caster and UnitGUID(caster),caster and UnitName(caster),nil,
                 UnitGUID(unit),UnitName(unit),nil,id,name,"BUFF")
+            ns.TrackShield("SPELL_AURA_APPLIED",caster and UnitGUID(caster),caster and UnitName(caster),nil,
+                UnitGUID(unit),UnitName(unit),nil,id,name,nil,"BUFF",expires)
         end
     end
 end
@@ -93,16 +95,24 @@ function ns.Parse(timestamp,event,sg,sn,sf,dg,dn,df,...)
         end
         return
     end
+    if event=="SPELL_AURA_APPLIED" or event=="SPELL_AURA_REFRESH" or event=="SPELL_AURA_APPLIED_DOSE" or event=="SPELL_AURA_REMOVED_DOSE" or event=="SPELL_AURA_REMOVED" or event=="SPELL_AURA_BROKEN" then
+        local id,name,school,auraType=...
+        ns.TrackShield(event,sg,sn,sf,dg,dn,df,id,name,school,auraType)
+    elseif event=="SPELL_AURA_BROKEN_SPELL" then
+        local id,name,school,extraID,extraName,extraSchool,auraType=...
+        ns.TrackShield(event,sg,sn,sf,dg,dn,df,id,name,school,auraType)
+    elseif event=="UNIT_DIED" or event=="UNIT_DESTROYED" then ns.ClearShields(dg) end
     local sourceFriendly,destFriendly=ns.Friendly(sg,sf),ns.Friendly(dg,df)
     if not sourceFriendly and not destFriendly then return end
     local isDamage=damageEvents[event] or event=="SWING_DAMAGE" or event=="ENVIRONMENTAL_DAMAGE"
-    if ns.current and ns.endedAt and not isDamage and not ns.GroupInCombat() then return end
+    local activity=isDamage or missEvents[event] or event=="SWING_MISSED"
+    if ns.current and ns.endedAt and not activity and not ns.GroupInCombat() then return end
     if not ns.current then
-        if isDamage or ns.GroupInCombat() then ns.Start(not destFriendly and dn or not sourceFriendly and sn or nil) else return end
+        if activity or ns.GroupInCombat() then ns.Start(not destFriendly and dn or not sourceFriendly and sn or nil) else return end
     end
     if not ns.current then return end
-    if isDamage or ns.GroupInCombat() then ns.lastActivity=GetTime(); ns.endedAt=nil end
-    if ns.current.label=="Combat" and isDamage then ns.current.label=not destFriendly and dn or not sourceFriendly and sn or "Combat" end
+    if activity or ns.GroupInCombat() then ns.lastActivity=GetTime(); ns.endedAt=nil end
+    if ns.current.label=="Combat" and activity then ns.current.label=not destFriendly and dn or not sourceFriendly and sn or "Combat" end
     if isDamage then
         local id,name,school,amount,overkill,resisted,blocked,absorbed,critical
         if event=="SWING_DAMAGE" then
@@ -120,6 +130,7 @@ function ns.Parse(timestamp,event,sg,sn,sf,dg,dn,df,...)
         if destFriendly then
             ns.Add("taken",amount,dg,dn,df,id,name,sg,sn,critical,school)
             ns.Add("absorbed",absorbed,dg,dn,df,id,name,sg,sn,false,school)
+            ns.CreditAbsorb(absorbed,dg,dn,school)
             ns.Add("blocked",blocked,dg,dn,df,id,name,sg,sn,false,school)
             ns.Add("resisted",resisted,dg,dn,df,id,name,sg,sn,false,school)
             Log(dg,dn,df,"damage",amount,id,name,sn,overkill)
@@ -137,7 +148,10 @@ function ns.Parse(timestamp,event,sg,sn,sf,dg,dn,df,...)
         local id,name,school,miss,amount
         if event=="SWING_MISSED" then miss,amount=...; id,name=0,"Melee"
         else id,name,school,miss,amount=... end
-        if miss=="ABSORB" and destFriendly then ns.Add("absorbed",amount,dg,dn,df,id,name,sg,sn) end
+        if miss=="ABSORB" and destFriendly then
+            ns.Add("absorbed",amount,dg,dn,df,id,name,sg,sn)
+            ns.CreditAbsorb(amount,dg,dn,event=="SWING_MISSED" and 1 or school)
+        end
         if sourceFriendly then ns.Add("misses",1,sg,sn,sf,id,name,dg,dn) end
         if destFriendly then ns.Add("avoided",1,dg,dn,df,id,name,sg,sn) end
     elseif event=="SPELL_ENERGIZE" or event=="SPELL_PERIODIC_ENERGIZE" then

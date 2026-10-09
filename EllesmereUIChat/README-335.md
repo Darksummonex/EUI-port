@@ -1,4 +1,17 @@
-# EllesmereUI Chat — 3.3.5 — 0.46
+# EllesmereUI Chat — 3.3.5 — 0.49
+
+0.49: Copy Chat copia a aba que está aberta. No 3.3.5 o `FCF_GetCurrentChatFrame`
+devolve a última aba clicada com o botão direito (`CURRENT_CHAT_FRAME_ID`), então
+a janela podia mostrar "(No chat history)"; agora usa a aba selecionada do dock.
+
+0.48: inclui anúncio de ouro sem sell: "5000G=20 bucks" e site
+ofuscado "W.W.W.N+O+S+T100.C-O-M". Discussões comuns continuam visíveis.
+
+0.48: filtro de vendedores de ouro ativado por padrão; combina venda e ouro
+com site ou preço real, respeitando os tipos de chat selecionados.
+
+0.47: ignora avisos de canal sem texto no cliente Wrath (ex.: NOT_IN_LFG),
+evitando format(nil) no ChatFrame nativo. Avisos reconhecidos continuam normais.
 
 0.46: filtro de mortes do Hardcore em Chat > Spam Filter > HARDCORE. Esconde
 anúncios do servidor como "Warrash the level 11 Gnome Warrior has been slain

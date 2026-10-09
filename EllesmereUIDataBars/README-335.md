@@ -1,4 +1,8 @@
-# DataBars 3.3.5a — 0.4
+# DataBars 3.3.5a — 0.5
+
+0.5: texto de latência colorido por qualidade da conexão por padrão (verde até
+100 ms, amarelo até 250 ms, vermelho acima). Novo swatch "Latency" em Text Color;
+cor Custom, Class ou Accent escolhida continua valendo.
 
 0.4: barras presas a uma borda da tela ("Snap to Screen Edge") ou em tela
 cheia não começam mais em posição estranha depois do login. Antes a posição era

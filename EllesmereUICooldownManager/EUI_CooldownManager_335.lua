@@ -4,6 +4,7 @@ if not E or not E.Lite then return end
 E._ModuleNS[ADDON]=ns
 ns.IsWrath=true; ns.addon=E.Lite.NewAddon(ADDON); ns.ECME=ns.addon
 ns.frames,ns.compiled,ns.auras,ns.spells,ns.petSpells,ns.actionGlows,ns.keybinds,ns.pressed={},{},{},{},{},{},{},{}
+ns.icdStart,ns.icdWatch,ns.collapsed={},{},setmetatable({},{__mode="k"})
 ns.DEFAULT_BARS={"cooldowns","utility","buffs"}
 -- Retail per-bar keys (EllesmereUICooldownManager.lua DEFAULTS and the CDM Bars page).
 ns.BAR_DEFAULTS={enabled=true,barType="cooldowns",iconSize=36,numRows=1,spacing=2,growDirection="RIGHT",rowGrowDirection="DOWN",verticalOrientation=false,
@@ -51,7 +52,7 @@ local V1={{key="cooldowns",name="Cooldowns",iconSize=42,show="always",showKeybin
 function ns.Migrate(p)
     p.cdmBars=p.cdmBars or {enabled=true}
     local old,new=p.cdmBars.bars,{}
-    if type(old)~="table" or #old==0 then p.cdmBars.bars=type(old)=="table" and old or {}; return end
+    if type(old)~="table" or old[1]==nil then p.cdmBars.bars=type(old)=="table" and old or {}; return end
     if old[1].barType then return end
     for i,v in ipairs(V1) do
         local o=old[i] or {}; for k,x in pairs(v) do if o[k]==nil then o[k]=x end end
@@ -77,11 +78,47 @@ function ns.Migrate(p)
     end
     p.cdmBars.bars=new; p.wrathVersion=2
 end
+ns.BUILTIN_NAMES={cooldowns="Cooldowns",utility="Utility",buffs="Buffs"}
+-- Older options could save a built-in bar twice or with another built-in's type/name
+-- (one bar missing, two "Buffs"): give each built-in key back to exactly one bar.
+function ns.RepairBuiltins(bars)
+    local names,order,count,missing=ns.BUILTIN_NAMES,{},{},{}
+    for i,k in ipairs(ns.DEFAULT_BARS) do order[k]=i end
+    for _,b in ipairs(bars) do if names[b.key] then count[b.key]=(count[b.key] or 0)+1 end end
+    for _,k in ipairs(ns.DEFAULT_BARS) do if not count[k] then missing[#missing+1]=k end end
+    for _,b in ipairs(bars) do
+        local k=b.key
+        if names[k] and count[k]>1 then
+            local to
+            for i,m in ipairs(missing) do if order[m]<order[k] then to=table.remove(missing,i); break end end
+            if not to and b~=ns.FirstBarByKey(bars,k) then to=table.remove(missing,1) end
+            if to then count[k]=count[k]-1; b.key=to; b.name=names[to]
+            elseif b~=ns.FirstBarByKey(bars,k) then
+                local n=1; while ns.FirstBarByKey(bars,"custom_"..n) do n=n+1 end
+                count[k]=count[k]-1; b.key="custom_"..n
+            end
+        end
+        if names[b.key] then
+            if b.barType~=b.key then b.barType=b.key end
+            for other,n in pairs(names) do if other~=b.key and b.name==n then b.name=names[b.key] end end
+            if not b.name then b.name=names[b.key] end
+        end
+    end
+end
+function ns.FirstBarByKey(bars,key) for _,b in ipairs(bars) do if b.key==key then return b end end end
 function ns.Bars()
     local p=ns.Profile(); if not p then return {} end
     ns.Migrate(p)
     local bars=p.cdmBars.bars
-    if #bars==0 then for _,k in ipairs(ns.DEFAULT_BARS) do bars[#bars+1]=ns.NewBar(k,k,k=="cooldowns" and "Cooldowns" or k=="utility" and "Utility" or "Buffs") end end
+    -- Spec Overrides traces getters through read proxies: # and ipairs see them empty in
+    -- Lua 5.1, so read through __index into a plain list and never seed or repair there.
+    if rawget(bars,1)==nil and bars[1]~=nil then
+        local list,i={},1
+        while bars[i]~=nil do list[i]=bars[i]; i=i+1 end
+        return list
+    end
+    if bars[1]==nil then for i,k in ipairs(ns.DEFAULT_BARS) do bars[i]=ns.NewBar(k,k,ns.BUILTIN_NAMES[k]) end end
+    ns.RepairBuiltins(bars)
     for _,b in ipairs(bars) do b.spellDefaults=b.spellDefaults or {}; ns.Fill(b,ns.TYPE_DEFAULTS[b.barType] or {}); ns.Fill(b,ns.BAR_DEFAULTS) end
     return bars
 end
@@ -131,6 +168,7 @@ function ns.ListsFor(key)
         end end
     end
     for _,t in ipairs(lists.tbb) do ns.Fill(t,ns.TBB_DEFAULTS) end
+    if not ns.collapsed[lists] then ns.collapsed[lists]=true; ns.CollapseRacials(lists) end
     return lists
 end
 function ns.Lists() return ns.ListsFor(ns.SpecKey()) end
@@ -179,6 +217,19 @@ function ns.PresetItems(e)
     local p=ns.ITEM_PRESET_BY_KEY[e.id]; if not p then return end
     return p
 end
+-- Passive proc items (TrinketData): proc spell IDs and the internal cooldown they share.
+function ns.TrinketProcs(itemID)
+    local v=ns.TRINKET_PROCS and ns.TRINKET_PROCS[itemID]; if not v then return end
+    local ids=type(v)=="table" and v or {v}; local icd,nocd=0,true
+    for _,p in ipairs(ids) do if not ns.TRINKET_NOCD[p] then nocd=false; icd=math.max(icd,ns.TRINKET_ICD[p] or 45) end end
+    return {ids=ids,icd=icd,nocd=nocd}
+end
+function ns.ProcCooldown(procs)
+    if procs.nocd then return 0,0 end
+    local start=0
+    for _,p in ipairs(procs.ids) do local s=ns.icdStart[p]; if s and s>start then start=s end end
+    return start,start>0 and procs.icd or 0
+end
 function ns.Resolve(entry,bar)
     local kind=entry.kind or "spell"
     if kind=="preset" then
@@ -202,11 +253,14 @@ function ns.Resolve(entry,bar)
     elseif kind=="item" or kind=="slot" then
         local itemID=kind=="slot" and GetInventoryItemID("player",id) or id
         if not itemID then return end
-        if kind=="slot" and (id==13 or id==14) and bar and not bar.showPassiveTrinkets and GetItemSpell and not GetItemSpell(itemID) then return end
+        local useSpell=GetItemSpell and GetItemSpell(itemID); local onUse=useSpell
+        if kind=="slot" and not onUse then onUse=select(3,GetInventoryItemCooldown("player",id))==1 end
+        local procs=not onUse and ns.TrinketProcs(itemID) or nil
+        if kind=="slot" and (id==13 or id==14) and bar and not bar.showPassiveTrinkets and not onUse and not procs then return end
         local name,_,_,_,_,_,_,_,_,icon=GetItemInfo(itemID)
-        icon=icon or GetItemIcon and GetItemIcon(itemID)
+        icon=icon or GetItemIcon and GetItemIcon(itemID) or kind=="slot" and GetInventoryItemTexture and GetInventoryItemTexture("player",id)
         if not name and not icon then return end
-        return {name=name or ("Item "..itemID),id=itemID,icon=custom or icon,kind=kind,slot=kind=="slot" and id or nil,useSpell=GetItemSpell and GetItemSpell(itemID)}
+        return {name=name or ("Item "..itemID),id=itemID,icon=custom or icon,kind=kind,slot=kind=="slot" and id or nil,useSpell=useSpell,procs=procs}
     end
 end
 function ns.KickEntry(bar)
@@ -217,16 +271,26 @@ end
 function ns.Compile()
     local lists=ns.Lists(); if not lists then return end
     ns.compiled={}
+    local watch={}
     for _,bar in ipairs(ns.Bars()) do
-        local entries={}; ns.compiled[bar.key]=entries
+        local entries,seen={},{}; ns.compiled[bar.key]=entries
         local source=lists[bar.key] or {}
         if bar.barType=="focuskick" then local k=ns.KickEntry(bar); source=k and {k} or {} end
         for _,entry in ipairs(source) do
             if entry.enabled~=false and ns.TalentOK(entry) then
                 local meta=ns.Resolve(entry,bar)
+                if meta and meta.kind=="spell" then
+                    local k=tostring(meta.book)..":"..tostring(meta.slot)
+                    if seen[k] then meta=nil else seen[k]=true end
+                end
+                if meta and meta.procs and not meta.procs.nocd then for _,p in ipairs(meta.procs.ids) do watch[p]=true end end
                 if meta and #entries<40 then entries[#entries+1]={entry=entry,meta=meta,bar=bar,remaining=0,active=false,count=0} end
             end
         end
+    end
+    ns.icdWatch=watch
+    if ns.events then
+        if next(watch) then ns.events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED") else ns.events:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED") end
     end
     if ns.EnsurePools then ns.EnsurePools() end
 end
@@ -240,6 +304,9 @@ function ns.ScanAuras()
                 local name,_,icon,count,_,duration,expires,caster,_,_,id=UnitAura(unit,i,filter)
                 if not name then break end
                 list[#list+1]={name=name,id=id,icon=icon,count=count or 0,duration=duration or 0,expires=expires or 0,caster=caster,index=i,unit=unit,filter=filter}
+                if id and ns.icdWatch[id] and unit=="player" and (duration or 0)>0 then
+                    local s=expires-duration; if s>(ns.icdStart[id] or 0)+.5 then ns.icdStart[id]=s end
+                end
             end
         end
     end
@@ -284,6 +351,7 @@ function ns.UpdateState(st,now)
     if m.kind=="aura" then AuraState(st,now); return end
     local start,duration,enabled,itemID
     if m.kind=="spell" then start,duration,enabled=GetSpellCooldown(m.slot,m.book)
+    elseif m.procs then start,duration=ns.ProcCooldown(m.procs); enabled=1; itemID=m.id
     elseif m.kind=="slot" then start,duration,enabled=GetInventoryItemCooldown("player",m.slot); itemID=m.id
     else itemID=m.kind=="preset" and ns.PresetChoice(st) or m.id; start,duration,enabled=GetItemCooldown(itemID) end
     start,duration=tonumber(start) or 0,tonumber(duration) or 0
@@ -311,6 +379,11 @@ function ns.UpdateState(st,now)
         local cname=custom and GetSpellInfo(custom)
         local a=ns.FindAura("player","HELPFUL",custom,cname or m.name,nil,true,now)
         if a and a.duration>0 and (custom or a.duration<=60) then st.activeAura=a end
+    elseif m.procs and bar.activeState and ns.Eff(st,"activeState")~="none" then
+        for _,p in ipairs(m.procs.ids) do
+            local a=ns.FindAura("player","HELPFUL",p,nil,nil,false,now)
+            if a and a.duration>0 then st.activeAura=a; break end
+        end
     end
     if st.fakeUntil and st.fakeUntil>now then st.activeAura={expires=st.fakeUntil,duration=st.fakeDuration or 0,count=0}
     else st.fakeUntil=nil end
@@ -395,12 +468,20 @@ function ns.OnSpellCast(unit,spellName)
         if d and d>0 and (st.meta.name==spellName or st.meta.useSpell==spellName) then st.fakeUntil=now+d; st.fakeDuration=d end
     end end
 end
+-- A watched trinket proc starts its internal cooldown (registered only while one is tracked).
+function ns.OnCombatLog(_,sub,src,_,_,dst,_,_,spellID)
+    if not ns.icdWatch[spellID] or sub=="SPELL_AURA_REMOVED" or sub=="SPELL_AURA_REMOVED_DOSE" or sub=="SPELL_MISSED" then return end
+    local me=UnitGUID("player")
+    if src~=me and not (dst==me and (not src or src=="0x0000000000000000" or src==dst)) then return end
+    ns.icdStart[spellID]=GetTime(); ns.Update()
+end
 local EVENTS={"PLAYER_ENTERING_WORLD","SPELLS_CHANGED","ACTIVE_TALENT_GROUP_CHANGED","PLAYER_TALENT_UPDATE","CHARACTER_POINTS_CHANGED","UNIT_PET","UNIT_AURA",
  "PLAYER_TARGET_CHANGED","PLAYER_FOCUS_CHANGED","SPELL_UPDATE_COOLDOWN","SPELL_UPDATE_USABLE","BAG_UPDATE_COOLDOWN","BAG_UPDATE","UNIT_INVENTORY_CHANGED",
  "PLAYER_REGEN_DISABLED","PLAYER_REGEN_ENABLED","ACTIONBAR_SLOT_CHANGED","ACTIONBAR_PAGE_CHANGED","UPDATE_BINDINGS","ADDON_LOADED","GET_ITEM_INFO_RECEIVED",
  "UNIT_SPELLCAST_SUCCEEDED","UPDATE_MACROS"}
-function ns.OnEvent(_,event,unit,arg2)
-    if event=="UNIT_AURA" or event=="PLAYER_TARGET_CHANGED" or event=="PLAYER_FOCUS_CHANGED" then
+function ns.OnEvent(_,event,unit,arg2,...)
+    if event=="COMBAT_LOG_EVENT_UNFILTERED" then ns.OnCombatLog(unit,arg2,...)
+    elseif event=="UNIT_AURA" or event=="PLAYER_TARGET_CHANGED" or event=="PLAYER_FOCUS_CHANGED" then
         if event~="UNIT_AURA" or unit=="player" or unit=="target" or unit=="focus" or unit=="pet" then ns.ScanAuras(); ns.Update() end
     elseif event=="PLAYER_REGEN_DISABLED" or event=="PLAYER_REGEN_ENABLED" then
         ns.inCombat=event=="PLAYER_REGEN_DISABLED"

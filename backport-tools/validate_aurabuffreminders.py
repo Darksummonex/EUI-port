@@ -103,9 +103,9 @@ assert(p.display.iconSize==nil and math.abs(p.display.scale-1.5)<1e-9 and p.disp
 assert(p.raidBuffs.enabled.ai==false and p.raidBuffs.whereToShow.open_world==false and p.raidBuffs.sectionSound=='airhorn')
 assert(p.auras.enabled.inner_fire==false and p.auras.whereToShow.in_combat==false)
 assert(p.consumables.enabled.food==false and p.consumables.preferredFood=='great_feast' and p.consumables.where==nil)
-assert(p.custom.customIDs[1]==700 and p.customReminders==nil)
+assert(D.GetCustomSettings().customIDs[1]==700 and p.customReminders==nil)
 assert(p.talentReminders[1].zoneNames[1]=='Naxxramas' and p.talentReminders[1].class=='PRIEST')
-p.auras.enabled.inner_fire=true; p.auras.whereToShow={}; p.consumables.enabled.food=true; p.custom.customIDs={}
+p.auras.enabled.inner_fire=true; p.auras.whereToShow={}; p.consumables.enabled.food=true; D.GetCustomSettings().customIDs={}
 p.talentReminders={}; p.display.scale=1; p.raidBuffs.sectionSound=nil
 
 function IsLoggedIn() return true end
@@ -174,8 +174,8 @@ auras.player[2]=nil; D.Refresh(); assert(#playedSounds==before+1 and playedSound
 D.Refresh(); assert(#playedSounds==before+1)
 
 -- Custom spell reminder.
-p.custom.customIDs={700}; D.Refresh(); assert(Missing('custom:700') and Missing('custom:700').mode==nil)
-p.custom.customIDs={}
+D.GetCustomSettings().customIDs={700}; D.Refresh(); assert(Missing('custom:700') and Missing('custom:700').mode==nil)
+D.GetCustomSettings().customIDs={}
 
 -- Rogue: one poison per hand from the bags, applied by slot macro.
 D._class='ROGUE'; weapons[17]='item:1001:0:0'; counts[43231]=5; counts[43233]=3; D.Refresh()
@@ -304,8 +304,8 @@ assert(Control('Show Below') and not Control('Show Below Pre-Key') and not Contr
 local p=_EABR_AceDB.profile
 Control('Show Below').setValue(9); assert(p.display.showUnder==9)
 Control('Runeforging').setValue(false); assert(p.consumables.enabled.runeforge==false)
-Control('Add Custom Spell').setValue('700'); assert(p.custom.customIDs[1]==700)
-Control('Add Custom Spell').setValue('99999'); assert(#p.custom.customIDs==1)
+Control('Add Custom Spell').setValue('700'); assert(D.GetCustomSettings().customIDs[1]==700)
+Control('Add Custom Spell').setValue('99999'); assert(#D.GetCustomSettings().customIDs==1)
 local flaskValues
 for _,c in ipairs(rows) do if c.text=='Preferred (Click to Buff)' and c.values.frost_wyrm then flaskValues=c end end
 assert(flaskValues.values.frost_wyrm=='Flask of the Frost Wyrm')

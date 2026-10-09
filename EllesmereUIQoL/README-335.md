@@ -1,4 +1,8 @@
-# Quality of Life 3.3.5 — 0.13
+# Quality of Life 3.3.5 — 0.14
+
+0.14: contador de FPS com nova cor padrão "Quality": FPS e cada latência ficam
+verde, amarelo ou vermelho (60/30 fps, 100/250 ms), e os rótulos seguem a cor do
+valor. Custom e Class Color continuam disponíveis em Text Color.
 
 0.13: esconder as barras do DBM/BigWigs com o AbilityTimeline ativo saiu do
 EUI (seção BOSS MOD BARS do Raid Tools e `EUI_QoL_335_BossBars.lua`) e foi

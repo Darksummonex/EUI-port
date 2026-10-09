@@ -360,6 +360,28 @@ assert(D.ProgressUsed('xp'))
 ''')
 print('PASS: block values (fps, latency, zone, coords, durability, talents, professions, currency, audio, clock, item level) and secure hearthstone')
 
+# Latency text follows the good/fair/poor color by default; a chosen text color still wins.
+lua.execute('''
+local K, msb = D.BlockKit, allBlocks.ms
+local function shown()
+    local fs=Find(Slot('ms'),function(f) return f.kind=='FontString' and f.text and tostring(f.text):find('%d') end)
+    return fs.textColor
+end
+local function at(lat) GetNetStats=function() return 2.5,3.5,lat end; Inst('ms'):Refresh(); return shown() end
+msb.color,msb.useClassColor,msb.useAccentColor,msb.useDynamicColor=nil,nil,nil,nil
+local good,fair,poor=at(80),at(180),at(400)
+assert(good[2]>good[1] and good[2]>good[3],'good latency is green')
+assert(fair[1]>.5 and fair[2]>.5 and fair[3]<.5,'fair latency is yellow')
+assert(poor[1]>poor[2] and poor[1]>poor[3],'poor latency is red')
+msb.useDynamicColor=true; assert(at(400)[1]==poor[1])
+msb.useDynamicColor=nil; msb.color={r=.2,g=.3,b=.4}; local c=at(400); assert(c[1]==.2 and c[2]==.3 and c[3]==.4,'custom color wins')
+msb.color=nil; msb.useAccentColor=true; local ar=D.GetAccent(); assert(at(400)[1]==ar,'accent wins'); msb.useAccentColor=nil
+local fps=allBlocks.fps; fps.color,fps.useDynamicColor=nil,nil
+local r,g,b=K.BlockColorOf(fps); assert(r==1 and g==1 and b==1,'other blocks keep white')
+GetNetStats=function() return 2.5,3.5,80 end; Inst('ms'):Refresh()
+''')
+print('PASS: latency text colored good/fair/poor by default and with the Latency swatch; custom/accent colors win; other blocks stay white')
+
 # Owned tooltip: every interactive block opens rows on hover.
 lua.execute('''
 local opened=0
@@ -485,6 +507,23 @@ rows={}; sections={}; cfg.buildPage('DataBars',UIParent,0)
 FindRow('Currency').setValue(49426); assert(D.GetBar(target.id).blocks[n+1].settings.currencyId==49426)
 FindRow('Visibility').setValue('in_raid'); assert(D.GetBar(target.id).visibility=='in_raid' and D.live[target.id].bar.driver=='[group:raid] show; hide')
 for _,r in ipairs(rows) do if r and r.type=='input' then assert(not r.autoFocus,'options EditBox autofocus') end end
+-- Latency Text Color: a Latency swatch, selected while no color is stored; Custom seeds white on first click.
+local msBar, msBlock
+for _,bar in ipairs(D.BarsInOrder()) do for _,b in ipairs(bar.blocks) do if b.type=='ms' and not msBlock then msBar,msBlock=bar,b end end end
+assert(msBlock,'a bar with a latency block')
+msBlock.color,msBlock.useClassColor,msBlock.useAccentColor,msBlock.useDynamicColor=nil,nil,nil,nil
+FindRow('Select Bar').setValue(msBar.id); rows={}; sections={}; cfg.buildPage('DataBars',UIParent,0)
+local lat, custom
+for _,r in ipairs(rows) do
+    if r and r.type=='multiSwatch' then
+        for _,sw in ipairs(r.swatches) do if sw.tooltip=='Latency' then lat,custom=sw,r.swatches[1] end end
+    end
+end
+assert(lat and custom,'Latency text color swatch')
+assert(lat.refreshAlpha()==1 and custom.refreshAlpha()==.3,'Latency selected by default')
+custom.onClick({}); assert(msBlock.color and msBlock.color.r==1 and custom.refreshAlpha()==1 and lat.refreshAlpha()==.3)
+lat.onClick(); assert(msBlock.useDynamicColor and lat.refreshAlpha()==1 and custom.refreshAlpha()==.3)
+msBlock.color,msBlock.useDynamicColor=nil,nil
 assert(#lifecycleErrors==0,lifecycleErrors[1])
 SlashCmdList.EUI335DATABARS(); assert(shownModule=='EllesmereUIDataBars')
 ''')
@@ -502,7 +541,7 @@ if original.exists():
 expected = ['EUI_DataBars_335.lua', 'EUI_DataBars_335_Tip.lua', 'EUI_DataBars_335_Kit.lua'] + ['Blocks_335\\' + n + '.lua' for n in
     ['Clock', 'Stats', 'Location', 'Gold', 'Bags', 'XPRep', 'Travel', 'Spec', 'Profession', 'MicroMenu', 'Currency', 'ItemLevel', 'Audio', 'LDB', 'Spacer']]
 assert files == expected, files
-assert re.search(r'^## Interface: 30300$', toc, re.M) and re.search(r'^## Version: 9\.3\.4-335-0\.4$', toc, re.M)
+assert re.search(r'^## Interface: 30300$', toc, re.M) and re.search(r'^## Version: 9\.3\.4-335-0\.5$', toc, re.M)
 wrath_sources = [root / 'EllesmereUIDataBars' / f.replace('\\', '/') for f in files] + [root / 'EllesmereUIOptions/EUI_DataBars_335_Options.lua']
 banned = re.compile(r'\.png["\']|:SetAtlas\(|:SetRotatesTexture\(|:SetSize\(|:SetShown\(|:SetColorTexture\(|C_Timer\.After|\bC_(Map|CurrencyInfo|Container|PvP|Item|Spell|DateAndTime|ClassTalents|SpecializationInfo|ToyBox|FriendList|BattleNet|Club|TradeSkillUI|WeeklyRewards|AddOns|CVar)\.')
 for src in wrath_sources:
@@ -533,7 +572,7 @@ from PIL import Image  # noqa: E402
 for tga in media.rglob('*.tga'):
     w, h = Image.open(tga).size
     assert w & (w - 1) == 0 and h & (h - 1) == 0, tga
-print('PASS: unchanged Retail references, native TOC 9.3.4-335-0.4 load order, no Retail-only APIs/PNG, power-of-two TGA media present')
+print('PASS: unchanged Retail references, native TOC 9.3.4-335-0.5 load order, no Retail-only APIs/PNG, power-of-two TGA media present')
 
 # Snapped and full-length bars anchor to UIParent's edges, never to offsets computed
 # from its size: Core re-applies the UI scale after OnEnable, which stranded the bar.

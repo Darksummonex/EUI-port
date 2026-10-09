@@ -120,6 +120,11 @@ p.hideTooltipOnHover=true
 CHAT.CopyChat(ChatFrame1)
 assert(CHAT.copyWindow:IsShown() and CHAT.copyWindow.box:GetText():find("hello [https://example.com]\\n13:07 said",1,true))
 CHAT.copyWindow.close:RunScript("OnClick"); assert(not CHAT.copyWindow:IsShown() and not CHAT.copyWindow.box:HasFocus())
+-- The copy button follows the shown tab, not FCF_GetCurrentChatFrame (last right-clicked tab).
+local staleCurrent=FCF_GetCurrentChatFrame; FCF_GetCurrentChatFrame=function() return ChatFrame2 end
+SELECTED_DOCK_FRAME=ChatFrame1; CHAT.CopyChat()
+assert(CHAT.copyWindow.box:GetText():find("hello [https://example.com]",1,true),"copy uses the selected tab")
+CHAT.copyWindow:Hide(); FCF_GetCurrentChatFrame=staleCurrent
 ChatFrame1:RunScript("OnMouseWheel",1); assert(ChatFrame1.scroll=="up")
 shift=true; ChatFrame1:RunScript("OnMouseWheel",-1); assert(ChatFrame1.scroll=="bottom"); shift=false
 -- A tab menu size choice becomes the profile size for every window.

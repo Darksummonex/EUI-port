@@ -202,6 +202,20 @@ assert(f.fps.world:GetText()=='80 ms' and f.fps.worldLabel:GetText()=='(world)' 
 p.fpsLabels=false; Q.Apply(); assert(not f.fps.worldLabel:IsShown() and not f.fps.localLabel:IsShown())
 p.fpsColorMode='class'; Q.Apply(); assert(f.fps.text.textColor[1]==1 and f.fps.text.textColor[2]==.49)
 p.fpsColorMode='custom'; p.fpsColor={r=0,g=1,b=0}; Q.Apply(); assert(f.fps.text.textColor[1]==0 and f.fps.text.textColor[2]==1)
+-- Quality (default): FPS and each latency value in green/yellow/red bands; labels follow their value.
+assert(Q.defaults.profile.fpsColorMode=='quality')
+local frate,net=GetFramerate,GetNetStats
+local function green(c) return c[2]>c[1] and c[2]>c[3] end
+local function yellow(c) return c[1]>.5 and c[2]>.5 and c[3]<.5 end
+local function red(c) return c[1]>c[2] and c[1]>c[3] end
+p.fpsColorMode='quality'; p.fpsLabels=true; p.fpsColor={r=0,g=0,b=1}
+GetFramerate=function() return 144 end; GetNetStats=function() return 1,1,45,80 end; Q.Apply()
+assert(green(f.fps.text.textColor) and green(f.fps.localMs.textColor) and green(f.fps.world.textColor))
+assert(f.fps.localLabel.textColor[2]==f.fps.localMs.textColor[2] and f.fps.localLabel.textColor[4]==.6)
+GetFramerate=function() return 40 end; GetNetStats=function() return 1,1,180,400 end; Q.Apply()
+assert(yellow(f.fps.text.textColor) and yellow(f.fps.localMs.textColor) and red(f.fps.world.textColor))
+GetFramerate=function() return 20 end; Q.Apply(); assert(red(f.fps.text.textColor))
+GetFramerate,GetNetStats=frate,net; p.fpsColorMode='custom'; p.fpsColor={r=0,g=1,b=0}; Q.Apply()
 p.statsExtra=true; Q.Apply(); local stats=f.stats.text:GetText()
 assert(stats:find('|cffff7d0aHit|r  0.0%',1,true) and stats:find('Expertise|r  0',1,true) and stats:find('Armor Pen|r',1,true),stats); p.statsExtra=false
 durability=30; p.durabilityColor={r=1,g=1,b=0}; Q.Apply(); assert(f.durability.text:GetText()=='Low Durability (30%)' and f.durability.text.textColor[3]==0 and f.durability:IsShown())

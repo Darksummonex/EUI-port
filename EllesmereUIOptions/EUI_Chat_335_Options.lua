@@ -38,7 +38,7 @@ init:SetScript("OnEvent",function(self)
     local spacer={type="spacer"}
     local function Off(key) return function() return not Get(key,false) end end
     local function FilterScopesOff()
-        for _,key in ipairs({"spamFilterEnabled","spamFilterKeywordsEnabled","spamFilterTrade","spamFilterRecruitment"}) do
+        for _,key in ipairs({"spamFilterEnabled","spamFilterKeywordsEnabled","spamFilterTrade","spamFilterRecruitment","spamFilterGoldSellers"}) do
             if Get(key,false) then return false end
         end
         return true
@@ -182,6 +182,7 @@ init:SetScript("OnEvent",function(self)
                 Button("Show Hidden Messages",function() if ns.ShowHiddenLog then ns.ShowHiddenLog() end end)
                 Button("Reset Repeat Memory",function() ns.ResetSpamFilter() end)
                 Section("PRESET FILTERS")
+                Row(Toggle("spamFilterGoldSellers","Filter Gold Sellers",true,"Hide gold-sale ads that include a website or cash price, including ads like sell 5000 G = 19 Web. Enabled by default. Uses Public Chat, Group and Guild Chat, and Incoming Whispers above."),spacer)
                 Row(Toggle("spamFilterAchievements","Filter Achievements",false,"Hide player and guild achievement announcements. Your own achievements remain visible."),spacer)
                 Row(Toggle("spamFilterTrade","Filter Trade Ads",false,"Hide public chat ads containing whole words such as WTS, WTB, WTT, LFW, selling, buying, vendo or compro. Needs Public Chat above. Does not hide the entire Trade channel."),
                     Toggle("spamFilterRecruitment","Filter Guild Recruitment",false,"Hide common English and Portuguese guild recruitment or looking-for-guild phrases in public chat. Raid ads such as <Guild> LF heal ICC are kept. Needs Public Chat above."))

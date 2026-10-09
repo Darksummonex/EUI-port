@@ -4,7 +4,7 @@
 ## Group: EllesmereUI
 ## Notes: Independent Wrath combat statistics, history and spell/target breakdowns.
 ## Author: Ellesmere
-## Version: 9.3.4-335-0.7
+## Version: 9.3.4-335-0.8
 ## Dependencies: EllesmereUI
 ## X-Part-Of: EllesmereUI
 ## SavedVariables: EllesmereUIDamageMetersDB
@@ -14,6 +14,7 @@
 # Main Luas
 # Retail files are retained as unloaded references.
 EUI_DamageMeters_335.lua
+EUI_DamageMeters_335_Absorbs.lua
 EUI_DamageMeters_335_Parser.lua
 EUI_DamageMeters_335_Specs.lua
 EUI_DamageMeters_335_Display.lua

@@ -118,8 +118,10 @@ end
 --  Auras (self buffs, stances, soulstone)
 -------------------------------------------------------------------------------
 local function SpecAllowed(def)
-    if not def.specTabs then return true end
+    if not def.specTabs and not def.excludeSpecTabs then return true end
     local tab = EABR.GetSpecTab()
+    for _, t in ipairs(def.excludeSpecTabs or {}) do if t == tab then return false end end
+    if not def.specTabs then return true end
     for _, t in ipairs(def.specTabs) do if t == tab then return true end end
     return false
 end
@@ -142,6 +144,7 @@ function EABR.OwnSoulstoneActive()
 end
 
 function EABR.CollectSoulstone(out, def, inInstance)
+    if EABR._class ~= "WARLOCK" then return end
     if EABR.InCombat() or not EABR.SectionShows(P().consumables.warlockWhereToShow, inInstance) then return end
     if EABR.OwnSoulstoneActive() then return end
     local itemID = FirstOwned(EABR.SOULSTONE_ITEMS)
@@ -585,13 +588,44 @@ end
 -------------------------------------------------------------------------------
 --  Custom spell reminders
 -------------------------------------------------------------------------------
+-- Separate SavedVariablesPerCharacter storage keeps custom reminders independent
+-- of shared profiles, profile copies and imports. Claim legacy lists once only.
+function EABR.GetCustomSettings()
+    if type(EllesmereUIAuraBuffRemindersCharDB)~="table" then EllesmereUIAuraBuffRemindersCharDB={} end
+    local store=EllesmereUIAuraBuffRemindersCharDB
+    local legacy=P() and P().custom
+    if type(store.custom)~="table" then
+        local where={}
+        for key,value in pairs(legacy and legacy.whereToShow or {}) do where[key]=value end
+        store.custom={customIDs={},whereToShow=where,sectionSound=legacy and legacy.sectionSound}
+    end
+    local cu=store.custom
+    if type(cu.customIDs)~="table" then cu.customIDs={} end
+    if type(cu.whereToShow)~="table" then cu.whereToShow={} end
+    local function Import(id)
+        if type(id)~="number" or id<=0 then return end
+        for _,existing in ipairs(cu.customIDs) do if existing==id then return end end
+        cu.customIDs[#cu.customIDs+1]=id
+    end
+    if legacy and type(legacy.customIDs)=="table" and #legacy.customIDs>0 then
+        for _,id in ipairs(legacy.customIDs) do Import(id) end
+        legacy.customIDs={}
+    end
+    -- An old profile activated mid-session may not have run the full migration.
+    if P() and type(P().customReminders)=="table" then
+        for _,entry in ipairs(P().customReminders) do if entry.enabled~=false then Import(entry.spellID) end end
+        P().customReminders=nil
+    end
+    return cu
+end
 function EABR.CollectCustom(out, inInstance)
-    local cu = P().custom
+    local cu = EABR.GetCustomSettings()
     local ids = cu and cu.customIDs
     if not ids or #ids == 0 or not EABR.SectionShows(cu.whereToShow, inInstance) then return end
     for _, id in ipairs(ids) do
         local name = EABR.SpellName(id)
-        if name then
+        local warlockOnly = id == EABR.CREATE_SOULSTONE or name == EABR.SpellName(EABR.CREATE_SOULSTONE)
+        if name and (not warlockOnly or EABR._class == "WARLOCK") then
             local found, dur, exp = EABR.FindAuraByName("player", name)
             if not found or EABR.IsUnderDuration(dur, exp) then
                 local m = EABR.NewEntry("custom", tostring(id), EABR.ShortLabel(name))
@@ -624,7 +658,7 @@ function EABR.ResolveReminderSound(dk)
     local p = P()
     if prefix == "raidbuff" then return p.raidBuffs.sectionSound end
     if prefix == "aura" then return p.auras.sectionSound end
-    if prefix == "custom" then return p.custom and p.custom.sectionSound end
+    if prefix == "custom" then return EABR.GetCustomSettings().sectionSound end
     if prefix == "consumable" then
         if EABR.IsSpecialKey(key) then return p.consumables.specialsSound end
         return p.consumables.sectionSound
@@ -953,11 +987,13 @@ function EABR:OnInitialize()
     EABR.db = E.Lite.NewDB("EllesmereUIAuraBuffRemindersDB", EABR.defaults, true)
     ns.db = EABR.db
     EABR.MigrateLegacyProfile(EABR.db.profile)
+    EABR.GetCustomSettings()
     EABR.EnsureGlowModeMigrated(EABR.db.profile.display)
 end
 
 function EABR.PublishGlobals()
     _G._EABR_AceDB = EABR.db
+    _G._EABR_GetCustomSettings = EABR.GetCustomSettings
     _G._EABR_RequestRefresh = EABR.RequestRefresh
     _G._EABR_ApplyIconBorder = EABR.ApplyIconBorder
     _G._EABR_ApplyAllIconBorders = EABR.ApplyAllIconBorders

@@ -253,8 +253,14 @@ local function ShowWidgetTooltip(label, text, opts)
         tt._fadeIn:SetDuration(0.25)
         tt._fadeIn:SetSmoothing("OUT")
     end
-    tt._fadeIn:SetFromAlpha(0)
-    tt._fadeIn:SetToAlpha(1)
+    if tt._fadeIn.SetFromAlpha and tt._fadeIn.SetToAlpha then
+        tt._fadeIn:SetFromAlpha(0)
+        tt._fadeIn:SetToAlpha(1)
+    else
+        -- Wrath Alpha animations specify a delta from the region's base alpha.
+        tt:SetAlpha(0)
+        tt._fadeIn:SetChange(1)
+    end
     tt._fadeAG:SetScript("OnFinished", function() tt:SetAlpha(1) end)
     tt._fadeAG:Play()
 end
@@ -275,8 +281,12 @@ local function HideWidgetTooltip(instant)
         tt._fadeOut:SetDuration(0.25)
         tt._fadeOut:SetSmoothing("IN")
     end
-    tt._fadeOut:SetFromAlpha(tt:GetAlpha())
-    tt._fadeOut:SetToAlpha(0)
+    if tt._fadeOut.SetFromAlpha and tt._fadeOut.SetToAlpha then
+        tt._fadeOut:SetFromAlpha(tt:GetAlpha())
+        tt._fadeOut:SetToAlpha(0)
+    else
+        tt._fadeOut:SetChange(-tt:GetAlpha())
+    end
     tt._fadeOutAG:SetScript("OnFinished", function() tt:SetAlpha(0); tt:Hide(); tt:SetScale(1) end)
     tt._fadeOutAG:Play()
 end

@@ -294,7 +294,8 @@ EABR.AURAS = {
     { key="trueshot",         class="HUNTER",  name="Trueshot Aura",     castSpell=19506, buffIDs={19506}, check="player", ownOnly=true, specTabs={2} },
     { key="pala_aura",        class="PALADIN", name="Devotion Aura",     castSpell=465,   buffIDs={465, 7294, 19746, 19876, 19888, 19891}, check="player", ownOnly=true, noMounted=true,
       castSpellFn=SpecCast({ [1]=19746, [2]=465, [3]=7294 }, {465}) },
-    { key="seal",             class="PALADIN", name="Seal of Righteousness", castSpell=21084, buffIDs={21084, 20375, 20165, 20166, 20164, 31801, 53736}, check="player", ownOnly=true,
+    { key="seal_wisdom",      class="PALADIN", name="Seal of Wisdom", castSpell=20166, buffIDs={20166}, check="player", ownOnly=true, specTabs={1} },
+    { key="seal",             class="PALADIN", name="Seal of Righteousness", castSpell=21084, buffIDs={21084, 20375, 20165, 20166, 20164, 31801, 53736}, check="player", ownOnly=true, excludeSpecTabs={1},
       castSpellFn=SpecCast({ [1]=20166, [2]=31801, [3]=20375 }, {53736, 21084}) },
     { key="righteous_fury",   class="PALADIN", name="Righteous Fury",    castSpell=25780, buffIDs={25780}, check="player", specTabs={2} },
     { key="battle_stance",    class="WARRIOR", name="Battle Stance",     castSpell=2457,  check="player", specTabs={1}, isStance=true },
@@ -630,7 +631,7 @@ EABR.defaults = {
         auras = {
             enabled = {
                 inner_fire=true, shadowform=true, vampiric_embrace=true, mage_armor=true, demon_armor=true,
-                aspect=true, trueshot=true, pala_aura=true, seal=true, righteous_fury=true,
+                aspect=true, trueshot=true, pala_aura=true, seal=true, seal_wisdom=true, righteous_fury=true,
                 battle_stance=true, berserk_stance=true, def_stance=true,
                 soulstone=false,
             },

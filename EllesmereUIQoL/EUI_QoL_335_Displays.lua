@@ -200,20 +200,36 @@ function ns.FormatRange(lo,hi,format)
     return lo.."-"..hi
 end
 
+-- Quality color: good/fair/poor bands (60/30 fps, 100/250 ms), the Data Bars latency colors.
+local function Band(good,fair)
+    local c=(good and GREEN_FONT_COLOR) or (fair and YELLOW_FONT_COLOR) or RED_FONT_COLOR
+    if c and c.r then return c.r,c.g,c.b end
+    if good then return .1,1,.1 elseif fair then return 1,.82,0 end
+    return 1,.1,.1
+end
+function ns.FPSQualityColor(fps) return Band(fps>=60,fps>=30) end
+function ns.LatencyQualityColor(ms) return Band(ms<=100,ms<=250) end
 local function FPS(f,p)
     local r,g,b
+    local quality=p.fpsColorMode=="quality"
     if p.fpsColorMode=="class" then r,g,b=ClassColor() end
     if not r then r,g,b=Color(p.fpsColor,1,1,1) end
+    if quality then r,g,b=1,1,1 end
     local _,_,home,world=GetNetStats()
-    f.text:SetText(math.floor(GetFramerate()+.5).." fps"); f.text:SetTextColor(r,g,b,1)
+    local fps=math.floor(GetFramerate()+.5)
+    local fr,fg,fb=r,g,b
+    if quality then fr,fg,fb=ns.FPSQualityColor(fps) end
+    f.text:SetText(fps.." fps"); f.text:SetTextColor(fr,fg,fb,1)
     local anchor,width=f.text,f.text:GetStringWidth()
     local function Part(show,div,value,label,ms,suffix)
         if not show then div:Hide(); value:Hide(); label:Hide(); return end
+        local vr,vg,vb=r,g,b
+        if quality then vr,vg,vb=ns.LatencyQualityColor(ms or 0) end
         div:ClearAllPoints(); div:SetPoint("LEFT",anchor,"RIGHT",6,0); div:SetVertexColor(r,g,b,.35); div:Show()
-        value:ClearAllPoints(); value:SetPoint("LEFT",div,"RIGHT",6,0); value:SetText((ms or 0).." ms"); value:SetTextColor(r,g,b,1); value:Show()
+        value:ClearAllPoints(); value:SetPoint("LEFT",div,"RIGHT",6,0); value:SetText((ms or 0).." ms"); value:SetTextColor(vr,vg,vb,1); value:Show()
         anchor,width=value,width+13+value:GetStringWidth()
         if p.fpsLabels then
-            label:ClearAllPoints(); label:SetPoint("LEFT",value,"RIGHT",3,0); label:SetText(suffix); label:SetTextColor(r,g,b,.6); label:Show()
+            label:ClearAllPoints(); label:SetPoint("LEFT",value,"RIGHT",3,0); label:SetText(suffix); label:SetTextColor(vr,vg,vb,.6); label:Show()
             anchor,width=label,width+3+label:GetStringWidth()
         else label:Hide() end
     end

@@ -1,4 +1,7 @@
-# Blizz UI Enhanced 3.3.5 — 0.26
+# Blizz UI Enhanced 3.3.5 — 0.27
+
+0.27: Save de equipamentos inicializa a lista de ícones mesmo com o popup
+aberto, evitando comparar números com nil. New Set limpa a seleção anterior.
 
 0.26: as caixas de dropdown das janelas da Blizzard (UIDropDownMenuTemplate,
 como o "Type" do Dungeon Finder) não passam mais da borda da janela. O quadro

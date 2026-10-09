@@ -51,6 +51,7 @@ function C.LayoutCast(p)
         f.bar = ns.NewBar(f)
         Spark(f.bar)
         f.latency = f.bar:CreateTexture(nil, "BORDER"); f.latency:SetTexture(WHITE); f.latency:Hide()
+        f.latencyFront = f.bar.over:CreateTexture(nil, "ARTWORK"); f.latencyFront:SetTexture(WHITE); f.latencyFront:Hide()
         f.spell = f.bar.text
         f.timer = f.bar.over:CreateFontString(nil, "OVERLAY")
         ns.frames.castBar = f
@@ -87,7 +88,7 @@ function C.LayoutCast(p)
     Side(f.timer, bar, c.timerSide or "right", c.timerX, c.timerY)
     if c.showSpellText then f.spell:Show() else f.spell:Hide() end
     if c.showTimer then f.timer:Show() else f.timer:Hide() end
-    f.latency:SetVertexColor(c.latencyR or 0.835, c.latencyG or 0.29, c.latencyB or 0.29, (c.latencyA or 1) * 0.6)
+    for _,overlay in ipairs({f.latency,f.latencyFront}) do overlay:SetVertexColor(c.latencyR or 0.835, c.latencyG or 0.29, c.latencyB or 0.29, (c.latencyA or 1) * 0.6) end
     ns.ApplyBorder(f, c, c.useClassicStyle)
     ns.Position("castBar")
     C.HideNative(p.enabled and c.enabled)
@@ -115,8 +116,10 @@ end
 
 local function Latency()
     if not GetNetStats then return 0 end
-    local _, _, lat = GetNetStats()
-    return (tonumber(lat) or 0) / 1000
+    local _, _, home, world = GetNetStats()
+    local lat=tonumber(world) or 0
+    if lat<=0 then lat=tonumber(home) or 0 end
+    return max(0,lat) / 1000
 end
 function C.ReadCast()
     local name, _, text, icon, startMS, endMS, _, _, notInt = UnitCastingInfo("player")
@@ -133,7 +136,8 @@ function C.ReadCast()
         if mode == "channel" then
             state.ticks = E.WrathChannelTicks and E.WrathChannelTicks.Schedule(name, start, finish, state.ticks, nil, false) or nil
         else state.ticks = nil end
-        if not state.lat and state.sentAt then state.lat = Latency(); state.sentAt = nil end
+        if state.lat==nil then state.lat = Latency() end
+        state.sentAt = nil
     elseif not state.failedUntil then
         state.mode = nil
     end
@@ -167,11 +171,11 @@ function C.UpdateCast()
     if not mode and ns.preview then
         bar:SetMinMaxValues(0, 1); bar:SetValue(0.6, true); bar:Paint(r, g, b, alpha, c)
         f.spell:SetText("Cast Bar"); f.timer:SetText("1.2"); f.icon:SetTexture("Interface\\Icons\\INV_Misc_QuestionMark")
-        f.latency:Hide(); if E.WrathChannelTicks then E.WrathChannelTicks.Hide(bar) end
+        f.latency:Hide(); f.latencyFront:Hide(); if E.WrathChannelTicks then E.WrathChannelTicks.Hide(bar) end
         return
     end
     if not mode then
-        bar:SetMinMaxValues(0, 1); bar:SetValue(0, true); f.spell:SetText(""); f.timer:SetText(""); f.latency:Hide()
+        bar:SetMinMaxValues(0, 1); bar:SetValue(0, true); f.spell:SetText(""); f.timer:SetText(""); f.latency:Hide(); f.latencyFront:Hide()
         if E.WrathChannelTicks then E.WrathChannelTicks.Hide(bar) end
         return
     end
@@ -179,7 +183,7 @@ function C.UpdateCast()
     if state.failedUntil then
         bar:SetMinMaxValues(0, 1); bar:SetValue(1, true)
         bar:Paint(c.failedR or 0.85, c.failedG or 0.2, c.failedB or 0.2, alpha)
-        f.spell:SetText(state.failedText or ""); f.timer:SetText(""); f.latency:Hide()
+        f.spell:SetText(state.failedText or ""); f.timer:SetText(""); f.latency:Hide(); f.latencyFront:Hide()
         if E.WrathChannelTicks then E.WrathChannelTicks.Hide(bar) end
         return
     end
@@ -195,15 +199,17 @@ function C.UpdateCast()
     local timer = format("%.1f", remaining)
     if c.showTotalDuration then timer = timer .. format(" / %.1f", duration) end
     local lat = state.lat
+    local overlay=mode=="channel" and f.latencyFront or f.latency
+    if mode=="channel" then f.latency:Hide() else f.latencyFront:Hide() end
     if c.latencyEnabled and lat and lat > 0 then
         local frac = min(1, lat / duration)
-        f.latency:ClearAllPoints()
-        f.latency:SetWidth(max(1, bar:GetWidth() * frac))
+        overlay:ClearAllPoints()
+        overlay:SetWidth(max(1, bar:GetWidth() * frac))
         local anchor = mode == "channel" and "LEFT" or "RIGHT"
-        f.latency:SetPoint("TOP" .. anchor, bar, "TOP" .. anchor, 0, 0); f.latency:SetPoint("BOTTOM" .. anchor, bar, "BOTTOM" .. anchor, 0, 0)
-        f.latency:Show()
+        overlay:SetPoint("TOP" .. anchor, bar, "TOP" .. anchor, 0, 0); overlay:SetPoint("BOTTOM" .. anchor, bar, "BOTTOM" .. anchor, 0, 0)
+        overlay:Show()
         if c.latencyShowText then timer = timer .. format(" (%dms)", lat * 1000 + 0.5) end
-    else f.latency:Hide() end
+    else f.latency:Hide(); f.latencyFront:Hide() end
     f.timer:SetText(timer)
     if E.WrathChannelTicks then
         E.WrathChannelTicks.Draw(bar, state.ticks, state.start, state.finish, mode == "channel" and c.showChannelTicks and c.showTickMarks)

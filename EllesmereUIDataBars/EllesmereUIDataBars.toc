@@ -2,7 +2,7 @@
 ## Title: |cff0cd29fEllesmereUI|r DataBars
 ## Notes: Configurable information bars for Wrath with native game data.
 ## Author: Ellesmere / 3.3.5 backport
-## Version: 9.3.4-335-0.4
+## Version: 9.3.4-335-0.5
 ## Dependencies: EllesmereUI
 ## X-Part-Of: EllesmereUI
 

@@ -925,8 +925,11 @@ do
         },
     },
     {
-        version = "Raid Frames 0.13",
+        version = "Raid Frames 0.16",
         heroes = {
+            { title = "Ready Check Icons", desc = "Ready check icons appear above debuffs and keep each player result for ten seconds after the check finishes.", nav = Nav("EllesmereUIRaidFrames", "Raid") },
+            { title = "No Duplicate Debuff Icon", desc = "The debuff displayed in the central Raid Debuff icon is excluded from the regular debuff bar, leaving room for other debuffs.", nav = Nav("EllesmereUIRaidFrames", "Raid") },
+            { title = "Out-of-Range Fade", desc = "Raid and party frames dim outside range on Wrath, including in combat. Dim Out of Range and Out of Range Alpha control the fade.", nav = Nav("EllesmereUIRaidFrames", "Raid") },
             {
                 title = "Raid Debuffs",
                 desc  = "A large icon in the middle of each frame for important ICC, Ruby Sanctum, Trial of the Crusader, Ulduar and Naxxramas debuffs, highest priority first, with timer, stacks and a dispel colored border. Without a listed debuff it can show a dispellable one instead.",
@@ -978,8 +981,10 @@ do
         },
     },
     {
-        version = "Core 0.55",
+        version = "Core 0.59",
         heroes = {
+            { title = "Native Wrath Languages", desc = "The Locales addon provides community translations for all original Wrath client languages, with English fallback and Lua 5.1 formatting." },
+            { title = "Collapsed Menu Icons", desc = "The collapsed menu displays the original Ellesmere E logo with the UI accent color and a working close icon on the Wrath client." },
             {
                 title = "SharedMedia Fonts, Textures and Sounds",
                 desc  = "Fonts, bar textures and sounds that other addons register with LibSharedMedia appear in the EllesmereUI menus, including ones registered after login.",
@@ -1030,6 +1035,8 @@ do
             },
         },
         fixes = {
+            { text = "Fixed an \"attempt to call global 'issecretvalue'\" error from Cooldown Manager glows before the options panel was first opened." },
+            { text = "Unlock Mode widget tooltips use Wrath-compatible alpha fades, fixing the SetFromAlpha error on Grow Right." },
             { text = "The options search results list has a fully opaque background with its results drawn above it, so sidebar and page text no longer bleeds into the results." },
             { text = "Unlock Mode no longer errors on SetMaxLines when it first opens, so element movers appear again." },
             { text = "The Patch Notes reminder dot now lights after each backport update." },
@@ -1043,8 +1050,13 @@ do
         },
     },
     {
-        version = "Options 0.98",
+        version = "Options 0.110",
         heroes = {
+            {
+                title = "Custom Reminders Per Character",
+                desc = "Custom spell reminders, visibility and sounds are saved separately for each character, independently of shared profiles.",
+                nav = Nav("EllesmereUIAuraBuffReminders", "Auras, Buffs & Consumables"),
+            },
             {
                 title = "Spam Filter Presets and Keywords",
                 desc = "Optional achievement, trade and guild recruitment filters, plus your own blocked words and phrases.",
@@ -1087,6 +1099,12 @@ do
             },
         },
         features = {
+            {
+                module = "Cooldown Manager",
+                title  = "Bar Dropdown and Icon Preview",
+                desc   = "CDM Bars now opens with Retail's bar dropdown (rename or delete custom bars, add Cooldowns, Utility, Buff or FocusKick bars) and the selected bar's icons: drag to reorder, click an icon to edit it, middle-click to remove it, and use + to add spells or buffs.",
+                nav    = Nav("EllesmereUICooldownManager", "CDM Bars"),
+            },
             {
                 module = "Chat",
                 title  = "Hardcore Death Filter",
@@ -1160,6 +1178,7 @@ do
             },
         },
         fixes = {
+            { module = "Cooldown Manager", text = "CDM Bars and Tracking Bars open without an \"attempt to call field 'disabled'\" error, and nine toggles show their tooltips again." },
             { module = "Chat", text = "Chat > Spam Filter: the chat type settings stay usable when only the trade or recruitment filter is on, and the tooltips explain what each one covers." },
             { module = "General", text = "Opening the options no longer makes later Blizzard actions risk being blocked in EllesmereUI's name." },
             { module = "General", text = "Checklist menus such as Visibility tick and untick their boxes as soon as they are clicked, even when the module's live update runs into a problem, instead of only after closing and reopening the menu." },
@@ -1177,7 +1196,7 @@ do
         },
     },
     {
-        version = "Quality of Life 0.13",
+        version = "Quality of Life 0.14",
         heroes = {
             {
                 title = "Zone Text Outline",
@@ -1212,6 +1231,11 @@ do
         },
         features = {
             {
+                title = "FPS and Latency Quality Colors",
+                desc  = "The FPS counter's new default Text Color, Quality, turns FPS and each latency value green, yellow or red (60/30 fps, 100/250 ms). Custom and Class Color remain available.",
+                nav   = Nav("EllesmereUIQoL", "Displays"),
+            },
+            {
                 title = "SharedMedia Sounds",
                 desc  = "Alert sounds from SharedMedia packs that load after Quality of Life play too",
             },
@@ -1244,8 +1268,9 @@ do
         },
     },
     {
-        version = "Blizz UI Enhanced 0.26",
+        version = "Blizz UI Enhanced 0.27",
         heroes = {
+            { title = "Equipment Set Save", desc = "Saving an equipment set rebuilds the native icon picker even when already open, preventing the PaperDollFrame nil comparison error." },
             {
                 title = "Group Roll Choices",
                 desc  = "Need, Greed, Disenchant and Pass buttons on loot rolls count what the rest of the group picked. Hover a button to see who, in class colors.",
@@ -1297,7 +1322,7 @@ do
         },
     },
     {
-        version = "Cooldown Manager 0.3",
+        version = "Cooldown Manager 0.7",
         heroes = {
             {
                 title = "Retail Bar Model",
@@ -1311,6 +1336,15 @@ do
             },
         },
         features = {
+            {
+                title = "Add Spell Menu",
+                desc  = "The + buttons above the bar icons open Retail's add menu: custom spell, item or slot, trinkets, racial, potions and your learned spells, or buffs and buff presets from the gold +",
+                nav   = Nav("EllesmereUICooldownManager", "CDM Bars"),
+            },
+            {
+                title = "Trinket Internal Cooldowns",
+                desc  = "Passive proc trinkets in the trinket slots show their icon and the internal cooldown after each proc, with the proc buff while it lasts",
+            },
             {
                 title = "SharedMedia Textures and Sounds",
                 desc  = "Tracking bar textures include SharedMedia, and the FocusKick Cast Sound adds EllesmereUI and SharedMedia sounds to the Blizzard ones",
@@ -1333,9 +1367,15 @@ do
                 desc  = "Show an entry only when a chosen talent is learned",
             },
         },
+        fixes = {
+            { text = "Utility bar options no longer switch to Buffs after a click, and the Cooldowns bar is no longer replaced by a second Buffs bar." },
+            { text = "Racials show once: the Utility bar no longer lists Arcane Torrent (and other racials with class variants) three times." },
+            { text = "A passive trinket in a trinket slot shows its own icon in the options instead of a question mark." },
+            { text = "Bars saved twice or under another bar's name (two Buffs bars and no Cooldowns) are repaired, so each built-in bar keeps its own icons and options." },
+        },
     },
     {
-        version = "DataBars 0.4",
+        version = "DataBars 0.5",
         heroes = {
             {
                 title = "Retail Engine and Look",
@@ -1347,6 +1387,10 @@ do
             },
         },
         features = {
+            {
+                title = "Latency Color",
+                desc  = "Latency text is green, yellow or red by connection quality by default. A Latency swatch in Text Color switches back to it after picking another color.",
+            },
             {
                 title = "Retail Tooltip",
                 desc  = "Column tooltips with clickable rows and secure spell, item and macro lines",
@@ -1365,8 +1409,9 @@ do
         },
     },
     {
-        version = "Resource Bars 0.4",
+        version = "Resource Bars 0.5",
         heroes = {
+            { title = "Latency (Spell Queue) Overlay", desc = "The cast bar latency zone works for queued spells and remains visible during channels, with configurable color and millisecond text.", nav = Nav("EllesmereUIResourceBars", "Cast Bar") },
             {
                 title = "Retail Pages",
                 desc  = "Class, Power and Health Bars, Cast Bar, GCD Bar, Swing Timer and Totem Bar, each element with its own Unlock Mode mover. Older profiles migrate once.",
@@ -1548,8 +1593,19 @@ do
         },
     },
     {
-        version = "Aura Buff Reminders 0.4",
+        version = "Aura Buff Reminders 0.7",
         heroes = {
+            { title = "Warlock-Only Soulstone", desc = "Create Soulstone reminders, including custom spell reminders, only appear for Warlocks.", nav = Nav("EllesmereUIAuraBuffReminders", "Auras, Buffs & Consumables") },
+            {
+                title = "Custom Reminders Per Character",
+                desc = "Custom spell reminders, visibility and sounds are saved separately for each character, independently of shared profiles.",
+                nav = Nav("EllesmereUIAuraBuffReminders", "Auras, Buffs & Consumables"),
+            },
+            {
+                title = "Holy Paladin Seal of Wisdom",
+                desc = "A Holy-only reminder for your Seal of Wisdom, including when another seal is active.",
+                nav = Nav("EllesmereUIAuraBuffReminders", "Auras, Buffs & Consumables"),
+            },
             {
                 title = "Raid Buff Provider Button",
                 desc  = "One click casts your group buff, such as Fortitude, Gift of the Wild or Arcane Brilliance, at its highest rank on the first member missing it.",
@@ -1585,8 +1641,9 @@ do
         },
     },
     {
-        version = "Bags 0.10",
+        version = "Bags 0.11",
         heroes = {
+            { title = "Open Bags In Combat", desc = "Bag keybinds open and close the existing layout during combat. Layout refreshes wait until combat ends.", nav = Nav("EllesmereUIBags", "Bags") },
             {
                 title = "Retail Bags Window",
                 desc  = "A sidebar with All Items, OneBag and MultiBag views, pinned and recent items, Retail categories for Wrath items and your own categories.",
@@ -1621,8 +1678,10 @@ do
         },
     },
     {
-        version = "Chat 0.46",
+        version = "Chat 0.49",
         heroes = {
+            { title = "Gold Seller Filter", desc = "Gold sale ads with websites or cash prices, including 5000G=20 bucks and disguised W.W.W addresses, are filtered by default in your selected chat scopes." },
+            { title = "Server Channel Notices", desc = "Unsupported server channel notices such as NOT_IN_LFG no longer cause the native chat formatter to error." },
             {
                 title = "Spam Filter Presets and Keywords",
                 desc = "Optional achievement, trade and guild recruitment filters, plus your own blocked words and phrases.",
@@ -1674,6 +1733,7 @@ do
             },
         },
         fixes = {
+            { text = "Copy Chat copies the chat tab you are looking at instead of the last tab you right-clicked, which could show \"(No chat history)\"." },
             { text = "Fixed a \"SetPoint(): is dependent on this\" error when styling some NPC chat bubbles." },
             { text = "The guild recruitment filter no longer hides raid ads that mention a guild, such as \"<Frost> LF 1 heal ICC25\"; only LF guild phrases count." },
             { text = "GM whispers and messages are never hidden by the spam filter." },
@@ -1716,8 +1776,13 @@ do
         },
     },
     {
-        version = "Damage Meters 0.7",
+        version = "Damage Meters 0.8",
         heroes = {
+            {
+                title = "Shield Absorbs in Healing",
+                desc = "Consumed shield absorbs count toward Healing Done and HPS when the caster can be identified, with an Absorbs Done view.",
+                nav = Nav("EllesmereUIDamageMeters", "Damage Meters"),
+            },
             {
                 title = "Retail Windows",
                 desc  = "Flat body, accent header, Atrocity bars and header icons for Settings, Segment, Meter Type and Reset, with up to five windows.",
@@ -2374,14 +2439,12 @@ initFrame:SetScript("OnEvent", function(self)
                 ["frFR"] = { text = "Français" },
                 ["esES"] = { text = "Español (EU)" },
                 ["esMX"] = { text = "Español (LatAm)" },
-                ["itIT"] = { text = "Italiano" },
-                ["ptBR"] = { text = "Português (BR)" },
                 ["ruRU"] = { text = "Русский" },
                 ["koKR"] = { text = "한국어 (Korean)" },
                 ["zhCN"] = { text = "简体中文 (Simplified Chinese)" },
                 ["zhTW"] = { text = "繁體中文 (Traditional Chinese)" },
             }
-            local langOrder = { "auto", "enUS", "deDE", "frFR", "esES", "esMX", "itIT", "ptBR", "ruRU", "koKR", "zhCN", "zhTW" }
+            local langOrder = { "auto", "enUS", "deDE", "frFR", "esES", "esMX", "ruRU", "koKR", "zhCN", "zhTW" }
             -- Pin each entry to the plain font its own script needs, independent
             -- of whichever display locale is currently active.
             for _, key in ipairs(langOrder) do

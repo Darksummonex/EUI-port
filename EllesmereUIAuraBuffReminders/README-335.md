@@ -1,4 +1,18 @@
-# EllesmereUI AuraBuff Reminders — Wrath 3.3.5a — 0.4
+# EllesmereUI AuraBuff Reminders — Wrath 3.3.5a — 0.7
+
+0.7: Create Soulstone é exclusivo para Bruxos, inclusive nos lembretes
+customizados e em outros ranks com o mesmo nome localizado.
+
+0.6: lembretes customizados (IDs, visibilidade e som) ficam por personagem,
+em SavedVariablesPerCharacter, independentes dos perfis compartilhados. A lista
+antiga é movida uma vez para o personagem que carregar a atualização primeiro,
+sem duplicar entradas; novos personagens começam sem lembretes personalizados.
+
+0.5: lembrete Seal of Wisdom exclusivo para Paladino Holy (árvore Sagrado).
+Exige o próprio Seal of Wisdom, mesmo com outro selo ativo; usa o ícone/cast
+correto e o toggle Seal of Wisdom em AURAS. O lembrete genérico de selo não
+aparece em Holy, evitando duplicatas. Protection/Retribution ficam inalterados.
+Respeita condições de exibição, duração mínima e spellbook existentes.
 
 0.4: os sons dos lembretes incluem os sons da LibSharedMedia, inclusive os
 registrados depois do login, e chaves `sm:` tocam via `ResolveSoundPath`.

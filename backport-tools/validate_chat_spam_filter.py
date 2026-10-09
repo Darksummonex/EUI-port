@@ -13,6 +13,26 @@ local function deliver(frame,event,text,author,id,channel)
     end
     return false
 end
+assert(p.spamFilterGoldSellers)
+assert(deliver(ChatFrame1,"CHAT_MSG_CHANNEL","5000G=20 bucks IF YOU NEED PLS VISIT : >W.W.W.N+O+S+T100.C-O-M<---","Seller",920))
+assert(deliver(ChatFrame1,"CHAT_MSG_CHANNEL","5000g = 20 bucks","Seller",921))
+assert(not deliver(ChatFrame1,"CHAT_MSG_CHANNEL","WTS sword 5000g, saved 20 bucks on groceries","Trader",922))
+assert(not deliver(ChatFrame1,"CHAT_MSG_CHANNEL","www.example.com raid guide 5000g budget","Bob",923))
+assert(deliver(ChatFrame1,"CHAT_MSG_CHANNEL","++++ sell ~ 5000 G=19 ~+++ Web+: LFMHEAL.COM","Seller",900))
+assert(deliver(ChatFrame1,"CHAT_MSG_CHANNEL","SELL GOLD $19 www.example.com","Seller",901))
+assert(not deliver(ChatFrame1,"CHAT_MSG_CHANNEL","WTS sword 5000g","Trader",902))
+assert(not deliver(ChatFrame1,"CHAT_MSG_CHANNEL","I spent 5000 gold on gear","Bob",903))
+assert(not deliver(ChatFrame1,"CHAT_MSG_CHANNEL","sell 5000 G=19 Web LFMHEAL.COM","player",904))
+p.spamFilterGoldSellers=false
+assert(not deliver(ChatFrame1,"CHAT_MSG_CHANNEL","sell 5000 G=19 Web LFMHEAL.COM","Seller",905))
+p.spamFilterGoldSellers=true
+p.spamFilterPublic=false
+assert(not deliver(ChatFrame1,"CHAT_MSG_CHANNEL","sell gold $19","Seller",906))
+p.spamFilterPublic=true
+assert(not deliver(ChatFrame1,"CHAT_MSG_WHISPER","sell gold $19","Seller",907))
+p.spamFilterWhispers=true
+assert(deliver(ChatFrame1,"CHAT_MSG_WHISPER","sell gold $19","Seller",908))
+p.spamFilterWhispers=false
 assert(not p.spamFilterEnabled)
 assert(not deliver(ChatFrame1,"CHAT_MSG_CHANNEL","sale","Bob",1))
 assert(not deliver(ChatFrame1,"CHAT_MSG_CHANNEL","sale","Bob",2))
@@ -90,7 +110,7 @@ assert(not CHAT.SpamFilter(ChatFrame1,"CHAT_MSG_SAY","reset","Bob"))
 print('PASS: spam scopes, normalization, sender/channel separation, multi-window line IDs, missing IDs, expiry, own messages, toggles/combat, cache limits and real options controls')
 lua.execute(r'''
 local p=CHAT.GetSettings()
-p.spamFilterEnabled=false; p.spamFilterKeywordsEnabled=false
+p.spamFilterGoldSellers=false; p.spamFilterEnabled=false; p.spamFilterKeywordsEnabled=false
 p.spamFilterTrade=false; p.spamFilterRecruitment=false; p.spamFilterAchievements=false
 p.spamFilterPublic=true; p.spamFilterGroup=false; p.spamFilterWhispers=false; CHAT.Apply()
 local function blocked(event,text,author) return CHAT.SpamFilter(ChatFrame1,event,text,author or "Bob") end

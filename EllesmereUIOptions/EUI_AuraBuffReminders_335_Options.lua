@@ -72,7 +72,7 @@ initFrame:SetScript("OnEvent", function(self)
     local function ADB()  local p = DB(); return p and p.auras end
     local function CDB()  local p = DB(); return p and p.consumables end
     local function FDB()  local p = DB(); return p and p.forever end  -- WoW Forever section (nil on retail)
-    local function CustomDB() local p = DB(); return p and p.custom end
+    local function CustomDB() return _G._EABR_GetCustomSettings and _G._EABR_GetCustomSettings() end
     local function CustomWhere() local cu = CustomDB(); if not cu then return nil end; cu.whereToShow = cu.whereToShow or {}; return cu.whereToShow end
 
     ---------------------------------------------------------------------------
@@ -1943,7 +1943,7 @@ initFrame:SetScript("OnEvent", function(self)
         _, h = W:Spacer(parent, y, 20);  y = y - h
 
         -----------------------------------------------------------------------
-        --  CUSTOM REMINDERS section: any self buff by spell ID
+        --  CUSTOM REMINDERS section: character-specific self buffs by spell ID
         -----------------------------------------------------------------------
         _, h = W:SectionHeader(parent, SECTION_CUSTOM, y);  y = y - h
         _, h = SectionControlRow(parent, y, {
@@ -1955,7 +1955,7 @@ initFrame:SetScript("OnEvent", function(self)
         _, h = W:DualRow(parent, y,
             { type="label", text="" },
             { type="input", text="Add Custom Spell", inputStyle="popup", placeholder="Spell ID", inputWidth=110,
-              tooltip="Type a spell ID and press Enter to be reminded whenever that buff is missing on you.\nSpells in your spellbook are click-to-cast. Unknown IDs are ignored.",
+              tooltip="Saved for this character only. Type a spell ID and press Enter to be reminded whenever that buff is missing on you.\nSpells in your spellbook are click-to-cast. Unknown IDs are ignored.",
               getValue=function() return "" end,
               setValue=function(text)
                   local id = tonumber((text or ""):match("^%s*(%d+)%s*$"))

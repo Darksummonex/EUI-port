@@ -42,7 +42,10 @@ assert(bank and gold)
 B.InitializeBroker(); assert(B.broker==broker)
 B.Show('bags'); broker.OnClick(nil,'LeftButton'); assert(not B.views.bags:IsShown()); broker.OnClick(nil,'LeftButton'); assert(B.views.bags:IsShown())
 broker.OnClick(nil,'RightButton'); assert(B.views.bank:IsShown() and not B.IsLiveView(B.views.bank))
-combat=true; broker.OnClick(nil,'LeftButton'); broker.OnClick(nil,'LeftButton'); assert(not B.views.bags:IsShown()); combat=false
+-- Bags 0.11: the broker opens and closes the existing bag layout in combat too.
+combat=true; broker.OnClick(nil,'LeftButton'); assert(not B.views.bags:IsShown())
+broker.OnClick(nil,'LeftButton'); assert(B.views.bags:IsShown())
+broker.OnClick(nil,'LeftButton'); assert(not B.views.bags:IsShown()); combat=false
 assert(not B.ImportBagnon and not B.BagnonDataAvailable and not B.GetSettings().bagUseBagnonCache)
 ''')
 lua.execute((root/'EllesmereUIOptions/EUI_Bags_335_Options.lua').read_text(encoding='utf-8-sig'))

@@ -222,7 +222,7 @@ init:SetScript("OnEvent", function(self)
     ---------------------------------------------------------------------------
     --  Block color rows
     ---------------------------------------------------------------------------
-    local DYNAMIC_TEXT = { durability = "Dynamic", location = "Reactive", coords = "Reactive", ilvl = "Band" }
+    local DYNAMIC_TEXT = { durability = "Dynamic", location = "Reactive", coords = "Reactive", ilvl = "Band", ms = "Latency" }
 
     -- Text Color: Custom / Class / Accent (+ Coin Colored on gold, + the
     -- state-driven swatch on durability, location, coordinates and item level).
@@ -230,7 +230,10 @@ init:SetScript("OnEvent", function(self)
         local b = c.b
         local function Recolor(page) ns.ReflowBlocks(c.barId); if page then SoftRefresh() end end
         local function Clear() b.useClassColor, b.useAccentColor, b.useDynamicColor, b.useCoinColor = nil, nil, nil, nil end
-        local function CustomOn() return not (b.useClassColor or b.useAccentColor or b.useDynamicColor or b.useCoinColor) end
+        local function FlagsOff() return not (b.useClassColor or b.useAccentColor or b.useDynamicColor or b.useCoinColor) end
+        -- Latency text defaults to its state color: Custom only counts once a color is stored.
+        local dynDefault = ns.TEXT_DYNAMIC_DEFAULT and ns.TEXT_DYNAMIC_DEFAULT[b.type]
+        local function CustomOn() return FlagsOff() and (not dynDefault or b.color ~= nil) end
         local sw = {
             { tooltip = "Custom Color", hasAlpha = false,
               getValue = function()
@@ -240,7 +243,11 @@ init:SetScript("OnEvent", function(self)
               end,
               setValue = function(r, g, bl) b.color = { r = r, g = g, b = bl }; Recolor() end,
               onClick = function(btn)
-                  if not CustomOn() then Clear(); Recolor(true); return end
+                  if not CustomOn() then
+                      Clear()
+                      if dynDefault and b.color == nil then b.color = { r = 1, g = 1, b = 1 } end
+                      Recolor(true); return
+                  end
                   if btn._eabOrigClick then btn._eabOrigClick(btn) end
               end,
               refreshAlpha = function() return CustomOn() and 1 or 0.3 end },
@@ -260,7 +267,9 @@ init:SetScript("OnEvent", function(self)
             sw[4] = { tooltip = DYNAMIC_TEXT[b.type], hasAlpha = false,
                 getValue = function() return TextDynamic(b.type) end, setValue = noop,
                 onClick = function() Clear(); b.useDynamicColor = true; Recolor(true) end,
-                refreshAlpha = function() return b.useDynamicColor and 1 or 0.3 end }
+                refreshAlpha = function()
+                    return (b.useDynamicColor or (dynDefault and FlagsOff() and b.color == nil)) and 1 or 0.3
+                end }
         end
         return { type = "multiSwatch", text = "Text Color", swatches = sw }
     end

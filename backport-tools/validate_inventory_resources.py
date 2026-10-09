@@ -114,6 +114,8 @@ bagSlots[1]=2; p.bagColumns=12; f.view='all'
 items['1:1'].uncached=true; BAGS.Refresh('bags'); assert(f._uncached)
 items['1:1'].uncached=false; BAGS.events:RunScript('OnUpdate',.6); assert(not f._uncached and armor.level:GetText()=='232')
 local w=f:GetWidth(); combat=true; p.bagColumns=6; BAGS.Apply(); assert(f:GetWidth()==w)
+f:Hide(); OpenBackpack(); assert(f:IsShown() and f:GetWidth()==w)
+ToggleBackpack(); assert(not f:IsShown()); ToggleBackpack(); assert(f:IsShown())
 combat=false; BAGS.events:RunScript('OnEvent','PLAYER_REGEN_ENABLED'); assert(f:GetWidth()<w)
 assert(not BAGS.views.bank:IsShown())
 bankSession=true; BankFrame:Show(); BAGS.events:RunScript('OnEvent','BANKFRAME_OPENED')

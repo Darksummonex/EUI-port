@@ -1,4 +1,37 @@
-# EllesmereUI Cooldown Manager — Wrath 3.3.5a — 0.3
+# EllesmereUI Cooldown Manager — Wrath 3.3.5a — 0.7
+
+0.7: os botões "+" do cabeçalho do CDM Bars abrem o menu de adicionar do Retail,
+ancorado no botão. O "+" principal lista Custom Spell ID, Custom Item ID e
+Equipment Slot (pedem o ID numa janela), Trinket Slot 1/2 e Racial com o ícone
+equipado/da raça, Potions & Healthstone (submenu com os presets de itens) e os
+feitiços aprendidos das abas da classe, por nome e com ícone. O "+" dourado e o
+"+" de uma barra Buffs listam Custom Spell ID (aura), os presets de buffs, os
+buffs da classe e os feitiços aprendidos como auras. O que já está na barra fica
+apagado e desativado; listas longas rolam com a roda do mouse e, ao adicionar um
+feitiço da lista, o menu continua aberto. A rolagem move as linhas e esconde as
+que ficam fora da vista (o ScrollFrame do 3.3.5 deixava o menu vazio, só o fundo).
+Removido o log temporário `/ecdm debug`.
+Não portado: rodapé "Missing Spells?" (abre o CDM da Blizzard), janela de slots de
+equipamento com ícones e o aviso de feitiço do tipo de barra errado.
+
+0.6: as opções da barra Utility não trocam mais para Buffs. As bordas douradas do
+Spec Overrides leem os getters por tabelas proxy, onde `#` e `ipairs` veem a lista
+de barras vazia no Lua 5.1; `ns.Bars()` recriava as barras padrão (todas no índice
+1, deixando duas Buffs e nenhuma Cooldowns) e a barra selecionada caía em Buffs.
+Agora a lista é lida pelo `__index` sem gravar nada durante o rastreio.
+
+0.5: os raciais aparecem uma vez só: a barra Utility não mostra mais três
+Arcane Torrent (variantes por classe do mesmo racial). Listas salvas juntam as
+variantes na primeira entrada e a barra ignora feitiços repetidos. Trinkets
+passivos nos slots 13/14 mostram o ícone do item (antes "?" nas opções) e,
+quando estão na tabela de procs (dados da WeakAura "Item Widget"), o cooldown
+interno começa a contar a cada proc (45 s quando não há valor), com o buff do
+proc enquanto dura. Não portado: ICD de encantamentos e gemas, início do ICD ao
+equipar e memória do ICD entre /reloads.
+
+0.4: barras salvas em dobro ou com o nome de outra barra (duas Buffs e
+nenhuma Cooldowns) são corrigidas ao carregar: cada barra padrão volta a ter
+a sua chave, tipo e nome, e uma barra extra vira barra personalizada.
 
 0.3: texturas das Tracking Bars incluem a LibSharedMedia. O Cast Sound da
 barra FocusKick mantém os 5 sons da Blizzard (`PlaySound`) e agora lista os

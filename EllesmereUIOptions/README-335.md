@@ -1,4 +1,43 @@
-# Options 3.3.5 — 0.98
+# Options 3.3.5 — 0.110
+
+0.110: Cooldown Manager > CDM Bars ganha o cabeçalho do Retail. Dropdown de barras
+com renomear/apagar nas barras personalizadas e "+ Add New Cooldowns/Utility/Buff
+Bar" (FocusKick enquanto não existir; até 20 barras personalizadas). Abaixo, os
+ícones da barra: arrastar reordena, clique abre a edição do ícone em Tracked Spells,
+botão do meio remove, "+" vai para Add Entry (o "+" dourado já escolhe Buff /
+Debuff). Saem Select Bar, Bar Name, New Bar Type, Add Bar e Remove Selected Bar.
+Não portado: os menus de escolha de feitiço do Retail (o "+" leva ao Add Entry), a
+reordenação das barras personalizadas dentro do dropdown e a prévia com o estilo
+real da barra (bordas, formas, textos).
+
+0.109: Cooldown Manager > CDM Bars e Tracking Bars abrem sem o erro "attempt to
+call field 'disabled'". Nove opções passavam o tooltip no lugar da condição de
+desativação; os tooltips voltam a aparecer. Data Bars: swatch "Latency" em
+Text Color do bloco de latência. QoL: Text Color do contador de FPS ganha
+"Quality", agora o padrão.
+
+0.108: seletor de idioma limitado aos idiomas nativos do WoW 3.3.5.
+
+0.107: Chat > Spam Filter inclui Filter Gold Sellers, ativado por padrão.
+
+0.106: opção Latency (Spell Queue) Overlay na barra de cast.
+
+0.105: notas da compatibilidade de avisos de canal do servidor.
+
+0.104: notas da correção de Save no gerenciador de equipamentos.
+
+0.103: notas da correção dos ícones de ready check.
+
+0.102: notas sobre remover debuffs duplicados entre o destaque central e a barra.
+
+0.101: notas do fade fora de alcance de Raid Frames no Wrath.
+
+0.100: notas da correção de Create Soulstone exclusivo para Bruxos.
+
+0.99: lembretes customizados (IDs, visibilidade e som) ficam por personagem,
+em SavedVariablesPerCharacter, independentes dos perfis compartilhados. A lista
+antiga é movida uma vez para o personagem que carregar a atualização primeiro,
+sem duplicar entradas; novos personagens começam sem lembretes personalizados.
 
 0.98: seção HARDCORE em Chat > Spam Filter com "Filter Hardcore Deaths" e
 "Keep Deaths From Level". Botão "Show Hidden Messages" e "Clear Filter History"

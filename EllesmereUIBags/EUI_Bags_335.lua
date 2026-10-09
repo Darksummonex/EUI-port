@@ -134,9 +134,10 @@ function ns.Show(kind,keepSelection)
     local p=ns.GetSettings(); if not p then return end
     if kind=="bank" and not p.enhancedBank then return end
     if kind=="bags" and not p.enhancedBags then return end
-    if InCombatLockdown() then return end
+    if InCombatLockdown() and kind~="bags" then return end
     local f=views[kind]; if f then
-        if not keepSelection then ns.UseCurrentView(kind) end
+        -- Combat opens the existing layout; refresh and selection changes wait.
+        if not keepSelection and not InCombatLockdown() then ns.UseCurrentView(kind) end
         if kind=="bank" and ns.IsLiveView(f) and nativeBank then return end
         local first=not f:IsShown()
         f:Show(); f.search:ClearFocus(); ns.Refresh(kind)
@@ -165,7 +166,7 @@ function ns.Apply()
 end
 function ns.ResetPositions() local p=ns.GetSettings(); if p then p.positions={}; ns.Apply() end end
 local function TakeOverBags()
-    local function Active() local p=ns.GetSettings(); return p and p.enhancedBags and not InCombatLockdown() end
+    local function Active() local p=ns.GetSettings(); return p and p.enhancedBags end
     for _,name in ipairs({"ToggleAllBags","ToggleBackpack","OpenAllBags","OpenBackpack","CloseAllBags","CloseBackpack","ToggleBag","OpenBag","CloseBag","IsBagOpen"}) do
         local native=_G[name]
         if type(native)=="function" then

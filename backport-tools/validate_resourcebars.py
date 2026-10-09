@@ -13,7 +13,7 @@ for original in retail.rglob('*'):
     if original.is_file() and original.suffix.lower()!='.toc':
         assert original.read_bytes()==(root/FOLDER/original.relative_to(retail)).read_bytes(),original
 toc=(root/FOLDER/(FOLDER+'.toc')).read_text(encoding='utf-8-sig')
-assert '## Interface: 30300' in toc and '## Version: 9.3.4-335-0.4' in toc
+assert '## Interface: 30300' in toc and '## Version: 9.3.4-335-0.5' in toc
 assert [l.strip() for l in toc.splitlines() if l.strip() and not l.startswith('#')]==FILES
 
 import re
@@ -140,6 +140,18 @@ nativeCast=nil; RB.events:RunScript('OnEvent','UNIT_SPELLCAST_STOP','player'); a
 RB.events:RunScript('OnEvent','UNIT_SPELLCAST_SENT','player')
 nativeCast={'Frostbolt','Rank 1','Frostbolt','frost-icon',10000,14000,false,2}; RB.events:RunScript('OnEvent','UNIT_SPELLCAST_START','player')
 assert(f.castBar.timer:GetText()=='4.0 / 4.0 (100ms)',f.castBar.timer:GetText()); assert(f.castBar.latency:IsShown() and near(f.castBar.latency.width,200*.1/4))
+-- Queue-proof: no SENT event; prefer world and fall back to Wrath/home.
+function GetNetStats() return 0,0,100,250 end
+nativeCast={'Queued Cast','Rank 1','Queued Cast','icon',10000,14000,false,3}
+RB.events:RunScript('OnEvent','UNIT_SPELLCAST_START','player')
+assert(near(f.castBar.latency.width,200*.25/4) and f.castBar.timer:GetText():find('250ms',1,true))
+nativeCast=nil; nativeChannel={'Queued Channel','Rank 1','Queued Channel','icon',10000,14000}
+RB.events:RunScript('OnEvent','UNIT_SPELLCAST_CHANNEL_START','player')
+assert(f.castBar.latencyFront:IsShown() and not f.castBar.latency:IsShown() and near(f.castBar.latencyFront.width,200*.25/4))
+function GetNetStats() return 0,0,100,0 end
+nativeChannel=nil; nativeCast={'Fallback','Rank 1','Fallback','icon',10000,14000,false,4}
+RB.events:RunScript('OnEvent','UNIT_SPELLCAST_START','player')
+assert(f.castBar.latency:IsShown() and not f.castBar.latencyFront:IsShown() and near(f.castBar.latency.width,200*.1/4))
 nativeCast=nil; RB.events:RunScript('OnEvent','UNIT_SPELLCAST_INTERRUPTED','player'); RB.events:RunScript('OnEvent','UNIT_SPELLCAST_STOP','player')
 assert(f.castBar:IsShown() and f.castBar.spell:GetText()=='Interrupted')
 now=11; RB.events:RunScript('OnUpdate',.016); assert(not f.castBar:IsShown())
