@@ -15,7 +15,7 @@ core = root / 'EllesmereUI'
 opts = root / 'EllesmereUIOptions'
 NEW = ['EllesmereUI_Kick_335.lua', 'EllesmereUI_ManaRegenSpark_335.lua',
        'EllesmereUI_SpellCostPrediction_335.lua', 'EllesmereUI_VideoGuides_335.lua',
-       'EllesmereUI_PartyMode_335.lua']
+       'EllesmereUI_PartyMode_335.lua', 'EllesmereUI_Absorbs_335.lua']
 
 toc = (core / 'EllesmereUI.toc').read_text(encoding='utf-8-sig').splitlines()
 toc = [l.strip() for l in toc if l.strip() and not l.startswith('#')]

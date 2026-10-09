@@ -121,7 +121,7 @@ init:SetScript("OnEvent",function(self)
                 getValue=function() return S("raidDebuffOffsetY") or 0 end,setValue=function(v) Set("raidDebuffOffsetY",v) end})
     end
     E:RegisterModule("EllesmereUIRaidFrames",{title="Raid Frames",description="Wrath raid and party frames with native unit clicks, auras, range and click casting.",pages={"Raid","Party","Buffs","Debuffs","Extras","Aura Filters","Click Casting"},
-        searchTerms="raid party group 10 25 40 players layout hide healer health mana power class name range threat aggro dispel buffs debuffs filter click casting healing ready leader marker preview mode overlay real horizontal frames heal prediction healcomm resurrection combat main tank pets boss valithria healer mana role icon border hover gradient sated dispels dispel overlay opacity frame border type icon dispel colors only show dispellable",
+        searchTerms="raid party group 10 25 40 players layout hide healer health mana power class name range threat aggro dispel buffs debuffs filter click casting healing ready leader marker preview mode overlay real horizontal frames heal prediction healcomm resurrection combat main tank pets boss valithria healer mana role icon border hover gradient sated dispels dispel overlay opacity frame border type icon dispel colors only show dispellable absorb absorbs shield shields overshield targeted spells targeted spell enemy cast casting incoming",
         buildPage=function(page,parent,y)
             if page=="Aura Filters" then return E.BuildWrathAuraFilters("EllesmereUIRaidFrames",parent,y) end
             local W=E.Widgets; local kind=page=="Party" and "party" or "raid"
@@ -236,6 +236,29 @@ init:SetScript("OnEvent",function(self)
             prediction.tooltip="Incoming heals from LibHealComm-4.0 (bundled). Only heals from players running a HealComm addon are seen."
             Row(prediction,Slider(kind,"healPredOpacity","Prediction Opacity",10,100,5))
             Row(Color(kind,"healPredColor","Prediction Color"),Label("Next 4 seconds of incoming heals"))
+            local AB=E.Absorbs
+            if AB then
+                Section("ABSORBS")
+                local function NoAbsorb() local p=ns.GetOptionSettings(kind); return p and p.absorbStyle=="none" end
+                local styleValues,styleOrder=AB.StyleMenu(ns.healthBarTextureNames,ns.healthBarTextureOrder)
+                local style=DD(kind,"absorbStyle","Absorb Style",styleValues,styleOrder)
+                style.tooltip="Damage shields on the health bar. 3.3.5 does not report shield amounts, so they are estimated from the combat log (base rank value plus your own spell power, minus what each shield absorbed)."
+                local setStyle=style.setValue
+                style.setValue=function(v) local p=ns.GetOptionSettings(kind); if p then p.absorbOpacity=(v=="clean") and 30 or 90 end; setStyle(v); E:RefreshPage() end
+                local opacity=Slider(kind,"absorbOpacity","Absorb Opacity",5,100,5); opacity.disabled,opacity.disabledTooltip=NoAbsorb,"Absorb Style"
+                Row(style,opacity)
+                local placement=DD(kind,"absorbEdgeMode","Placement",AB.EDGE_NAMES,AB.EDGE_ORDER); placement.disabled,placement.disabledTooltip=NoAbsorb,"Absorb Style"
+                local setPlacement=placement.setValue
+                placement.setValue=function(v) setPlacement(v); E:RefreshPage() end
+                Row(Color(kind,"absorbColor","Absorb Color",NoAbsorb),placement)
+                local over=DD(kind,"overshieldMode","Show Overshield",AB.OVERSHIELD_NAMES,AB.OVERSHIELD_ORDER)
+                over.tooltip="Overshield is the part of an absorb exceeding your empty health. Always backfills it over current health from the shield's edge; From Left grows it from the opposite end of the bar; Never hides it."
+                over.disabledTooltip="Absorb Style and the Overlay placement"
+                over.disabled=function() local p=ns.GetOptionSettings(kind); return not p or p.absorbStyle=="none" or (p.absorbEdgeMode or "overlay")~="overlay" end
+                over.getValue=function() local p=ns.GetOptionSettings(kind); return p and (p.overshieldMode or (p.showOvershield==false and "never" or "always")) end
+                over.setValue=function(v) local p=ns.GetOptionSettings(kind); if p then p.overshieldMode=v; p.showOvershield=(v~="never"); ns.Apply() end end
+                Row(over,Label("Shields are estimated on 3.3.5"))
+            end
             Section("BORDERS")
             Row(Slider(kind,"borderSize","Border Size",0,4),Color(kind,"borderColor","Border Color"))
             Row(Toggle(kind,"showThreat","Threat Border"),Color(kind,"threatBorderColor","Threat Color"))
@@ -268,6 +291,27 @@ init:SetScript("OnEvent",function(self)
             Row(Toggle(kind,"showCombatIndicator","Combat Indicator"),Slider(kind,"combatIndicatorSize","Combat Icon Size",8,32))
             Row(DD(kind,"combatIndicatorPosition","Combat Icon Position",P,PO),Label("Members currently in combat"))
             DispelRows(kind,Row,Section)
+            local TS=ns.TargetedSpells
+            if TS then
+                Section("TARGETED SPELLS")
+                local function TsOff() local p=ns.GetOptionSettings(kind); return not p or (p.tsMode or "never")=="never" end
+                local function Ts(control) control.disabled,control.disabledTooltip=TsOff,"Show Targeted Spells"; return control end
+                local mode=DD(kind,"tsMode","Show Targeted Spells",TS.MODE_VALUES,TS.MODE_ORDER)
+                mode.tooltip="Icons on the member an enemy is casting at. 3.3.5 has no spell target, so the victim is the caster's target, and only enemies targeted by someone in the group (or your target, focus or mouseover) are seen."
+                local setMode=mode.setValue
+                mode.setValue=function(v) setMode(v); E:RefreshPage() end
+                local preview=Ts(Toggle(kind,"tsPreview","Show targeted spells on preview"))
+                Row(mode,preview)
+                Row(Ts(Slider(kind,"tsSize","Targeted Spell Size",10,40)),Ts(Slider(kind,"tsMax","Maximum Icons",1,5)))
+                Row(Ts(DD(kind,"tsPosition","Icon Position",P,PO)),Ts(DD(kind,"tsGrowth","Growth Direction",TS.GROWTH_VALUES,TS.GROWTH_ORDER)))
+                Row(Ts(Slider(kind,"tsOffsetX","Targeted Spells Offset X",-60,60)),Ts(Slider(kind,"tsOffsetY","Targeted Spells Offset Y",-60,60)))
+                Row(Ts(Toggle(kind,"tsSwipe","Cast Swipe")),Ts(Toggle(kind,"tsTimer","Cast Timer")))
+                local colorBy=Ts(Toggle(kind,"tsColorInterrupt","Color by Interruptible"))
+                colorBy.tooltip="Border color shows whether the cast can be interrupted."
+                Row(colorBy,Label("When Healing uses your role or healing talents"))
+                local function NoColor() return TsOff() or ns.GetOptionSettings(kind).tsColorInterrupt==false end
+                Row(Color(kind,"tsInterruptibleColor","Interruptible Color",NoColor),Color(kind,"tsUninterruptibleColor","Uninterruptible Color",NoColor))
+            end
             Section("AURAS")
             Row(Toggle(kind,"showBuffs","Show Buffs"),Toggle(kind,"showDebuffs","Show Debuffs"))
             Row(Slider(kind,"maxBuffs","Maximum Buffs",0,8),Slider(kind,"maxDebuffs","Maximum Debuffs",0,8))

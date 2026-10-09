@@ -925,7 +925,7 @@ do
         },
     },
     {
-        version = "Raid Frames 0.16",
+        version = "Raid Frames 0.18",
         heroes = {
             { title = "Ready Check Icons", desc = "Ready check icons appear above debuffs and keep each player result for ten seconds after the check finishes.", nav = Nav("EllesmereUIRaidFrames", "Raid") },
             { title = "No Duplicate Debuff Icon", desc = "The debuff displayed in the central Raid Debuff icon is excluded from the regular debuff bar, leaving room for other debuffs.", nav = Nav("EllesmereUIRaidFrames", "Raid") },
@@ -947,6 +947,15 @@ do
             },
         },
         features = {
+            {
+                title = "Targeted Spells",
+                desc  = "Enemy casts show as icons on the party or raid member being cast at, with a cast sweep and interruptible border. Party defaults to When Healing; each raid layout has its own mode. Wrath has no spell target, so the victim is the caster's target, and only enemies someone in the group targets are seen",
+                nav   = Nav("EllesmereUIRaidFrames", "Party", "TARGETED SPELLS"),
+            },
+            {
+                title = "Absorb Shields",
+                desc  = "Damage shields show on the health bar as on Retail: Absorb Style, Opacity, Color, Placement and Show Overshield. Wrath does not report shield amounts, so they are estimated from the combat log",
+            },
             {
                 title = "SharedMedia Bar Textures",
                 desc  = "Health Bar Texture lists textures from SharedMedia and other addons, also in the aura indicator preview",
@@ -981,7 +990,7 @@ do
         },
     },
     {
-        version = "Core 0.59",
+        version = "Core 0.60",
         heroes = {
             { title = "Native Wrath Languages", desc = "The Locales addon provides community translations for all original Wrath client languages, with English fallback and Lua 5.1 formatting." },
             { title = "Collapsed Menu Icons", desc = "The collapsed menu displays the original Ellesmere E logo with the UI accent color and a working close icon on the Wrath client." },
@@ -1007,6 +1016,10 @@ do
             },
         },
         features = {
+            {
+                title = "Shield Estimates",
+                desc  = "Raid and Unit Frames read absorb shields from a shared estimate: rank base value plus your own spell power, minus what each shield absorbs in the combat log. Clients with a native absorb API use it directly",
+            },
             {
                 title = "Arena Frames Support",
                 desc  = "Arena Frames joins the sidebar, first-use list, profiles, spec overrides, module fonts and search",
@@ -1050,7 +1063,7 @@ do
         },
     },
     {
-        version = "Options 0.110",
+        version = "Options 0.112",
         heroes = {
             {
                 title = "Custom Reminders Per Character",
@@ -1099,6 +1112,16 @@ do
             },
         },
         features = {
+            {
+                module = "Raid Frames",
+                title  = "Targeted Spells Section",
+                desc   = "Party and Raid pages gain a TARGETED SPELLS section: mode, preview, icon size, maximum icons, position, growth, offsets, cast swipe, cast timer and interruptible colors.",
+            },
+            {
+                module = "Raid and Unit Frames",
+                title  = "Absorbs Section",
+                desc   = "Raid Frames (Party and Raid) and Unit Frames (player, target, focus) gain an ABSORBS section for the estimated shields, with a shield in the Unit Frames preview.",
+            },
             {
                 module = "Cooldown Manager",
                 title  = "Bar Dropdown and Icon Preview",
@@ -1268,7 +1291,7 @@ do
         },
     },
     {
-        version = "Blizz UI Enhanced 0.27",
+        version = "Blizz UI Enhanced 0.28",
         heroes = {
             { title = "Equipment Set Save", desc = "Saving an equipment set rebuilds the native icon picker even when already open, preventing the PaperDollFrame nil comparison error." },
             {
@@ -1310,6 +1333,7 @@ do
             },
         },
         fixes = {
+            { text = "Auction House: panels and tabs added by Auctionator and other auction addons keep their own look and layout, and the footer Close buttons no longer get an \"x\" over their text." },
             { text = "Talents: the close button and the points footer end at the scroll bar instead of past the window edge." },
             { text = "Window tabs keep their dark background instead of showing through." },
             { text = "World map: the player arrow, party and raid dots, corpse and quest markers stay on the map art after a map view change during combat, including instance maps." },
@@ -1497,7 +1521,7 @@ do
         },
     },
     {
-        version = "Unit Frames 0.17",
+        version = "Unit Frames 0.18",
         heroes = {
             {
                 title = "Outline per Text",
@@ -1517,6 +1541,10 @@ do
         },
         features = {
             {
+                title = "Absorb Shields",
+                desc  = "Player, target, focus and boss health bars show estimated damage shields with Retail's Absorb Style, Opacity, Color, Placement, Show Overshield and Show on Boss Frames",
+            },
+            {
                 title = "Druid Form Power",
                 desc  = "Mana or Mana + Form Power, with a separate form bar",
             },
@@ -1534,6 +1562,7 @@ do
             },
         },
         fixes = {
+            { text = "Boss frames now update health, power and text while the boss is not your target or focus." },
             { text = "Visibility conditions (combat, group, and hiding without a target) now apply to the frames instead of stopping with an error, so the Visibility menu's boxes also tick right away." },
             { text = "Classic WoW UI power bars now stay inside the frame art: the art's rim draws over the power bar as it does over the health bar." },
             { text = "Classic WoW UI now gives every unit frame the original green health bar instead of class colors. Returning to the EllesmereUI look restores your colors." },

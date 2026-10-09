@@ -4,7 +4,7 @@
 ## Group: EllesmereUI
 ## Notes: Simple unit frames with a modern visual style.
 ## Author: Ellesmere
-## Version: 9.3.4-335-0.17
+## Version: 9.3.4-335-0.18
 ## Dependencies: EllesmereUI
 ## X-Part-Of: EllesmereUI
 ## SavedVariables: EllesmereUIUnitFramesDB
@@ -23,5 +23,6 @@ EllesmereUIUnitFrames.lua
 #EUI_UnitFrames_AuraContainers.lua
 EUI_UnitFrames_335_Auras.lua
 EUI_UnitFrames_335_FormBar.lua
+EUI_UnitFrames_335_Absorbs.lua
 
 # Options

@@ -609,6 +609,40 @@ local function EnsureTracker(token)
     return t
 end
 
+-------------------------------------------------------------------------------
+--  Boss frames: the Wrath client sends a boss's health and power events under
+--  the token it is targeted or focused through, never under bossN, so an
+--  untargeted boss frame only moves on this 0.2s ticker, alive while one shows.
+-------------------------------------------------------------------------------
+local bossFrames = {}
+local BOSS_POLL_CHANNELS = { health = true, power = true, text = true, absorb = true }
+local bossTicker = CreateFrame("Frame")
+bossTicker:Hide()
+local bossAccum = 0
+local BOSS_POLL_INTERVAL = 0.2
+
+bossTicker:SetScript("OnUpdate", function(self, elapsed)
+    bossAccum = bossAccum + elapsed
+    if bossAccum < BOSS_POLL_INTERVAL then return end
+    bossAccum = 0
+    for frame in pairs(bossFrames) do
+        local info = attached[frame]
+        if info and frame:IsShown() and UnitExists(info.unit) then
+            local chans = info.channels
+            for i = 1, #chans do
+                if BOSS_POLL_CHANNELS[chans[i]] then Paint(frame, chans[i], "Poll") end
+            end
+        end
+    end
+end)
+
+local function BossVisibilityChanged()
+    for frame in pairs(bossFrames) do
+        if frame:IsShown() then bossTicker:Show(); return end
+    end
+    bossTicker:Hide()
+end
+
 --- Attaches a frame to the engine. channels = array of channel names; the
 --- exact set drives which events get registered, so a frame with no castbar
 --- never hears a spellcast event.
@@ -617,6 +651,12 @@ function Engine.Attach(frame, unit, channels)
     t._euiFrame = frame
     attached[frame] = { unit = unit, channels = channels }
     unitFrames[unit] = frame
+    if not bossFrames[frame] and unit:match("^boss%d$") then
+        bossFrames[frame] = true
+        frame:HookScript("OnShow", BossVisibilityChanged)
+        frame:HookScript("OnHide", BossVisibilityChanged)
+        BossVisibilityChanged()
+    end
     -- Unit-watch shows happen while events were being dropped (hidden frames
     -- skip dispatch), so a freshly shown frame repaints in full.
     if not frame._euiEngineShowHook then

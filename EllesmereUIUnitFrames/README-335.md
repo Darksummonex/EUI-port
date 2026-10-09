@@ -1,4 +1,13 @@
-# Unit Frames 3.3.5 — 0.17
+# Unit Frames 3.3.5 — 0.18
+
+0.18: escudos (absorbs) nas barras de vida de player, target, focus e boss
+(estilo do target, com "Show on Boss Frames"). Seção ABSORBS no 3.3.5: Absorb
+Style, Absorb Opacity, Absorb Color, Placement e Show Overshield, com prévia nas
+opções. O valor é estimado pelo Core a partir do combat log. Ligado uma vez por
+padrão (Striped). Heal absorbs, barras de faixa e Glow Line não existem no 3.3.5.
+Boss frames atualizam vida, poder e texto sem o boss estar no target/focus: o
+cliente Wrath só manda `UNIT_HEALTH` pelo token do target/focus, não por `bossN`,
+então os boss frames visíveis são lidos a cada 0,2 s.
 
 0.17: as condições de Visibility (combate, grupo, esconder sem alvo) davam
 erro `RegisterAttributeDriver` (nil): essa API não existe no 3.3.5. As 7

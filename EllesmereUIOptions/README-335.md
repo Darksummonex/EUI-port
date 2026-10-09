@@ -1,4 +1,12 @@
-# Options 3.3.5 — 0.110
+# Options 3.3.5 — 0.112
+
+0.112: seção TARGETED SPELLS em Raid Frames (Party/Raid): Show Targeted Spells,
+prévia, tamanho, máximo de ícones, posição, direção, offsets, varredura, timer e
+cores de interrompível.
+
+0.111: seção ABSORBS em Raid Frames (Party/Raid) e Unit Frames (player, target,
+focus) para os escudos estimados no 3.3.5; prévia do escudo na janela de Unit
+Frames.
 
 0.110: Cooldown Manager > CDM Bars ganha o cabeçalho do Retail. Dropdown de barras
 com renomear/apagar nas barras personalizadas e "+ Add New Cooldowns/Utility/Buff

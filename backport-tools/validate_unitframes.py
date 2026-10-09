@@ -159,6 +159,8 @@ lua.execute('testAddon:OnInitialize()')
 lua.globals().UF = ns
 lua.execute('testUnitDB.profile.player.healthBarTexture="fade"')
 load('EUI_UnitFrames_335_Auras.lua')
+lua.execute((root/'EllesmereUI/EllesmereUI_Absorbs_335.lua').read_text(encoding='utf-8-sig'))
+load('EUI_UnitFrames_335_Absorbs.lua')
 lua.execute('''
 -- Blizzard layout runs before name font initialization. Model an untemplated
 -- level FontString honestly: no implicit font, and SetText requires one.
@@ -269,6 +271,72 @@ for _, key in ipairs(UF.healthBarTextureOrder) do
 end
 UF.db.profile.player.healthBarTexture="fade"
 FlushReload()
+-- Wrath sends boss health only under the target/focus token: shown boss frames repaint on a poll.
+do
+    local b1=UF.frames.boss1; assert(b1, "boss1 frame")
+    local vis,frames,ticker
+    for i=1,30 do local n,v=debug.getupvalue(UF.Engine.Attach,i); if not n then break end
+        if n=="BossVisibilityChanged" then vis=v elseif n=="bossFrames" then frames=v end end
+    assert(vis and frames and frames[b1], "boss1 joins the boss poll")
+    for i=1,10 do local n,v=debug.getupvalue(vis,i); if not n then break end; if n=="bossTicker" then ticker=v end end
+    local health,wasShown=UnitHealth,{}
+    for i=1,5 do local f=UF.frames["boss"..i]; if f then wasShown[f]=f:IsShown() end end
+    b1:Show(); vis(); assert(ticker:IsShown(), "boss poll runs while a boss frame shows")
+    UnitHealth=function(u) if u=="boss1" then return 7 end return health(u) end
+    local savedNow=now
+    now=(now or 0)+1
+    ticker:GetScript("OnUpdate")(ticker,.25)
+    assert(b1.Health.value==7, "untargeted boss health repaints: "..tostring(b1.Health.value))
+    UnitHealth,now=health,savedNow
+    for i=1,5 do local f=UF.frames["boss"..i]; if f then f:Hide() end end
+    vis(); assert(not ticker:IsShown(), "boss poll stops with no boss frame shown")
+    for f,shown in pairs(wasShown) do if shown then f:Show() end end
+    vis()
+end
+-- Wrath shields: the Core estimate on player/target/focus/boss health bars, seeded
+-- on once, Retail UF "Striped" = striped3 stretched, overshield backfilled.
+do
+    local AB=EllesmereUI.Absorbs; AB.Reset()
+    local pl=UF.frames.player; local o=pl._euiWrathAbsorb
+    assert(o and UF.frames.target._euiWrathAbsorb and UF.frames.focus._euiWrathAbsorb and not UF.frames.pet._euiWrathAbsorb)
+    local ps=UF.db.profile.player
+    assert(ps.showPlayerAbsorb=="striped" and ps.wrathAbsorbSeeded and UF.db.profile.target.showPlayerAbsorb=="striped")
+    ps.showPlayerAbsorb="none"; FlushReload(); assert(ps.showPlayerAbsorb=="none", "seed runs once"); ps.showPlayerAbsorb="striped"
+    local W0=pl.Health:GetWidth()
+    o.fw.SetVertexColor=function(self,...) self.vertexColor={...} end
+    AB.CombatLog(0,"SPELL_AURA_APPLIED","X",nil,0,"player",nil,0,17,"Power Word: Shield",2,"BUFF")
+    assert(EllesmereUI.GetUnitAbsorb("player")==44 and o.fw:IsShown() and not o.os:IsShown())
+    -- Stretched styles use bar-space texcoords, so texcoords[1] is the segment start.
+    assert(math.abs(o.fw.texcoords[1]-.25)<1e-6 and math.abs(o.fw:GetWidth()-W0*.44)<.01)
+    assert(o.fw:GetTexture():find("shields_335\\\\striped3.tga",1,true) and canLoadTexture(o.fw:GetTexture()))
+    assert(math.abs(o.fw.vertexColor[4]-.8)<1e-6, "unset opacity keeps Retail 0.8")
+    AB.CombatLog(0,"SWING_DAMAGE","M",nil,0,"player",nil,0,100,0,1,0,0,24)
+    assert(EllesmereUI.GetUnitAbsorb("player")==20 and math.abs(o.fw:GetWidth()-W0*.2)<.01)
+    AB.CombatLog(0,"SPELL_AURA_APPLIED","X",nil,0,"player",nil,0,48066,"Power Word: Shield",2,"BUFF")
+    assert(o.os:IsShown() and math.abs(o.os:GetWidth()-W0*.25)<.01 and o.os.texcoords[1]==0 and math.abs(o.os.texcoords[2]-.25)<1e-6)
+    ps.overshieldMode="fromleft"; UF.UF_WrathAbsorbRefresh(); assert(o.os:IsShown() and o.os.texcoords[1]==0)
+    ps.overshieldMode="never"; UF.UF_WrathAbsorbRefresh(); assert(not o.os:IsShown()); ps.overshieldMode=nil
+    ps.showPlayerAbsorb="clean"; ps.absorbOpacity=nil; UF.UF_WrathAbsorbRefresh()
+    assert(o.fw:GetTexture()=="Interface\\\\Buttons\\\\WHITE8X8" and math.abs(o.fw.vertexColor[4]-.3)<1e-6)
+    ps.showPlayerAbsorb="none"; UF.UF_WrathAbsorbRefresh(); assert(not o.fw:IsShown() and not o.os:IsShown()); ps.showPlayerAbsorb="striped"
+    local b1=UF.frames.boss1
+    if b1 and b1._euiWrathAbsorb then
+        AB.CombatLog(0,"SPELL_AURA_APPLIED","X",nil,0,"boss1",nil,0,17,"Power Word: Shield",2,"BUFF")
+        assert(b1._euiWrathAbsorb.fw:IsShown(), "boss frames use the target styling")
+        UF.db.profile.boss.showAbsorbs=false; UF.UF_WrathAbsorbRefresh(); assert(not b1._euiWrathAbsorb.fw:IsShown())
+        UF.db.profile.boss.showAbsorbs=nil
+    end
+    -- Options preview: same overlay on the preview bar, sample shield, preview fill direction.
+    local host=W.CreateFrame("Frame")
+    UF.UF_WrathAbsorbPreview(host,{showPlayerAbsorb="striped",absorbOpacity=50},100,20,.7,.4)
+    local po=host._euiWrathAbsorbPreview
+    assert(po.fw:IsShown() and math.abs(po.fw.texcoords[1]-.7)<1e-6 and math.abs(po.fw:GetWidth()-30)<.01)
+    assert(po.os:IsShown() and math.abs(po.os.texcoords[1]-.6)<1e-6 and math.abs(po.os:GetWidth()-10)<.01)
+    UF.UF_WrathAbsorbPreview(host,{showPlayerAbsorb="striped",healthReverseFill=true},100,20,.7,.2)
+    assert(math.abs(po.fw.texcoords[1]-.1)<1e-6 and math.abs(po.fw:GetWidth()-20)<.01)
+    UF.UF_WrathAbsorbPreview(host,nil,100,20,.7,.2); assert(not po.fw:IsShown())
+    AB.Reset(); UF.UF_WrathAbsorbRefresh(); assert(not o.fw:IsShown())
+end
 local fallbackBar = W.CreateFrame("StatusBar")
 assert(fallbackBar:GetStatusBarTexture() == nil, "getter must not invent a fill")
 fallbackBar:SetStatusBarTexture("Interface\\\\AddOns\\\\MissingMedia\\\\absent.tga")
@@ -655,6 +723,13 @@ assert 'ns.Wrath.SetFactionArt or EllesmereUI.SetFactionArt' in opts_src
 assert 'ns.Wrath.SpellIcons(ns.Wrath.PreviewDebuffSpells)' in opts_src and 'FALLBACK_CAST_SPELLS = ns.Wrath.PreviewCastSpells' in opts_src
 toc = (root/'EllesmereUIUnitFrames/EllesmereUIUnitFrames.toc').read_text(encoding='utf-8-sig')
 assert toc.index('EUI_UnitFrames_335_Textures.lua') < toc.index('EUI_UnitFrames_335_Media.lua') < toc.index('EllesmereUIUnitFrames.lua')
+assert toc.index('EUI_UnitFrames_335_Auras.lua') < toc.index('EUI_UnitFrames_335_Absorbs.lua')
+# Wrath ABSORBS section (player/target/focus) and the shared preview painter.
+wrath_absorbs = opts_src.split('elseif EUI_WOW_335 and EllesmereUI.Absorbs', 1)[1].split('end -- _supportsAbsorbs', 1)[0]
+for row in ('"ABSORBS"', 'text="Absorb Style"', 'text="Absorb Opacity"', 'text="Absorb Color"', 'text="Placement"',
+            'text="Show Overshield"', 'text="Show on Boss Frames"', 'absorbRow, h = W:DualRow'):
+    assert row in wrath_absorbs, row
+assert 'ns.UF_WrathAbsorbPreview(health, (not _healWillShow) and s or nil, fw, hh' in opts_src
 # Default fonts and every redirected/declared UF media file load on 3.3.5.
 fonts_src = (root/'EllesmereUI/EllesmereUI_Fonts.lua').read_text(encoding='utf-8-sig')
 for font in re.findall(r'=\s*"([^"]+\.(?:ttf|TTF|otf))"', fonts_src.split('EllesmereUI.FONT_FILES = {', 1)[1].split('\n}', 1)[0]):

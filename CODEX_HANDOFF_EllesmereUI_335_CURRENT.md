@@ -1,5 +1,85 @@
 # EllesmereUI 3.3.5a — Handoff — 2026-10-06
 
+## Latest (2026-10-08) — Auction House vs AH addons (Blizz UI Enhanced 0.28)
+
+- The AH skin is the generic window walk. It restyled Auctionator's own frames
+  (backdrops, Blizzard-path art) inside AuctionFrame. The `auctionhouse` spec is
+  now `nativeOnly`: children that are anonymous or whose global name is not
+  `issecurevariable` go through `WalkForeign` (fonts and ui-panel-button text
+  buttons only), and anonymous textures on the AuctionFrame root are left alone.
+- `Button`: `*CloseButton` with label text (BrowseCloseButton, BidCloseButton,
+  AuctionsCloseButton, addon "Close" buttons) no longer gets the "x" label.
+- `blizzardskin_mock.lua`: window close buttons are label-less like UIPanelCloseButton.
+- Open: Alex reported "some bars misplaced" on the AH; still needs a screenshot
+  of the Blizzard tabs to identify them.
+
+## Latest (2026-10-08) — Boss frame health poll (Unit Frames 0.18)
+
+- Wrath sends a boss's UNIT_HEALTH/UNIT_POWER under the target/focus token only,
+  never `bossN`, and the 3.3.5 `RegisterUnitEvent` shim filters by token, so
+  untargeted boss frames froze. `EUI_UnitFrames_Engine.lua` `Engine.Attach` puts
+  boss1-5 in `bossFrames`; `bossTicker` (0.2 s, shown only while a boss frame is
+  shown) paints health, power, text and absorb. `validate_unitframes.py` covers it.
+
+## Latest (2026-10-08) — Targeted Spells (Raid Frames 0.18, Options 0.112)
+
+- Retail Raid Frames no longer ships the code; only the migration
+  `rf_targeted_spells_bool_to_mode_v1` (`tsMode`, `tsRaidMode`, never/whenHealing)
+  and locale labels remain, so the port follows those keys and labels.
+- `EllesmereUIRaidFrames/EUI_RaidFrames_335_TargetedSpells.lua` (after ClickCast):
+  per-group keys `tsMode` (party whenHealing, every raid layout never but
+  selectable), `tsPreview`, `tsSize`, `tsMax`, `tsPosition`, `tsGrowth`,
+  `tsOffsetX/Y`, `tsSwipe`, `tsTimer`, `tsColorInterrupt`,
+  `tsInterruptibleColor`, `tsUninterruptibleColor` (patched into `ns.defaults`).
+  Wraps `ns.Apply` (refresh activation), `ns.LayoutButton`, `ns.UpdateFrame`
+  (preview icons and repaint); `ns.TargetedSpells` holds the state.
+- Detection: one entry per caster GUID; victim `UnitGUID(token.."target")` is
+  re-read on every observation. UNIT_SPELLCAST_* only for target, focus,
+  mouseover, boss1-4, arena1-5; UNIT_TARGET, PLAYER_TARGET/FOCUS_CHANGED,
+  UPDATE_MOUSEOVER_UNIT refresh. A 0.2 s scan reads target, focus, mouseover,
+  targettarget, focustarget, pettarget, boss1-4 and raidNtarget/partyNtarget.
+  Unseen casters are dropped 250 ms after their end time; an interrupted or
+  stopped cast is not revived by the scan (`TS.ended` keeps its start).
+  Events and OnUpdate are only registered while the live group's mode is on.
+- Validator: new `validate_raid_targeted_spells.py`.
+- Not ported: Retail glow/important-cast highlight, icon tooltips, per-spell
+  filters. Which tokens fire UNIT_SPELLCAST_* on Alex's client still needs
+  in-game confirmation (compound tokens are polled either way).
+
+## Latest (2026-10-08) — Absorb shields (Core 0.60, Raid Frames 0.17, Unit Frames 0.18, Options 0.111)
+
+- Core `EllesmereUI_Absorbs_335.lua` (after SpellCostPrediction in the TOC):
+  `EllesmereUI.GetUnitAbsorb(unit)`, `GetGUIDAbsorb(guid)`,
+  `RegisterAbsorbCallback(owner, fn(guid))`, `UnregisterAbsorbCallback`. Events
+  register on the first callback. CLEU estimate: known shield IDs (PW:S, Divine
+  Aegis, Sacred Shield proc 58597, Ice Barrier, Mana Shield, Fire/Frost/Shadow
+  Ward, Sacrifice, AMS, AMZ, Savage Defense, Val'anyr 64413) get the rank base,
+  plus SP x coefficient when the player cast it (no talents/glyphs); Aegis 30% of
+  the caster's last crit heal on the target, Val'anyr 15% of the last heal (both
+  stack to a cap); AMS 50% of max health; Savage Defense 25% AP (own) else 1500.
+  Absorbed parts of damage and `*_MISSED ABSORB` drain shields oldest first,
+  school wards only for their school. Removal within 0.5 s of a hit stores the
+  absorbed total as the learned capacity per spell+caster. UNIT_AURA seeds untracked
+  shields and drops gone ones. A secure native `UnitGetTotalAbsorbs` bypasses all
+  of it (`issecurevariable` filters addon-defined globals).
+- Shared overlay `EllesmereUI.Absorbs.CreateOverlay/Paint/Hide`: two textures
+  (forward + overshield backfill), edge modes overlay/overlayReverse/right/left,
+  overshield always/never/fromleft, vertical, reverse; tiled styles keep native
+  density via texcoords. Art in `media/textures/shields_335` from
+  `backport-tools/prepare_absorb_media.py` (PNG/NPOT Retail art to POT TGA).
+- Raid Frames: Retail keys/defaults (`absorbStyle` striped, 90%, white, overlay,
+  overshield on); ABSORBS section after HEAL PREDICTION.
+- Unit Frames: `EUI_UnitFrames_335_Absorbs.lua` wraps `ns.UF_AttachEngineFrame`
+  (player/target/focus/boss1-5), repaints from `ns.UF_ReloadAllAuraContainers`
+  (wrapped) and the absorb callback; reads Retail keys, Striped = striped3
+  stretched. One-time seed `wrathAbsorbSeeded` sets `showPlayerAbsorb` to striped.
+  Options: `elseif EUI_WOW_335` ABSORBS branch and `ns.UF_WrathAbsorbPreview` in
+  the preview. `EllesmereUIUnitFrames.lua` and the Engine are untouched.
+- Validators: new `validate_absorbs.py`; `validate_raidframes.py`,
+  `validate_unitframes.py`, `validate_core_engines.py` extended.
+- Not ported: heal absorbs, absorb strip bars, Glow Line, large/pixels styles,
+  absorb text tags, the preview eyeball. Waiting for in-game confirmation.
+
 ## Latest (2026-10-08) — Cooldown Manager 0.7 (Retail add menus)
 
 - The CDM Bars header '+' slots open `O.ShowPicker` (UIParent child,
@@ -156,11 +236,11 @@ Working-tree backups: `backport-tools/backup_project.py` writes
 
 ## Current versions
 
-Core 0.59; Action Bars 0.19; Arena 0.3; AuraBuff Reminders 0.7; Bags 0.11;
-Blizz UI Enhanced (BlizzardSkin) 0.27; Chat 0.49; Cooldown Manager 0.7;
+Core 0.60; Action Bars 0.19; Arena 0.3; AuraBuff Reminders 0.7; Bags 0.11;
+Blizz UI Enhanced (BlizzardSkin) 0.28; Chat 0.49; Cooldown Manager 0.7;
 Damage Meters 0.8; Data Bars 0.5; Friends 0.3; Minimap 0.4; Nameplates 0.14;
-Options 0.110; Locales 0.1; QoL 0.14; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.16;
-Resource Bars 0.5; Unit Frames 0.17.
+Options 0.112; Locales 0.1; QoL 0.14; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.18;
+Resource Bars 0.5; Unit Frames 0.18.
 
 Git: branch `cursor/eui-shapes-bars-skins-qol`, built on
 `cursor/eui-arena-and-fixes`. Neither is merged into `main`; no PR is open.

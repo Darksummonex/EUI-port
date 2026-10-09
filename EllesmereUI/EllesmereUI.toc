@@ -2,7 +2,7 @@
 ## Title: |cff0cd29fEllesmereUI|r
 ## Notes: Core UI backport for World of Warcraft 3.3.5
 ## Author: Ellesmere / 3.3.5 backport
-## Version: 3.3.5-core-0.59
+## Version: 3.3.5-core-0.60
 ## SavedVariables: EllesmereUIDB
 ## IconTexture: Interface\AddOns\EllesmereUI\media\eg-logo.tga
 EllesmereUI_3.3.5_Compat.lua
@@ -40,6 +40,7 @@ EllesmereUI_Glows.lua
 EllesmereUI_ClassicArt.lua
 EllesmereUI_ManaRegenSpark_335.lua
 EllesmereUI_SpellCostPrediction_335.lua
+EllesmereUI_Absorbs_335.lua
 EllesmereUI_BuffPresets.lua
 EllesmereUI_FirstInstall.lua
 EllesmereUI_StyleCards.lua

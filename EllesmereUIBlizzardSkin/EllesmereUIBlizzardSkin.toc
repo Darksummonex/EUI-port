@@ -2,7 +2,7 @@
 ## Title: |cff0cd29fEllesmereUI|r Blizz UI Enhanced
 ## Notes: Native Wrath window, tooltip, menu and popup skins.
 ## Author: Ellesmere / 3.3.5 backport
-## Version: 9.3.4-335-0.27
+## Version: 9.3.4-335-0.28
 ## Dependencies: EllesmereUI
 ## X-Part-Of: EllesmereUI
 ## SavedVariablesPerCharacter: EllesmereUIBlizzardSkinCharDB

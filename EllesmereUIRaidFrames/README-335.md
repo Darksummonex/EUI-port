@@ -1,4 +1,23 @@
-# Raid Frames 3.3.5 — 0.16
+# Raid Frames 3.3.5 — 0.18
+
+0.18: Targeted Spells do Retail: ícone do feitiço inimigo no quadro do membro
+(party e raid) que o inimigo está mirando, com varredura do tempo de conjuração,
+borda por interrompível/não interrompível e timer opcional. Seção TARGETED
+SPELLS com Show Targeted Spells (Never, When Healing, Always) separado para
+party (padrão When Healing) e cada layout de raid (padrão Never, mas
+selecionável), tamanho, máximo de ícones, posição, direção, offsets e prévia.
+Limites do 3.3.5: não há API de alvo do feitiço nem nameplates, então a vítima é
+o alvo do conjurador durante a conjuração, e só aparecem inimigos que alguém do
+grupo tem como alvo (ou o seu target, focus, mouseover e boss1-4). Casts de área
+ou em alvo diferente do alvo atual do inimigo podem cair no alvo atual. Os
+tokens raidNtarget/partyNtarget não geram eventos e são lidos a cada 0,2 s só
+enquanto o recurso está ativo.
+
+0.17: escudos (absorbs) na barra de vida, como no Retail: seção ABSORBS com
+Absorb Style (Striped, Striped Reversed, Striped Thick, Clean, Blizzard e
+texturas SharedMedia; None desliga), Absorb Opacity, Absorb Color, Placement
+(Overlay, Overlay Reverse, bordas) e Show Overshield. O valor é estimado pelo
+Core a partir do combat log. Ligado por padrão (Striped, 90%).
 
 0.16: ícones de ready check acima dos debuffs; respostas por GUID permanecem
 por 10 segundos após terminar. Pendentes viram não prontos ao fim da checagem.

@@ -81,7 +81,9 @@ function NativeWindow(name)
     f.icon=f.body:CreateTexture(); f.icon:SetTexture('Interface\\Icons\\Spell_Fire_Fireball')
     f.model=CreateFrame('PlayerModel',nil,f.body)
     f.button=NativeButton(name..'Button',f)
-    f.close=NativeButton(name..'CloseButton',f)
+    -- UIPanelCloseButton: minimize art, no FontString.
+    f.close=NativeButton(name..'CloseButton',f); f.close.label=nil
+    f.close.normal:SetTexture('Interface\\Buttons\\UI-Panel-MinimizeButton-Up')
     f.edit=CreateFrame('EditBox',nil,f); f.edit:SetAutoFocus(false); f.edit:SetFont('Fonts\\FRIZQT__.TTF',12,'')
     f.edit:SetScript('OnEnterPressed',function() sent=(sent or 0)+1 end)
     return f

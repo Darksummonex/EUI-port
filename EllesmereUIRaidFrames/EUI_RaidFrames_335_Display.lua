@@ -87,6 +87,7 @@ function ns.InitButton(b)
     b.Health=CreateFrame("StatusBar",nil,b); b.Health:SetMinMaxValues(0,1); b.Health:SetValue(0)
     b.Health.bg=b.Health:CreateTexture(nil,"BACKGROUND"); b.Health.bg:SetAllPoints(b.Health); b.Health.bg:SetTexture(white); b.Health.bg:SetVertexColor(.08,.08,.09,1)
     b.healPred=b.Health:CreateTexture(nil,"OVERLAY"); b.healPred:Hide()
+    b.absorb=E.Absorbs and E.Absorbs.CreateOverlay(b.Health,"OVERLAY")
     b.dispelOverlay=b.Health:CreateTexture(nil,"OVERLAY"); b.dispelOverlay:SetAllPoints(b.Health); b.dispelOverlay:SetTexture(white); b.dispelOverlay:Hide()
     b.dispelBorder=CreateFrame("Frame",nil,b.Health); b.dispelBorder:SetAllPoints(b.Health); b.dispelBorder:EnableMouse(false); b.dispelBorder:Hide()
     b.Power=CreateFrame("StatusBar",nil,b); b.Power:SetMinMaxValues(0,1); b.Power:SetValue(0)
@@ -399,14 +400,35 @@ local function UpdatePrediction(b,c,hp,maximum,guid)
     local col=c.healPredColor or {r=.4,g=.95,b=.4}
     t:SetVertexColor(col.r,col.g,col.b,math.max(0,math.min(100,tonumber(c.healPredOpacity) or 75))/100); t:Show()
 end
+-- Shields (Core estimate on 3.3.5, see EllesmereUI_Absorbs_335.lua) from the
+-- end of the fill; the part past full health is drawn back over the fill.
+local function UpdateAbsorb(b,c,hp,maximum,unit)
+    local o=b.absorb; if not o then return end
+    local style=c.absorbStyle or "striped"
+    local amount=b._euiPreview and (b._euiPreview%3==2 and maximum*.25 or 0) or (unit and E.GetUnitAbsorb(unit) or 0)
+    if style=="none" or amount<=0 then E.Absorbs.Hide(o); return end
+    local col=c.absorbColor or {r=1,g=1,b=1}
+    local overshield=c.overshieldMode or (c.showOvershield==false and "never" or "always")
+    E.Absorbs.Paint(o,hp,maximum,amount,style,col.r,col.g,col.b,math.max(5,math.min(100,tonumber(c.absorbOpacity) or 90))/100,
+        c.absorbEdgeMode or "overlay",overshield,c.healthVerticalFill,false,b._healthW or 1,b._healthH or 1,textures)
+end
 function ns.RefreshGUID(guid)
     for _,b in ipairs(ns.buttons) do if b:IsShown() and b._euiGUID==guid then ns.UpdateFrame(b,false) end end
+end
+function ns.RefreshAbsorb(guid)
+    for _,b in ipairs(ns.buttons) do
+        if b.absorb and b._euiGUID==guid and b.unit and b:IsShown() then
+            local c=ns.GetSettings(b._euiKind)
+            if c then UpdateAbsorb(b,c,b._euiHP or 0,b._euiMax or 1,b.unit) end
+        end
+    end
 end
 function ns.InitPrediction()
     if ns._predictionReady then return end; ns._predictionReady=true
     local stub=_G.LibStub
     HealComm=stub and stub("LibHealComm-4.0",true); ResComm=stub and stub("LibResComm-1.0",true)
     ns.HealComm,ns.ResComm=HealComm,ResComm
+    if E.RegisterAbsorbCallback then E.RegisterAbsorbCallback(ns,ns.RefreshAbsorb) end
     if HealComm and HealComm.RegisterCallback then
         local function Targets(...) for i=1,select("#",...) do ns.RefreshGUID((select(i,...))) end end
         local function Cast(_,_,_,_,_,...) Targets(...) end
@@ -464,6 +486,7 @@ function ns.UpdateFrame(b,auras)
     if not valid then
         b._euiGUID=nil; b.dispelColorCandidates=nil; b.dispelBorder:Hide(); b.dispelIcon:Hide(); b.Health:SetValue(0); b.Power:SetValue(0); Text(b.name,""); Text(b.healthText,""); Text(b.powerText,""); Text(b.status,""); ClearAuras(b)
         for _,t in ipairs({b.role,b.leader,b.raidMarker,b.ready,b.combat,b.rez,b.healPred,b.dispelOverlay}) do t:Hide() end; b:SetAlpha(1)
+        if b.absorb then E.Absorbs.Hide(b.absorb) end
         if ns.hovered==b then ns.tooltipKey=nil; GameTooltip:Hide() end; return
     end
     local guid=b._euiPreview or UnitGUID(unit)
@@ -480,6 +503,8 @@ function ns.UpdateFrame(b,auras)
     b.Health:SetStatusBarColor(baseR,baseG,baseB)
     b.Health.bg:SetVertexColor(ns.BackgroundColor(c,color,status=="Dead" or status=="Ghost",not connected))
     UpdatePrediction(b,c,hp,maximum,not b._euiPreview and guid)
+    b._euiHP,b._euiMax=hp,maximum
+    UpdateAbsorb(b,c,hp,maximum,not b._euiPreview and unit)
     Text(b.name,Truncate(b._euiPreviewName or (b._euiPreview and ("Player "..b._euiPreview)) or (UnitName(base or unit) or ""),c.nameMaxLength))
     b.name:SetTextColor(ModeColor(c.nameColorMode or (c.classColoredNames and "class" or "custom"),c.nameCustomColor,color))
     Text(b.status,status)

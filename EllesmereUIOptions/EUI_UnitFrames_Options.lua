@@ -4772,6 +4772,9 @@ initFrame:SetScript("OnEvent", function(self)
                     end
                 else
                     absorbBar:Hide()
+                    if EUI_WOW_335 and ns.UF_WrathAbsorbPreview then
+                        ns.UF_WrathAbsorbPreview(health, (not _healWillShow) and s or nil, fw, hh, _previewHealthPct or 0.70)
+                    end
                 end
             end
             if healAbsorbBar then
@@ -13896,7 +13899,8 @@ initFrame:SetScript("OnEvent", function(self)
         -- Declared outside the gate: the click-mapping table at the bottom of
         -- this function references them (block-locals would be nil there).
         local sharedAbsorbsHeader, absorbRow
-        -- Wrath 3.3.5 has no absorb or incoming-heal API, so the section stays out.
+        -- Wrath 3.3.5 has no absorb or incoming-heal API, so this section stays out;
+        -- the EUI_WOW_335 branch below has the estimated-shield rows.
         local _supportsAbsorbs = not EUI_WOW_335
             and (selectedUnit == "player" or selectedUnit == "target" or selectedUnit == "focus")
         if _supportsAbsorbs then
@@ -14520,6 +14524,66 @@ initFrame:SetScript("OnEvent", function(self)
         SApplySupport(overhealRow._leftRegion, "healPredOverheal")
         SApplySupport(overhealRow._rightRegion, "healPredTexture")
 
+        _, h = W:Spacer(parent, y, 20); y = y - h
+        elseif EUI_WOW_335 and EllesmereUI.Absorbs
+            and (selectedUnit == "player" or selectedUnit == "target" or selectedUnit == "focus") then
+        -- Wrath: shields estimated from the combat log (Core EllesmereUI_Absorbs_335.lua)
+        -- and drawn by EUI_UnitFrames_335_Absorbs.lua. No heal absorbs, strip bars or
+        -- glow line: 3.3.5 has no heal-absorb data and no masks.
+        local AB = EllesmereUI.Absorbs
+        sharedAbsorbsHeader, h = W:SectionHeader(parent, "ABSORBS", y); y = y - h
+        local wStyleValues, wStyleOrder = AB.StyleMenu(ns.healthBarTextureNames, ns.healthBarTextureOrder)
+        local function wAbsorbOff() return SValSupported("showPlayerAbsorb", "none") == "none" end
+        absorbRow, h = W:DualRow(parent, y,
+            { type="dropdown", text="Absorb Style", values=wStyleValues, order=wStyleOrder,
+              tooltip="Damage shields on the health bar. 3.3.5 does not report shield amounts, so they are estimated from the combat log (base rank value plus your own spell power, minus what each shield absorbed).",
+              getValue=function() return SValSupported("showPlayerAbsorb", "none") end,
+              setValue=function(v)
+                  UNIT_DB_MAP[selectedUnit]().absorbOpacity = (v == "clean") and 30 or 90
+                  SSetSupported("showPlayerAbsorb", v); EllesmereUI:RefreshPage()
+              end },
+            { type="slider", text="Absorb Opacity", min=5, max=100, step=1,
+              disabled=wAbsorbOff, disabledTooltip="Absorb Style",
+              getValue=function()
+                  local v = SValSupported("absorbOpacity", nil)
+                  if v then return v end
+                  if SValSupported("showPlayerAbsorb", "none") == "clean" then return SValSupported("absorbCleanAlpha", 30) end
+                  return 80
+              end,
+              setValue=function(v) SSetSupported("absorbOpacity", v) end });  y = y - h
+        _, h = W:DualRow(parent, y,
+            { type="colorpicker", text="Absorb Color", hasAlpha=false,
+              disabled=wAbsorbOff, disabledTooltip="Absorb Style",
+              getValue=function() local c = SValSupported("absorbColor", nil) or { r = 1, g = 1, b = 1 }; return c.r or 1, c.g or 1, c.b or 1, 1 end,
+              setValue=function(r, g, b) SSetSupported("absorbColor", { r = r, g = g, b = b }) end },
+            { type="dropdown", text="Placement", values=AB.EDGE_NAMES, order=AB.EDGE_ORDER,
+              disabled=wAbsorbOff, disabledTooltip="Absorb Style",
+              getValue=function() return SValSupported("absorbEdgeMode", "overlay") end,
+              setValue=function(v) SSetSupported("absorbEdgeMode", v); EllesmereUI:RefreshPage() end });  y = y - h
+        _, h = W:DualRow(parent, y,
+            { type="dropdown", text="Show Overshield", values=AB.OVERSHIELD_NAMES, order=AB.OVERSHIELD_ORDER,
+              tooltip="Overshield is the part of an absorb exceeding your empty health. Always backfills it over current health from the shield's edge; From Left grows it from the opposite end of the bar; Never hides it.",
+              disabled=function() return wAbsorbOff() or SValSupported("absorbEdgeMode", "overlay") ~= "overlay" end,
+              disabledTooltip="Absorb Style and the Overlay placement",
+              getValue=function()
+                  local m = SValSupported("overshieldMode", nil)
+                  if m then return m end
+                  return SValSupported("showOvershield", true) == false and "never" or "always"
+              end,
+              setValue=function(v)
+                  UNIT_DB_MAP[selectedUnit]().showOvershield = (v ~= "never")
+                  SSetSupported("overshieldMode", v)
+              end },
+            { type="toggle", text="Show on Boss Frames",
+              tooltip="Render absorbs on Boss Frames using the Target frame's absorb styling.",
+              getValue=function() return not (db.profile.boss and db.profile.boss.showAbsorbs == false) end,
+              setValue=function(v)
+                  local b = db.profile.boss
+                  if b then
+                      if v then b.showAbsorbs = nil else b.showAbsorbs = false end
+                  end
+                  ReloadAndUpdate()
+              end });  y = y - h
         _, h = W:Spacer(parent, y, 20); y = y - h
         end -- _supportsAbsorbs
 

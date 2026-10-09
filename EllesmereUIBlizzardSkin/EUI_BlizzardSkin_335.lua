@@ -20,7 +20,7 @@ local windows={
     {id="gossip",key="reskinGossip",label="NPC Dialogs",frames={"GossipFrame"},classic=true},
     {id="merchant",key="reskinMerchant",label="Merchant",frames={"MerchantFrame"},classic=true},
     {id="mail",key="reskinMail",label="Mail",frames={"MailFrame","OpenMailFrame"},classic=true},
-    {id="auctionhouse",key="reskinAuctionHouse",label="Auction House",frames={"AuctionFrame"}},
+    {id="auctionhouse",key="reskinAuctionHouse",label="Auction House",frames={"AuctionFrame"},nativeOnly=true},
     {id="trade",key="reskinTrade",label="Trade",frames={"TradeFrame"},classic=true},
     {id="professions",key="reskinProfessions",label="Professions",frames={"TradeSkillFrame","CraftFrame"},classic=true},
     {id="trainer",key="reskinTrainer",label="Trainer, Stable & Taxi",frames={"ClassTrainerFrame","PetStableFrame","TaxiFrame"},classic=true},
@@ -282,10 +282,11 @@ local function Icon(s,button,icon)
 end
 local function Button(s,button)
     local name=button.GetName and button:GetName() or ""
-    local close=name and name:find("CloseButton$",1)~=nil
+    local label=button.GetFontString and button:GetFontString()
+    -- Auction House footers name their "Close" text buttons BrowseCloseButton etc.
+    local close=name and name:find("CloseButton$",1)~=nil and not (label and label:GetText())
     local normal=button.GetNormalTexture and button:GetNormalTexture()
     local path=normal and normal:GetTexture()
-    local label=button.GetFontString and button:GetFontString()
     local nativeTextButton=label and label:GetText() and type(path)=="string" and
         (path:lower():find("ui-panel-button",1,true) or path:lower():find("ui-dialogbox-button",1,true))
     local tab=name and (name:find("FrameTab%d+$") or name:find("FrameTabButton%d+$") or name:find("TabHeaderTab%d+$"))
@@ -339,8 +340,32 @@ local function Button(s,button)
         if button.GetDisabledCheckedTexture then TextureStyle(s,button:GetDisabledCheckedTexture(),.5,.5,.5,.3) end
     end
 end
+-- AddOn frames inside a nativeOnly window (Auctionator tabs and panels on
+-- AuctionFrame) are anonymous or named from insecure code.
+local function Foreign(obj)
+    local name=obj.GetName and obj:GetName()
+    if not name or name=="" or _G[name]~=obj then return true end
+    return issecurevariable and not issecurevariable(name) or false
+end
+-- Inside foreign frames only fonts and stock text buttons are restyled; their
+-- textures, backdrops and layout stay as the AddOn drew them.
+local function WalkForeign(s,frame,depth)
+    if owned[frame] or depth>6 then return end
+    if Kind(frame,"Button") then
+        local label=frame:GetFontString(); local normal=frame:GetNormalTexture()
+        local path=normal and normal:GetTexture()
+        if label and label:GetText() and type(path)=="string" and path:lower():find("ui-panel-button",1,true) then Button(s,frame) end
+    end
+    if frame.GetRegions then
+        for _,region in ipairs({frame:GetRegions()}) do
+            if not owned[region] and Kind(region,"FontString") then Font(s,region) end
+        end
+    end
+    if frame.GetChildren then for _,child in ipairs({frame:GetChildren()}) do WalkForeign(s,child,depth+1) end end
+end
 local function Walk(s,frame,depth,root)
     if owned[frame] or depth>6 then return end
+    if s.spec.nativeOnly and not root and Foreign(frame) then WalkForeign(s,frame,depth); return end
     local name=frame.GetName and frame:GetName() or ""
     local chrome=chromeFrames[name] or Kind(frame,"EditBox") or name and name:find("DropDown$")
     if not s.spec.tooltip and (Kind(frame,"EditBox") or chrome or name and (name:find("DropDown$") or name:find("ScrollBar$"))) then
@@ -362,7 +387,9 @@ local function Walk(s,frame,depth,root)
     if not s.spec.tooltip and (Kind(frame,"Button") or Kind(frame,"CheckButton")) then Button(s,frame) end
     if frame.GetRegions then
         for _,region in ipairs({frame:GetRegions()}) do
-            if not owned[region] and not (s.keep and s.keep[region]) then
+            -- AddOn art parented to a nativeOnly root is anonymous; Blizzard's root art is named.
+            local foreignArt=root and s.spec.nativeOnly and Kind(region,"Texture") and Foreign(region)
+            if not owned[region] and not (s.keep and s.keep[region]) and not foreignArt then
                 if Kind(region,"FontString") then Font(s,region,s.spec.tooltip and ns.GetValue("tooltipFontScale") or 1)
                 elseif not s.spec.tooltip and not s.textureStyles[region] and
                     (Decor(region,root) or chrome and Kind(region,"Texture") and region:GetTexture()~=nil

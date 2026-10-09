@@ -5,7 +5,7 @@ root=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(root/'.codex-tools'))
 from lupa.lua51 import LuaRuntime
 lua=LuaRuntime(unpack_returned_tuples=True)
-for file in ['backport-tools/wrath_mock.lua','backport-tools/inventory_resources_mock.lua','backport-tools/raidframes_mock.lua','EllesmereUI/EllesmereUI_Lite.lua','EllesmereUI/EUI_AuraFilters_335.lua','EllesmereUI/EUI_AuraIndicators_335.lua','EllesmereUIOptions/EUI_AuraFilters_335_Options.lua','EllesmereUIOptions/EUI_AuraIndicators_335_Options.lua']:
+for file in ['backport-tools/wrath_mock.lua','backport-tools/inventory_resources_mock.lua','backport-tools/raidframes_mock.lua','EllesmereUI/EllesmereUI_Lite.lua','EllesmereUI/EllesmereUI_Absorbs_335.lua','EllesmereUI/EUI_AuraFilters_335.lua','EllesmereUI/EUI_AuraIndicators_335.lua','EllesmereUIOptions/EUI_AuraFilters_335_Options.lua','EllesmereUIOptions/EUI_AuraIndicators_335_Options.lua']:
     lua.execute((root/file).read_text(encoding='utf-8-sig'))
 ns=lua.table()
 for file in ['EUI_RaidFrames_335.lua','EUI_RaidFrames_335_RaidDebuffs.lua','EUI_RaidFrames_335_Display.lua','EUI_RaidFrames_335_Extras.lua','EUI_RaidFrames_335_ClickCast.lua']:
@@ -329,6 +329,26 @@ heal=0; callbacks.HealComm_HealStopped('HealComm_HealStopped','C',2061,1,false,'
 heal=9000; callbacks.HealComm_HealStarted('HealComm_HealStarted','C',2061,1,GetTime()+2,'Z1'); assert(member.healPred:IsShown() and math.abs(member.healPred:GetWidth()-W*.5)<.01,'Prediction not capped at missing health')
 c.healthVerticalFill=true; R.Apply(); assert(member.Health.orientation=='VERTICAL' and member.healPred:GetWidth()==W)
 c.healthVerticalFill=false; c.healPrediction=false; R.Apply(); assert(not member.healPred:IsShown())
+-- Absorbs: Core combat-log estimate drawn from the end of the fill; the part past
+-- full health is backfilled over the fill (Retail "overlay" + overshield).
+local AB=EllesmereUI.Absorbs; AB.Reset(); R.UpdateAll(false)
+local fw,os=member.absorb.fw,member.absorb.os
+assert(c.absorbStyle=='striped' and c.absorbOpacity==90 and not fw:IsShown())
+AB.CombatLog(0,'SPELL_AURA_APPLIED','X',nil,0,'Z1',nil,0,48066,'Power Word: Shield',2,'BUFF')
+assert(EllesmereUI.GetUnitAbsorb('party1')==2230 and fw:IsShown() and not os:IsShown())
+assert(math.abs(fw:GetWidth()-W*.223)<.01 and math.abs(select(4,fw:GetPoint(1))-W*.5)<.01 and math.abs(fw.vertexColor[4]-.9)<1e-6)
+assert(fw:GetTexture():find('shields_335\\\\striped-5.tga',1,true),fw:GetTexture())
+AB.CombatLog(0,'SPELL_DAMAGE','M',nil,0,'Z1',nil,0,1,'Hit',1,500,0,1,0,0,1230)
+assert(EllesmereUI.GetUnitAbsorb('party1')==1000 and math.abs(fw:GetWidth()-W*.1)<.01)
+units.party1.health=9500; R.UpdateAll(false)
+assert(math.abs(fw:GetWidth()-W*.05)<.01 and os:IsShown() and math.abs(select(4,os:GetPoint(1))-W*.9)<.01 and math.abs(os:GetWidth()-W*.05)<.01)
+c.overshieldMode='never'; R.UpdateAll(false); assert(not os:IsShown()); c.overshieldMode=nil
+c.absorbEdgeMode='right'; R.UpdateAll(false); assert(math.abs(select(4,fw:GetPoint(1))-W*.9)<.01 and not os:IsShown()); c.absorbEdgeMode='overlay'
+c.healthVerticalFill=true; R.Apply(); assert(fw:GetWidth()==W and select(1,fw:GetPoint(1))=='BOTTOMLEFT'); c.healthVerticalFill=false
+c.absorbStyle='none'; R.UpdateAll(false); assert(not fw:IsShown()); c.absorbStyle='striped'; R.UpdateAll(false); assert(fw:IsShown())
+AB.CombatLog(0,'SPELL_AURA_REMOVED','X',nil,0,'Z1',nil,0,48066,'Power Word: Shield',2,'BUFF')
+assert(EllesmereUI.GetUnitAbsorb('party1')==0 and not fw:IsShown() and not os:IsShown())
+units.party1.health=5000; R.Apply()
 units.party1.dead=true; rezName='Zed'; R.UpdateAll(false); assert(member.rez:IsShown())
 rezName=nil; callbacks.ResComm_ResEnd('ResComm_ResEnd','Priest','Zed'); assert(not member.rez:IsShown())
 c.showIncomingRez=false; rezName='Zed'; R.UpdateAll(false); assert(not member.rez:IsShown()); units.party1.dead=false; rezName=nil; c.showIncomingRez=true
@@ -476,6 +496,14 @@ FindRow('Type Icon Position').setValue('none'); assert(not c.showDispelIcons and
 local sw=FindRow('Dispel Colors').swatches; assert(#sw==4 and sw[2].tooltip=='Curse'); sw[2].setValue(.1,.2,.3,.5); assert(c.dispelColorCurse.g==.2 and c.dispelColorCurse.a==.5)
 FindRow('Only Show Dispellable').setValue(true); assert(c.dispelShowAll==false); FindRow('Only Show Dispellable').setValue(false); assert(c.dispelShowAll==true)
 FindRow('Frame Border').setValue(1); assert(c.dispelBorderSize==1); c.dispelBorderSize=0; c.dispelOverlay='fill'; c.dispelColorCurse={r=.6,g=0,b=.6}
+-- Retail ABSORBS rows (Wrath styles + SharedMedia; Clean drops opacity to 30 as Retail).
+local absorbStyle=FindRow('Absorb Style'); assert(absorbStyle.values.striped=='Striped' and absorbStyle.order[1]=='none')
+absorbStyle.setValue('clean'); assert(c.absorbStyle=='clean' and c.absorbOpacity==30)
+absorbStyle.setValue('striped'); assert(c.absorbOpacity==90 and not FindRow('Absorb Opacity').disabled())
+FindRow('Show Overshield').setValue('never'); assert(c.overshieldMode=='never' and c.showOvershield==false)
+FindRow('Show Overshield').setValue('always'); assert(c.showOvershield==true)
+FindRow('Placement').setValue('left'); assert(c.absorbEdgeMode=='left' and FindRow('Show Overshield').disabled()); c.absorbEdgeMode='overlay'
+FindRow('Absorb Color').setValue(.2,.4,.6); assert(c.absorbColor.g==.4); c.absorbColor={r=1,g=1,b=1}
 rows={}; cfg.buildPage('Raid',UIParent,0); FindRow('Reverse Group Order').setValue(true); assert(R.GetOptionSettings('raid').reverseGroups); R.GetOptionSettings('raid').reverseGroups=false
 p.tankFrames.enabled=false; p.petFrames.party=false; p.healerMana.mode='none'; R.Apply()
 assert(not R.extraHolders.tank:IsShown() and not R.extraHolders.pet:IsShown() and not R.healerMana:IsShown())

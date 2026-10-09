@@ -1,4 +1,9 @@
-# Blizz UI Enhanced 3.3.5 — 0.27
+# Blizz UI Enhanced 3.3.5 — 0.28
+
+0.28: Casa de Leilões convive com addons (Auctionator e similares): painéis,
+abas e artes que o addon cria dentro do AuctionFrame mantêm o visual e o
+layout do addon; só fontes e botões de texto padrão seguem o skin. Os botões
+"Close" do rodapé não ganham mais um "x" por cima do texto.
 
 0.27: Save de equipamentos inicializa a lista de ícones mesmo com o popup
 aberto, evitando comparar números com nil. New Set limpa a seleção anterior.

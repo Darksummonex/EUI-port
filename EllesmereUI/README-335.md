@@ -1,4 +1,13 @@
-# EllesmereUI Wrath Core — 0.59
+# EllesmereUI Wrath Core — 0.60
+
+0.60: estimativa de escudos (absorbs) em `EllesmereUI_Absorbs_335.lua`, usada
+pelos Raid Frames e Unit Frames. O 3.3.5 não informa o valor dos escudos: o Core
+lê o combat log (valor base do rank, mais o spell power dos seus próprios
+escudos, menos o que cada escudo absorveu; Divine Aegis = 30% do último crítico,
+AMS = 50% da vida máxima) e limpa no fim da aura. Um escudo quebrado logo após
+absorver dano ensina o valor real para o próximo cast do mesmo autor. Clientes
+com `UnitGetTotalAbsorbs` nativo usam a API direto. Texturas do Retail em TGA
+potência de dois em `media/textures/shields_335`.
 
 0.59: issecretvalue/issecrettable existem desde o carregamento do Core. Corrige o
 erro "attempt to call global 'issecretvalue'" nos brilhos do Cooldown Manager

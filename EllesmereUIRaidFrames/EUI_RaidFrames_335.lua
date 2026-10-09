@@ -23,6 +23,7 @@ local function Config(width,height)
         healthColorMode="class",customFillColor=RGB(37/255,193/255,29/255),dynamicColor100=RGB(0,1,0),dynamicColor50=RGB(1,1,0),dynamicColor0=RGB(1,0,0),
         bgClassColored=false,bgDarkness=50,customBgColor=RGB(.08,.08,.09),statusColorOffline=RGB(.4,.4,.4),statusColorDead=RGB(.14,.09,.09),
         healthVerticalFill=false,healPrediction=false,healPredColor=RGB(102/255,243/255,102/255),healPredOpacity=75,
+        absorbStyle="striped",absorbOpacity=90,absorbColor=RGB(1,1,1),absorbEdgeMode="overlay",showOvershield=true,
         borderSize=1,borderColor=RGB(0,0,0),hoverBorderEnabled=true,hoverBorderColor=RGB(1,1,1),targetBorderColor=RGB(.05,.82,.61),threatBorderColor=RGB(1,.15,.15),
         nameColorMode="class",nameCustomColor=RGB(1,1,1),namePosition="topleft",nameOffsetX=0,nameOffsetY=0,nameMaxLength=0,
         healthTextPosition="topright",healthTextOffsetX=0,healthTextOffsetY=0,healthTextColorMode="custom",healthTextCustomColor=RGB(1,1,1),statusShowAFK=true,

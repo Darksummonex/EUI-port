@@ -95,6 +95,30 @@ assert(CharacterFrame.title.font[1]==skinFont and c.buttons[CharacterFrame.close
 -- Native show callbacks and ADDON_LOADED discover real late frames/controls.
 AuctionFrame=NativeWindow('AuctionFrame'); BS.events:RunScript('OnEvent','ADDON_LOADED','Blizzard_AuctionUI'); BS.events:RunScript('OnUpdate',.3)
 assert(BS.states[AuctionFrame].active)
+-- AddOn tabs/panels on AuctionFrame (Auctionator) keep their art and layout; only
+-- fonts and stock text buttons follow the skin. "Close" text buttons get no "x".
+do
+    local ah=BS.states[AuctionFrame]
+    local atr=CreateFrame('Frame',nil,AuctionFrame); atr.art=atr:CreateTexture()
+    atr.art:SetTexture('Interface\\\\AuctionFrame\\\\UI-AuctionFrame-Auction-TopLeft')
+    atr:SetBackdrop({bgFile='atr-bg'})
+    local atrButton=NativeButton('Atr_TestButton',atr)
+    local atrClose=NativeButton('Atr_CloseButton',atr); atrClose.label:SetText('Close')
+    local rootArt=AuctionFrame:CreateTexture(); rootArt:SetTexture('Interface\\\\AuctionFrame\\\\UI-AuctionFrame-Bid-Bot')
+    local named=AuctionFrame:CreateTexture(); AuctionFrameTopLeft=named; named.name='AuctionFrameTopLeft'
+    named:SetTexture('Interface\\\\AuctionFrame\\\\UI-AuctionFrame-Browse-TopLeft')
+    local browseClose=NativeButton('BrowseCloseButton',AuctionFrame); browseClose.label:SetText('Close')
+    issecurevariable=function(n) return not n:find('^Atr_') end
+    BS.RequestRefresh(); BS.events:RunScript('OnUpdate',.3)
+    assert(atr.art:GetTexture()~=nil and atr.backdrop and atr.backdrop.bgFile=='atr-bg' and not ah.insets[atr],'AddOn panel art was skinned')
+    assert(rootArt:GetTexture()~=nil,'anonymous AddOn art on the AuctionFrame root was faded')
+    assert(named:GetTexture()==nil,'Blizzard AuctionFrame art was not faded')
+    assert(ah.buttons[atrButton] and atrButton.normal:GetTexture()==nil,'AddOn text button not restyled')
+    assert(ah.buttons[atrClose] and not ah.buttons[atrClose].label,'AddOn Close text button got an x')
+    assert(ah.buttons[browseClose] and not ah.buttons[browseClose].label,'BrowseCloseButton text got an x')
+    assert(ah.buttons[AuctionFrameCloseButton].label:GetText()=='x')
+    issecurevariable=nil
+end
 TalentFrame=NativeWindow('TalentFrame'); TalentFrame:SetBackdrop(nil); TalentFrame.noBackdropColor=true
 BS.events:RunScript('OnEvent','ADDON_LOADED'); BS.events:RunScript('OnUpdate',.3)
 BS.SetValue('reskinPlayerSpells',false); assert(not BS.states[TalentFrame].active and not TalentFrame.backdrop)
