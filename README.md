@@ -137,4 +137,12 @@ This project is not affiliated with or endorsed by Blizzard Entertainment.
 
 ## License
 
-[MIT](LICENSE) for the backport work.
+EllesmereUI is distributed under its original custom license ([LICENSE-EllesmereUI.md](LICENSE-EllesmereUI.md)):
+
+> **Custom License for: EllesmereUI**
+>
+> Copyright ©2026 The contents of this addon, excluding third-party resources, are copyrighted to their authors with all rights reserved.
+>
+> All rights not explicitly addressed in this license are reserved by the copyright holders.
+
+Third-party libraries (LibStub, CallbackHandler, LibDataBroker, LibSharedMedia, LibDeflate) keep their own licenses.
