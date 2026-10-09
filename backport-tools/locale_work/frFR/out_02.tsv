@@ -1,0 +1,450 @@
+1904	Filtrer les messages répétés
+1905	Filtrer les annonces commerciales
+1906	filtres
+1907	Les filtres sont enregistrés séparément pour chaque cadre
+1919	Premier et dernier
+1920	Prénom
+1922	Cinq emplacements de groupe, vous compris
+1923	Règle des cinq secondes
+1924	Règle des cinq secondes et étincelle de tick de mana sur la barre de mana.
+1925	Donjons à cinq joueurs, Mythique+ inclus. Les Gouffres, raids et scénarios ne comptent pas.
+1926	Corriger les conflits d'addons en un clic
+1927	Marqués uniquement
+1933	Fait clignoter l'icône quand son bouton d'action est pressé.
+1935	Plat
+1936	PLAT ET MODERNE
+1937	Plat, épuré et moderne. Le style autour duquel EllesmereUI a été conçu.
+1938	Points de vol
+1939	Vols : or neutre, bleu Alliance, rouge Horde, vert non découvert.
+1940	Retourner le dragon
+1941	Retourne le portrait horizontalement pour qu'il regarde de l'autre côté.
+1942	Texte de combat flottant et noms du monde (réglages du moteur)
+1944	Taille des boutons déroulants
+1945	Direction du menu déroulant
+1947	BARRE D'INCANTATION DE LA FOCALISATION
+1949	Taille du nom (barre focalisation)
+1950	Taille de la cible (barre focalisation)
+1951	Texture de la barre d'incantation (focalisation)
+1952	Taille du chrono (barre focalisation)
+1953	Lueur des incantations importantes (focalisation)
+1954	Taille de la lettre de focalisation
+1955	Lueur des améliorations purgeables (focalisation)
+1958	Auras suivies (focalisation)
+1961	Barre FocusKick
+1962	OPTIONS FOCUSKICK
+1963	Suivre la couleur Blizzard
+1966	Police et contour uniquement
+1970	Taille de police des titres de catégorie dans la grille de contenu.
+1972	Taille de police des cumuls.
+1973	Polices
+1974	Les polices suivent Réglages globaux > Polices > Interface Blizz améliorée.
+1984	Force la texture d'arrière-plan
+1985	Force la texture de barre
+1987	STYLE FOREVER
+1989	Les cadres de bronze, griffons et badges ronds de Forever, avec les fonctionnalités d'EllesmereUI.
+1990	Décalage X du texte de forme
+1991	Décalage Y du texte de forme
+1996	FPS ET LATENCE
+1997	Taille du texte FPS / latence
+1998	FPS et latence
+1999	Couleurs de qualité FPS et latence
+2000	COMPTEUR DE FPS
+2002	Taille du texte du compteur FPS
+2003	FPS au survol
+2004	Décalage X des FPS
+2005	Décalage Y des FPS
+2006	Position des FPS
+2007	Échelle des FPS
+2008	Taille du texte FPS
+2009	Échelle FPS/MS
+2012	Style de bordure du cadre
+2014	Pied du cadre
+2016	Échelle du cadre
+2017	SÉLECTION DU CADRE
+2020	Source et visibilité du cadre
+2025	Styles de bordure (cadre, ressource, auras)
+2029	Libre
+2030	Libre (Maj-glisser)
+2031	Libre / Total
+2035	Opacité des lignes d'amis
+2036	Amical
+2039	Contour des noms amicaux
+2041	Taille des noms amicaux (mode barre)
+2042	Taille des noms amicaux (nom seul)
+2043	Noms amicaux
+2045	Taille des noms de PNJ amicaux
+2046	Joueur amical
+2048	Les unités amicales prennent aussi la couleur de leur niveau, au lieu de l'or.
+2050	Blason des amis
+2052	Lignes max d'amis
+2053	Bouton des amis en ligne
+2055	Depuis le bord inférieur
+2056	Depuis la gauche
+2059	Depuis le bord supérieur
+2063	Complet (12345)
+2064	Barre pleine au repos
+2065	Export complet
+2066	Couleur pleine vie
+2078	Échelle du texte du jeu
+2079	Manette
+2080	Écart
+2083	Couleur de l'écart
+2086	Texture de la barre de GCD
+2087	Texture de l'anneau de GCD
+2089	GearScore dans les infobulles
+2090	La ligne joueur de GearScoreLite la remplace lorsqu'il est activé.
+2100	Progression du temps de recharge global
+2105	Réglages globaux > Style définit l'apparence de toute l'interface ou de chaque module.
+2106	Globaux
+2109	Texture de la ligne de lueur
+2110	Réglages de lueur
+2111	Style de lueur
+2112	MODÈLE DE LUEUR
+2113	Faire briller les améliorations que vous pouvez purger ou voler
+2116	Brille quand une aura a 30 % ou moins de sa durée restante.
+2117	Lueur quand prêt
+2118	Lueur quand prêt et utilisable
+2119	Lueurs
+2120	Fait briller les boutons d'action (barres EUI, Blizzard et ElvUI) tant qu'une aura est active ou absente.
+2121	Brille durant les 30 derniers % de la durée.
+2122	Lueurs en combat uniquement
+2123	Lueurs définies par entrée, que le modèle ne modifie jamais
+2124	Les lueurs définies par icône, indicateur ou filtre gardent leurs propres réglages.
+2125	Fait briller les améliorations que vous pouvez purger ou voler.
+2126	Fait briller les améliorations que vous pouvez purger ou voler. Les améliorations en surbrillance passent en tête de ligne et ont leur propre nombre d'Améliorations max.
+2130	Aller aux réglages
+2132	Les réglages de bordure dorée ont des priorités. Survolez l'icône d'info pour les détails.
+2133	Filtre des vendeurs d'or
+2151	Griser hors combat
+2153	Grille
+2154	Colonnes de la grille
+2160	Fouillis au sol - réduit à 1\n
+2163	groupe
+2169	Chat de groupe et de guilde
+2170	Grouper l'Armurerie par emplacement
+2171	Automatisation de groupe
+2172	Grouper par catégorie
+2174	Taille du texte d'alerte de mort du groupe
+2176	Disposition du groupe
+2177	Limite de groupes
+2179	Taille du numéro de groupe
+2180	Numéros de groupe
+2181	Choix de jet de groupe
+2182	SÉLECTION DU GROUPE
+2185	Les barres groupées s'empilent et partagent un seul déplaceur.
+2186	REGROUPEMENT
+2187	Groupes en largeur
+2188	Groupes en hauteur
+2190	Croissance 
+2192	Croissance centrée horizontale
+2193	Croissance centrée verticale
+2195	sens de croissance
+2199	Agrandit la fenêtre des sacs (plus de colonnes et plus haute) pour que tous les emplacements tiennent sans défilement.
+2201	Croissance
+2206	Rang de guilde
+2209	Couleur demi-vie
+2213	Position du bonheur
+2214	Filtre des morts Hardcore
+2217	A l'aggro (aggro de tank classique)
+2218	A une durée
+2220	Pourcentage de la ligne de repère
+2221	Lignes de repère
+2222	Mode des repères
+2223	Valeurs des repères
+2229	Couleur en-tête / pied
+2230	Opacité en-tête / pied
+2231	Couleur de bordure de l'en-tête
+2233	Couleur de l'en-tête
+2234	Taille de police de l'en-tête
+2236	Couleur du texte de l'en-tête
+2237	Taille du texte de l'en-tête
+2245	Prédiction des soins et résurrections
+2246	PRÉDICTION DES SOINS
+2248	Texture de prédiction des soins
+2249	Unités de rencontre soignables (boss1-4), par exemple Valithria Marcherêve.
+2250	MANA DES SOIGNEURS
+2251	Affichage du mana des soigneurs
+2252	Taille du texte du mana des soigneurs
+2253	Aperçu soigneur
+2255	Soigneurs uniquement
+2257	Soins / défensifs / externes ; ajoutez d'autres améliorations manuellement
+2259	Les soins excluent les soins en excès et les boucliers déduits.
+2263	vie
+2271	VIE ET BARRE D'INCANTATION
+2272	Textures de vie et de barre d'incantation
+2273	VIE ET RESSOURCE
+2274	Barres de vie et de ressource
+2277	Textures de barre de vie et d'absorption
+2282	Barre de vie pour chaque familier ennemi sous son maître. Clic gauche pour cibler, clic droit pour focaliser.
+2286	Couleur de vie
+2287	Texte numérique de vie
+2289	Couleur du texte de vie
+2290	Couleur perso du texte de vie
+2294	Décalage X du texte de vie
+2295	Décalage Y du texte de vie
+2296	Texture de vie
+2299	Textures de vie, incantation, absorption et surbrillance
+2300	Texte de vie, ressource, barre d'incantation et auras (par unité)
+2301	Texte de vie, ressource, ressource de classe, incantation et barre de totems
+2304	Pierres de foyer
+2307	Décalage de hauteur
+2308	détenu par '%s'
+2312	Donjons héroïques
+2314	Frappe héroïque, Enchaînement, Mutiler ou Attaque du raptor en file.
+2318	Masqué
+2319	masqué
+2320	Masqué en combat
+2321	Masqué en arène
+2322	Journal des messages masqués
+2323	Masqué pendant une barre d'incantation.
+2327	Masquer les boutons d'addons
+2328	Masquer tous les objectifs
+2329	Masquer les sacs de banque dans la barre latérale
+2330	Masquer les cadres d'arène Blizzard
+2331	Masquer l'art des barres Blizzard
+2332	Masquer le cadre des totems Blizzard
+2333	Masquer la bordure
+2337	Masque les phrases courantes en anglais et en portugais de recrutement de guilde ou de recherche de guilde dans le chat public. Les annonces de raid comme <Guild> LF heal ICC sont conservées. Nécessite Chat public ci-dessus.
+2339	Masquer les icônes de rôle DPS
+2340	Masquer les emplacements vides en groupe
+2342	Masquer les barres d'info ennemies hors combat
+2344	Masque les annonces de vente d'or contenant un site web ou un prix en argent réel, y compris celles comme sell 5000 G = 19 Web. Activé par défaut. Utilise Chat public, Chat de groupe et de guilde et Chuchotements reçus ci-dessus.
+2346	Masquer l'aperçu de prédiction des soins
+2347	Masquer la barre de vie
+2350	Masquer en forme d'ours
+2351	Masquer en formes de lanceur de sorts
+2352	Masquer en forme de félin
+2356	Masquer en instance
+2357	Masquer en forme de sélénien
+2358	Masquer en JcJ
+2360	Masquer les lueurs inactives (%d)
+2364	Masque les messages contenant un mot ou une phrase personnalisés, dans les portées choisies ci-dessus. Fonctionne indépendamment du filtrage des messages répétés.
+2365	Masquer les objets manquants
+2366	Masquer en recharge
+2367	Masquer en recharge (garder la place)
+2372	Masque les annonces de hauts faits des joueurs et de guilde. Vos propres hauts faits restent visibles.
+2373	Masque les annonces du chat public contenant des mots entiers comme WTS, WTB, WTT, LFW, selling, buying, vendo ou compro. Nécessite Chat public ci-dessus. Ne masque pas tout le canal Commerce.
+2375	Masque les messages répétés dans la fenêtre de répétition. Vos propres messages sont toujours affichés. Nécessite Activer le chat.
+2377	Masquer les icônes de rôle en combat
+2379	Masque les annonces de mort du serveur comme \"Nom le Guerrier gnome de niveau 11 a été tué par ... à Marche de l'Ouest\". Fonctionne dans toutes les fenêtres de chat, indépendamment des types de chat ci-dessus.
+2382	Masquer l'aperçu du coût des sorts
+2383	Masquer le balayage
+2384	Masque le contour de 1 pixel autour de la barre.
+2385	Masque le badge de faction des PNJ de faction comme les gardes.
+2388	Les masquer au lieu de les afficher
+2390	Masquer la barre de titre
+2392	Masquer les zéros finaux
+2393	Masquer les tutoriels
+2395	Masquer les entrées inutilisables
+2400	Masquer quand prêt
+2401	Masquer quand prêt (garder la place)
+2402	Masquer en vol à dos de dragon
+2403	Masquer tant que cette condition est vraie
+2409	Masque les cadres d'ennemis d'arène par défaut lorsque ceux-ci sont activés.
+2411	Masque l'en-tête Objectifs et son bouton de réduction en haut du suivi.
+2412	Masque l'en-tête Objectifs et son bouton de réduction en haut du suivi. Lorsqu'il est affiché, il utilise la Couleur de l'en-tête avec un séparateur dans la Couleur de ligne.
+2414	Masque le balayage et garde le chrono.
+2416	Masque les fins séparateurs entre les messages, le champ de saisie et la barre latérale.
+2421	Surligner le dernier tick
+2422	Surligner la cible
+2424	Maintenez une touche assignée, pointez ou faites défiler pour choisir, puis relâchez pour lancer. Échap annule.
+2425	Maintenez une touche pour ouvrir un menu d'actions ; pointez ou faites défiler pour choisir, relâchez pour lancer.
+2426	Maintenez Maj et faites glisser les boutons de ligne pour les ajuster. Réinitialiser la position des boutons les replace.
+2427	Maintenez Maj pour retirer des actions des barres verrouillées.
+2428	Maintenez Maj pour revoir la vérification de rôle de l'Outil Donjons
+2429	Maintenez Maj pour défiler jusqu'en haut ou en bas.
+2431	Maintenez la touche pour ouvrir, relâchez pour lancer. Le mode bascule garde le menu ouvert : la touche Sélection lance, la touche du menu ou Échap ferme.
+2432	Fige le bloc à cette largeur et coupe le texte plus long, pour qu'un plugin dont la longueur du texte change ne décale jamais les blocs voisins. Zéro adapte le bloc au texte actuel du plugin.
+2435	Sceau de sagesse (paladin Sacré)
+2440	Icône d'honneur
+2441	Portrait d'honneur
+2442	Horde
+2446	Disposition horizontale
+2447	Cadres de groupe horizontaux
+2450	Maison
+2451	Taille du texte de la barre de faveur de maison
+2452	Texture de la barre de faveur de maison
+2458	DÉTAIL AU SURVOL
+2459	Détail au survol
+2460	Couleur de survol
+2462	Survolez pour voir les membres de guilde et amis en ligne. Clic gauche sur un nom pour chuchoter, clic droit pour inviter.
+2464	Marqueurs au survol pour noms, niveaux et détails des maîtres de vol.
+2466	Survolez le calendrier pour les instances sauvegardées et l'heure du serveur.
+2467	Survolez le niveau d'objet pour voir les meilleurs objets dans vos sacs.
+2471	Jusqu'où les soins entrants peuvent dépasser la fin de la barre de vie, en pourcentage de sa longueur. 0 les garde dans la barre.
+2472	Nombre de décimales du nombre.
+2481	Il me manque des améliorations des autres
+2482	J'ai compris
+2486	Bordure d'icône
+2487	Styles de bordure d'icône (par barre)
+2490	Séparateur d'icône
+2491	Texte de durée, cumuls et raccourci d'icône (par barre)
+2492	Texte de durée, cumuls et raccourcis d'icône, et des barres de suivi
+2494	Les lueurs Effets d'icône se règlent par filtre et la Lueur de cadre par tuile sur la page Gestionnaire d'affaiblissements. Le modèle ne les modifie jamais.
+2495	Les lueurs Effets d'icône se règlent par filtre sur chaque barre de la page Barres d'auras du joueur. Le modèle ne les modifie jamais.
+2496	La Lueur d'icône se règle par indicateur sur la page Gestionnaire d'améliorations. Le modèle ne la modifie jamais.
+2499	INDICATEURS D'ICÔNE
+2500	Décalage Y de l'icône
+2502	Opacité de l'icône
+2509	Icône X
+2510	Icône Y
+2514	Icônes sur le membre visé par l'incantation d'un ennemi. La 3.3.5 n'a pas de cible de sort, donc la victime est la cible du lanceur, et seuls les ennemis ciblés par quelqu'un du groupe (ou votre cible, focalisation ou survol) sont vus.
+2515	Icônes par catégorie de contrôle : vert = la prochaine dure moitié moins, jaune = un quart, rouge = immunisé. Se réinitialise 18 secondes après la fin de la dernière.
+2516	Icônes par indicateur
+2517	Icônes affichées
+2518	FONDU AU REPOS
+2519	Fondu au repos
+2520	idTip entre en conflit avec les infobulles d'EllesmereUI. Désactivez l'addon idTip pour rester compatible.
+2521	Ignorer
+2522	Ignorer le temps de recharge global
+2523	NIV. OBJ.
+2524	niv. obj.
+2525	Diablotin
+2527	Importer et recharger
+2531	Importer toutes les données du compte
+2535	Importe toute la configuration de priorités du partageur : valeurs de priorité par spécialisation et conditionnelles, groupes, leurs dispositions personnalisées du Mode Déverrouillage et priorités du Gestionnaire d'améliorations. Cela remplace TOUTES vos priorités. Désactivé = garder les vôtres intactes.
+2538	Importants et les vôtres
+2540	Importants uniquement
+2541	Importants ou les vôtres
+2543	Configurations de talents améliorées
+2545	en combat
+2546	En groupe
+2547	En instance
+2550	En raid
+2552	Dans l'Armurerie et les vues Armes / Bijoux, Armure et Ensembles d'objets, regroupe les objets sous des sous-titres par emplacement.
+2553	UTILISÉ
+2554	Utilisé
+2555	En véhicule
+2556	Inactif sur WoW Forever : ce personnage utilise %s
+2560	Inclut les polices, couleurs personnalisées, mode sombre, couleur d'accent et échelle de l'interface dans cet export. Désactivé = seuls les réglages des modules choisis sont exportés, en gardant l'apparence globale du destinataire.
+2561	Inclure le trousseau
+2562	Inclure les assistants principaux
+2564	Inclure les classes de soigneur non assignées
+2565	Inclut vos réglages Interface Blizz améliorée des onglets Habillage des fenêtres et Infobulles, menus et fenêtres. Ils sont communs au compte : si l'importateur accepte, ils remplacent ses réglages sur TOUS ses profils.
+2566	Inclut toute votre configuration de priorités : valeurs de priorité par spécialisation et conditionnelles, groupes, leurs dispositions personnalisées du Mode Déverrouillage et priorités du Gestionnaire d'améliorations. À l'import, cela remplace entièrement les priorités du destinataire.
+2568	Inclure :
+2569	AFFAIBLISSEMENTS INCLUS
+2570	Les affaiblissements inclus s'affichent en plus de votre sélection du Filtre des affaiblissements (sauf s'il est réglé sur Auras suivies uniquement).
+2571	Inclut les affaiblissements lancés par votre familier.
+2572	Inclut les polices de LibSharedMedia
+2573	Soins entrants via LibHealComm-4.0 (inclus). Seuls les soins des joueurs utilisant un addon HealComm sont vus.
+2574	Résurrection entrante
+2575	Chuchotements reçus
+2579	Statistiques de combat indépendantes pour Wrath. Aucune dépendance à Details.
+2581	Indicateur 
+2582	Couleur de l'indicateur
+2583	Filtre de l'indicateur
+2584	Disposition de l'indicateur
+2585	Nom de l'indicateur
+2590	Hériter
+2592	Marge intérieure X
+2593	Ombre intérieure
+2597	Intérieur
+2605	Inspection et marchand
+2606	Enchantements à l'inspection
+2607	Niveau d'objet à l'inspection
+2608	Niveaux d'objet à l'inspection
+2613	Instances + combat
+2614	Incantations instantanées uniquement
+2617	Panneaux d'interface
+2618	Annonce d'interruption
+2623	Interrompu / échoué
+2625	Incantation interruptible.
+2626	Couleur interruptible
+2629	Chaîne invalide
+2632	Cela réduit les performances et doit rester désactivé sauf pour capturer un rapport de bug.
+2633	Boutons d'objet
+2634	Colonnes d'objets dans la fenêtre des sacs.
+2635	Colonnes d'objets dans la fenêtre de banque.
+2636	Recharge d'objet
+2638	Réglages du nombre d'objets
+2640	Texte du nombre, niveau d'objet, catégorie et étiquette
+2641	Nombre d'objets
+2646	Les préréglages d'objets affichent la potion suivante de la même famille quand l'une est épuisée.
+2654	Garder
+2656	Garder les morts à partir du niveau
+2658	Garder les miens
+2660	Garde la couleur de texte du jeu pour chaque canal.
+2661	Garde l'icône visible (assombrie) tant que l'aura est absente.
+2662	Garde la couleur de classe ou de réaction de l'unité sur l'anneau en Mode sombre au lieu de votre couleur de classe.
+2664	Gardé 
+2665	Touche déjà assignée
+2666	Touche assignée : 
+2667	Assignation de touche annulée
+2668	Assignation de touche expirée
+2670	Capture de touche
+2672	raccourci
+2674	Couleur du raccourci
+2675	Position du raccourci
+2676	Taille du raccourci
+2677	Texte du raccourci
+2679	Texte raccourci, macro, charges et recharge (par barre)
+2680	Texte raccourci, macro, nombre et recharge (par barre)
+2683	Raccourcis
+2685	Taille du texte de la fenêtre de clé
+2695	Étiquette
+2704	Nom de famille
+2705	Couleur du dernier tick
+2707	Dernière monture utilisée
+2710	Superposition de latence (file de sorts)
+2711	Couleur de latence
+2712	Étiquettes de latence
+2713	Texte de latence
+2716	couche
+2722	Icône de chef en combat
+2723	Position de l'icône de chef
+2729	Laissez un raccourci vide pour le supprimer.
+2731	Quittez le combat pour activer la visite.
+2733	Sortie de combat
+2738	À gauche du curseur
+2740	À gauche de la fenêtre
+2741	Bord gauche de l'écran
+2743	Couleur de classe du texte gauche
+2747	Faire glisser la fenêtre des sacs au clic gauche la déplace sans maintenir Maj.
+2752	Améliorations de soins mineures
+2754	Indicateur de niveau et d'élite
+2755	Taille du niveau
+2756	Réglages du texte de niveau
+2757	Texte de niveau : couleur de difficulté
+2758	Texte de niveau : inclure les amicaux
+2759	Niveau supérieur
+2760	Niveau | Nom
+2761	LibDeflate non disponible
+2762	Roi-liche
+2763	Thème du Roi-liche
+2764	Place les barres d'incantation du joueur, de la cible, de la focalisation et des boss au-dessus des autres cadres pour qu'elles ne soient jamais cachées derrière.
+2768	Illumine le bouton du sort que vous incantez avec l'effet de surbrillance.
+2773	Couleur de ligne
+2778	Détail des liquides - désactivé\n
+2779	Liste les catégories d'objets dans une barre latérale de banque comme celle des sacs. En choisir une filtre la grille sur cette catégorie.
+2780	Hauteur des lignes de liste
+2781	Barre d'info d'aperçu en direct
+2783	Chargement des maisons...
+2786	Localisation
+2788	Verrouiller le glisser d'actions
+2791	Verrouiller la position et désactiver le clic
+2792	Verrouiller la position de la fenêtre
+2794	Enregistrer les donjons
+2795	Enregistrer les raids
+2796	Journalisation
+2797	journalisation
+2798	La journalisation lancée manuellement reste sous votre contrôle
+2800	Butin
+2801	Ramasse tout instantanément, même sans fouille automatique. Maintenez Maj en ramassant pour afficher la fenêtre de butin.
+2807	Couleur de vie basse
+2809	Alerte de place insuffisante
+2810	Limite inférieure (30+)
+2811	Réduction d'opacité
+2812	Réduire l'opacité en recharge
+2814	Texte du chrono M+, objectifs, paliers et barre de sorts
+2816	Nom / index de macro
+2817	Texte de macro
+2826	Décalage X du courrier
+2827	Décalage Y du courrier
+2829	Boîte aux lettres : tout ouvrir
+2830	Boîte aux lettres : bouton Tout ouvrir
+2832	Hauteur du chat principal
+2833	Largeur du chat principal
+2835	Auras des cadres principaux
+2837	Couleur de main droite
+2838	CADRES DES TANKS PRINCIPAUX

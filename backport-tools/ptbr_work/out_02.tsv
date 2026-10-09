@@ -1,0 +1,350 @@
+700	Tamanho da Borda
+701	Tamanho da borda em pixels; em estilos com textura, é o tamanho da arte da borda.
+702	Estilo da Borda
+703	O Estilo da Borda só é configurável quando a Barra de Poder está separada. Barras de Poder anexadas sempre usam Sólido.
+704	Estilos de Borda (por barra)
+705	Textura da Borda
+706	Espessura da Borda
+707	Borda Envolve o Ícone
+708	Chefe
+709	Filtro de Bônus de Chefe
+710	Combate contra Chefe
+711	Filtro de Penalidades de Chefe
+712	Ícone de Penalidade de Chefe
+713	Quadros de Chefe
+714	Auras dos Quadros de Chefe
+715	Tamanhos de Texto dos Quadros de Chefe
+716	Ícone de Chefe
+717	Sincronia de boss mod: líder/assistente da raide ou líder do grupo
+718	Auras Rastreadas de Chefe
+719	Ambos
+720	Base
+721	Espaço Inferior
+722	Barra de Informações Inferior
+723	Inferior Esquerdo
+724	Tamanho do Texto Inferior Esquerdo
+725	Inferior Esquerdo, para a Direita
+726	Inferior Esquerdo, para Cima
+727	Inferior Direito
+728	Tamanho do Texto Inferior Direito
+729	Inferior Direito, para a Esquerda
+730	Inferior Direito, para Cima
+731	Borda Inferior da Tela
+732	Espaçamento Inferior
+733	De Baixo para Cima
+734	Arena de Boxe
+735	Chave
+736	Textura da Barra de Detalhamento
+737	Posição do Detalhamento
+738	Escala do Detalhamento (%)
+739	Mestre Cervejeiro
+740	Linha brilhante na borda do giro (requer um cliente com Cooldown:SetDrawEdge).
+741	Brilho
+742	Plugin Broker
+743	Explorar predefinições da comunidade.
+744	Configurações do Texto Central da BTB
+745	Configurações do Texto Esquerdo da BTB
+746	Configurações do Texto Direito da BTB
+747	Bônus
+748	bônus
+749	Bônus / Penalidade
+750	Barra de Bônus
+751	barra de bônus
+752	Lista Negra de Bônus
+753	Exibição de Bônus
+754	Tamanho da Duração dos Bônus
+755	Filtro de Bônus
+756	Opções do Filtro de Bônus
+757	FILTROS DE BÔNUS
+758	Brilho de Bônus
+759	Ícones de Bônus por Linha
+760	Gerenciador de Bônus
+761	Alterações do Gerenciador de Bônus nesta página se aplicam só a esta substituição.
+762	Brilhos de Ícone do Gerenciador de Bônus
+763	Texto do Gerenciador de Bônus (por indicador)
+764	Movedor de Bônus
+765	Bônus ou penalidade a observar.
+766	Posição dos Bônus
+767	Predefinição de Bônus
+768	Configurações de Bônus
+769	Bônus exibido como estado ativo (0 = bônus de mesmo nome).
+770	Tamanho dos Bônus
+771	Tamanho dos Acúmulos de Bônus
+772	Tamanho do Texto dos Bônus
+773	Bônus que marca este feitiço como ativado (0 = lista interna).
+774	Bônus
+775	BÔNUS E PENALIDADES
+776	Bônus e Penalidades
+777	Os bônus entram na pilha de penalidades como primeiras linhas; as penalidades continuam na linha seguinte e se movem conforme as linhas de bônus mudam.
+778	Local dos Bônus
+779	Bônus que você pode roubar ou expurgar
+780	CORREÇÕES DE BUGS
+781	BuildInlineCog: disabled precisa de um disabledTooltip
+782	Burne
+783	Botão
+784	Botão 4
+785	Botão 5
+786	Fundos dos Botões
+787	Distância da Linha de Botões
+788	Posição da Linha de Botões
+789	Espaçamento da Linha de Botões
+790	Tamanho do Botão
+791	Espaçamento dos Botões
+792	Button1
+793	BV
+794	BWCustomBar 
+795	c
+796	C'Thun
+797	C: 
+798	Calendário
+799	BARRA DE INVOCAR TOTEM
+800	Benefícios do Acampamento
+801	Cancelar
+802	cancelar
+803	Cancelar Forma
+804	Tecla de cancelar: 
+805	Não é possível abrir as opções durante o combate.
+806	Não é possível abrir as opções em combate
+807	Não é possível recarregar durante o combate. Digite /reload.
+808	Não é possível alternar o Modo de Desbloqueio durante o combate.
+809	Não Pode Ser Usado em Combate
+810	Barra de Captura e Status do Bate-papo de GM
+811	As substituições capturadas referenciam módulos desativados (%s). Ative-os e recarregue antes de promover, ou essas configurações serão perdidas.
+812	lançamento
+813	Progresso de Lançamento / Canalização
+814	Lançar Ações ao Pressionar a Tecla
+815	Barras de Lançamento e GCD
+816	Fundo do Lançamento
+817	BARRA DE LANÇAMENTO
+818	Barra de Lançamento
+819	Altura da Barra de Lançamento
+820	Tamanho do Texto da Barra de Lançamento
+821	Textura da Barra de Lançamento
+822	Tamanho do Cronômetro da Barra de Lançamento
+823	Largura da Barra de Lançamento
+824	Deslocamento Y da Barra de Lançamento
+825	Cor do Lançamento
+826	CORES E EFEITOS DE LANÇAMENTO
+827	Ícone do Lançamento
+828	Tamanho do Nome do Lançamento
+829	Lançar ao Pressionar a Tecla
+830	Texto de Lembrete de Lançamento
+831	Textura do Anel de Lançamento
+832	Som de Lançamento
+833	Faísca do Lançamento
+834	Lançar Feitiço
+835	Giro do Lançamento
+836	Tamanho do Alvo do Lançamento
+837	Tamanho do Texto do Lançamento
+838	Textura do Lançamento
+839	Cronômetro do Lançamento
+840	Contorno do Cronômetro do Lançamento
+841	Tamanho do Cronômetro do Lançamento
+842	Barra de Lançamento
+843	Forma de Felino
+844	Cat Meow
+845	Cat Meow 2
+846	Veja tudo o que você pode ter perdido
+847	Categorias
+848	Categoria
+849	Barra Lateral de Categorias
+850	Tamanho do Título da Categoria
+851	Tamanho da Duração de CC
+852	Opacidade do Giro de Recarga
+853	Barras do CDM
+854	Ícones do CDM
+855	CDM: 
+856	GATILHOS DE CELEBRAÇÃO
+857	Celestial
+858	Cenarius
+859	Centro
+860	Centralizar na Tela
+861	Retícula Central
+862	Texto Central
+863	Configurações do Texto Central
+864	Tamanho do Texto Central
+865	Centralizado
+866	Cadeia de Raios
+867	Campeão
+868	Changa
+869	Altere os atalhos fora de combate
+870	Alterar visibilidade da vida fora de combate
+871	Mudar Especialização
+872	Mudar Especialização
+873	As alterações se aplicam fora de combate.
+874	Alterações aqui editam o padrão compartilhado; substituições mantêm seus próprios valores.
+875	Alterações feitas no OneBag afetarão a posição dos itens nas bolsas padrão da Blizzard
+876	Mudar a âncora do cursor requer recarregar a interface para ter efeito.
+877	Mudar a origem do quadro requer recarregar a interface para ter efeito.
+878	Mudar o idioma requer recarregar a interface.
+879	Mudar o estilo requer recarregar a interface para aplicar.
+880	Pulsos de Canalização
+881	PULSOS DE CANALIZAÇÃO E LATÊNCIA
+882	Seta do Caos
+883	Personagem
+884	Mira do Personagem
+885	APRIMORAMENTO DO PERSONAGEM
+886	Ficha do Personagem
+887	Melhorias da Ficha do Personagem
+888	Personagens
+889	Personagens (cabeçalho) navega por bolsas e bancos salvos.
+890	Bate-papo
+891	Texturas de fundo e abas do bate-papo
+892	BALÕES DE FALA
+893	Balões de Fala
+894	Contagem Regressiva no Bate-papo
+895	Extras do Bate-papo
+896	Fonte do Bate-papo
+897	Tamanho da Fonte do Bate-papo
+898	Modo de Contorno do Bate-papo
+899	Opções do Filtro de Spam do Bate-papo
+900	Janelas, abas e campo de entrada do bate-papo
+901	Chatter
+902	Chattynator
+903	Marcar Todos
+904	Verificar DPS
+905	Verificar Curadores
+906	Marque ícones para mostrá-los; arraste as linhas para reordenar.
+907	Verificar Tanques
+908	Botões marcados saem do menu suspenso e ficam na linha de botões.
+909	Torso
+910	Chi
+911	Chonky Character Sheet
+912	Chonky Character Sheet conflita com a Ficha do Personagem do EllesmereUI. Desative o Chonky ou o visual da Ficha do Personagem nas configurações de Blizzard UI Enhanced.
+913	Escolha um texto para este espaço primeiro.
+914	Escolha um elemento para este espaço primeiro.
+915	Escolha EllesmereUI, Blizzard ou Clássico.
+916	Escolher Quadro...
+917	Escolha as listas de feitiços em Filtros de Auras
+918	Escolher textura por barra
+919	Escolha quais addons importar. Addons não incluídos usarão as configurações do seu perfil ativo no novo perfil.
+920	Escolha quais addons incluir no perfil exportado. Marque tudo para exportar o perfil completo.
+921	Escolha quais addons você quer ativar. Você pode mudar isso depois no painel de configurações do EllesmereUI.
+922	Escolha quais dicas aparecem ao passar o mouse. Afeta todos os quadros de unidade, incluindo os de chefe.
+923	ESCOLHA SEU VISUAL
+924	Escolher...
+925	Cinzel Decorative
+926	Cinzel Decorative.ttf
+927	Círculo
+928	círculo
+929	Círculo e Retrato desenham ícones redondos; Diamante, Hexágono e Escudo recortam o ícone no formato. Quadrado e Quadrado Curvo contornam o ícone quadrado. O contorno usa o Tamanho da Borda e a cor abaixo.
+930	Opacidade do Círculo
+931	Classe
+932	classe
+933	Lembretes de Classe e Consumíveis
+934	Cor da Classe
+935	Escurecer Cor da Classe
+936	Nomes com Cor da Classe
+937	Cor da Classe
+938	Fundo com Cor da Classe
+939	Borda com Cor da Classe
+940	Preenchimento com Cor da Classe
+941	Vida com Cor da Classe
+942	Barra de Vida com Cor da Classe
+943	Nomes com Cor da Classe
+944	CORES DAS CLASSES
+945	Ícone da Classe
+946	Ícone da classe para amigos online; amigos offline mostram um ícone offline esmaecido.
+947	Configurações do Ícone da Classe
+948	Lado do Ícone da Classe
+949	Estilo do Ícone da Classe
+950	Tema do Ícone da Classe
+951	Ícones de Classe
+952	Reativo à Classe
+953	RECURSO DE CLASSE
+954	Recurso de Classe
+955	BARRA DE RECURSO DE CLASSE
+956	CORES DO RECURSO DE CLASSE
+957	O Recurso de Classe deve estar em Moderno
+958	Posição do Recurso de Classe
+959	Tamanho do Texto do Recurso de Classe
+960	Estilo da Classe
+961	Tema da Classe
+962	Zoom da Classe
+963	Barras de Classe, Poder e Vida
+964	Clássico
+965	Clássico (Vida %)
+966	Faixa Clássica
+967	Estilo de Barra Clássico
+968	Tamanho do Quadro Clássico
+969	Estilo de Ícone Clássico
+970	Estilo Clássico
+971	Barras em Estilo Clássico
+972	Aggro de Tanque Clássico
+973	Classic WoW
+974	Brilho Classic WoW
+975	Classic WoW UI
+976	Moldura da barra de lançamento do Classic WoW UI.
+977	O Classic WoW UI usa o anel vanilla, a faixa de zona, os botões de zoom e indicadores com borda de anel em um mapa redondo.
+978	Limpo (Plano)
+979	Renovações visuais limpas e bonitas para elementos da interface da Blizzard.
+980	Placas de identificação limpas e leves com personalização infinita.
+981	Limpar
+982	Limpar e Desativar Esta Paleta
+983	Limpar Histórico de Combate...
+984	Limpar Atalhos da Paleta
+985	Limpar Teclas de Seleção e Cancelar
+986	Cor de Cutilada na Fila
+987	clique
+988	Clique em um bloco para rolar até suas configurações. Clique direito para removê-lo.
+989	Clique num jogador: detalhes dos feitiços. Shift-clique: janela completa.
+990	Ação do Clique
+991	Clique em um endereço http, https ou www para copiá-lo.
+992	Clique em qualquer elemento\npara ancorar nele
+993	Clique em qualquer elemento\npara igualar a altura
+994	Clique em qualquer elemento\npara igualar a largura
+995	Clique em qualquer elemento\npara defini-lo como Âncora Reserva
+996	Clique em qualquer elemento\npara defini-lo como Âncora Substituta
+997	Clique em qualquer novidade para ir direto à configuração
+998	Clique em Atribuir Tecla e pressione seu atalho.
+999	LANÇAR COM CLIQUE
+1000	Lançar com Clique
+1001	Clique edita - Arrastar reordena - Clique direito remove - Solte para adicionar
+1002	Clique nos elementos para rolar até suas opções e destacá-las
+1003	Clique no link e use Ctrl+C para copiá-lo
+1004	Clique Através
+1005	Clique para escolher uma gema das suas bolsas
+1006	Clique para editar. Clique do meio para remover.
+1007	Clique para rolar. Clique direito para remover.
+1008	Clique para Definir Tecla
+1009	Clicar para usar está desativado em combate
+1010	URLs Clicáveis
+1011	Clique
+1012	O Clique pode gerenciar quadros com os atalhos internos desligados
+1013	O Clique controla o lançamento com clique nos mesmos Quadros de Raide que o HoverCast do EllesmereUI, então eles conflitam. Desative o addon Clique para usar o HoverCast.
+1014	Relógio
+1015	RELÓGIO E ZONA
+1016	Formato do Relógio
+1017	Relógio ao Passar o Mouse
+1018	Deslocamento X do Relógio
+1019	Deslocamento Y do Relógio
+1020	Posição do Relógio
+1021	Escala do Relógio
+1022	Texto de relógio, zona, coordenadas, FPS e dificuldade
+1023	Fechar
+1024	Perto do Aggro
+1025	Fechar Janela
+1026	Tiro da Naja
+1027	Cor da Moeda
+1028	Ícones de Moedas
+1029	Recolher
+1030	Ícones do Menu Recolhido
+1031	COLEÇÃO E HISTÓRICO
+1032	Coleções
+1033	Visuais de Coleções e Guarda-roupa
+1034	Cor
+1035	Colorir Chefes
+1036	Colorir pela Recarga da Interrupção
+1037	Colorir se Interrompível
+1038	Colorir por Ameaça
+1039	Colorir AM/PM do Relógio
+1040	Colorir Bordas Personalizadas
+1041	Colorir Letra da Dificuldade
+1042	Colorir Elites em Instâncias
+1043	Colorir Sufixo FPS/MS
+1044	Colorir Espaços
+1045	Colorir Fora de Alcance
+1046	Seletor de Cores
+1047	Colorir o Texto
+1048	Colore a barra de vida pela vida restante, em vez de uma cor fixa. Clássico vai de verde com vida cheia, passando por amarelo, até vermelho quando vazia. Cores Personalizadas mescla as três amostras desta linha -- cheia (100%), metade (50%) e vazia (0%). Reativo à Classe mostra a cor da classe com vida cheia, passando para as cores de 50% e 0% conforme a unidade sofre dano. Desligado mantém as amostras de Cor de Preenchimento fixas; em ambos os casos o Gradiente abaixo ainda se aplica, partindo da cor escolhida aqui.
+1049	CORES

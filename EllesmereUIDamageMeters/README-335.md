@@ -1,5 +1,16 @@
 # EllesmereUI Damage Meters — Wrath 3.3.5a — 0.8
 
+Versão standalone (sem bump): `backport-tools/build_standalone.py --zip` gera a
+pasta `EUIStandaloneDamageMeters`, só o Damage Meters (1.6 MB): sem Core, sem
+painel do EUI e sem Unlock Mode. Um shim pequenino
+(`backport-tools/standalone_src/DamageMeters_Standalone.lua`) cuida do ciclo da
+addon, das configurações (em `EUIStandaloneDamageMetersDB`) e de uma janela de
+configurações própria (`/edm` ou a engrenagem) com as abas Windows, Spell History
+e Combat Data. As janelas se movem arrastando o cabeçalho. Ao lado da suite fica
+inerte, com um aviso no chat. Em BAR TEXT há a opção Font (só no standalone):
+Expressway ou qualquer fonte do LibSharedMedia, com prévia na lista; o
+LibSharedMedia vai junto e também libera as texturas de barra.
+
 0.8: absorções consumidas por escudos observados contam em Healing Done/HPS
 para o dono identificado, com métrica Absorbs Done e detalhes por alvo/magia.
 Rastreia Power Word: Shield, Divine Aegis, proc de Sacred Shield, escudos pessoais

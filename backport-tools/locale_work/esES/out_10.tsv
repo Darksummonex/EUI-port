@@ -1,0 +1,291 @@
+4936	Dos manos
+4937	Escribe /reload en el chat para aplicar.
+4938	Escribe \"%s\" para activar:
+4939	Escribe una tecla como ALT-X. Usa el objeto de tu misión seguida (o el primer objeto de misión) y solo se asigna mientras exista uno. Se actualiza fuera de combate; déjalo vacío para desactivar.
+4940	Escribe un ID de hechizo y pulsa Intro para recibir un recordatorio cuando falte ese beneficio.\nLos ID desconocidos se ignoran.
+4941	Posición del icono de tipo
+4942	Tipo: 
+4943	Tipografía del reloj del cronómetro M+. El resto de textos de Mítica+ usan la fuente del módulo.
+4944	Tipografía del seguimiento de misiones. Esta elección local del módulo tiene prioridad sobre la fuente del módulo de arriba.
+4945	TIPOGRAFÍA
+4949	Color de acento de la UI
+4950	Reestilizar addons de la UI
+4951	Escala de la UI
+4952	Escala de la UI cambiada
+4953	Problema de escala de la UI: el perfil se creó al %1$d%%, la tuya es %2$d%%
+4954	Escala de la UI no coincide
+4955	Opciones de escala de la UI
+4956	Escala de la UI establecida en 0.5333. Se recomienda recargar.
+4957	Estilos predefinidos de la UI
+4959	Sin asignar
+4960	Desmarcar todo
+4961	Desmarca Todos los perjuicios para elegir cómo se combinan los filtros de Mostrar.
+4962	Color del subrayado
+4963	Origen del color del subrayado
+4964	Subraya la pestaña social seleccionada con el color de acento.
+4965	Desagrupar 
+4966	Sin agrupar
+4967	Botones sin agrupar
+4969	Profano
+4970	No interrumpible
+4971	Lanzamiento no interrumpible
+4972	Color no interrumpible
+4973	Escudo no interrumpible
+4974	Color de unidad en modo oscuro
+4975	Marco de unidad
+4976	FILTROS DE AURAS DE MARCOS DE UNIDAD
+4978	Iconos de marcos de unidad
+4979	Menú de unidad
+4980	Descripción de unidad
+4981	Desconocido
+4982	Error desconocido
+4983	Macro desconocida
+4984	Tipo de perfil desconocido
+4985	Hechizo desconocido
+4986	Ilimitado
+4987	Desbloquear marcos de arena
+4988	Desbloquear posiciones de visualización
+4989	Modo desbloqueo
+4990	El Modo desbloqueo es la forma de mover y redimensionar todo en EllesmereUI, y está repleto de herramientas: anclajes, igualar ancho, anclajes de respaldo, diseños por grupo. Este vídeo te enseña a dominarlo rápido.
+4991	En el Modo desbloqueo puedes ajustar\nla posición de todos los elementos de EllesmereUI
+4992	Diseño del Modo desbloqueo
+4993	Movedores del Modo desbloqueo
+4994	Desbloquea la ventana para cerrar
+4995	Desbloqueado
+4996	Cambios sin guardar
+4997	Enemigos no vistos
+4998	Opacidad no vistos
+5000	Hasta 
+5001	Hasta 20 mascotas de banda
+5002	Intervalo de actualización (segundos)
+5003	Avisos de actualización
+5004	Actualizar grupo de sincronización
+5005	Subir
+5006	Texto en mayúsculas
+5007	Tinte de usabilidad
+5008	Usar formato de 24 horas.
+5009	Usar color de acento
+5010	Usa las flechas para mover el elemento seleccionado 1px en cualquier dirección
+5011	Usar estilo Blizzard
+5012	Usar color de clase
+5013	Usar UI de WoW Classic
+5014	Usar colores de disipación
+5015	Usar estilo EllesmereUI
+5016	Usar fuente de EUI
+5017	Usar orden extra de hechizos
+5018	Usar fondos del banco de hermandad
+5019	Usar piedra de hogar
+5020	Usar diseño de indicadores
+5021	Usar letras
+5022	Usar fuente del medidor
+5023	Usar diseño de banda
+5024	Usar hora del servidor
+5025	Usa las flechas de cada encabezado de sección para reordenar.
+5026	Usa el estilo, tamaño y color del borde de la barra de lanzamiento alrededor del icono.
+5027	Usa la ventana de bolsas de EllesmereUI en lugar de las bolsas predeterminadas. Tras desactivarla, usa /reload para devolver por completo las teclas de bolsas a las bolsas predeterminadas.
+5028	Usa la ventana de banco de EllesmereUI en lugar del marco de banco predeterminado.
+5029	Usa el color de Tiene amenaza mientras tanqueas en lugar del color de reacción normal.
+5030	Usar WoW Forever
+5031	Usado
+5032	Usado / Total
+5033	Lo usa el modo de visualización Barra de la alerta de movimiento.
+5034	Barras de información creadas por el usuario: reloj, oro, PX, micromenú y más.
+5035	Usa las texturas de monedas de Blizzard en lugar de los sufijos de letras.
+5036	Usa las auras en vivo del objetivo/mouseover y la caché de auras por GUID para otras placas identificadas.
+5037	Usa Logs/WoWCombatLog.txt
+5038	Usa eventos de combate nativos de Wrath
+5039	Usa /maintank y /mainassist de banda
+5040	Usa el color de recurso de EllesmereUI para tu clase.
+5041	Usa el color de Interrupción en reutilización mientras tu interrupción se está recargando.
+5042	Usa el color de umbral por debajo del valor en lugar de igual o por encima.
+5043	Usa el ancho amplio del seguimiento de objetivos de Wrath.
+5044	Usa tu objetivo cuando el foco no está lanzando.
+5045	Utilidad
+5046	Barra de utilidad
+5048	Valor
+5049	valor
+5050	Valor | %
+5051	ARTE VANILLA
+5053	Venganza
+5055	Separador de borde vertical
+5056	Vertical abajo
+5057	Relleno vertical
+5058	Desplazamiento vertical
+5059	Orientación vertical
+5060	Separador vertical
+5061	Espaciado vertical
+5062	Vertical arriba
+5063	Veterano
+5064	VIDEOGUÍA
+5065	Videoguía
+5066	Videoguía: Gestor de reutilización
+5067	Videoguía: Modo desbloqueo
+5068	Ver todo / Quitar anulaciones
+5069	Distancia de visión: reducida a 1\n
+5070	Ver casas
+5071	Ver equipo de EUI
+5072	Ver notas del parche
+5073	VISIBILIDAD
+5076	Visibilidad en Siempre o Nunca
+5077	GRUPOS VISIBLES
+5078	Filas visibles
+5079	Visitar
+5080	Vivificar
+5081	Voz/Canales
+5082	Abisario
+5083	Igualar An.
+5084	An. igualado
+5085	Cintura
+5087	Brujo
+5088	Piedra de alma solo de brujo
+5090	AVISO: las posiciones de los marcos pueden estar desajustadas.
+5091	AVISO: esta función requiere volver a conectarte o reiniciar WoW para surtir efecto.
+5093	Guerrero
+5094	Garganta Grito de Guerra
+5095	VER PRIMERO
+5097	Elemental de agua
+5098	Arma
+5099	Mejora de arma
+5100	Armas / Abalorios
+5101	Reinicio semanal
+5102	Bienvenido a EllesmereUI
+5103	Lo que aparece delante del número. Icono muestra el icono del personaje; las muestras de color de la izquierda lo tiñen.
+5104	Novedades de EllesmereUI.
+5105	Al surcar dragones
+5106	Al sanar
+5107	Al sanar usa tu rol o tus talentos de sanación
+5108	Sin surcar dragones
+5109	Si está activado, los recordatorios de frasco/comida/arma/veneno se siguen mostrando (atenuados) cuando no tienes un objeto que coincida en tus bolsas, como aviso para reabastecerte.\nSi está desactivado, se ocultan por completo si no llevas el objeto.
+5110	Si está desbloqueado, mantén Shift y arrastra el minimapa. La posición también está disponible en el Modo desbloqueo.
+5111	Cuando tu interrupción está en reutilización pero estará lista antes de que termine el lanzamiento enemigo, colorea la parte de la barra de lanzamiento durante la que tu interrupción estará disponible. El color desaparece en cuanto tu interrupción sale de reutilización.
+5112	Dónde se sitúa el contenido del bloque dentro de su hueco.
+5113	Dónde se sitúa la tira de iconos dentro de su hueco.
+5114	Dónde mostrar
+5115	Qué canal de audio ajusta la barra de volumen del bloque.
+5116	Qué latencia mostrar: local, mundo o ambas una al lado de otra.
+5117	Qué botones del micromenú muestra este bloque.
+5118	Qué parte de la fila permanece fija cuando aparecen y desaparecen recordatorios.
+5119	Qué secciones muestra la descripción del oro.
+5120	Qué recuento de huecos muestra el bloque.
+5121	Qué vista abren las bolsas por defecto.
+5122	Con Agrupar por categoría activado, elimina el bloque final de huecos vacíos para que la vista solo muestre objetos.
+5123	En una montura capaz de planear, incluso en tierra, donde Blizzard muestra su HUD de vigor. Surcacielos (en el aire) además requiere que estés volando.
+5124	Mientras el Modo fiesta está activo. El Modo fiesta puede iniciarse en combate (Ansia de sangre); los elementos seguros como las barras de acción mantienen entonces su visibilidad actual hasta que termine el combate.
+5125	Mientras descansas, en una ciudad o en una posada.
+5126	Mientras vas en un vehículo.
+5127	Mientras estás dentro de una casa o parcela.
+5128	Mientras lanzas, muestra en la barra el maná que costará el hechizo.
+5129	Torbellino
+5130	Acumulaciones de Torbellino
+5131	Susurrar
+5132	Sonido de susurro
+5133	Blanco
+5134	Franjas anchas
+5135	Seguimiento ancho
+5137	Ancho %
+5138	Desplazamiento de ancho
+5140	Arma Viento Furioso
+5141	Estilos de borde de ventanas y barras
+5142	Aspectos de ventanas y descripciones
+5143	ARRASTRE DE VENTANAS
+5144	Fuentes de ventana y escala del texto de descripciones
+5145	Texto del encabezado, barras y temporizador de la ventana
+5146	Nombre de la ventana
+5148	Escala de la ventana %
+5149	La escala de la ventana, el zoom de iconos y el nivel de objeto se comparten con la página Bolsas.
+5150	AJUSTES DE VENTANA
+5151	Aspectos de ventanas
+5152	Los aspectos de ventanas cambiaron para este perfil. Hay que recargar la UI para aplicarlos.
+5153	Ancho de la ventana
+5154	Ventanas
+5155	Viajero del viento
+5156	Alado
+5157	Conquista del Invierno
+5158	Con texturas por barra activadas, Textura de barra se aplica al recurso de clase.
+5159	Mundo
+5160	Canales del mundo como letras: General Ge, Trade T, LocalDefense LD, WorldDefense WD, LookingForGroup LFG.
+5161	MAPA DEL MUNDO
+5162	Mapa del mundo
+5163	Superposición del mapa del mundo: Confort > Interfaz
+5164	Marcador de mundo 1-8
+5165	Marcadores de mundo
+5166	Marcadores de mundo en el cursor
+5167	Veneno hiriente
+5170	WoW Forever, Estilo Blizzard y UI de WoW Classic recargan la UI una vez para aplicarse. Cada módulo se puede cambiar por separado más tarde.
+5171	Envuelve las barras de vida, recurso y recurso de clase en el marco de barra de lanzamiento de la UI de WoW Classic.
+5173	Posiciones de pulsos de canalización de Wrath
+5174	Posiciones de pulsos de canalización de Wrath.
+5175	Ventanas de chat de Wrath con el panel, pestañas, barra lateral y bocadillos de chat de EllesmereUI.
+5176	DATOS DE WRATH
+5177	Barras de vida, recurso, recursos de clase, lanzamiento, GCD, golpe y tótems de Wrath.
+5178	INVENTARIO DE WRATH
+5179	BACKPORT DE WRATH OF THE LICH KING
+5180	Wrath solo tiene una barra de recurso de clase de Blizzard para las runas del caballero de la Muerte.
+5181	Marcos de banda y grupo de Wrath con clics de unidad nativos, auras, alcance y lanzamiento con clic.
+5182	Hechizos, objetos y auras de Wrath. Las asignaciones se guardan para cada grupo de talentos doble.
+5183	Seguimiento nativo de misiones y logros de Wrath con estilo EUI, reglas de visibilidad, aceptar/entregar automático y tecla de objeto de misión.
+5184	Muñeca
+5188	Posición X
+5190	Tamaño del texto de PX y reputación
+5191	Barra de PX / reputación
+5192	Las barras de PX y reputación usan la textura ElvUI Norm.
+5193	Tamaño del texto de la barra de PX
+5194	Textura de la barra de PX
+5195	Texturas de barras de PX, reputación y favor
+5199	Posición Y
+5200	Gritar
+5201	Sí
+5203	No estás mostrando NINGÚN beneficio.
+5204	No estás mostrando NINGÚN perjuicio.
+5205	Cambiaste ajustes mientras la sincronización de perfiles está activa. Recarga tu UI para que los cambios de sincronización surtan efecto.
+5206	Cambiaste el valor predeterminado de un ajuste que tiene anulaciones. Las anulaciones conservan sus propios valores, así que este cambio no llegará a las especializaciones o condiciones que cubren. Para cambiarlo en una anulación, elige esa anulación desde el glifo de clase junto a la barra de búsqueda del módulo y edítala ahí.
+5207	No tienes este objeto en tus bolsas
+5208	No has aprendido %1$s.
+5209	Tienes cambios de posición sin guardar.\n¿Qué quieres hacer?
+5210	Solo puedes tener 
+5211	¡Tienes correo!
+5212	Tu especialización actual tiene un perfil asignado, así que no puedes cambiar a otro. Quita la asignación para cambiar.
+5213	Tu especialización actual tiene su propio Gestor de beneficios personalizado, así que los Gestores de beneficios condicionales nunca se le aplican.
+5214	Tu especialización actual tiene su propio Gestor de perjuicios personalizado, así que los Gestores de perjuicios condicionales nunca se le aplican.
+5215	Tu especialización actual tiene su propio Modo desbloqueo personalizado, así que los modos desbloqueo condicionales nunca se le aplican. Cambia a una especialización sin uno para personalizar esto.
+5216	Tus sanaciones
+5217	Tu comida preferida se agotó; usando una de reserva que tienes
+5218	Tu configuración y todas las funciones de EllesmereUI se conservan; solo cambia el aspecto. Aplica un estilo a todos los módulos con un clic o configura cada módulo abajo. Cambiar un estilo recarga la UI.
+5219	Tu UI, renovada en segundos
+5220	Zona
+5221	Zona y subzona
+5222	Rangos de nivel de zona
+5223	Desplazamiento X de zona
+5224	Desplazamiento Y de zona
+5225	Posición de la zona
+5226	Color JcJ de la zona
+5227	Escala de la zona
+5228	TEXTO DE ZONA
+5229	Texto de zona
+5230	Contorno del texto de zona
+5231	Escala del texto de zona
+5234	ZZZ en el marco de jugador de EUI mientras descansas
+5235	|cff00ff00[EllesmereUI]|r Todas las pistas restablecidas. Usa /reload para verlas de nuevo.
+5236	|cff00ff00[EllesmereUI]|r Escala de la UI restablecida. Usa /reload para volver a tomarla de tu escala de Blizzard.
+5237	|cff00ff98EllesmereUI:|r Introducción de anulaciones restablecida. El aviso emergente aparecerá en tu próximo /reload; la videoguía aparecerá en tu próximo clic en el glifo de anulaciones.
+5238	|cff00ff98EllesmereUI:|r Videoguías y consejos del tutorial restablecidos. Las insignias han vuelto; los avisos de una sola vez aparecerán de nuevo.
+5239	|cff0cd29dClic izquierdo:|r |cffE0E0E0Mostrar/ocultar EllesmereUI|r
+5240	|cff0cd29dClic central:|r |cffE0E0E0Ocultar botón del minimapa|r
+5241	|cff0cd29dClic derecho:|r |cffE0E0E0Entrar en Modo desbloqueo|r
+5242	|cff888888...y %d más|r
+5243	|cffff6060[EllesmereUI]|r Ya existe un perfil llamado \"%1$s\".
+5244	|cffff6060[EllesmereUI]|r No se puede entrar en Modo desbloqueo en combate.
+5245	|cffff6060[EllesmereUI]|r No se pueden abrir las opciones en combate. Usa /eui para ver las notas del parche.
+5246	|cffff6060[EllesmereUI]|r No se puede renombrar a \"Default\".
+5247	|cffff6060[EllesmereUI]|r Especialización cambiada: Modo desbloqueo cerrado, cambios de diseño sin guardar descartados.
+5248	|cffFFFFFFCtrl + Alt + Clic izquierdo:|r
+5249	|cffFFFFFFCtrl + Clic izquierdo:|r
+5250	|cffFFFFFFCtrl + Clic derecho:|r
+5251	|cffFFFFFFClic izquierdo:|r
+5252	|cffFFFFFFClic derecho:|r
+5253	|cffFFFFFFRueda:|r
+5254	|cffFFFFFFShift + Clic izquierdo:|r
+5255	|cffFFFFFFShift + Clic central:|r
+5256	简体中文 (chino simplificado)
+5257	繁體中文 (chino tradicional)
+5258	한국어 (coreano)

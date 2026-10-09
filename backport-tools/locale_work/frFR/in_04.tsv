@@ -1,0 +1,450 @@
+3680	Reload the UI now?
+3681	Reload to finish importing.
+3682	Reload to finish switching to the new profile.
+3684	Remaining Duration
+3686	Remembered Lines
+3687	Remind you to grab a Healthstone when a Warlock is in your group. Warlocks get a click-to-cast Create Healthstone reminder.
+3688	Reminder Color
+3689	Reminder Conditions
+3690	Reminder Glow
+3691	Reminder names, item counts and the mana warning
+3692	Reminder Size
+3693	Reminder Sound
+3694	Reminder X
+3695	Reminder Y
+3696	Reminds you when the Camp Benefits campfire buff is missing.
+3697	Reminds you whenever this buff is missing. Remove stops tracking it.
+3700	Remove a character's saved bags, bank and gold from the account cache. The character you are logged in on is recorded again automatically and cannot be deleted.
+3701	Remove Action
+3706	Remove Entry
+3709	Remove Selected Bar
+3710	Remove Selected Binding
+3711	Remove Selected Indicator
+3713	Remove Stranded Override
+3714	Remove the stranded '%s' override for %s? The spec returns to the shared default.
+3715	Removed 
+3717	Removes the color codes the plugin writes into its own text, so this block's Text Color applies. Off keeps the plugin's colors.
+3718	Removes this block from the bar.
+3724	Rename this bar. Press Enter to apply.
+3727	Repaired all items for 
+3728	Repairs from the guild bank when your withdraw limit covers the cost, otherwise from your own gold.
+3729	Repeat Window (seconds)
+3730	Repeated Message Filter
+3731	REPEATED MESSAGES
+3732	REPEATS AND KEYWORDS IN
+3733	Replace Blizzard's split popup for bag and bank items with the split dialog that also offers Auto Split.
+3734	Replaces the class icon with the strongest stun, silence, fear, root or immunity on that enemy.
+3735	Replaces the difficulty flag with a compact readout such as 25H.
+3736	Replaces the stock player cast bar.
+3738	Reposition this element within Unlock Mode
+3742	Reputation Bar Text Size
+3743	Reputation Bar Texture
+3744	Requires a client with gliding events.
+3745	Requires a Debuff Display
+3746	Requires Power Type: Mana + Form Power.
+3747	Requires Show Player. Party frames hide while in a raid.
+3748	Rescue tool for a profile built inside an override: the selected group's settings and layouts become this profile's own baseline, then ALL spec override groups are deleted. Conditional overrides are not affected.
+3754	Reset All Bar Positions
+3757	Reset Bar Position
+3758	Reset Bar Positions
+3759	Reset Button Positions
+3761	Reset Data Keybind (Example: CTRL-R)
+3762	Reset failed - there are still players inside the instance.
+3763	Reset Icon Positions
+3764	Reset Menu, Bags & XP Positions
+3765	Reset Message
+3766	Reset Position
+3767	Reset Repeat Memory
+3768	Reset Selected Aura Filters
+3769	Reset Selected Bar Position
+3771	Reset Stat Colors & Order
+3772	Reset This Group Position
+3774	Reset Tracking Bar Positions
+3776	Reset Window Positions
+3778	Reskin Dungeon Ready & Role Check
+3780	Reskin Popups & Context Menus
+3781	Reskin Tooltips
+3787	Resource amounts are separated by power type.
+3788	Resource Bar Settings
+3791	Resource Colored
+3793	Resource, cast and GCD bar textures
+3796	Rested Indicator X Offset
+3797	Rested Indicator Y Offset
+3798	Resting
+3801	Restore Default Assignments For This Bar
+3803	Restyle My UI
+3804	Restyles the game's chat bubbles and turns them on for the checked channels.
+3806	Retail Appearance
+3807	Retail Aura Lanes
+3808	Retail Bags Window
+3809	Retail Bar Model
+3810	Retail Bar Settings
+3811	Retail border styles from the shared border catalogue.
+3812	Retail Chat Panel
+3813	Retail Engine and Look
+3814	Retail Friends List
+3815	Retail Layout
+3816	Retail Look
+3817	Retail Pages
+3818	Retail Settings Pages
+3819	Retail Tooltip
+3820	Retail Windows
+3822	Reveal on hover only. Combines with the conditions below: hover-reveals while they all pass, stays hidden while any fails.
+3823	Reveal Unexplored Areas
+3825	Reverse Group Order
+3826	Reverse Member Order
+3832	Right click: back from details, or open meter bookmarks.
+3834	Right of Cursor
+3836	Right of Window
+3837	Right Screen Edge
+3839	Right Text Class Color
+3845	Right-drag still turns the camera
+3846	Ring / Arc
+3850	Ring Radius
+3852	Ring Thickness
+3859	role
+3860	Role Icon Position
+3862	Role Icon Style
+3863	Role Icon X Offset
+3864	Role Icon Y Offset
+3866	Roster Order
+3869	Row Grow Direction
+3870	Row Height
+3876	Runeforging
+3878	Runes and Combo Points
+3884	Same setup, same EllesmereUI features, a new look: switch to Blizzard Style or the new Classic WoW UI in one click, and switch back any time.
+3885	Sated / Exhaustion Timer
+3886	Satyr
+3889	Save Binding
+3890	Save History Between Sessions
+3891	Save Inventory & Reload UI
+3893	SAVED BINDINGS
+3894	Saved for this character only. Type a spell ID and press Enter to be reminded whenever that buff is missing on you.\nSpells in your spellbook are click-to-cast. Unknown IDs are ignored.
+3895	Saved for this raid layout. Hidden groups leave no empty space.
+3896	Saved Instances
+3898	Say
+3899	Say, Yell and numbered channels such as General, Trade and World. Scopes repeat, keyword, trade ad and recruitment filters.
+3905	Scales the size of Blizzard's default game text (menus, tooltips, quest log, and more). Requires a UI reload.
+3906	Scales the stock bar; 30 is its normal size.
+3907	Scales the text size of Blizzard tooltips.
+3908	Scales the whole frame. Blizzard Style frames are the stock size, so this stands in for Bar Width and Health Bar Height.
+3910	Screen Center
+3911	Screen Coordinates
+3912	Screen layer this bar renders on. Raise it to draw over other frames, lower it to sit behind them.
+3913	Screen Position
+3914	Screen X Offset
+3915	Screen Y Offset
+3916	Scroll Button on Chat Panel
+3917	Scroll the mouse wheel over a vendor window to turn its item pages.
+3919	Sea Giant
+3926	SECONDARY STATS
+3928	Secondary Stats Text Size
+3929	Seconds to show the active state after a cast, for spells without a buff.
+3932	Segment
+3933	Select
+3934	Select a character
+3936	Select a plugin
+3939	Select Bar
+3941	Select Frame
+3942	Select Glow
+3943	Select Group
+3944	Select Indicator
+3945	Select key: 
+3946	Select Palette
+3953	Select Window
+3954	Select...
+3955	Selected: 
+3957	Selection Needle
+3959	Send Mail Recipients
+3960	Send Mail: Recipient List
+3961	Send to DBM / BigWigs
+3964	Separate Spacing
+3965	Separate words or phrases with commas or semicolons. Case insensitive, including accented letters, literal substring matching. Empty entries are ignored.
+3966	Separated (12,345)
+3967	Separator
+3968	Server Channel Notices
+3972	Set a glow once. Apply to All changes the active custom glows listed below.
+3974	Set Cancel Key
+3976	Set Name Text Options
+3977	Set Name Text Size
+3978	Set per filter
+3979	Set per filter and tile
+3980	Set per indicator
+3981	Set Select Key
+3984	Set Volume
+3987	Sets the font for the names that float above players, NPCs and enemies in the world.\n\nSeparate from Global Font - changing this does not affect the rest of the UI, and Global Font does not affect it.\n\nBlizzard Default leaves the name text completely untouched.\n\n|cffff4d4dRequires a re-log or restart of WoW to take effect.|r
+3991	Settings Cog
+3993	Settings Overrides are the most powerful system in EllesmereUI, and the deepest. A few minutes with this video will save you hours of working it out on your own.
+4004	Shapes and Borders
+4005	SharedMedia Bar Textures
+4006	SharedMedia Fonts, Textures and Sounds
+4007	SharedMedia in Sound Menus
+4008	SharedMedia Sounds
+4009	SharedMedia Textures and Sounds
+4013	Shield Absorbs in Healing
+4014	Shield Estimates
+4015	Shields are estimated on 3.3.5
+4017	Shift + left drag: save position
+4020	Shift while resizing locks one direction
+4023	Shift+Middle Click to always show all settings
+4026	Shift-Click Attach Same Category
+4027	Shift-Click: Attach Same Category
+4028	Shift-drag the icons to move them
+4033	Short (12.3k)
+4034	Short Keybind Text
+4035	Shortened Channel Names
+4039	Show 
+4043	Show / Hide Includes Combat Timer
+4044	Show / Hide Includes Spell History
+4045	Show / Hide Windows Keybind (Example: ALT-M)
+4046	Show 15 Spells (Otherwise 8)
+4048	Show a glow on the cast bar when the unit is casting a spell Blizzard marks as important.
+4051	Show a reminder when you don't have an active pet summoned. Only applies to pet classes (Hunter, Warlock, Unholy Death Knight).\nHunters: right-click switches between Call Pet and Revive Pet. Warlocks: right-click cycles demons.
+4052	Show a reminder when your active pet is set to Passive stance. Clicking sets it to Defensive.
+4054	Show Action Text Label
+4055	Show Active State
+4056	Show AFK Status
+4059	Show Arena Pets
+4061	Show aura tooltips when hovering buff and debuff icons on all unit frames except boss frames.
+4062	Show aura tooltips when hovering buff and debuff icons on boss frames.
+4063	Show Auras
+4064	Show Bag Slot Bar
+4068	Show Below
+4069	Show BoE Text
+4071	Show Border Behind
+4074	Show Calendar
+4077	Show Channel Ticks
+4078	Show Character Bank
+4079	Show Character Item Counts
+4081	Show Class Icons
+4083	Show Clear Button
+4090	Show Coordinates on World Map
+4091	Show copies of the same item in separate slots as one icon with their counts added together. Paused while the mail, trade, auction house, bank or guild bank window is open.
+4094	Show Decimals
+4095	Show Description
+4096	Show Difficulty Flag
+4098	Show Dispellable When No Boss Debuff
+4099	Show DPS / HPS Beside Total
+4100	Show Durability
+4103	Show Enchant Names Instead of Icons
+4104	Show Enemy Buffs
+4105	Show Enemy Nameplates
+4107	Show every buff that has a duration (hides permanent buffs). Use the Hide lane below to remove specific filters.
+4108	Show every buff. Use the Hide lane below to remove specific filters.
+4109	Show every debuff. Use the Hide lane below to remove specific filters.
+4110	Show Flyout Button
+4111	Show FPS & Latency
+4113	Show Friend Notes
+4114	Show Friendly Bosses
+4115	Show Friendly Nameplates
+4116	Show Friends Online
+4117	Show GearScore
+4118	Show Group 
+4119	Show Group Roll Choices
+4120	Show Happiness
+4121	Show Hash Line on Target
+4122	Show Header Icons on Mouseover
+4124	Show Heal Prediction
+4125	Show heal prediction preview
+4126	Show Healer Icons
+4129	Show Hidden Messages
+4132	Show Hit / Expertise / Armor Pen
+4133	Show how many of the consumable you have left in your bags.
+4135	Show Icon on Portrait
+4137	Show In
+4143	Show in Instances
+4150	Show item or spell tooltips when hovering reminder icons.
+4151	Show Key Presses
+4153	Show Keybinds
+4156	Show Label
+4157	Show Labels
+4158	Show Latency
+4160	Show Local Latency
+4161	Show Mail Indicator
+4162	Show Main Tank Frames
+4163	Show Mana Bar while Shapeshifted
+4165	Show Merchant as List
+4167	Show Mount & Collected Status
+4169	Show Names (Raid)
+4173	Show on Right
+4175	Show one sub-category per equipment set (named after the set) under Item Set Gear.
+4177	Show Only In Combat
+4178	Show Out of Combat
+4181	Show Party Frames
+4182	Show Party Pets
+4183	Show Passive Trinkets
+4184	Show Percentage
+4190	Show Player
+4195	Show Power Percent
+4196	Show PvP Trinket
+4197	Show Queue Indicators
+4198	Show Raid Frames
+4200	Show Raid Pets
+4201	Show Raid Tools
+4202	Show Ready Cooldowns
+4204	Show reminders when remaining buff time is below this many minutes.\n0 = only when fully expired.\nIgnored in combat (then only when the buff is gone).
+4205	Show Set Name on Gear
+4209	Show spell cost preview
+4214	Show Subzone
+4215	Show Tank Icons
+4216	Show Target
+4219	Show Tenths of a Second
+4221	Show the border style and size controls for the cast bar.
+4222	Show the equipped bag slots above the window (also toggled by the Bags header button).
+4223	Show the friends and flyout buttons only while the map is hovered.
+4224	Show the keyring in the bag window.
+4227	Show the pet frame whenever you have a pet, ignoring the Player frame's visibility settings.
+4230	Show the unit's tooltip when hovering the frame itself.
+4231	Show This Bar
+4232	Show Threat % on Target & Focus
+4233	Show Threat Colors
+4234	Show Threat On Border
+4235	Show Threat On Health Bar
+4236	Show Threat On Name
+4237	Show Time
+4240	Show Tooltip Data
+4241	Show Tooltip For
+4245	Show Totem Bar (Death Knight)
+4246	Show Totem Bar (Shaman)
+4247	Show Tracking
+4249	Show When Health Missing
+4251	Show While Solo
+4252	Show Window
+4253	Show Without Item in Bags
+4254	Show World Latency
+4255	Show World Map Button
+4256	Show Zoom Buttons
+4258	Showing the '%s' override's value. Edit it from that override's editing mode.
+4259	Showing this aura from any caster; click for your casts only.
+4260	Showing this aura from your casts only; click for any caster.
+4261	Shown at max level. Header shows GearScore.
+4262	Shown on dead members being resurrected (LibResComm-1.0, bundled).
+4264	Shows a house or globe icon marking which latency each value is.
+4267	Shows a small white tick mark where the cast will be when your interrupt comes off cooldown.
+4269	Shows debuffs that match any checked Show filter (the default).
+4270	Shows every bar with placeholder icons while the options are open.
+4271	Shows every debuff on this frame.
+4272	Shows incoming heals past the health bar: yours, then other players'.
+4273	Shows large amounts using K/M suffixes (284,208g becomes 284.2Kg) instead of the full grouped number. The tooltip always shows the exact amount.
+4274	Shows only debuffs Blizzard flags as important.
+4275	Shows only debuffs that match every checked Show filter (dispel types count as one); opposites like Non-Player Auras with Cast By You show nothing.
+4276	Shows only the debuffs you apply that Blizzard also flags as important.
+4277	Shows only the debuffs you apply.
+4278	Shows only this frame's Tracked Auras; add them with Edit Tracked Auras at the top of this menu.
+4280	Shows the audio icon next to the volume bar.
+4281	Shows the bag icon next to the slot count.
+4283	Shows the combat status text only while your character is in combat.
+4284	Shows the cost of the spell being cast on the power bar.
+4286	Shows the currency's description text in the tooltip. Turn off for a compact tooltip with just the name and the amount.
+4287	Shows the debuffs you apply plus important debuffs from anyone.
+4288	Shows the frame while this unit is below full health; while enabled, a frame hidden by its visibility setting can still be clicked.
+4289	Shows the health text elements placed in Core Text Positions.
+4291	Shows the last lines of each chat window again after a reload or relog.
+4294	Shows the most important boss debuff (ICC, Ruby Sanctum, ToC, Ulduar, Naxxramas) as a large icon in the middle of the frame.
+4295	Shows the network latency zone at the end of casts or channels, including queued spells.
+4297	Shows the overlay only for debuffs you can currently dispel.
+4298	Shows the plugin's own icon next to its text.
+4299	Shows the plugin's text. Off leaves an icon-only block that still carries the plugin's tooltip and clicks.
+4300	Shows the profession icons next to the text.
+4302	Shows the spec icon next to the text.
+4303	Shows the spell icon over the portrait while casting and lets the bar use the full width.
+4304	Shows the stock rune or combo point frame here instead of the pips.
+4305	Shows the unit's level in the frame's level circle, as the default UI does.
+4307	Shows your arena opponents. Left click targets, right click sets focus.
+4309	Shows your hunter pet's happiness beside the pet frame.
+4310	Shows your interrupt while your focus is casting.
+4311	Shows your interrupt while your focus or target is casting.
+4312	Shows your threat percentage on the target and focus frames while you are in combat with that unit.
+4314	Sidebar
+4330	Size matching is unavailable with Blizzard Style Unit Frames.
+4333	Size of the Classic frame around the bar.
+4334	Size of the Classic WoW UI frame when the classic style is on.
+4335	Size of the dragon, as a percent of its fit around the portrait.
+4336	Size of the outer ring relative to the portrait.
+4338	Sizes the movement alert's free text, bar number and icon countdown. Switching the alert's Display Mode re-seeds this value.
+4342	Skull
+4344	Skyriding (Airborne)
+4345	Skyriding HUD
+4347	Skyriding Mount
+4349	Slash Commands
+4350	Slide
+4351	Slider
+4352	Slot
+4353	Slowly orbits the checked elements while Party Mode is active; they stay upright and pause in combat.
+4359	Smarter Quest Helpers
+4361	Smooth Animation
+4363	Smooth Cast Bars
+4369	Snap to Other Windows
+4376	Snapping and Locking
+4379	Socket Panel & One-Click Gems
+4380	Socketed Gem Icons
+4387	Sort Options
+4388	Sort Ready Runes First
+4389	Sort to Bottom
+4390	Sorted
+4395	Sound Effects
+4398	spacing
+4401	Spam Filter
+4402	Spam Filter Presets and Keywords
+4403	Spark Mode
+4405	Spec 
+4407	Spec Icons
+4408	Spec Override
+4410	Special thanks to Ellesmere
+4411	Special thanks to:
+4412	SPECIAL UPDATE
+4413	Specialization Icons
+4414	Specializations
+4417	spell
+4418	Spell 
+4419	Spell / Item ID
+4420	Spell Cooldown
+4421	Spell Cost Color
+4422	Spell Cost Prediction
+4423	Spell Density - Set to Essential\n
+4425	Spell History Bar Texture
+4426	Spell History Text Size
+4428	Spell icons show your own short buff from that spell instead of the cooldown.
+4430	Spell ID of the interrupt to show. 0 uses your class interrupt.
+4431	Spell ID or texture path.
+4432	Spell ID unavailable in this client
+4433	Spell ID...
+4434	Spell IDs on Tooltips
+4436	Spell Name Outline
+4437	Spell names appear on identified target and mouseover plates.
+4439	Spell Text Color
+4440	Spell Text Position
+4441	Spell Text Size
+4442	Spell Text X
+4443	Spell Text Y
+4447	spells
+4449	Spin
+4450	Spinning
+4453	Split bank items by category, using the same category list, order and renames as the All Items bag view.
+4454	Split Set Gear by Set
+4455	Split Stack
+4458	Square and rectangular maps only.
+4459	Square dark skins for Wrath windows, tooltips, menus and popups.
+4460	SSAO (Ambient Occlusion) - Disabled\n
+4464	Stack Splitter
+4466	Stack Text Position
+4467	Stack Text Size
+4468	Stack Threshold Color
+4469	Stack Ticks
+4473	Stacks / Item Count
+4474	Stacks Color
+4475	Stacks Position
+4476	Stacks Size
+4479	Stances, forms and stealth keep Action Bar 1 on its own page.
+4483	Standalone Timer Size
+4485	Star
+4489	Starter layout for the next bar you create.
+4490	Starts the tab strip at the sidebar edge.
+4491	Stats Header
+4492	STATS SIDEBAR
+4494	Status Text Size
+4497	Stealable Only
+4501	Stored Segments
+4504	Stranded Overrides
+4506	strata
+4509	Strip Colors

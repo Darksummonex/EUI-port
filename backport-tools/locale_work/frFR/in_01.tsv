@@ -1,0 +1,450 @@
+995	Click any element\nto set as the Fallback Anchor
+996	Click any element\nto set as the Override Anchor
+998	Click Assign Key, then press your hotkey.
+999	CLICK CASTING
+1000	Click Casting
+1001	Click edits - Drag reorders - Right click removes - Drop to add
+1003	Click the link, then Ctrl+C to copy it
+1005	Click to choose a gem from your bags
+1006	Click to edit. Middle-click to remove.
+1007	Click to scroll. Right Click to remove.
+1009	Click-to-use is disabled in combat
+1010	Clickable URLs
+1012	Clique can manage frames with built-in bindings off
+1015	CLOCK & ZONE
+1016	Clock Format
+1017	Clock Hover
+1018	Clock Offset X
+1019	Clock Offset Y
+1022	Clock, zone, coordinates, FPS and difficulty text
+1027	Coin Colored
+1029	Collapse
+1030	Collapsed Menu Icons
+1031	COLLECTION AND HISTORY
+1033	Collections and Wardrobe Skins
+1035	Color Bosses
+1036	Color by Interrupt Cooldown
+1037	Color by Interruptible
+1038	Color by Threat
+1039	Color Clock AM/PM
+1040	Color Custom Borders
+1041	Color Difficulty Letter
+1042	Color Elites in Instances
+1043	Color FPS/MS Suffix
+1044	Color Gaps
+1047	Color Text Instead
+1048	Color the health bar by how much health is left, instead of a flat color. Classic runs green at full health through yellow to red at empty. Custom Colors blends between the three stop swatches on this row -- full (100%), half (50%) and empty (0%). Class Reactive shows the class color at full health, bleeding into the 50% and 0% colors as the unit takes damage. Off leaves the flat Fill Color swatches in charge; either way the Gradient below still applies, running from whichever color this picks.
+1051	Colors allied player bars using their class. Group/raid members are identified automatically; other allies are learned from target, mouseover or focus.
+1052	Colors an attackable unit's level by difficulty, as the default UI does.
+1054	Colors group and raid member names inside Say, Yell, Party and Raid messages.
+1055	Colors level text by difficulty, from grey (trivial) through green, yellow and orange to red (5+ levels above you).
+1056	Colors the bar text instead of the fill when the threshold applies.
+1057	Colors the cast segment during which your interrupt will be available.
+1058	Colors the dispel type borders with your Dispel Colors instead of Blizzard's.
+1059	Colors the number by threat status. Off shows it in white.
+1060	Colors the number when free slots drop below this many; the swatch picks the color. Zero turns it off.
+1061	Colors the strip behind the target's name by its reaction.
+1066	Combat & World Text
+1068	Combat Alert Class Color
+1069	Combat Alert Text Size
+1070	Combat Data
+1071	Combat End Grace (Seconds)
+1072	Combat Icon Position
+1075	Combat Indicator and Portraits
+1077	COMBAT LOGGING
+1078	Combat Status
+1080	Combat Text Font (logout required)
+1083	Combat Timer
+1084	Combine Hands
+1085	Combine Spell Name and Target
+1086	Combines with the conditions below: shows outright once at least one passes, otherwise still reveals on hover. A checked Hide state still hides it, hover included.
+1087	Combo point count; DK rune recharge seconds.
+1089	Combo points on the target nameplate (Rogue and Druid).
+1092	Comma separated, e.g. 3,5
+1093	Comma separated, for example 25, 50, 75.
+1094	Comma-separated spell IDs. Empty means no entries.
+1095	Compact Slot Groups
+1097	Compute Effects - Disabled\n
+1099	conditional
+1105	Consolidate Bags
+1108	Containers wait for vendors, mail, bank and trade
+1109	Content
+1113	Contrast
+1117	Cooldown Bar
+1118	cooldown bars
+1119	Cooldown bars fill as the cooldown recovers.
+1120	Cooldown Edge
+1121	COOLDOWN MANAGER
+1125	Cooldown Manager Icons
+1126	Cooldown Manager spells from the other game client were not imported.
+1128	Cooldown Ready Sound
+1129	Cooldown State
+1130	Cooldown States
+1131	Cooldown Swipes
+1132	Cooldown Text
+1133	Cooldown Text Color
+1134	Cooldown Text Position
+1136	Cooldown Text X
+1137	Cooldown Text Y
+1138	Cooldown Timer Text
+1139	Cooldown Tracker Text Size
+1141	Coordinate Decimals
+1142	COORDINATES
+1144	Coordinates Mode
+1146	Coordinates Scale
+1149	Copied settings from 
+1150	Copied to 
+1153	Copy Buffer Lines
+1155	Copy Current Chat Window
+1156	Copy every shared setting from another frame in this group to this frame.
+1157	Copy from %1$s Buff Manager
+1158	Copy from main Buff Manager
+1159	Copy From:
+1160	Copy Included/Excluded Spells From:
+1162	Copy Settings From
+1164	Copy This Bar to Other Talent Group
+1167	Core Healing Buffs
+1169	Core Positions
+1171	Corner options place the bar flush with that corner of the target and set its grow direction to keep it there as bars change size.
+1173	Cost Color
+1174	Could not build the export string.
+1176	Count Text
+1177	Count Text Size
+1178	Countdown Bar Height
+1179	Countdown Text Color
+1180	Countdown Text Offset
+1181	Countdown Text Size
+1182	Counts on Need/Greed/Disenchant/Pass; hover a button for names.
+1185	Create Bar
+1188	Create Meter Window
+1190	CREATE NEW DATABAR
+1193	Created 
+1195	Critical Strike
+1196	Crop Amount
+1202	CROSSHAIR AND COORDINATES
+1203	Crosshair Border
+1204	Crosshair Color
+1205	Crosshair Length
+1206	Crosshair Thickness
+1207	Crosshair Visibility
+1208	Crowd Control on Class Icon
+1212	Ctrl + left drag: move until window closes
+1218	Curls a gold dragon around the portrait of elite and boss enemies, and a silver one around rares.
+1219	Curls Blizzard's gold dragon around the portrait.
+1222	Current / Maximum
+1225	Current Segment On Combat
+1227	Current | Percent
+1232	Cursor action added
+1237	Cursor Offset X
+1238	Cursor Offset Y
+1240	Cursor Size
+1241	Cursor Texture
+1256	Custom Colors
+1257	Custom Debuff Manager
+1258	Custom Debuff Managers
+1259	Custom Dynamic
+1260	Custom Dynamic blends these by health
+1261	Custom Fill Color
+1262	Custom Health Color
+1263	Custom Icon
+1265	CUSTOM KEYWORDS
+1266	Custom Label
+1267	Custom Macro
+1269	Custom Non-Player Portrait
+1271	CUSTOM REMINDERS
+1272	Custom Reminders
+1273	Custom Reminders Per Character
+1283	Cycle Target Markers
+1284	Cycle World Markers
+1288	DAMAGE METERS
+1290	Damage shields on the health bar. 3.3.5 does not report shield amounts, so they are estimated from the combat log (base rank value plus your own spell power, minus what each shield absorbed).
+1300	Dark Mode drives a Dark Mode override condition and can't be changed while editing an override
+1305	Data Bars
+1306	DataBar 
+1308	DataBars cannot be restructured in combat.
+1314	Dead Background
+1316	Death Alert Sound
+1319	Death Knights: remind you when an equipped weapon has no rune (click opens Runeforging).
+1320	Death recap: last 20 seconds, up to 40 events.
+1322	Deaths at this level or higher stay visible, for example 80 to still see max level deaths. 81 hides every death.
+1323	Deathwing
+1324	Debuff
+1325	debuff
+1326	debuff bar
+1331	Debuff Filter Options
+1332	DEBUFF FILTERS
+1333	Debuff Icon Border
+1334	Debuff Icons Per Row
+1335	Debuff Manager
+1336	Debuff Manager changes on this page apply only to this override.
+1337	Debuff Manager Glows
+1338	Debuff Manager Text (per tile)
+1339	Debuff Mover
+1348	Decimals Below
+1349	DEFAULT
+1354	Default for every icon on this bar; icons can override it.
+1355	Default Preset
+1357	Default: left target, right unit menu
+1363	Degrees per second. 360 is one full turn a second; 0 parks the bars where they are.
+1373	Delete Custom Debuff Manager
+1376	Delete Override Anchor
+1379	Delete Saved Character
+1380	Delete Saved Characters
+1381	Delete Selected Window
+1386	Delete the custom Debuff Manager for '%s'? Its conditions return to your default Debuff Manager.
+1387	Delete the custom Debuff Manager for '%s'? Its specs return to your default Debuff Manager.
+1391	Delete the saved bags, bank and gold of 
+1392	Deletes the selected bar and all of its blocks.
+1397	Depth Effects - Disabled\n
+1399	Desaturate Inactive Buffs
+1402	Description Color
+1403	Description text (FPS/MS suffixes, AM/PM, difficulty letter) follows the accent color.
+1404	Deselect a grow direction to return to centered
+1414	Detaches the sidebar from the chat panel with its own border.
+1415	Details Font Size
+1424	Differs
+1425	Differs (template shows as %s)
+1426	Differs from template
+1427	Difficulty as Text
+1428	Difficulty Color
+1429	Difficulty Offset X
+1430	Difficulty Offset Y
+1432	Difficulty Text Size
+1433	Difficulty Tier Colors
+1434	Dim Out of Range
+1436	Dim Unexplored Areas
+1437	Dim Unflagged
+1438	Dim Unusable Entries
+1439	DIMINISHING RETURNS
+1440	Diminishing Returns
+1441	Dimmer
+1446	Disable Addons
+1447	Disable and Reload
+1448	Disable Form Paging
+1450	Disable Right Click on Allies in Combat
+1451	Disable Right Click on Enemies
+1458	Disabled when the Name/Level text is centered on the health bar due to overlapping text
+1460	Disband
+1468	Dismiss
+1469	dispel
+1472	dispel colors
+1481	Dispels and Preview Mode
+1484	Display Binds when Equipped / Binds when Used on unbound items in your bags and bank.
+1487	Display the equipment set's name at the bottom of bag items that belong to one of your equipment sets.
+1489	Displays
+1490	Displays Page
+1491	Distance Format
+1492	Distance Text Size
+1494	Divider Color Source
+1498	Dock Inspect Beside Character
+1499	Docks when both windows fit on screen.
+1506	Doomguard
+1511	DPS/HPS use combat duration.
+1512	DR Icon Size
+1513	DR Icons Side
+1514	drag
+1515	Drag bars in Unlock Mode; the cog opens these options.
+1516	Drag empty window backgrounds outside combat
+1517	Drag sidebar icons anywhere on the sidebar. Reset Icon Positions returns them.
+1518	Drag the header to move; mouse wheel scrolls rows.
+1522	Dragon Frame Level
+1524	Dragon Size
+1525	Dragon Strata
+1526	Dragonriding
+1527	Dragonriding Bar Texture
+1528	Dragonriding speed bar texture
+1529	Dragonriding Speed Text Size
+1530	Draw a divider between the integrated icon and the bar, using the cast bar's border appearance.
+1531	Draw square borders below the map surface.
+1532	Draw the custom cast bar border around the icon and the bar together. An icon with an offset keeps its own border.
+1533	Draws a border in the dispel type color around the health bar.
+1534	Draws a thin accent line at the top of the tracker background.
+1535	Draws the border behind the cast bar instead of over it.
+1536	Draws the border below the chat background.
+1537	Draws the border style's seam art between the health bar and an attached power bar.
+1538	Draws the dispel-colored ring in this border style's shape instead of flat lines.
+1539	Draws the selected border style between the attached portrait and the bars.
+1540	Draws your faction's banner behind each friend row (Wrath friends share your faction).
+1541	Dreadlord
+1544	Drop spells, items, macros or mounts here, or use Add Action below.
+1545	Drop the individual Bank / Bank Bag entries once the category list is doing the navigating.
+1548	Druid Form Power
+1549	Druid travel, aquatic and flight forms count as mounted.
+1550	Due to Blizzard API restrictions, Blizzard's native 
+1552	Dungeon & Raid Entrances
+1553	Dungeon Finder
+1554	Dungeon Ready Countdown
+1556	Dungeons
+1557	Dungeons, raids, scenarios, arenas and battlegrounds. Garrisons do not count.
+1559	Durability Label
+1560	Durability Location
+1561	Durability Text Color
+1562	Durability Threshold %
+1563	Durability Warning Text Size
+1571	Duration Text Size
+1574	Dynamic
+1575	Dynamic Color
+1576	Dynamic Color is on -- the fill color comes from the unit's health
+1578	Each layout saves its settings and position
+1579	Each preset's page includes its import string.
+1584	Edit Action
+1585	Edit Anchor
+1586	EDIT BINDING
+1587	Edit Blacklist
+1593	Edit Entry
+1594	Edit Filters
+1596	Edit in Aura Filters
+1600	Edit Override: 
+1601	Edit Tracked Auras
+1604	Eight target markers, Ready Check, Pull and Disband
+1606	Element Row
+1607	Element Row Distance
+1611	Elements cannot be anchored to\n
+1612	Elements cannot size match to\n
+1613	Elite Enemy Dragon
+1614	Elite Icon Size
+1615	Elite/Rare Indicator
+1616	Elite/Rare Indicator Settings
+1628	EllesmereUI on 3.3.5a
+1631	EllesmereUI Style
+1632	EllesmereUI style shows them while the map is hovered.
+1633	EllesmereUI Style, Blizzard Style and Classic WoW UI reload the UI once to apply. Each module can be switched separately later.
+1634	ELLESMEREUI WEBSITE
+1636	EllesmereUI WonderBar was renamed to EllesmereUI DataBars. The old WonderBar addon is still installed and both create the same bar. Please disable or delete the EllesmereUIWonderBar addon.
+1639	Empty Action Menu
+1641	Empty Preset
+1647	Enable %1$s to change its style.
+1648	Enable %1$s to edit its text settings.
+1649	Enable %1$s to edit its texture settings.
+1650	Enable %1$s to edit these settings.
+1654	Enable Arena Frames
+1657	Enable Bank
+1658	Enable Bar
+1660	Enable Bar Glows
+1666	Enable Built-in Click Casting
+1667	Enable Call Totem Bar
+1669	Enable Chat Bubbles
+1673	Enable Dark Mode (Global Settings, Fonts & Colors) to use this condition
+1675	Enable Elite Enemy Dragon
+1676	Enable Entry
+1677	Enable Experience Bar
+1680	Enable Focus Cast Bar
+1682	Enable Friends Skin
+1684	Enable Glow
+1687	Enable Idle Fade
+1688	Enable Indicator
+1691	Enable Modules First
+1695	Enable Player Frame Dragon
+1698	Enable Quickdraw
+1699	Enable Raid Frames Module
+1700	Enable Reputation Bar
+1701	Enable Resource Bars
+1703	Enable Swing Timer
+1704	Enable Target Cast Bar
+1707	Enable Targeted Spell Bars
+1710	Enable the indicators previewed above. Disable to return to the existing aura rows.
+1711	Enable This Palette
+1715	Enable Window Dragging
+1716	Enable Window Skins
+1722	Enchant Name Size
+1723	Enchant Text Size
+1724	Enchants on Equipment Slots
+1726	End Preview
+1727	Enemy
+1728	Enemy arena frames with PvP trinket, crowd control and cast tracking.
+1732	Enemy Forces Text Size
+1735	Enemy Player Class Colors
+1736	Enemy Target
+1739	Enhanced Character Layout
+1741	Enhanced Tooltips
+1747	Enter a spell ID to track:
+1748	Enter a valid ID or equipment slot 1-19
+1749	Enter a valid spell ID for Cast Spell.
+1750	Enter an equipment slot (1-19). Trinkets are 13 and 14.
+1751	Enter an item ID to track:
+1752	Enter and Leave
+1756	Enter positive spell IDs separated by commas or spaces.
+1757	Enter positive spell IDs separated by commas.
+1759	Enter the maximum debuff duration in seconds:
+1760	Enter the spell ID of a buff or debuff to track:
+1761	Enter the spell ID to always show on this frame.
+1762	Enter the spell ID to always show.
+1763	Enter the spell ID to exclude from this frame.
+1764	Enter the spell ID to exclude.
+1765	Entering Combat
+1767	Entry Type
+1768	Environment Detail - Reduced to 1\n
+1772	Equipment Flyout Item Levels
+1773	Equipment Item Levels
+1774	Equipment Set
+1775	Equipment Set Save
+1776	Equipment Slot
+1777	Equipped
+1778	Equipped counts your worn gear. Total also counts upgrades sitting in your bags.
+1780	Esc Menu Buttons
+1786	EUI cooldown numbers on action buttons (Wrath has no Blizzard cooldown text).
+1792	EUI Options Panel Scale
+1794	EUI Unlock Mode
+1796	Every action button holding this spell glows.
+1797	Every chat window. A tab menu size choice updates this value.
+1798	Every condition you set has to match. The default.
+1799	Every glow in this module already matches the template or is locked on its settings page.
+1800	Every glow in this module is active.
+1801	Every look but the one in use reloads the UI once to apply. Each module can be switched separately later.
+1803	Every Retail Text Choice
+1804	Everything
+1806	Example: 2061
+1807	Exclude
+1808	EXCLUDED DEBUFFS
+1809	Excluded Spell IDs
+1810	Execute Pulse Glow
+1811	Execute, Hammer of Wrath and Kill Shot at 20%; Drain Soul at 25%.
+1816	Expand
+1818	Experience & Reputation Bars
+1819	Experience and reputation bar text.
+1822	Export All Data with Profile
+1824	Export Failed
+1828	Expressway (Latin only)
+1831	Extends the chat background behind the tab strip.
+1832	external defensives
+1834	externals
+1837	EXTRA BUTTONS
+1838	Extra Buttons on Mouseover
+1840	Extra Spell IDs
+1846	Extras Page
+1850	Faction Icon Size
+1851	Faction Indicator
+1852	Faction Indicator Settings
+1854	Fade After (Seconds, 0 = Never)
+1855	Fade Delay (seconds)
+1856	Fade Old Messages
+1858	Fade Out of Range
+1860	Fade Strength
+1862	Fades enemies beyond your class's 30-40 yard spell range.
+1863	Fades the chat after a period without messages, hovering or typing.
+1866	Failed and interrupted casts show in red
+1867	Failed to decode string
+1868	Failed to decompress data
+1869	Failed to deserialize data
+1870	Failed to read import data
+1872	Fallback Anchor: Change
+1873	Fallback Anchor: Clear
+1874	Fallback Anchor: Select
+1876	Fallback to %1$s
+1877	Falls back to the first debuff your character can remove.
+1878	Fan
+1879	Fan Direction
+1884	Felhunter
+1886	Feral Combat
+1887	fill
+1888	Fill by Stacks
+1890	Fill Color Settings
+1894	Fill Remaining Space
+1895	Fill the health bar bottom-to-top instead of left-to-right. Reverse Fill flips it to top-to-bottom.
+1896	Fill Up
+1898	filter
+1899	Filter Achievements
+1900	Filter Gold Sellers
+1901	Filter Guild Recruitment
+1902	Filter Hardcore Deaths
+1903	Filter Keywords

@@ -1,0 +1,350 @@
+1400	Dessaturar Itens Inúteis
+1401	Dessaturar em Recarga
+1402	Cor da Descrição
+1403	O texto de descrição (sufixos FPS/MS, AM/PM, letra da dificuldade) segue a cor de destaque.
+1404	Desmarque uma direção de crescimento para voltar a centralizar
+1405	Desmarcar Tudo
+1406	Destruição
+1407	Separado
+1408	Camadas das Barras Separadas
+1409	Separado Embaixo
+1410	Deslocamentos da Posição Separada
+1411	Barra de Poder Separada
+1412	Barra de Texto Separada
+1413	Separado em Cima
+1414	Separa a barra lateral do painel de bate-papo, com borda própria.
+1415	Tamanho da Fonte dos Detalhes
+1416	Deutsch
+1417	Devastação
+1418	DESENVOLVEDOR
+1419	Aura de Devoção
+1420	Devorador
+1421	Diálogo
+1422	Diamante
+1423	diamante
+1424	Difere
+1425	Difere (o modelo mostra como %s)
+1426	Difere do modelo
+1427	Dificuldade como Texto
+1428	Cor da Dificuldade
+1429	Deslocamento X da Dificuldade
+1430	Deslocamento Y da Dificuldade
+1431	Posição da Dificuldade
+1432	Tamanho do Texto da Dificuldade
+1433	Cores por Nível de Dificuldade
+1434	Escurecer Fora de Alcance
+1435	Escurecer as Luzes Enquanto Ativo
+1436	Escurecer Áreas Inexploradas
+1437	Escurecer Sem JxJ
+1438	Escurecer Entradas Inutilizáveis
+1439	RETORNOS DECRESCENTES
+1440	Retornos Decrescentes
+1441	Escurecedor
+1442	Desativar
+1443	desativar
+1444	Desativar 
+1445	Desativar e Recarregar
+1446	Desativar Addons
+1447	Desativar e Recarregar
+1448	Desativar Troca de Página por Forma
+1449	Desativar Quadros de Raide
+1450	Desativar Clique Direito em Aliados em Combate
+1451	Desativar Clique Direito em Inimigos
+1452	Desativar Contorno Slug
+1453	Desativar Encaixe
+1454	Desativar Ícones de Sincronia
+1455	Desativar Dicas
+1456	Desativado
+1457	desativado
+1458	Desativado quando o texto de Nome/Nível está centralizado na barra de vida, por sobreposição de texto
+1459	Desativado enquanto %s estiver ativado.
+1460	Desfazer
+1461	Desfazer Grupo
+1462	Desfazer Grupo de Sincronia
+1463	Disciplina
+1464	Sobreposição de luzes de discoteca para celebrações.
+1465	Discord
+1466	Doença
+1467	Desintegrar
+1468	Dispensar
+1469	dissipar
+1470	Borda de Dissipação
+1471	Cores de Dissipação
+1472	cores de dissipação
+1473	Ícone de Dissipação
+1474	Sobreposição de Dissipação
+1475	Bordas por Tipo de Dissipação
+1476	Rastreamento de dissipações, defensivas e auras privadas
+1477	Dissipável
+1478	DISSIPAÇÕES
+1479	Dissipações
+1480	dissipações
+1481	Dissipações e Modo de Prévia
+1482	EXIBIÇÃO
+1483	Exibição
+1484	Exibe Vinculado ao Equipar / Vinculado ao Usar em itens não vinculados nas bolsas e no banco.
+1485	Exibe o nível de item nos equipamentos do inventário.
+1486	Exibe itens inúteis em estilo acinzentado.
+1487	Exibe o nome do conjunto de equipamentos na base dos itens das bolsas que pertencem a um dos seus conjuntos.
+1488	Exibe o botão de ordenar no cabeçalho das bolsas.
+1489	Exibições
+1490	Página de Exibições
+1491	Formato da Distância
+1492	Tamanho do Texto da Distância
+1493	Dividir
+1494	Origem da Cor do Divisor
+1495	Dlarge
+1496	DMForever
+1497	DMStyle
+1498	Acoplar Inspeção ao Lado do Personagem
+1499	Acopla quando as duas janelas cabem na tela.
+1500	Dominos
+1501	DoN
+1502	Não mostrar novamente
+1503	Não me mostrar novamente
+1504	Concluído
+1505	Dookie
+1506	Demonarca
+1507	Setas Duplas
+1508	Baixo
+1509	Baixar
+1510	DPS
+1511	DPS/HPS usam a duração do combate.
+1512	Tamanho do Ícone de RD
+1513	Lado dos Ícones de RD
+1514	arrastar
+1515	Arraste as barras no Modo de Desbloqueio; a engrenagem abre estas opções.
+1516	Arrastar fundos vazios de janelas fora de combate
+1517	Arraste os ícones da barra lateral para qualquer lugar dela. Redefinir Posições dos Ícones os devolve.
+1518	Arraste o cabeçalho para mover; a roda do mouse rola as linhas.
+1519	Arraste para Reordenar
+1520	Arraste para Reordenar. Clique para adicionar brilhos, efeitos de estado ativo/recarga e mais.
+1521	Arraste para Reordenar. Clique para substituir a exibição e adicionar efeitos por ícone
+1522	Nível de Quadro do Dragão
+1523	Montaria Dracônica
+1524	Tamanho do Dragão
+1525	Camada do Dragão
+1526	Montaria Dracônica
+1527	Textura da Barra de Montaria Dracônica
+1528	Textura da barra de velocidade da montaria dracônica
+1529	Tamanho do Texto de Velocidade Dracônica
+1530	Desenha um divisor entre o ícone integrado e a barra, usando a aparência da borda da barra de lançamento.
+1531	Desenha bordas quadradas abaixo da superfície do mapa.
+1532	Desenha a borda personalizada da barra de lançamento em volta do ícone e da barra juntos. Um ícone com deslocamento mantém a própria borda.
+1533	Desenha uma borda na cor do tipo de dissipação em volta da barra de vida.
+1534	Desenha uma linha fina de destaque no topo do fundo do rastreador.
+1535	Desenha a borda atrás da barra de lançamento em vez de sobre ela.
+1536	Desenha a borda abaixo do fundo do bate-papo.
+1537	Desenha a arte de junção do estilo de borda entre a barra de vida e uma barra de poder acoplada.
+1538	Desenha o anel na cor de dissipação no formato deste estilo de borda em vez de linhas retas.
+1539	Desenha o estilo de borda selecionado entre o retrato acoplado e as barras.
+1540	Desenha o estandarte da sua facção atrás de cada linha de amigo (no Wrath, amigos são da sua facção).
+1541	Senhor do Medo
+1542	Provador
+1543	Sombra Projetada
+1544	Solte feitiços, itens, macros ou montarias aqui, ou use Adicionar Ação abaixo.
+1545	Remove as entradas individuais Banco / Bolsa do Banco quando a lista de categorias faz a navegação.
+1546	Druida
+1547	Forma de Druida (fora de combate)
+1548	Poder da Forma de Druida
+1549	As formas de viagem, aquática e de voo do druida contam como montado.
+1550	Devido a restrições da API da Blizzard, o recurso nativo da Blizzard 
+1551	Masmorra
+1552	Entradas de Masmorras e Raides
+1553	Localizador de Masmorras
+1554	Contagem para Masmorra Pronta
+1555	Masmorreiro
+1556	Masmorras
+1557	Masmorras, raides, cenários, arenas e campos de batalha. Guarnições não contam.
+1558	Durabilidade
+1559	Rótulo da Durabilidade
+1560	Local da Durabilidade
+1561	Cor do Texto da Durabilidade
+1562	Limite de Durabilidade %
+1563	Tamanho do Aviso de Durabilidade
+1564	Duração
+1565	Duração e Acúmulo
+1566	Posição da Duração
+1567	Tamanho da Duração
+1568	Varredura da Duração
+1569	Texto da Duração
+1570	Cor do Texto da Duração
+1571	Tamanho do Texto da Duração
+1572	Duração X
+1573	Duração Y
+1574	Dinâmico
+1575	Cor Dinâmica
+1576	Cor Dinâmica está ativa -- a cor do preenchimento vem da vida da unidade
+1577	Colorido Dinâmico
+1578	Cada layout salva suas configurações e posição
+1579	A página de cada predefinição inclui seu texto de importação.
+1580	Obtido
+1581	Arma Terraviva
+1582	Poder de Ébano
+1583	Editar
+1584	Editar Ação
+1585	Editar Âncora
+1586	EDITAR ATALHO
+1587	Editar Lista Negra
+1588	Fonte da Caixa de Texto
+1589	Tamanho da Fonte da Caixa de Texto
+1590	Altura da Caixa de Texto
+1591	Editar Grupo Condicional
+1592	Editar Condicional: %s
+1593	Editar Entrada
+1594	Editar Filtros
+1595	Editar Grupo: %s
+1596	Editar em Filtros de Auras
+1597	Modo de Edição Expandido
+1598	Editar normalmente: as alterações valem para a especialização atual
+1599	Editar Grupo de Substituição
+1600	Editar Substituição: 
+1601	Editar Auras Rastreadas
+1602	Editando como %s
+1603	Editando Especialização
+1604	Oito marcadores de alvo, Verificação de Prontidão, Pull e Desfazer
+1605	Opções do Elemento
+1606	Linha de Elementos
+1607	Distância da Linha de Elementos
+1608	Posição da Linha de Elementos
+1609	Espaçamento da Linha de Elementos
+1610	Elemental
+1611	Elementos não podem ser ancorados a\n
+1612	Elementos não podem igualar o tamanho a\n
+1613	Dragão de Inimigo Elite
+1614	Tamanho do Ícone de Elite
+1615	Indicador de Elite/Raro
+1616	Configurações do Indicador de Elite/Raro
+1617	Ellesmere
+1618	Logo Ellesmere
+1619	Barras de Ação do Ellesmere
+1620	Brilhos de Barra CDM do Ellesmere
+1621	Placas de Identificação do Ellesmere
+1622	Quadros de Unidade do Ellesmere
+1623	EllesmereUI
+1624	EllesmereUI 
+1625	Fundo EllesmereUI
+1626	EllesmereUI Forever
+1627	EllesmereUI combina com a moldura do visual de janelas; Moderno é uma cor sólida.
+1628	EllesmereUI no 3.3.5a
+1629	EllesmereUI Original
+1630	Os Quadros de Raide do EllesmereUI chegaram! Limpos, totalmente personalizáveis e feitos para desempenho.
+1631	Estilo EllesmereUI
+1632	O estilo EllesmereUI os mostra ao passar o mouse sobre o mapa.
+1633	Estilo EllesmereUI, Estilo Blizzard e Interface Clássica do WoW recarregam a interface uma vez para aplicar. Cada módulo pode ser trocado separadamente depois.
+1634	SITE DO ELLESMEREUI
+1635	EllesmereUI WonderBar
+1636	O EllesmereUI WonderBar foi renomeado para EllesmereUI DataBars. O addon WonderBar antigo ainda está instalado e ambos criam a mesma barra. Desative ou exclua o addon EllesmereUIWonderBar.
+1637	ElvUI
+1638	Emote
+1639	Menu de Ações Vazio
+1640	Cor da Barra Vazia
+1641	Predefinição Vazia
+1642	Engaste Vazio
+1643	Espaço vazio reservado neste lado do conteúdo do bloco.
+1644	Ativar
+1645	ativar
+1646	Ativar 
+1647	Ative %1$s para mudar seu estilo.
+1648	Ative %1$s para editar as configurações de texto.
+1649	Ative %1$s para editar as configurações de textura.
+1650	Ative %1$s para editar estas configurações.
+1651	Ativar e Recarregar
+1652	Ativar Cores de Destaque
+1653	Ativar Barras de Ação
+1654	Ativar Quadros de Arena
+1655	Ativar Lembretes de Auras/Bônus
+1656	Ativar Bolsas
+1657	Ativar Banco
+1658	Ativar Barra
+1659	Ativar Fundo da Barra
+1660	Ativar Brilhos de Barra
+1661	Ativar Histórico da Barra
+1662	Ativar Ícone de Ressurreição em Combate
+1663	Ativar Fundo do Bloco
+1664	Ativar Ícone de Sede de Sangue
+1665	Ativar Quadros de Chefe
+1666	Ativar Clique para Lançar Integrado
+1667	Ativar Barra de Chamar Totem
+1668	Ativar Bate-papo
+1669	Ativar Balões de Fala
+1670	Ativar Recurso de Classe
+1671	Ativar Gerenciador de Recargas
+1672	Ativar Medidores de Dano
+1673	Ative o Modo Escuro (Configurações Globais, Fontes e Cores) para usar esta condição
+1674	Ativar Barra de Montaria Dracônica
+1675	Ativar Dragão de Inimigo Elite
+1676	Ativar Entrada
+1677	Ativar Barra de Experiência
+1678	Ativar Estandartes de Facção
+1679	Ative primeiro Esmaecer Fora de Combate
+1680	Ativar Barra de Lançamento do Foco
+1681	Ativar Alvo do Foco
+1682	Ativar Visual de Amigos
+1683	Ativar Barra de RGT
+1684	Ativar Brilho
+1685	Ativar Gradiente
+1686	Ativar Histórico de Ícones
+1687	Ativar Esmaecer Ocioso
+1688	Ativar Indicador
+1689	Ativar Minimapa
+1690	Ativar Estilo Moderno
+1691	Ative os Módulos Primeiro
+1692	Ativar Modo Passar o Mouse
+1693	Ativar Quadro do Ajudante
+1694	Ativar Barra de Lançamento do Jogador
+1695	Ativar Dragão no Quadro do Jogador
+1696	Ativar Qualidade de Vida
+1697	Ativar Rastreador de Missões
+1698	Ativar Quickdraw
+1699	Ativar Módulo de Quadros de Raide
+1700	Ativar Barra de Reputação
+1701	Ativar Barras de Recurso
+1702	Ativar Encaixe
+1703	Ativar Temporizador de Golpe
+1704	Ativar Barra de Lançamento do Alvo
+1705	Ativar Cor do Alvo
+1706	Ativar Alvo do Alvo
+1707	Ativar Barras de Feitiços Direcionados
+1708	Ativar Texto
+1709	Ativar Barra de Texto
+1710	Ativa os indicadores mostrados acima. Desative para voltar às linhas de auras existentes.
+1711	Ativar Esta Paleta
+1712	Ative para exibir um lembrete para remover\neste talento quando não for necessário\n(todas as outras masmorras/raides não selecionadas).
+1713	Ativar Limite
+1714	Ativar Dicas de Tutorial
+1715	Ativar Arrastar Janelas
+1716	Ativar Visuais de Janela
+1717	Ative/desative a qualquer momento pela barra lateral do painel de opções.
+1718	ativado
+1719	Categorias Ativadas
+1720	Moedas Ativadas
+1721	Ativa a nitidez para melhorar a clareza da imagem. Mais perceptível em escalas de renderização menores.
+1722	Tamanho do Nome do Encantamento
+1723	Tamanho do Texto do Encantamento
+1724	Encantamentos nos Espaços de Equipamento
+1725	Barra de Encontro
+1726	Encerrar Prévia
+1727	Inimigo
+1728	Quadros de arena inimigos com berloque JxJ, controle de grupo e rastreio de lançamentos.
+1729	CORES DE INIMIGOS
+1730	Cores de Inimigos
+1731	Dano Recebido por Inimigos
+1732	Tamanho do Texto de Forças Inimigas
+1733	Nome do Inimigo
+1734	Texto do Nome do Inimigo
+1735	Cores de Classe de Jogadores Inimigos
+1736	Alvo Inimigo
+1737	Energia
+1738	English
+1739	Layout de Personagem Aprimorado
+1740	Sistema de inventário aprimorado com categorias na barra lateral, níveis de item e bordas de qualidade.
+1741	Dicas Aprimoradas
+1742	Aperfeiçoamento
+1743	Digite um nome para o novo perfil:
+1744	Digite um novo nome para \"%1$s\":
+1745	Digite um novo nome para \"%s\":
+1746	Digite um novo nome:
+1747	Digite um ID de feitiço para rastrear:
+1748	Digite um ID válido ou espaço de equipamento 1-19
+1749	Digite um ID de feitiço válido para Lançar Feitiço.

@@ -1,5 +1,9 @@
 # Blizz UI Enhanced 3.3.5 — 0.28
 
+0.28 (sem bump): a janela de Conquistas não escurece mais a lista. A moldura
+sem nome que o Blizzard põe acima das linhas (Conquistas, Resumo, Estatísticas e
+Comparação) agora ganha só a borda, sem o fundo escuro que cobria o conteúdo.
+
 0.28: Casa de Leilões convive com addons (Auctionator e similares): painéis,
 abas e artes que o addon cria dentro do AuctionFrame mantêm o visual e o
 layout do addon; só fontes e botões de texto padrão seguem o skin. Os botões

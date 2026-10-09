@@ -1,0 +1,450 @@
+3983	Fijar escala de IU en 0.5333
+3984	Ajustar volumen
+3985	Establece un ancho personalizado para la barra de lanzamiento. Pon 0 para igualar el ancho del marco de jefe.
+3986	Establece el color de acento usado en todos los elementos de EllesmereUI (pestañas, resplandores, resaltados, bordes). Por defecto usa el color de tu tema.
+3987	Establece la fuente de los nombres que flotan sobre jugadores, PNJ y enemigos en el mundo.\n\nEs independiente de la fuente global: cambiarla no afecta al resto de la IU, y la fuente global no la afecta.\n\nPredeterminado de Blizzard deja el texto del nombre totalmente intacto.\n\n|cffff4d4dRequiere volver a conectar o reiniciar WoW para aplicarse.|r
+3988	Establece la escala de toda la IU del juego. Los valores bajos lo hacen todo más pequeño y los altos, más grande.
+3989	Establece la escala de la IU al valor exacto pixel-perfect que usan otros addons. EllesmereUI no lo necesita para verse pixel-perfect.
+3990	Configuración
+3991	Engranaje de configuración
+3992	Ajustes específicos
+3993	Los ajustes específicos son el sistema más potente y profundo de EllesmereUI. Unos minutos con este vídeo te ahorrarán horas de descubrirlo por tu cuenta.
+3995	Sombras
+3996	Descarga de las Sombras
+3997	Forma de las Sombras
+3998	Chamán
+3999	IMBUICIONES Y ESCUDOS DE CHAMÁN
+4000	Forma
+4001	Borde de forma
+4002	Ajustes del borde de forma
+4003	Resplandor de forma
+4004	Formas y bordes
+4005	Texturas de barra de SharedMedia
+4006	Fuentes, texturas y sonidos de SharedMedia
+4007	SharedMedia en menús de sonido
+4008	Sonidos de SharedMedia
+4009	Texturas y sonidos de SharedMedia
+4011	Escudo
+4012	escudo
+4013	Absorciones de escudo en sanación
+4014	Estimaciones de escudo
+4015	Los escudos se estiman en 3.3.5
+4017	Shift + arrastrar con clic izquierdo: guardar posición
+4018	Shift + clic derecho para ocultar los iconos de guía en vídeo
+4019	Modificador Shift
+4020	Shift al redimensionar bloquea una dirección
+4023	Shift+clic central para mostrar siempre todos los ajustes
+4024	Shift+clic derecho para ocultar temporalmente la superposición
+4026	Shift-clic: unir misma categoría
+4027	Shift-clic: unir misma categoría
+4028	Arrastra los iconos con Shift para moverlos
+4032	Tienda
+4033	Corto (12.3k)
+4034	Texto de atajo corto
+4035	Nombres de canal abreviados
+4036	Hombros
+4037	Grito
+4039	Mostrar 
+4040	Mostrar %
+4041	Mostrar decimal de %
+4042	Mostrar recordatorio de 'No necesario'
+4043	Mostrar/Ocultar incluye temporizador de combate
+4044	Mostrar/Ocultar incluye historial de hechizos
+4045	Atajo para mostrar/ocultar ventanas (ejemplo: ALT-M)
+4046	Mostrar 15 hechizos (si no, 8)
+4047	Mostrar 2 para jefe
+4048	Muestra un resplandor en la barra de lanzamiento cuando la unidad lanza un hechizo que Blizzard marca como importante.
+4049	Muestra un punto pulsante en el botón de notas del parche cada vez que EllesmereUI se actualiza a una nueva versión.
+4051	Muestra un recordatorio cuando no tienes ninguna mascota invocada. Solo se aplica a clases con mascota (cazador, brujo, caballero de la Muerte profano).\nCazadores: el clic derecho alterna entre Llamar a mascota y Revivir mascota. Brujos: el clic derecho rota los demonios.
+4052	Muestra un recordatorio cuando tu mascota está en actitud pasiva. Al hacer clic la pone en defensiva.
+4054	Mostrar texto de acción
+4055	Mostrar estado activo
+4056	Mostrar estado AUS
+4057	Mostrar todo
+4058	Mostrar todo al pasar el ratón
+4059	Mostrar mascotas de arena
+4060	Mostrar flechas a la derecha
+4061	Muestra tooltips de auras al pasar el ratón sobre iconos de beneficios y perjuicios en todos los marcos de unidad excepto los de jefe.
+4062	Muestra tooltips de auras al pasar el ratón sobre iconos de beneficios y perjuicios en los marcos de jefe.
+4063	Mostrar auras
+4064	Mostrar barra de ranuras de bolsa
+4065	Mostrar espacio de bolsas
+4066	Mostrar bolsas
+4068	Mostrar debajo
+4069	Mostrar texto BoE
+4070	Mostrar borde
+4071	Mostrar borde detrás
+4072	Mostrar desglose al pasar el ratón
+4073	Mostrar beneficios
+4074	Mostrar calendario
+4075	Mostrar barra de lanzamiento
+4076	Mostrar icono de lanzamiento
+4077	Mostrar tics de canalización
+4078	Mostrar banco del personaje
+4079	Mostrar recuento de objetos por personaje
+4080	Mostrar icono de clase
+4081	Mostrar iconos de clase
+4082	Mostrar recurso de clase
+4083	Mostrar botón de borrar
+4084	Mostrar texto de daño en combate
+4085	Mostrar texto de sanación en combate
+4086	Mostrar vista previa del indicador de combate
+4087	Mostrar números de reutilización
+4088	Mostrar texto de reutilización
+4089	Mostrar coordenadas
+4090	Mostrar coordenadas en el mapa del mundo
+4091	Muestra las copias del mismo objeto en ranuras separadas como un solo icono con sus cantidades sumadas. Se pausa mientras esté abierta la ventana de correo, comercio, casa de subastas, banco o banco de hermandad.
+4092	Mostrar perjuicios
+4093	Mostrar decimal en texto de vida
+4094	Mostrar decimales
+4095	Mostrar descripción
+4096	Mostrar marca de dificultad
+4097	Mostrar vista previa de disipación
+4098	Mostrar disipables si no hay perjuicio de jefe
+4099	Mostrar DPS / HPS junto al total
+4100	Mostrar durabilidad
+4101	Mostrar duración
+4102	Mostrar duración (dentro del engranaje)
+4103	Mostrar nombres de encantamientos en vez de iconos
+4104	Mostrar beneficios enemigos
+4105	Mostrar placas de nombre enemigas
+4106	Mostrar placas de nombre de mascotas enemigas
+4107	Muestra todos los beneficios con duración (oculta los permanentes). Usa el carril Ocultar de abajo para quitar filtros concretos.
+4108	Muestra todos los beneficios. Usa el carril Ocultar de abajo para quitar filtros concretos.
+4109	Muestra todos los perjuicios. Usa el carril Ocultar de abajo para quitar filtros concretos.
+4110	Mostrar botón desplegable
+4111	Mostrar FPS y latencia
+4112	Mostrar contador de FPS
+4113	Mostrar notas de amigos
+4114	Mostrar jefes amistosos
+4115	Mostrar placas de nombre amistosas
+4116	Mostrar amigos conectados
+4117	Mostrar GearScore
+4118	Mostrar grupo 
+4119	Mostrar elecciones de tirada del grupo
+4120	Mostrar felicidad
+4121	Mostrar línea de marca en objetivo
+4122	Mostrar iconos de encabezado al pasar el ratón
+4123	Mostrar vista previa de absorción de sanación
+4124	Mostrar predicción de sanación
+4125	Mostrar vista previa de predicción de sanación
+4126	Mostrar iconos de sanador
+4127	Mostrar barra de vida
+4128	Muestra texto de ayuda en los encabezados de las categorías Objetos fijados y Objetos recientes.
+4129	Mostrar mensajes ocultos
+4130	Mostrar borde de resaltado
+4131	Mostrar resaltado al lanzar hechizo
+4132	Mostrar golpe / pericia / penetración de armadura
+4133	Muestra cuántas unidades del consumible te quedan en las bolsas.
+4134	Mostrar icono
+4135	Mostrar icono en el retrato
+4136	Mostrar icono a la derecha
+4137	Mostrar en
+4138	Mostrar en Todos los objetos
+4139	Mostrar en arena
+4140	Mostrar en campos de batalla
+4141	Mostrar en combate
+4142	Mostrar en mazmorras
+4143	Mostrar en estancias
+4144	Mostrar en OneBag/MultiBag
+4145	Mostrar en el mundo abierto
+4146	Mostrar en bandas
+4147	Mostrar destello al interrumpir
+4148	Mostrar cantidad de objetos
+4149	Mostrar nivel de objeto
+4150	Muestra tooltips de objeto o hechizo al pasar el ratón sobre los iconos de recordatorio.
+4151	Mostrar pulsaciones de teclas
+4152	Mostrar texto de atajo
+4153	Mostrar atajos
+4154	Mostrar barra de interrupción lista a mitad de lanzamiento
+4155	Mostrar marca de interrupción lista a mitad de lanzamiento
+4156	Mostrar etiqueta
+4157	Mostrar etiquetas
+4158	Mostrar latencia
+4159	Mostrar nivel
+4160	Mostrar latencia local
+4161	Mostrar indicador de correo
+4162	Mostrar marcos de tanque principal
+4163	Mostrar barra de maná con cambio de forma
+4164	Mostrarme
+4165	Mostrar mercader como lista
+4166	Mostrar botón del minimapa
+4167	Mostrar montura y estado de colección
+4168	Mostrar nombre
+4169	Mostrar nombres (banda)
+4170	Mostrar apodos
+4171	Mostrar en
+4172	Mostrar en marcos de jefe
+4173	Mostrar a la derecha
+4174	Muestra un decimal en el texto de vida: valores como 240.5k y porcentajes como 77.3%. El texto de recurso no se ve afectado. Desactivado por defecto.
+4175	Muestra una subcategoría por cada equipamiento (con el nombre del conjunto) dentro de Equipo de conjunto.
+4176	Muestra insignias de guía en vídeo de un solo uso junto a funciones nuevas o complejas. Cada insignia desaparece para siempre al hacer clic.
+4177	Mostrar solo en combate
+4178	Mostrar fuera de combate
+4179	Mostrar sobreescudo
+4180	Mostrar flechas de página
+4181	Mostrar marcos de grupo
+4182	Mostrar mascotas del grupo
+4183	Mostrar abalorios pasivos
+4184	Mostrar porcentaje
+4185	Mostrar daño periódico
+4186	Mostrar daño cuerpo a cuerpo de mascota
+4187	Mostrar daño de hechizos de mascota
+4188	Mostrar consejos de fijados y recientes
+4189	Mostrar objetos fijados
+4190	Mostrar jugador
+4191	Muestra los apodos de jugadores de addons compatibles en vez de los nombres de personaje en tus marcos principales.
+4192	Mostrar títulos de jugador
+4193	Mostrar retrato
+4194	Mostrar barra de recursos
+4195	Mostrar porcentaje de recurso
+4196	Mostrar abalorio JcJ
+4197	Mostrar indicadores de cola
+4198	Mostrar marcos de banda
+4199	Mostrar marca de banda
+4200	Mostrar mascotas de banda
+4201	Mostrar herramientas de banda
+4202	Mostrar reutilizaciones listas
+4203	Mostrar objetos recientes
+4204	Muestra recordatorios cuando el tiempo restante del beneficio sea inferior a estos minutos.\n0 = solo cuando haya expirado.\nSe ignora en combate (entonces solo cuando el beneficio desaparece).
+4205	Mostrar nombre de conjunto en el equipo
+4206	Mostrar plata y cobre
+4207	Mostrar icono de orden
+4208	Mostrar chispa
+4209	Mostrar vista previa del coste de hechizo
+4210	Mostrar icono de hechizo
+4211	Mostrar ID de hechizo en el tooltip
+4212	Mostrar tooltips de hechizos al pasar el ratón
+4213	Mostrar acumulaciones
+4214	Mostrar subzona
+4215	Mostrar iconos de tanque
+4216	Mostrar objetivo
+4217	Mostrar hechizos dirigidos
+4218	Mostrar hechizos dirigidos en la vista previa
+4219	Mostrar décimas de segundo
+4220	Mostrar texto
+4221	Muestra los controles de estilo y tamaño del borde de la barra de lanzamiento.
+4222	Muestra las ranuras de bolsa equipadas encima de la ventana (también se alterna con el botón Bolsas del encabezado).
+4223	Muestra los botones de amigos y desplegable solo al pasar el ratón por el mapa.
+4224	Muestra el llavero en la ventana de bolsas.
+4225	Muestra el borde de resaltado al pasar el ratón de los marcos principales en este marco. Desactívalo para que este marco nunca cambie de color al pasar el ratón. No tiene efecto si el resaltado está desactivado en los bordes al pasar el ratón de los marcos principales.
+4226	Muestra el nombre del objetivo del lanzamiento del jefe.
+4227	Muestra el marco de mascota siempre que tengas mascota, ignorando los ajustes de visibilidad del marco de jugador.
+4228	Muestra la categoría Objetos fijados en la barra lateral y la cuadrícula de contenido.
+4229	Muestra la categoría Objetos recientes en la barra lateral y la cuadrícula de contenido para los objetos recién obtenidos.
+4230	Muestra el tooltip de la unidad al pasar el ratón sobre el propio marco.
+4231	Mostrar esta barra
+4232	Mostrar % de amenaza en objetivo y foco
+4233	Mostrar colores de amenaza
+4234	Mostrar amenaza en el borde
+4235	Mostrar amenaza en la barra de vida
+4236	Mostrar amenaza en el nombre
+4237	Mostrar hora
+4238	Mostrar temporizador
+4239	Mostrar tooltip
+4240	Mostrar datos del tooltip
+4241	Mostrar tooltip para
+4242	Mostrar tooltips
+4243	Mostrar línea superior
+4244	Mostrar duración total
+4245	Mostrar barra de tótems (caballero de la Muerte)
+4246	Mostrar barra de tótems (chamán)
+4247	Mostrar rastreo
+4248	Mostrar cuando
+4249	Mostrar si falta vida
+4250	Mostrar con montura
+4251	Mostrar en solitario
+4252	Mostrar ventana
+4253	Mostrar sin el objeto en las bolsas
+4254	Mostrar latencia del mundo
+4255	Mostrar botón del mapa del mundo
+4256	Mostrar botones de zoom
+4257	Mostrar/Ocultar en vista previa
+4258	Mostrando el valor del ajuste específico '%s'. Edítalo desde el modo de edición de ese ajuste.
+4259	Mostrando esta aura de cualquier lanzador; haz clic para solo las tuyas.
+4260	Mostrando esta aura solo de tus lanzamientos; haz clic para cualquier lanzador.
+4261	Se muestra a nivel máximo. El encabezado muestra el GearScore.
+4262	Se muestra en miembros muertos que están siendo resucitados (LibResComm-1.0, incluida).
+4263	Muestra un leve velo blanco sobre cada bloque al pasar el ratón.
+4264	Muestra un icono de casa o de globo que indica a qué latencia corresponde cada valor.
+4265	Muestra un icono de descanso mientras tu personaje descansa.
+4266	Muestra una pequeña marca blanca en la barra de lanzamiento en el punto en que estará el lanzamiento cuando tu interrupción salga de reutilización.
+4267	Muestra una pequeña marca blanca donde estará el lanzamiento cuando tu interrupción salga de reutilización.
+4268	Muestra un icono de sobre cuando tienes correo sin leer.
+4269	Muestra los perjuicios que coincidan con cualquier filtro Mostrar marcado (predeterminado).
+4270	Muestra todas las barras con iconos de ejemplo mientras las opciones están abiertas.
+4271	Muestra todos los perjuicios en este marco.
+4272	Muestra las sanaciones entrantes más allá de la barra de vida: las tuyas y luego las de otros jugadores.
+4273	Muestra las cantidades grandes con sufijos K/M (284,208g pasa a 284.2Kg) en vez del número completo. El tooltip siempre muestra la cantidad exacta.
+4274	Muestra solo los perjuicios que Blizzard marca como importantes.
+4275	Muestra solo los perjuicios que coincidan con todos los filtros Mostrar marcados (los tipos de disipación cuentan como uno); opuestos como Auras no de jugador con Lanzado por ti no muestran nada.
+4276	Muestra solo los perjuicios que aplicas tú y que Blizzard también marca como importantes.
+4277	Muestra solo los perjuicios que aplicas tú.
+4278	Muestra solo las auras rastreadas de este marco; añádelas con Editar auras rastreadas en la parte superior de este menú.
+4279	Muestra plata y cobre, no solo oro.
+4280	Muestra el icono de audio junto a la barra de volumen.
+4281	Muestra el icono de bolsa junto al recuento de ranuras.
+4282	Muestra el icono de moneda junto a la cantidad.
+4283	Muestra el texto de estado de combate solo mientras tu personaje está en combate.
+4284	Muestra en la barra de recursos el coste del hechizo que se está lanzando.
+4285	Muestra el icono de la divisa junto a la cantidad.
+4286	Muestra el texto de descripción de la divisa en el tooltip. Desactívalo para un tooltip compacto con solo el nombre y la cantidad.
+4287	Muestra los perjuicios que aplicas tú más los perjuicios importantes de cualquiera.
+4288	Muestra el marco mientras esta unidad no tenga la vida completa; mientras esté activado, un marco oculto por su ajuste de visibilidad aún se puede pulsar.
+4289	Muestra los elementos de texto de vida colocados en Posiciones de texto principales.
+4290	Muestra el icono junto a la lectura de durabilidad.
+4291	Vuelve a mostrar las últimas líneas de cada ventana de chat tras recargar o volver a conectar.
+4292	Muestra el marcador del mapa junto al nombre de la zona.
+4293	Muestra el icono de marcador junto a las coordenadas.
+4294	Muestra el perjuicio de jefe más importante (ICC, Sagrario Rubí, ToC, Ulduar, Naxxramas) como un icono grande en el centro del marco.
+4295	Muestra la zona de latencia de red al final de los lanzamientos o canalizaciones, incluidos los hechizos en cola.
+4296	Muestra los contadores de amigos y hermandad conectados.
+4297	Muestra la superposición solo para los perjuicios que puedes disipar ahora.
+4298	Muestra el icono propio del plugin junto a su texto.
+4299	Muestra el texto del plugin. Desactivado deja un bloque solo con icono que mantiene el tooltip y los clics del plugin.
+4300	Muestra los iconos de profesión junto al texto.
+4301	Muestra el icono de marca de banda en los marcos de jefe.
+4302	Muestra el icono de especialización junto al texto.
+4303	Muestra el icono del hechizo sobre el retrato al lanzar y deja que la barra use todo el ancho.
+4304	Muestra aquí el marco original de runas o puntos de combo en vez de los indicadores.
+4305	Muestra el nivel de la unidad en el círculo de nivel del marco, como la IU predeterminada.
+4306	Muestra la zona y la subzona juntas en vez de solo la subzona.
+4307	Muestra a tus rivales de arena. Clic izquierdo para seleccionar, clic derecho para fijar foco.
+4308	Muestra tus ranuras de bolsa libres.
+4309	Muestra la felicidad de tu mascota de cazador junto al marco de mascota.
+4310	Muestra tu interrupción mientras tu foco lanza.
+4311	Muestra tu interrupción mientras tu foco u objetivo lanza.
+4312	Muestra tu porcentaje de amenaza en los marcos de objetivo y foco mientras estás en combate con esa unidad.
+4313	BARRA LATERAL
+4314	Barra lateral
+4315	Tamaño de iconos de barra lateral
+4316	Iconos de barra lateral
+4317	Color de iconos de barra lateral
+4318	Visibilidad de la barra lateral
+4321	Flechas simples
+4322	Visualización simple de beneficios
+4323	Posición simple de beneficios
+4324	Visualización simple de perjuicios
+4325	Posición simple de perjuicios
+4326	Recordatorios sencillos de beneficios de banda, auras, consumibles y talentos.
+4327	Runas simples
+4328	Marcos de unidad sencillos con un estilo visual moderno.
+4330	Igualar el tamaño no está disponible con los marcos de unidad de estilo Blizzard.
+4331	Tamaño de la barra a lo ancho de su eje de bloque, en píxeles.
+4332	Tamaño de la barra a lo largo de su eje de bloque, en píxeles.
+4333	Tamaño del marco clásico alrededor de la barra.
+4334	Tamaño del marco de IU clásico de WoW cuando el estilo clásico está activo.
+4335	Tamaño del dragón, como porcentaje de su ajuste alrededor del retrato.
+4336	Tamaño del anillo exterior respecto al retrato.
+4337	Ajusta la barra a toda la pantalla a lo largo de su eje.
+4338	Ajusta el tamaño del texto libre, el número de barra y la cuenta atrás del icono de la alerta de movimiento. Cambiar el modo de visualización de la alerta restablece este valor.
+4339	Saltar cinemáticas
+4340	Omitido
+4342	Calavera
+4344	Vuelo dinámico (en el aire)
+4345	HUD de vuelo dinámico
+4346	HUD de vuelo dinámico con seguimiento de velocidad, vigor y segundo aliento.
+4347	Montura de vuelo dinámico
+4349	Comandos de barra
+4350	Deslizar
+4351	Deslizador
+4352	Ranura
+4353	Hace orbitar lentamente los elementos marcados mientras el modo fiesta está activo; se mantienen derechos y se pausan en combate.
+4354	El contorno Slug ofrece contornos de mayor calidad que el modo de contorno base de WoW, pero puede hacer que los efectos de contorno parezcan algo más gruesos.
+4355	Pequeño (90%)
+4356	Rayas pequeñas densas
+4357	Rayas pequeñas espaciadas
+4358	Texto inteligente
+4359	Ayudantes de misión más inteligentes
+4361	Animación suave
+4362	Barras suaves
+4363	Barras de lanzamiento suaves
+4364	Barras de vida suaves
+4365	Ajustar elementos\nDesactivado
+4366	Ajustar elementos\nActivado
+4367	Objetivo de ajuste
+4368	Objetivo de ajuste: %1$s
+4369	Ajustar a otras ventanas
+4370	Ajustar al borde de la pantalla
+4371	Ajustar a: %1$s
+4372	Ajustar a: todos los elementos
+4373	Ajustar a: automático
+4374	Ajustar a: ninguno
+4375	Ajustar a: elegir elemento
+4376	Ajuste y bloqueo
+4379	Panel de engarces y gemas con un clic
+4380	Iconos de gemas engarzadas
+4381	Sólido
+4382	Color sólido
+4383	En solitario
+4384	En solitario (sin grupo)
+4386	Ordenar
+4387	Opciones de orden
+4388	Ordenar runas listas primero
+4389	Ordenar al final
+4390	Ordenado
+4391	Fragmentos de alma
+4392	Fragmentos de alma
+4394	Sonido
+4395	Efectos de sonido
+4396	Separador
+4398	espaciado
+4399	Espaciado X
+4400	Espaciado Y
+4401	Filtro de spam
+4402	Preajustes y palabras clave del filtro de spam
+4403	Modo de chispa
+4405	Especialización 
+4406	Grupos de especialización: edita una vez y aplica a todas las del grupo
+4407	Iconos de especialización
+4408	Ajuste por especialización
+4409	Ajustes por especialización
+4410	Agradecimientos especiales a Ellesmere
+4411	Agradecimientos especiales a:
+4412	ACTUALIZACIÓN ESPECIAL
+4413	Iconos de especialización
+4414	Especializaciones
+4415	Velocidad
+4416	Hechizo
+4417	hechizo
+4418	Hechizo 
+4419	ID de hechizo / objeto
+4420	Reutilización de hechizo
+4421	Color del coste de hechizo
+4422	Predicción del coste de hechizo
+4423	Densidad de hechizos - Fijar en Esencial\n
+4424	Historial de hechizos
+4425	Textura de barra del historial de hechizos
+4426	Tamaño de texto del historial de hechizos
+4427	Icono de hechizo
+4428	Los iconos de hechizo muestran tu propio beneficio corto de ese hechizo en vez de la reutilización.
+4429	ID de hechizo
+4430	ID de hechizo de la interrupción a mostrar. 0 usa la interrupción de tu clase.
+4431	ID de hechizo o ruta de textura.
+4432	ID de hechizo no disponible en este cliente
+4433	ID de hechizo...
+4434	ID de hechizo en tooltips
+4435	Nombre de hechizo
+4436	Contorno del nombre de hechizo
+4437	Los nombres de hechizo aparecen en las placas identificadas de objetivo y del ratón.
+4438	Objetivo del hechizo
+4439	Color del texto de hechizo
+4440	Posición del texto de hechizo
+4441	Tamaño del texto de hechizo
+4442	Texto de hechizo X
+4443	Texto de hechizo Y
+4444	Libro de hechizos
+4446	Hechizos
+4447	hechizos
+4448	Gastado
+4449	Girar
+4450	Girando
+4452	Dividir
+4453	Divide los objetos del banco por categoría, usando la misma lista de categorías, orden y nombres que la vista Todos los objetos de las bolsas.
+4454	Separar equipo de conjunto por conjunto
+4455	Dividir pila
+4456	Cuadrado
+4457	cuadrado
+4458	Solo mapas cuadrados y rectangulares.
+4459	Aspectos oscuros cuadrados para ventanas, tooltips, menús y ventanas emergentes de Wrath.
+4460	SSAO (oclusión ambiental) - Desactivado\n

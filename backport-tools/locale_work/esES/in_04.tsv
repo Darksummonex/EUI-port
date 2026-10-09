@@ -1,0 +1,450 @@
+2006	FPS Position
+2007	FPS Scale
+2008	FPS Text Size
+2009	FPS/MS Scale
+2010	Frame
+2011	Frame Border
+2012	Frame Border Style
+2013	FRAME DISPLAY
+2014	Frame Footer
+2015	Frame Height
+2016	Frame Scale
+2017	FRAME SELECTION
+2018	FRAME SIZES
+2019	Frame Source
+2020	Frame Source & Visibility
+2021	Frame Spacing
+2023	Frame Style
+2024	Frame Width
+2025	Frame, Power & Aura Border Styles
+2026	FRAMES
+2027	Frames
+2029	Free
+2030	Free (Shift-drag)
+2031	Free / Total
+2032	Free Move Buttons
+2033	Free Move Icons
+2035	Friend Row Opacity
+2036	Friendly
+2037	FRIENDLY BOSS FRAMES
+2038	Friendly Boss Frames
+2039	Friendly Name Outline
+2040	Friendly Name Size
+2041	Friendly Name Size (Bar Mode)
+2042	Friendly Name Size (Name Only)
+2043	Friendly Names
+2044	Friendly NPC
+2045	Friendly NPC Name Size
+2046	Friendly Player
+2047	Friendly Target
+2048	Friendly units get their level's color too, instead of gold.
+2049	Friends
+2050	Friends Crest
+2052	Friends Max Rows
+2053	Friends Online Button
+2055	From Bottom Edge
+2056	From Left
+2057	From Left Edge
+2058	From Right Edge
+2059	From Top Edge
+2061	Frost
+2062	Frostbolt
+2063	Full (12345)
+2064	Full Bar When Idle
+2065	Full Export
+2066	Full Health Color
+2067	Full mouseover cast binding suite
+2068	Full Overlay
+2069	Full Screen Height
+2070	Full Screen Width
+2071	Fullscreen
+2072	Fullscreen Dialog
+2073	Fury
+2077	Game Menu
+2078	Game Text Scale
+2079	Gamepad
+2080	Gap
+2081	Gap between the main menu button and the icon row.
+2082	Gap between the micro menu icons.
+2083	Gap Color
+2085	GCD Bar
+2086	GCD Bar Texture
+2087	GCD Ring Texture
+2088	Gear Enhancements
+2089	GearScore on Tooltips
+2090	GearScoreLite's own player line replaces it when enabled.
+2091	GENERAL
+2092	General
+2093	General options for all EllesmereUI addons.
+2094	GENERAL TEXT
+2095	Ghoul
+2096	Giant (150%)
+2097	Glass
+2099	GLOBAL COLORS
+2100	Global Cooldown Progress
+2102	Global Font
+2103	Global Scale
+2104	Global Settings
+2105	Global Settings > Style sets the look for the whole UI or for each module.
+2106	Globals
+2107	Glow
+2108	Glow Color
+2109	Glow Line Texture
+2110	Glow Settings
+2111	Glow Style
+2112	GLOW TEMPLATE
+2113	Glow the buffs you can purge or spellsteal
+2114	Glow Type
+2115	Glow When
+2116	Glow when an aura has 30% or less of its duration left.
+2117	Glow When Ready
+2118	Glow When Ready and Usable
+2119	Glows
+2120	Glows action buttons (EUI, Blizzard and ElvUI bars) while an aura is up or missing.
+2121	Glows in the last 30% of the duration.
+2122	Glows Only In Combat
+2123	Glows set per entry, which the template never changes
+2124	Glows set per icon, indicator or filter keep their own settings.
+2125	Glows the buffs you can purge or spellsteal.
+2126	Glows the buffs you can purge or spellsteal. Glowing buffs lead the row and have their own Max Buffs count.
+2128	Glyph
+2129	Go to Setting
+2130	Go to Settings
+2131	Gold
+2132	Gold border settings have overrides. Hover info icon for details.
+2133	Gold Seller Filter
+2134	Gold Summary
+2135	Gold Tracking and History
+2136	Got It
+2141	Gradient
+2142	Gradient Direction
+2143	Gradient Down
+2144	Gradient End Color
+2145	Gradient Left
+2146	Gradient Overlay
+2147	Gradient Right
+2148	Gradient Settings
+2149	Gradient Sharp
+2150	Gradient Up
+2151	Gray Out of Combat
+2152	Greater Heal
+2153	Grid
+2154	Grid Columns
+2155	Grid Lines\nBright
+2156	Grid Lines\nDimmed
+2157	Grid Lines\nDisabled
+2160	Ground Clutter - Reduced to 1\n
+2161	GROUP
+2162	Group
+2163	group
+2164	Group 
+2165	Group 1
+2166	Group 2
+2167	Group 3
+2168	Group 4
+2169	Group and Guild Chat
+2170	Group Armory by Slot
+2171	Group Automation
+2172	Group by Category
+2173	Group Death Alert
+2174	Group Death Alert Text Size
+2175	Group Finder
+2176	Group Layout
+2177	Group Limit
+2178	Group Number
+2179	Group Number Size
+2180	Group Numbers
+2181	Group Roll Choices
+2182	GROUP SELECTION
+2183	GROUP SETTINGS
+2184	Group Spacing
+2185	Grouped bars stack together and share one mover.
+2186	GROUPING
+2187	Groups Across
+2188	Groups Down
+2189	Grow
+2190	Grow 
+2191	Grow Centered
+2192	Grow Centered Horizontal
+2193	Grow Centered Vertical
+2194	Grow Direction
+2195	grow direction
+2196	Grow Down
+2197	Grow Left
+2198	Grow Right
+2199	Grow the bag window (more columns and taller) so every slot fits without scrolling.
+2200	Grow Up
+2201	Growth
+2203	Guardian
+2204	GUILD
+2205	Guild
+2206	Guild Rank
+2207	H Match
+2208	H Matched
+2209	Half Health Color
+2211	Hammer of Wrath
+2212	Hands
+2213	Happiness Position
+2214	Hardcore Death Filter
+2216	Has Aggro
+2217	Has Aggro (Classic Tank Aggro)
+2218	Has Duration
+2219	Hash Color
+2220	Hash Line Percent
+2221	Hash Lines
+2222	Hash Mode
+2223	Hash Values
+2224	Hash Width
+2225	Haste
+2226	Havoc
+2227	Head
+2228	HEADER
+2229	Header / Footer Color
+2230	Header / Footer Opacity
+2231	Header Border Color
+2233	Header Color
+2234	Header Font Size
+2235	Header Height
+2236	Header Text Color
+2237	Header Text Size
+2238	Heal Absorb Amount
+2239	Heal Absorb Bar
+2240	Heal Absorb Opacity
+2241	Heal Absorb Rendering
+2242	Heal Absorb Short (80k)
+2243	Heal Absorb Style
+2244	Heal Absorb Text Size
+2245	Heal and Resurrection Prediction
+2246	HEAL PREDICTION
+2247	Heal Prediction
+2248	Heal Prediction Texture
+2249	Healable encounter units (boss1-4), for example Valithria Dreamwalker.
+2250	HEALER MANA
+2251	Healer Mana Display
+2252	Healer Mana Text Size
+2253	Healer Preview
+2255	Healers Only
+2256	Healing
+2257	Healing / defensives / externals; add other buffs manually
+2258	Healing Done
+2259	Healing excludes overheal and inferred shields.
+2260	Healing Touch
+2261	Healing Wave
+2262	Health
+2263	health
+2264	Health #
+2265	Health # - %
+2266	Health # | %
+2267	Health %
+2268	Health % (No Sign)
+2269	Health % - #
+2270	Health % | #
+2271	HEALTH AND CAST BAR
+2272	Health and cast bar textures
+2273	HEALTH AND POWER
+2274	Health and Power Bars
+2276	Health Bar
+2277	Health bar and absorb textures
+2278	Health bar color at empty (0%) health
+2279	Health bar color at full (100%) health
+2280	Health bar color at half (50%) health
+2281	Health Bar Fill
+2282	Health bar for each enemy pet under its owner. Left click targets, right click sets focus.
+2283	Health Bar Height
+2284	Health Bar Texture
+2285	Health Bar Width
+2286	Health Color
+2287	Health Number Text
+2288	Health Text
+2289	Health Text Color
+2290	Health Text Custom Color
+2291	Health Text Decimals
+2292	Health Text Position
+2293	Health Text Size
+2294	Health Text X Offset
+2295	Health Text Y Offset
+2296	Health Texture
+2297	Health | Power %
+2298	Health | Power Value
+2299	Health, cast, absorb and highlight textures
+2300	Health, power, cast bar and aura text (per unit)
+2301	Health, power, class resource, cast and totem bar text
+2302	Healthstone
+2303	Hearthstone
+2304	Hearthstones
+2307	Height Offset
+2308	held by '%s'
+2309	Help
+2310	Hero
+2311	Heroic Boss Kill
+2312	Heroic Dungeons
+2313	Heroic Raid
+2314	Heroic Strike, Cleave, Maul or Raptor Strike queued.
+2316	Hexagon
+2317	hexagon
+2318	Hidden
+2319	hidden
+2320	Hidden during combat
+2321	Hidden in Arenas
+2322	Hidden Messages Log
+2323	Hidden while a cast bar is running.
+2325	Hide 
+2326	Hide 'Add Category' Tab
+2327	Hide Addon Buttons
+2328	Hide All Objectives
+2329	Hide Bank Bags in Sidebar
+2330	Hide Blizzard Arena Frames
+2331	Hide Blizzard Bar Art
+2332	Hide Blizzard Totem Frame
+2333	Hide Border
+2334	Hide Borders
+2335	Hide Categories with 0 Items
+2336	Hide combat indicator preview
+2337	Hide common English and Portuguese guild recruitment or looking-for-guild phrases in public chat. Raid ads such as <Guild> LF heal ICC are kept. Needs Public Chat above.
+2338	Hide dispel overlay preview
+2339	Hide DPS Role Icons
+2340	Hide Empty Slots When Grouped
+2341	Hide Enemy Name While Casting
+2342	Hide Enemy Nameplates out of Combat
+2343	Hide Error Messages
+2344	Hide gold-sale ads that include a website or cash price, including ads like sell 5000 G = 19 Web. Enabled by default. Uses Public Chat, Group and Guild Chat, and Incoming Whispers above.
+2345	Hide heal absorb preview
+2346	Hide heal prediction preview
+2347	Hide Health Bar
+2348	Hide Icons
+2349	Hide in All Items
+2350	Hide in Bear Form
+2351	Hide in Caster Forms
+2352	Hide in Cat Form
+2353	Hide in Dungeons
+2354	Hide in Housing
+2355	Hide in Instance
+2356	Hide in Instances
+2357	Hide in Moonkin Form
+2358	Hide in PvP
+2359	Hide in Raids
+2360	Hide Inactive Glows (%d)
+2361	Hide Item Transforms
+2362	Hide Keybind Text
+2363	Hide Macro Text
+2364	Hide messages containing any custom word or phrase, in the scopes selected above. Works independently of repeated-message filtering.
+2365	Hide Missing Items
+2366	Hide on Cooldown
+2367	Hide on Cooldown (Keep Place)
+2368	Hide OneBag Randomize Button
+2369	Hide OneBag/MultiBag Warning
+2370	Hide out of Instances
+2371	Hide Pause Menu Button
+2372	Hide player and guild achievement announcements. Your own achievements remain visible.
+2373	Hide public chat ads containing whole words such as WTS, WTB, WTT, LFW, selling, buying, vendo or compro. Needs Public Chat above. Does not hide the entire Trade channel.
+2374	Hide Rank Numbers
+2375	Hide repeated messages within the repeat window. Your own messages are always shown. Requires Enable Chat.
+2376	Hide Reset Button
+2377	Hide Role Icons In Combat
+2378	Hide Screenshot Status
+2379	Hide server death announcements such as \"Name the level 11 Gnome Warrior has been slain by ... in Westfall\". Works in every chat window, independent of the chat types above.
+2380	Hide Sidebar Background
+2381	Hide sidebar categories that have no items in them.
+2382	Hide spell cost preview
+2383	Hide Swipe
+2384	Hide the 1-pixel outline around the bar.
+2385	Hide the faction badge on faction NPCs such as guards.
+2386	Hide the randomize (dice) button in the OneBag view.
+2387	Hide the warning text at the top of the OneBag view.
+2388	Hide these instead of showing them
+2389	Hide Timer
+2390	Hide Title Bar
+2391	Hide Tooltip on Hover
+2392	Hide Trailing Zeros
+2393	Hide Tutorials
+2394	Hide Unlock Mode Menu Button
+2395	Hide Unusable Entries
+2396	Hide When Idle
+2397	Hide When In Raid
+2398	Hide When Inactive
+2399	Hide when Mounted
+2400	Hide When Ready
+2401	Hide When Ready (Keep Place)
+2402	Hide when Skyriding Mounted
+2403	Hide while this condition is true
+2404	Hide without Enemy Target
+2405	Hide without Target
+2406	Hides Pinned Items. Re-show in settings.
+2407	Hides Recent Items. Re-show in settings.
+2408	Hides the Add Category button at the bottom of the bag sidebar.
+2409	Hides the default arena enemy frames while these are enabled.
+2410	Hides the EllesmereUI button from the game's Escape/pause menu.
+2411	Hides the Objectives header and its minimize button at the top of the tracker.
+2412	Hides the Objectives header and its minimize button at the top of the tracker. When shown, it uses the Header Color with a divider in the Line Color.
+2413	Hides the resize handle on the main chat frame, preventing accidental resizing.
+2414	Hides the swipe and keeps the timer.
+2415	Hides the sync icons on the sidebar module list.
+2416	Hides the thin dividers between the messages, input field and sidebar.
+2417	Hides the Unlock Mode button from the game's Escape/pause menu. You can still toggle Unlock Mode from the EUI options panel.
+2418	Hides this element while you are on a skyriding (glide-capable) mount, where Blizzard shows its vigor HUD.
+2419	High
+2420	Highlight
+2421	Highlight Last Tick
+2422	Highlight Target
+2423	Highlight Type
+2424	Hold a bound key, point or scroll to choose, then release to fire. Escape cancels.
+2425	Hold a key to open a menu of actions; point or scroll to choose, release to fire.
+2426	Hold Shift and drag row buttons to nudge them. Reset Button Positions returns them.
+2427	Hold Shift to drag actions off locked bars.
+2428	Hold Shift to review the Dungeon Finder role check
+2429	Hold Shift to scroll to the top or bottom.
+2430	Hold Shift to Skip
+2431	Hold the key to open, release to fire. Toggle mode keeps the menu open: the Select key fires, the menu key or Escape closes.
+2432	Holds the block at this width and clips longer text, so a plugin whose text keeps changing length never shifts the blocks beside it. Zero sizes the block to whatever the plugin currently says.
+2433	Holy
+2434	Holy Light
+2435	Holy Paladin Seal of Wisdom
+2436	Holy Power
+2437	Holy Spear
+2438	Home
+2440	Honor Icon
+2441	Honor Portrait
+2442	Horde
+2444	Horizontal bars lay blocks left to right; vertical bars stack them top to bottom.
+2445	Horizontal Frames
+2446	Horizontal Layout
+2447	Horizontal Party Frames
+2448	Hostile
+2449	Hostile Target
+2450	House
+2451	House Favor Bar Text Size
+2452	House Favor Bar Texture
+2453	Housing
+2454	Housing Dashboard
+2455	Hover
+2456	Hover Border
+2457	Hover Borders
+2458	HOVER BREAKDOWN
+2459	Hover Breakdown
+2460	Hover Color
+2461	Hover Effect
+2462	Hover for online guild members and friends. Left-click a name to whisper, right-click to invite.
+2463	Hover Highlight Blocks
+2464	Hover markers for names, levels and flight master details.
+2465	Hover Texture
+2466	Hover the calendar for saved instances and server time.
+2467	Hover the item level for better items in your bags.
+2468	Hover Top Bar\nDisabled
+2469	Hover Top Bar\nEnabled
+2471	How far incoming heals can extend past the end of the health bar, as a percent of its length. 0 keeps them inside the bar.
+2472	How many decimal places the number carries.
+2473	How precise the coordinates read. More decimals make the block wider.
+2474	How wide the block stays, whatever the zone is called.
+2475	Howling Blast
+2477	Huge (125%)
+2478	Hunter
+2481	I am missing others' buffs
+2482	I Understand
+2483	Icicles
+2484	Icon
+2485	Icon Background
+2486	Icon Border
+2487	Icon Border Styles (per bar)
+2488	Icon Color
+2489	ICON DISPLAY
+2490	Icon Divider

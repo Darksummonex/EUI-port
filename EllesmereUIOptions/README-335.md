@@ -1,6 +1,8 @@
 # Options 3.3.5 — 0.113
 
-0.113: Patch Notes: a aba "EUI Staff" virou "Original Staff". No topo, "Special
+Sem bump: EUI Options Language lista "Português (Brasil)" entre o espanhol e o russo.
+
+0.113: Patch Notes: a aba "EUI Staff" (nome mantido). No topo, "Special
 thanks to Ellesmere" e o cartão PORT STAFF (Laraystiri, com ícone do GitHub que
 abre o link dos releases para copiar); abaixo, o cartão ORIGINAL STAFF. A linha
 "Special thanks to: Ellesmere" volta ao cabeçalho e abre essa página.

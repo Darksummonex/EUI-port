@@ -1,0 +1,450 @@
+2839	Contributeurs majeurs (correctifs/fonctionnalités)
+2840	Temps de recharge défensifs majeurs
+2843	En fait le remplacement. Il remplace tout le réglage Visibilité, donc les conditions ci-dessous ne s'appliquent plus tant qu'il est actif. Cliquez à nouveau pour retirer le remplacement.
+2846	Mana + ressource de forme
+2847	BARRE DE MANA EN FORME ANIMALE
+2848	Couleur du mana
+2849	Mana garde la barre sur le mana en forme d'ours et de félin. Mana + ressource de forme affiche aussi votre énergie ou rage dans une seconde barre.
+2850	Étincelle de régén. de mana
+2851	Texte du mana
+2852	Ticks de mana
+2853	Valeur du mana
+2854	Valeur du mana | Mana %
+2858	Gérer les infobulles améliorées
+2864	Taille du texte des coordonnées
+2865	Bord de la carte
+2866	Drapeau de la carte
+2870	Marque les cibles élites, élites rares et rares ; le style Pixels Dragon marque aussi les joueurs.
+2871	Indique où en sera l'incantation quand votre interruption sera prête.
+2874	Principal
+2876	Accent assorti au thème
+2877	Correspondance entre expéditeurs
+2878	Toutes les conditions
+2879	Tous les filtres
+2880	N'importe quelle condition
+2881	N'importe quel filtre
+2883	Selon la forme
+2884	Selon le cadre
+2885	Selon la bordure du cadre
+2886	Selon le cadre dessine le dragon avec le portrait. Un niveau d'affichage plus élevé le dessine par-dessus le reste du cadre, bordure comprise.
+2887	Selon les barres du compteur
+2888	Mode de correspondance
+2889	Selon l'échelle
+2890	Correspondances
+2891	Correspond au modèle
+2892	Compare le texte sans tenir compte de la casse ni des espaces en trop, dans le même type de discussion et le même canal. Les dialogues de PNJ et autres messages système sont toujours affichés.
+2903	Cumul max
+2907	16 palettes maximum
+2908	40 entrées maximum par barre
+2909	Améliorations max
+2910	Affaiblissements max
+2911	Hauteur maximale
+2912	Icônes max
+2913	Largeur maximale
+2918	Mêlée 5 m, chasseur 35 m, lanceurs de sorts 30 m
+2920	Tri des membres
+2921	Espacement des membres
+2922	Membres actuellement en combat
+2923	Affichage de la mémoire
+2925	Mémoire utilisée :
+2930	MENUS ET FENÊTRES CONTEXTUELLES
+2932	Niveaux d'objet chez le marchand
+2933	Molette chez le marchand
+2934	Marchand : pages à la molette
+2935	Fusionner les objets en double
+2936	Fusionner les familiers avec leur maître
+2937	Délai de disparition des messages
+2939	Textures des barres du compteur, du détail et de l'historique
+2941	Taille des micro-boutons
+2944	Apparence du micro-menu
+2946	Espacement micro
+2947	Milieu
+2948	Clic milieu sur un signet pour le retirer.
+2949	Clic milieu sur un rappel pour le masquer jusqu'au prochain écran de chargement
+2950	Menu clic milieu
+2951	Clic milieu sur un objet pour l'épingler. Glissez les catégories dans la barre latérale pour les réordonner ; clic droit pour les renommer ou les grouper.
+2952	Clic milieu sur la minicarte pour le personnage, les talents, les métiers, la recherche de groupe et d'autres raccourcis natifs. S'ouvre hors combat.
+2955	LES MIENS
+2960	Style de bordure de la minicarte
+2961	Style de bordure de la minicarte
+2963	Disposition et contrôles de la minicarte pour Wrath.
+2965	Minimum (30)
+2966	Portrait en miroir
+2968	MANQUANT
+2969	Manquant
+2970	Icônes d'enchantement, gemme et boucle manquants
+2971	Familier absent
+2974	Modèle 3D
+2975	Modèle : glisser-gauche pour pivoter, glisser-droit pour déplacer, molette pour zoomer. L'œil masque les détails des emplacements.
+2978	Le style d'arrière-plan moderne est requis.
+2981	Modificateur
+2982	Les boutons de module et de ligne remplacent aussi les lueurs désactivées, Blizzard par défaut, Bordure Blizzard et Bordure pleine.
+2983	Module désactivé
+2984	POLICES DES MODULES
+2985	LUEURS DES MODULES
+2986	Contour du module
+2987	STYLES DES MODULES
+2988	TEXTURES DES MODULES
+2991	Lune
+2994	Plus d'apparences de fenêtres
+2996	Index de monture
+2998	Sur une monture
+2999	Montures
+3000	Bouton de souris
+3001	Curseur de souris
+3002	Défilement à la molette
+3003	Zoom à la molette
+3005	survol
+3006	déplacer
+3007	Descendre l'action
+3008	Monter l'action
+3009	Déplacez et redimensionnez les barres en Mode Déverrouillage.
+3011	Descendre
+3012	Déplacez chaque élément en Mode Déverrouillage
+3013	Descendre l'entrée
+3014	Monter l'entrée
+3016	Déplacer à gauche
+3017	Déplacer les outils raid
+3018	Déplacer à droite
+3019	Déplacez la position fixe de l'infobulle en Mode Déverrouillage.
+3020	Monter
+3022	Déplacer le texte de zone
+3023	Déplacé 
+3024	Déplacement
+3025	déplacement
+3026	Art de la barre d'alerte de déplacement et de l'anneau du curseur
+3027	Texture de la barre d'alerte de déplacement
+3028	Texture de la barre d'alerte de déplacement
+3029	Taille du texte d'alerte de déplacement
+3030	Temps de recharge de déplacement
+3031	Son de déplacement prêt
+3032	ID du sort de déplacement
+3033	Déplacement : en combat uniquement
+3034	Place le champ de saisie au-dessus des messages.
+3035	Place le bouton de retour en bas dans le coin inférieur droit du panneau de discussion.
+3036	Déplace la barre de totems multiples d'origine pour que le Mode Déverrouillage puisse la placer.
+3037	Déplace le nom de zone affiché en entrant dans une région vers le haut de l'écran (centre haut, X 9 / Y 322). Désactivé rétablit la position de Blizzard.
+3041	Contributeurs du support multilingue
+3044	Musique
+3049	Chrono Mythique+, barres de sorts ciblés et barres d'incantation autonomes.
+3050	Outils Mythique+
+3056	Couleur personnalisée du nom
+3058	Les changements de police des noms nécessitent une déconnexion vers la sélection du personnage. C'est une limitation du moteur de WoW.
+3059	Taille de police du nom
+3060	Format du nom
+3061	Longueur max du nom
+3063	Réglages du nom
+3067	Nom X
+3068	Décalage X du nom
+3069	Nom Y
+3070	Décalage Y du nom
+3071	Nom | Niveau
+3072	Bordures des barres d'info
+3075	Noms, barre d'incantation et texte des auras sur les barres d'info
+3076	Noms, vie et texte des indicateurs sur les cadres de raid et de groupe
+3078	Les actions natives, la saisie et l'ancrage des infobulles restent disponibles.
+3079	Apparences natives du HUD
+3080	Couleurs de classe natives de Wrath pour les joueurs ennemis.
+3081	Commodités, affichages, curseur, déplacement des fenêtres et outils raid natifs de Wrath.
+3082	Langues natives de Wrath
+3085	Menus d'actions imbriqués
+3093	Nouveau modèle de barre
+3097	Animation des nouvelles icônes
+3098	NOUVEAUTÉS D'ELLESMEREUI
+3100	Nouveau module : cadres d'arène
+3108	Soins entrants des 4 prochaines secondes
+3109	Surbrillance du prochain coup
+3112	Aucune lueur active
+3113	Aucune lueur active. Désactivez Masquer les lueurs inactives pour modifier les autres.
+3115	Aucune lueur de barre pour l'instant.
+3116	Aucun sort sur liste noire.
+3118	Pas d'icône d'affaiblissement en double
+3119	Aucune entrée sur cette barre.
+3120	Aucun ami en ligne
+3121	Aucune maison trouvée.
+3122	Aucune icône
+3124	Aucune gemme correspondante dans vos sacs
+3126	Aucun autre personnage enregistré
+3130	Aucune réputation suivie
+3133	Portrait non-joueur
+3134	Non-tank
+3139	Aucun (déplacement libre)
+3144	Normal bronze, héroïque bleu.
+3145	Donjons normaux
+3147	Pas une lueur personnalisée
+3148	Chaîne EllesmereUI invalide. Assurez-vous d'avoir copié toute la chaîne.
+3152	Indisponible en mode sombre. Les couleurs du mode sombre se règlent dans Réglages globaux -> Polices et couleurs.
+3153	Indisponible tant qu'une ancienne valeur de visibilité est sélectionnée. Choisissez d'abord Jamais ou Toujours.
+3155	Non personnalisé
+3156	Couleur mana insuffisant
+3157	Pas de guilde
+3160	non chargé
+3161	Non remplaçable
+3162	Non remplaçable. Ces conditions sont partagées et ne peuvent être modifiées que lorsqu'aucun remplacement n'est en cours d'édition. Un remplacement supplante complètement le réglage Visibilité -- Jamais, Toujours ou Survol -- et ignore tout ce qui est défini ici tant qu'il s'applique.
+3163	Pas en vol dynamique (en l'air)
+3164	Non pris
+3165	Rien
+3166	Rien de disponible
+3167	Rien de plus
+3168	Rien à ajouter dans cette catégorie
+3169	Rien à changer : chaque lueur ici correspond déjà au modèle.
+3170	Rien à changer : aucune lueur personnalisée active ne diffère du modèle.
+3174	Nombre de cadres de test affichés quand cette page est ouverte ou en Mode Déverrouillage.
+3175	Couleur des objectifs
+3180	Désactivé colore le texte comme le remplissage.
+3181	Désactivé colore le texte avec la couleur de ressource.
+3183	Couleur main gauche
+3184	Désactivé utilise la couleur du type de ressource.
+3185	Désactivé utilise votre couleur de classe.
+3186	Désactivé : survoler un lien d'objet, de sort, de quête ou de haut fait affiche son infobulle.
+3187	Désactivé : filtre les répétitions du même expéditeur. Activé : masque aussi les messages identiques envoyés par d'autres joueurs dans le même canal.
+3188	Désactivé : seule la discussion des joueurs est horodatée, comme dans le jeu.
+3189	Désactivé : les marqueurs au sol demandent un clic au sol.
+3190	CD offensifs
+3193	Arrière-plan hors ligne
+3196	Ogre mage
+3203	En recharge
+3207	Un seul bouton de sac à dos ; ouvre l'inventaire unifié.
+3208	Une ligne de mêlée indiquant le prochain coup de l'une ou l'autre main.
+3210	S'applique uniquement si Nom > Cible est sélectionné.
+3211	Sorts assignés uniquement
+3213	Seulement sous le seuil
+3214	Dissipables par vous uniquement
+3215	Affaiblissements dissipables uniquement
+3217	Ne met en surbrillance que les affaiblissements que votre personnage peut retirer maintenant.
+3218	Seulement en groupe
+3220	Seulement en combat
+3221	Seuls les sorts appris apparaissent
+3222	N'afficher que les améliorations avec une durée, hors permanentes.
+3223	N'afficher que les améliorations avec une durée, hors permanentes. Se combine avec les filtres ci-dessous.
+3224	N'afficher que les améliorations que vous pouvez voler ou purger.
+3225	N'afficher que les affaiblissements avec une durée, hors permanents.
+3226	N'afficher que les affaiblissements avec une durée, hors permanents. Se combine avec les filtres ci-dessous ; coché seul, affiche tous les affaiblissements temporaires.
+3227	N'afficher que les affaiblissements avec une durée, hors permanents. Les auras suivies sont toujours affichées.
+3228	N'afficher que les affaiblissements dont la durée totale est au plus ce nombre de secondes. Se combine avec les filtres ; Illimité n'applique aucune limite.
+3231	Membres du groupe uniquement
+3232	Seulement au logement
+3234	Chiffres uniquement
+3236	Seulement sur une monture
+3237	Améliorations volables uniquement
+3238	Auras temporaires uniquement
+3239	Suivies uniquement
+3240	Auras suivies uniquement
+3241	Uniquement EN L'AIR sur une monture capable de planer ou en forme de vol. Pour la monture elle-même, au sol compris, utilisez Monture de vol dynamique.
+3242	Vos affaiblissements uniquement
+3244	Opacité des ennemis camouflés ou hors de vue.
+3245	Opacité du remplissage de la barre ; en dessous de 100, le monde est visible à travers le remplissage au lieu de l'arrière-plan.
+3247	Opacité du remplissage de la barre d'incantation ; en dessous de 100, le monde est visible à travers le remplissage au lieu de l'arrière-plan.
+3248	Tout ouvrir ignore les envois contre remboursement et les courriers de MJ
+3249	Animation d'ouverture
+3250	Ouvrir à
+3252	Ouvrir les sacs en combat
+3253	Ouvrir la fiche de personnage
+3261	Style d'ouverture
+3262	Ouvrir les talents
+3263	Ouvrir le panneau de réglages d'EllesmereUI.
+3264	Ouvrir le Mode Déverrouillage
+3265	Monde extérieur
+3266	Faction opposée
+3270	Minerai, herbes, tissu... équipement LqE par qualité
+3272	ÉQUIPE ORIGINALE
+3273	Équipe EUI
+3277	Soins des autres joueurs
+3278	Il manque mon amélioration aux autres
+3279	Il manque mon amélioration aux autres : rappel quand un membre du groupe n'a pas une amélioration que vous pouvez lancer.\nIl me manque les améliorations des autres : rappel quand il vous manque une amélioration qu'un membre du groupe pourrait vous donner (affiché seulement si quelqu'un pouvant la lancer est présent). Désactivé par défaut.
+3284	Hors combat, vous rappelle quand aucun membre du groupe n'a votre Bouclier de terre. Un clic le lance sur le tank du groupe (ou votre focalisation).
+3287	Couleur hors de portée
+3289	Fondu hors de portée
+3290	Opacité hors de portée
+3291	Fondu hors de portée
+3292	Anneau extérieur
+3293	Taille de l'anneau extérieur
+3294	Les chuchotements sortants et ceux des MJ sont toujours affichés. Limite les filtres de répétition et de mots-clés.
+3297	Contour du texte de zone, sous-zone et statut JcJ affiché en entrant dans une région.
+3300	Mode contour - Désactivé\n
+3302	Contour par texte
+3303	Remplacement du style de contour pour tous les 
+3305	Hors de l'outil Donjons, Wrath n'a pas de rôle de soigneur ; les utilisateurs de mana des classes de soin sont listés.
+3307	Débordement vers
+3308	Soins en excès
+3312	Superposition inversée
+3313	Remplacé par :
+3315	Remplacer l'ancrage
+3316	Remplacer la direction d'ancrage
+3318	Remplacement à promouvoir
+3319	Remplacements
+3323	AVERTISSEMENT REMPLACEMENTS
+3324	Le sur-bouclier est la partie d'une absorption qui dépasse votre vie manquante. Toujours le remplit sur la vie actuelle depuis le bord du bouclier ; Depuis la gauche le fait croître depuis l'extrémité opposée de la barre ; Jamais le masque.
+3325	Écraser les réglages de fenêtres et d'infobulles ?
+3326	Vos auras uniquement
+3327	Inclut votre familier et votre véhicule
+3330	Range les objets triés dans les derniers emplacements pour que les emplacements vides se retrouvent en haut. Affecte OneBag, MultiBag et la banque.
+3331	Marge
+3334	Flèches de pagination
+3335	La pagination, l'achat et le rachat restent natifs.
+3337	suppression de la douleur
+3340	Palette 
+3341	Nom de la palette
+3342	Palettes
+3343	LUEUR PANDÉMIE
+3345	Couleur de la lueur pandémie
+3347	Panneau
+3348	Styles de bordure des panneaux et onglets
+3351	Groupe et raid
+3353	Texture de vie du groupe
+3356	Discussion de groupe, raid (avertissements compris), champ de bataille, guilde et officiers. Limite les filtres de répétition et de mots-clés.
+3357	Tailles de texte propres au groupe
+3358	Textures propres au groupe
+3359	Familier passif
+3367	Par icône
+3368	Textures d'arrière-plan par barre
+3369	Échelle du texte par barre
+3370	Réglages de lueur par icône : le modèle ne les modifie jamais.
+3372	pourcentage
+3374	Rappel de performances
+3376	Tailles de texte familier et cible de la cible (par unité)
+3377	Les emplacements de familier et de posture suivent la disposition de Blizzard
+3379	Hauteur de la barre de familier
+3380	CADRES DE FAMILIER
+3381	HUMEUR DU FAMILIER
+3382	La fusion des familiers s'applique aux nouveaux événements collectés.
+3383	Textures des barres familier, cible de la cible et boss
+3385	Familiers, rendements décroissants et portée
+3386	Téléphone
+3387	Tri physique
+3389	Choisissez ce que les PNJ affichent en art de classe au lieu de leur portrait 2D.
+3390	Choisissez dans quel contenu apparaissent les rappels de classe (poisons/rites/imprégnations/boucliers).\nLes zones de repos (villes et auberges) restent toujours masquées.
+3391	Choisissez dans quel contenu apparaissent les rappels personnalisés.\nLes zones de repos (villes et auberges) restent toujours masquées.
+3392	Choisissez dans quel contenu apparaissent les rappels WoW Forever.\nLes zones de repos (villes et auberges) restent toujours masquées.
+3393	Choisissez dans quel contenu apparaissent ces rappels d'auras.\nLes zones de repos (villes et auberges) restent toujours masquées.
+3394	Choisissez dans quel contenu apparaissent ces rappels de consommables.\nLes zones de repos (villes et auberges) restent toujours masquées.
+3395	Choisissez dans quel contenu apparaissent ces rappels de démoniste.\nLes zones de repos (villes et auberges) restent toujours masquées.
+3396	Choisissez dans quel contenu apparaissent les rappels de cette section.\nLes zones de repos (villes et auberges) restent toujours masquées.
+3402	Arrière-plan des pastilles
+3406	Arrière-plan de la lueur pixel
+3407	Lignes de la lueur pixel
+3409	Vitesse de la lueur pixel
+3428	Placer les petits groupes d'emplacements de l'Armurerie côte à côte. Les grands groupes utilisent toujours des lignes complètes.
+3431	Place les cinq cadres de groupe côte à côte au lieu de les empiler.
+3432	Place votre propre cadre en premier ou en dernier dans son groupe. Utilise la liste de noms native, actualisée hors combat.
+3433	Place votre propre cadre en premier ou en dernier dans le groupe. Utilise la liste de noms native, actualisée hors combat.
+3437	Jouer un son une fois quand un rappel de cette section apparaît.
+3438	Jouer un son en mode groupe
+3440	Coordonnées du joueur et du curseur
+3441	Barres d'auras du joueur
+3442	barres d'auras du joueur
+3443	Lueurs d'icônes des barres d'auras du joueur
+3444	Texte des barres d'auras du joueur (par barre)
+3445	AURAS DU JOUEUR
+3447	Superposition de dissipation du joueur
+3448	Dragon du cadre du joueur
+3451	Tailles de texte joueur, cible et focalisation (par unité)
+3452	Joueurs uniquement
+3453	Joué à chaque chuchotement reçu, en plus du son de chuchotement du jeu.
+3459	Les préréglages populaires sont désormais sur le nouveau site d'EllesmereUI, avec aperçus complets, instructions d'installation pas à pas et de nouveaux préréglages ajoutés chaque jour !
+3460	Fenêtre contextuelle
+3461	Styles de bordure des fenêtres et infobulles
+3462	Fenêtres contextuelles
+3463	ÉQUIPE DU PORTAGE
+3474	position
+3477	Annonce le sort que vous ou votre familier avez interrompu. Groupe et Raid utilisent le canal de champ de bataille dans les champs de bataille.
+3479	Potions
+3481	ressource
+3487	Jointure de la barre de ressource
+3489	Barres de ressource
+3490	Options de bordure de ressource
+3493	Arrière-plan coloré par ressource. Les couleurs de ressource se règlent dans Réglages globaux -> Polices et couleurs.
+3494	Remplissage coloré par ressource. Les couleurs de ressource se règlent dans Réglages globaux -> Polices et couleurs.
+3500	Taille du texte de ressource
+3501	Texture de ressource
+3507	Précis en dessous de (minutes, 0 = désactivé)
+3508	Couleur de prédiction
+3510	Préféré (clic pour améliorer)
+3511	Préfixe
+3512	Ajoute le nom du plugin devant son texte.
+3514	FILTRES PRÉRÉGLÉS
+3515	Les filtres préréglés fonctionnent indépendamment des répétitions. Vos propres messages sont conservés. Les filtres de mots-clés et de recrutement peuvent masquer des messages légitimes ; n'activez que ceux que vous voulez.
+3516	Préréglages
+3517	Les préréglages ont une nouvelle maison
+3518	Appuyez deux fois sur \"%1$s\" pour continuer.
+3519	Appuyez sur un raccourci pour 
+3521	Appuyez à nouveau pour confirmer.
+3523	Appuyez sur 
+3530	Aperçu / Copier / Envoyer le rapport
+3531	Cadres d'aperçu
+3533	L'aperçu correspond aux cadres réels
+3536	Aperçu • cliquez sur une icône ou un indicateur pour le modifier
+3537	Aperçu • activez Utiliser la disposition des indicateurs pour appliquer
+3539	Prismatique
+3540	ID de l'aura de proc
+3543	Cumuls du proc
+3547	Import et export de profil
+3549	Migration de profil
+3552	Profil synchronisé
+3556	Progression
+3557	Promouvoir et recharger
+3558	Promouvoir le remplacement et supprimer TOUS les remplacements
+3559	Promouvoir le remplacement en profil
+3560	Promouvoir un remplacement recharge l'interface et est impossible en combat. Quittez le combat et réessayez.
+3563	Discussion publique
+3566	Pull annulé
+3568	Pull dans 
+3569	Compte à rebours de pull
+3570	Durée du pull (secondes)
+3572	Pulsation
+3573	Lueur des améliorations purgeables
+3574	Améliorations purgeables
+3575	Enfoncé
+3578	Emblème JcJ
+3579	Drapeau JcJ
+3583	Qualité
+3586	Qualité : les FPS et chaque latence passent au vert, jaune ou rouge (60/30 fps, 100/250 ms).
+3588	Quête échouée
+3592	Taille du texte des objectifs de quête
+3593	Titre de quête ou de haut fait sous la souris.
+3597	Les quêtes avec plusieurs choix de récompense et les rendus coûtant de l'argent ou des objets restent manuels.
+3598	Couleur en file d'attente
+3604	Palettes radiales
+3608	raid
+3609	Filtres d'auras raid / groupe
+3610	Raid et groupe
+3611	Les filtres de raid et de groupe sont enregistrés séparément
+3612	Raid et cadres d'unité
+3613	Bouton de fournisseur d'améliorations de raid
+3615	CD de raid
+3616	Combat de raid
+3617	AFFAIBLISSEMENTS DE RAID
+3618	Affaiblissements de raid
+3619	Section affaiblissements de raid
+3622	Texture de vie du raid
+3623	DISPOSITIONS DE RAID
+3625	marqueur de raid
+3626	Marqueur de raid 0-8
+3630	Marqueurs de raid
+3631	Raid uniquement
+3632	OUTILS RAID
+3634	Avertissement raid
+3635	Avertissement raid > Raid > Groupe ; 10 s et 5 dernières s
+3638	Augmenter le niveau du cadre
+3639	Élève le dragon dans son niveau d'affichage. Des valeurs plus élevées le dessinent par-dessus une plus grande partie du cadre.
+3644	portée
+3645	Portée (30-35)
+3646	Couleur de portée
+3647	Distance
+3648	Couleur distance
+3652	prêt
+3654	Icônes de vérification de préparation
+3656	Position de la vérification de préparation
+3657	Taille de la vérification de préparation
+3658	Style de lueur prête
+3659	Runes prêtes uniquement, avec un compteur central.
+3661	Réassigner
+3662	Recharge de Renaissance (druide)
+3663	Renaissance utilise votre temps de recharge ; pas de charges de raid partagées
+3667	Couleur de rechargement
+3669	Recolore la bordure du cadre avec la couleur du type de dissipation tant qu'un affaiblissement de ce type est affiché.
+3670	Rectangulaire
+3671	Réduisez les icônes par indicateur pour faire de la place (huit icônes par type d'aura).
+3672	Fréquence d'actualisation (secondes)
+3674	Ticks de régénération
+3676	Relatif à l'écran

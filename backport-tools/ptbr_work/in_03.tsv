@@ -1,0 +1,350 @@
+1050	Colors
+1051	Colors allied player bars using their class. Group/raid members are identified automatically; other allies are learned from target, mouseover or focus.
+1052	Colors an attackable unit's level by difficulty, as the default UI does.
+1053	Colors are shared globally from the \"%1$s\" profile.\nSwitch to it (or set Pull Colors From to this profile) to edit.
+1054	Colors group and raid member names inside Say, Yell, Party and Raid messages.
+1055	Colors level text by difficulty, from grey (trivial) through green, yellow and orange to red (5+ levels above you).
+1056	Colors the bar text instead of the fill when the threshold applies.
+1057	Colors the cast segment during which your interrupt will be available.
+1058	Colors the dispel type borders with your Dispel Colors instead of Blizzard's.
+1059	Colors the number by threat status. Off shows it in white.
+1060	Colors the number when free slots drop below this many; the swatch picks the color. Zero turns it off.
+1061	Colors the strip behind the target's name by its reaction.
+1062	Columns
+1063	COMBAT
+1064	Combat
+1065	combat
+1066	Combat & World Text
+1067	Combat Alert
+1068	Combat Alert Class Color
+1069	Combat Alert Text Size
+1070	Combat Data
+1071	Combat End Grace (Seconds)
+1072	Combat Icon Position
+1073	Combat Icon Size
+1074	Combat Indicator
+1075	Combat Indicator and Portraits
+1076	Combat Indicator Settings
+1077	COMBAT LOGGING
+1078	Combat Status
+1079	Combat Text Font
+1080	Combat Text Font (logout required)
+1081	Combat text font changes require a logout to character select to take effect. This is a WoW engine limitation.
+1082	Combat Text Size
+1083	Combat Timer
+1084	Combine Hands
+1085	Combine Spell Name and Target
+1086	Combines with the conditions below: shows outright once at least one passes, otherwise still reveals on hover. A checked Hide state still hides it, hover included.
+1087	Combo point count; DK rune recharge seconds.
+1088	Combo Points
+1089	Combo points on the target nameplate (Rogue and Druid).
+1090	Coming Soon
+1091	Coming soon
+1092	Comma separated, e.g. 3,5
+1093	Comma separated, for example 25, 50, 75.
+1094	Comma-separated spell IDs. Empty means no entries.
+1095	Compact Slot Groups
+1096	Completed Color
+1097	Compute Effects - Disabled\n
+1098	Conditional
+1099	conditional
+1100	Conditional Overrides
+1101	Conditionals: Keybind, Dungeon, Raid, Arena, BG, Solo
+1102	Configure alerts for missing Beacon of Light or Faith.
+1103	Configure unit frame appearance and behavior.
+1104	Confirm
+1105	Consolidate Bags
+1106	CONSUMABLES
+1107	Consumables
+1108	Containers wait for vendors, mail, bank and trade
+1109	Content
+1110	Content Position
+1111	Content Scale
+1112	Continue
+1113	Contrast
+1114	Controls the order that overlapping elements display in. Set higher to show above other elements.
+1115	Controls the text rendering style used across all UI elements
+1116	Cooldown
+1117	Cooldown Bar
+1118	cooldown bars
+1119	Cooldown bars fill as the cooldown recovers.
+1120	Cooldown Edge
+1121	COOLDOWN MANAGER
+1122	Cooldown Manager
+1123	Cooldown Manager Centered
+1124	Cooldown Manager has its own per-spec system and can't be overridden here.
+1125	Cooldown Manager Icons
+1126	Cooldown Manager spells from the other game client were not imported.
+1127	Cooldown Numbers
+1128	Cooldown Ready Sound
+1129	Cooldown State
+1130	Cooldown States
+1131	Cooldown Swipes
+1132	Cooldown Text
+1133	Cooldown Text Color
+1134	Cooldown Text Position
+1135	Cooldown Text Size
+1136	Cooldown Text X
+1137	Cooldown Text Y
+1138	Cooldown Timer Text
+1139	Cooldown Tracker Text Size
+1140	Cooldowns
+1141	Coordinate Decimals
+1142	COORDINATES
+1143	Coordinates
+1144	Coordinates Mode
+1145	Coordinates Position
+1146	Coordinates Scale
+1147	Coordinates\nDisabled
+1148	Coordinates\nEnabled
+1149	Copied settings from 
+1150	Copied to 
+1151	Copy
+1152	Copy all shared settings from %1$s to %2$s?
+1153	Copy Buffer Lines
+1154	Copy Chat
+1155	Copy Current Chat Window
+1156	Copy every shared setting from another frame in this group to this frame.
+1157	Copy from %1$s Buff Manager
+1158	Copy from main Buff Manager
+1159	Copy From:
+1160	Copy Included/Excluded Spells From:
+1161	Copy Profile
+1162	Copy Settings From
+1163	Copy the string below and share it
+1164	Copy This Bar to Other Talent Group
+1165	CORE
+1166	Core Addons
+1167	Core Healing Buffs
+1168	CORE POSITIONS
+1169	Core Positions
+1170	CORE TEXT POSITIONS
+1171	Corner options place the bar flush with that corner of the target and set its grow direction to keep it there as bars change size.
+1172	Cosmic Hearthstone
+1173	Cost Color
+1174	Could not build the export string.
+1175	Count
+1176	Count Text
+1177	Count Text Size
+1178	Countdown Bar Height
+1179	Countdown Text Color
+1180	Countdown Text Offset
+1181	Countdown Text Size
+1182	Counts on Need/Greed/Disenchant/Pass; hover a button for names.
+1183	Crazyyoungs
+1184	Create
+1185	Create Bar
+1186	Create Group
+1187	Create Group With
+1188	Create Meter Window
+1189	Create New (Copy)
+1190	CREATE NEW DATABAR
+1191	Create Sync Group
+1192	Create your first DataBar from a starter template, or start empty.
+1193	Created 
+1194	Crippling Poison
+1195	Critical Strike
+1196	Crop Amount
+1197	Cropped
+1198	cropped
+1199	Cropped Icons
+1200	Crops the border of every item icon in bags and bank. 0 shows the full icon.
+1201	Cross
+1202	CROSSHAIR AND COORDINATES
+1203	Crosshair Border
+1204	Crosshair Color
+1205	Crosshair Length
+1206	Crosshair Thickness
+1207	Crosshair Visibility
+1208	Crowd Control on Class Icon
+1209	Crystal
+1210	csquare
+1211	Ctrl
+1212	Ctrl + left drag: move until window closes
+1213	Ctrl + Right-Click: Reset all data
+1214	Ctrl + Shift
+1215	Ctrl Modifier
+1216	Ctrl+C to copy, Escape to close
+1217	CTRL-
+1218	Curls a gold dragon around the portrait of elite and boss enemies, and a silver one around rares.
+1219	Curls Blizzard's gold dragon around the portrait.
+1220	Currency
+1221	Current
+1222	Current / Maximum
+1223	Current HP Only
+1224	Current HP | Percent
+1225	Current Segment On Combat
+1226	Current Specialization
+1227	Current | Percent
+1228	Curse
+1229	CURSOR
+1230	Cursor
+1231	cursor
+1232	Cursor action added
+1233	Cursor Circle
+1234	Cursor Light\nDisabled
+1235	Cursor Light\nEnabled
+1236	Cursor Offset
+1237	Cursor Offset X
+1238	Cursor Offset Y
+1239	Cursor Position
+1240	Cursor Size
+1241	Cursor Texture
+1242	Cursor Trail
+1243	Curved
+1244	Curved Square
+1245	Custom
+1246	Custom Background Color
+1247	Custom Bar Stratas
+1248	Custom Border Style
+1249	Custom Buff Manager
+1250	Custom Buff Managers
+1251	Custom buff tracking, layouts, colors and borders
+1252	Custom Button Shape
+1253	Custom Color
+1254	Custom Colored
+1255	Custom Colored Fill
+1256	Custom Colors
+1257	Custom Debuff Manager
+1258	Custom Debuff Managers
+1259	Custom Dynamic
+1260	Custom Dynamic blends these by health
+1261	Custom Fill Color
+1262	Custom Health Color
+1263	Custom Icon
+1264	Custom Item ID
+1265	CUSTOM KEYWORDS
+1266	Custom Label
+1267	Custom Macro
+1268	Custom nameplate design and behavior.
+1269	Custom Non-Player Portrait
+1270	Custom Recharge Color
+1271	CUSTOM REMINDERS
+1272	Custom Reminders
+1273	Custom Reminders Per Character
+1274	Custom Resource Bars with thresholds, hash lines and more.
+1275	Custom Spell ID
+1276	Custom Text Color
+1277	Custom Tooltip Size
+1278	Custom Unlock Mode
+1279	Custom Unlock Mode layouts and Buff Managers per group
+1280	Custom Unlock Modes
+1281	Customize Unlock Mode
+1282	Customizing Unlock Mode: %s (changes apply only to this group's specs)
+1283	Cycle Target Markers
+1284	Cycle World Markers
+1285	Daily reset
+1286	Damage
+1287	Damage Done
+1288	DAMAGE METERS
+1289	Damage Meters
+1290	Damage shields on the health bar. 3.3.5 does not report shield amounts, so they are estimated from the combat log (base rank value plus your own spell power, minus what each shield absorbed).
+1291	Damage Taken
+1292	Damage Text Settings
+1293	DAMAGER
+1294	Danders Frames
+1295	Dark
+1296	DARK MODE
+1297	Dark Mode
+1298	Dark Mode (Class Resource Bar)
+1299	Dark Mode Class Resource
+1300	Dark Mode drives a Dark Mode override condition and can't be changed while editing an override
+1301	Dark Mode Fill Color
+1302	Dark Mode Fill Opacity
+1303	Dark Overlays\nDisabled
+1304	Dark Overlays\nEnabled
+1305	Data Bars
+1306	DataBar 
+1307	DataBars
+1308	DataBars cannot be restructured in combat.
+1309	DBMv4-PT
+1310	Deactivate Boss Preview
+1311	Deactivate Party Mode
+1312	DEAD
+1313	Dead
+1314	Dead Background
+1315	Deadly Poison
+1316	Death Alert Sound
+1317	Death Coil
+1318	Death Knight
+1319	Death Knights: remind you when an equipped weapon has no rune (click opens Runeforging).
+1320	Death recap: last 20 seconds, up to 40 events.
+1321	Deaths
+1322	Deaths at this level or higher stay visible, for example 80 to still see max level deaths. 81 hides every death.
+1323	Deathwing
+1324	Debuff
+1325	debuff
+1326	debuff bar
+1327	Debuff Display
+1328	Debuff Duration
+1329	Debuff Duration Size
+1330	Debuff Filter
+1331	Debuff Filter Options
+1332	DEBUFF FILTERS
+1333	Debuff Icon Border
+1334	Debuff Icons Per Row
+1335	Debuff Manager
+1336	Debuff Manager changes on this page apply only to this override.
+1337	Debuff Manager Glows
+1338	Debuff Manager Text (per tile)
+1339	Debuff Mover
+1340	Debuff Position
+1341	Debuff Settings
+1342	Debuff Size
+1343	Debuff Stack Size
+1344	Debuff Text Size
+1345	Debuffs
+1346	Debuffs Location
+1347	Decimals
+1348	Decimals Below
+1349	DEFAULT
+1350	Default
+1351	Default Bag Type
+1352	Default Blizz Frames
+1353	Default Editing Mode
+1354	Default for every icon on this bar; icons can override it.
+1355	Default Preset
+1356	Default Profile (for non-assigned specs)
+1357	Default: left target, right unit menu
+1358	Defense
+1359	Defensive Stance
+1360	Defensives
+1361	defensives
+1362	Deficit
+1363	Degrees per second. 360 is one full turn a second; 0 parks the bars where they are.
+1364	Deja Character Stats
+1365	Deja Character Stats conflicts with the EllesmereUI's Character Sheet. Disable either Deja or the Character Sheet skin in Blizzard UI Enhanced settings.
+1366	Delasteve
+1367	Delete
+1368	Delete \"%1$s\"?
+1369	Delete Bar
+1370	Delete Category
+1371	Delete Conditional Group
+1372	Delete Custom Buff Manager
+1373	Delete Custom Debuff Manager
+1374	Delete Custom Unlock Mode
+1375	Delete DataBar
+1376	Delete Override Anchor
+1377	Delete Override Group
+1378	Delete Profile
+1379	Delete Saved Character
+1380	Delete Saved Characters
+1381	Delete Selected Window
+1382	Delete Spec Group
+1383	Delete the conditional '%s'? Its captured overrides and custom unlock mode are removed with it.
+1384	Delete the custom Buff Manager for '%s'? Its conditions return to your default Buff Manager.
+1385	Delete the custom Buff Manager for '%s'? Its specs return to your default Buff Manager.
+1386	Delete the custom Debuff Manager for '%s'? Its conditions return to your default Debuff Manager.
+1387	Delete the custom Debuff Manager for '%s'? Its specs return to your default Debuff Manager.
+1388	Delete the custom unlock mode for '%s'? Its conditions return to your default unlock mode layout.
+1389	Delete the custom unlock mode for '%s'? Its specs return to your default unlock mode layout.
+1390	Delete the group '%s'? Its captured overrides are removed with it; settings keep their current live values.
+1391	Delete the saved bags, bank and gold of 
+1392	Deletes the selected bar and all of its blocks.
+1393	Demon
+1394	Demon Hunter
+1395	Demonology
+1396	Deplete Fill
+1397	Depth Effects - Disabled\n
+1398	Derek
+1399	Desaturate Inactive Buffs

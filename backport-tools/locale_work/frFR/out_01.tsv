@@ -1,0 +1,450 @@
+995	Cliquez sur un élément\npour en faire l'ancrage de secours
+996	Cliquez sur un élément\npour en faire l'ancrage de remplacement
+998	Cliquez sur Assigner une touche, puis appuyez sur votre raccourci.
+999	INCANTATION AU CLIC
+1000	Incantation au clic
+1001	Clic : modifier - Glisser : réordonner - Clic droit : retirer - Déposer : ajouter
+1003	Cliquez sur le lien, puis Ctrl+C pour le copier
+1005	Cliquez pour choisir une gemme dans vos sacs
+1006	Cliquez pour modifier. Clic du milieu pour retirer.
+1007	Cliquez pour faire défiler. Clic droit pour retirer.
+1009	Le clic pour utiliser est désactivé en combat
+1010	URL cliquables
+1012	Clique peut gérer les cadres avec les raccourcis intégrés désactivés
+1015	HORLOGE ET ZONE
+1016	Format de l'horloge
+1017	Survol de l'horloge
+1018	Décalage X de l'horloge
+1019	Décalage Y de l'horloge
+1022	Horloge, zone, coordonnées, IPS et texte de difficulté
+1027	Couleur des pièces
+1029	Réduire
+1030	Icônes du menu réduit
+1031	COLLECTION ET HISTORIQUE
+1033	Habillage des collections et de la garde-robe
+1035	Colorer les boss
+1036	Colorer selon la recharge d'interruption
+1037	Colorer si interruptible
+1038	Colorer selon la menace
+1039	Colorer AM/PM de l'horloge
+1040	Colorer les bordures perso.
+1041	Colorer la lettre de difficulté
+1042	Colorer les élites en instance
+1043	Colorer le suffixe IPS/MS
+1044	Colorer les écarts
+1047	Colorer le texte à la place
+1048	Colore la barre de vie selon la vie restante plutôt qu'avec une couleur unie. Classique passe du vert à pleine vie au jaune puis au rouge à vide. Couleurs personnalisées mélange les trois nuanciers de cette ligne -- plein (100%), moitié (50%) et vide (0%). Réactif à la classe affiche la couleur de classe à pleine vie, puis glisse vers les couleurs 50% et 0% à mesure que l'unité subit des dégâts. Désactivé laisse les nuanciers Couleur de remplissage unie aux commandes ; dans tous les cas, le Dégradé ci-dessous s'applique toujours, à partir de la couleur choisie ici.
+1051	Colore les barres des joueurs alliés selon leur classe. Les membres du groupe/raid sont identifiés automatiquement ; les autres alliés sont appris via la cible, le survol ou la focalisation.
+1052	Colore le niveau d'une unité attaquable selon la difficulté, comme l'interface par défaut.
+1054	Colore les noms des membres du groupe et du raid dans les messages Dire, Crier, Groupe et Raid.
+1055	Colore le texte de niveau selon la difficulté, du gris (insignifiant) au vert, jaune et orange jusqu'au rouge (5 niveaux ou plus au-dessus de vous).
+1056	Colore le texte de la barre au lieu du remplissage quand le seuil s'applique.
+1057	Colore le segment de l'incantation pendant lequel votre interruption sera disponible.
+1058	Colore les bordures de type de dissipation avec vos Couleurs de dissipation au lieu de celles de Blizzard.
+1059	Colore le nombre selon l'état de menace. Désactivé l'affiche en blanc.
+1060	Colore le nombre quand les emplacements libres passent sous cette valeur ; le nuancier choisit la couleur. Zéro le désactive.
+1061	Colore la bande derrière le nom de la cible selon sa réaction.
+1066	Texte de combat et du monde
+1068	Couleur de classe de l'alerte de combat
+1069	Taille du texte d'alerte de combat
+1070	Données de combat
+1071	Délai de fin de combat (secondes)
+1072	Position de l'icône de combat
+1075	Indicateur de combat et portraits
+1077	JOURNAL DE COMBAT
+1078	État de combat
+1080	Police du texte de combat (déconnexion requise)
+1083	Chrono de combat
+1084	Combiner les mains
+1085	Combiner nom du sort et cible
+1086	Se combine avec les conditions ci-dessous : s'affiche directement dès qu'au moins une est remplie, sinon apparaît quand même au survol. Un état Masquer coché le masque toujours, survol compris.
+1087	Nombre de points de combo ; secondes de recharge des runes du DK.
+1089	Points de combo sur la barre d'info de la cible (Voleur et Druide).
+1092	Séparés par des virgules, ex. 3,5
+1093	Séparés par des virgules, par exemple 25, 50, 75.
+1094	ID de sorts séparés par des virgules. Vide signifie aucune entrée.
+1095	Groupes d'emplacements compacts
+1097	Effets de calcul - Désactivés\n
+1099	conditionnel
+1105	Regrouper les sacs
+1108	Les conteneurs attendent marchands, courrier, banque et échange
+1109	Contenu
+1113	Contraste
+1117	Barre de recharge
+1118	barres de recharge
+1119	Les barres de recharge se remplissent à mesure que la recharge avance.
+1120	Bord de recharge
+1121	GESTIONNAIRE DE RECHARGE
+1125	Icônes du gestionnaire de recharge
+1126	Les sorts du gestionnaire de recharge de l'autre client de jeu n'ont pas été importés.
+1128	Son de recharge prête
+1129	État de recharge
+1130	États de recharge
+1131	Balayages de recharge
+1132	Texte de recharge
+1133	Couleur du texte de recharge
+1134	Position du texte de recharge
+1136	Texte de recharge X
+1137	Texte de recharge Y
+1138	Texte du chrono de recharge
+1139	Taille du texte du suivi de recharges
+1141	Décimales des coordonnées
+1142	COORDONNÉES
+1144	Mode des coordonnées
+1146	Échelle des coordonnées
+1149	Réglages copiés depuis 
+1150	Copié vers 
+1153	Copier les lignes du tampon
+1155	Copier la fenêtre de chat actuelle
+1156	Copie tous les réglages partagés d'un autre cadre de ce groupe vers ce cadre.
+1157	Copier depuis le gestionnaire d'améliorations %1$s
+1158	Copier depuis le gestionnaire d'améliorations principal
+1159	Copier depuis :
+1160	Copier les sorts inclus/exclus depuis :
+1162	Copier les réglages depuis
+1164	Copier cette barre vers l'autre groupe de talents
+1167	Améliorations de soins essentielles
+1169	Positions de base
+1171	Les options de coin collent la barre à ce coin de la cible et règlent sa direction de croissance pour l'y maintenir quand les barres changent de taille.
+1173	Couleur du coût
+1174	Impossible de générer la chaîne d'export.
+1176	Texte du nombre
+1177	Taille du texte du nombre
+1178	Hauteur de la barre de compte à rebours
+1179	Couleur du texte du compte à rebours
+1180	Décalage du texte du compte à rebours
+1181	Taille du texte du compte à rebours
+1182	Compte les Besoin/Cupidité/Désenchanter/Passer ; survolez un bouton pour les noms.
+1185	Créer une barre
+1188	Créer une fenêtre de compteur
+1190	CRÉER UNE NOUVELLE DATABAR
+1193	Créé 
+1195	Score de coup critique
+1196	Recadrage
+1202	RÉTICULE ET COORDONNÉES
+1203	Bordure du réticule
+1204	Couleur du réticule
+1205	Longueur du réticule
+1206	Épaisseur du réticule
+1207	Visibilité du réticule
+1208	Contrôle de foule sur l'icône de classe
+1212	Ctrl + glisser gauche : déplacer jusqu'à la fermeture de la fenêtre
+1218	Enroule un dragon doré autour du portrait des ennemis élites et des boss, et un argenté autour des rares.
+1219	Enroule le dragon doré de Blizzard autour du portrait.
+1222	Actuel / Maximum
+1225	Segment actuel en combat
+1227	Actuel | Pourcentage
+1232	Action du curseur ajoutée
+1237	Décalage X du curseur
+1238	Décalage Y du curseur
+1240	Taille du curseur
+1241	Texture du curseur
+1256	Couleurs personnalisées
+1257	Gestionnaire d'affaiblissements perso.
+1258	Gestionnaires d'affaiblissements perso.
+1259	Dynamique personnalisé
+1260	Dynamique personnalisé les mélange selon la vie
+1261	Couleur de remplissage perso.
+1262	Couleur de vie perso.
+1263	Icône personnalisée
+1265	MOTS-CLÉS PERSONNALISÉS
+1266	Libellé personnalisé
+1267	Macro personnalisée
+1269	Portrait perso. des non-joueurs
+1271	RAPPELS PERSONNALISÉS
+1272	Rappels personnalisés
+1273	Rappels personnalisés par personnage
+1283	Alterner les marqueurs de cible
+1284	Alterner les marqueurs au sol
+1288	COMPTEURS DE DÉGÂTS
+1290	Boucliers d'absorption sur la barre de vie. La 3.3.5 ne fournit pas la valeur des boucliers, elle est donc estimée à partir du journal de combat (valeur de base du rang plus votre propre puissance des sorts, moins ce que chaque bouclier a absorbé).
+1300	Le mode sombre pilote une condition de remplacement Mode sombre et ne peut pas être modifié pendant l'édition d'un remplacement
+1305	Barres de données
+1306	DataBar 
+1308	Les DataBars ne peuvent pas être restructurées en combat.
+1314	Arrière-plan mort
+1316	Son d'alerte de mort
+1319	Chevaliers de la mort : vous rappelle quand une arme équipée n'a pas de rune (le clic ouvre Runeforge).
+1320	Récapitulatif de mort : 20 dernières secondes, jusqu'à 40 événements.
+1322	Les morts à ce niveau ou plus restent visibles, par exemple 80 pour voir encore les morts au niveau max. 81 masque toutes les morts.
+1323	Aile-de-mort
+1324	Affaiblissement
+1325	affaiblissement
+1326	barre d'affaiblissements
+1331	Options du filtre d'affaiblissements
+1332	FILTRES D'AFFAIBLISSEMENTS
+1333	Bordure des icônes d'affaiblissement
+1334	Icônes d'affaiblissement par ligne
+1335	Gestionnaire d'affaiblissements
+1336	Les changements du gestionnaire d'affaiblissements sur cette page ne s'appliquent qu'à ce remplacement.
+1337	Lueurs du gestionnaire d'affaiblissements
+1338	Texte du gestionnaire d'affaiblissements (par case)
+1339	Déplacement des affaiblissements
+1348	Décimales sous
+1349	PAR DÉFAUT
+1354	Valeur par défaut pour chaque icône de cette barre ; les icônes peuvent la remplacer.
+1355	Préréglage par défaut
+1357	Défaut : gauche cible, droit menu d'unité
+1363	Degrés par seconde. 360 fait un tour complet par seconde ; 0 fige les barres sur place.
+1373	Supprimer le gestionnaire d'affaiblissements perso.
+1376	Supprimer l'ancrage de remplacement
+1379	Supprimer le personnage enregistré
+1380	Supprimer les personnages enregistrés
+1381	Supprimer la fenêtre sélectionnée
+1386	Supprimer le gestionnaire d'affaiblissements personnalisé de « %s » ? Ses conditions reviennent à votre gestionnaire d'affaiblissements par défaut.
+1387	Supprimer le gestionnaire d'affaiblissements personnalisé de « %s » ? Ses spécialisations reviennent à votre gestionnaire d'affaiblissements par défaut.
+1391	Supprimer les sacs, la banque et l'or enregistrés de 
+1392	Supprime la barre sélectionnée et tous ses blocs.
+1397	Effets de profondeur - Désactivés\n
+1399	Désaturer les améliorations inactives
+1402	Couleur de la description
+1403	Le texte de description (suffixes IPS/MS, AM/PM, lettre de difficulté) suit la couleur d'accentuation.
+1404	Désélectionnez une direction de croissance pour revenir au centrage
+1414	Détache la barre latérale du panneau de chat avec sa propre bordure.
+1415	Taille de police des détails
+1424	Diffère
+1425	Diffère (le modèle affiche %s)
+1426	Diffère du modèle
+1427	Difficulté en texte
+1428	Couleur de difficulté
+1429	Décalage X de la difficulté
+1430	Décalage Y de la difficulté
+1432	Taille du texte de difficulté
+1433	Couleurs des paliers de difficulté
+1434	Atténuer hors de portée
+1436	Atténuer les zones inexplorées
+1437	Atténuer les non-JcJ
+1438	Atténuer les entrées inutilisables
+1439	RENDEMENTS DÉCROISSANTS
+1440	Rendements décroissants
+1441	Atténuation
+1446	Désactiver les addons
+1447	Désactiver et recharger
+1448	Désactiver la pagination des formes
+1450	Désactiver le clic droit sur les alliés en combat
+1451	Désactiver le clic droit sur les ennemis
+1458	Désactivé quand le texte Nom/Niveau est centré sur la barre de vie à cause du chevauchement de texte
+1460	Dissoudre
+1468	Ignorer
+1469	dissipation
+1472	couleurs de dissipation
+1481	Dissipations et mode Aperçu
+1484	Affiche Lié quand équipé / Lié quand utilisé sur les objets non liés de vos sacs et de votre banque.
+1487	Affiche le nom de l'ensemble d'équipement en bas des objets de sac appartenant à l'un de vos ensembles d'équipement.
+1489	Affichages
+1490	Page Affichages
+1491	Format de distance
+1492	Taille du texte de distance
+1494	Source de couleur du séparateur
+1498	Ancrer l'inspection à côté du personnage
+1499	S'ancre quand les deux fenêtres tiennent à l'écran.
+1506	Garde funeste
+1511	DPS/HPS utilisent la durée du combat.
+1512	Taille des icônes RD
+1513	Côté des icônes RD
+1514	glisser
+1515	Déplacez les barres en mode Déverrouillage ; l'engrenage ouvre ces options.
+1516	Glisser les fonds de fenêtre vides hors combat
+1517	Glissez les icônes de la barre latérale n'importe où sur celle-ci. Réinitialiser les positions des icônes les remet en place.
+1518	Glissez l'en-tête pour déplacer ; la molette fait défiler les lignes.
+1522	Niveau de cadre du dragon
+1524	Taille du dragon
+1525	Niveau d'affichage du dragon
+1526	Vol à dos de dragon
+1527	Texture de la barre de vol draconique
+1528	Texture de la barre de vitesse de vol draconique
+1529	Taille du texte de vitesse draconique
+1530	Trace un séparateur entre l'icône intégrée et la barre, avec l'apparence de bordure de la barre d'incantation.
+1531	Trace des bordures carrées sous la surface de la carte.
+1532	Trace la bordure personnalisée de la barre d'incantation autour de l'icône et de la barre ensemble. Une icône avec un décalage garde sa propre bordure.
+1533	Trace une bordure de la couleur du type de dissipation autour de la barre de vie.
+1534	Trace une fine ligne d'accentuation en haut de l'arrière-plan du suivi.
+1535	Trace la bordure derrière la barre d'incantation au lieu de par-dessus.
+1536	Trace la bordure sous l'arrière-plan du chat.
+1537	Trace le motif de jointure du style de bordure entre la barre de vie et une barre de ressource attachée.
+1538	Trace l'anneau aux couleurs de dissipation dans la forme de ce style de bordure au lieu de lignes plates.
+1539	Trace le style de bordure choisi entre le portrait attaché et les barres.
+1540	Affiche la bannière de votre faction derrière chaque ligne d'ami (dans Wrath, vos amis sont de votre faction).
+1541	Seigneur de l'effroi
+1544	Déposez ici des sorts, objets, macros ou montures, ou utilisez Ajouter une action ci-dessous.
+1545	Retire les entrées individuelles Banque / Sac de banque une fois que la liste des catégories assure la navigation.
+1548	Ressource des formes de druide
+1549	Les formes de voyage, aquatique et de vol du druide comptent comme monté.
+1550	En raison des restrictions de l'API de Blizzard, le natif de Blizzard 
+1552	Entrées de donjons et raids
+1553	Recherche de donjons
+1554	Compte à rebours de donjon prêt
+1556	Donjons
+1557	Donjons, raids, scénarios, arènes et champs de bataille. Les fiefs ne comptent pas.
+1559	Libellé de durabilité
+1560	Emplacement de la durabilité
+1561	Couleur du texte de durabilité
+1562	Seuil de durabilité %
+1563	Taille de l'avertissement de durabilité
+1571	Taille du texte de durée
+1574	Dynamique
+1575	Couleur dynamique
+1576	Couleur dynamique activée -- la couleur de remplissage dépend de la vie de l'unité
+1578	Chaque disposition enregistre ses réglages et sa position
+1579	La page de chaque préréglage inclut sa chaîne d'import.
+1584	Modifier l'action
+1585	Modifier l'ancrage
+1586	MODIFIER LE RACCOURCI
+1587	Modifier la liste noire
+1593	Modifier l'entrée
+1594	Modifier les filtres
+1596	Modifier dans les filtres d'auras
+1600	Modifier le remplacement : 
+1601	Modifier les auras suivies
+1604	Huit marqueurs de cible, Appel, Pull et Dissoudre
+1606	Ligne d'éléments
+1607	Distance entre lignes d'éléments
+1611	Les éléments ne peuvent pas s'ancrer à\n
+1612	Les éléments ne peuvent pas aligner leur taille sur\n
+1613	Dragon des ennemis élites
+1614	Taille de l'icône élite
+1615	Indicateur élite/rare
+1616	Réglages de l'indicateur élite/rare
+1628	EllesmereUI sur 3.3.5a
+1631	Style EllesmereUI
+1632	Le style EllesmereUI les affiche au survol de la carte.
+1633	Style EllesmereUI, Style Blizzard et Interface WoW Classic rechargent l'interface une fois pour s'appliquer. Chaque module peut être changé séparément plus tard.
+1634	SITE WEB D'ELLESMEREUI
+1636	EllesmereUI WonderBar a été renommé EllesmereUI DataBars. L'ancien addon WonderBar est toujours installé et les deux créent la même barre. Veuillez désactiver ou supprimer l'addon EllesmereUIWonderBar.
+1639	Menu d'action vide
+1641	Préréglage vide
+1647	Activez %1$s pour changer son style.
+1648	Activez %1$s pour modifier ses réglages de texte.
+1649	Activez %1$s pour modifier ses réglages de texture.
+1650	Activez %1$s pour modifier ces réglages.
+1654	Activer les cadres d'arène
+1657	Activer la banque
+1658	Activer la barre
+1660	Activer les lueurs de barre
+1666	Activer l'incantation au clic intégrée
+1667	Activer la barre d'appel des totems
+1669	Activer les bulles de dialogue
+1673	Activez le mode sombre (Réglages globaux, polices et couleurs) pour utiliser cette condition
+1675	Activer le dragon des ennemis élites
+1676	Activer l'entrée
+1677	Activer la barre d'expérience
+1680	Activer la barre d'incantation de focalisation
+1682	Activer l'habillage des amis
+1684	Activer la lueur
+1687	Activer le fondu d'inactivité
+1688	Activer l'indicateur
+1691	Activez d'abord les modules
+1695	Activer le dragon du cadre de joueur
+1698	Activer Quickdraw
+1699	Activer le module Cadres de raid
+1700	Activer la barre de réputation
+1701	Activer les barres de ressource
+1703	Activer le chrono de frappe
+1704	Activer la barre d'incantation de la cible
+1707	Activer les barres de sorts ciblés
+1710	Active les indicateurs prévisualisés ci-dessus. Désactivez pour revenir aux lignes d'auras existantes.
+1711	Activer cette palette
+1715	Activer le déplacement des fenêtres
+1716	Activer l'habillage des fenêtres
+1722	Taille du nom d'enchantement
+1723	Taille du texte d'enchantement
+1724	Enchantements sur les emplacements d'équipement
+1726	Terminer l'aperçu
+1727	Ennemi
+1728	Cadres d'arène ennemis avec bijou JcJ, contrôle de foule et suivi des incantations.
+1732	Taille du texte des forces ennemies
+1735	Couleurs de classe des joueurs ennemis
+1736	Cible ennemie
+1739	Disposition améliorée du personnage
+1741	Infobulles améliorées
+1747	Entrez un ID de sort à suivre :
+1748	Entrez un ID valide ou un emplacement d'équipement 1-19
+1749	Entrez un ID de sort valide pour Lancer le sort.
+1750	Entrez un emplacement d'équipement (1-19). Les bijoux sont 13 et 14.
+1751	Entrez un ID d'objet à suivre :
+1752	Entrée et sortie
+1756	Entrez des ID de sorts positifs séparés par des virgules ou des espaces.
+1757	Entrez des ID de sorts positifs séparés par des virgules.
+1759	Entrez la durée maximale de l'affaiblissement en secondes :
+1760	Entrez l'ID de sort d'une amélioration ou d'un affaiblissement à suivre :
+1761	Entrez l'ID de sort à toujours afficher sur ce cadre.
+1762	Entrez l'ID de sort à toujours afficher.
+1763	Entrez l'ID de sort à exclure de ce cadre.
+1764	Entrez l'ID de sort à exclure.
+1765	Entrée en combat
+1767	Type d'entrée
+1768	Détail de l'environnement - Réduit à 1\n
+1772	Niveaux d'objet du menu d'équipement
+1773	Niveaux d'objet de l'équipement
+1774	Ensemble d'équipement
+1775	Enregistrement d'ensemble d'équipement
+1776	Emplacement d'équipement
+1777	Équipé
+1778	Équipé compte l'équipement porté. Total compte aussi les améliorations présentes dans vos sacs.
+1780	Boutons du menu Échap
+1786	Chiffres de recharge EUI sur les boutons d'action (Wrath n'a pas de texte de recharge Blizzard).
+1792	Échelle du panneau d'options EUI
+1794	Mode Déverrouillage EUI
+1796	Chaque bouton d'action contenant ce sort brille.
+1797	Chaque fenêtre de chat. Un choix de taille dans le menu d'onglet met à jour cette valeur.
+1798	Chaque condition définie doit être remplie. Par défaut.
+1799	Chaque lueur de ce module correspond déjà au modèle ou est verrouillée sur sa page de réglages.
+1800	Chaque lueur de ce module est active.
+1801	Chaque apparence autre que celle utilisée recharge l'interface une fois pour s'appliquer. Chaque module peut être changé séparément plus tard.
+1803	Tous les choix de texte Retail
+1804	Tout
+1806	Exemple : 2061
+1807	Exclure
+1808	AFFAIBLISSEMENTS EXCLUS
+1809	ID de sorts exclus
+1810	Lueur pulsée d'exécution
+1811	Exécution, Marteau de courroux et Tir mortel à 20% ; Drain d'âme à 25%.
+1816	Développer
+1818	Barres d'expérience et de réputation
+1819	Texte des barres d'expérience et de réputation.
+1822	Exporter toutes les données avec le profil
+1824	Échec de l'export
+1828	Expressway (latin uniquement)
+1831	Étend l'arrière-plan du chat derrière la bande d'onglets.
+1832	défensifs externes
+1834	externes
+1837	BOUTONS SUPPLÉMENTAIRES
+1838	Boutons supplémentaires au survol
+1840	ID de sorts supplémentaires
+1846	Page Extras
+1850	Taille de l'icône de faction
+1851	Indicateur de faction
+1852	Réglages de l'indicateur de faction
+1854	Estomper après (secondes, 0 = jamais)
+1855	Délai du fondu (secondes)
+1856	Estomper les anciens messages
+1858	Estomper hors de portée
+1860	Intensité du fondu
+1862	Estompe les ennemis au-delà de la portée de sorts de 30-40 mètres de votre classe.
+1863	Estompe le chat après une période sans messages, survol ni saisie.
+1866	Les incantations échouées et interrompues s'affichent en rouge
+1867	Impossible de décoder la chaîne
+1868	Impossible de décompresser les données
+1869	Impossible de désérialiser les données
+1870	Impossible de lire les données d'import
+1872	Ancrage de secours : changer
+1873	Ancrage de secours : effacer
+1874	Ancrage de secours : choisir
+1876	Repli sur %1$s
+1877	Se rabat sur le premier affaiblissement que votre personnage peut retirer.
+1878	Éventail
+1879	Direction de l'éventail
+1884	Chasseur corrompu
+1886	Combat farouche
+1887	remplissage
+1888	Remplir selon les cumuls
+1890	Réglages de la couleur de remplissage
+1894	Remplir l'espace restant
+1895	Remplit la barre de vie de bas en haut au lieu de gauche à droite. Remplissage inversé la remplit de haut en bas.
+1896	Remplir vers le haut
+1898	filtre
+1899	Filtrer les hauts faits
+1900	Filtrer les vendeurs d'or
+1901	Filtrer le recrutement de guilde
+1902	Filtrer les morts hardcore
+1903	Filtrer les mots-clés

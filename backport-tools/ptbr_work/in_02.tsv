@@ -1,0 +1,350 @@
+700	Border Size
+701	Border size in pixels; for a textured style this is the size of its edge art.
+702	Border Style
+703	Border Style is only configurable when the Power Bar is detached. Attached Power Bars always use Solid.
+704	Border Styles (per bar)
+705	Border Texture
+706	Border Thickness
+707	Border Wraps Icon
+708	Boss
+709	Boss Buff Filter
+710	Boss Combat
+711	Boss Debuff Filter
+712	Boss Debuff Icon
+713	Boss Frames
+714	Boss Frames Auras
+715	Boss Frames Text Sizes
+716	Boss Icon
+717	Boss mod sync: raid leader / assistant or party leader
+718	Boss Tracked Auras
+719	Both
+720	Bottom
+721	Bottom Gap
+722	Bottom Info Bar
+723	Bottom Left
+724	Bottom Left Text Size
+725	Bottom Left, Rightward
+726	Bottom Left, Upward
+727	Bottom Right
+728	Bottom Right Text Size
+729	Bottom Right, Leftward
+730	Bottom Right, Upward
+731	Bottom Screen Edge
+732	Bottom Spacing
+733	Bottom to Top
+734	Boxing Arena
+735	Bracket
+736	Breakdown Bar Texture
+737	Breakdown Position
+738	Breakdown Scale (%)
+739	Brewmaster
+740	Bright line on the swipe edge (needs a client with Cooldown:SetDrawEdge).
+741	Brightness
+742	Broker Plugin
+743	Browse community presets.
+744	BTB Center Text Settings
+745	BTB Left Text Settings
+746	BTB Right Text Settings
+747	Buff
+748	buff
+749	Buff / Debuff
+750	Buff Bar
+751	buff bar
+752	Buff Blacklist
+753	Buff Display
+754	Buff Duration Size
+755	Buff Filter
+756	Buff Filter Options
+757	BUFF FILTERS
+758	Buff Glow
+759	Buff Icons Per Row
+760	Buff Manager
+761	Buff Manager changes on this page apply only to this override.
+762	Buff Manager Icon Glows
+763	Buff Manager Text (per indicator)
+764	Buff Mover
+765	Buff or debuff to watch.
+766	Buff Position
+767	Buff Preset
+768	Buff Settings
+769	Buff shown as the active state (0 = same-named buff).
+770	Buff Size
+771	Buff Stack Size
+772	Buff Text Size
+773	Buff that marks this spell as proc'd (0 = built-in list).
+774	Buffs
+775	BUFFS AND DEBUFFS
+776	Buffs and Debuffs
+777	Buffs join the debuff stack as its first rows; debuffs continue on the next row and move as buff rows change.
+778	Buffs Location
+779	Buffs you can spellsteal or purge
+780	BUG FIXES
+781	BuildInlineCog: disabled needs a disabledTooltip
+782	Burne
+783	Button
+784	Button 4
+785	Button 5
+786	Button Backgrounds
+787	Button Row Distance
+788	Button Row Position
+789	Button Row Spacing
+790	Button Size
+791	Button Spacing
+792	Button1
+793	BV
+794	BWCustomBar 
+795	c
+796	C'Thun
+797	C: 
+798	Calendar
+799	CALL TOTEM BAR
+800	Camp Benefits
+801	Cancel
+802	cancel
+803	Cancel Form
+804	Cancel key: 
+805	Cannot open options during combat.
+806	Cannot open options in combat
+807	Cannot reload during combat. Type /reload instead.
+808	Cannot toggle Unlock Mode during combat.
+809	Cannot Use While In Combat
+810	Capture Bar and GM Chat Status
+811	Captured overrides reference disabled modules (%s). Enable them and reload before promoting, or those settings would be lost.
+812	cast
+813	Cast / Channel Progress
+814	Cast Actions on Key Down
+815	Cast and GCD Bars
+816	Cast Background
+817	CAST BAR
+818	Cast Bar
+819	Cast Bar Height
+820	Cast Bar Text Size
+821	Cast Bar Texture
+822	Cast Bar Timer Size
+823	Cast Bar Width
+824	Cast Bar Y Offset
+825	Cast Color
+826	CAST COLORS AND EFFECTS
+827	Cast Icon
+828	Cast Name Size
+829	Cast on Key Down
+830	Cast Reminder Text
+831	Cast Ring Texture
+832	Cast Sound
+833	Cast Spark
+834	Cast Spell
+835	Cast Swipe
+836	Cast Target Size
+837	Cast Text Size
+838	Cast Texture
+839	Cast Timer
+840	Cast Timer Outline
+841	Cast Timer Size
+842	Castbar
+843	Cat Form
+844	Cat Meow
+845	Cat Meow 2
+846	Catch up on anything you may have missed
+847	Categories
+848	Category
+849	Category Sidebar
+850	Category Title Size
+851	CC Duration Size
+852	CD Swipe Opacity
+853	CDM Bars
+854	CDM Icons
+855	CDM: 
+856	CELEBRATION TRIGGERS
+857	Celestial
+858	Cenarius
+859	Center
+860	Center on Screen
+861	Center Reticle
+862	Center Text
+863	Center Text Settings
+864	Center Text Size
+865	Centered
+866	Chain Lightning
+867	Champion
+868	Changa
+869	Change bindings outside combat
+870	Change health visibility out of combat
+871	Change Spec
+872	Change Specialization
+873	Changes apply outside combat.
+874	Changes here edit the shared default; overrides keep their own values.
+875	Changes made in OneBag will affect the positions of items in default Blizzard bags
+876	Changing cursor anchor requires a UI reload to take effect.
+877	Changing the frame source requires a UI reload to take effect.
+878	Changing the language requires a UI reload.
+879	Changing the style requires a UI reload to apply.
+880	Channel Ticks
+881	CHANNEL TICKS AND LATENCY
+882	Chaos Bolt
+883	Character
+884	Character Crosshair
+885	CHARACTER ENHANCEMENT
+886	Character Sheet
+887	Character Sheet Upgrades
+888	Characters
+889	Characters (header) browses saved bags and banks.
+890	Chat
+891	Chat background and tab textures
+892	CHAT BUBBLES
+893	Chat Bubbles
+894	Chat Countdown
+895	Chat Extras
+896	Chat Font
+897	Chat Font Size
+898	Chat Outline Mode
+899	Chat Spam Filter Options
+900	Chat windows, tabs and the input field
+901	Chatter
+902	Chattynator
+903	Check All
+904	Check DPS
+905	Check Healers
+906	Check icons to show them; drag rows to reorder.
+907	Check Tanks
+908	Checked buttons leave the flyout and sit on the button row.
+909	Chest
+910	Chi
+911	Chonky Character Sheet
+912	Chonky Character Sheet conflicts with the EllesmereUI's Character Sheet. Disable either Chonky or the Character Sheet skin in Blizzard UI Enhanced settings.
+913	Choose a text for this slot first.
+914	Choose an element for this slot first.
+915	Choose EllesmereUI, Blizzard or Classic.
+916	Choose Frame...
+917	Choose spell lists on Aura Filters
+918	Choose texture per bar
+919	Choose which addons to import. Any addons not included will use your active profile's settings in the new profile.
+920	Choose which addons to include in your exported profile. Check everything for a full profile export.
+921	Choose which addons you want enabled. You can change any of these later in the EllesmereUI settings panel.
+922	Choose which tooltips appear on hover. Affects all unit frames, including boss frames.
+923	CHOOSE YOUR LOOK
+924	Choose...
+925	Cinzel Decorative
+926	Cinzel Decorative.ttf
+927	Circle
+928	circle
+929	Circle and Portrait draw round icons, and Diamond, Hexagon and Shield crop the icon to the shape. Square and Curved Square outline the square icon. The outline uses the Border Size and colour below.
+930	Circle Opacity
+931	Class
+932	class
+933	Class and Consumable Reminders
+934	Class Color
+935	Class Color Darken
+936	Class Color Names
+937	Class Colored
+938	Class Colored Background
+939	Class Colored Border
+940	Class Colored Fill
+941	Class Colored Health
+942	Class Colored Health Bar
+943	Class Colored Names
+944	CLASS COLORS
+945	Class Icon
+946	Class icon for online friends; offline friends show a dimmed offline icon.
+947	Class Icon Settings
+948	Class Icon Side
+949	Class Icon Style
+950	Class Icon Theme
+951	Class Icons
+952	Class Reactive
+953	CLASS RESOURCE
+954	Class Resource
+955	CLASS RESOURCE BAR
+956	CLASS RESOURCE COLORS
+957	Class Resource must be set to Modern
+958	Class Resource Position
+959	Class Resource Text Size
+960	Class Style
+961	Class Theme
+962	Class Zoom
+963	Class, Power and Health Bars
+964	Classic
+965	Classic (Health %)
+966	Classic Banner
+967	Classic Bar Style
+968	Classic Frame Size
+969	Classic Icon Style
+970	Classic Style
+971	Classic Style Bars
+972	Classic Tank Aggro
+973	Classic WoW
+974	Classic WoW Glow
+975	Classic WoW UI
+976	Classic WoW UI cast bar frame.
+977	Classic WoW UI wears the vanilla ring, zone banner, zoom buttons and ring-bordered indicators on a round map.
+978	Clean (Flat)
+979	Clean and beautiful visual refreshes for Blizzard UI elements.
+980	Clean, lightweight nameplates with endless customization.
+981	Clear
+982	Clear And Disable This Palette
+983	Clear Combat History...
+984	Clear Palette Keybinds
+985	Clear Select And Cancel Keys
+986	Cleave Queued Color
+987	click
+988	Click a block to scroll to its settings. Right Click to remove it.
+989	Click a player: spell details. Shift-click: full window.
+990	Click Action
+991	Click an http, https or www address to copy it.
+992	Click any element\nto anchor to it
+993	Click any element\nto match its height
+994	Click any element\nto match its width
+995	Click any element\nto set as the Fallback Anchor
+996	Click any element\nto set as the Override Anchor
+997	Click any new feature to go directly to the setting
+998	Click Assign Key, then press your hotkey.
+999	CLICK CASTING
+1000	Click Casting
+1001	Click edits - Drag reorders - Right click removes - Drop to add
+1002	Click elements to scroll to and highlight their options
+1003	Click the link, then Ctrl+C to copy it
+1004	Click Through
+1005	Click to choose a gem from your bags
+1006	Click to edit. Middle-click to remove.
+1007	Click to scroll. Right Click to remove.
+1008	Click to Set Key
+1009	Click-to-use is disabled in combat
+1010	Clickable URLs
+1011	Clique
+1012	Clique can manage frames with built-in bindings off
+1013	Clique controls click-casting on the same Raid Frames as EllesmereUI's HoverCast, so they conflict. Disable the Clique addon to use HoverCast.
+1014	Clock
+1015	CLOCK & ZONE
+1016	Clock Format
+1017	Clock Hover
+1018	Clock Offset X
+1019	Clock Offset Y
+1020	Clock Position
+1021	Clock Scale
+1022	Clock, zone, coordinates, FPS and difficulty text
+1023	Close
+1024	Close to Aggro
+1025	Close Window
+1026	Cobra Shot
+1027	Coin Colored
+1028	Coin Icons
+1029	Collapse
+1030	Collapsed Menu Icons
+1031	COLLECTION AND HISTORY
+1032	Collections
+1033	Collections and Wardrobe Skins
+1034	Color
+1035	Color Bosses
+1036	Color by Interrupt Cooldown
+1037	Color by Interruptible
+1038	Color by Threat
+1039	Color Clock AM/PM
+1040	Color Custom Borders
+1041	Color Difficulty Letter
+1042	Color Elites in Instances
+1043	Color FPS/MS Suffix
+1044	Color Gaps
+1045	Color Out of Range
+1046	Color Picker
+1047	Color Text Instead
+1048	Color the health bar by how much health is left, instead of a flat color. Classic runs green at full health through yellow to red at empty. Custom Colors blends between the three stop swatches on this row -- full (100%), half (50%) and empty (0%). Class Reactive shows the class color at full health, bleeding into the 50% and 0% colors as the unit takes damage. Off leaves the flat Fill Color swatches in charge; either way the Gradient below still applies, running from whichever color this picks.
+1049	COLORS

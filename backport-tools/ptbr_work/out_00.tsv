@@ -1,0 +1,350 @@
+0	 (banco da guilda)
+1	 (Raide)
+2	 Detalhamento
+3	 Passar o Mouse também fica travado aqui para este elemento: o mecanismo de foco segue a configuração compartilhada, então uma substituição só poderia deixá-lo visível.
+4	 prévia
+5	 texto. O Contorno Global da EUI segue a configuração de Modo de Contorno global acima.
+6	 janelas ativas
+7	%1$s está ativo. Configurações que só se aplicam ao visual do EllesmereUI estão ocultas.
+8	%1$s está ativo: o bate-papo mantém o fundo e a arte das abas da Blizzard.
+9	%1$s está ativo: o rastreador mantém o texto da Blizzard.
+10	Módulo %1$s
+11	Sincronização de %1$s
+12	%d / %d Itens
+13	%d ativos
+14	%d diferem do modelo
+15	%d Itens
+16	%d deles estão desligados ou usam um estilo da Blizzard e passam a usar o brilho do modelo.
+17	%d deles não podem mostrar o estilo escolhido e usam o mais próximo.
+18	%dd
+19	%dh
+20	%dm
+21	Substituição de %s Ativa
+22	'%s' agora está personalizado para %s.
+23	 - Resumo de Morte
+24	(%a[%w']*)
+25	(%d+)x(%d+)
+26	(%l)(%u)
+27	(%u+)%-
+28	(ativo)|r
+29	(Aplica ao Fechar a Janela)
+30	(Aplica a Todas as Unidades)
+31	(Exibição rápida extra, seus itens também ficam na categoria deles)
+32	(local)
+33	(Clique do Meio para Adicionar ou Remover)
+34	(min)
+35	(minutos)
+36	(Sem histórico de bate-papo)
+37	(um por espaço)
+38	(segundos)
+39	(Especialização priorizada em conflitos de configuração)
+40	(mundo)
+41	*A configuração de alvo automático da Blizzard (alvo suave) pode causar uma breve oscilação quando seu alvo real morre mas um alvo suave ainda está ativo.
+42	*Insira um nome de perfil
+43	+ %d a mais
+44	+ Adicionar Nova Barra de Bônus
+45	+ Adicionar Novo Grupo Condicional
+46	+ Adicionar Nova Barra de Recargas
+47	+ Adicionar Novo Grupo de Especialização
+48	+ Adicionar Nova Barra Utilitária
+49	Tamanho do Texto do Limite +1
+50	Tamanho do Texto do Limite +2
+51	Tamanho do Texto do Limite +3
+52	...
+53	...e mais %d
+54	03:27
+55	03:27 PM
+56	03:27:32
+57	03:27:32 PM
+58	100%
+59	11:37
+60	15:27
+61	15:27:32
+62	Largura do Quadro de 20 Jogadores
+63	Relógio de 24 Horas
+64	Retrato 2D
+65	Zoom 2D
+66	Retrato 3D
+67	Retratos 3D
+68	Retratos 3D podem causar uma pequena perda de desempenho. Deseja ativá-los?
+69	Zoom 3D
+70	[ Texto de importação capturado (%1$s caracteres) ]
+71	\"%1$s\" foi salvo mas não pode ser carregado porque esta especialização tem um perfil atribuído.
+72	\"%1$s\" foi salvo mas não pode ser carregado porque esta especialização tem um perfil atribuído. Troque de especialização ou remova a atribuição para usá-lo.
+73	Uma bela renovação visual das Bolsas da Blizzard com organização intuitiva.
+74	Um substituto do CDM focado em desempenho, personalização e alertas.
+75	Um visual limpo e atualizado do Rastreador de Missões da Blizzard.
+76	um Estilo de Brilho
+77	Uma lista de amigos moderna com ferramentas de organização integradas.
+78	Um minimapa moderno com estilo limpo e opções de layout quadrado.
+79	Já existe um perfil chamado \"%1$s\". Escolha outro nome.
+80	Uma visão rápida de todas as configurações de fonte em um só lugar.
+81	Uma visão rápida de todas as configurações de textura em um só lugar.
+82	É necessário recarregar para aplicar isto.
+83	Uma substituição de especialização controla esta configuração, então este valor condicional nunca se aplica fora de uma sessão de edição. Remova a substituição de especialização para liberá-lo.
+84	Um estilo de bate-papo padrão está ativo na página Estilo: o painel, as abas e a barra lateral mantêm o visual da Blizzard.
+85	Um estilo de bate-papo padrão está ativo: o bate-papo mantém o fundo e a arte das abas da Blizzard.
+86	Um grupo de sincronização precisa de pelo menos dois perfis
+87	Um alvo que você pode atacar.
+88	Um contorno fino ao redor da aba selecionada.
+89	Abreviar Quantidade
+90	Abreviar Texto
+91	Acima
+92	Acima da Barra de Absorção
+93	Acima do Cursor
+94	Acima do Quadro à Esquerda
+95	Acima do Quadro à Direita
+96	Acima da Barra de Vida
+97	Acima da Linha sob o Mouse
+98	Acima do Ícone
+99	Acima do Mapa
+100	Acima do Modelo
+101	Acima da Janela Superior, Esquerda
+102	Acima da Janela Superior, Direita
+103	Absol3m
+104	absorção
+105	Quantidade de Absorção
+106	Barra de Absorção
+107	Cor da Absorção
+108	Opacidade da Absorção
+109	Renderização da Absorção
+110	Escudos de Absorção
+111	Absorção Curta (230k)
+112	Estilo da Absorção
+113	Estilo da Absorção e posição da Sobreposição
+114	ABSORÇÕES
+115	ABSORÇÕES E CURAS
+116	Absorções Recebidas: escudos consumidos em cada jogador.
+117	Seção de Absorções
+118	Destaque
+119	Cor de Destaque
+120	Na Cor de Destaque
+121	Texto do Cabeçalho na Cor de Destaque
+122	Temporizador na Cor de Destaque
+123	Cabeçalho de Destaque
+124	Estilo de Destaque
+125	TEXTO DE DESTAQUE
+126	Aceitar
+127	Aceitar Convites de Amigos e Guilda
+128	Aceitar Convites de Membros da Guilda
+129	Aceita convites de grupo da sua lista de amigos e membros da guilda. Ignorado na fila do Localizador de Masmorras ou se já estiver em grupo.
+130	Conquista
+131	Pontos de Conquista
+132	Conquistas
+133	Ação
+134	Ação 
+135	Ação adicionada
+136	Barra de Ação 10
+137	Barra de Ação 2
+138	Barra de Ação 3
+139	Barra de Ação 4
+140	Barra de Ação 5
+141	Barra de Ação 6
+142	Barra de Ação 7
+143	Barra de Ação 8
+144	Barra de Ação 9
+145	Barras de Ação
+146	Barras de Ação 7 a 10
+147	Barras de Ação só podem igualar largura\ncom outras Barras de Ação
+148	Ícones das Barras de Ação
+149	Barras de ação, visuais do HUD da Blizzard e posições das auras do jogador para Wrath.
+150	Brilho do Botão de Ação
+151	ID do Feitiço do Botão de Ação
+152	ID / Nome / Texto da Ação
+153	Menu de Ações
+154	Número do Menu de Ações
+155	CONFIGURAÇÃO DO MENU DE AÇÕES
+156	Tipo de Ação
+157	Ativar Prévia de Chefe
+158	Ativar Modo de Grupo
+159	Brilho de Aura Ativa
+160	ID da Aura Ativa
+161	Fonte do Fundo Ativo
+162	Borda Ativa
+163	Cor da Borda Ativa
+164	Duração Ativa
+165	Fonte da Cor do Texto Ativo
+166	Mitigação Ativa
+167	Perfil Ativo
+168	LEMBRETES ATIVOS
+169	Fundo da Aba Ativa
+170	Borda da Aba Ativa
+171	Cor da Fonte da Aba Ativa
+172	Sublinhado Ativo
+173	Adicionar
+174	Adicionar Feitiço de Bônus
+175	Adicionar Feitiço de Recarga/Utilitário
+176	ADICIONAR AÇÃO
+177	Adicionar Ação
+178	Adicionar Ação do Cursor
+179	Menu Adicionar Ação
+180	Adicionar Bloco
+181	Adicionar Predefinição de Bônus
+182	Adicionar Categoria
+183	Adicionar Feitiço Personalizado
+184	ADICIONAR ENTRADA
+185	Adicionar Entrada
+186	Adicionar Indicador de Recarga Externa
+187	Adicionar Brilho
+188	Adicionar Indicador de Bônus de Curador
+189	Adiciona à dica quantos de um item seus outros personagens possuem.
+190	Adicionar Predefinição de Item
+191	Adicionar Feitiço Aprendido
+192	Adicionar Novo
+193	Adicionar Novas Barras ao Grupo
+194	Adicionar Novo Indicador
+195	Adicionar Indicador de Defensiva Pessoal
+196	Adicionar Racial
+197	Adicionar Lembrete
+198	Adicionar Ação Selecionada
+199	Adicionar ID de Feitiço
+200	Menu Adicionar Feitiço
+201	Adicionar ao Grupo
+202	Adicionar Barra de Rastreamento
+203	Adicionado 
+204	Somado ao tamanho atual do quadro de raide ou grupo.
+205	Adicionado. Feitiços não aprendidos e espaços vazios continuam ocultos.
+206	DESLOCAMENTO ADICIONAL DA BARRA
+207	RECURSOS ADICIONAIS
+208	Addon
+209	Menu Suspenso de Botões de Addon
+210	BOTÕES DE ADDON
+211	Botões de Addon
+212	Lista de AddOns
+213	Addon não carregado
+214	Adiciona um segundo anel ao redor de um retrato redondo; Igualar Borda do Quadro segue o estilo de borda do seu quadro.
+215	Adiciona uma borda de Sombra ao quadro do jogador quando você puxa ou mantém ameaça sem ser tanque. Só ativo em masmorras, raides e imersões.
+216	Adiciona uma sombra suave dentro de um retrato redondo.
+217	Adiciona a linha de brilho de escudo da Blizzard onde o escudo encontra a vida atual.
+218	AdiBags
+219	Ajustar Volume
+220	AVANÇADO
+221	Guia de Aventura
+222	Preparação de Aventura
+223	Aventureiro
+224	Tamanho do Afixo
+225	Suplício
+226	AFK
+227	Após ancorar, arraste até uma borda e escolha uma direção de crescimento para manter o canto quando as barras mudarem de tamanho.
+228	aggro
+229	Agilidade
+230	Tiro Mirado
+231	Buzina
+232	Texto de alertas e rastreadores
+233	Alertas
+234	Texto de alertas, rastreadores, ressurreição em combate e pop-ups
+235	Alinhar Conteúdo
+236	Alinhar Abas ao Painel Inteiro
+237	Alinhamento
+238	Todos
+239	Todos Permitidos
+240	Todos os Bônus
+241	Todos os Bônus ou Com Duração
+242	Todos os Bônus ou Com Duração está selecionado, então todos os bônus já aparecem. Use a caixa vermelha Ocultar para excluí-los.
+243	Todas as Penalidades
+244	Todas as Penalidades está selecionado, então todas as penalidades já aparecem. Use a caixa vermelha Ocultar para excluí-las.
+245	Todos os DPS (Exceto Aug)
+246	Todos os Elementos
+247	Todos os Addons EUI
+248	Todos os Curadores/Aug
+249	Todos os Itens
+250	todos iguais ao modelo
+251	Todos Exceto Curadores/Aug
+252	Todos os perfis selecionados manterão as configurações de %1$s sincronizadas: alterações feitas em qualquer um passam para os outros. Escolha de qual perfil o grupo começa.
+253	Todas as Especializações
+254	Todos os Tanques
+255	Aliança
+256	Nomes aliados mantêm a cor da classe sem alvo ou mouse. Membros do grupo/raide são identificados automaticamente; outros aliados são aprendidos pelo alvo, mouse ou foco.
+257	Permitir que o Rastreador de Missões Saia da Tela
+258	Demônios Permitidos
+259	Aloft
+260	Opacidade
+261	Opacidade em Recarga
+262	Já atribuído a %s
+263	Já está igual ao modelo.
+264	Já está em 
+265	Também mostra o emblema em masmorras e raides, onde a maioria dos inimigos é elite.
+266	Também mostra o dragão em masmorras e raides, onde a maioria dos inimigos é elite.
+267	Também Observar o Alvo
+268	Alt
+269	Alt + Ctrl
+270	Alt + Ctrl + Shift
+271	Alt + Shift
+272	Modificador Alt
+273	ALT-
+274	Personagens alternativos aparecem após entrar com cada um
+275	Sempre
+276	Sempre Mostrar
+277	Sempre Mostrar Bônus
+278	Sempre Mostrar Botões
+279	Sempre mostra configurações menos comuns em vez de recolhê-las atrás de um link Mostrar Menos Comuns.
+280	Sempre Mostrar Quadro do Ajudante
+281	Sempre Mostrar Jogador
+282	Sempre usar K/M/B em vez de unidades localizadas.
+283	Sempre: oculta o rastreador o tempo todo em raide.\nCombate em Raide: oculta durante qualquer combate em raide.\nCombate com Chefe: oculta só em encontros com chefes.\nArenas sempre ocultam o rastreador.
+284	AM
+285	Ambiente
+286	Uma seta ao lado do campo Para lista seus personagens neste reino e facção, membros da guilda e os últimos nomes para quem você enviou correio.
+287	Um elemento não pode ancorar a si mesmo
+288	Um plugin LibDataBroker do EllesmereUI registrado agora. Um bloco por plugin -- adicione o bloco de novo para um segundo.
+289	Âncora
+290	Deslocamento X da Âncora
+291	Deslocamento Y da Âncora
+292	Lado da Âncora
+293	Ancore este elemento primeiro
+294	Ancorar Em
+295	Ancorar em %1$s
+296	Ancorar no Cursor
+297	Ancorar nas Penalidades
+298	Ancorado
+299	Ancorado em: %1$s
+300	Anunciar Redefinição de Instância
+301	Anunciar Interrupções
+302	Outro grupo de substituição já fornece o Gerenciador de Bônus personalizado para sua especialização atual.
+303	Outro grupo de substituição já fornece o Gerenciador de Penalidades personalizado para sua especialização atual.
+304	Qualquer configuração alterada agora se aplica só às especializações deste grupo.
+305	Qualquer configuração alterada agora se aplica só enquanto este condicional estiver ativo.
+306	AoF
+307	APARÊNCIA
+308	Acrescenta o alvo do lançamento ao nome do feitiço (Nome do Feitiço - Alvo), na cor da classe, e desativa a exibição separada de Alvo do Feitiço.
+309	Aplica-se a este perfil. Mantém suas escolhas individuais de janela.
+310	Aplica sua Fonte Global ao texto padrão do jogo da Blizzard (menus, dicas, registro de missões, painéis do personagem e mais). Requer recarregar a interface.
+311	Aplicar
+312	Aplicar 
+313	Aplicar Estilo, cor e renderização da Absorção a todos os Quadros
+314	Aplicar Todas as Configurações
+315	Aplicar Todas as Configurações De
+316	Aplicar Estilo de Arte a todos os Quadros
+317	Aplicar Fundo da Barra a todos os Quadros
+318	Aplicar Cor da Barra a todos os Quadros
+319	Aplicar Opacidade da Barra a todos os Quadros
+320	Aplicar Posição da Barra a todos os Quadros
+321	Aplicar Textura da Barra a todos os Quadros
+322	Aplicar Largura da Barra a todos os Quadros
+323	Aplicar Tamanho da Borda a todos os Quadros
+324	Aplicar Estilo da Borda a todos os Quadros
+325	Aplicar Borda a todos os Quadros
+326	Aplicar Local dos Bônus a todos os Quadros
+327	Aplicar Estilo da Borda da Barra de Lançamento a todos os Quadros
+328	Aplicar Borda da Barra de Lançamento a todos os Quadros
+329	Aplicar Altura da Barra de Lançamento a todos os Quadros
+330	Aplicar Texto Central a todos os Quadros
+331	Aplicar Cores de Classe a todos os Quadros
+332	Aplicar Cor de Fundo do Recurso de Classe a todos os Quadros
+333	Aplicar Espaçamento das Barras do Recurso de Classe a todos os Quadros
+334	Aplicar Posição do Recurso de Classe a todos os Quadros
+335	Aplicar Tamanho do Recurso de Classe a todos os Quadros
+336	Aplicar Estilo do Recurso de Classe a todos os Quadros
+337	Aplicar Estilo do Indicador de Combate a todos os Quadros
+338	Aplicar Tamanho e Cor da Duração a todos os Quadros
+339	Aplicar Ativar Barra de Texto a todos os Quadros
+340	Aplicar Texto Extra a todos os Quadros
+341	Aplicar Tamanho do Ícone de Facção a todos os Quadros
+342	Aplicar Camada do Quadro a todos os Quadros
+343	Aplicar Modelo de Brilho
+344	Aplicar Estilo, cor e renderização da Absorção de Cura a todos os Quadros
+345	Aplicar Altura da Barra de Vida a todos os Quadros
+346	Aplicar Brilho de Lançamento Importante ao Alvo e Foco
+347	Aplicar Tamanho do Ícone de Líder a todos os Quadros
+348	Aplicar Indicador de Líder a todos os Quadros
+349	Aplicar Texto Esquerdo a todos os Quadros

@@ -233,6 +233,10 @@ local sheetFrames={PaperDollFrame=true,PetPaperDollFrame=true,ReputationFrame=tr
     QuestFrameDetailPanel=true,QuestFrameProgressPanel=true,QuestFrameRewardPanel=true,QuestFrameGreetingPanel=true,
     GossipFrameGreetingPanel=true,SendMailFrame=true,PVPFrame=true,PVPBattlegroundFrame=true,
     ArenaRegistrarGreetingFrame=true,ArenaRegistrarPurchaseFrame=true}
+-- Unnamed border frames on the achievement pages sit above the list rows; a
+-- fill there covers the rows, so they keep only the border.
+local overlayParents={AchievementFrameAchievements=true,AchievementFrameSummary=true,
+    AchievementFrameStats=true,AchievementFrameComparison=true}
 local function InnerPanel(s,frame)
     if not frame.GetBackdrop then return end
     local d=s.insets[frame]
@@ -262,7 +266,10 @@ local function InnerPanel(s,frame)
     -- The border frame carries no fill. One level below its owner it can tie with
     -- the sheet whose BACKGROUND fill covers it (Send Mail's To/Subject boxes).
     if not (s.panel and sheetFrames[frame:GetName()]) then d.panel:SetFrameLevel(frame:GetFrameLevel()) end
-    if Kind(frame,"EditBox") then
+    local parent=frame:GetParent()
+    if not frame:GetName() and parent and overlayParents[parent:GetName() or ""] then
+        d.panel:SetBackdropColor(0,0,0,0); d.panel:SetBackdropBorderColor(.18,.18,.18,1)
+    elseif Kind(frame,"EditBox") then
         d.panel:SetBackdropColor(.06,.06,.06,.95); d.panel:SetBackdropBorderColor(.25,.25,.25,1)
     else
         d.panel:SetBackdropColor(.035,.035,.035,.9); d.panel:SetBackdropBorderColor(.18,.18,.18,1)

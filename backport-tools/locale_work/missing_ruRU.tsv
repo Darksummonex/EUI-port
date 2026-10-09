@@ -1,0 +1,253 @@
+18	%dd
+19	%dh
+24	(%a[%w']*)
+25	(%d+)x(%d+)
+26	(%l)(%u)
+27	(%u+)%-
+54	03:27
+56	03:27:32
+58	100%
+60	15:27
+61	15:27:32
+103	Absol3m
+218	AdiBags
+228	aggro
+259	Aloft
+269	Alt + Ctrl
+270	Alt + Ctrl + Shift
+271	Alt + Shift
+273	ALT-
+306	AoF
+395	Archimonde
+396	ArcUI
+407	Arial
+408	Arial Bold
+409	Arial Bold.TTF
+410	Arial Narrow
+411	Arial Narrow.ttf
+412	ArkInventory
+444	AUDIO_AMBIENCE
+445	AUDIO_MASTER
+446	AUDIO_MUSIC
+447	AUDIO_SFX
+450	Aura 
+509	Avant Garde
+510	Avant Garde Naowh.ttf
+511	Ayije CDM
+531	Baganator
+532	Bagnon
+578	Bar10
+579	Bar2
+580	Bar3
+581	Bar4
+582	Bar5
+583	Bar6
+584	Bar7
+585	Bar8
+586	Bar9
+588	Barbiero
+591	Bartender4
+618	Better Character Panel
+620	Better Cooldown Manager
+621	BetterBags
+623	Bierbauch
+628	Bite
+781	BuildInlineCog: disabled needs a disabledTooltip
+782	Burne
+792	Button1
+793	BV
+794	BWCustomBar 
+795	c
+796	C'Thun
+844	Cat Meow
+845	Cat Meow 2
+855	CDM: 
+858	Cenarius
+868	Changa
+901	Chatter
+902	Chattynator
+911	Chonky Character Sheet
+925	Cinzel Decorative
+926	Cinzel Decorative.ttf
+975	Classic WoW UI
+1011	Clique
+1183	Crazyyoungs
+1214	Ctrl + Shift
+1217	CTRL-
+1231	cursor
+1294	Danders Frames
+1309	DBMv4-PT
+1364	Deja Character Stats
+1366	Delasteve
+1398	Derek
+1495	Dlarge
+1496	DMForever
+1497	DMStyle
+1500	Dominos
+1501	DoN
+1505	Dookie
+1617	Ellesmere
+1624	EllesmereUI 
+1626	EllesmereUI Forever
+1629	EllesmereUI Original
+1635	EllesmereUI WonderBar
+1637	ElvUI
+1638	Emote
+1781	Español (EU)
+1782	Español (LatAm)
+1814	Exo
+1815	Exo.otf
+1827	Expressway
+1829	Expressway CAPS
+1830	Expressway CAPS.ttf
+1897	Filpet96
+1909	Fira Sans Bold
+1910	Fira Sans Light
+1911	Fira Sans Medium
+1912	FiraSans Bold.ttf
+1913	FiraSans Light.ttf
+1914	FiraSans Medium.ttf
+1986	Forever
+1987	FOREVER ART
+1988	Forever Essentials
+1993	FPS
+1994	fps
+2028	Français
+2034	Freschi
+2054	Friz Quadrata
+2060	Frontals Gunshot
+2074	Future X Black
+2075	Future X Black.otf
+2076	g
+2098	GLOBAL
+2127	Glyalith
+2137	Gotham Narrow
+2138	Gotham Narrow Ultra
+2139	Gotham Narrow Ultra.otf
+2140	Gotham Narrow.otf
+2158	Grid2
+2159	Groukh
+2215	Harreks Advanced Raid Frames
+2254	Healers Have To Die
+2439	Homespun
+2479	HWT Artz
+2480	HWT Artz.ttf
+2512	IconID
+2588	Infernal
+2649	ItemID
+2652	Kaching
+2653	KB/s
+2663	Kel'Thuzad
+2688	Kil'jaeden
+2689	Kiri
+2690	Kned
+2691	Kneeul
+2692	KR
+2693	KUI Nameplates
+2694	Kulia
+2697	Laraystiri
+2708	lastmount
+2718	Layout
+2719	layout
+2727	Leatrix
+2813	Lyrex
+2815	macro
+2845	Mana %
+2859	Mantis
+2860	Manual
+2861	Manual 
+2926	Menu
+2938	Meta
+2940	Meza
+2964	MinimapButtonButton
+2989	Mohkan
+2995	Morpheus
+3038	MPlusTimer
+3039	MR
+3040	Mudd
+3051	Naga Siren
+3077	Naowh Thin Circle
+3110	Nnoggie
+3197	OH
+3304	OUTLINE, SLUG
+3411	Pixels
+3412	Pixels Background
+3413	Pixels Circle
+3414	Pixels Comic
+3415	Pixels Dark
+3416	Pixels Dragon
+3417	Pixels Fill
+3418	Pixels Glow Line
+3419	Pixels Overshield Line
+3420	Pixels Ring
+3421	Pixels Ring Shadow
+3422	Pixels Shield
+3423	Pixels Shield Edge
+3424	Pixels Shield Fill
+3425	Pixels Textured
+3426	Pixels Textured Ring
+3427	Pixels Textured Ring Shadow
+3434	Plater Nameplates
+3436	Platynator
+3454	Plugin
+3457	Poppins
+3506	Prat
+3564	Pull 
+3565	Pull 10s
+3571	Pull!
+3602	Quickdraw
+3606	Ragnaros
+3782	reskinItemUpgrade
+3783	reskinLoot
+3784	reskinLootToast
+3829	Ricoder92
+3854	RLP
+3855	Robot Blip
+3881	Russo One
+3882	Russo One.ttf
+3883	s
+3962	Sensei Class Resource Bar
+3994	SexyMap
+4025	SHIFT-
+4030	shifter
+4031	Shiyan66666
+4320	Silithid
+4341	Skiron Cooldown Manager
+4343	Skurri
+4348	Slam
+4360	Smite
+4377	Snsei987
+4378	Social
+4385	Sonar
+4404	Spaze
+4445	SpellID
+4451	Spinning Crane Kick
+4486	Starfire
+4487	Start a Campfire
+4495	Steady Shot
+4498	Stoley
+4499	Stone
+4500	Stone Golem
+4502	Stormspren
+4526	Svart
+4528	Sweeping Strikes
+4609	TellMeWhen
+4645	TF0rd
+4809	TidyPlates
+4810	TidyPlates ThreatPlates
+4886	ToS
+4946	Tzahal
+4947	Ubuntu
+4968	Unhalted Unit Frames
+5047	VA
+5052	Varimathras
+5089	Warning Siren
+5092	WarpDeplete
+5139	Wilhelm
+5168	WOW FOREVER
+5169	WoW Forever
+5172	Wrath
+5189	Xanax
+5196	XPBar
+5202	Yogg-Saron
+5233	Zylann

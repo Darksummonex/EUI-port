@@ -1,0 +1,450 @@
+3097	New Icon Animation
+3098	NEW IN ELLESMEREUI
+3100	New Module: Arena Frames
+3101	New Overrides System
+3102	New Patch Reminder Dot
+3104	New Spec Group
+3105	NEW SYSTEM
+3107	Next
+3108	Next 4 seconds of incoming heals
+3109	Next Swing Highlight
+3111	No
+3112	No active glows
+3113	No active glows. Turn off Hide Inactive Glows to edit the others.
+3115	No bar glows yet.
+3116	No blacklisted spells.
+3117	No conditional overrides yet. Click the Conditional Overrides button next to the module search bar and create a conditional group (Dungeon, Raid, Keybind...). Spec overrides always take precedence over conditionals.
+3118	No Duplicate Debuff Icon
+3119	No entries on this bar.
+3120	No friends online
+3121	No houses found.
+3122	No Icons
+3123	no key set
+3124	No matching gems in your bags
+3126	No other saved characters
+3130	No Rep Tracked
+3131	No spec overrides yet. Click the spec glyph next to the module search bar, select or create a spec group, and any setting you change while editing as that group is saved here.
+3133	Non-Player Portrait
+3134	Non-Tank
+3136	Non-Target Opacity
+3139	None (Free Move)
+3144	Normal bronze, heroic blue.
+3145	Normal Dungeons
+3147	Not a custom glow
+3148	Not a valid EllesmereUI string. Make sure you copied the entire string.
+3149	Not available for horizontal bars
+3150	Not available for this combat indicator style.
+3151	Not available for vertical bars
+3152	Not available in Dark Mode. Dark Mode colors can be adjusted in Global Settings -> Fonts & Colors.
+3153	Not available while a legacy visibility value is selected. Pick Never or Always first.
+3155	Not custom
+3156	Not Enough Mana Color
+3157	Not in a guild
+3160	not loaded
+3161	Not overridable
+3162	Not overridable. These conditions are shared and can only be changed while no override is being edited. An override replaces the Visibility setting outright -- Never, Always or Mouseover -- and ignores everything set here while it applies.
+3163	Not Skyriding (Airborne)
+3164	Not Taken
+3165	Nothing
+3166	Nothing available
+3167	Nothing Extra
+3168	Nothing to add in this category
+3169	Nothing to change: every glow here already matches the template.
+3170	Nothing to change: no active custom glow differs from the template.
+3174	Number of test frames shown while this page is open or in Unlock Mode.
+3175	Objective Color
+3180	Off colors the text like the fill.
+3181	Off colors the text with the power color.
+3183	Off Hand Color
+3184	Off uses the power type color.
+3185	Off uses your class color.
+3186	Off: hovering an item, spell, quest or achievement link shows its tooltip.
+3187	Off: match repeats from the same sender. On: also hide matching messages sent by other players in the same channel.
+3188	Off: only player chat is stamped, as the game does.
+3189	Off: world markers ask for a ground click.
+3190	Offensive CDs
+3193	Offline Background
+3196	Ogre Mage
+3201	On
+3202	On (default): one profile's palette is shared across every profile (chosen via Pull Colors From). Off: each profile keeps its own custom colors (Power, Class Resource, Class, Resource).
+3203	On Cooldown
+3204	On Hover
+3205	On Icon
+3207	One backpack button; opens the unified inventory.
+3208	One melee row showing the next swing of either hand.
+3210	Only applies when Name > Target is selected.
+3211	Only Assigned Spells
+3213	Only Below Threshold
+3214	Only Dispellable by You
+3215	Only Dispellable Debuffs
+3217	Only highlights debuffs your character can remove right now.
+3218	Only in a Group
+3219	Only In Combat
+3220	Only in Combat
+3221	Only learned spells appear
+3222	Only show buffs that have a duration, excluding permanent ones.
+3223	Only show buffs that have a duration, excluding permanent ones. Combines with the filters below.
+3224	Only show buffs you can spellsteal or purge.
+3225	Only show debuffs that have a duration, excluding permanent ones.
+3226	Only show debuffs that have a duration, excluding permanent ones. Combines with the filters below; checked alone it shows every timed debuff.
+3227	Only show debuffs that have a duration, excluding permanent ones. Tracked Auras always show.
+3228	Only show debuffs whose full duration is at most this many seconds. Combines with the filters; Unlimited applies no cap.
+3230	Only Show for % Health
+3231	Only Show Group Members
+3232	Only Show in Housing
+3234	Only Show Numbers
+3235	Only show the cast bar while a cast is in progress; hide it the rest of the time.
+3236	Only Show when Mounted
+3237	Only Stealable Buffs
+3238	Only Timed Auras
+3239	Only Tracked
+3240	Only Tracked Auras
+3241	Only while AIRBORNE on a glide-capable mount or flight form. For the mount itself, ground included, use Skyriding Mount.
+3242	Only Your Debuffs
+3244	Opacity of enemies that are stealthed or out of sight.
+3245	Opacity of the bar fill; below 100 the world shows through the fill instead of the background.
+3246	Opacity of the bar's background; the swatch picks the Modern color.
+3247	Opacity of the cast bar fill; below 100 the world shows through the fill instead of the background.
+3248	Open All skips COD and GM mail
+3249	Open Animation
+3250	Open At
+3251	Open Bags
+3252	Open Bags In Combat
+3253	Open Character Sheet
+3254	Open Currencies
+3256	Open it anytime from the EUI Options Sidebar.
+3257	Open Profession
+3258	Open Profession Book
+3260	Open Settings
+3261	Open Style
+3262	Open Talents
+3263	Open the EllesmereUI settings panel.
+3264	Open Unlock Mode
+3265	Open World
+3266	Opposite Faction
+3269	Order of the buttons on this bar; corner options place the first button in that corner.
+3270	Ore, herbs, cloth... BoE gear by quality
+3272	ORIGINAL STAFF
+3273	EUI Staff
+3277	Other players' heals
+3278	Others are missing my buff
+3279	Others are missing my buff: remind when a groupmate is missing a buff you can cast.\nI am missing others' buffs: remind when you are missing a buff a groupmate could give you (only shown when someone who can cast it is present). Off by default.
+3280	Out of Boss Combat
+3282	Out of Combat Alpha
+3283	Out of Combat Opacity
+3284	Out of combat, reminds you when no groupmate has your Earth Shield. Clicking casts it on the group's tank (or your focus).
+3287	Out of Range Color
+3289	Out of Range Fade
+3290	Out of Range Opacity
+3291	Out-of-Range Fade
+3292	Outer Ring
+3293	Outer Ring Size
+3294	Outgoing whispers and GM whispers are always shown. Scopes repeat and keyword filters.
+3297	Outline for the zone, sub-zone and PvP status text shown when entering an area.
+3300	Outline Mode - Disabled\n
+3302	Outline per Text
+3303	Outline style override for all 
+3305	Outside the Dungeon Finder Wrath has no healer role; mana users of healing classes are listed.
+3307	Overflow To
+3308	Overheal
+3312	Overlay Reverse
+3313	Overridden by:
+3314	Override Active: %s
+3315	Override Anchor
+3316	Override Anchor Direction
+3317	Override any setting for a group of specs, or for the content you're in. Everything else keeps your normal profile settings.
+3318	Override to Promote
+3319	Overrides
+3320	Overrides are locked: this page's custom Buff Manager is active. Leave the Buff Manager tab to manage overrides.
+3321	Overrides the border size from the main frames for this frame only. Border color and texture still follow the main frames.
+3322	Overrides the Frame Strata set in the main frames for this frame only. Controls the order that overlapping frames display in; set higher to show above other frames.
+3323	OVERRIDES WARNING
+3324	Overshield is the part of an absorb exceeding your empty health. Always backfills it over current health from the shield's edge; From Left grows it from the opposite end of the bar; Never hides it.
+3325	Overwrite Window & Tooltip Settings?
+3326	Own Auras Only
+3327	Own includes your pet and vehicle
+3330	Pack sorted items into the last slots so the empty slots end up at the top. Affects OneBag, MultiBag and the bank.
+3331	Padding
+3332	Page
+3334	Paging Arrows
+3335	Paging, buying and buyback stay native.
+3337	pain suppression
+3340	Palette 
+3341	Palette Name
+3342	Palettes
+3343	PANDEMIC GLOW
+3345	Pandemic Glow Color
+3347	Panel
+3348	Panel & Tab Border Styles
+3351	Party and Raid
+3353	Party Health Texture
+3356	Party, raid (including warnings), battleground, guild and officer chat. Scopes repeat and keyword filters.
+3357	Party-Specific Text Sizes
+3358	Party-Specific Textures
+3359	Passive Pet
+3361	Paste Interrupted
+3366	Peek Modifier
+3367	Per icon
+3368	Per-bar background textures
+3369	Per-bar text scale
+3370	Per-icon glow settings: the template never changes them.
+3372	percent
+3374	Performance Reminder
+3376	Pet & Target-of-Target Text Sizes (per unit)
+3377	Pet and stance slots follow Blizzard's own layout
+3379	Pet Bar Height
+3380	PET FRAMES
+3381	PET HAPPINESS
+3382	Pet merge applies to newly collected events.
+3383	Pet, Target-of-Target & Boss Bar Textures
+3385	Pets, Diminishing Returns and Range
+3386	Phone
+3387	Physical Sorting
+3388	Pick any currency your character has discovered.
+3389	Pick what NPCs show in Class art instead of their 2D portrait.
+3390	Pick which content the class-special reminders (poisons/rites/imbues/shields) appear in.\nRested areas (cities and inns) always stay hidden.
+3391	Pick which content the custom reminders appear in.\nRested areas (cities and inns) always stay hidden.
+3392	Pick which content the WoW Forever reminders appear in.\nRested areas (cities and inns) always stay hidden.
+3393	Pick which content these aura reminders appear in.\nRested areas (cities and inns) always stay hidden.
+3394	Pick which content these consumable reminders appear in.\nRested areas (cities and inns) always stay hidden.
+3395	Pick which content these Warlock reminders appear in.\nRested areas (cities and inns) always stay hidden.
+3396	Pick which content this section's reminders appear in.\nRested areas (cities and inns) always stay hidden.
+3400	Pins the bar flush against a screen edge; moving the bar in unlock mode sets this back to None.
+3401	Pins this block's content to the exact center of the bar; blocks before it pack left, blocks after pack right. Combined with Fill Remaining, the block also absorbs the leftover space around the center.
+3402	Pip Background
+3406	Pixel Glow Background
+3407	Pixel Glow Lines
+3409	Pixel Glow Speed
+3428	Place smaller Armory slot groups beside each other. Large groups still use full rows.
+3429	Place the cast icon on the right side of the bar instead of the left.
+3431	Places the five party frames side by side instead of stacked.
+3432	Places your own frame first or last in its group. Uses the native name list, refreshed outside combat.
+3433	Places your own frame first or last in the party. Uses the native name list, refreshed outside combat.
+3437	Play a sound once when a reminder in this section newly appears.
+3438	Play Sound on Party Mode
+3440	Player & Cursor Coordinates
+3441	Player Aura Bars
+3442	player aura bars
+3443	Player Aura Bars Icon Glows
+3444	Player Aura Bars Text (per bar)
+3445	PLAYER AURAS
+3447	Player Dispel Overlay
+3448	Player Frame Dragon
+3450	Player Threat (Non-Tank)
+3451	Player, Target & Focus Text Sizes (per unit)
+3452	Players Only
+3453	Plays with each incoming whisper, alongside the game's own whisper sound.
+3459	Popular presets now live on the new EllesmereUI website including full previews, step-by-step install instructions, plus new presets added every day!
+3460	Popup
+3461	Popup & Tooltip Border Styles
+3462	Popups
+3463	PORT STAFF
+3474	position
+3477	Posts the spell you or your pet interrupted. Party and Raid use the battleground channel inside battlegrounds.
+3479	Potions
+3481	power
+3487	Power Bar Seam
+3489	Power Bars
+3490	Power Border Options
+3491	Power Color Darken
+3493	Power Colored Background. Power colors can be adjusted in Global Settings -> Fonts & Colors.
+3494	Power Colored Fill. Power colors can be adjusted in Global Settings -> Fonts & Colors.
+3500	Power Text Size
+3501	Power Texture
+3507	Precise Below (minutes, 0 = off)
+3508	Prediction Color
+3510	Preferred (Click to Buff)
+3511	Prefix
+3512	Prefixes the plugin's own name to its text.
+3514	PRESET FILTERS
+3515	Preset filters work independently of repeats. Your own messages are preserved. Keyword and recruitment matches can hide legitimate messages; enable only the filters you want.
+3516	Presets
+3517	Presets Have a New Home
+3518	Press \"%1$s\" twice to continue.
+3519	Press a hotkey for 
+3521	Press again to confirm.
+3523	Press the 
+3530	Preview / Copy / Send Report
+3531	Preview Frames
+3532	Preview mana warning
+3533	Preview Matches the Live Frames
+3536	Preview • click an icon or indicator to edit
+3537	Preview • enable Use Indicator Layout to apply
+3539	Prismatic
+3540	Proc Aura ID
+3543	Proc Stacks
+3544	Processing
+3547	Profile Import and Export
+3549	Profile Migration
+3552	Profile Synced
+3555	Profit
+3556	Progress
+3557	Promote & Reload
+3558	Promote Override & Delete ALL Overrides
+3559	Promote Override to Profile
+3560	Promoting an override reloads the UI and cannot run in combat. Leave combat and try again.
+3563	Public Chat
+3566	Pull canceled
+3567	Pull Colors From
+3568	Pull in 
+3569	Pull Timer
+3570	Pull Timer Length (seconds)
+3572	Pulse
+3573	Purgeable Buff Glow
+3574	Purgeable Buffs
+3575	Pushed
+3578	PvP Emblem
+3579	PvP Flag
+3580	Pyroblast
+3583	Quality
+3584	QUALITY OF LIFE
+3586	Quality: FPS and each latency value turn green, yellow or red (60/30 fps, 100/250 ms).
+3587	Quest
+3588	Quest Failed
+3592	Quest Objective Text Size
+3593	Quest or achievement title under the mouse.
+3596	Quests
+3597	Quests with more than one reward choice, and turn-ins that cost money or items, stay manual.
+3598	Queued Color
+3600	Quick Keybind Mode (/kb)
+3604	Radial Palettes
+3608	raid
+3609	Raid / Party Aura Filters
+3610	Raid and Party
+3611	Raid and party filters are saved separately
+3612	Raid and Unit Frames
+3613	Raid Buff Provider Button
+3615	Raid CDs
+3616	Raid Combat
+3617	RAID DEBUFFS
+3618	Raid Debuffs
+3619	Raid Debuffs Section
+3622	Raid Health Texture
+3623	RAID LAYOUTS
+3625	raid marker
+3626	Raid Marker 0-8
+3630	Raid Markers
+3631	Raid Only
+3632	RAID TOOLS
+3634	Raid Warning
+3635	Raid Warning > Raid > Party; 10s and final 5s
+3637	Raise Cast Bar Strata (All)
+3638	Raise Frame Level
+3639	Raises the dragon within its strata. Higher values draw it over more of the frame.
+3641	Random Hearthstone
+3644	range
+3645	Range (30-35)
+3646	Range Color
+3647	Ranged
+3648	Ranged Color
+3650	Reactive
+3652	ready
+3654	Ready Check Icons
+3655	Ready Check Mana Warning
+3656	Ready Check Position
+3657	Ready Check Size
+3658	Ready Glow Style
+3659	Ready runes only, with a central ready count.
+3661	Rebind
+3662	Rebirth Cooldown (Druid)
+3663	Rebirth uses your cooldown; no shared raid charges
+3664	Recent Colors
+3667	Recharge Color
+3668	Recolor the theme to any color and opacity you like
+3669	Recolors the frame border in the dispel type color while a debuff of that type is shown.
+3670	Rectangular
+3671	Reduce Icons Per Indicator to make room (eight icons per aura type).
+3672	Refresh Rate (Seconds)
+3673	Refresh stats / print memory snapshot
+3674	Regen Ticks
+3676	Relative to Screen
+3680	Reload the UI now?
+3681	Reload to finish importing.
+3682	Reload to finish switching to the new profile.
+3684	Remaining Duration
+3686	Remembered Lines
+3687	Remind you to grab a Healthstone when a Warlock is in your group. Warlocks get a click-to-cast Create Healthstone reminder.
+3688	Reminder Color
+3689	Reminder Conditions
+3690	Reminder Glow
+3691	Reminder names, item counts and the mana warning
+3692	Reminder Size
+3693	Reminder Sound
+3694	Reminder X
+3695	Reminder Y
+3696	Reminds you when the Camp Benefits campfire buff is missing.
+3697	Reminds you whenever this buff is missing. Remove stops tracking it.
+3699	Remove '%s'? The setting keeps its current live value.
+3700	Remove a character's saved bags, bank and gold from the account cache. The character you are logged in on is recorded again automatically and cannot be deleted.
+3701	Remove Action
+3703	Remove Block
+3704	Remove Character
+3705	Remove Conditional Override
+3706	Remove Entry
+3708	Remove Override
+3709	Remove Selected Bar
+3710	Remove Selected Binding
+3711	Remove Selected Indicator
+3712	Remove Spec Override
+3713	Remove Stranded Override
+3714	Remove the stranded '%s' override for %s? The spec returns to the shared default.
+3715	Removed 
+3716	Removes the block from the bar in instanced content, where player coordinates are unavailable.
+3717	Removes the color codes the plugin writes into its own text, so this block's Text Color applies. Off keeps the plugin's colors.
+3718	Removes this block from the bar.
+3724	Rename this bar. Press Enter to apply.
+3725	Render absorbs on Boss Frames using the Target frame's absorb styling.
+3726	Renders the spec text in uppercase.
+3728	Repairs from the guild bank when your withdraw limit covers the cost, otherwise from your own gold.
+3729	Repeat Window (seconds)
+3730	Repeated Message Filter
+3731	REPEATED MESSAGES
+3732	REPEATS AND KEYWORDS IN
+3733	Replace Blizzard's split popup for bag and bank items with the split dialog that also offers Auto Split.
+3734	Replaces the class icon with the strongest stun, silence, fear, root or immunity on that enemy.
+3735	Replaces the difficulty flag with a compact readout such as 25H.
+3736	Replaces the stock player cast bar.
+3738	Reposition this element within Unlock Mode
+3742	Reputation Bar Text Size
+3743	Reputation Bar Texture
+3744	Requires a client with gliding events.
+3745	Requires a Debuff Display
+3746	Requires Power Type: Mana + Form Power.
+3747	Requires Show Player. Party frames hide while in a raid.
+3748	Rescue tool for a profile built inside an override: the selected group's settings and layouts become this profile's own baseline, then ALL spec override groups are deleted. Conditional overrides are not affected.
+3754	Reset All Bar Positions
+3757	Reset Bar Position
+3758	Reset Bar Positions
+3759	Reset Button Positions
+3761	Reset Data Keybind (Example: CTRL-R)
+3762	Reset failed - there are still players inside the instance.
+3763	Reset Icon Positions
+3764	Reset Menu, Bags & XP Positions
+3765	Reset Message
+3766	Reset Position
+3767	Reset Repeat Memory
+3768	Reset Selected Aura Filters
+3769	Reset Selected Bar Position
+3770	Reset Session
+3771	Reset Stat Colors & Order
+3772	Reset This Group Position
+3774	Reset Tracking Bar Positions
+3776	Reset Window Positions
+3778	Reskin Dungeon Ready & Role Check
+3780	Reskin Popups & Context Menus
+3781	Reskin Tooltips
+3785	Resolution Issue: Profile was made at %1$dx%2$d, yours is %3$dx%4$d
+3787	Resource amounts are separated by power type.
+3788	Resource Bar Settings
+3790	Resource Color Darken
+3791	Resource Colored
+3793	Resource, cast and GCD bar textures
+3796	Rested Indicator X Offset
+3797	Rested Indicator Y Offset
+3798	Resting
+3799	Resting Icon
+3801	Restore Default Assignments For This Bar
+3803	Restyle My UI
+3804	Restyles the game's chat bubbles and turns them on for the checked channels.
+3806	Retail Appearance
+3807	Retail Aura Lanes

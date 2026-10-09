@@ -1,0 +1,350 @@
+3500	Tamanho do Texto de Poder
+3501	Textura de Poder
+3502	Tipo de Poder
+3503	Valor de Poder
+3504	Valor de Poder | Poder %
+3505	Palavra de Poder: Fortitude
+3506	Prat
+3507	Preciso abaixo de (minutos, 0 = desligado)
+3508	Cor da Previsão
+3509	Opacidade da Previsão
+3510	Preferido (Clique para Bônus)
+3511	Prefixo
+3512	Adiciona o nome do próprio plugin antes do texto.
+3513	Preservação
+3514	FILTROS PREDEFINIDOS
+3515	Filtros predefinidos funcionam independentemente das repetições. Suas próprias mensagens são preservadas. Palavras-chave e recrutamento podem ocultar mensagens legítimas; ative só os filtros que quiser.
+3516	Predefinições
+3517	Predefinições Têm um Novo Lugar
+3518	Pressione \"%1$s\" duas vezes para continuar.
+3519	Pressione uma tecla de atalho para 
+3520	Pressione uma tecla...
+3521	Pressione de novo para confirmar.
+3522	Pressione Ctrl+C para copiar e Escape para fechar
+3523	Pressione 
+3524	Ant.
+3525	Impedir Aceitar Várias Missões
+3526	Impedir Escurecer Ícone de Recomposição Rápida
+3527	Impede que a Blizzard escureça Recomposição Rápida nas barras de ação e no CDM com base na Eflorescência.
+3528	PRÉVIA
+3529	Prévia
+3530	Prévia / Copiar / Enviar Relatório
+3531	Quadros de Prévia
+3532	Prévia do aviso de mana
+3533	Prévia Igual aos Quadros Reais
+3534	Modo Prévia
+3535	Prévia do Som
+3536	Prévia • clique num ícone ou indicador para editar
+3537	Prévia • ative Usar Layout de Indicadores para aplicar
+3538	Sacerdote
+3539	Prismático
+3540	ID da Aura de Proc
+3541	Brilho de Proc
+3542	Efeito de Brilho de Proc
+3543	Acúmulos de Proc
+3544	Processando
+3545	Profissões
+3546	Perfil
+3547	Importar e Exportar Perfil
+3548	Perfil Importado
+3549	Migração de Perfil
+3550	Nome do Perfil
+3551	Nome do perfil...
+3552	Perfil Sincronizado
+3553	Perfis
+3554	Perfis e Predefinições
+3555	Lucro
+3556	Progresso
+3557	Promover e Recarregar
+3558	Promover Substituição e Excluir TODAS as Substituições
+3559	Promover Substituição para Perfil
+3560	Promover uma substituição recarrega a interface e não funciona em combate. Saia do combate e tente de novo.
+3561	Proteção
+3562	Espreitar
+3563	Bate-papo Público
+3564	Pull 
+3565	Pull 10s
+3566	Pull cancelado
+3567	Puxar Cores De
+3568	Pull em 
+3569	Contagem de Pull
+3570	Duração da Contagem de Pull (segundos)
+3571	Pull!
+3572	Pulsar
+3573	Brilho de Bônus Expurgáveis
+3574	Bônus Expurgáveis
+3575	Pressionado
+3576	Tipo de Pressionado
+3577	JxJ
+3578	Emblema JxJ
+3579	Marcador JxJ
+3580	Pirobola
+3581	QdV
+3582	Addons de QdV
+3583	Qualidade
+3584	QUALIDADE DE VIDA
+3585	Qualidade de Vida
+3586	Qualidade: FPS e cada latência ficam verde, amarelo ou vermelho (60/30 fps, 100/250 ms).
+3587	Missão
+3588	Missão Falhou
+3589	Atalho de Item de Missão
+3590	Itens de Missão
+3591	Registro de Missões
+3592	Tamanho do Texto de Objetivos de Missão
+3593	Título da missão ou conquista sob o mouse.
+3594	Rastreador de Missões
+3595	Fonte do Rastreador de Missões
+3596	Missões
+3597	Missões com mais de uma recompensa à escolha e entregas que custam dinheiro ou itens ficam manuais.
+3598	Cor em Fila
+3599	Modo de Atalho Rápido
+3600	Modo de Atalho Rápido (/kb)
+3601	Saque Rápido
+3602	Quickdraw
+3603	Racial
+3604	Paletas Radiais
+3605	Raiva
+3606	Ragnaros
+3607	Raide
+3608	raide
+3609	Filtros de Aura de Raide / Grupo
+3610	Raide e Grupo
+3611	Filtros de raide e grupo são salvos separadamente
+3612	Raide e Quadros de Unidade
+3613	Botão de Provedor de Bônus de Raide
+3614	BÔNUS DE RAIDE
+3615	CDs de Raide
+3616	Combate de Raide
+3617	PENALIDADES DE RAIDE
+3618	Penalidades de Raide
+3619	Seção de Penalidades de Raide
+3620	Quadros de Raide
+3621	Ícones dos Quadros de Raide
+3622	Textura de Vida da Raide
+3623	LAYOUTS DE RAIDE
+3624	Marcador de Raide
+3625	marcador de raide
+3626	Marcador de Raide 0-8
+3627	Posição do Marcador de Raide
+3628	Configurações do Marcador de Raide
+3629	Tamanho do Marcador de Raide
+3630	Marcadores de Raide
+3631	Só em Raide
+3632	FERRAMENTAS DE RAIDE
+3633	Ferramentas de Raide
+3634	Aviso de Raide
+3635	Aviso de Raide > Raide > Grupo; 10s e últimos 5s
+3636	Raides
+3637	Elevar Camada da Barra de Lançamento (Todas)
+3638	Elevar Nível do Quadro
+3639	Eleva o dragão dentro da camada. Valores maiores o desenham sobre mais partes do quadro.
+3640	Recarga Mínima de Celebrações Aleatórias
+3641	Pedra de Regresso Aleatória
+3642	Aleatorizar
+3643	Aleatoriamente
+3644	alcance
+3645	Alcance (30-35)
+3646	Cor de Alcance
+3647	À Distância
+3648	Cor à Distância
+3649	Vitória em Arena Ranqueada
+3650	Reativo
+3651	Pronto
+3652	pronto
+3653	Verificação de Prontidão
+3654	Ícones de Verificação de Prontidão
+3655	Aviso de Mana na Verificação de Prontidão
+3656	Posição da Verificação de Prontidão
+3657	Tamanho da Verificação de Prontidão
+3658	Estilo do Brilho de Pronto
+3659	Só runas prontas, com contagem central de prontas.
+3660	Prévia Real
+3661	Reatribuir
+3662	Recarga de Renascimento (Druida)
+3663	Renascimento usa sua recarga; sem cargas de raide compartilhadas
+3664	Cores Recentes
+3665	Itens Recentes
+3666	Opções de Itens Recentes
+3667	Cor de Recarga
+3668	Mude a cor do tema para qualquer cor e opacidade
+3669	Recolore a borda do quadro com a cor do tipo de dissipação enquanto uma penalidade desse tipo é mostrada.
+3670	Retangular
+3671	Reduza Ícones por Indicador para abrir espaço (oito ícones por tipo de aura).
+3672	Taxa de Atualização (Segundos)
+3673	Atualizar estatísticas / imprimir uso de memória
+3674	Ticks de Regeneração
+3675	Recrescimento
+3676	Relativo à Tela
+3677	Recarregar Agora
+3678	Recarregamento Recomendado
+3679	Recarregamento Necessário
+3680	Recarregar a interface agora?
+3681	Recarregue para concluir a importação.
+3682	Recarregue para concluir a troca para o novo perfil.
+3683	Recarregar Interface
+3684	Duração Restante
+3685	Lembrar Últimas Linhas do Bate-papo
+3686	Linhas Lembradas
+3687	Lembra você de pegar uma Pedra de Vida quando há um Bruxo no grupo. Bruxos recebem um lembrete clicável de Criar Pedra de Vida.
+3688	Cor do Lembrete
+3689	Condições do Lembrete
+3690	Brilho do Lembrete
+3691	Nomes dos lembretes, contagem de itens e aviso de mana
+3692	Tamanho do Lembrete
+3693	Som do Lembrete
+3694	Lembrete X
+3695	Lembrete Y
+3696	Lembra você quando o bônus de fogueira Benefícios do Acampamento estiver ausente.
+3697	Lembra você sempre que este bônus estiver ausente. Remover para de rastreá-lo.
+3698	Remover
+3699	Remover '%s'? A configuração mantém seu valor atual.
+3700	Remove as bolsas, banco e ouro salvos de um personagem do cache da conta. O personagem conectado é registrado de novo automaticamente e não pode ser excluído.
+3701	Remover Ação
+3702	Remover Âncora
+3703	Remover Bloco
+3704	Remover Personagem
+3705	Remover Substituição Condicional
+3706	Remover Entrada
+3707	Remover Brilho
+3708	Remover Substituição
+3709	Remover Barra Selecionada
+3710	Remover Atalho Selecionado
+3711	Remover Indicador Selecionado
+3712	Remover Substituição de Especialização
+3713	Remover Substituição Órfã
+3714	Remover a substituição órfã '%s' de %s? A especialização volta ao padrão compartilhado.
+3715	Removido 
+3716	Remove o bloco da barra em conteúdo instanciado, onde as coordenadas do jogador não estão disponíveis.
+3717	Remove os códigos de cor que o plugin escreve no próprio texto, para aplicar a Cor do Texto deste bloco. Desligado mantém as cores do plugin.
+3718	Remove este bloco da barra.
+3719	Renomear
+3720	Renomear Barra
+3721	Renomear Categoria
+3722	Renomear Grupo
+3723	Renomear Perfil
+3724	Renomeie esta barra. Pressione Enter para aplicar.
+3725	Mostra absorções nos Quadros de Chefe usando o estilo de absorção do quadro do Alvo.
+3726	Mostra o texto da especialização em maiúsculas.
+3727	Todos os itens reparados por 
+3728	Repara com o banco da guilda quando seu limite de saque cobre o custo; caso contrário, com seu próprio ouro.
+3729	Janela de Repetição (segundos)
+3730	Filtro de Mensagens Repetidas
+3731	MENSAGENS REPETIDAS
+3732	REPETIÇÕES E PALAVRAS-CHAVE EM
+3733	Substitui o popup de divisão da Blizzard para itens de bolsa e banco pela janela que também oferece Divisão Automática.
+3734	Substitui o ícone de classe pelo atordoamento, silêncio, medo, enraizamento ou imunidade mais forte naquele inimigo.
+3735	Substitui o marcador de dificuldade por uma leitura compacta como 25H.
+3736	Substitui a barra de lançamento padrão do jogador.
+3737	Reposicione livremente com
+3738	Reposicione este elemento no Modo de Desbloqueio
+3739	Reputação
+3740	BARRA DE REPUTAÇÃO
+3741	Barra de Reputação
+3742	Tamanho do Texto da Barra de Reputação
+3743	Textura da Barra de Reputação
+3744	Requer um cliente com eventos de planar.
+3745	Requer uma Exibição de Penalidades
+3746	Requer Tipo de Poder: Mana + Poder da Forma.
+3747	Requer Mostrar Jogador. Quadros de grupo ficam ocultos em raide.
+3748	Ferramenta de resgate para um perfil criado dentro de uma substituição: as configurações e layouts do grupo selecionado viram a base deste perfil, e TODOS os grupos de substituição de especialização são excluídos. Substituições condicionais não são afetadas.
+3749	REDEFINIR
+3750	Redefinir
+3751	Redefinir %1$s
+3752	Redefinir e Recarregar
+3753	Redefinir Tudo e Recarregar
+3754	Redefinir Posições de Todas as Barras
+3755	Redefinir TODAS as Configurações dos Addons EUI
+3756	Redefinir TODAS as Configurações
+3757	Redefinir Posição da Barra
+3758	Redefinir Posições das Barras
+3759	Redefinir Posições dos Botões
+3760	Redefinir Dados
+3761	Atalho para Redefinir Dados (Exemplo: CTRL-R)
+3762	Falha ao redefinir - ainda há jogadores dentro da instância.
+3763	Redefinir Posições dos Ícones
+3764	Redefinir Posições de Menu, Bolsas e XP
+3765	Mensagem de Redefinição
+3766	Redefinir Posição
+3767	Redefinir Memória de Repetições
+3768	Redefinir Filtros de Aura Selecionados
+3769	Redefinir Posição da Barra Selecionada
+3770	Redefinir Sessão
+3771	Redefinir Cores e Ordem dos Atributos
+3772	Redefinir Posição Deste Grupo
+3773	Redefinir para o padrão
+3774	Redefinir Posições das Barras de Rastreamento
+3775	Redefinir Posição da Janela
+3776	Redefinir Posições das Janelas
+3777	Redimensionar Largura
+3778	Visual de Masmorra Pronta e Verificação de Função
+3779	Visual do Menu de Pausa
+3780	Visual de Popups e Menus de Contexto
+3781	Visual das Dicas
+3782	reskinItemUpgrade
+3783	reskinLoot
+3784	reskinLootToast
+3785	Problema de Resolução: o perfil foi feito em %1$dx%2$d, a sua é %3$dx%4$d
+3786	Barras de Recurso e Lançamento
+3787	Quantidades de recurso são separadas por tipo de poder.
+3788	Configurações da Barra de Recurso
+3789	Barras de Recurso
+3790	Escurecer Cor do Recurso
+3791	Cor do Recurso
+3792	Texto do Recurso
+3793	Texturas das barras de recurso, lançamento e GCD
+3794	Descansado
+3795	Indicador de Descanso
+3796	Deslocamento X do Indicador de Descanso
+3797	Deslocamento Y do Indicador de Descanso
+3798	Descansando
+3799	Ícone de Descanso
+3800	Restauração
+3801	Restaurar Atribuições Padrão Desta Barra
+3802	Restaurar Minhas Configurações
+3803	Reestilizar Minha Interface
+3804	Reestiliza os balões de fala do jogo e os ativa nos canais marcados.
+3805	Brilho ao Aceitar Ressurreição
+3806	Aparência Retail
+3807	Faixas de Aura Retail
+3808	Janela de Bolsas Retail
+3809	Modelo de Barra Retail
+3810	Configurações de Barra Retail
+3811	Estilos de borda Retail do catálogo de bordas compartilhado.
+3812	Painel de Bate-papo Retail
+3813	Motor e Visual Retail
+3814	Lista de Amigos Retail
+3815	Layout Retail
+3816	Visual Retail
+3817	Páginas Retail
+3818	Páginas de Configurações Retail
+3819	Dica Retail
+3820	Janelas Retail
+3821	Retribuição
+3822	Revela só ao passar o mouse. Combina com as condições abaixo: revela ao passar o mouse enquanto todas passam, fica oculto se alguma falhar.
+3823	Revelar Áreas Inexploradas
+3824	Preenchimento Invertido
+3825	Inverter Ordem dos Grupos
+3826	Inverter Ordem dos Membros
+3827	Inverter Varredura
+3828	Invertido
+3829	Ricoder92
+3830	Direita
+3831	direita
+3832	Clique direito: voltar dos detalhes ou abrir favoritos do medidor.
+3833	Espaço à Direita
+3834	À Direita do Cursor
+3835	À Direita do Ícone
+3836	À Direita da Janela
+3837	Borda Direita da Tela
+3838	Texto Direito
+3839	Cor da Classe no Texto Direito
+3840	Configurações do Texto Direito
+3841	Tamanho do Texto Direito
+3842	Direita para Esquerda
+3843	Clique direito: favoritar
+3844	Clique direito: remover favorito
+3845	Arrastar com o botão direito ainda gira a câmera
+3846	Anel / Arco
+3847	Anel Grosso
+3848	Anel Fino
+3849	Anel Normal

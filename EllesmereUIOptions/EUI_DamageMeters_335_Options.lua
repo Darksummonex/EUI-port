@@ -171,6 +171,12 @@ init:SetScript("OnEvent",function(self)
             Row(ColorField("barBgColor","Bar Background",true),Label(""))
 
             Section("BAR TEXT")
+            if E.StandaloneFontChoices then
+                local fontNames,fontOrder=E.StandaloneFontChoices()
+                local font=DD(ns.Profile,"font","Font",fontNames,fontOrder); font.previewFont=E.StandaloneFontPath
+                font.getValue=function() return ns.Profile().font or "Expressway" end
+                Row(font,Label("Includes fonts from LibSharedMedia"))
+            end
             Row(DD(Selected,"numberFormat","Number Format",{short="Short (12.3k)",full="Full (12345)",comma="Separated (12,345)"},{"short","full","comma"}),
                 Field(Selected,"hideRank","Hide Rank Numbers","toggle"))
             Row(Field(Selected,"fontSize","Left Text Size","slider",8,20),Field(Selected,"valueFontSize","Right Text Size","slider",8,20))

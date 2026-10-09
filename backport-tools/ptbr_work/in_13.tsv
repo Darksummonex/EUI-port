@@ -1,0 +1,350 @@
+4550	Tab Spacing
+4551	Tab Texture
+4552	Tabard
+4553	Tabs
+4554	Tabs Inside Chat Panel
+4555	Tabs use the chat panel border style, size and color.
+4556	Taken
+4557	Talent Condition
+4558	Talent Conditions
+4559	Talent Must Be
+4560	Talent name; the entry only shows when the condition matches.
+4561	Talent Reminders
+4562	Talents
+4563	Tank
+4564	Tank > Healer > DPS
+4565	Tank Threat
+4566	Tapped
+4567	Target
+4568	TARGET AND FOCUS EFFECTS
+4569	TARGET AND VISIBILITY
+4570	Target Arrows
+4571	Target Border
+4572	TARGET CAST BAR
+4573	Target Cast Bar
+4574	Target Cast Bar Name Size
+4575	Target Cast Bar Target Size
+4576	Target Cast Bar Texture
+4577	Target Cast Bar Timer Size
+4578	Target Color
+4579	TARGET DISTANCE
+4580	Target Distance
+4581	Target Distance Text
+4582	Target Distance Text Size
+4583	Target Effect
+4584	Target Highlight Color
+4585	Target Important Cast Glow
+4586	Target Markers
+4587	Target of Target
+4588	Target Purgeable Buff Glow
+4589	Target Texture
+4590	Target Tracked Auras
+4591	TARGET, FOCUS & HOVER EFFECTS
+4592	Target/Focus Bars
+4593	Targeted Bars Name Size
+4594	Targeted Bars Target Size
+4595	Targeted Bars Texture
+4596	Targeted Bars Timer Size
+4597	TARGETED SPELL BARS
+4598	Targeted Spell Bars
+4599	Targeted Spell Size
+4600	TARGETED SPELLS
+4601	Targeted Spells
+4602	Targeted Spells Offset X
+4603	Targeted Spells Offset Y
+4604	Targeted Spells Section
+4605	Targeting:
+4606	Targets
+4607	Teleport Home
+4608	Teleports
+4609	TellMeWhen
+4610	TellMeWhen overlaps with EllesmereUI's core positional architecture. If you ONLY use for sound alerts it should be okay but may still cause issues.
+4611	Terrible
+4612	Test Frames
+4613	Test frames: this page, Unlock Mode or /earena test
+4614	TEXT
+4615	Text
+4616	Text Align
+4617	Text Anchor
+4618	TEXT BAR
+4619	Text Bar
+4620	Text Boxes
+4621	Text Color
+4622	TEXT DISPLAY
+4623	Text Group
+4624	Text Outline Choices
+4625	Text Outline Styles
+4626	Text Position
+4627	Text Scale
+4628	Text Scale (per data bar)
+4629	Text shown before the target's name.
+4630	Text Size
+4631	Text X Offset
+4632	Text Y Offset
+4633	Texture
+4634	Texture drawn over the chat background color.
+4635	Texture drawn over the tab background colors.
+4636	Texture drawn with the chat background color.
+4637	Texture for every unit frame cast bar. Inherit follows each unit's bar texture.
+4638	Texture for the class resource bar.
+4639	Texture for the health, power and class resource bars.
+4640	Texture Not Found
+4641	Texture Resolution - Set to High\n
+4642	Textured Circle
+4643	Textured Dispel Ring
+4644	Textures
+4645	TF0rd
+4646	That setting is stored by list position and can't be safely overridden.
+4647	The active override's Buff Manager is bound to the open page. Leave the Buff Manager tab to switch overrides.
+4648	The active override's custom %s is bound to this page. Leave the %s tab to switch to another override.
+4649	The Armory
+4650	The background colour behind Dark Mode bars (Unit Frames, Raid Frames, Resource Bars).
+4651	The bank opens anywhere from the Bags header; away from a banker it shows the last saved contents.
+4652	The bar shows stacks out of the maximum instead of time.
+4653	The bar this page edits.
+4654	The Combat Indicator is not available for the Focus frame.
+4655	The Cooldown Manager can do far more than show cooldowns, it also has per-spell settings, bar glows, tracking bars and more! Check out some tips and tricks for getting more from it.
+4656	The display language for the EllesmereUI options panel. Auto follows your game client. Untranslated text falls back to English.
+4657	the EllesmereUI theme
+4658	The exact inverse of Skyriding (Airborne): anything that is not airborne on a glide-capable mount or flight form, standing on the ground included.
+4659	The fallback must differ from\nthe main anchor target
+4660	The flat fill colour bars use when Dark Mode is enabled (Unit Frames, Raid Frames, Resource Bars).
+4661	the Frame Source to be EllesmereUI
+4662	The gem could not be socketed.
+4663	The glow line is not shown on a vertical fill or with the From Left Edge placement
+4664	The glow line is not shown on a vertical fill or with the From Right Edge placement
+4665	The glow line is not shown with Absorb Style None
+4666	The Lich King
+4667	the Modern background style
+4668	The native social window with class icons, class-coloured names, faction banners and invite auto-accept; friend actions and every social tab stay native.
+4669	The original frames, rings and slots where the game has them, with EllesmereUI's features.
+4670	The override group '%s' already provides the custom unlock mode for your current spec. Customize it there, or remove this spec from that group.
+4671	The pasted string could not be read completely. Please paste it again.
+4672	The personal resource display's bar frame, or the classic cast bar frame, on the health, power and class resource bars, with every EllesmereUI bar feature.
+4673	The Pixel Glow settings this bar's per-icon glows use. The template never changes them.
+4674	the Randomly trigger
+4675	The Ring of Valor
+4676	The scriptProfile CVar is enabled.
+4677	The socketed gem will be destroyed. Continue?
+4678	The taintLog and scriptProfile CVars are enabled.
+4679	The taintLog CVar is enabled.
+4680	The tracker always hides in arenas
+4681	These are the same settings found on each module's own pages, not separate ones.
+4682	These settings prioritize frame rate and visual clarity over environmental detail. Textures stay high quality so your character and the world still look perfect.
+4683	These specs hold override values that no group's editing mode can reach anymore (left behind by membership changes). They still apply. Remove one to return that spec to the shared default.
+4684	Thick
+4685	Thick Outline
+4686	Thickness
+4687	Thickness in pixels. -1 follows each debuff indicator's Border setting, 0 hides the dispel color border.
+4688	Thin
+4689	Thin Line Bottom
+4690	Thin Line Top
+4691	This bar sizes its blocks itself, so the width is not this block's to choose.
+4692	This bar will only show if you have an enemy targeted
+4693	This block is already the 'Fill Remaining Space' block. Check another block to move the role.
+4694	This can't change which spells the user tracks in Blizzard's CDM.\nIt's recommended to also share your Blizzard CDM layout for any spec you choose here.
+4695	This cannot be undone. Consider exporting this profile as a backup first.
+4696	This cannot be undone. Export your own profile as a backup first.
+4697	This condition is coming in a future update.
+4698	This conditional is not active right now. Meet one of its conditions first (for example, enter the dungeon) so you can arrange the layout in its real context.
+4699	This control recently changed direction: it now copies FROM the frame you choose. Confirming will copy all shared settings FROM %1$s TO %2$s.
+4700	This element cannot use group-based visibility.
+4701	This element doesn't support both Height and Width matching
+4702	This element shows as soon as ONE Show condition matches. Hide keeps its meaning in both match modes: a checked Hide always hides, on every row.
+4703	This element will only show while you are inside a house or plot
+4704	This element will only show while you are mounted
+4705	This export includes cross profile settings that will overwrite the importing user's settings including Quality of Life, Hovercast and more that should typically not be shared with standard profiles. THIS IS NOT RECOMMENDED for public sharing of profiles.
+4706	This feature optimizes your in-game graphics settings to give you the best combination of high FPS and visual clarity.\n\nYou can revert all changes at any time by clicking \"Restore My Settings\" which will appear after optimizing.\n\n\nWhat we change:\n\n
+4707	This feature requires Snap Elements to be enabled
+4708	This frame's source changes require a UI reload to take effect.
+4709	This glow is locked on its settings page.
+4710	This group's custom Buff Manager can only be activated or edited while playing one of its specs.
+4711	This group's custom Debuff Manager can only be activated or edited while playing one of its specs.
+4712	This is a CDM Bar Layout string, not a profile string.
+4713	This is an old CDM Bar Layout string. This format is no longer supported. Use the standard profile import instead.
+4714	This is the Spell Queue Window, it helps with making sure you can't queue up too many spells at once which makes the game feel laggy. Recommended settings are generally a minimum of 200 + your local ping. If you are unsure of exactly what this setting does, leave it at 400.
+4715	This is where you can control the settings of Unlock Mode.\n\nElements can be repositioned by dragging or arrow keys (+shift)\nAnchor, Height Match, or Width match any element.\nSnapping is based on closest element, but you can snap only to\n a specific element via right click or the settings icon.
+4716	This makes it so the width of the cast bar includes the icon, rather than placing it to the left of the cast bars width.
+4717	This module can't be overridden. Exit the override editing session to open it.
+4718	This module is excluded from Spec Overrides.
+4719	This option can't be used while Blizzard Class Resource Art is enabled in Resource Bars.
+4720	This option does not apply to the player frame.
+4721	This option is not available on the player frame
+4722	This option is only available for formats that display a percentage.
+4723	This option is only available for the Custom Color Theme
+4724	This option is only available when Portrait Mode is Detached.
+4725	This option only affects Raid Buffs you can cast
+4726	This option only applies to the Badge style.
+4727	This option only applies when Name > Target is selected.
+4728	This option only applies when Name > Target or Target is selected.
+4729	This option only applies when Target is selected.
+4730	This option only applies when the text shows a name.
+4731	This option requires %1$s to be %2$s
+4732	This option requires a 2D Portrait or Class Art Style.
+4733	This option requires a Border Size above 0
+4734	This option requires a Border Size above 0.
+4735	This option requires a Border Style other than Inherit (Main Frames).
+4736	This option requires a Border Style other than Solid.
+4737	This option requires a border style with divider art and a Border Size above 0.
+4738	This option requires a Circle or Pixels Circle Shape.
+4739	This option requires a Class Icon other than None.
+4740	This option requires a detached position to be active.
+4741	This option requires a Dispel Overlay, Color Custom Borders or Use Dispel Colors.
+4742	This option requires a dropdown selection other than Above Health Bar
+4743	This option requires a Glow Style other than None
+4744	This option requires a text position other than none.
+4745	This option requires a text selection other than none.
+4746	This option requires a Type Icon Position other than None
+4747	This option requires a visible Portrait and Show Icon.
+4748	This option requires an attached Power Bar, a Border Size above 0 and a border style with seam art.
+4749	This option requires an EllesmereUI Target or Focus frame.
+4750	This option requires an Outer Ring other than None.
+4751	This option requires Art Style to be set to Class
+4752	This option requires Blizzard Style to be disabled
+4753	This option requires Class Resource to be set to Modern.
+4754	This option requires Combine Spell Name and Target to be disabled.
+4755	This option requires Custom Border Style, Show Icon and Make Icon Part of the Bar, with the EllesmereUI style.
+4756	This option requires Dispel Type Borders to be enabled.
+4757	This option requires Portrait Mode to be set to Detached.
+4758	This option requires Show Icon and Make Icon Part of the Bar, with the EllesmereUI style.
+4759	This option requires Show Icon and the EllesmereUI style.
+4760	This option requires Show Icon beside the cast bar and the EllesmereUI style.
+4761	This option requires Show Level.
+4762	This option requires Solid or a border style with divider art, and a Border Size above 0.
+4763	This option requires the Class Art Style.
+4764	This option requires the Class Colored Shape Border and Dark Mode.
+4765	This option requires the position setting to be detached
+4766	This option requires the WoW Forever style.
+4767	This overwrites this frame's current settings. Frame position, visibility, and enable state are not changed.
+4768	This page is excluded from overrides.
+4769	This permanently overwrites this profile's settings with the override '%s': its captured settings and its custom Unlock Mode and Buff Manager layouts (where present) become the profile's own baseline for every spec. ALL spec override groups on this profile are then deleted and the UI reloads. Conditional overrides are not affected.
+4770	This profile string does not carry any global settings.
+4771	This profile string does not carry any override data.
+4772	This profile string does not carry any Window & Tooltip Skins settings.
+4773	This profile was created before the beta wipe and is no longer compatible. Please create a new export.
+4774	This profile was created with a newer version of EllesmereUI. Please update your addon.
+4775	This profile was made at %1$d%% UI scale; yours is %2$d%%. Change your UI scale to match the imported profile? This will show all profiles at this scale as UI Scale is not a per-profile setting, but can be changed at any time back to your original value.
+4776	This resets every EUI addon, not just the current one.
+4777	This setting already has an override for %s
+4778	This setting can't be overridden.
+4779	This Setting Has Overrides
+4780	This spec's custom unlock mode is owned by '%s'. Customize it there, or remove the spec from that group.
+4781	This string is a FULL ACCOUNT export. It replaces your account-wide settings with the sender's, including Quality of Life, HoverCast bindings, Cooldown Manager spell setups, unlock anchors, UI scale, and profile keybinds -- not just a profile. Your other profiles are kept, but a profile with the same name is replaced.
+4782	This unit uses the Blizzard default frame -- there are no EllesmereUI settings to configure here.
+4783	This unit's frame is hidden -- there are no EllesmereUI settings to configure here.
+4784	This will create a fully unique Buff Manager for this conditional group. Changes made to your default Buff Manager will no longer affect it.
+4785	This will create a fully unique Buff Manager for this override group. Changes made to your default Buff Manager will no longer affect these specs.
+4786	This will create a fully unique Debuff Manager for this conditional group. Your current Debuff Manager settings are copied as its starting point, and changes made to your default Debuff Manager will no longer affect it.
+4787	This will create a fully unique Debuff Manager for this override group. Your current Debuff Manager settings are copied as its starting point, and changes made to your default Debuff Manager will no longer affect these specs.
+4788	This will create a fully unique unlock mode for this conditional group. Changes made to your default unlock mode will no longer affect it.
+4789	This will create a fully unique unlock mode for this override group. Changes made to your default unlock mode will no longer affect these specs.
+4790	This will not reset addon-specific Quick Setup.
+4791	This will replace YOUR Blizz UI Enhanced settings (the Window Skins and Tooltips, Menus & Popups tabs) with the sharer's, across ALL of your profiles. Your current settings on those two tabs cannot be recovered afterward.
+4792	This would create a circular anchor
+4793	This would create a circular height match
+4794	This would create a circular width match
+4795	threat
+4796	Threat %
+4797	Threat % Position
+4798	Threat and Pet Happiness
+4799	Threat Border
+4800	Threat Color
+4801	THREAT COLORS
+4802	Threat Meter
+4803	Threat: native values for the current target.
+4804	Threshold %
+4805	Threshold Color
+4806	Threshold Count
+4807	Tick Color
+4808	Ticks at Stacks
+4809	TidyPlates
+4810	TidyPlates ThreatPlates
+4811	Time from the last displayed matching message. Hidden repeats do not extend the window.
+4812	Timer
+4813	Timer Background
+4814	Timer Background Texture
+4815	Timer Bar Texture
+4816	Timer Border Color
+4817	Timer Border Size
+4818	Timer Color
+4819	Timer Font
+4820	Timer Layer
+4821	Timer Outline
+4822	Timer Position
+4823	Timer Size
+4824	Timer Text Size
+4825	Timer X
+4826	Timer Y
+4827	Timer, forces and spell bar textures
+4828	Timestamp All Messages
+4829	Timestamps
+4830	Tints the dragon with your class color instead of gold or silver.
+4831	Tints the dragon with your class color instead of gold.
+4832	Tints this block's slot with its own color.
+4833	Tiny (75%)
+4834	Tiny Stripes
+4835	Tip of the Spear
+4836	Title Color
+4837	Title Font Size
+4838	Title Size
+4839	Titles
+4840	Toggle Action Bar
+4841	Toggle between horizontal and vertical bar layout.
+4842	Toggle Calendar
+4843	Toggle Clock
+4844	Toggle EllesmereUI's optional buttons: the Escape menu buttons and the minimap button.
+4845	Toggle Key
+4846	Toggle Keybind
+4847	Toggle Menu Open
+4848	Toggle mode needs a Select key; until one is set the menu fires on release.
+4849	Toggle On/Off Keybind
+4850	Toggle Orientation
+4851	Toggle World Map
+4852	Toggling an action bar is only available out of combat\n\nLeft-click to set a keybind.\nRight-click to unbind.
+4853	Tooltip
+4854	tooltip
+4855	Tooltip Background Opacity
+4856	Tooltip border and background
+4857	Tooltip Border Size
+4858	Tooltip Borders & Background
+4859	Tooltip Font Scale
+4860	Tooltip Font Size Scale
+4861	TOOLTIP INFORMATION
+4862	Tooltip Options
+4863	TOOLTIP POSITION
+4864	Tooltip text scale and enchant text
+4865	Tooltip text scale, enchant text and dragonriding speed
+4866	TOOLTIP VISIBILITY
+4867	Tooltips
+4868	Tooltips, Menus & Popups
+4869	Top
+4870	Top Gap
+4871	Top Left
+4872	Top Left, Downward
+4873	Top Left, Rightward
+4874	Top Name Bar Text Size
+4875	Top of the line performance metrics
+4876	Top Offset
+4877	Top position is only available in Detached mode
+4878	Top Right
+4879	Top Right, Downward
+4880	Top Right, Leftward
+4881	Top Screen Edge
+4882	Top Text
+4883	Top Text Size
+4884	Top to Bottom
+4885	Top/Bottom Info Bar
+4886	ToS
+4887	Total
+4888	TOTEM BAR
+4889	Totem Bar
+4890	Totem Bars
+4891	Totem Timer Size
+4892	Track
+4893	Track and display gold amounts from all your characters on hover.
+4894	Track consumables and raid buffs for instanced content.
+4895	Track Diminishing Returns
+4896	TRACKED AURAS
+4897	Tracked Auras
+4898	Tracked Buff Bars
+4899	Tracked IDs are added; excluded IDs always hide

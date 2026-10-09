@@ -4,8 +4,30 @@ import sys
 root = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(root / '.codex-tools'))
 from lupa.lua51 import LuaRuntime
-codes = ['deDE','esES','esMX','frFR','koKR','ruRU','zhCN','zhTW']
+codes = ['deDE','esES','esMX','frFR','koKR','ruRU','zhCN','zhTW','ptBR']
+# ptBR is port-only (built by build_ptbr_catalog.py); Retail ships no ptBR catalog.
+port_only = {'ptBR'}
 engine = (root / 'EllesmereUI/EUI_Locale_335.lua').read_text(encoding='utf-8')
+# Catalogs are trimmed by clean_locale_catalogs.py: entries the port never shows
+# are removed, every kept line is byte-identical to Retail and in Retail order.
+# Port-only translations live after MARKER (build_locale_additions.py); only the
+# part above it must match Retail.
+MARKER = b'-- == 3.3.5 port additions (backport-tools/build_locale_additions.py) =='
+_subset = {}
+def subset_of_retail(path, retail):
+    if path not in _subset:
+        theirs = iter(retail.read_bytes().splitlines())
+        ours = path.read_bytes().split(MARKER, 1)[0].splitlines()
+        _subset[path] = all(any(line == other for other in theirs) for line in ours if line.strip())
+    return _subset[path]
+toc = (root / 'EllesmereUILocales/EllesmereUILocales.toc').read_text(encoding='utf-8')
+for code in codes:
+    assert (code + '.lua') in toc.split(), code
+ptbr = (root / 'EllesmereUILocales/ptBR.lua').read_bytes()
+assert not ptbr.startswith(b'\xef\xbb\xbf') and b'\r\n' in ptbr and b'\n' not in ptbr.replace(b'\r\n', b'')
+assert ptbr.count(b'\nL["') > 4000
+opts = (root / 'EllesmereUIOptions/EUI__General_Options.lua').read_text(encoding='utf-8')
+assert '["ptBR"] = { text = "Português (Brasil)" }' in opts and '"esMX", "ptBR", "ruRU"' in opts
 def run(client, override=None, missing=False):
     lua = LuaRuntime(unpack_returned_tuples=True)
     g = lua.globals()
@@ -25,8 +47,9 @@ CreateFrame=function() return {
         if not missing:
             for code in codes:
                 path = root / 'EllesmereUILocales' / (code + '.lua')
-                retail = Path('D:/World of Warcraft/_retail_/Interface/AddOns/EllesmereUILocales') / path.name
-                assert path.read_bytes() == retail.read_bytes(), code
+                if code not in port_only:
+                    retail = Path('D:/World of Warcraft/_retail_/Interface/AddOns/EllesmereUILocales') / path.name
+                    assert subset_of_retail(path, retail), code
                 lua.execute(path.read_text(encoding='utf-8-sig'))
         return not missing
     g.C_AddOns = lua.table(LoadAddOn=load)
@@ -45,10 +68,15 @@ CreateFrame=function() return {
         assert translated != 'Background', (active, translated)
         assert g.EllesmereUI.EnKey(translated) == 'Background'
         assert g.EllesmereUI._localeFont == g.STANDARD_TEXT_FONT or override
+    if active == 'deDE' and not missing:
+        assert g.EllesmereUI.Lf('Learn %d skill%s for %s', 2, 's', 'Trainer') == 'Lerne 2 Fertigkeit(en) für Trainer'
+    if active == 'ptBR' and not missing:
+        assert g.EllesmereUI.L('Background') == 'Fundo'
+        assert g.EllesmereUI.L('Enable') == 'Ativar'
     return lua
 for code in codes + ['enUS','enGB']:
     run(code)
 for code in codes:
     run('enUS', code)
-run('enUS','ptBR'); run('enUS','itIT'); run('deDE',missing=True)
-print('PASS: eight original catalogs; native/English clients, manual overrides, missing-addon/key fallback, reverse lookup, native fonts and positional/ordinary/escaped Lua 5.1 formats')
+run('enUS','itIT'); run('deDE',missing=True)
+print('PASS: eight Retail catalogs trimmed to the text the port shows (kept lines identical to Retail) plus the port-only pt-BR catalog; native/English clients, manual overrides incl. Português (Brasil), missing-addon/key fallback, reverse lookup, native fonts and positional/ordinary/escaped Lua 5.1 formats')

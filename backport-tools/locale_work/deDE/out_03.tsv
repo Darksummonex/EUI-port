@@ -1,0 +1,450 @@
+3893	GESPEICHERTE BELEGUNGEN
+3894	Nur für diesen Charakter gespeichert. Gib eine Zauber-ID ein und drücke Enter, um erinnert zu werden, sobald dieser Stärkungszauber auf Dir fehlt.\nZauber aus Deinem Zauberbuch sind per Klick wirkbar. Unbekannte IDs werden ignoriert.
+3895	Für dieses Schlachtzugslayout gespeichert. Ausgeblendete Gruppen hinterlassen keinen leeren Platz.
+3896	Gespeicherte Instanzen
+3899	Sagen, Schreien und nummerierte Kanäle wie Allgemein, Handel und Welt. Bereiche gelten für Wiederholungs-, Schlüsselwort-, Handelsanzeigen- und Rekrutierungsfilter.
+3906	Skaliert die Standardleiste; 30 ist ihre normale Größe.
+3907	Skaliert die Textgröße der Blizzard Tooltips.
+3910	Bildschirmmitte
+3911	Bildschirmkoordinaten
+3913	Bildschirmposition
+3914	Bildschirm X-Versatz
+3915	Bildschirm Y-Versatz
+3917	Drehe das Mausrad über einem Händlerfenster, um die Warenseiten umzublättern.
+3919	Meeresriese
+3926	SEKUNDÄRE WERTE
+3928	Textgröße sekundäre Werte
+3929	Sekunden, die der aktive Zustand nach einem Zauber angezeigt wird (für Zauber ohne Stärkungszauber).
+3932	Segment
+3933	Auswählen
+3934	Wähle einen Charakter
+3939	Leiste auswählen
+3941	Fenster auswählen
+3942	Leuchten auswählen
+3943	Gruppe auswählen
+3944	Indikator auswählen
+3945	Auswahltaste: 
+3946	Palette auswählen
+3951	Wähle die Spezialisierungen, die diese Gruppe bearbeitet:
+3953	Fenster auswählen
+3955	Ausgewählt: 
+3957	Auswahlnadel
+3959	Post Empfänger
+3960	Post senden: Empfängerliste
+3961	An DBM / BigWigs senden
+3964	Getrennter Abstand
+3965	Trenne Wörter oder Phrasen mit Kommas oder Semikolons. Groß-/Kleinschreibung wird ignoriert (auch bei Akzentbuchstaben), es wird nach wörtlichen Teilzeichenfolgen gesucht. Leere Einträge werden ignoriert.
+3966	Getrennt (12.345)
+3968	Server Kanalmeldungen
+3972	Lege ein Leuchten einmal fest. 'Auf alle anwenden' ändert die unten aufgeführten aktiven eigenen Leuchteffekte.
+3974	Abbruchtaste festlegen
+3978	Pro Filter festlegen
+3979	Pro Filter und Kachel festlegen
+3980	Pro Indikator festlegen
+3981	Auswahltaste festlegen
+3991	Einstellungszahnrad
+3996	Schattenblitz
+4004	Formen und Rahmen
+4005	SharedMedia Leistentexturen
+4006	SharedMedia Schriftarten, Texturen und Sounds
+4007	SharedMedia in Soundmenüs
+4008	SharedMedia Sounds
+4009	SharedMedia Texturen und Sounds
+4013	Schildabsorption in Heilung
+4014	Schildschätzungen
+4015	Schilde werden auf 3.3.5 geschätzt
+4017	Shift + Linksziehen: Position speichern
+4020	Shift beim Skalieren sperrt eine Richtung
+4026	Shift-Klick: Gleiche Kategorie anhängen
+4027	Shift-Klick: Gleiche Kategorie anhängen
+4028	Ziehe die Symbole mit Shift, um sie zu verschieben
+4033	Kurz (12.3k)
+4034	Kurzer Tastenbelegungstext
+4039	Zeige 
+4043	Anzeigen/Ausblenden umfasst Kampftimer
+4044	Anzeigen/Ausblenden umfasst Zauberverlauf
+4045	Tastenbelegung Fenster anzeigen/ausblenden (Beispiel: ALT-M)
+4046	15 Zauber anzeigen (sonst 8)
+4048	Zeigt ein Leuchten auf der Zauberleiste, wenn die Einheit einen von Blizzard als wichtig markierten Zauber wirkt.
+4051	Zeigt eine Erinnerung an, wenn Du keinen aktiven Begleiter beschworen hast. Gilt nur für Begleiterklassen (Jäger, Hexenmeister, Unheilig-Todesritter).\nJäger: Rechtsklick wechselt zwischen 'Tier rufen' und 'Tier wiederbeleben'. Hexenmeister: Rechtsklick wechselt durch die Dämonen.
+4052	Zeigt eine Erinnerung an, wenn Dein aktiver Begleiter auf 'Passiv' gestellt ist. Ein Klick stellt ihn auf 'Defensiv'.
+4055	Aktiven Zustand anzeigen
+4056	AFK Status anzeigen
+4059	Arena Begleiter anzeigen
+4063	Auren anzeigen
+4064	Taschenplatzleiste anzeigen
+4069	BoE Text anzeigen
+4071	Rahmen dahinter anzeigen
+4074	Kalender anzeigen
+4077	Kanalisierungsticks anzeigen
+4078	Charakterbank anzeigen
+4079	Gegenstandsanzahl der Charaktere anzeigen
+4080	Klassensymbol anzeigen
+4081	Klassensymbole anzeigen
+4090	Koordinaten auf Weltkarte anzeigen
+4091	Zeigt Kopien desselben Gegenstands in getrennten Plätzen als ein Symbol mit addierter Anzahl an. Pausiert, solange das Post-, Handels-, Auktionshaus-, Bank- oder Gildenbankfenster geöffnet ist.
+4092	Schwächungszauber anzeigen
+4094	Nachkommastellen anzeigen
+4096	Schwierigkeitsflagge anzeigen
+4098	Bannbare zeigen, wenn kein Boss-Schwächungszauber
+4099	DPS / HPS neben Gesamt anzeigen
+4100	Haltbarkeit anzeigen
+4103	Verzauberungsnamen statt Symbolen anzeigen
+4104	Gegnerische Stärkungszauber anzeigen
+4105	Gegnerische Namensplaketten anzeigen
+4110	Ausklapptaste anzeigen
+4111	FPS & Latenz anzeigen
+4113	Freundesnotizen anzeigen
+4114	Freundliche Bosse anzeigen
+4115	Freundliche Namensplaketten anzeigen
+4116	Online Freunde anzeigen
+4117	GearScore anzeigen
+4118	Zeige Gruppe 
+4119	Würfelauswahl der Gruppe anzeigen
+4121	Strichlinie auf Ziel anzeigen
+4122	Kopfzeilensymbole bei Mouseover anzeigen
+4124	Heilvorhersage anzeigen
+4126	Heilersymbole anzeigen
+4129	Versteckte Nachrichten anzeigen
+4132	Trefferwertung / Waffenkunde / Rüstungsdurchschlag anzeigen
+4133	Zeigt, wie viele dieser Verbrauchsgüter Du noch in Deinen Taschen hast.
+4135	Symbol auf Porträt anzeigen
+4137	Anzeigen in
+4150	Zeigt Gegenstands- oder Zauber-Tooltips beim Drüberbewegen über Erinnerungssymbole.
+4151	Tastendrücke anzeigen
+4153	Tastenbelegungen anzeigen
+4157	Beschriftungen anzeigen
+4158	Latenz anzeigen
+4160	Lokale Latenz anzeigen
+4161	Postanzeige anzeigen
+4162	Haupttank Fenster anzeigen
+4163	Manaleiste in Gestaltwandlung anzeigen
+4164	Mich anzeigen
+4165	Händler als Liste anzeigen
+4167	Reittier- & Sammelstatus anzeigen
+4169	Namen anzeigen (Schlachtzug)
+4173	Rechts anzeigen
+4175	Zeigt eine Unterkategorie pro Ausrüstungsset (nach dem Set benannt) unter 'Ausrüstungsset Gegenstände'.
+4177	Nur im Kampf anzeigen
+4181	Gruppenfenster anzeigen
+4182	Gruppenbegleiter anzeigen
+4183	Passive Schmuckstücke anzeigen
+4184	Prozent anzeigen
+4190	Spieler anzeigen
+4195	Ressourcen Prozent anzeigen
+4196	PvP Schmuckstück anzeigen
+4197	Warteschlangen Indikatoren anzeigen
+4198	Schlachtzugsfenster anzeigen
+4200	Schlachtzugsbegleiter anzeigen
+4202	Bereite Abklingzeiten anzeigen
+4204	Zeigt Erinnerungen, wenn die verbleibende Dauer des Stärkungszaubers unter dieser Anzahl Minuten liegt.\n0 = nur wenn vollständig abgelaufen.\nIm Kampf ignoriert (dann nur, wenn der Stärkungszauber fehlt).
+4214	Subzone anzeigen
+4215	Tanksymbole anzeigen
+4216	Ziel anzeigen
+4217	Anvisierte Zauber anzeigen
+4218	Anvisierte Zauber in Vorschau anzeigen
+4219	Zehntelsekunden anzeigen
+4221	Zeigt die Einstellungen für Rahmenstil und -größe der Zauberleiste.
+4222	Zeigt die angelegten Taschenplätze über dem Fenster (auch über die Taschen-Kopfzeilentaste umschaltbar).
+4223	Zeigt die Freundes- und Ausklapptasten nur beim Drüberbewegen über die Karte.
+4224	Zeigt den Schlüsselbund im Taschenfenster.
+4231	Diese Leiste anzeigen
+4232	Bedrohung % auf Ziel & Fokus anzeigen
+4233	Bedrohungsfarben anzeigen
+4234	Bedrohung am Rahmen anzeigen
+4235	Bedrohung auf Gesundheitsleiste anzeigen
+4236	Bedrohung am Namen anzeigen
+4245	Totemleiste anzeigen (Todesritter)
+4246	Totemleiste anzeigen (Schamane)
+4247	Verfolgung anzeigen
+4249	Bei fehlender Gesundheit anzeigen
+4251	Auch alleine anzeigen
+4252	Fenster anzeigen
+4254	Weltlatenz anzeigen
+4255	Weltkartentaste anzeigen
+4256	Zoomtasten anzeigen
+4261	Auf Höchststufe angezeigt. Die Kopfzeile zeigt den GearScore.
+4262	Wird bei toten Mitgliedern angezeigt, die wiederbelebt werden (LibResComm-1.0, enthalten).
+4269	Zeigt Schwächungszauber, die einem beliebigen aktivierten Anzeigefilter entsprechen (Standard).
+4270	Zeigt jede Leiste mit Platzhaltersymbolen, solange die Optionen geöffnet sind.
+4273	Zeigt große Beträge mit K/M Suffixen (284.208g wird zu 284.2Kg) statt der vollständigen gruppierten Zahl. Der Tooltip zeigt immer den genauen Betrag.
+4275	Zeigt nur Schwächungszauber, die allen aktivierten Anzeigefiltern entsprechen (Banntypen zählen als einer); Gegensätze wie 'Nicht-Spieler Auren' mit 'Von Dir gewirkt' zeigen nichts.
+4281	Zeigt das Taschensymbol neben der Platzanzahl.
+4283	Zeigt den Kampfstatustext nur, während Dein Charakter im Kampf ist.
+4284	Zeigt die Kosten des gewirkten Zaubers auf der Ressourcenleiste.
+4288	Zeigt das Fenster, solange diese Einheit nicht volle Gesundheit hat; wenn aktiviert, kann ein durch seine Sichtbarkeitseinstellung ausgeblendetes Fenster trotzdem angeklickt werden.
+4289	Zeigt die Gesundheitstextelemente, die in 'Haupttextpositionen' platziert sind.
+4291	Zeigt die letzten Zeilen jedes Chatfensters nach einem Neuladen oder erneutem Einloggen wieder an.
+4294	Zeigt den wichtigsten Boss-Schwächungszauber (ICC, Rubinsanktum, PdK, Ulduar, Naxxramas) als großes Symbol in der Mitte des Fensters.
+4295	Zeigt die Netzwerklatenzzone am Ende von Zaubern oder Kanalisierungen, einschließlich eingereihter Zauber.
+4303	Zeigt das Zaubersymbol beim Wirken über dem Porträt und lässt die Leiste die volle Breite nutzen.
+4304	Zeigt hier das Standard Runen- oder Combopunktfenster statt der Punkte.
+4307	Zeigt Deine Arenagegner. Linksklick wählt als Ziel, Rechtsklick setzt den Fokus.
+4310	Zeigt Deinen Unterbrechungszauber, während Dein Fokus zaubert.
+4311	Zeigt Deinen Unterbrechungszauber, während Dein Fokus oder Ziel zaubert.
+4312	Zeigt Deinen Bedrohungsprozentsatz auf Ziel- und Fokusfenster, solange Du mit dieser Einheit im Kampf bist.
+4333	Größe des klassischen Rahmens um die Leiste.
+4334	Größe des Classic WoW UI Rahmens, wenn der klassische Stil aktiv ist.
+4335	Größe des Drachen in Prozent seiner Einpassung um das Porträt.
+4336	Größe des äußeren Rings relativ zum Porträt.
+4338	Skaliert den freien Text, die Leistennummer und den Symbol-Countdown der Bewegungswarnung. Ein Wechsel des Anzeigemodus der Warnung setzt diesen Wert neu.
+4342	Totenschädel
+4345	Himmelsreiten HUD
+4349	Slash Befehle
+4350	Gleiten
+4351	Schieberegler
+4352	Platz
+4359	Intelligentere Questhelfer
+4361	Flüssige Animation
+4363	Flüssige Zauberleisten
+4369	An anderen Fenstern einrasten
+4376	Einrasten und Sperren
+4379	Sockelfenster & Ein-Klick Edelsteine
+4380	Gesockelte Edelsteinsymbole
+4388	Bereite Runen zuerst sortieren
+4390	Sortiert
+4401	Spamfilter
+4402	Spamfilter Voreinstellungen und Schlüsselwörter
+4403	Funkenmodus
+4405	Spez. 
+4406	Spezialisierungsgruppen: Einmal bearbeiten, auf jede Spezialisierung der Gruppe anwenden
+4407	Spezialisierungssymbole
+4408	Spezialisierungs Überschreibung
+4410	Besonderer Dank an Ellesmere
+4412	BESONDERES UPDATE
+4413	Spezialisierungssymbole
+4419	Zauber- / Gegenstands-ID
+4420	Zauberabklingzeit
+4423	Zauberdichte - Auf 'Wesentlich' gesetzt\n
+4428	Zaubersymbole zeigen statt der Abklingzeit Deinen eigenen kurzen Stärkungszauber dieses Zaubers.
+4430	Zauber-ID des anzuzeigenden Unterbrechungszaubers. 0 nutzt den Unterbrechungszauber Deiner Klasse.
+4431	Zauber-ID oder Texturpfad.
+4432	Zauber-ID in diesem Client nicht verfügbar
+4434	Zauber-IDs in Tooltips
+4436	Zaubernamen Kontur
+4437	Zaubernamen erscheinen auf identifizierten Ziel- und Mouseover-Plaketten.
+4439	Zaubertextfarbe
+4440	Zaubertextposition
+4441	Zaubertextgröße
+4442	Zaubertext X
+4443	Zaubertext Y
+4453	Teilt Bankgegenstände nach Kategorie auf, mit derselben Kategorienliste, Reihenfolge und Umbenennung wie die 'Alle Gegenstände' Taschenansicht.
+4458	Nur quadratische und rechteckige Karten.
+4459	Quadratische dunkle Skins für Wrath Fenster, Tooltips, Menüs und Popups.
+4460	SSAO (Umgebungsverdeckung) - Deaktiviert\n
+4466	Stapeltextposition
+4467	Stapeltextgröße
+4468	Stapelschwellenfarbe
+4469	Stapelmarkierungen
+4473	Stapel / Gegenstandsanzahl
+4474	Stapelfarbe
+4475	Stapelposition
+4476	Stapelgröße
+4479	Haltungen, Gestalten und Verstohlenheit behalten für Aktionsleiste 1 eine eigene Seite.
+4485	Stern
+4489	Startlayout für die nächste Leiste, die Du erstellst.
+4490	Beginnt die Reiterleiste am Rand der Seitenleiste.
+4492	WERTE SEITENLEISTE
+4497	Nur stehlbare
+4501	Gespeicherte Segmente
+4527	Leere Tränke austauschen
+4529	Schlagtimer
+4530	Wischdeckkraft
+4546	Quelle Reiterschriftfarbe
+4555	Reiter nutzen Rahmenstil, -größe und -farbe des Chatfensters.
+4557	Talentbedingung
+4559	Talent muss sein
+4560	Talentname; der Eintrag wird nur angezeigt, wenn die Bedingung zutrifft.
+4564	Tank > Heiler > DPS
+4569	ZIEL UND SICHTBARKEIT
+4578	Zielfarbe
+4579	ZIELENTFERNUNG
+4584	Zielhervorhebungsfarbe
+4599	Größe anvisierter Zauber
+4600	ANVISIERTE ZAUBER
+4601	Anvisierte Zauber
+4602	Anvisierte Zauber Versatz-X
+4603	Anvisierte Zauber Versatz-Y
+4604	Abschnitt anvisierte Zauber
+4607	Heimteleport
+4611	Schrecklich
+4612	Testfenster
+4613	Testfenster: diese Seite, Freigabemodus oder /earena test
+4617	Textanker
+4620	Textfelder
+4623	Textgruppe
+4624	Textkontur Optionen
+4625	Textkonturstile
+4629	Text, der vor dem Namen des Ziels angezeigt wird.
+4631	Text X-Versatz
+4632	Text Y-Versatz
+4636	Textur, die mit der Chathintergrundfarbe gezeichnet wird.
+4637	Textur für jede Zauberleiste der Einheitenfenster. 'Vererben' folgt der Leistentextur der jeweiligen Einheit.
+4638	Textur für die Klassenressourcen Leiste.
+4640	Textur nicht gefunden
+4641	Texturauflösung - Auf 'Hoch' gesetzt\n
+4643	Texturierter Bannring
+4646	Diese Einstellung wird nach Listenposition gespeichert und kann nicht sicher überschrieben werden.
+4647	Der Stärkungszauber Manager der aktiven Überschreibung ist an die geöffnete Seite gebunden. Verlasse den Reiter des Stärkungszauber Managers, um Überschreibungen zu wechseln.
+4651	Die Bank lässt sich überall über die Taschen-Kopfzeile öffnen; fern eines Bankiers zeigt sie den zuletzt gespeicherten Inhalt.
+4652	Die Leiste zeigt Stapel im Verhältnis zum Maximum statt der Zeit.
+4653	Die Leiste, die diese Seite bearbeitet.
+4655	Der Abklingzeiten Manager kann weit mehr als nur Abklingzeiten anzeigen: Er bietet auch Einstellungen pro Zauber, Leistenleuchten, Verfolgungsleisten und mehr! Sieh Dir ein paar Tipps und Tricks an, um mehr aus ihm herauszuholen.
+4659	Die Ausweichoption muss sich vom\nHauptankerziel unterscheiden
+4662	Der Edelstein konnte nicht gesockelt werden.
+4663	Die Leuchtlinie wird bei vertikaler Füllung oder mit der Platzierung 'Vom linken Rand' nicht angezeigt
+4664	Die Leuchtlinie wird bei vertikaler Füllung oder mit der Platzierung 'Vom rechten Rand' nicht angezeigt
+4665	Die Leuchtlinie wird mit Absorptionsstil 'Keiner' nicht angezeigt
+4666	Der Lichkönig
+4668	Das native Sozialfenster mit Klassensymbolen, klassenfarbigen Namen, Fraktionsbannern und automatischer Annahme von Einladungen; Freundesaktionen und alle sozialen Reiter bleiben nativ.
+4670	Die Überschreibungsgruppe '%s' stellt bereits den eigenen Freigabemodus für Deine aktuelle Spezialisierung bereit. Passe ihn dort an oder entferne diese Spezialisierung aus der Gruppe.
+4672	Der Leistenrahmen der persönlichen Ressourcenanzeige oder der klassische Zauberleistenrahmen, auf Gesundheits-, Ressourcen- und Klassenressourcen Leisten, mit allen EllesmereUI Leistenfunktionen.
+4673	Die Pixelleuchten Einstellungen, die die Symbolleuchten dieser Leiste nutzen. Die Vorlage ändert sie nie.
+4676	Die scriptProfile CVar ist aktiviert.
+4677	Der gesockelte Edelstein wird zerstört. Fortfahren?
+4678	Die CVars taintLog und scriptProfile sind aktiviert.
+4679	Die taintLog CVar ist aktiviert.
+4680	Der Tracker wird in Arenen immer ausgeblendet
+4687	Dicke in Pixeln. -1 folgt der Rahmeneinstellung jedes Schwächungszauber Indikators, 0 blendet den Bannfarbrahmen aus.
+4695	Dies kann nicht rückgängig gemacht werden. Exportiere dieses Profil am besten zuerst als Sicherung.
+4698	Diese Bedingung ist gerade nicht aktiv. Erfülle zuerst eine ihrer Bedingungen (betritt z. B. den Dungeon), damit Du das Layout im echten Kontext anordnen kannst.
+4706	Diese Funktion optimiert Deine Grafikeinstellungen im Spiel für die beste Kombination aus hohen FPS und visueller Klarheit.\n\nDu kannst alle Änderungen jederzeit rückgängig machen, indem Du auf \"Meine Einstellungen wiederherstellen\" klickst, was nach dem Optimieren erscheint.\n\n\nWas wir ändern:\n\n
+4709	Dieses Leuchten ist auf seiner Einstellungsseite gesperrt.
+4710	Der eigene Stärkungszauber Manager dieser Gruppe kann nur aktiviert oder bearbeitet werden, während Du eine ihrer Spezialisierungen spielst.
+4712	Dies ist ein CDM Leistenlayout String, kein Profil String.
+4713	Dies ist ein alter CDM Leistenlayout String. Dieses Format wird nicht mehr unterstützt. Nutze stattdessen den normalen Profilimport.
+4718	Dieses Modul ist von Spezialisierungs Überschreibungen ausgeschlossen.
+4719	Diese Option kann nicht genutzt werden, solange 'Blizzard Klassenressourcen Grafik' in den Ressourcenleisten aktiviert ist.
+4725	Diese Option betrifft nur Schlachtzugsbuffs, die Du wirken kannst
+4726	Diese Option gilt nur für den Abzeichen Stil.
+4727	Diese Option gilt nur, wenn 'Name > Ziel' ausgewählt ist.
+4728	Diese Option gilt nur, wenn 'Name > Ziel' oder 'Ziel' ausgewählt ist.
+4729	Diese Option gilt nur, wenn 'Ziel' ausgewählt ist.
+4730	Diese Option gilt nur, wenn der Text einen Namen zeigt.
+4732	Erfordert ein 2D Porträt oder den Kunststil 'Klasse'.
+4733	Erfordert eine Rahmengröße über 0
+4735	Erfordert einen anderen Rahmenstil als 'Vererben (Hauptfenster)'.
+4736	Erfordert einen anderen Rahmenstil als 'Einfarbig'.
+4737	Erfordert einen Rahmenstil mit Trennliniengrafik und eine Rahmengröße über 0.
+4738	Erfordert die Form 'Kreis' oder 'Pixelkreis'.
+4741	Erfordert eine Bannüberlagerung, 'Eigene Rahmen einfärben' oder 'Bannfarben verwenden'.
+4743	Erfordert einen anderen Leuchtstil als 'Keiner'
+4747	Erfordert ein sichtbares Porträt und 'Symbol anzeigen'.
+4748	Erfordert eine angehängte Ressourcenleiste, eine Rahmengröße über 0 und einen Rahmenstil mit Nahtgrafik.
+4749	Erfordert ein EllesmereUI Ziel- oder Fokusfenster.
+4750	Erfordert einen anderen äußeren Ring als 'Keiner'.
+4751	Erfordert, dass der Kunststil auf 'Klasse' eingestellt ist
+4752	Erfordert, dass der Blizzard Stil deaktiviert ist
+4755	Erfordert eigenen Rahmenstil, 'Symbol anzeigen' und 'Symbol zum Teil der Leiste machen' mit dem EllesmereUI Stil.
+4756	Erfordert, dass 'Rahmen nach Banntyp' aktiviert ist.
+4758	Erfordert 'Symbol anzeigen' und 'Symbol zum Teil der Leiste machen' mit dem EllesmereUI Stil.
+4759	Erfordert 'Symbol anzeigen' und den EllesmereUI Stil.
+4760	Erfordert 'Symbol anzeigen' neben der Zauberleiste und den EllesmereUI Stil.
+4762	Erfordert 'Einfarbig' oder einen Rahmenstil mit Trennliniengrafik sowie eine Rahmengröße über 0.
+4763	Erfordert den Kunststil 'Klasse'.
+4764	Erfordert den klassenfarbigen Formrahmen und den dunklen Modus.
+4766	Erfordert den WoW Forever Stil.
+4769	Dies überschreibt die Einstellungen dieses Profils dauerhaft mit der Überschreibung '%s': Ihre erfassten Einstellungen sowie ihre eigenen Freigabemodus- und Stärkungszauber Manager Layouts (sofern vorhanden) werden zur eigenen Grundlage des Profils für jede Spezialisierung. ALLE Spezialisierungs Überschreibungsgruppen dieses Profils werden danach gelöscht und das UI wird neu geladen. Bedingte Überschreibungen sind nicht betroffen.
+4773	Dieses Profil wurde vor dem Beta-Wipe erstellt und ist nicht mehr kompatibel. Bitte erstelle einen neuen Export.
+4774	Dieses Profil wurde mit einer neueren Version von EllesmereUI erstellt. Bitte aktualisiere Dein Addon.
+4777	Diese Einstellung hat bereits eine Überschreibung für %s
+4778	Diese Einstellung kann nicht überschrieben werden.
+4779	Diese Einstellung hat Überschreibungen
+4780	Der eigene Freigabemodus dieser Spezialisierung gehört zu '%s'. Passe ihn dort an oder entferne die Spezialisierung aus dieser Gruppe.
+4788	Dies erstellt einen völlig eigenen Freigabemodus für diese bedingte Gruppe. Änderungen an Deinem Standard-Freigabemodus wirken sich nicht mehr darauf aus.
+4789	Dies erstellt einen völlig eigenen Freigabemodus für diese Überschreibungsgruppe. Änderungen an Deinem Standard-Freigabemodus wirken sich nicht mehr auf diese Spezialisierungen aus.
+4792	Dies würde einen zirkulären Anker erzeugen
+4793	Dies würde eine zirkuläre Höhenangleichung erzeugen
+4794	Dies würde eine zirkuläre Breitenangleichung erzeugen
+4796	Bedrohung %
+4797	Bedrohung % Position
+4798	Bedrohung und Begleiterzufriedenheit
+4799	Bedrohungsrahmen
+4800	Bedrohungsfarbe
+4803	Bedrohung: native Werte für das aktuelle Ziel.
+4806	Schwellenanzahl
+4811	Zeit seit der letzten angezeigten passenden Nachricht. Ausgeblendete Wiederholungen verlängern das Zeitfenster nicht.
+4812	Timer
+4813	Timerhintergrund
+4816	Timer Rahmenfarbe
+4817	Timer Rahmengröße
+4820	Timer Ebene
+4821	Timer Kontur
+4822	Timerposition
+4824	Timer Textgröße
+4825	Timer X
+4826	Timer Y
+4830	Färbt den Drachen in Deiner Klassenfarbe statt in Gold oder Silber.
+4831	Färbt den Drachen in Deiner Klassenfarbe statt in Gold.
+4846	Tastenbelegung umschalten
+4848	Der Umschaltmodus benötigt eine Auswahltaste; bis eine festgelegt ist, löst das Menü beim Loslassen aus.
+4850	Ausrichtung umschalten
+4855	Tooltip Hintergrunddeckkraft
+4856	Tooltip Rahmen und Hintergrund
+4857	Tooltip Rahmengröße
+4858	Tooltip Rahmen & Hintergrund
+4859	Tooltip Schriftskalierung
+4861	TOOLTIP INFORMATIONEN
+4862	Tooltip Optionen
+4863	TOOLTIP POSITION
+4864	Tooltip Textskalierung und Verzauberungstext
+4866	TOOLTIP SICHTBARKEIT
+4872	Oben links, nach unten
+4873	Oben links, nach rechts
+4876	Oberer Versatz
+4879	Oben rechts, nach unten
+4880	Oben rechts, nach links
+4888	TOTEMLEISTE
+4890	Totemleisten
+4892	Verfolgen
+4895	Abnehmende Wirkung verfolgen
+4899	Verfolgte IDs werden hinzugefügt; ausgeschlossene IDs werden immer ausgeblendet
+4900	Verfolgte Zauber-IDs
+4903	Tracker Symbolgröße
+4904	Tracker Skalierung
+4909	VERFOLGUNGSLEISTEN
+4911	Verfolgung, Kalender und Post. Runde Karten platzieren sie neben einer oberen Uhr.
+4912	Verfolgt PvP Schmuckstück und 'Jeder für sich' (2 Minuten Abklingzeit) über das Kampflog.
+4914	Handelsanzeigen umfassen LFW
+4917	Lehrer: Taste 'Alle trainieren'
+4918	Verwandlungen: Schlotternächte, Nobelgarten, Pilgerfreuden Truthahn, Nogglefizz
+4919	Übersetzung
+4921	Dreieck
+4923	Schmuckstück- und Kontrolleffekt Verfolgung
+4924	Interne Abklingzeiten von Schmuckstücken
+4925	Schmuckstück Seite
+4926	Schmuckstückplatz 
+4927	Aktiviere 'Gestaltwechsel Seitenwechsel deaktivieren' auf Aktionsleiste 1, um ihr eigene Plätze zu geben.
+4928	Schaltet Sprechblasen in Dungeons, Schlachtzügen, Schlachtfeldern und Arenen aus.
+4931	Dreht den Drachen, sodass er in die andere Richtung um das Porträt blickt.
+4932	Zwielicht
+4935	Zwei neue Schalter in der Fenster Skins Liste
+4939	Gib eine Taste wie ALT-X ein. Sie nutzt den Gegenstand Deiner verfolgten Quest (oder den ersten Questgegenstand) und ist nur belegt, solange einer existiert. Wird außerhalb des Kampfes aktualisiert; leer lassen zum Deaktivieren.
+4940	Gib eine Zauber-ID ein und drücke Enter, um erinnert zu werden, sobald dieser Stärkungszauber fehlt.\nUnbekannte IDs werden ignoriert.
+4942	Typ: 
+4957	UI Stil Voreinstellungen
+4959	Nicht belegt
+4961	Deaktiviere 'Alle Schwächungszauber', um zu wählen, wie die Anzeigefilter kombiniert werden.
+4962	Unterstrichfarbe
+4963	Quelle Unterstrichfarbe
+4964	Unterstreicht den ausgewählten sozialen Reiter in der Akzentfarbe.
+4965	Gruppierung aufheben 
+4967	Nicht gruppierte Tasten
+4970	Nicht unterbrechbar
+4972	Farbe nicht unterbrechbar
+4973	Schild nicht unterbrechbar
+4974	Einheitenfarbe im dunklen Modus
+4979	Einheitenmenü
+4980	Einheiten Tooltip
+4984	Unbekannter Profiltyp
+4987	Arenafenster freigeben
+4988	Anzeigepositionen freigeben
+4990	Im Freigabemodus verschiebst und skalierst Du alles in EllesmereUI, und er steckt voller Werkzeuge: Anker, Breitenangleichung, Ausweichanker, Layouts pro Gruppe. Dieses Video macht Dich schnell damit vertraut.
+4993	Freigabemodus Verschieber
+4997	Ungesehene Gegner
+4998	Ungesehen Deckkraft
+5000	Bis zu 
+5001	Bis zu 20 Schlachtzugsbegleiter
+5002	Aktualisierungsintervall (Sekunden)
+5003	Updatehinweise
+5007	Nutzbarkeitsfärbung

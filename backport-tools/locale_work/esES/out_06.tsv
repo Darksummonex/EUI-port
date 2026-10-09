@@ -1,0 +1,450 @@
+2988	TEXTURAS DEL MÓDULO
+2990	Monje
+2991	Luna
+2992	Forma de lechúcico lunar
+2993	Más información
+2994	Más aspectos de ventana
+2996	Índice de montura
+2997	Montura:
+2998	Montado
+2999	Monturas
+3000	Botón del ratón
+3001	Cursor del ratón
+3002	Desplazamiento con rueda del ratón
+3003	Zoom con rueda del ratón
+3004	Al pasar el ratón
+3005	al pasar el ratón
+3006	mover
+3007	Bajar acción
+3008	Subir acción
+3009	Mueve y redimensiona las barras en el modo de desbloqueo.
+3010	Mover bolsas sin Shift
+3011	Bajar
+3012	Mueve cada elemento en el modo de desbloqueo
+3013	Bajar entrada
+3014	Subir entrada
+3015	Mover en modo de desbloqueo
+3016	Mover a la izquierda
+3017	Mover herramientas de banda
+3018	Mover a la derecha
+3019	Mueve la posición fija de la descripción emergente en el modo de desbloqueo.
+3020	Subir
+3021	Mover con el modo de edición de Blizzard
+3022	Mover texto de zona
+3023	Movido 
+3024	Movimiento
+3025	movimiento
+3026	Arte de la barra de alerta de movimiento y del anillo del cursor
+3027	Textura de la barra de alerta de movimiento
+3028	Textura de la barra de alerta de movimiento
+3029	Tamaño del texto de alerta de movimiento
+3030	Reutilización de movimiento
+3031	Sonido de movimiento listo
+3032	ID de hechizo de movimiento
+3033	Movimiento: solo en combate
+3034	Mueve el campo de entrada encima de los mensajes.
+3035	Mueve el botón de ir al final a la esquina inferior derecha del panel de chat.
+3036	Mueve la barra de tótems de multilanzamiento original para que el modo de desbloqueo pueda colocarla.
+3037	Mueve el nombre de zona que aparece al entrar en un área a la parte superior de la pantalla (arriba al centro, X 9 / Y 322). Desactivado restaura la posición de Blizzard.
+3041	Colaboradores del soporte multilingüe
+3044	Música
+3045	Mi perfil
+3047	Temporizador de míticas+
+3049	Temporizador de míticas+, barras de hechizos dirigidos y barras de lanzamiento independientes.
+3050	Herramientas de míticas+
+3052	Arena de Nagrand
+3053	Nombre
+3054	Nombre > Objetivo
+3055	Color del nombre
+3056	Color personalizado del nombre
+3058	Los cambios de fuente de nombres requieren cerrar sesión hasta la selección de personaje para aplicarse. Es una limitación del motor de WoW.
+3059	Tamaño de fuente del nombre
+3060	Formato del nombre
+3061	Longitud máx. del nombre
+3062	Posición del nombre
+3063	Ajustes del nombre
+3064	Tamaño del nombre
+3065	Nombre en uso
+3067	Nombre X
+3068	Desplazamiento X del nombre
+3069	Nombre Y
+3070	Desplazamiento Y del nombre
+3071	Nombre | Nivel
+3072	Bordes de placas de nombre
+3073	ESPACIADO DE PLACAS DE NOMBRE
+3075	Nombres, barra de lanzamiento y texto de auras en las placas de nombre
+3076	Nombres, vida y texto de indicadores en los marcos de banda y grupo
+3078	Las acciones nativas, la entrada y el anclaje de descripciones siguen disponibles.
+3079	Aspectos nativos del HUD
+3080	Colores de clase nativos de Wrath para jugadores enemigos.
+3081	Comodidades nativas de Wrath, visualizaciones, cursor, arrastre de ventanas y herramientas de banda.
+3082	Idiomas nativos de Wrath
+3083	Cerca de amenaza
+3084	Cuello
+3085	Menús de acción anidados
+3086	Neutral
+3087	Neutrales y enemigos menores
+3089	No vuelvas a perderte una actualización. La nueva sección de notas del parche detalla las novedades de cada versión, con enlaces rápidos a cada nuevo ajuste.
+3090	NUEVO
+3092	Nueva barra
+3093	Nueva plantilla de barra
+3094	Nuevo grupo condicional
+3095	Nueva DataBar
+3096	NUEVA FUNCIÓN
+3097	Nueva animación de icono
+3098	NOVEDADES EN ELLESMEREUI
+3099	Correo nuevo
+3100	Nuevo módulo: Marcos de arena
+3101	Nuevo sistema de anulaciones
+3102	Punto de aviso de nuevo parche
+3103	Nuevo perfil
+3104	Nuevo grupo de especialización
+3105	NUEVO SISTEMA
+3106	Nueva ventana
+3107	Siguiente
+3108	Sanación entrante de los próximos 4 segundos
+3109	Resaltar siguiente golpe
+3111	No
+3112	No hay resplandores activos
+3113	No hay resplandores activos. Desactiva Ocultar resplandores inactivos para editar los demás.
+3114	Sin amenaza
+3115	Aún no hay resplandores de barra.
+3116	No hay hechizos en la lista negra.
+3117	Aún no hay anulaciones condicionales. Haz clic en el botón Anulaciones condicionales junto a la barra de búsqueda de módulos y crea un grupo condicional (Mazmorra, Banda, Atajo...). Las anulaciones de especialización siempre tienen prioridad sobre las condicionales.
+3118	Sin icono de perjuicio duplicado
+3119	No hay entradas en esta barra.
+3120	No hay amigos conectados
+3121	No se encontraron casas.
+3122	Sin iconos
+3123	sin tecla asignada
+3124	No hay gemas compatibles en tus bolsas
+3125	No hay otros perfiles con los que sincronizar
+3126	No hay otros personajes guardados
+3127	Aún no hay notas del parche.
+3128	Sin vista previa
+3129	Sin personalizaciones a nivel de perfil
+3130	Sin reputación seguida
+3131	Aún no hay anulaciones de especialización. Haz clic en el glifo de especialización junto a la barra de búsqueda de módulos, selecciona o crea un grupo de especialización, y cualquier ajuste que cambies mientras editas ese grupo se guardará aquí.
+3132	No hay recordatorios de talentos configurados
+3133	Retrato de no jugador
+3134	No tanque
+3135	Amenaza de no tanque
+3136	Opacidad sin objetivo
+3138	ninguno
+3139	Ninguno (movimiento libre)
+3140	La forma Ninguna requiere el estilo de arte 3D
+3143	Jefe muerto en normal
+3144	Normal bronce, heroico azul.
+3145	Mazmorras normales
+3146	Banda normal
+3147	No es un resplandor personalizado
+3148	No es una cadena válida de EllesmereUI. Asegúrate de haber copiado la cadena completa.
+3149	No disponible para barras horizontales
+3150	No disponible para este estilo de indicador de combate.
+3151	No disponible para barras verticales
+3152	No disponible en el modo oscuro. Los colores del modo oscuro se ajustan en Ajustes globales -> Fuentes y colores.
+3153	No disponible mientras haya un valor de visibilidad heredado seleccionado. Elige primero Nunca o Siempre.
+3154	Sin asignar
+3155	No personalizado
+3156	Color de maná insuficiente
+3157	Sin hermandad
+3158	No incluido
+3159	No cargado
+3160	no cargado
+3161	No anulable
+3162	No anulable. Estas condiciones son compartidas y solo se pueden cambiar cuando no se está editando ninguna anulación. Una anulación reemplaza por completo el ajuste de visibilidad (Nunca, Siempre o Al pasar el ratón) e ignora todo lo configurado aquí mientras se aplica.
+3163	Sin surcacielos (en el aire)
+3164	No elegido
+3165	Nada
+3166	Nada disponible
+3167	Nada extra
+3168	Nada que añadir en esta categoría
+3169	Nada que cambiar: todos los resplandores ya coinciden con la plantilla.
+3170	Nada que cambiar: ningún resplandor personalizado activo difiere de la plantilla.
+3171	Formato de números
+3172	Número de iconos
+3173	Número de filas
+3174	Número de marcos de prueba mostrados mientras esta página está abierta o en el modo de desbloqueo.
+3175	Color de objetivo
+3176	Tamaño de fuente de objetivos
+3177	Tamaño de objetivos
+3178	NO
+3179	Desactivado
+3180	Desactivado colorea el texto como el relleno.
+3181	Desactivado colorea el texto con el color del recurso.
+3182	Mano izquierda
+3183	Color de mano izquierda
+3184	Desactivado usa el color del tipo de recurso.
+3185	Desactivado usa el color de tu clase.
+3186	Desactivado: al pasar el ratón sobre un enlace de objeto, hechizo, misión o logro se muestra su descripción.
+3187	Desactivado: detecta repeticiones del mismo remitente. Activado: también oculta mensajes coincidentes enviados por otros jugadores en el mismo canal.
+3188	Desactivado: solo se marca la hora del chat de jugadores, como hace el juego.
+3189	Desactivado: los marcadores de mundo piden un clic en el suelo.
+3190	CD ofensivos
+3193	Fondo desconectado
+3196	Mago ogro
+3200	SÍ
+3201	Activado
+3202	Activado (predeterminado): la paleta de un perfil se comparte entre todos los perfiles (elegida en Tomar colores de). Desactivado: cada perfil conserva sus propios colores personalizados (Recurso, Recurso de clase, Clase, Recurso).
+3203	En reutilización
+3204	Al pasar el ratón
+3205	En el icono
+3206	Uno
+3207	Un solo botón de mochila; abre el inventario unificado.
+3208	Una fila cuerpo a cuerpo que muestra el siguiente golpe de cualquiera de las manos.
+3210	Solo se aplica cuando se selecciona Nombre > Objetivo.
+3211	Solo hechizos asignados
+3212	Solo disponible en los modos Separado o Interior
+3213	Solo por debajo del umbral
+3214	Solo disipables por ti
+3215	Solo perjuicios disipables
+3216	Ocultar solo totalmente sincronizados
+3217	Solo resalta los perjuicios que tu personaje puede quitar ahora mismo.
+3218	Solo en grupo
+3219	Solo en combate
+3220	Solo en combate
+3221	Solo aparecen los hechizos aprendidos
+3222	Muestra solo beneficios con duración, excluyendo los permanentes.
+3223	Muestra solo beneficios con duración, excluyendo los permanentes. Se combina con los filtros de abajo.
+3224	Muestra solo beneficios que puedes robar o purgar.
+3225	Muestra solo perjuicios con duración, excluyendo los permanentes.
+3226	Muestra solo perjuicios con duración, excluyendo los permanentes. Se combina con los filtros de abajo; marcado solo, muestra todos los perjuicios temporales.
+3227	Muestra solo perjuicios con duración, excluyendo los permanentes. Las auras seguidas siempre se muestran.
+3228	Muestra solo perjuicios cuya duración total sea como máximo esta cantidad de segundos. Se combina con los filtros; Ilimitado no aplica límite.
+3229	Mostrar solo disipables
+3230	Solo mostrar para % Vida
+3231	Mostrar solo miembros del grupo
+3232	Mostrar solo en viviendas
+3233	Mostrar solo en estancias
+3234	Mostrar solo números
+3235	Muestra la barra de lanzamiento solo mientras haya un lanzamiento en curso; ocúltala el resto del tiempo.
+3236	Mostrar solo con montura
+3237	Solo beneficios robables
+3238	Solo auras temporales
+3239	Solo seguidas
+3240	Solo auras seguidas
+3241	Solo mientras estés EN EL AIRE en una montura capaz de planear o en forma de vuelo. Para la montura en sí, incluido en tierra, usa Montura de surcacielos.
+3242	Solo tus perjuicios
+3244	Opacidad de los enemigos en sigilo o fuera de la vista.
+3245	Opacidad del relleno de la barra; por debajo de 100 se ve el mundo a través del relleno en lugar del fondo.
+3246	Opacidad del fondo de la barra; la muestra elige el color Moderno.
+3247	Opacidad del relleno de la barra de lanzamiento; por debajo de 100 se ve el mundo a través del relleno en lugar del fondo.
+3248	Abrir todo omite el correo contra reembolso y de MJ
+3249	Animación de apertura
+3250	Abrir en
+3251	Abrir bolsas
+3252	Abrir bolsas en combate
+3253	Abrir hoja de personaje
+3254	Abrir monedas
+3255	Abrir EllesmereUI
+3256	Ábrelo cuando quieras desde la barra lateral de opciones de EUI.
+3257	Abrir profesión
+3258	Abrir libro de profesiones
+3259	Abrir Barras de recurso y lanzamiento > Barra de lanzamiento
+3260	Abrir ajustes
+3261	Estilo abierto
+3262	Abrir talentos
+3263	Abre el panel de ajustes de EllesmereUI.
+3264	Abrir modo de desbloqueo
+3265	Mundo abierto
+3266	Facción contraria
+3267	Optimizar mis FPS y gráficos
+3268	Optimiza tus ajustes gráficos para obtener los máximos FPS y claridad visual.
+3269	Orden de los botones de esta barra; las opciones de esquina colocan el primer botón en esa esquina.
+3270	Mineral, hierbas, tela... equipo LCE por calidad
+3272	EQUIPO ORIGINAL
+3273	Equipo de EUI
+3274	Otro
+3275	OTROS COLORES
+3276	OTRAS PLACAS DE NOMBRE
+3277	Sanaciones de otros jugadores
+3278	A otros les falta mi beneficio
+3279	A otros les falta mi beneficio: avisa cuando a un miembro del grupo le falta un beneficio que puedes lanzar.\nMe faltan beneficios de otros: avisa cuando te falta un beneficio que un miembro del grupo podría darte (solo se muestra si está presente alguien que pueda lanzarlo). Desactivado por defecto.
+3280	Fuera de combate con jefe
+3281	Fuera de combate
+3282	Alfa fuera de combate
+3283	Opacidad fuera de combate
+3284	Fuera de combate, te avisa cuando ningún miembro del grupo tiene tu Escudo de tierra. Al hacer clic lo lanza sobre el tanque del grupo (o tu foco).
+3285	Desactualizado
+3286	Alfa fuera de alcance
+3287	Color fuera de alcance
+3288	Coloreado fuera de alcance
+3289	Atenuar fuera de alcance
+3290	Opacidad fuera de alcance
+3291	Atenuar fuera de alcance
+3292	Anillo exterior
+3293	Tamaño del anillo exterior
+3294	Los susurros enviados y los susurros de MJ siempre se muestran. Delimita los filtros de repetición y de palabras clave.
+3295	Forajido
+3297	Contorno del texto de zona, subzona y estado JcJ que aparece al entrar en un área.
+3298	Contorno del texto de iconos
+3299	Modo de contorno
+3300	Modo de contorno - Desactivado\n
+3301	Modo de contorno cambiado. Hay que recargar la IU para aplicarlo.
+3302	Contorno por texto
+3303	Anulación del estilo de contorno para todos 
+3305	Fuera del Buscador de mazmorras, Wrath no tiene rol de sanador; se listan los usuarios de maná de clases sanadoras.
+3306	Total
+3307	Desbordar a
+3308	Sobresanación
+3309	Superposición
+3310	Opacidad de superposición
+3311	Vista previa de superposición
+3312	Superposición invertida
+3313	Anulado por:
+3314	Anulación activa: %s
+3315	Anular anclaje
+3316	Anular dirección de anclaje
+3317	Anula cualquier ajuste para un grupo de especializaciones o para el contenido en el que estés. Todo lo demás mantiene los ajustes normales de tu perfil.
+3318	Anulación a promover
+3319	Anulaciones
+3320	Las anulaciones están bloqueadas: el gestor de beneficios personalizado de esta página está activo. Sal de la pestaña del gestor de beneficios para gestionar las anulaciones.
+3321	Anula el tamaño de borde de los marcos principales solo para este marco. El color y la textura del borde siguen a los marcos principales.
+3322	Anula el nivel de marco establecido en los marcos principales solo para este marco. Controla el orden en que se muestran los marcos superpuestos; súbelo para mostrarlo encima de otros marcos.
+3323	AVISO DE ANULACIONES
+3324	El sobreescudo es la parte de una absorción que excede tu vida vacía. Siempre lo rellena sobre la vida actual desde el borde del escudo; Desde la izquierda lo hace crecer desde el extremo opuesto de la barra; Nunca lo oculta.
+3325	¿Sobrescribir ajustes de ventanas y descripciones?
+3326	Solo auras propias
+3327	Propio incluye tu mascota y vehículo
+3328	Solo propias
+3329	P: %.0f, %.0f
+3330	Agrupa los objetos ordenados en las últimas casillas para que las casillas vacías queden arriba. Afecta a OneBag, MultiBag y al banco.
+3331	Relleno
+3332	Página
+3333	PAGINACIÓN
+3334	Flechas de paginación
+3335	La paginación, la compra y la recompra siguen siendo nativas.
+3336	Dolor
+3337	supresión de dolor
+3338	Paladín
+3339	RITOS DE PALADÍN
+3340	Paleta 
+3341	Nombre de la paleta
+3342	Paletas
+3343	RESPLANDOR PANDÉMICO
+3344	Resplandor pandémico
+3345	Color del resplandor pandémico
+3346	Estilo del resplandor pandémico
+3347	Panel
+3348	Estilos de borde de panel y pestaña
+3349	GRUPO
+3350	Grupo
+3351	Grupo y banda
+3352	Marcos de grupo
+3353	Textura de vida de grupo
+3354	MODO GRUPO
+3355	Modo grupo
+3356	Chat de grupo, banda (incluidos avisos), campo de batalla, hermandad y oficiales. Delimita los filtros de repetición y de palabras clave.
+3357	Tamaños de texto específicos de grupo
+3358	Texturas específicas de grupo
+3359	Mascota pasiva
+3360	Pega abajo una cadena de perfil de EllesmereUI
+3361	Pegado interrumpido
+3362	Pega aquí tu cadena de perfil...
+3363	Notas del parche
+3366	Modificador de vistazo
+3367	Por icono
+3368	Texturas de fondo por barra
+3369	Escala de texto por barra
+3370	Ajustes de resplandor por icono: la plantilla nunca los cambia.
+3371	Porcentaje
+3372	porcentaje
+3373	Solo porcentaje
+3374	Recordatorio de rendimiento
+3375	Mascota
+3376	Tamaños de texto de mascota y objetivo del objetivo (por unidad)
+3377	Las casillas de mascota y actitud siguen la disposición propia de Blizzard
+3378	Barra de mascota
+3379	Altura de la barra de mascota
+3380	MARCOS DE MASCOTA
+3381	FELICIDAD DE LA MASCOTA
+3382	La fusión de mascotas se aplica a los eventos recién recogidos.
+3383	Texturas de barras de mascota, objetivo del objetivo y jefe
+3384	MASCOTAS
+3385	Mascotas, rendimientos decrecientes y alcance
+3386	Teléfono
+3387	Ordenación física
+3388	Elige cualquier moneda que tu personaje haya descubierto.
+3389	Elige qué muestran los PNJ en el arte de clase en lugar de su retrato 2D.
+3390	Elige en qué contenido aparecen los recordatorios especiales de clase (venenos/ritos/imbuiciones/escudos).\nLas zonas de descanso (ciudades y posadas) siempre quedan ocultas.
+3391	Elige en qué contenido aparecen los recordatorios personalizados.\nLas zonas de descanso (ciudades y posadas) siempre quedan ocultas.
+3392	Elige en qué contenido aparecen los recordatorios de WoW Forever.\nLas zonas de descanso (ciudades y posadas) siempre quedan ocultas.
+3393	Elige en qué contenido aparecen estos recordatorios de auras.\nLas zonas de descanso (ciudades y posadas) siempre quedan ocultas.
+3394	Elige en qué contenido aparecen estos recordatorios de consumibles.\nLas zonas de descanso (ciudades y posadas) siempre quedan ocultas.
+3395	Elige en qué contenido aparecen estos recordatorios de brujo.\nLas zonas de descanso (ciudades y posadas) siempre quedan ocultas.
+3396	Elige en qué contenido aparecen los recordatorios de esta sección.\nLas zonas de descanso (ciudades y posadas) siempre quedan ocultas.
+3398	Objetos fijados
+3399	Opciones de objetos fijados
+3400	Fija la barra pegada a un borde de la pantalla; mover la barra en el modo de desbloqueo vuelve a ponerlo en Ninguno.
+3401	Fija el contenido de este bloque en el centro exacto de la barra; los bloques anteriores se agrupan a la izquierda y los posteriores a la derecha. Combinado con Rellenar restante, el bloque también absorbe el espacio sobrante alrededor del centro.
+3402	Fondo de puntos
+3403	Foso de Saron
+3405	Resplandor de píxeles
+3406	Fondo del resplandor de píxeles
+3407	Líneas del resplandor de píxeles
+3408	Ajustes del resplandor de píxeles
+3409	Velocidad del resplandor de píxeles
+3410	Grosor del resplandor de píxeles
+3428	Coloca los grupos de casillas pequeños de la Armería uno junto a otro. Los grupos grandes siguen usando filas completas.
+3429	Coloca el icono de lanzamiento en el lado derecho de la barra en lugar del izquierdo.
+3430	Colocación
+3431	Coloca los cinco marcos de grupo uno al lado del otro en lugar de apilados.
+3432	Coloca tu propio marco el primero o el último de su grupo. Usa la lista de nombres nativa, actualizada fuera de combate.
+3433	Coloca tu propio marco el primero o el último del grupo. Usa la lista de nombres nativa, actualizada fuera de combate.
+3435	Placas
+3437	Reproduce un sonido una vez cuando aparece un nuevo recordatorio en esta sección.
+3438	Reproducir sonido en modo grupo
+3439	Jugador
+3440	Coordenadas del jugador y del cursor
+3441	Barras de auras del jugador
+3442	barras de auras del jugador
+3443	Resplandores de iconos de barras de auras del jugador
+3444	Texto de barras de auras del jugador (por barra)
+3445	AURAS DEL JUGADOR
+3446	Barra de lanzamiento del jugador
+3447	Superposición de disipación del jugador
+3448	Dragón del marco del jugador
+3449	Mini barra de lanzamiento del marco del jugador
+3450	Amenaza del jugador (no tanque)
+3451	Tamaños de texto de jugador, objetivo y foco (por unidad)
+3452	Solo jugadores
+3453	Suena con cada susurro entrante, junto al propio sonido de susurro del juego.
+3456	Veneno
+3458	Preajustes populares
+3459	¡Los preajustes populares ahora están en la nueva web de EllesmereUI, con vistas previas completas, instrucciones de instalación paso a paso y nuevos preajustes añadidos cada día!
+3460	Ventana emergente
+3461	Estilos de borde de ventanas emergentes y descripciones
+3462	Ventanas emergentes
+3463	EQUIPO DEL PORT
+3464	RETRATO
+3465	Retrato
+3466	retrato
+3467	Modo de retrato
+3468	El modo de retrato está en Ninguno
+3469	Retrato a la derecha
+3470	Desplazamientos de posición del retrato
+3471	Ajustes del retrato
+3472	Zoom del retrato
+3474	posición
+3475	Los ajustes de posición y tamaño no se sincronizan y mantienen los valores propios de cada perfil.
+3476	Ajustes de posición
+3477	Anuncia el hechizo que tú o tu mascota interrumpisteis. Grupo y Banda usan el canal de campo de batalla dentro de los campos de batalla.
+3478	Poción
+3479	Pociones
+3480	Pociones y piedra de salud
+3481	recurso
+3482	Recurso %
+3484	Barra de recursos
+3485	Relleno de la barra de recursos
+3486	Altura de la barra de recursos
+3487	Unión de la barra de recursos
+3488	Textura de la barra de recursos
+3489	Barras de recursos
+3490	Opciones de borde de recursos
+3491	Oscurecer color de recurso
+3492	Color de recurso
+3493	Fondo con color de recurso. Los colores de recursos se ajustan en Ajustes globales -> Fuentes y colores.
+3494	Relleno con color de recurso. Los colores de recursos se ajustan en Ajustes globales -> Fuentes y colores.
+3495	Texto con color de recurso
+3496	COLORES DE RECURSOS
+3497	Altura de recurso

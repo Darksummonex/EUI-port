@@ -35,7 +35,7 @@ local CreateFrame = CreateFrame
 
 local SUPPORTED = {
     enUS = true, deDE = true, esES = true, esMX = true, frFR = true,
-    ruRU = true, koKR = true, zhCN = true, zhTW = true,
+    ruRU = true, koKR = true, zhCN = true, zhTW = true, ptBR = true,
 }
 
 -- Per-locale translation tables, keyed by locale code. Filled by the

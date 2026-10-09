@@ -1,0 +1,450 @@
+3	 Mouseover is sealed here too for this element: its hover mechanism follows the shared setting, so an override could only leave it shown.
+5	 text. EUI Global Outline follows the global Outline Mode setting above.
+7	%1$s is active. Settings that only apply to the EllesmereUI look are hidden.
+8	%1$s is active: chat keeps Blizzard's own background and tab art.
+9	%1$s is active: the tracker keeps Blizzard's own text.
+13	%d active
+14	%d differ from template
+16	%d of them are off or use a Blizzard style and switch to the template glow.
+17	%d of them can't show the chosen style and use the closest one.
+21	%s Override Active
+22	'%s' is now customized for %s.
+28	(active)|r
+30	(Applies to All Units)
+39	(Spec prio'd for settings conflicts)
+43	+ %d more
+45	+ Add New Conditional Group
+47	+ Add New Spec Group
+49	+1 Threshold Text Size
+50	+2 Threshold Text Size
+51	+3 Threshold Text Size
+63	24 Hour Clock
+70	[ Import string captured (%1$s characters) ]
+71	\"%1$s\" was saved but cannot be loaded because this spec has an assigned profile.
+72	\"%1$s\" was saved but cannot be loaded because this spec has an assigned profile. Switch specs or remove the spec assignment to use it.
+76	a Glow Style
+80	A quick view of every font setting in one place.
+81	A quick view of every texture setting in one place.
+82	A reload is required to apply this.
+83	A spec override owns this setting, so this conditional value never applies outside an editing session. Remove the spec override to let it through.
+84	A stock chat style is active on the Style page: the panel, tabs and sidebar keep Blizzard's look.
+85	A stock chat style is active: chat keeps Blizzard's own background and tab art.
+86	A sync group needs at least two profiles
+87	A target you can attack.
+88	A thin outline around the selected tab.
+89	Abbreviate Amount
+91	Above
+92	Above Absorb Bar
+93	Above Cursor
+97	Above Hovered Row
+98	Above Icon
+99	Above Map
+100	Above Model
+101	Above Top Window, Left
+102	Above Top Window, Right
+104	absorb
+107	Absorb Color
+110	Absorb Shields
+113	Absorb Style and the Overlay placement
+115	ABSORBS AND HEALS
+116	Absorbs Received: shields consumed on each player.
+117	Absorbs Section
+118	Accent
+121	Accent Colored Header Text
+122	Accent Colored Timer
+123	Accent Header
+124	Accent Styling
+125	ACCENTED TEXT
+126	Accept
+127	Accept Invites from Friends & Guild
+128	Accept Invites from Guildmates
+129	Accepts group invites from your friends list and guildmates. Skipped while queued in the Dungeon Finder or already grouped.
+131	Achievement Points
+134	Action 
+135	Action added
+146	Action Bars 7 to 10
+147	Action Bars can only width match\nto other Action Bars
+149	Action bars, Blizzard HUD skins and player aura positions for Wrath.
+151	Action Button Spell ID
+152	Action ID / Name / Text
+153	Action Menu
+154	Action Menu Number
+155	ACTION MENU SETUP
+156	Action Type
+159	Active Aura Glow
+160	Active Aura ID
+161	Active Background Source
+162	Active Border
+163	Active Border Color
+164	Active Duration
+165	Active Font Color Source
+166	Active Mitigation
+169	Active Tab Background
+170	Active Tab Border
+171	Active Tab Font Color
+172	Active Underline
+174	Add a Buff Spell
+175	Add a CD/Utility Spell
+176	ADD ACTION
+177	Add Action
+178	Add Action From Cursor
+179	Add Action Menu
+180	Add Block
+181	Add Buff Preset
+184	ADD ENTRY
+185	Add Entry
+186	Add External Cooldown Indicator
+187	Add Glow
+188	Add Healer Buff Indicator
+189	Add how many of an item your other characters own to its tooltip.
+190	Add Item Preset
+191	Add Learned Spell
+193	Add New Bars to Group
+194	Add New Indicator
+195	Add Personal Defensive Indicator
+196	Add Racial
+198	Add Selected Action
+199	Add Spell ID
+200	Add Spell Menu
+202	Add Tracking Bar
+203	Added 
+204	Added to the current raid or party frame size.
+205	Added. Unlearned spells and empty slots stay hidden.
+206	ADDITIONAL BAR OFFSET
+207	ADDITIONAL FEATURES
+209	Addon Button Flyout
+210	ADDON BUTTONS
+212	AddOn List
+214	Adds a second ring around a round portrait; Match Frame Border follows your frame border style.
+215	Adds a Shadow border to your player frame when you pull or hold threat as a non-tank. Only active in dungeons, raids and delves.
+216	Adds a soft shadow inside a round portrait.
+217	Adds the Blizzard shield glow line where the shield meets current health.
+219	Adjust Volume
+227	After anchoring, drag to an edge and choose a grow direction to maintain its corner spot as bars change size.
+230	Aimed Shot
+232	Alert and tracker text
+234	Alerts, trackers, battle res and popup text
+235	Align Content
+236	Align Tabs to Full Panel
+239	All Allowed
+240	All Buffs
+241	All Buffs or Has Duration
+242	All Buffs or Has Duration is selected, so every buff already shows. Use the red Hide box to exclude these instead.
+243	All Debuffs
+244	All Debuffs is selected, so every debuff already shows. Use the red Hide box to exclude these instead.
+245	All DPS (Non-Aug)
+248	All Healers/Aug
+250	all match the template
+251	All Non Healers/Aug
+256	Allied names keep their class color without target or mouseover. Group/raid members are identified automatically; other allies are learned from target, mouseover or focus.
+261	Alpha when on CD
+263	Already matches the template.
+265	Also show the badge in dungeons and raids, where most enemies are elite.
+266	Also show the dragon in dungeons and raids, where most enemies are elite.
+267	Also Watch Target
+274	Alts appear after logging in on each one
+276	Always Show
+279	Always show less common settings instead of collapsing them behind a Show Less Common link.
+280	Always Show Pet Frame
+282	Always use K/M/B instead of localized units.
+283	Always: hide the tracker the whole time you are in a raid.\nRaid Combat: hide during any raid combat.\nBoss Combat: hide only during boss encounters.\nArenas always hide the tracker.
+285	Ambience
+286	An arrow next to the To box lists your alts on this realm and faction, guild members and the last names you mailed.
+287	An element cannot anchor to itself
+288	An EllesmereUI LibDataBroker plugin registered right now. One block per plugin -- add the block again for a second one.
+290	Anchor Offset X
+291	Anchor Offset Y
+292	Anchor Side
+293	Anchor this element first
+294	Anchor To
+297	Anchor to Debuffs
+299	Anchored to: %1$s
+301	Announce Interrupts
+302	Another override group already provides the custom Buff Manager for your current spec.
+303	Another override group already provides the custom Debuff Manager for your current spec.
+304	Any setting you change now applies only to this group's specs.
+305	Any setting you change now applies only while this conditional is active.
+308	Appends the cast target to the spell name (Spell Name - Target), class colored, and disables the separate Spell Target display.
+309	Applies to this profile. Keeps your individual window choices.
+312	Apply 
+313	Apply Absorb Style, color and rendering to all Frames
+314	Apply All Settings
+315	Apply All Settings From
+323	Apply Border Size to all Frames
+327	Apply Cast Bar Border Style to all Frames
+328	Apply Cast Bar Border to all Frames
+340	Apply Extra Text to all Frames
+341	Apply Faction Icon Size to all Frames
+342	Apply Frame Strata to all Frames
+343	Apply Glow Template
+344	Apply Heal Absorb Style, color and rendering to all Frames
+346	Apply Important Cast Glow to Target and Focus
+347	Apply Leader Icon Size to all Frames
+348	Apply Leader Indicator to all Frames
+351	Apply Non-Player Portrait to all Frames
+362	Apply Show Cast Bar and Cast Color to Target and Focus
+367	Apply Template
+368	Apply Template to This Module
+377	Apply the sharer's Blizz UI Enhanced Window Skins and Tooltips, Menus & Popups settings. These are account-wide and will overwrite yours across ALL profiles. Off = keep your own.
+378	Apply the sharer's fonts, custom colours, dark mode, accent colour and UI scale. Off = keep your own global look and scale; only the selected modules' settings come in.
+379	Apply the template to %d glow(s)?
+380	Apply the template to the %d active custom glow(s) listed here?
+382	Apply to All Active Glows
+384	Apply to All Profiles
+388	Arc Rotation (Degrees)
+389	Arc Span (Degrees)
+392	Arcane Blast
+398	Are you sure you want to delete \"%s\"?
+403	Arena Frames
+404	Arena Frames Page
+405	Arena Frames Support
+406	Arena Pets
+414	Armory Slot Group Options
+418	Art used for the glow line and the overshield edge.
+419	Art used for the leader crown and the assistant icon.
+421	Assign Key
+423	Assign this profile to the same specializations it was assigned to on export. Off = your current spec assignments stay as they are.
+425	ASSIGNED BUFFS
+426	ASSIGNED DEBUFFS
+427	Assigned Order
+428	ASSIGNED SPELLS
+429	Assignments: 
+430	Assist
+433	At Stacks
+437	Attached Portrait Mode
+439	Auction Bell
+441	AUDIO
+442	Audio
+443	Audio Channel
+451	Aura Active
+452	aura bars
+453	Aura Duration Size
+454	Aura Filters
+455	Aura Icon Size
+456	Aura icon tooltips use Aura Tooltips
+457	Aura Missing
+458	Aura Spell ID
+459	Aura Stack Size
+461	Aura Stacks Size
+462	Aura Timer Size
+463	Aura Tooltips
+464	Aura Type
+465	Aura Unit
+466	Aura uptime: sum of observed seconds across targets.
+470	Auras with a dispel type you can dispel
+473	Auto (stance/form)
+476	Auto Assign to Specs
+478	Auto Current on Combat
+479	Auto Expand Less Common Settings
+480	Auto Grid Columns
+485	Auto Sized
+486	Auto Split
+488	Auto treats Defensive Stance, Bear Form, Righteous Fury and Frost Presence as tanking.
+491	Auto Zoom Reset (seconds)
+493	Auto-Accept Role Check
+498	Automatic
+500	Automatic Combat Logging
+501	Automatic follows the zone name. Manual holds the block at a fixed width and clips longer names, so it never shifts the blocks beside it.
+502	Automatic shows XP while leveling and reputation at max level.
+503	Automatic uses instance capacity, then roster size
+507	Automation and displays start disabled
+508	Automation Layout
+513	Backdrop Dim
+516	Background Darkness
+517	Background Only on Pips
+519	Background opacity for Dark Mode bars. Applies to Unit Frames and Raid Frames only (Resource Bars ignore it).
+520	Background Style
+521	Background Texture
+522	Background texture for this bar, tinted by the bar's color and opacity.
+525	Badge
+526	Badge shows a small icon; Pixels Dragon wraps the portrait in classification art.
+527	Bag Bar
+528	Bag Bar Skin
+529	Bag Button Size
+530	Bag Spacing
+534	Bags and Bank Pages
+538	Band
+540	Bank Categories
+541	Banner Icon
+543	Bar & Button Border Styles
+544	Bar and absorb textures for the main frames
+546	BAR BACKGROUND
+548	Bar Background Color
+549	Bar Border Color
+550	Bar Border Size
+551	Bar button text, XP/Rep bar text
+553	Bar Default
+556	Bar Dropdown and Icon Preview
+562	Bar Layer
+563	BAR LAYOUT
+564	Bar Left Text Size
+565	Bar Name
+568	Bar Right Text Size
+569	BAR SETTINGS
+571	Bar Strata
+574	Bar Texture (Class Resource)
+575	Bar Texture (per data bar)
+576	Bar Texture (per window)
+590	Bars Shown
+592	Basic
+594	Battle Res Count Size
+595	Battle Res Duration Size
+596	Battle Res Font
+597	Battle Res Outline
+598	Battle Res Text Size
+601	Battleground
+602	Battleground Win
+603	Beacon Reminders
+608	Below
+610	Below Bottom Window, Left
+611	Below Bottom Window, Right
+612	Below Cursor
+614	Below Icon
+615	Below Map
+616	Below Threshold Only
+622	BG Power Color Darken
+626	binding
+627	Binding changes apply outside combat
+629	Blackens every class colour by this amount, everywhere class colours are used.
+630	Blackens every class-resource colour by this amount, everywhere class-resource colours are used.
+631	Blackens every power colour by this amount, everywhere power colours are used.
+632	Blackens power-colored Power Bar backgrounds (Unit Frames and Raid Frames) by this amount, on top of Power Color Darken.
+634	Blacklisted spells never display.
+637	Blizz Colored Target Header
+640	Blizzard action button ring and press highlight.
+641	Blizzard and Classic Styles
+642	BLIZZARD ART
+643	Blizzard Border
+645	Blizzard Class Resource Art
+647	Blizzard Default keeps the Interface Options timestamp setting.
+649	Blizzard Glow Line
+651	Blizzard Style
+652	BLIZZARD TOOLTIP
+653	Blizzard Window Skinning
+654	Blizzard Window Skins
+656	Blizzard's aura borders on the buffs, debuffs and weapon enchants, with every EllesmereUI bar feature.
+657	Blizzard's bar panel and action button frame, or the classic bar frame and slot ring, with every EllesmereUI Skyriding HUD feature.
+658	Blizzard's buff bar art, or the classic cast bar frame, with every EllesmereUI tracked bar feature.
+659	Blizzard's cast bar art, or the classic cast bar frame, with every EllesmereUI cast bar feature.
+661	Blizzard's frame art, portraits and bar shapes, or the classic frames, with every EllesmereUI frame feature.
+662	Blizzard's health and cast bar art, or the classic flat plates, with every EllesmereUI nameplate feature.
+663	Blizzard's meter window and bar art, or a window in the classic chat tabs' border, with every EllesmereUI meter feature.
+664	Blizzard's meter window and bar art, or a window in the classic chat tabs' border, with every EllesmereUI threat meter feature.
+665	Blizzard's own character sheet as the game draws it; WoW Forever keeps the item text beside the slots, and the stat colors stay with the EllesmereUI look.
+666	Blizzard's own character sheet with the EllesmereUI stats, slot text and socket panel added; the Calc tab stays with the EllesmereUI look.
+667	Blizzard's own chat window, tabs and input box, or the same window with the classic tab art, with every EllesmereUI chat feature.
+668	Blizzard's own frame and button art, with EllesmereUI's features.
+669	Blizzard's own friends window and cards, with the EllesmereUI class icons, class-coloured names and region icons added. Both stock styles look the same here.
+670	Blizzard's own tracker, with every EllesmereUI tracker feature. Both stock styles look the same here.
+671	Blizzard's raid frame edge and highlights, or the classic ones, with every EllesmereUI raid frame feature.
+672	Blizzard's round minimap and header, or the classic ring, with every EllesmereUI minimap feature.
+673	Blizzard's rounded button art, or the classic square slots, with every EllesmereUI bar feature.
+674	Blizzard's rounded cooldown icons, or the classic square slots, with every EllesmereUI icon feature.
+675	Blizzard's windows now match the EllesmereUI theme with a WoW 2.0 Dark Theme, from the Dungeon Journal to the Auction House and beyond.
+676	Block Background
+677	Block To Add
+678	Block type the Add Block button appends to the end of this bar.
+679	Blocked Keywords
+681	Bloodlust / Heroism
+682	Bloodlust Count Size
+683	Bloodlust Duration Size
+685	BoE
+686	BoE / Warbound Text Size
+687	BoE Text Options
+688	BoE Text Size
+689	BORDER
+691	border
+692	Border art drawn around the boss frames. Inherit (Main Frames) uses the main frames' border.
+693	Border art drawn around the cast bar.
+695	Border color shows whether the cast can be interrupted.
+696	Border Color Source
+699	Border Options
+701	Border size in pixels; for a textured style this is the size of its edge art.
+704	Border Styles (per bar)
+707	Border Wraps Icon
+710	Boss Combat
+712	Boss Debuff Icon
+714	Boss Frames Auras
+715	Boss Frames Text Sizes
+716	Boss Icon
+717	Boss mod sync: raid leader / assistant or party leader
+718	Boss Tracked Auras
+721	Bottom Gap
+722	Bottom Info Bar
+724	Bottom Left Text Size
+725	Bottom Left, Rightward
+726	Bottom Left, Upward
+728	Bottom Right Text Size
+729	Bottom Right, Leftward
+730	Bottom Right, Upward
+731	Bottom Screen Edge
+732	Bottom Spacing
+737	Breakdown Position
+738	Breakdown Scale (%)
+740	Bright line on the swipe edge (needs a client with Cooldown:SetDrawEdge).
+742	Broker Plugin
+747	Buff
+748	buff
+749	Buff / Debuff
+751	buff bar
+752	Buff Blacklist
+755	Buff Filter
+756	Buff Filter Options
+757	BUFF FILTERS
+759	Buff Icons Per Row
+761	Buff Manager changes on this page apply only to this override.
+762	Buff Manager Icon Glows
+763	Buff Manager Text (per indicator)
+764	Buff Mover
+765	Buff or debuff to watch.
+767	Buff Preset
+769	Buff shown as the active state (0 = same-named buff).
+773	Buff that marks this spell as proc'd (0 = built-in list).
+777	Buffs join the debuff stack as its first rows; debuffs continue on the next row and move as buff rows change.
+779	Buffs you can spellsteal or purge
+780	BUG FIXES
+781	BuildInlineCog: disabled needs a disabledTooltip
+783	Button
+784	Button 4
+785	Button 5
+787	Button Row Distance
+788	Button Row Position
+789	Button Row Spacing
+790	Button Size
+799	CALL TOTEM BAR
+800	Camp Benefits
+803	Cancel Form
+804	Cancel key: 
+807	Cannot reload during combat. Type /reload instead.
+809	Cannot Use While In Combat
+810	Capture Bar and GM Chat Status
+811	Captured overrides reference disabled modules (%s). Enable them and reload before promoting, or those settings would be lost.
+812	cast
+813	Cast / Channel Progress
+815	Cast and GCD Bars
+820	Cast Bar Text Size
+822	Cast Bar Timer Size
+823	Cast Bar Width
+824	Cast Bar Y Offset
+826	CAST COLORS AND EFFECTS
+828	Cast Name Size
+829	Cast on Key Down
+830	Cast Reminder Text
+831	Cast Ring Texture
+832	Cast Sound
+833	Cast Spark
+834	Cast Spell
+835	Cast Swipe
+836	Cast Target Size
+837	Cast Text Size
+838	Cast Texture
+840	Cast Timer Outline
+841	Cast Timer Size
+842	Castbar
+848	Category
+849	Category Sidebar
+851	CC Duration Size
+852	CD Swipe Opacity
+861	Center Reticle
+864	Center Text Size
+866	Chain Lightning

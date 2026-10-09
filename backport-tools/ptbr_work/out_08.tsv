@@ -1,0 +1,350 @@
+2800	Saque
+2801	Saqueia tudo instantaneamente, mesmo com o Saque Automático desligado. Segure Shift ao saquear para mostrar a janela de saque.
+2802	Perdendo Aggro
+2803	Baixo
+2804	Durabilidade Baixa (%d%%)
+2805	Durabilidade Baixa (Prévia)
+2806	Aviso de Durabilidade Baixa
+2807	Cor de Vida Baixa
+2808	MANA BAIXA
+2809	Aviso de Pouco Espaço
+2810	Limite Inferior (30+)
+2811	Redução de Opacidade
+2812	Reduzir Opacidade em Recarga
+2813	Lyrex
+2814	Cronômetro M+, objetivos, limites e texto da barra de feitiços
+2815	macro
+2816	Nome / Índice da Macro
+2817	Texto da Macro
+2818	Tamanho do Texto da Macro
+2819	Macros
+2820	Voragem
+2821	Arma da Voragem
+2822	Mago
+2823	Magia
+2824	Correio
+2825	Alerta de Correio
+2826	Deslocamento X do Correio
+2827	Deslocamento Y do Correio
+2828	Posição do Correio
+2829	Caixa de Correio: Abrir Tudo
+2830	Caixa de Correio: Botão Abrir Tudo
+2831	Bolsas Principais (%d / %d)
+2832	Altura do Bate-papo Principal
+2833	Largura do Bate-papo Principal
+2834	Quadros Principais
+2835	Auras dos Quadros Principais
+2836	Mão Principal
+2837	Cor da Mão Principal
+2838	QUADROS DE TANQUE PRINCIPAL
+2839	Principais Colaboradores de Correções/Recursos
+2840	Grandes recargas defensivas
+2841	Placas Amigas Apenas com Nome
+2842	Tornar o Ícone Parte da Barra
+2843	Torna isto a substituição. Ela substitui toda a configuração de Visibilidade, então as condições abaixo não se aplicam enquanto estiver ativa. Clique novamente para remover a substituição.
+2844	Mana
+2845	Mana %
+2846	Mana + Poder da Forma
+2847	BARRA DE MANA EM FORMA ALTERADA
+2848	Cor da Mana
+2849	Mana mantém a barra em Mana nas Formas de Urso e Felina. Mana + Poder da Forma também mostra sua Energia ou Raiva em uma segunda barra.
+2850	Faísca de Regeneração de Mana
+2851	Texto de Mana
+2852	Ticks de Mana
+2853	Valor de Mana
+2854	Valor de Mana | Mana %
+2855	Fonte do Aviso de Mana
+2856	Configurações do Aviso de Mana
+2857	Tamanho do Texto do Aviso de Mana
+2858	Gerenciar Dicas Aprimoradas
+2859	Mantis
+2860	Manual
+2861	Manual 
+2862	A largura manual é obrigatória.
+2863	Muitos módulos do ElvUI são incompatíveis com o EllesmereUI. Desative todos os módulos conflitantes.
+2864	Tamanho do Texto das Coordenadas do Mapa
+2865	Borda do Mapa
+2866	Bandeira do Mapa
+2867	Marca
+2868	Marca do Selvagem
+2869	Tamanho do Marcador
+2870	Marca alvos elite, elite raro e raro; o estilo Pixels Dragon também marca jogadores.
+2871	Marca onde o lançamento estará quando sua interrupção estiver pronta.
+2872	Precisão
+2873	Enorme (200%)
+2874	Principal
+2875	Controle geral de todos os lembretes de auras, bônus e consumíveis. Lembretes de talentos não são afetados.
+2876	Destaque Igual ao Tema
+2877	Comparar Entre Remetentes
+2878	Atender a Todas as Condições
+2879	Atender a Todos os Filtros
+2880	Atender a Qualquer Condição
+2881	Atender a Qualquer Filtro
+2882	Igualar aos Medidores de Dano
+2883	Igualar à Forma
+2884	Igualar ao Quadro
+2885	Igualar à Borda do Quadro
+2886	Igualar ao Quadro desenha o dragão com o retrato. Um estrato mais alto o desenha sobre o resto do quadro, incluindo a borda.
+2887	Igualar às Barras do Medidor
+2888	Modo de Correspondência
+2889	Igualar Escala
+2890	Correspondências
+2891	Corresponde ao modelo
+2892	Compara o texto ignorando maiúsculas e espaços extras, no mesmo tipo de bate-papo e canal. Diálogos de PNJ e outras mensagens do sistema são sempre mostrados.
+2893	Fosco
+2894	Máx. de Bônus
+2895	Distância Máxima da Câmera
+2896	Contagem Máxima
+2897	Máx. de Penalidades
+2898	Duração Máxima
+2899	Faixas de Vida Máxima
+2900	Estilo de Vida Máxima
+2901	Máx. de Ícones
+2902	Máx. por Linha
+2903	Acúmulo Máximo
+2904	Acúmulos Máximos
+2905	Brilho em Acúmulos Máximos
+2906	Largura Máxima
+2907	Máximo de 16 paletas
+2908	Máximo de 40 entradas por barra
+2909	Máximo de Bônus
+2910	Máximo de Penalidades
+2911	Altura Máxima
+2912	Máximo de Ícones
+2913	Largura Máxima
+2914	Talvez Depois
+2915	Médio
+2916	Faixas Médias
+2917	Corpo a corpo
+2918	Corpo a corpo 5 m, Caçador 35 m, lançadores 30 m
+2919	Melli (ElvUI)
+2920	Ordenação de Membros
+2921	Espaçamento de Membros
+2922	Membros em combate no momento
+2923	Leitura de Memória
+2924	Uso de Memória
+2925	Uso de Memória:
+2926	Menu
+2927	Elementos do Menu
+2928	Espaçamento do Menu
+2929	Menu, Bolsas e Barras de XP
+2930	MENUS E POP-UPS
+2931	Mercador
+2932	Níveis de Item do Mercador
+2933	Roda do Mouse no Mercador
+2934	Mercador: Páginas com a Roda do Mouse
+2935	Mesclar Itens Duplicados
+2936	Juntar Ajudantes aos Donos
+2937	Atraso para Sumir Mensagens
+2938	Meta
+2939	Texturas das barras do medidor, detalhamento e histórico
+2940	Meza
+2941	Tamanho dos Microbotões
+2942	Micromenu
+2943	MICROMENU E BOLSAS
+2944	Visual do Micromenu
+2945	Faixa do Micromenu
+2946	Espaçamento dos Micros
+2947	Meio
+2948	Clique do meio em um favorito para removê-lo.
+2949	Clique do meio em um lembrete para ocultá-lo até a próxima tela de carregamento
+2950	Menu do Clique do Meio
+2951	Clique do meio em um item para fixá-lo. Arraste categorias na barra lateral para reordenar; clique direito para renomear ou agrupar.
+2952	Clique do meio no minimapa para personagem, talentos, profissões, localizador de grupo e outros atalhos nativos. Abre fora de combate.
+2953	Midnight
+2954	Explosão Mental
+2955	MEU
+2956	Miniquadros
+2957	MINIPATCH
+2958	Mínimo
+2959	Minimapa
+2960	Estilo da Borda do Minimapa
+2961	Estilo da borda do minimapa
+2962	Companheiro do Minimapa
+2963	Layout e controles do minimapa para Wrath.
+2964	MinimapButtonButton
+2965	Mínimo (30)
+2966	Espelhar Retrato
+2967	Diversos
+2968	FALTANDO
+2969	Faltando
+2970	Ícones de Encantamento, Gema e Fivela Faltando
+2971	Ajudante Ausente
+2972	Tecelão da Névoa
+2973	Modo
+2974	Modelo
+2975	Modelo: arrastar com o esquerdo gira, com o direito move, roda dá zoom. O olho oculta os detalhes do espaço.
+2976	Moderno
+2977	Barras de ação modernas feitas para desempenho e clareza.
+2978	O Estilo de Fundo Moderno é obrigatório.
+2979	Melhorias modernas de bate-papo com utilidades úteis.
+2980	Brilho Moderno do WoW
+2981	Modificador
+2982	Os botões de módulo e de linha também substituem brilhos desligados, Blizzard Default, Blizzard Border e Solid Border.
+2983	Módulo Desativado
+2984	FONTES DOS MÓDULOS
+2985	BRILHOS DOS MÓDULOS
+2986	Contorno do Módulo
+2987	ESTILOS DOS MÓDULOS
+2988	TEXTURAS DOS MÓDULOS
+2989	Mohkan
+2990	Monge
+2991	Lua
+2992	Forma de Luniscante
+2993	Mais Informações
+2994	Mais Visuais de Janela
+2995	Morpheus
+2996	Índice da Montaria
+2997	Montaria:
+2998	Montado
+2999	Montarias
+3000	Botão do Mouse
+3001	Cursor do Mouse
+3002	Rolagem com a Roda do Mouse
+3003	Zoom com a Roda do Mouse
+3004	Passar o Mouse
+3005	passar o mouse
+3006	mover
+3007	Mover Ação para Baixo
+3008	Mover Ação para Cima
+3009	Mova e redimensione as barras no Modo de Desbloqueio.
+3010	Mover Bolsas Sem Shift
+3011	Mover para Baixo
+3012	Mova cada elemento no Modo de Desbloqueio
+3013	Mover Entrada para Baixo
+3014	Mover Entrada para Cima
+3015	Mover no Modo de Desbloqueio
+3016	Mover para a Esquerda
+3017	Mover Ferramentas de Raide
+3018	Mover para a Direita
+3019	Mova a posição fixa da dica no Modo de Desbloqueio.
+3020	Mover para Cima
+3021	Mover pelo Modo de Edição da Blizz
+3022	Mover Texto da Zona
+3023	Movido 
+3024	Movimento
+3025	movimento
+3026	Barra de alerta de movimento e arte do anel do cursor
+3027	Textura da Barra de Alerta de Movimento
+3028	Textura da barra de alerta de movimento
+3029	Tamanho do Texto do Alerta de Movimento
+3030	Recarga de Movimento
+3031	Som de Movimento Pronto
+3032	ID do Feitiço de Movimento
+3033	Movimento: Só em Combate
+3034	Move o campo de digitação para acima das mensagens.
+3035	Move o botão de rolar até o fim para o canto inferior direito do painel de bate-papo.
+3036	Move a barra de totens multilançamento padrão para que o Modo de Desbloqueio possa posicioná-la.
+3037	Move o nome da zona exibido ao entrar em uma área para o topo da tela (topo central, X 9 / Y 322). Desligado restaura a posição da Blizzard.
+3038	MPlusTimer
+3039	MR
+3040	Mudd
+3041	Colaboradores do Suporte a Vários Idiomas
+3042	MultiBag
+3043	Múltiplo
+3044	Música
+3045	Meu Perfil
+3046	Myth
+3047	Cronômetro de Mítica+
+3048	Cronômetro M+
+3049	Cronômetro M+, barras de feitiços direcionados e barras de lançamento independentes.
+3050	Ferramentas de Mítica+
+3051	Naga Siren
+3052	Arena de Nagrand
+3053	Nome
+3054	Nome > Alvo
+3055	Cor do Nome
+3056	Cor Personalizada do Nome
+3057	Fonte do Nome
+3058	Mudanças na fonte do nome exigem sair para a seleção de personagem para ter efeito. É uma limitação do motor do WoW.
+3059	Tamanho da Fonte do Nome
+3060	Formato do Nome
+3061	Comprimento Máx. do Nome
+3062	Posição do Nome
+3063	Configurações do Nome
+3064	Tamanho do Nome
+3065	Nome em Uso
+3066	Tamanho do Texto do Nome
+3067	Nome X
+3068	Deslocamento X do Nome
+3069	Nome Y
+3070	Deslocamento Y do Nome
+3071	Nome | Nível
+3072	Bordas das Placas
+3073	ESPAÇAMENTO DAS PLACAS
+3074	Placas de Identificação
+3075	Nomes, barra de lançamento e texto de auras nas placas de identificação
+3076	Nomes, vida e texto de indicadores nos quadros de raide e grupo
+3077	Naowh Thin Circle
+3078	Ações nativas, entrada e ancoragem de dicas continuam disponíveis.
+3079	Visuais Nativos do HUD
+3080	Cores de classe nativas do Wrath para jogadores inimigos.
+3081	Conveniências nativas do Wrath, exibições, cursor, arrastar janelas e ferramentas de raide.
+3082	Idiomas Nativos do Wrath
+3083	Quase com Aggro
+3084	Pescoço
+3085	Menus de Ação Aninhados
+3086	Neutro
+3087	Neutros e Inimigos Menores
+3088	Nunca
+3089	Nunca mais perca uma atualização. A nova seção de Notas do Patch detalha as novidades de cada versão, com links rápidos para cada nova configuração.
+3090	NOVO
+3091	Novo
+3092	Nova Barra
+3093	Novo Modelo de Barra
+3094	Novo Grupo Condicional
+3095	Nova DataBar
+3096	NOVO RECURSO
+3097	Animação de Novo Ícone
+3098	NOVIDADES NO ELLESMEREUI
+3099	Novo Correio
+3100	Novo Módulo: Quadros de Arena
+3101	Novo Sistema de Substituições
+3102	Ponto de Lembrete de Novo Patch
+3103	Novo Perfil
+3104	Novo Grupo de Especialização
+3105	NOVO SISTEMA
+3106	Nova Janela
+3107	Próximo
+3108	Curas recebidas nos próximos 4 segundos
+3109	Destaque do Próximo Golpe
+3110	Nnoggie
+3111	Não
+3112	Nenhum brilho ativo
+3113	Nenhum brilho ativo. Desligue Ocultar Brilhos Inativos para editar os outros.
+3114	Sem Aggro
+3115	Nenhum brilho de barra ainda.
+3116	Nenhum feitiço na lista negra.
+3117	Nenhuma substituição condicional ainda. Clique no botão Substituições Condicionais ao lado da busca de módulos e crie um grupo condicional (Masmorra, Raide, Atalho...). Substituições de especialização sempre têm prioridade sobre as condicionais.
+3118	Sem Ícone de Penalidade Duplicado
+3119	Nenhuma entrada nesta barra.
+3120	Nenhum amigo online
+3121	Nenhuma casa encontrada.
+3122	Sem Ícones
+3123	nenhuma tecla definida
+3124	Nenhuma gema compatível nas suas bolsas
+3125	Nenhum outro perfil para sincronizar
+3126	Nenhum outro personagem salvo
+3127	Nenhuma nota de patch ainda.
+3128	Sem Prévia
+3129	Sem Personalizações por Perfil
+3130	Nenhuma Reputação Rastreada
+3131	Nenhuma substituição de especialização ainda. Clique no glifo de especialização ao lado da busca de módulos, selecione ou crie um grupo de especialização, e toda configuração alterada enquanto edita como esse grupo será salva aqui.
+3132	Nenhum lembrete de talento configurado
+3133	Retrato de Não Jogador
+3134	Não Tanque
+3135	Ameaça de Não Tanque
+3136	Opacidade de Não Alvo
+3137	Nenhum
+3138	nenhum
+3139	Nenhum (Movimento Livre)
+3140	O formato Nenhum requer o Estilo de Arte 3D
+3141	Normal
+3142	Normal (100%)
+3143	Abate de Chefe Normal
+3144	Normal bronze, heroico azul.
+3145	Masmorras Normais
+3146	Raide Normal
+3147	Não é um brilho personalizado
+3148	Não é um texto válido do EllesmereUI. Certifique-se de copiar o texto inteiro.
+3149	Indisponível para barras horizontais

@@ -1,0 +1,450 @@
+2491	Texto de duración, acumulaciones y atajo del icono (por barra)
+2492	Texto de duración, acumulaciones y atajos del icono y de la barra de seguimiento
+2493	EFECTOS DE ICONO
+2494	Los resplandores de Efectos de icono se configuran por filtro y el Resplandor de marco por casilla en la página del Gestor de perjuicios. La plantilla nunca los cambia.
+2495	Los resplandores de Efectos de icono se configuran por filtro en cada barra de la página de Barras de auras del jugador. La plantilla nunca los cambia.
+2496	El Resplandor de icono se configura por indicador en la página del Gestor de beneficios. La plantilla nunca lo cambia.
+2497	HISTORIAL DE ICONOS
+2498	Historial de iconos
+2499	INDICADORES DE ICONO
+2500	Desplazamiento Y del icono
+2501	Icono a la derecha
+2502	Opacidad del icono
+2503	Orden de iconos
+2504	Posición del icono
+2505	Forma del icono
+2508	Estilo del icono
+2509	Icono X
+2510	Icono Y
+2511	Zoom del icono
+2513	ICONOS
+2514	Iconos sobre el miembro al que lanza un enemigo. 3.3.5 no tiene objetivo de hechizo, así que la víctima es el objetivo del lanzador, y solo se ven los enemigos que alguien del grupo tiene como objetivo (o tu objetivo, foco o el que está bajo el ratón).
+2515	Iconos por categoría de control de masas: verde = el siguiente dura la mitad, amarillo = un cuarto, rojo = inmune. Se reinicia 18 segundos después de que desaparezca el último.
+2516	Iconos por indicador
+2517	Iconos mostrados
+2518	DESVANECER EN REPOSO
+2519	Desvanecer en reposo
+2520	idTip entra en conflicto con los sistemas de tooltips de EllesmereUI. Desactiva el addon idTip para mantener la compatibilidad.
+2521	Ignorar
+2522	Ignorar tiempo de reutilización global
+2523	iLvl
+2524	ilvl
+2525	Diablillo
+2526	Importar
+2527	Importar y recargar
+2528	Importar un perfil desde una cadena.
+2529	Importar addons
+2530	Error al importar
+2531	Importar todos los datos de la cuenta
+2532	Importar perfil
+2533	Importar addons seleccionados
+2534	Importa las relaciones de anclaje y ajuste de tamaño de este perfil. Desactivado = conservas tu propia disposición; solo se importan las posiciones y ajustes propios de los módulos seleccionados.
+2535	Importa la configuración completa de anulaciones de quien comparte: valores de anulación por especialización y condicionales, grupos, sus disposiciones personalizadas del Modo desbloqueo y las anulaciones del Gestor de beneficios. Esto reemplaza TODAS tus anulaciones. Desactivado = las tuyas no se tocan.
+2536	La importación incluirá %1$s de %2$s addons.
+2537	Importa, exporta y cambia perfiles y preajustes de EllesmereUI.
+2538	Importantes y propios
+2539	Resplandor de lanzamiento importante
+2540	Solo importantes
+2541	Importantes o propios
+2542	Importando %1$s
+2543	Configuraciones de talentos mejoradas
+2544	En combate
+2545	en combate
+2546	En grupo
+2547	En estancias
+2548	En mantenimiento
+2549	En grupo
+2550	En banda
+2551	En grupo de banda
+2552	En la Armería y en las vistas de Armas / Abalorios, Armadura y Equipo de conjunto, agrupa los objetos bajo subencabezados por ranura de equipo.
+2553	EN USO
+2554	En uso
+2555	En vehículo
+2556	Inactivo en WoW Forever: este personaje usa %s
+2557	Incinerar
+2558	Incluir
+2559	¿Incluir disposición de hechizos del CDM?
+2560	Incluye fuentes, colores personalizados, modo oscuro, color de acento y escala de la UI en esta exportación. Desactivado = solo se exportan los ajustes propios de los módulos seleccionados, manteniendo el aspecto global del destinatario.
+2561	Incluir llavero
+2562	Incluir ayudantes principales
+2563	Incluye las relaciones de anclaje y ajuste de tamaño entre módulos. Desactivado = exporta solo las posiciones propias de cada módulo, sin vínculos entre módulos.
+2564	Incluir clases sanadoras no asignadas
+2565	Incluye tus ajustes de Blizz UI Enhanced de las pestañas Aspectos de ventanas y Tooltips, menús y ventanas emergentes. Son de toda la cuenta: si el importador los acepta, sobrescriben los ajustes de ese jugador en TODOS sus perfiles.
+2566	Incluye tu configuración completa de anulaciones: valores de anulación por especialización y condicionales, grupos, sus disposiciones personalizadas del Modo desbloqueo y las anulaciones del Gestor de beneficios. Al importar, esto reemplaza por completo las anulaciones del destinatario.
+2567	Incluye la disposición de hechizos de tu Gestor de reutilización (qué hechizos van en qué barras) y todos los ajustes por hechizo de las especializaciones que elijas.
+2568	Incluir:
+2569	PERJUICIOS INCLUIDOS
+2570	Los perjuicios incluidos se muestran además de tu selección del Filtro de perjuicios (salvo que esté en Solo auras rastreadas).
+2571	Incluye los perjuicios lanzados por tu mascota.
+2572	Incluye fuentes de LibSharedMedia
+2573	Sanaciones entrantes de LibHealComm-4.0 (incluida). Solo se ven las sanaciones de jugadores que usan un addon HealComm.
+2574	Resurrección entrante
+2575	Susurros entrantes
+2576	Addon incompatible detectado
+2577	Aumentar calidad de imagen del juego
+2578	Marcos de banda modernos, con un rendimiento increíblemente ligero y flexibilidad infinita.
+2579	Estadísticas de combate independientes para Wrath. Sin dependencia de Details.
+2580	Indicador
+2581	Indicador 
+2582	Color del indicador
+2583	Filtro del indicador
+2584	Disposición del indicador
+2585	Nombre del indicador
+2587	Indicadores
+2590	Heredar
+2591	Heredar (marcos principales)
+2592	Relleno interior X
+2593	Sombra interior
+2596	Locura
+2597	Dentro
+2598	Dentro centro
+2599	Dentro izquierda
+2600	Dentro del mapa
+2601	Las posiciones interiores requieren el estilo de arte 3D
+2602	Las posiciones interiores requieren el modo separado
+2603	Dentro derecha
+2604	Inspeccionar
+2605	Inspección y mercader
+2606	Encantamientos al inspeccionar
+2607	Nivel de objeto al inspeccionar
+2608	Niveles de objeto al inspeccionar
+2609	La estancia se ha reiniciado: ¡ya puedes volver a entrar!
+2610	Solo en estancias
+2611	Estancias
+2612	estancias
+2613	Estancias + combate
+2614	Solo lanzamientos instantáneos
+2615	Veneno instantáneo
+2616	Intelecto
+2617	Paneles de interfaz
+2618	Anunciar interrupción
+2619	Interrupción en reutilización
+2620	Interrupción lista a mitad de lanzamiento
+2621	Hechizo de interrupción
+2622	Interrumpido
+2623	Interrumpido / Fallido
+2624	Lanzamiento interrumpible
+2625	Lanzamiento interrumpible.
+2626	Color interrumpible
+2627	Interrupciones
+2628	Cadena de importación no válida.
+2629	Cadena no válida
+2630	Invitar
+2631	Isla de la Conquista
+2632	Reduce el rendimiento y debería estar desactivado salvo que estés capturando un informe de error.
+2633	Botones de objeto
+2634	Columnas de objetos en la ventana de bolsas.
+2635	Columnas de objetos en la ventana del banco.
+2636	Reutilización de objeto
+2638	Ajustes de cantidad de objetos
+2640	Texto de cantidad, nivel de objeto, categoría y etiqueta
+2641	Cantidades de objetos
+2642	ID de objeto
+2643	Nivel de objeto
+2644	Tamaño del texto de nivel de objeto
+2645	Nivel de objeto:
+2646	Los preajustes de objetos muestran la siguiente poción de la familia cuando se acaba una.
+2647	Equipo de conjunto
+2648	Engarce de objetos
+2650	Objetos
+2651	Ve directo a cualquier ajuste nuevo con un clic
+2654	Conservar
+2655	Mantener beneficios en el mismo sitio
+2656	Conservar muertes desde nivel
+2657	Mantener activado
+2658	Conservar los míos
+2659	Mantener marcos de banda
+2660	Mantiene el color de texto del juego para cada canal.
+2661	Mantiene el icono visible (atenuado) mientras el aura no está activa.
+2662	Mantiene el color de clase o de reacción de la unidad en el anillo en modo oscuro en lugar de tu propio color de clase.
+2664	Conservado 
+2665	Tecla ya asignada
+2666	Tecla asignada: 
+2667	Asignación de tecla cancelada
+2668	Asignación de tecla agotada
+2669	TEXTO DE ATAJOS
+2670	Captura de tecla
+2671	Atajo
+2672	atajo
+2673	Atajo (fuera de combate)
+2674	Color del atajo
+2675	Posición del atajo
+2676	Tamaño del atajo
+2677	Texto del atajo
+2678	Tamaño del texto del atajo
+2679	Texto de atajo, macro, cargas y reutilización (por barra)
+2680	Texto de atajo, macro, cantidad y reutilización (por barra)
+2681	Atajo: 
+2682	Atajo: %1$s
+2683	Atajos
+2684	Los atajos responden al pulsar la tecla en lugar de al soltarla. Esto hace que tus habilidades se sientan más reactivas.
+2685	Tamaño del texto de la ventana de piedra angular
+2686	Aviso de patada lista a mitad de lanzamiento
+2687	Golpe en los riñones
+2695	Etiqueta
+2696	Tolerancia de latencia
+2698	Grande (110%)
+2699	Rayas grandes con contorno
+2700	Rayas grandes con contorno R
+2701	Rayas grandes
+2702	Rayas grandes R
+2703	Último
+2704	Apellido
+2705	Color del último tic
+2706	Último usado
+2707	Última montura usada
+2709	Latencia
+2710	Superposición de latencia (cola de hechizos)
+2711	Color de latencia
+2712	Etiquetas de latencia
+2713	Texto de latencia
+2715	Ráfaga de lava
+2716	capa
+2720	Ajustes de disposición
+2721	Icono de líder
+2722	Icono de líder en combate
+2723	Posición del icono de líder
+2724	Tamaño del icono de líder
+2725	Indicador de líder
+2726	Ajustes del indicador de líder
+2728	Leatrix Plus tiene funciones de chat y minimapa que entran en conflicto con EllesmereUI. Desactiva las opciones relacionadas con el chat o el minimapa en Leatrix Plus para mantener la compatibilidad.
+2729	Deja un atajo vacío para eliminarlo.
+2730	Color de salida
+2731	Sal del combate para habilitar las visitas.
+2732	Texto de salida
+2733	Saliendo de combate
+2735	izquierda
+2736	Clic izquierdo para aplicar beneficios (fuera de combate), clic central para ocultar hasta la siguiente pantalla de carga
+2737	Hueco izquierdo
+2738	A la izquierda del cursor
+2739	A la izquierda del icono
+2740	A la izquierda de la ventana
+2741	Borde izquierdo de la pantalla
+2742	Texto izquierdo
+2743	Color de clase del texto izquierdo
+2744	Ajustes del texto izquierdo
+2745	Tamaño del texto izquierdo
+2746	De izquierda a derecha
+2747	Arrastrar la ventana de bolsas con clic izquierdo la mueve sin mantener Shift.
+2748	Clic izquierdo para asignar  |  Clic derecho para desasignar  |  Esc para cerrar
+2749	Clic izquierdo para asignar un atajo.\nClic derecho para desasignar.
+2750	Leyenda
+2751	Piernas
+2752	Beneficios de sanación menores
+2753	Nivel
+2754	Indicador de nivel y élite
+2755	Tamaño del nivel
+2756	Ajustes del texto de nivel
+2757	Texto de nivel: color de dificultad
+2758	Texto de nivel: incluir amistosos
+2759	Subida de nivel
+2760	Nivel | Nombre
+2761	LibDeflate no disponible
+2762	Rey Exánime
+2763	Tema del Rey Exánime
+2764	Eleva las barras de lanzamiento del jugador, objetivo, foco y jefes por encima de otros marcos para que nunca queden ocultas tras ellos.
+2765	Ligero
+2766	Descarga de relámpagos
+2767	Escudo de relámpagos/agua
+2768	Ilumina el botón del hechizo que estás lanzando con el aspecto de resaltado.
+2769	Borde Lightspark
+2770	Medidores de daño ligeros con una personalización sencilla pero potente.
+2771	Herramientas y mejoras ligeras de calidad de vida.
+2773	Color de línea
+2774	Líneas
+2775	Enlace copiado: pégalo en tu navegador
+2776	Vinculado por ajuste de anclaje/ancho/alto a: %1$s. Se exportan juntos.
+2777	Vinculado por ajuste de anclaje/ancho/alto a: %1$s. Se importan juntos.
+2778	Liquid Detail - Desactivado\n
+2779	Muestra las categorías de objetos en una barra lateral del banco, igual que la barra lateral de las bolsas. Al seleccionar una se filtra la cuadrícula por esa categoría.
+2780	Altura de fila de la lista
+2781	Placa de vista previa en vivo
+2782	Llama viva
+2783	Cargando casas...
+2784	Hora del ordenador local en lugar de la hora del servidor.
+2785	Hora local
+2786	Localización
+2787	Ubicación
+2788	Bloquear arrastre de acciones
+2789	Bloquear tamaño del chat principal
+2790	Bloquear posición
+2791	Bloquear posición y desactivar clic
+2792	Bloquear posición de la ventana
+2793	Bloqueado
+2794	Registrar mazmorras
+2795	Registrar bandas
+2796	Registro
+2797	registro
+2798	El registro que iniciaste manualmente sigue bajo tu control
+2799	Es necesario cerrar sesión
+2800	Botín
+2801	Despoja todo al instante, incluso con el botín automático desactivado. Mantén Shift al despojar para mostrar la ventana de botín.
+2802	Perdiendo amenaza
+2803	Bajo
+2804	Durabilidad baja (%d%%)
+2805	Durabilidad baja (vista previa)
+2806	Aviso de durabilidad baja
+2807	Color de vida baja
+2808	POCO MANÁ
+2809	Aviso de poco espacio
+2810	Límite inferior (30+)
+2811	Cantidad de reducción de opacidad
+2812	Reducir opacidad en reutilización
+2814	Texto del temporizador de M+, objetivos, umbrales y barra de hechizos
+2816	Nombre / índice de macro
+2817	Texto de macro
+2818	Tamaño del texto de macro
+2820	Vorágine
+2821	Arma vorágine
+2822	Mago
+2823	Magia
+2824	Correo
+2825	Alerta de correo
+2826	Desplazamiento X del correo
+2827	Desplazamiento Y del correo
+2828	Posición del correo
+2829	Buzón: abrir todo
+2830	Buzón: botón Abrir todo
+2831	Bolsas principales (%d / %d)
+2832	Altura del chat principal
+2833	Ancho del chat principal
+2834	Marcos principales
+2835	Auras de marcos principales
+2836	Mano principal
+2837	Color de mano principal
+2838	MARCOS DE TANQUES PRINCIPALES
+2839	Colaboradores principales en correcciones/funciones
+2840	Grandes reutilizaciones defensivas
+2841	Placas de nombre amistosas solo con nombre
+2842	Integrar el icono en la barra
+2843	Convierte esto en la anulación. Reemplaza todo el ajuste de Visibilidad, así que las condiciones de abajo dejan de aplicarse mientras esté activa. Haz clic de nuevo para quitar la anulación.
+2846	Maná + poder de forma
+2847	BARRA DE MANÁ EN FORMA ALTERADA
+2848	Color de maná
+2849	Maná mantiene la barra en maná en forma de oso y de felino. Maná + poder de forma también muestra tu energía o ira en una segunda barra.
+2850	Chispa de regeneración de maná
+2851	Texto de maná
+2852	Tics de maná
+2853	Valor de maná
+2854	Valor de maná | Maná %
+2856	Ajustes del aviso de maná
+2858	Gestionar tooltips mejorados
+2862	Se requiere un ancho manual.
+2863	Muchos de los módulos de ElvUI son incompatibles con EllesmereUI. Asegúrate de desactivar los módulos en conflicto.
+2864	Tamaño del texto de coordenadas del mapa
+2865	Borde del mapa
+2866	Bandera del mapa
+2867	Marca
+2868	Marca de lo Salvaje
+2869	Tamaño del marcador
+2870	Marca objetivos élite, élite raros y raros; el estilo Pixels Dragon también marca jugadores.
+2871	Marca dónde estará el lanzamiento cuando tu interrupción esté lista.
+2872	Puntería
+2873	Enorme (200%)
+2874	Maestro
+2875	Interruptor general de todos los recordatorios de auras, beneficios y consumibles. Los recordatorios de talentos no se ven afectados.
+2876	Ajustar acento al tema
+2877	Coincidir entre remitentes
+2878	Cumplir todas las condiciones
+2879	Cumplir todos los filtros
+2880	Cumplir cualquier condición
+2881	Cumplir cualquier filtro
+2882	Igualar medidores de daño
+2883	Igualar forma
+2884	Igualar marco
+2885	Igualar borde del marco
+2886	Igualar marco dibuja el dragón con el retrato. Un estrato más alto lo dibuja sobre el resto del marco, borde incluido.
+2887	Igualar barras del medidor
+2888	Modo de coincidencia
+2889	Igualar escala
+2890	Coincidencias
+2891	Coincide con la plantilla
+2892	Compara el texto ignorando mayúsculas y espacios extra, dentro del mismo tipo de chat y canal. Los diálogos de PNJ y otros mensajes del sistema siempre se muestran.
+2893	Mate
+2894	Máx. beneficios
+2895	Distancia máxima de cámara
+2896	Cantidad máx.
+2897	Máx. perjuicios
+2898	Duración máx.
+2899	Rayas de vida máxima
+2900	Estilo de vida máxima
+2901	Máx. iconos
+2902	Máx. por fila
+2903	Acumulación máx.
+2904	Acumulaciones máx.
+2905	Resplandor con acumulaciones máx.
+2906	Ancho máx.
+2907	Máximo 16 paletas
+2908	Máximo 40 entradas por barra
+2909	Beneficios máximos
+2910	Perjuicios máximos
+2911	Altura máxima
+2912	Iconos máximos
+2913	Ancho máximo
+2914	Quizá más tarde
+2915	Medio
+2916	Rayas medianas
+2917	Cuerpo a cuerpo
+2918	Cuerpo a cuerpo 5 m, cazador 35 m, lanzadores 30 m
+2920	Orden de miembros
+2921	Espaciado de miembros
+2922	Miembros actualmente en combate
+2923	Lectura de memoria
+2924	Uso de memoria
+2925	Uso de memoria:
+2927	Elementos del menú
+2928	Espaciado del menú
+2929	Menú, bolsas y barras de PX
+2930	MENÚS Y VENTANAS EMERGENTES
+2931	Mercader
+2932	Niveles de objeto del mercader
+2933	Rueda del ratón en mercader
+2934	Mercader: páginas con la rueda del ratón
+2935	Combinar objetos duplicados
+2936	Combinar mascotas con sus dueños
+2937	Retraso de desvanecimiento de mensajes
+2939	Texturas de barras del medidor, desglose e historial
+2941	Tamaño de los micro botones
+2942	Micromenú
+2943	MICROMENÚ Y BOLSAS
+2944	Aspecto del micromenú
+2945	Franja del micromenú
+2946	Espaciado micro
+2947	Centro
+2948	Clic central en un marcador para eliminarlo.
+2949	Clic central en un recordatorio para ocultarlo hasta la siguiente pantalla de carga
+2950	Menú de clic central
+2951	Clic central en un objeto para fijarlo. Arrastra las categorías de la barra lateral para reordenarlas; clic derecho para renombrarlas o agruparlas.
+2952	Clic central en el minimapa para accesos nativos a personaje, talentos, profesiones, buscador de grupos y más. Se abre fuera de combate.
+2954	Explosión mental
+2955	MÍO
+2956	Minimarcos
+2957	MINIPARCHE
+2958	Mínimo
+2960	Estilo del borde del minimapa
+2961	Estilo del borde del minimapa
+2962	Acompañante del minimapa
+2963	Disposición y controles del minimapa para Wrath.
+2965	Mínimo (30)
+2966	Reflejar retrato
+2967	Varios
+2968	FALTA
+2969	Falta
+2970	Iconos de encantamiento, gema y hebilla que faltan
+2971	Falta la mascota
+2972	Tejedor de niebla
+2973	Modo
+2974	Modelo
+2975	Modelo: arrastrar con clic izquierdo rota, con clic derecho desplaza, la rueda hace zoom. El ojo oculta los detalles de las ranuras.
+2976	Moderno
+2977	Barras de acción modernas creadas para el rendimiento y la claridad.
+2978	Se requiere el estilo de fondo moderno.
+2979	Mejoras modernas del chat con utilidades prácticas.
+2980	Resplandor moderno de WoW
+2981	Modificador
+2982	Los botones de módulo y de fila también reemplazan los resplandores desactivados, Predeterminado de Blizzard, Borde de Blizzard y Borde sólido.
+2983	Módulo desactivado
+2984	FUENTES DE MÓDULOS
+2985	RESPLANDORES DE MÓDULOS
+2986	Contorno del módulo
+2987	ESTILOS DE MÓDULOS

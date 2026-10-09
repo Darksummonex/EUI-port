@@ -1,0 +1,350 @@
+0	 (guild bank)
+1	 (Raid)
+2	 Breakdown
+3	 Mouseover is sealed here too for this element: its hover mechanism follows the shared setting, so an override could only leave it shown.
+4	 preview
+5	 text. EUI Global Outline follows the global Outline Mode setting above.
+6	 windows active
+7	%1$s is active. Settings that only apply to the EllesmereUI look are hidden.
+8	%1$s is active: chat keeps Blizzard's own background and tab art.
+9	%1$s is active: the tracker keeps Blizzard's own text.
+10	%1$s Module
+11	%1$s Sync
+12	%d / %d Items
+13	%d active
+14	%d differ from template
+15	%d Items
+16	%d of them are off or use a Blizzard style and switch to the template glow.
+17	%d of them can't show the chosen style and use the closest one.
+18	%dd
+19	%dh
+20	%dm
+21	%s Override Active
+22	'%s' is now customized for %s.
+23	's Death Recap
+24	(%a[%w']*)
+25	(%d+)x(%d+)
+26	(%l)(%u)
+27	(%u+)%-
+28	(active)|r
+29	(Applies on Window Close)
+30	(Applies to All Units)
+31	(Extra quickview display, your items are also in their category)
+32	(local)
+33	(Middle Click to Add or Remove)
+34	(min)
+35	(minutes)
+36	(No chat history)
+37	(one per slot)
+38	(seconds)
+39	(Spec prio'd for settings conflicts)
+40	(world)
+41	*Blizzard's auto targeting (soft target) setting can cause brief flickering when your actual target dies but a soft-target is still active.
+42	*Please enter a profile name
+43	+ %d more
+44	+ Add New Buff Bar
+45	+ Add New Conditional Group
+46	+ Add New Cooldowns Bar
+47	+ Add New Spec Group
+48	+ Add New Utility Bar
+49	+1 Threshold Text Size
+50	+2 Threshold Text Size
+51	+3 Threshold Text Size
+52	...
+53	...and %d more
+54	03:27
+55	03:27 PM
+56	03:27:32
+57	03:27:32 PM
+58	100%
+59	11:37
+60	15:27
+61	15:27:32
+62	20 Man Frame Width
+63	24 Hour Clock
+64	2D Portrait
+65	2D Zoom
+66	3D Portrait
+67	3D Portraits
+68	3D portraits may cause a slight loss in performance efficiency. Do you want to enable them?
+69	3D Zoom
+70	[ Import string captured (%1$s characters) ]
+71	\"%1$s\" was saved but cannot be loaded because this spec has an assigned profile.
+72	\"%1$s\" was saved but cannot be loaded because this spec has an assigned profile. Switch specs or remove the spec assignment to use it.
+73	A beautiful visual refresh of Blizzard Bags with intuitive organization.
+74	A CDM replacement focused on performance, customizations and alerts.
+75	A clean, updated reskin of Blizzard's Quest Tracker.
+76	a Glow Style
+77	A modern friends list with built-in organization tools.
+78	A new age minimap with clean styling and square layout options.
+79	A profile named \"%1$s\" already exists. Please choose a different name.
+80	A quick view of every font setting in one place.
+81	A quick view of every texture setting in one place.
+82	A reload is required to apply this.
+83	A spec override owns this setting, so this conditional value never applies outside an editing session. Remove the spec override to let it through.
+84	A stock chat style is active on the Style page: the panel, tabs and sidebar keep Blizzard's look.
+85	A stock chat style is active: chat keeps Blizzard's own background and tab art.
+86	A sync group needs at least two profiles
+87	A target you can attack.
+88	A thin outline around the selected tab.
+89	Abbreviate Amount
+90	Abbreviate Text
+91	Above
+92	Above Absorb Bar
+93	Above Cursor
+94	Above Frame Left
+95	Above Frame Right
+96	Above Health Bar
+97	Above Hovered Row
+98	Above Icon
+99	Above Map
+100	Above Model
+101	Above Top Window, Left
+102	Above Top Window, Right
+103	Absol3m
+104	absorb
+105	Absorb Amount
+106	Absorb Bar
+107	Absorb Color
+108	Absorb Opacity
+109	Absorb Rendering
+110	Absorb Shields
+111	Absorb Short (230k)
+112	Absorb Style
+113	Absorb Style and the Overlay placement
+114	ABSORBS
+115	ABSORBS AND HEALS
+116	Absorbs Received: shields consumed on each player.
+117	Absorbs Section
+118	Accent
+119	Accent Color
+120	Accent Colored
+121	Accent Colored Header Text
+122	Accent Colored Timer
+123	Accent Header
+124	Accent Styling
+125	ACCENTED TEXT
+126	Accept
+127	Accept Invites from Friends & Guild
+128	Accept Invites from Guildmates
+129	Accepts group invites from your friends list and guildmates. Skipped while queued in the Dungeon Finder or already grouped.
+130	Achievement
+131	Achievement Points
+132	Achievements
+133	Action
+134	Action 
+135	Action added
+136	Action Bar 10
+137	Action Bar 2
+138	Action Bar 3
+139	Action Bar 4
+140	Action Bar 5
+141	Action Bar 6
+142	Action Bar 7
+143	Action Bar 8
+144	Action Bar 9
+145	Action Bars
+146	Action Bars 7 to 10
+147	Action Bars can only width match\nto other Action Bars
+148	Action Bars Icons
+149	Action bars, Blizzard HUD skins and player aura positions for Wrath.
+150	Action Button Glow
+151	Action Button Spell ID
+152	Action ID / Name / Text
+153	Action Menu
+154	Action Menu Number
+155	ACTION MENU SETUP
+156	Action Type
+157	Activate Boss Preview
+158	Activate Party Mode
+159	Active Aura Glow
+160	Active Aura ID
+161	Active Background Source
+162	Active Border
+163	Active Border Color
+164	Active Duration
+165	Active Font Color Source
+166	Active Mitigation
+167	Active Profile
+168	ACTIVE REMINDERS
+169	Active Tab Background
+170	Active Tab Border
+171	Active Tab Font Color
+172	Active Underline
+173	Add
+174	Add a Buff Spell
+175	Add a CD/Utility Spell
+176	ADD ACTION
+177	Add Action
+178	Add Action From Cursor
+179	Add Action Menu
+180	Add Block
+181	Add Buff Preset
+182	Add Category
+183	Add Custom Spell
+184	ADD ENTRY
+185	Add Entry
+186	Add External Cooldown Indicator
+187	Add Glow
+188	Add Healer Buff Indicator
+189	Add how many of an item your other characters own to its tooltip.
+190	Add Item Preset
+191	Add Learned Spell
+192	Add New
+193	Add New Bars to Group
+194	Add New Indicator
+195	Add Personal Defensive Indicator
+196	Add Racial
+197	Add Reminder
+198	Add Selected Action
+199	Add Spell ID
+200	Add Spell Menu
+201	Add to Group
+202	Add Tracking Bar
+203	Added 
+204	Added to the current raid or party frame size.
+205	Added. Unlearned spells and empty slots stay hidden.
+206	ADDITIONAL BAR OFFSET
+207	ADDITIONAL FEATURES
+208	Addon
+209	Addon Button Flyout
+210	ADDON BUTTONS
+211	Addon Buttons
+212	AddOn List
+213	Addon not loaded
+214	Adds a second ring around a round portrait; Match Frame Border follows your frame border style.
+215	Adds a Shadow border to your player frame when you pull or hold threat as a non-tank. Only active in dungeons, raids and delves.
+216	Adds a soft shadow inside a round portrait.
+217	Adds the Blizzard shield glow line where the shield meets current health.
+218	AdiBags
+219	Adjust Volume
+220	ADVANCED
+221	Adventure Guide
+222	Adventure Prep
+223	Adventurer
+224	Affix Size
+225	Affliction
+226	AFK
+227	After anchoring, drag to an edge and choose a grow direction to maintain its corner spot as bars change size.
+228	aggro
+229	Agility
+230	Aimed Shot
+231	Air Horn
+232	Alert and tracker text
+233	Alerts
+234	Alerts, trackers, battle res and popup text
+235	Align Content
+236	Align Tabs to Full Panel
+237	Alignment
+238	All
+239	All Allowed
+240	All Buffs
+241	All Buffs or Has Duration
+242	All Buffs or Has Duration is selected, so every buff already shows. Use the red Hide box to exclude these instead.
+243	All Debuffs
+244	All Debuffs is selected, so every debuff already shows. Use the red Hide box to exclude these instead.
+245	All DPS (Non-Aug)
+246	All Elements
+247	All EUI Addons
+248	All Healers/Aug
+249	All Items
+250	all match the template
+251	All Non Healers/Aug
+252	All selected profiles will keep their %1$s settings in sync: changes made on any of them carry over to the others. Choose which profile's settings the group starts from.
+253	All Specs
+254	All Tanks
+255	Alliance
+256	Allied names keep their class color without target or mouseover. Group/raid members are identified automatically; other allies are learned from target, mouseover or focus.
+257	Allow Quest Tracker to be Moved Offscreen
+258	Allowed Demons
+259	Aloft
+260	Alpha
+261	Alpha when on CD
+262	Already assigned to %s
+263	Already matches the template.
+264	Already on 
+265	Also show the badge in dungeons and raids, where most enemies are elite.
+266	Also show the dragon in dungeons and raids, where most enemies are elite.
+267	Also Watch Target
+268	Alt
+269	Alt + Ctrl
+270	Alt + Ctrl + Shift
+271	Alt + Shift
+272	Alt Modifier
+273	ALT-
+274	Alts appear after logging in on each one
+275	Always
+276	Always Show
+277	Always Show Buffs
+278	Always Show Buttons
+279	Always show less common settings instead of collapsing them behind a Show Less Common link.
+280	Always Show Pet Frame
+281	Always Show Player
+282	Always use K/M/B instead of localized units.
+283	Always: hide the tracker the whole time you are in a raid.\nRaid Combat: hide during any raid combat.\nBoss Combat: hide only during boss encounters.\nArenas always hide the tracker.
+284	AM
+285	Ambience
+286	An arrow next to the To box lists your alts on this realm and faction, guild members and the last names you mailed.
+287	An element cannot anchor to itself
+288	An EllesmereUI LibDataBroker plugin registered right now. One block per plugin -- add the block again for a second one.
+289	Anchor
+290	Anchor Offset X
+291	Anchor Offset Y
+292	Anchor Side
+293	Anchor this element first
+294	Anchor To
+295	Anchor to %1$s
+296	Anchor to Cursor
+297	Anchor to Debuffs
+298	Anchored
+299	Anchored to: %1$s
+300	Announce Instance Reset
+301	Announce Interrupts
+302	Another override group already provides the custom Buff Manager for your current spec.
+303	Another override group already provides the custom Debuff Manager for your current spec.
+304	Any setting you change now applies only to this group's specs.
+305	Any setting you change now applies only while this conditional is active.
+306	AoF
+307	APPEARANCE
+308	Appends the cast target to the spell name (Spell Name - Target), class colored, and disables the separate Spell Target display.
+309	Applies to this profile. Keeps your individual window choices.
+310	Applies your Global Font to Blizzard's default game text (menus, tooltips, quest log, character panes, and more). Requires a UI reload.
+311	Apply
+312	Apply 
+313	Apply Absorb Style, color and rendering to all Frames
+314	Apply All Settings
+315	Apply All Settings From
+316	Apply Art Style to all Frames
+317	Apply Bar Background to all Frames
+318	Apply Bar Color to all Frames
+319	Apply Bar Opacity to all Frames
+320	Apply Bar Position to all Frames
+321	Apply Bar Texture to all Frames
+322	Apply Bar Width to all Frames
+323	Apply Border Size to all Frames
+324	Apply Border Style to all Frames
+325	Apply Border to all Frames
+326	Apply Buffs Location to all Frames
+327	Apply Cast Bar Border Style to all Frames
+328	Apply Cast Bar Border to all Frames
+329	Apply Cast Bar Height to all Frames
+330	Apply Center Text to all Frames
+331	Apply Class Colors to all Frames
+332	Apply Class Resource Background Color to all Frames
+333	Apply Class Resource Bar Spacing to all Frames
+334	Apply Class Resource Position to all Frames
+335	Apply Class Resource Size to all Frames
+336	Apply Class Resource Style to all Frames
+337	Apply Combat Indicator Style to all Frames
+338	Apply Duration Size and Color to all Frames
+339	Apply Enable Text Bar to all Frames
+340	Apply Extra Text to all Frames
+341	Apply Faction Icon Size to all Frames
+342	Apply Frame Strata to all Frames
+343	Apply Glow Template
+344	Apply Heal Absorb Style, color and rendering to all Frames
+345	Apply Health Bar Height to all Frames
+346	Apply Important Cast Glow to Target and Focus
+347	Apply Leader Icon Size to all Frames
+348	Apply Leader Indicator to all Frames
+349	Apply Left Text to all Frames

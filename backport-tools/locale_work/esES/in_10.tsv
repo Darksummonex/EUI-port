@@ -1,0 +1,291 @@
+4936	Two-Hand
+4937	Type /reload in chat to apply.
+4938	Type \"%s\" to enable:
+4939	Type a key such as ALT-X. It uses your watched quest's item (or the first quest item) and binds only while one exists. Updates outside combat; leave empty to disable.
+4940	Type a spell ID and press Enter to be reminded whenever that buff is missing.\nUnknown IDs are ignored.
+4941	Type Icon Position
+4942	Type: 
+4943	Typeface for the M+ timer clock. Every other Mythic+ text uses the module font.
+4944	Typeface for the quest tracker. This module-local pick wins over the module font override above.
+4945	TYPOGRAPHY
+4949	UI Accent Color
+4950	UI Reskin Addons
+4951	UI Scale
+4952	UI Scale Changed
+4953	UI Scale Issue: Profile was made at %1$d%%, yours is %2$d%%
+4954	UI Scale Mismatch
+4955	UI Scale Options
+4956	UI scale set to 0.5333. A reload is recommended.
+4957	UI Style Presets
+4959	Unbound
+4960	Uncheck All
+4961	Uncheck All Debuffs to choose how the Show filters combine.
+4962	Underline Color
+4963	Underline Color Source
+4964	Underlines the selected social tab in the accent colour.
+4965	Ungroup 
+4966	Ungrouped
+4967	Ungrouped Buttons
+4969	Unholy
+4970	Uninterruptible
+4971	Uninterruptible Cast
+4972	Uninterruptible Color
+4973	Uninterruptible Shield
+4974	Unit Color in Dark Mode
+4975	Unit Frame
+4976	UNIT FRAME AURA FILTERS
+4978	Unit Frames Icons
+4979	Unit Menu
+4980	Unit Tooltip
+4981	Unknown
+4982	Unknown error
+4983	Unknown Macro
+4984	Unknown profile type
+4985	Unknown Spell
+4986	Unlimited
+4987	Unlock Arena Frames
+4988	Unlock Display Positions
+4989	Unlock Mode
+4990	Unlock Mode is how you move and resize everything in EllesmereUI, and it is packed with tools: anchors, width matching, fallback anchors, per-group layouts. This video gets you fluent fast.
+4991	Unlock Mode is where you can adjust\npositioning for all the elements of EllesmereUI
+4992	Unlock Mode Layout
+4993	Unlock Mode Movers
+4994	Unlock Window to Close
+4995	Unlocked
+4996	Unsaved Changes
+4997	Unseen Enemies
+4998	Unseen Opacity
+5000	Up to 
+5001	Up to 20 raid pets
+5002	Update Interval (seconds)
+5003	Update Notices
+5004	Update Sync Group
+5005	Upload
+5006	Uppercase Text
+5007	Usability Tint
+5008	Use 24-hour time.
+5009	Use Accent Color
+5010	Use arrow keys to move selected element 1px any direction
+5011	Use Blizzard Style
+5012	Use Class Color
+5013	Use Classic WoW UI
+5014	Use Dispel Colors
+5015	Use EllesmereUI Style
+5016	Use EUI Font Setting
+5017	Use Extra Spell Order
+5018	Use Guild Bank Funds
+5019	Use Hearthstone
+5020	Use Indicator Layout
+5021	Use Letters
+5022	Use Meter Font Setting
+5023	Use Raid Layout
+5024	Use Server Time
+5025	Use the arrows on each section header to reorder.
+5026	Use the cast bar's border style, size and color around the icon.
+5027	Use the EllesmereUI bag window instead of the default bags. After turning it off, /reload to hand the bag keys fully back to the default bags.
+5028	Use the EllesmereUI bank window instead of the default bank frame.
+5029	Use the Has Aggro color while you tank instead of the normal reaction color.
+5030	Use WoW Forever
+5031	Used
+5032	Used / Total
+5033	Used by the movement alert's Bar display mode.
+5034	User-created info bars: clock, gold, XP, micro menu and more.
+5035	Uses Blizzard's coin textures instead of the letter suffixes.
+5036	Uses live target/mouseover auras and the GUID aura cache for other identified plates.
+5037	Uses Logs/WoWCombatLog.txt
+5038	Uses native Wrath combat events
+5039	Uses raid /maintank and /mainassist
+5040	Uses the EllesmereUI resource color for your class.
+5041	Uses the Interrupt on CD color while your interrupt is cooling down.
+5042	Uses the threshold color below the value instead of at or above it.
+5043	Uses Wrath's wide objectives tracker width.
+5044	Uses your target when no focus is casting.
+5045	Utility
+5046	Utility Bar
+5048	Value
+5049	value
+5050	Value | %
+5051	VANILLA ART
+5053	Vengeance
+5055	Vertical Border Separator
+5056	Vertical Down
+5057	Vertical Fill
+5058	Vertical Offset
+5059	Vertical Orientation
+5060	Vertical Separator
+5061	Vertical Spacing
+5062	Vertical Up
+5063	Veteran
+5064	VIDEO GUIDE
+5065	Video Guide
+5066	Video Guide: Cooldown Manager
+5067	Video Guide: Unlock Mode
+5068	View All / Remove Overrides
+5069	View Distance - Reduced to 1\n
+5070	View Houses
+5071	View EUI Staff
+5072	View Patch Notes
+5073	VISIBILITY
+5076	Visibility set to Always or Never
+5077	VISIBLE GROUPS
+5078	Visible Rows
+5079	Visit
+5080	Vivify
+5081	Voice/Channels
+5082	Voidwalker
+5083	W Match
+5084	W Matched
+5085	Waist
+5087	Warlock
+5088	Warlock-Only Soulstone
+5090	WARNING: Frame positions may be off.
+5091	WARNING: This feature requires you to re-log or restart WoW to take effect.
+5093	Warrior
+5094	Warsong Gulch
+5095	WATCH FIRST
+5097	Water Elemental
+5098	Weapon
+5099	Weapon Enhancement
+5100	Weapons / Trinkets
+5101	Weekly reset
+5102	Welcome to EllesmereUI
+5103	What sits in front of the number. Icon shows the character icon; the color swatches on the left tint it.
+5104	What's new in EllesmereUI.
+5105	When Dragonriding
+5106	When Healing
+5107	When Healing uses your role or healing talents
+5108	When Not Dragonriding
+5109	When on, flask/food/weapon/poison reminders still show (dimmed) when you have no matching item in your bags, as a prompt to restock.\nWhen off, they are hidden entirely if you don't carry the item.
+5110	When unlocked, hold Shift and drag the minimap. Position is also available in Unlock Mode.
+5111	When your interrupt is on cooldown now but will be ready before the enemy cast finishes, color the part of the cast bar during which your interrupt will be available. The color clears the instant your interrupt comes off cooldown.
+5112	Where the block's content sits inside its slot.
+5113	Where the icon strip sits inside its slot.
+5114	Where to Show
+5115	Which audio channel the block's volume bar adjusts.
+5116	Which latency to show: home, world, or both side by side.
+5117	Which micro menu buttons this block shows.
+5118	Which part of the row stays in place as reminders appear and disappear.
+5119	Which sections the gold tooltip shows.
+5120	Which slot count the block shows.
+5121	Which view the bags open to by default.
+5122	While Group by Category is on, drop the trailing block of empty slots so the view only shows items.
+5123	While on a glide-capable mount, ground included, where Blizzard shows its vigor HUD. Skyriding (Airborne) additionally requires you to be flying.
+5124	While Party Mode is active. Party Mode can start in combat (Bloodlust); secure elements such as action bars then keep their current visibility until combat ends.
+5125	While resting, in a city or at an inn.
+5126	While seated in a vehicle.
+5127	While you are inside a house or plot.
+5128	While you cast, shows on the bar the mana the spell will cost.
+5129	Whirlwind
+5130	Whirlwind Stacks
+5131	Whisper
+5132	Whisper Sound
+5133	White
+5134	Wide Stripes
+5135	Wide Tracker
+5137	Width %
+5138	Width Offset
+5140	Windfury Weapon
+5141	Window & Bar Border Styles
+5142	Window & Tooltip Skins
+5143	WINDOW DRAGGING
+5144	Window fonts and tooltip text scale
+5145	Window header, bar and timer text
+5146	Window Name
+5148	Window Scale %
+5149	Window scale, icon zoom and item level settings are shared with the Bags page.
+5150	WINDOW SETTINGS
+5151	Window Skins
+5152	Window skins changed for this profile. A UI reload is needed to apply them.
+5153	Window Width
+5154	Windows
+5155	Windwalker
+5156	Winged
+5157	Wintergrasp
+5158	With per-bar textures on, Bar Texture applies to the class resource.
+5159	World
+5160	World channels as letters: General Ge, Trade T, LocalDefense LD, WorldDefense WD, LookingForGroup LFG.
+5161	WORLD MAP
+5162	World Map
+5163	World map overlay: QoL > Interface
+5164	World Marker 1-8
+5165	World Markers
+5166	World Markers at Cursor
+5167	Wound Poison
+5170	WoW Forever, Blizzard Style and Classic WoW UI reload the UI once to apply. Each module can be switched separately later.
+5171	Wraps the health, power and class resource bars in the Classic WoW UI cast bar frame.
+5173	Wrath channel pulse positions
+5174	Wrath channel pulse positions.
+5175	Wrath chat windows with the EllesmereUI panel, tabs, sidebar and chat bubbles.
+5176	WRATH DATA
+5177	Wrath health, power, class resources, cast, GCD, swing and totem bars.
+5178	WRATH INVENTORY
+5179	WRATH OF THE LICH KING BACKPORT
+5180	Wrath only has a Blizzard class resource bar for Death Knight runes.
+5181	Wrath raid and party frames with native unit clicks, auras, range and click casting.
+5182	Wrath spells, items and auras. Assignments are saved for each dual talent group.
+5183	Wrath's native quest and achievement tracker with EUI styling, visibility rules, auto-accept/turn-in and a quest-item hotkey.
+5184	Wrist
+5188	X Position
+5190	XP & Reputation Text Size
+5191	XP / Reputation Bar
+5192	XP and reputation bars use the ElvUI Norm texture.
+5193	XP Bar Text Size
+5194	XP Bar Texture
+5195	XP, reputation and favor bar textures
+5199	Y Position
+5200	Yell
+5201	Yes
+5203	You are displaying NO buffs at all.
+5204	You are displaying NO debuffs at all.
+5205	You changed settings while profile sync is active. Please reload your UI for sync changes to take effect.
+5206	You changed the default value of a setting that has overrides. Overrides keep their own values, so this change will not reach the specs or conditions they cover. To change it for an override, pick that override from the class glyph beside the module search bar and edit it there.
+5207	You don't have this item in your bags
+5208	You have not learned %1$s.
+5209	You have unsaved position changes.\nWhat would you like to do?
+5210	You may only have 
+5211	You've Got Mail!
+5212	Your current spec has an assigned profile so you cannot switch to another. Please unassign to switch.
+5213	Your current spec has its own custom Buff Manager, so conditional Buff Managers never apply to it.
+5214	Your current spec has its own custom Debuff Manager, so conditional Debuff Managers never apply to it.
+5215	Your current spec has its own custom unlock mode, so conditional unlock modes never apply to it. Swap to a spec without one to customize this.
+5216	Your heals
+5217	Your preferred food is out - using a backup you own
+5218	Your setup and every EllesmereUI feature carry over; only the look changes. Apply a style to every module in one click, or set each module below. Changing a style reloads the UI.
+5219	Your UI, Restyled in Seconds
+5220	Zone
+5221	Zone and Subzone
+5222	Zone Level Ranges
+5223	Zone Offset X
+5224	Zone Offset Y
+5225	Zone Position
+5226	Zone PvP Color
+5227	Zone Scale
+5228	ZONE TEXT
+5229	Zone Text
+5230	Zone Text Outline
+5231	Zone Text Scale
+5234	ZZZ on the EUI player frame while resting
+5235	|cff00ff00[EllesmereUI]|r All hints reset. /reload to see them again.
+5236	|cff00ff00[EllesmereUI]|r UI scale reset. /reload to re-snapshot from your Blizzard scale.
+5237	|cff00ff98EllesmereUI:|r Overrides intro reset. The announcement popup fires on your next /reload; the video guide fires on your next click of the overrides glyph.
+5238	|cff00ff98EllesmereUI:|r Video guides and tutorial tips reset. Badges are back; one-time popups will fire again.
+5239	|cff0cd29dLeft-click:|r |cffE0E0E0Toggle EllesmereUI|r
+5240	|cff0cd29dMiddle-click:|r |cffE0E0E0Hide Minimap Button|r
+5241	|cff0cd29dRight-click:|r |cffE0E0E0Enter Unlock Mode|r
+5242	|cff888888...and %d more|r
+5243	|cffff6060[EllesmereUI]|r A profile named \"%1$s\" already exists.
+5244	|cffff6060[EllesmereUI]|r Cannot enter Unlock Mode during combat.
+5245	|cffff6060[EllesmereUI]|r Cannot open options during combat. Use /eui to view Patch Notes.
+5246	|cffff6060[EllesmereUI]|r Cannot rename to \"Default\".
+5247	|cffff6060[EllesmereUI]|r Spec changed: Unlock Mode closed, unsaved layout changes discarded.
+5248	|cffFFFFFFCtrl + Alt + Left Click:|r
+5249	|cffFFFFFFCtrl + Left Click:|r
+5250	|cffFFFFFFCtrl + Right Click:|r
+5251	|cffFFFFFFLeft Click:|r
+5252	|cffFFFFFFRight Click:|r
+5253	|cffFFFFFFScroll:|r
+5254	|cffFFFFFFShift + Left Click:|r
+5255	|cffFFFFFFShift + Middle Click:|r
+5256	简体中文 (Simplified Chinese)
+5257	繁體中文 (Traditional Chinese)
+5258	한국어 (Korean)

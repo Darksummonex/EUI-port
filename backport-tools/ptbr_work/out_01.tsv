@@ -1,0 +1,350 @@
+350	Aplicar Tamanho do Marcador a todos os Quadros
+351	Aplicar Retrato de Não Jogador a todos os Quadros
+352	Aplicar Modo de Retrato a todos os Quadros
+353	Aplicar Posição do Retrato a todos os Quadros
+354	Aplicar Formato do Retrato a todos os Quadros
+355	Aplicar Tamanho do Retrato a todos os Quadros
+356	Aplicar Altura da Barra de Poder a todos os Quadros
+357	Aplicar Formato do Texto de Poder a todos os Quadros
+358	Aplicar Posição do Texto de Poder a todos os Quadros
+359	Aplicar Marcador de Raide a todos os Quadros
+360	Aplicar Texto Direito a todos os Quadros
+361	Aplicar Borda do Formato a todos os Quadros
+362	Aplicar Mostrar Barra de Lançamento e Cor de Lançamento ao Alvo e Foco
+363	Aplicar Mostrar Barra de Lançamento e Cor de Preenchimento a todos os Quadros
+364	Aplicar Mostrar Ícone a todos os Quadros
+365	Aplicar Tamanho e Cor do Nome do Feitiço a todos os Quadros
+366	Aplicar Tamanho e Cor do Alvo do Feitiço a todos os Quadros
+367	Aplicar Modelo
+368	Aplicar Modelo a Este Módulo
+369	Aplicar Texto Central da Barra de Texto a todos os Quadros
+370	Aplicar Ícone de Classe da Barra de Texto a todos os Quadros
+371	Aplicar Altura da Barra de Texto a todos os Quadros
+372	Aplicar Texto Esquerdo da Barra de Texto a todos os Quadros
+373	Aplicar Posição da Barra de Texto a todos os Quadros
+374	Aplicar Texto Direito da Barra de Texto a todos os Quadros
+375	Aplicar Largura da Barra de Texto a todos os Quadros
+376	Aplicar Cor do Texto a todos os Quadros
+377	Aplica as configurações de Visuais de Janelas e Dicas, Menus e Pop-ups do Blizz UI Enhanced de quem compartilhou. Valem para a conta toda e substituirão as suas em TODOS os perfis. Desligado = manter as suas.
+378	Aplica as fontes, cores personalizadas, modo escuro, cor de destaque e escala da interface de quem compartilhou. Desligado = manter seu visual e escala globais; só entram as configurações dos módulos selecionados.
+379	Aplicar o modelo a %d brilho(s)?
+380	Aplicar o modelo aos %d brilho(s) personalizado(s) ativo(s) listados aqui?
+381	Aplicar a Todos
+382	Aplicar a Todos os Brilhos Ativos
+383	Aplicar a Todo o Texto do Jogo
+384	Aplicar a Todos os Perfis
+385	Aplicar a:
+386	Aplicar Visibilidade a todos os Quadros
+387	Bacia Arathi
+388	Rotação do Arco (Graus)
+389	Extensão do Arco (Graus)
+390	Arcade
+391	Arcano
+392	Explosão Arcana
+393	Cargas Arcanas
+394	Intelecto Arcano
+395	Archimonde
+396	ArcUI
+397	Tem certeza de que deseja %1$s %2$s?
+398	Tem certeza de que deseja excluir \"%s\"?
+399	Tem certeza de que deseja redefinir todas as configurações de %1$s para o padrão? Isso recarregará sua interface.
+400	Tem certeza de que deseja redefinir TODAS as configurações dos addons EUI para o padrão? Isso recarregará sua interface.
+401	Tem certeza?
+402	Arena
+403	Quadros de Arena
+404	Página de Quadros de Arena
+405	Suporte a Quadros de Arena
+406	Ajudantes da Arena
+407	Arial
+408	Arial Bold
+409	Arial Bold.TTF
+410	Arial Narrow
+411	Arial Narrow.ttf
+412	ArkInventory
+413	Armadura
+414	Opções do Grupo de Espaços do Arsenal
+415	Armas
+416	Escala da Arte
+417	Estilo da Arte
+418	Arte usada para a linha de brilho e a borda do excesso de escudo.
+419	Arte usada para a coroa do líder e o ícone de assistente.
+420	Assassinato
+421	Definir Tecla
+422	Atribuir Predefinição a Especializações
+423	Atribui este perfil às mesmas especializações a que estava atribuído na exportação. Desligado = suas atribuições atuais permanecem como estão.
+424	Atribuir à Especialização
+425	BÔNUS ATRIBUÍDOS
+426	PENALIDADES ATRIBUÍDAS
+427	Ordem Atribuída
+428	FEITIÇOS ATRIBUÍDOS
+429	Atribuições: 
+430	Assistente
+431	Poder Astral
+432	pelo menos um Gatilho de Celebração
+433	Com Acúmulos
+434	Atrocity
+435	Prender Bônus Importantes ao Cursor
+436	Preso
+437	Modo de Retrato Anexado
+438	Atributos
+439	Sino do Leilão
+440	Casa de Leilões
+441	ÁUDIO
+442	Áudio
+443	Canal de Áudio
+444	AUDIO_AMBIENCE
+445	AUDIO_MASTER
+446	AUDIO_MUSIC
+447	AUDIO_SFX
+448	Aumento
+449	Aura
+450	Aura 
+451	Aura Ativa
+452	barras de aura
+453	Tamanho da Duração da Aura
+454	Filtros de Aura
+455	Tamanho do Ícone da Aura
+456	Dicas dos ícones de aura usam Dicas de Aura
+457	Aura Ausente
+458	ID do Feitiço da Aura
+459	Tamanho do Acúmulo da Aura
+460	Acúmulos da Aura
+461	Tamanho dos Acúmulos da Aura
+462	Tamanho do Temporizador da Aura
+463	Dicas de Aura
+464	Tipo de Aura
+465	Unidade da Aura
+466	Tempo ativo da aura: soma dos segundos observados em todos os alvos.
+467	Lembretes de AuraBuff
+468	Lembretes de AuraBuff: Bônus de Raide, Auras e Consumíveis.
+469	AURAS
+470	Auras com um tipo de dissipação que você pode dissipar
+471	Auras, Bônus e Consumíveis
+472	Automático
+473	Automático (postura/forma)
+474	Aceitar Missões Automaticamente
+475	Configurações de Aceite Automático
+476	Atribuir Automaticamente a Especializações
+477	Duração da Celebração Automática
+478	Atual Automático em Combate
+479	Expandir Automaticamente Configurações Menos Comuns
+480	Colunas da Grade Automáticas
+481	Abrir Recipientes Automaticamente
+482	Reparo Automático
+483	Configurações de Reparo Automático
+484	Vender Lixo Automaticamente
+485	Tamanho Automático
+486	Divisão Automática
+487	Alternar Atual/Geral Automaticamente
+488	O Automático considera Postura Defensiva, Forma de Urso, Fúria Justa e Presença de Gelo como tanque.
+489	Entregar Missões Automaticamente
+490	Configurações de Entrega Automática
+491	Redefinir Zoom Automaticamente (segundos)
+492	Aceitar Convites de Amigos Automaticamente
+493	Aceitar Verificação de Função Automaticamente
+494	Aceita automaticamente todos os convites de grupo de pessoas na sua lista de amigos
+495	Brilho de Lançamento Automático
+496	Preencher Confirmação de Exclusão
+497	Ajustar Tamanho Automaticamente
+498	Automático
+499	Automático (Cliente)
+500	Registro de Combate Automático
+501	Automático acompanha o nome da zona. Manual mantém o bloco com largura fixa e corta nomes longos, para nunca deslocar os blocos ao lado.
+502	Automático mostra XP ao subir de nível e reputação no nível máximo.
+503	Automático usa a capacidade da instância e depois o tamanho do grupo
+504	Repara automaticamente todo o equipamento ao visitar um vendedor com reparo.
+505	Vende automaticamente todos os itens de lixo ao visitar um vendedor.
+506	Digita DELETE automaticamente ao descartar um item valioso. Também permite pressionar Enter para aceitar a exclusão.
+507	Automação e exibições começam desativadas
+508	Layout de Automação
+509	Avant Garde
+510	Avant Garde Naowh.ttf
+511	Ayije CDM
+512	Voltar
+513	Escurecimento do Fundo
+514	Fundo
+515	Cor do Fundo
+516	Escuridão do Fundo
+517	Fundo Apenas nos Pontos
+518	Opacidade do Fundo
+519	Opacidade do fundo das barras no Modo Escuro. Aplica-se apenas a Quadros de Unidade e Quadros de Raide (Barras de Recurso ignoram).
+520	Estilo do Fundo
+521	Textura do Fundo
+522	Textura de fundo desta barra, tingida pela cor e opacidade da barra.
+523	Opacidade do Suporte
+524	Mochila
+525	Emblema
+526	Emblema mostra um pequeno ícone; Pixels Dragon envolve o retrato com arte de classificação.
+527	Barra de Bolsas
+528	Visual da Barra de Bolsas
+529	Tamanho do Botão de Bolsa
+530	Espaçamento das Bolsas
+531	Baganator
+532	Bagnon
+533	Bolsas
+534	Páginas de Bolsas e Banco
+535	Ícones das Bolsas
+536	Equilíbrio
+537	Banana Peel Slip
+538	Faixa
+539	Banco
+540	Categorias do Banco
+541	Ícone do Estandarte
+542	Barra
+543	Estilos de Borda de Barras e Botões
+544	Texturas de barra e absorção dos quadros principais
+545	Animações da Barra
+546	FUNDO DA BARRA
+547	Fundo da Barra
+548	Cor do Fundo da Barra
+549	Cor da Borda da Barra
+550	Tamanho da Borda da Barra
+551	Texto dos botões da barra, texto da barra de XP/Rep
+552	Cor da Barra
+553	Padrão da Barra
+554	EXIBIÇÃO DA BARRA
+555	Exibição da Barra
+556	Lista da Barra e Prévia do Ícone
+557	BRILHOS DA BARRA
+558	Brilhos da Barra
+559	Altura da Barra
+560	HISTÓRICO DA BARRA
+561	INTERAÇÕES DA BARRA
+562	Camada da Barra
+563	LAYOUT DA BARRA
+564	Tamanho do Texto Esquerdo da Barra
+565	Nome da Barra
+566	Opacidade da Barra
+567	Posição da Barra
+568	Tamanho do Texto Direito da Barra
+569	CONFIGURAÇÕES DA BARRA
+570	Espaçamento das Barras
+571	Estrato da Barra
+572	TEXTO DA BARRA
+573	Textura da Barra
+574	Textura da Barra (Recurso de Classe)
+575	Textura da Barra (por barra de dados)
+576	Textura da Barra (por janela)
+577	Largura da Barra
+578	Bar10
+579	Bar2
+580	Bar3
+581	Bar4
+582	Bar5
+583	Bar6
+584	Bar7
+585	Bar8
+586	Bar9
+587	Barbed
+588	Barbiero
+589	BARRAS
+590	Barras Exibidas
+591	Bartender4
+592	Básico
+593	RESSURREIÇÃO EM COMBATE
+594	Tamanho da Contagem de Ress. em Combate
+595	Tamanho da Duração de Ress. em Combate
+596	Fonte de Ress. em Combate
+597	Contorno de Ress. em Combate
+598	Tamanho do Texto de Ress. em Combate
+599	Brado de Batalha
+600	Postura de Batalha
+601	Campo de Batalha
+602	Vitória no Campo de Batalha
+603	Lembretes de Foco de Luz
+604	Forma de Urso
+605	Domínio das Feras
+606	Beautiful
+607	Atrás do Quadro de Unidade
+608	Abaixo
+609	Abaixo da Barra de Absorção
+610	Abaixo da Janela Inferior, Esquerda
+611	Abaixo da Janela Inferior, Direita
+612	Abaixo do Cursor
+613	Abaixo da Barra de Vida
+614	Abaixo do Ícone
+615	Abaixo do Mapa
+616	Somente Abaixo do Limite
+617	Postura de Berserker
+618	Better Character Panel
+619	Better Character Panel entra em conflito com a Ficha do Personagem do EllesmereUI. Desative o Better Character Panel ou o visual da Ficha do Personagem nas configurações do Blizz UI Enhanced.
+620	Better Cooldown Manager
+621	BetterBags
+622	Escurecer Cor de Poder do Fundo
+623	Bierbauch
+624	Defensiva Grande
+625	Bike Horn
+626	atalho
+627	Mudanças de atalho são aplicadas fora de combate
+628	Bite
+629	Escurece todas as cores de classe nesta quantidade, onde quer que sejam usadas.
+630	Escurece todas as cores de recurso de classe nesta quantidade, onde quer que sejam usadas.
+631	Escurece todas as cores de poder nesta quantidade, onde quer que sejam usadas.
+632	Escurece os fundos da Barra de Poder com cor de poder (Quadros de Unidade e de Raide) nesta quantidade, somado ao Escurecer Cor de Poder.
+633	Lista Negra
+634	Feitiços na lista negra nunca são exibidos.
+635	Arena da Lâmina Afiada
+636	Sangramento
+637	Cabeçalho de Alvo Colorido Blizz
+638	Blizz UI Enhanced
+639	Blizzard
+640	Anel do botão de ação e destaque ao pressionar da Blizzard.
+641	Estilos Blizzard e Clássico
+642	ARTE DA BLIZZARD
+643	Borda da Blizzard
+644	Barra de Habilidades do Personagem da Blizzard
+645	Arte de Recurso de Classe da Blizzard
+646	Padrão da Blizzard
+647	Padrão da Blizzard mantém a configuração de horário das Opções de Interface.
+648	Blizzard Dialog
+649	Linha de Brilho da Blizzard
+650	Barra de Raide da Blizzard
+651	Estilo Blizzard
+652	DICA DA BLIZZARD
+653	Visual das Janelas da Blizzard
+654	Visuais das Janelas da Blizzard
+655	Blizzard Wood
+656	Bordas de aura da Blizzard nos bônus, penalidades e encantamentos de arma, com todos os recursos de barra do EllesmereUI.
+657	Painel de barra e moldura de botão de ação da Blizzard, ou a moldura de barra clássica e anel de espaço, com todos os recursos do HUD de Dracoequitação do EllesmereUI.
+658	Arte da barra de bônus da Blizzard, ou a moldura clássica da barra de lançamento, com todos os recursos de barra rastreada do EllesmereUI.
+659	Arte da barra de lançamento da Blizzard, ou a moldura clássica da barra de lançamento, com todos os recursos de barra de lançamento do EllesmereUI.
+660	O encaixe do Modo de Edição da Blizzard pode não funcionar corretamente até você recarregar a interface.
+661	Arte de quadros, retratos e formatos de barra da Blizzard, ou os quadros clássicos, com todos os recursos de quadro do EllesmereUI.
+662	Arte das barras de vida e lançamento da Blizzard, ou as placas planas clássicas, com todos os recursos de placa de identificação do EllesmereUI.
+663	Janela e arte de barra do medidor da Blizzard, ou uma janela na borda clássica das abas do bate-papo, com todos os recursos de medidor do EllesmereUI.
+664	Janela e arte de barra do medidor da Blizzard, ou uma janela na borda clássica das abas do bate-papo, com todos os recursos do medidor de ameaça do EllesmereUI.
+665	A própria ficha de personagem da Blizzard como o jogo a desenha; WoW Forever mantém o texto dos itens ao lado dos espaços, e as cores dos atributos seguem o visual do EllesmereUI.
+666	A própria ficha de personagem da Blizzard com os atributos, texto dos espaços e painel de engastes do EllesmereUI; a aba Calc segue o visual do EllesmereUI.
+667	A própria janela de bate-papo, abas e caixa de entrada da Blizzard, ou a mesma janela com a arte clássica das abas, com todos os recursos de bate-papo do EllesmereUI.
+668	A própria arte de quadros e botões da Blizzard, com os recursos do EllesmereUI.
+669	A própria janela e cartões de amigos da Blizzard, com os ícones de classe, nomes na cor da classe e ícones de região do EllesmereUI. Ambos os estilos padrão ficam iguais aqui.
+670	O próprio rastreador da Blizzard, com todos os recursos de rastreador do EllesmereUI. Ambos os estilos padrão ficam iguais aqui.
+671	Borda e destaques dos quadros de raide da Blizzard, ou os clássicos, com todos os recursos de quadro de raide do EllesmereUI.
+672	Minimapa redondo e cabeçalho da Blizzard, ou o anel clássico, com todos os recursos de minimapa do EllesmereUI.
+673	Arte arredondada de botões da Blizzard, ou os espaços quadrados clássicos, com todos os recursos de barra do EllesmereUI.
+674	Ícones de recarga arredondados da Blizzard, ou os espaços quadrados clássicos, com todos os recursos de ícone do EllesmereUI.
+675	As janelas da Blizzard agora combinam com o tema do EllesmereUI com um Tema Escuro WoW 2.0, do Diário de Masmorras à Casa de Leilões e além.
+676	Fundo do Bloco
+677	Bloco a Adicionar
+678	Tipo de bloco que o botão Adicionar Bloco acrescenta ao final desta barra.
+679	Palavras-chave Bloqueadas
+680	Sangue
+681	Sede de Sangue / Heroísmo
+682	Tamanho da Contagem de Sede de Sangue
+683	Tamanho da Duração de Sede de Sangue
+684	RASTREADOR DE SEDE DE SANGUE
+685	VaE
+686	Tamanho do Texto VaE / Vinculado à Guerra
+687	Opções do Texto VaE
+688	Tamanho do Texto VaE
+689	BORDA
+690	Borda
+691	borda
+692	Arte de borda desenhada ao redor dos quadros de chefe. Herdar (Quadros Principais) usa a borda dos quadros principais.
+693	Arte de borda desenhada ao redor da barra de lançamento.
+694	Cor da Borda
+695	A cor da borda indica se o lançamento pode ser interrompido.
+696	Fonte da Cor da Borda
+697	A borda só está disponível quando a Barra de Poder é exibida.
+698	Opacidade da Borda
+699	Opções de Borda

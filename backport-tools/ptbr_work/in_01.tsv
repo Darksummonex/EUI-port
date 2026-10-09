@@ -1,0 +1,350 @@
+350	Apply Marker Size to all Frames
+351	Apply Non-Player Portrait to all Frames
+352	Apply Portrait Mode to all Frames
+353	Apply Portrait Position to all Frames
+354	Apply Portrait Shape to all Frames
+355	Apply Portrait Size to all Frames
+356	Apply Power Bar Height to all Frames
+357	Apply Power Text Format to all Frames
+358	Apply Power Text Position to all Frames
+359	Apply Raid Marker to all Frames
+360	Apply Right Text to all Frames
+361	Apply Shape Border to all Frames
+362	Apply Show Cast Bar and Cast Color to Target and Focus
+363	Apply Show Cast Bar and Fill Color to all Frames
+364	Apply Show Icon to all Frames
+365	Apply Spell Name Size and Color to all Frames
+366	Apply Spell Target Size and Color to all Frames
+367	Apply Template
+368	Apply Template to This Module
+369	Apply Text Bar Center Text to all Frames
+370	Apply Text Bar Class Icon to all Frames
+371	Apply Text Bar Height to all Frames
+372	Apply Text Bar Left Text to all Frames
+373	Apply Text Bar Position to all Frames
+374	Apply Text Bar Right Text to all Frames
+375	Apply Text Bar Width to all Frames
+376	Apply Text Color to all Frames
+377	Apply the sharer's Blizz UI Enhanced Window Skins and Tooltips, Menus & Popups settings. These are account-wide and will overwrite yours across ALL profiles. Off = keep your own.
+378	Apply the sharer's fonts, custom colours, dark mode, accent colour and UI scale. Off = keep your own global look and scale; only the selected modules' settings come in.
+379	Apply the template to %d glow(s)?
+380	Apply the template to the %d active custom glow(s) listed here?
+381	Apply to All
+382	Apply to All Active Glows
+383	Apply to All Game Text
+384	Apply to All Profiles
+385	Apply to:
+386	Apply Visibility to all Frames
+387	Arathi Basin
+388	Arc Rotation (Degrees)
+389	Arc Span (Degrees)
+390	Arcade
+391	Arcane
+392	Arcane Blast
+393	Arcane Charges
+394	Arcane Intellect
+395	Archimonde
+396	ArcUI
+397	Are you sure you want to %1$s %2$s?
+398	Are you sure you want to delete \"%s\"?
+399	Are you sure you want to reset all %1$s settings to their defaults? This will reload your UI.
+400	Are you sure you want to reset ALL EUI addon settings to their defaults? This will reload your UI.
+401	Are you sure?
+402	Arena
+403	Arena Frames
+404	Arena Frames Page
+405	Arena Frames Support
+406	Arena Pets
+407	Arial
+408	Arial Bold
+409	Arial Bold.TTF
+410	Arial Narrow
+411	Arial Narrow.ttf
+412	ArkInventory
+413	Armor
+414	Armory Slot Group Options
+415	Arms
+416	Art Scale
+417	Art Style
+418	Art used for the glow line and the overshield edge.
+419	Art used for the leader crown and the assistant icon.
+420	Assassination
+421	Assign Key
+422	Assign Preset to Specs
+423	Assign this profile to the same specializations it was assigned to on export. Off = your current spec assignments stay as they are.
+424	Assign to Spec
+425	ASSIGNED BUFFS
+426	ASSIGNED DEBUFFS
+427	Assigned Order
+428	ASSIGNED SPELLS
+429	Assignments: 
+430	Assist
+431	Astral Power
+432	at least one Celebration Trigger
+433	At Stacks
+434	Atrocity
+435	Attach Important Buffs to Cursor
+436	Attached
+437	Attached Portrait Mode
+438	Attributes
+439	Auction Bell
+440	Auction House
+441	AUDIO
+442	Audio
+443	Audio Channel
+444	AUDIO_AMBIENCE
+445	AUDIO_MASTER
+446	AUDIO_MUSIC
+447	AUDIO_SFX
+448	Augmentation
+449	Aura
+450	Aura 
+451	Aura Active
+452	aura bars
+453	Aura Duration Size
+454	Aura Filters
+455	Aura Icon Size
+456	Aura icon tooltips use Aura Tooltips
+457	Aura Missing
+458	Aura Spell ID
+459	Aura Stack Size
+460	Aura Stacks
+461	Aura Stacks Size
+462	Aura Timer Size
+463	Aura Tooltips
+464	Aura Type
+465	Aura Unit
+466	Aura uptime: sum of observed seconds across targets.
+467	AuraBuff Reminders
+468	AuraBuff Reminders: Raid Buffs, Auras, and Consumables.
+469	AURAS
+470	Auras with a dispel type you can dispel
+471	Auras, Buffs & Consumables
+472	Auto
+473	Auto (stance/form)
+474	Auto Accept Quests
+475	Auto Accept Settings
+476	Auto Assign to Specs
+477	Auto Celebration Duration
+478	Auto Current on Combat
+479	Auto Expand Less Common Settings
+480	Auto Grid Columns
+481	Auto Open Containers
+482	Auto Repair
+483	Auto Repair Settings
+484	Auto Sell Junk
+485	Auto Sized
+486	Auto Split
+487	Auto Swap Current/Overall
+488	Auto treats Defensive Stance, Bear Form, Righteous Fury and Frost Presence as tanking.
+489	Auto Turn In Quests
+490	Auto Turn In Settings
+491	Auto Zoom Reset (seconds)
+492	Auto-Accept Friend Invites
+493	Auto-Accept Role Check
+494	Auto-accepts all group invites from people on your friends list
+495	Auto-Cast Shine
+496	Auto-Fill Delete Confirmation
+497	Auto-Size to Fit
+498	Automatic
+499	Automatic (Client)
+500	Automatic Combat Logging
+501	Automatic follows the zone name. Manual holds the block at a fixed width and clips longer names, so it never shifts the blocks beside it.
+502	Automatic shows XP while leveling and reputation at max level.
+503	Automatic uses instance capacity, then roster size
+504	Automatically repair all gear when visiting a repair vendor.
+505	Automatically sell all junk items when visiting a vendor.
+506	Automatically types DELETE when throwing away a valuable item. Also allows you to press enter to accept the deletion.
+507	Automation and displays start disabled
+508	Automation Layout
+509	Avant Garde
+510	Avant Garde Naowh.ttf
+511	Ayije CDM
+512	Back
+513	Backdrop Dim
+514	Background
+515	Background Color
+516	Background Darkness
+517	Background Only on Pips
+518	Background Opacity
+519	Background opacity for Dark Mode bars. Applies to Unit Frames and Raid Frames only (Resource Bars ignore it).
+520	Background Style
+521	Background Texture
+522	Background texture for this bar, tinted by the bar's color and opacity.
+523	Backing Opacity
+524	Backpack
+525	Badge
+526	Badge shows a small icon; Pixels Dragon wraps the portrait in classification art.
+527	Bag Bar
+528	Bag Bar Skin
+529	Bag Button Size
+530	Bag Spacing
+531	Baganator
+532	Bagnon
+533	Bags
+534	Bags and Bank Pages
+535	Bags Icons
+536	Balance
+537	Banana Peel Slip
+538	Band
+539	Bank
+540	Bank Categories
+541	Banner Icon
+542	Bar
+543	Bar & Button Border Styles
+544	Bar and absorb textures for the main frames
+545	Bar Animations
+546	BAR BACKGROUND
+547	Bar Background
+548	Bar Background Color
+549	Bar Border Color
+550	Bar Border Size
+551	Bar button text, XP/Rep bar text
+552	Bar Color
+553	Bar Default
+554	BAR DISPLAY
+555	Bar Display
+556	Bar Dropdown and Icon Preview
+557	BAR GLOWS
+558	Bar Glows
+559	Bar Height
+560	BAR HISTORY
+561	BAR INTERACTIONS
+562	Bar Layer
+563	BAR LAYOUT
+564	Bar Left Text Size
+565	Bar Name
+566	Bar Opacity
+567	Bar Position
+568	Bar Right Text Size
+569	BAR SETTINGS
+570	Bar Spacing
+571	Bar Strata
+572	BAR TEXT
+573	Bar Texture
+574	Bar Texture (Class Resource)
+575	Bar Texture (per data bar)
+576	Bar Texture (per window)
+577	Bar Width
+578	Bar10
+579	Bar2
+580	Bar3
+581	Bar4
+582	Bar5
+583	Bar6
+584	Bar7
+585	Bar8
+586	Bar9
+587	Barbed
+588	Barbiero
+589	BARS
+590	Bars Shown
+591	Bartender4
+592	Basic
+593	BATTLE RES
+594	Battle Res Count Size
+595	Battle Res Duration Size
+596	Battle Res Font
+597	Battle Res Outline
+598	Battle Res Text Size
+599	Battle Shout
+600	Battle Stance
+601	Battleground
+602	Battleground Win
+603	Beacon Reminders
+604	Bear Form
+605	Beast Mastery
+606	Beautiful
+607	Behind Unit Frame
+608	Below
+609	Below Absorb Bar
+610	Below Bottom Window, Left
+611	Below Bottom Window, Right
+612	Below Cursor
+613	Below Health Bar
+614	Below Icon
+615	Below Map
+616	Below Threshold Only
+617	Berserker Stance
+618	Better Character Panel
+619	Better Character Panel conflicts with the EllesmereUI's Character Sheet. Disable either Better Character Panel or the Character Sheet skin in Blizzard UI Enhanced settings.
+620	Better Cooldown Manager
+621	BetterBags
+622	BG Power Color Darken
+623	Bierbauch
+624	Big Defensive
+625	Bike Horn
+626	binding
+627	Binding changes apply outside combat
+628	Bite
+629	Blackens every class colour by this amount, everywhere class colours are used.
+630	Blackens every class-resource colour by this amount, everywhere class-resource colours are used.
+631	Blackens every power colour by this amount, everywhere power colours are used.
+632	Blackens power-colored Power Bar backgrounds (Unit Frames and Raid Frames) by this amount, on top of Power Color Darken.
+633	Blacklist
+634	Blacklisted spells never display.
+635	Blade's Edge Arena
+636	Bleed
+637	Blizz Colored Target Header
+638	Blizz UI Enhanced
+639	Blizzard
+640	Blizzard action button ring and press highlight.
+641	Blizzard and Classic Styles
+642	BLIZZARD ART
+643	Blizzard Border
+644	Blizzard Character Skills Bar
+645	Blizzard Class Resource Art
+646	Blizzard Default
+647	Blizzard Default keeps the Interface Options timestamp setting.
+648	Blizzard Dialog
+649	Blizzard Glow Line
+650	Blizzard Raid Bar
+651	Blizzard Style
+652	BLIZZARD TOOLTIP
+653	Blizzard Window Skinning
+654	Blizzard Window Skins
+655	Blizzard Wood
+656	Blizzard's aura borders on the buffs, debuffs and weapon enchants, with every EllesmereUI bar feature.
+657	Blizzard's bar panel and action button frame, or the classic bar frame and slot ring, with every EllesmereUI Skyriding HUD feature.
+658	Blizzard's buff bar art, or the classic cast bar frame, with every EllesmereUI tracked bar feature.
+659	Blizzard's cast bar art, or the classic cast bar frame, with every EllesmereUI cast bar feature.
+660	Blizzard's Edit Mode snapping may not work correctly until you reload your UI.
+661	Blizzard's frame art, portraits and bar shapes, or the classic frames, with every EllesmereUI frame feature.
+662	Blizzard's health and cast bar art, or the classic flat plates, with every EllesmereUI nameplate feature.
+663	Blizzard's meter window and bar art, or a window in the classic chat tabs' border, with every EllesmereUI meter feature.
+664	Blizzard's meter window and bar art, or a window in the classic chat tabs' border, with every EllesmereUI threat meter feature.
+665	Blizzard's own character sheet as the game draws it; WoW Forever keeps the item text beside the slots, and the stat colors stay with the EllesmereUI look.
+666	Blizzard's own character sheet with the EllesmereUI stats, slot text and socket panel added; the Calc tab stays with the EllesmereUI look.
+667	Blizzard's own chat window, tabs and input box, or the same window with the classic tab art, with every EllesmereUI chat feature.
+668	Blizzard's own frame and button art, with EllesmereUI's features.
+669	Blizzard's own friends window and cards, with the EllesmereUI class icons, class-coloured names and region icons added. Both stock styles look the same here.
+670	Blizzard's own tracker, with every EllesmereUI tracker feature. Both stock styles look the same here.
+671	Blizzard's raid frame edge and highlights, or the classic ones, with every EllesmereUI raid frame feature.
+672	Blizzard's round minimap and header, or the classic ring, with every EllesmereUI minimap feature.
+673	Blizzard's rounded button art, or the classic square slots, with every EllesmereUI bar feature.
+674	Blizzard's rounded cooldown icons, or the classic square slots, with every EllesmereUI icon feature.
+675	Blizzard's windows now match the EllesmereUI theme with a WoW 2.0 Dark Theme, from the Dungeon Journal to the Auction House and beyond.
+676	Block Background
+677	Block To Add
+678	Block type the Add Block button appends to the end of this bar.
+679	Blocked Keywords
+680	Blood
+681	Bloodlust / Heroism
+682	Bloodlust Count Size
+683	Bloodlust Duration Size
+684	BLOODLUST TRACKER
+685	BoE
+686	BoE / Warbound Text Size
+687	BoE Text Options
+688	BoE Text Size
+689	BORDER
+690	Border
+691	border
+692	Border art drawn around the boss frames. Inherit (Main Frames) uses the main frames' border.
+693	Border art drawn around the cast bar.
+694	Border Color
+695	Border color shows whether the cast can be interrupted.
+696	Border Color Source
+697	Border is only available when the Power Bar is shown.
+698	Border Opacity
+699	Border Options

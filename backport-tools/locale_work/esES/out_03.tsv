@@ -1,0 +1,450 @@
+1509	Descargar
+1511	DPS/HPS usan la duración del combate.
+1512	Tamaño de icono DR
+1513	Lado de iconos DR
+1514	arrastrar
+1515	Arrastra las barras en el modo de desbloqueo; el engranaje abre estas opciones.
+1516	Arrastrar fondos de ventana vacíos fuera de combate
+1517	Arrastra los iconos a cualquier lugar de la barra lateral. Restablecer posiciones de iconos los devuelve.
+1518	Arrastra el encabezado para mover; la rueda del ratón desplaza las filas.
+1519	Arrastra para reordenar
+1520	Arrastra para reordenar. Haz clic para añadir resplandores personalizados, efectos de estado activo/reutilización y más.
+1521	Arrastra para reordenar. Haz clic para anular los ajustes de visualización y añadir efectos personalizados por icono
+1522	Nivel de marco del dragón
+1523	Surcacielos
+1524	Tamaño del dragón
+1525	Estrato del dragón
+1526	Surcacielos
+1527	Textura de barra de surcacielos
+1528	Textura de la barra de velocidad de surcacielos
+1529	Tamaño del texto de velocidad de surcacielos
+1530	Dibuja un divisor entre el icono integrado y la barra, usando el aspecto del borde de la barra de lanzamiento.
+1531	Dibuja bordes cuadrados debajo de la superficie del mapa.
+1532	Dibuja el borde personalizado de la barra de lanzamiento alrededor del icono y la barra juntos. Un icono con desplazamiento mantiene su propio borde.
+1533	Dibuja un borde del color del tipo de disipación alrededor de la barra de vida.
+1534	Dibuja una fina línea de acento en la parte superior del fondo del seguimiento.
+1535	Dibuja el borde detrás de la barra de lanzamiento en lugar de encima.
+1536	Dibuja el borde debajo del fondo del chat.
+1537	Dibuja el arte de unión del estilo de borde entre la barra de vida y una barra de recurso anclada.
+1538	Dibuja el anillo del color de disipación con la forma de este estilo de borde en lugar de líneas planas.
+1539	Dibuja el estilo de borde seleccionado entre el retrato anclado y las barras.
+1540	Dibuja el estandarte de tu facción detrás de cada fila de amigo (en Wrath, los amigos comparten tu facción).
+1541	Señor del terror
+1542	Probador
+1544	Suelta aquí hechizos, objetos, macros o monturas, o usa Añadir acción abajo.
+1545	Quita las entradas individuales de Banco / Bolsa de banco cuando la lista de categorías se encargue de la navegación.
+1546	Druida
+1547	Forma de druida (fuera de combate)
+1548	Poder de forma de druida
+1549	Las formas de viaje, acuática y de vuelo del druida cuentan como montado.
+1550	Debido a restricciones de la API de Blizzard, el sistema nativo de Blizzard 
+1551	Mazmorra
+1552	Entradas de mazmorras y bandas
+1553	Buscador de mazmorras
+1554	Cuenta atrás de mazmorra lista
+1555	Explorador de mazmorras
+1556	Mazmorras
+1557	Mazmorras, bandas, gestas, arenas y campos de batalla. Las ciudadelas no cuentan.
+1558	Durabilidad
+1559	Etiqueta de durabilidad
+1560	Ubicación de durabilidad
+1561	Color del texto de durabilidad
+1562	Umbral de durabilidad %
+1563	Tamaño del texto de aviso de durabilidad
+1564	Duración
+1565	Duración y acumulaciones
+1566	Posición de duración
+1567	Tamaño de duración
+1568	Barrido de duración
+1569	Texto de duración
+1570	Color del texto de duración
+1571	Tamaño del texto de duración
+1572	Duración X
+1573	Duración Y
+1574	Dinámico
+1575	Color dinámico
+1576	El color dinámico está activado: el color de relleno proviene de la vida de la unidad
+1577	Coloreado dinámico
+1578	Cada diseño guarda sus ajustes y su posición
+1579	La página de cada preajuste incluye su cadena de importación.
+1580	Obtenido
+1581	Arma Vida terrestre
+1582	Poderío de ébano
+1583	Editar
+1584	Editar acción
+1585	Editar anclaje
+1586	EDITAR ASIGNACIÓN
+1587	Editar lista negra
+1591	Editar grupo condicional
+1592	Editar condicional: %s
+1593	Editar entrada
+1594	Editar filtros
+1595	Editar grupo: %s
+1596	Editar en filtros de auras
+1597	Modo de edición ampliado
+1598	Edición normal: los cambios se aplican a tu especialización actual
+1599	Editar grupo de anulación
+1600	Editar anulación: 
+1601	Editar auras rastreadas
+1602	Editando como %s
+1603	Editando especialización
+1604	Ocho marcadores de objetivo, comprobación de listos, Pull y Disolver
+1605	Opciones de elementos
+1606	Fila de elementos
+1607	Distancia de la fila de elementos
+1608	Posición de la fila de elementos
+1609	Espaciado de la fila de elementos
+1611	Los elementos no se pueden anclar a\n
+1612	Los elementos no pueden igualar su tamaño a\n
+1613	Dragón de enemigo élite
+1614	Tamaño del icono de élite
+1615	Indicador de élite/raro
+1616	Ajustes del indicador de élite/raro
+1618	Logo de Ellesmere
+1619	Barras de acción de Ellesmere
+1620	Resplandores de barras CDM de Ellesmere
+1621	Placas de nombre de Ellesmere
+1622	Marcos de unidad de Ellesmere
+1625	Fondo de EllesmereUI
+1627	EllesmereUI coincide con el marco de aspecto de ventana; Moderno es un color plano.
+1628	EllesmereUI en 3.3.5a
+1630	¡Llegan los marcos de banda de EllesmereUI! Limpios, totalmente personalizables y creados para el rendimiento.
+1631	Estilo EllesmereUI
+1632	El estilo EllesmereUI los muestra al pasar el ratón sobre el mapa.
+1633	Estilo EllesmereUI, Estilo Blizzard e Interfaz de WoW clásico recargan la interfaz una vez para aplicarse. Cada módulo se puede cambiar por separado más tarde.
+1634	WEB DE ELLESMEREUI
+1636	EllesmereUI WonderBar ahora se llama EllesmereUI DataBars. El antiguo addon WonderBar sigue instalado y ambos crean la misma barra. Desactiva o elimina el addon EllesmereUIWonderBar.
+1639	Menú de acción vacío
+1640	Color de barra vacía
+1641	Preajuste vacío
+1642	Ranura vacía
+1643	Espacio vacío reservado en este lado del contenido del bloque.
+1645	activar
+1646	Activar 
+1647	Activa %1$s para cambiar su estilo.
+1648	Activa %1$s para editar sus ajustes de texto.
+1649	Activa %1$s para editar sus ajustes de textura.
+1650	Activa %1$s para editar estos ajustes.
+1651	Activar y recargar
+1652	Activar colores de acento
+1653	Activar barras de acción
+1654	Activar marcos de arena
+1655	Activar recordatorios de auras
+1656	Activar bolsas
+1657	Activar banco
+1658	Activar barra
+1659	Activar fondo de barra
+1660	Activar resplandores de barra
+1661	Activar historial de barras
+1662	Activar icono de res. en combate
+1663	Activar fondo del bloque
+1664	Activar icono de Ansia de sangre
+1665	Activar marcos de jefe
+1666	Activar clic para lanzar integrado
+1667	Activar barra de Llamada de tótems
+1668	Activar chat
+1669	Activar bocadillos de chat
+1670	Activar recurso de clase
+1671	Activar gestor de reutilización
+1672	Activar medidores de daño
+1673	Activa el modo oscuro (Ajustes globales, Fuentes y colores) para usar esta condición
+1674	Activar barra de surcacielos
+1675	Activar dragón de enemigo élite
+1676	Activar entrada
+1677	Activar barra de experiencia
+1678	Activar estandartes de facción
+1679	Activa primero Desvanecer fuera de combate
+1680	Activar barra de lanzamiento del foco
+1681	Activar objetivo del foco
+1682	Activar aspecto de amigos
+1683	Activar barra de GCD
+1684	Activar resplandor
+1685	Activar degradado
+1686	Activar historial de iconos
+1687	Activar desvanecido en reposo
+1688	Activar indicador
+1689	Activar minimapa
+1690	Activar estilo moderno
+1691	Activa primero los módulos
+1692	Activar modo al pasar el ratón
+1693	Activar marco de mascota
+1694	Activar barra de lanzamiento del jugador
+1695	Activar dragón del marco del jugador
+1696	Activar Calidad de vida
+1697	Activar seguimiento de misiones
+1698	Activar Quickdraw
+1699	Activar módulo de marcos de banda
+1700	Activar barra de reputación
+1701	Activar barras de recurso
+1702	Activar ajuste magnético
+1703	Activar temporizador de golpe
+1704	Activar barra de lanzamiento del objetivo
+1705	Activar color de objetivo
+1706	Activar objetivo del objetivo
+1707	Activar barras de hechizos dirigidos
+1708	Activar texto
+1709	Activar barra de texto
+1710	Activa los indicadores mostrados arriba. Desactívalo para volver a las filas de auras existentes.
+1711	Activar esta paleta
+1712	Actívalo para mostrar un recordatorio para quitar\neste talento cuando no sea necesario\n(todas las demás mazmorras/bandas no seleccionadas).
+1713	Activar umbral
+1714	Activar consejos del tutorial
+1715	Activar arrastre de ventanas
+1716	Activar aspectos de ventana
+1717	Actívalo o desactívalo en cualquier momento desde la barra lateral del panel de opciones.
+1719	Categorías activadas
+1720	Monedas activadas
+1721	Activa la nitidez para mejorar la claridad de la imagen. Especialmente notable con escalas de renderizado bajas.
+1722	Tamaño del nombre del encantamiento
+1723	Tamaño del texto del encantamiento
+1724	Encantamientos en ranuras de equipo
+1725	Barra de encuentro
+1726	Finalizar vista previa
+1727	Enemigo
+1728	Marcos de arena enemigos con seguimiento de abalorio JcJ, control de masas y lanzamientos.
+1729	COLORES DE ENEMIGO
+1730	Colores de enemigo
+1731	Daño recibido por enemigos
+1732	Tamaño del texto de fuerzas enemigas
+1733	Nombre del enemigo
+1734	Texto del nombre del enemigo
+1735	Colores de clase de jugadores enemigos
+1736	Objetivo enemigo
+1737	Energía
+1739	Diseño de personaje mejorado
+1740	Sistema de inventario mejorado con categorías en barra lateral, niveles de objeto y bordes de calidad.
+1741	Descripciones emergentes mejoradas
+1742	Mejora
+1743	Introduce un nombre para el nuevo perfil:
+1744	Introduce un nuevo nombre para \"%1$s\":
+1745	Introduce un nuevo nombre para \"%s\":
+1746	Introduce un nuevo nombre:
+1747	Introduce un ID de hechizo para rastrear:
+1748	Introduce un ID válido o una ranura de equipo 1-19
+1749	Introduce un ID de hechizo válido para Lanzar hechizo.
+1750	Introduce una ranura de equipo (1-19). Los abalorios son 13 y 14.
+1751	Introduce un ID de objeto para rastrear:
+1752	Entrar y salir
+1753	Color de entrada
+1755	Introduce un nombre...
+1756	Introduce ID de hechizo positivos separados por comas o espacios.
+1757	Introduce ID de hechizo positivos separados por comas.
+1758	Introducir texto
+1759	Introduce la duración máxima del perjuicio en segundos:
+1760	Introduce el ID de hechizo de un beneficio o perjuicio para rastrear:
+1761	Introduce el ID de hechizo que se mostrará siempre en este marco.
+1762	Introduce el ID de hechizo que se mostrará siempre.
+1763	Introduce el ID de hechizo que se excluirá de este marco.
+1764	Introduce el ID de hechizo que se excluirá.
+1765	Entrando en combate
+1766	Al entrar en combate, esta ventana vuelve a Actual si estás viendo un segmento anterior
+1767	Tipo de entrada
+1768	Detalle del entorno - Reducido a 1\n
+1769	Equipar
+1770	Equipo
+1771	Durabilidad del equipo
+1772	Niveles de objeto en el desplegable de equipo
+1773	Niveles de objeto del equipo
+1774	Conjunto de equipo
+1775	Guardar conjunto de equipo
+1776	Ranura de equipo
+1777	Equipado
+1778	Equipado cuenta el equipo que llevas puesto. Total también cuenta las mejoras que tienes en las bolsas.
+1779	Nivel de objeto equipado
+1780	Botones del menú Esc
+1783	Esencia
+1784	Oleada de eternidad
+1785	Botones EUI
+1786	Números de reutilización de EUI en los botones de acción (Wrath no tiene texto de reutilización de Blizzard).
+1788	Fuente global de EUI
+1789	Contorno global de EUI
+1790	Resplandor EUI
+1791	Idioma de las opciones de EUI
+1792	Escala del panel de opciones de EUI
+1793	Tema de las opciones de EUI
+1794	Modo de desbloqueo de EUI
+1795	División equitativa
+1796	Todos los botones de acción con este hechizo resplandecen.
+1797	Todas las ventanas de chat. Elegir un tamaño en el menú de pestañas actualiza este valor.
+1798	Todas las condiciones que establezcas deben cumplirse. Es el valor predeterminado.
+1799	Todos los resplandores de este módulo ya coinciden con la plantilla o están bloqueados en su página de ajustes.
+1800	Todos los resplandores de este módulo están activos.
+1801	Todos los aspectos salvo el que está en uso recargan la interfaz una vez para aplicarse. Cada módulo se puede cambiar por separado más tarde.
+1802	Todas las ventanas principales de Blizzard con un tema a juego con EUI
+1803	Todas las opciones de texto de Retail
+1804	Todo
+1805	Evocador
+1806	Ejemplo: 2061
+1807	Excluir
+1808	PERJUICIOS EXCLUIDOS
+1809	ID de hechizo excluidos
+1810	Resplandor pulsante de ejecución
+1811	Ejecutar, Martillo de cólera y Disparo mortal al 20%; Drenar alma al 25%.
+1812	Salir
+1813	Salir sin guardar
+1816	Expandir
+1817	Experiencia
+1818	Barras de experiencia y reputación
+1819	Texto de las barras de experiencia y reputación.
+1820	BARRA DE EXPERIENCIA
+1821	Exportar
+1822	Exportar todos los datos con el perfil
+1823	Exportar hechizos del CDM
+1824	Error al exportar
+1825	Exportar perfil
+1826	La exportación incluirá %1$s de %2$s addons.
+1828	Expressway (solo alfabeto latino)
+1831	Extiende el fondo del chat detrás de la fila de pestañas.
+1832	defensivos externos
+1833	Externos
+1834	externos
+1836	OPCIONES ADICIONALES DE AURAS
+1837	BOTONES ADICIONALES
+1838	Botones adicionales al pasar el ratón
+1839	Altura adicional
+1840	ID de hechizo adicionales
+1841	Texto adicional (completo)
+1842	Ajustes del texto adicional
+1843	Ancho adicional
+1846	Página de extras
+1847	Rayo ocular
+1848	Ojo de la Tormenta
+1849	Facción (automático)
+1850	Tamaño del icono de facción
+1851	Indicador de facción
+1852	Ajustes del indicador de facción
+1853	Desvanecer
+1854	Desvanecer tras (segundos, 0 = nunca)
+1855	Retraso del desvanecido (segundos)
+1856	Desvanecer mensajes antiguos
+1857	Desvanecer fuera de combate
+1858	Desvanecer fuera de alcance
+1859	Desvanecer a la derecha
+1860	Intensidad del desvanecido
+1861	Desvanece los marcos de jefe cuando el jefe está fuera del alcance de tus hechizos. Ponlo al 100% para desactivar el desvanecido.
+1862	Desvanece a los enemigos más allá del alcance de hechizos de 30-40 metros de tu clase.
+1863	Desvanece el chat tras un tiempo sin mensajes, sin pasar el ratón ni escribir.
+1864	Desvanece todo el marco (retrato, barras de vida y recurso, texto) fuera de combate.
+1865	Fallido
+1866	Los lanzamientos fallidos e interrumpidos se muestran en rojo
+1867	Error al decodificar la cadena
+1868	Error al descomprimir los datos
+1869	Error al deserializar los datos
+1870	Error al leer los datos de importación
+1871	Alternativa
+1872	Anclaje alternativo: cambiar
+1873	Anclaje alternativo: borrar
+1874	Anclaje alternativo: seleccionar
+1875	Dirección alternativa
+1876	Recurrir a %1$s
+1877	Recurre al primer perjuicio que tu personaje pueda eliminar.
+1878	Abanico
+1879	Dirección del abanico
+1880	Favoritos
+1881	Difuminado
+1882	Pies
+1883	Guardia vil
+1884	Manáfago
+1886	Combate feral
+1887	relleno
+1888	Rellenar por acumulaciones
+1890	Ajustes del color de relleno
+1891	Opacidad del relleno
+1892	Opacidad del relleno para las barras del modo oscuro. Solo se aplica a Marcos de unidad y Marcos de banda (las barras de recurso lo ignoran).
+1893	Superposición de relleno
+1894	Llenar el espacio restante
+1895	Rellena la barra de vida de abajo arriba en lugar de izquierda a derecha. Relleno inverso lo cambia a de arriba abajo.
+1896	Rellenar
+1898	filtro
+1899	Filtrar logros
+1900	Filtrar vendedores de oro
+1901	Filtrar reclutamiento de hermandad
+1902	Filtrar muertes Hardcore
+1903	Filtrar palabras clave
+1904	Filtrar mensajes repetidos
+1905	Filtrar anuncios de comercio
+1906	filtros
+1907	Los filtros se guardan por separado para cada marco
+1908	Encuéntralo en cualquier momento: el glifo de clase junto a la barra de búsqueda de módulos.
+1915	Fuego
+1916	Aliento de fuego
+1917	Bola de Fuego
+1918	Primero
+1919	Primero y último
+1920	Nombre
+1921	CONFIGURACIÓN INICIAL
+1922	Cinco huecos de grupo, incluido tú
+1923	Regla de los cinco segundos
+1924	Regla de los cinco segundos y chispa de tic de maná en una barra de maná.
+1925	Mazmorras de cinco jugadores, incluida Mítica+. Las profundidades, bandas y gestas no cuentan.
+1926	Soluciona conflictos de addons con un clic
+1927	Solo marcados
+1928	Arma Lengua de Fuego
+1929	Destello
+1930	Sanación relámpago
+1931	Destello de Luz
+1932	Muestra POCO MANÁ durante una comprobación de listos de banda fuera de combate si eres sanador y tienes menos del 80% de maná.
+1933	Hace destellar el icono cuando se pulsa su botón de acción.
+1934	Frasco
+1935	Plano
+1936	PLANO Y MODERNO
+1937	Plano, limpio y moderno. El aspecto en torno al que se diseñó EllesmereUI.
+1938	Puntos de vuelo
+1939	Vuelos: dorado neutral, azul Alianza, rojo Horda, verde sin descubrir.
+1940	Voltear dragón
+1941	Voltea el retrato horizontalmente para que mire hacia el otro lado.
+1942	Texto de combate flotante y texto de nombres del mundo (ajustes del motor)
+1943	Entrada volando
+1944	Tamaño del botón desplegable
+1945	Dirección del desplegable
+1946	Foco
+1947	BARRA DE LANZAMIENTO DEL FOCO
+1948	Barra de lanzamiento del foco
+1949	Tamaño del nombre de lanzamiento del foco
+1950	Tamaño del objetivo de lanzamiento del foco
+1951	Textura de la barra de lanzamiento del foco
+1952	Tamaño del temporizador de lanzamiento del foco
+1953	Resplandor de lanzamiento importante del foco
+1954	Tamaño de la letra del foco
+1955	Resplandor de beneficio purgable del foco
+1956	Objetivo del foco
+1957	Textura del foco
+1958	Auras rastreadas del foco
+1959	Color al enfocar
+1961	Barra FocusKick
+1962	OPCIONES DE FOCUSKICK
+1963	Seguir color de Blizzard
+1965	Fuente cambiada. Hay que recargar la interfaz para aplicar la nueva fuente.
+1966	Solo tipo de fuente y contorno
+1968	Ajustes de fuente
+1970	Tamaño de fuente de los títulos de categoría en la cuadrícula de contenido.
+1971	Tamaño de fuente de los números de nivel de objeto en el equipo.
+1972	Tamaño de fuente de las acumulaciones.
+1973	Fuentes
+1974	Las fuentes siguen Ajustes globales > Fuentes > Interfaz Blizz mejorada.
+1975	Comida
+1976	Para el marco del jugador, esto ofrece una barra de lanzamiento mini y sencilla debajo del marco. Para editar la barra de lanzamiento principal del jugador, %shaz clic aquí|r
+1977	Fuerza los beneficios del jefe en una única columna grande ajustada a la altura del marco.
+1978	Fuerza los perjuicios del jefe en una única columna grande ajustada a la altura del marco.
+1979	Forzar centrado
+1980	Forzar unidades en inglés (K/M/B)
+1981	Forzar recolección de basura
+1982	Forzar seguimiento de misiones en pantalla
+1983	Fuerza un contorno nítido en el texto de los iconos (acumulaciones, duraciones, atajos). Desmarca un módulo para que el texto de sus iconos siga el ajuste de Modo de contorno de arriba.
+1984	Fuerza la textura de fondo
+1985	Fuerza la textura de barra
+1987	ARTE FOREVER
+1989	Los marcos de bronce, grifos e insignias redondas de Forever, con las funciones de EllesmereUI.
+1990	Desplazamiento X del texto de forma
+1991	Desplazamiento Y del texto de forma
+1995	Optimización de FPS y gráficos
+1996	FPS Y LATENCIA
+1997	Tamaño del texto de FPS / latencia
+1998	FPS y latencia
+1999	Colores de calidad de FPS y latencia
+2000	CONTADOR DE FPS
+2001	Contador de FPS
+2002	Tamaño del texto del contador de FPS
+2003	FPS al pasar el ratón
+2004	Desplazamiento X de FPS
+2005	Desplazamiento Y de FPS

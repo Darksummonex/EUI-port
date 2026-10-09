@@ -1,0 +1,450 @@
+2491	Icon Duration, Stack & Keybind Text (per bar)
+2492	Icon duration, stacks, keybinds and tracking bar text
+2493	ICON EFFECTS
+2494	Icon Effects glows are set per filter and Frame Glow per tile on the Debuff Manager page. The template never changes them.
+2495	Icon Effects glows are set per filter on each bar of the Player Aura Bars page. The template never changes them.
+2496	Icon Glow is set per indicator on the Buff Manager page. The template never changes it.
+2497	ICON HISTORY
+2498	Icon History
+2499	ICON INDICATORS
+2500	Icon Offset Y
+2501	Icon on Right
+2502	Icon Opacity
+2503	Icon Order
+2504	Icon Position
+2505	Icon Shape
+2508	Icon Style
+2509	Icon X
+2510	Icon Y
+2511	Icon Zoom
+2513	ICONS
+2514	Icons on the member an enemy is casting at. 3.3.5 has no spell target, so the victim is the caster's target, and only enemies targeted by someone in the group (or your target, focus or mouseover) are seen.
+2515	Icons per crowd control category: green = next is half duration, yellow = quarter, red = immune. Resets 18 seconds after the last one fades.
+2516	Icons Per Indicator
+2517	Icons Shown
+2518	IDLE FADE
+2519	Idle Fade
+2520	idTip conflicts with EllesmereUI's tooltip systems. Disable the idTip addon to stay compatible.
+2521	Ignore
+2522	Ignore Global Cooldown
+2523	ILVL
+2524	ilvl
+2525	Imp
+2526	Import
+2527	Import & Reload
+2528	Import a profile from string.
+2529	Import Addons
+2530	Import Failed
+2531	Import Full Account Data
+2532	Import Profile
+2533	Import Selected Addons
+2534	Import the anchor & size-match relationships from this profile. Off = keep your own layout; only the selected modules' own positions/settings come in.
+2535	Import the sharer's complete override setup: spec and conditional override values, groups, their custom Unlock Mode layouts, and Buff Manager overrides. This replaces ALL of your own overrides. Off = keep yours untouched.
+2536	Import will include %1$s of %2$s addons.
+2537	Import, export, and switch EllesmereUI profiles and presets.
+2538	Important and Own
+2539	Important Cast Glow
+2540	Important Only
+2541	Important or Own
+2542	Importing %1$s
+2543	Improved Talent Loadouts
+2544	In Combat
+2545	in combat
+2546	In Group
+2547	In Instances
+2548	In Maintenance
+2549	In Party
+2550	In Raid
+2551	In Raid Group
+2552	In The Armory and the Weapons / Trinkets, Armor and Item Set Gear views, group items under equip-slot sub-headers.
+2553	IN USE
+2554	In Use
+2555	In Vehicle
+2556	Inactive on WoW Forever: this character uses %s
+2557	Incinerate
+2558	Include
+2559	Include CDM Spell Layout?
+2560	Include fonts, custom colours, dark mode, accent colour and UI scale with this export. Off = only the selected modules' own settings export, keeping the recipient's global look.
+2561	Include Keyring
+2562	Include Main Assists
+2563	Include the anchor & size-match relationships between modules. Off = export each module's own positions only, with no cross-module tying.
+2564	Include Unassigned Healer Classes
+2565	Include your Blizz UI Enhanced settings from the Window Skins and Tooltips, Menus & Popups tabs. These are account-wide: if the importer opts in, they overwrite that player's settings across ALL of their profiles.
+2566	Include your complete override setup: spec and conditional override values, groups, their custom Unlock Mode layouts, and Buff Manager overrides. On import this replaces the recipient's overrides entirely.
+2567	Include your Cooldown Manager spell layout (which spells sit on which bars) plus all per-spell settings for any specs you choose.
+2568	Include:
+2569	INCLUDED DEBUFFS
+2570	Included debuffs show in addition to your Debuff Filter selection (unless it is set to Only Tracked Auras).
+2571	Includes debuffs cast by your pet.
+2572	Includes fonts from LibSharedMedia
+2573	Incoming heals from LibHealComm-4.0 (bundled). Only heals from players running a HealComm addon are seen.
+2574	Incoming Resurrection
+2575	Incoming Whispers
+2576	Incompatible Addon Detected
+2577	Increase Game Image Quality
+2578	Incredibly light performance, modern raid frames with endless flexibility.
+2579	Independent combat statistics for Wrath. No Details dependency.
+2580	Indicator
+2581	Indicator 
+2582	Indicator Color
+2583	Indicator Filter
+2584	Indicator Layout
+2585	Indicator Name
+2587	Indicators
+2590	Inherit
+2591	Inherit (Main Frames)
+2592	Inner Padding X
+2593	Inner Shadow
+2596	Insanity
+2597	Inside
+2598	Inside Center
+2599	Inside Left
+2600	Inside Map
+2601	Inside positions require 3D Art Style
+2602	Inside positions require Detached mode
+2603	Inside Right
+2604	Inspect
+2605	Inspect and Merchant
+2606	Inspect Enchants
+2607	Inspect Item Level
+2608	Inspect Item Levels
+2609	Instance has been reset - you can re-enter now!
+2610	Instance Only
+2611	Instances
+2612	instances
+2613	Instances + Combat
+2614	Instant Casts Only
+2615	Instant Poison
+2616	Intellect
+2617	Interface Panels
+2618	Interrupt Announce
+2619	Interrupt on CD
+2620	Interrupt Ready Mid-Cast
+2621	Interrupt Spell
+2622	Interrupted
+2623	Interrupted / Failed
+2624	Interruptible Cast
+2625	Interruptible cast.
+2626	Interruptible Color
+2627	Interrupts
+2628	Invalid import string.
+2629	Invalid string
+2630	Invite
+2631	Isle of Conquest
+2632	It reduces performance and should be off unless you are capturing a bug report.
+2633	Item Buttons
+2634	Item columns in the bag window.
+2635	Item columns in the bank window.
+2636	Item Cooldown
+2638	Item Count Settings
+2640	Item count, item level, category and label text
+2641	Item Counts
+2642	Item ID
+2643	Item Level
+2644	Item Level Text Size
+2645	Item Level:
+2646	Item presets show the next potion of the family when one runs out.
+2647	Item Set Gear
+2648	Item Socketing
+2650	Items
+2651	Jump straight to any new setting in one click
+2654	Keep
+2655	Keep Buffs in Same Place
+2656	Keep Deaths From Level
+2657	Keep Enabled
+2658	Keep Mine
+2659	Keep Raid Frames
+2660	Keeps the game's text color for each channel.
+2661	Keeps the icon visible (dimmed) while the aura is down.
+2662	Keeps the unit's class or reaction color on the ring in Dark Mode instead of your own class color.
+2664	Kept 
+2665	Key Already Bound
+2666	Key assigned: 
+2667	Key assignment cancelled
+2668	Key assignment timed out
+2669	KEY BINDING TEXT
+2670	Key Capture
+2671	Keybind
+2672	keybind
+2673	Keybind (out of combat)
+2674	Keybind Color
+2675	Keybind Position
+2676	Keybind Size
+2677	Keybind Text
+2678	Keybind Text Size
+2679	Keybind, Macro, Charges & Cooldown Text (per bar)
+2680	Keybind, Macro, Count & Cooldown Text (per bar)
+2681	Keybind: 
+2682	Keybind: %1$s
+2683	Keybinds
+2684	Keybinds respond on key down instead of key up. This helps make your abilities feel more responsive.
+2685	Keystone Popup Text Size
+2686	Kick Ready Mid-Cast Hint
+2687	Kidney Shot
+2695	Label
+2696	Lag Tolerance
+2698	Large (110%)
+2699	Large Outlined Stripes
+2700	Large Outlined Stripes R
+2701	Large Stripes
+2702	Large Stripes R
+2703	Last
+2704	Last Name
+2705	Last Tick Color
+2706	Last Used
+2707	Last Used Mount
+2709	Latency
+2710	Latency (Spell Queue) Overlay
+2711	Latency Color
+2712	Latency Labels
+2713	Latency Text
+2715	Lava Burst
+2716	layer
+2720	Layout Settings
+2721	Leader Icon
+2722	Leader Icon In Combat
+2723	Leader Icon Position
+2724	Leader Icon Size
+2725	Leader Indicator
+2726	Leader Indicator Settings
+2728	Leatrix Plus has chat and minimap features that conflict with EllesmereUI. Disable any chat or minimap related options within Leatrix Plus to stay compatible.
+2729	Leave a keybind empty to remove it.
+2730	Leave Color
+2731	Leave combat to enable visiting.
+2732	Leave Text
+2733	Leaving Combat
+2735	left
+2736	Left Click to apply buffs (out of combat), Middle Click to hide until next load screen
+2737	Left Gap
+2738	Left of Cursor
+2739	Left of Icon
+2740	Left of Window
+2741	Left Screen Edge
+2742	Left Text
+2743	Left Text Class Color
+2744	Left Text Settings
+2745	Left Text Size
+2746	Left to Right
+2747	Left-click dragging the bag window moves it without holding Shift.
+2748	Left-click to set  |  Right-click to unbind  |  Esc to close
+2749	Left-click to set a keybind.\nRight-click to unbind.
+2750	Legend
+2751	Legs
+2752	Lesser Healing Buffs
+2753	Level
+2754	Level & Elite Indicator
+2755	Level Size
+2756	Level Text Settings
+2757	Level Text: Difficulty Color
+2758	Level Text: Include Friendly
+2759	Level Up
+2760	Level | Name
+2761	LibDeflate not available
+2762	Lich King
+2763	Lich King Theme
+2764	Lifts player, target, focus, and boss cast bars above other frames so they are never hidden behind them.
+2765	Light
+2766	Lightning Bolt
+2767	Lightning/Water Shield
+2768	Lights the button of the spell you are casting with the highlight look.
+2769	Lightspark Border
+2770	Lightweight damage meters with simple but powerful customization.
+2771	Lightweight quality of life tools and enhancements.
+2773	Line Color
+2774	Lines
+2775	Link copied - paste it into your browser
+2776	Linked by Anchor/Width/Height Matching to: %1$s. These export together.
+2777	Linked by Anchor/Width/Height Matching to: %1$s. These import together.
+2778	Liquid Detail - Disabled\n
+2779	List item categories in a bank sidebar the way the bags sidebar does. Selecting one filters the grid to that category.
+2780	List Row Height
+2781	Live Preview Plate
+2782	Living Flame
+2783	Loading houses...
+2784	Local computer time instead of server time.
+2785	Local Time
+2786	Localization
+2787	Location
+2788	Lock Action Dragging
+2789	Lock Main Chat Size
+2790	Lock Position
+2791	Lock Position & Disable Click
+2792	Lock Window Position
+2793	Locked
+2794	Log Dungeons
+2795	Log Raids
+2796	Logging
+2797	logging
+2798	Logging you started manually remains under your control
+2799	Logout Required
+2800	Loot
+2801	Loots everything instantly, even with Auto Loot off. Hold Shift when looting to show the loot window.
+2802	Losing Aggro
+2803	Low
+2804	Low Durability (%d%%)
+2805	Low Durability (Preview)
+2806	Low Durability Warning
+2807	Low Health Color
+2808	LOW MANA
+2809	Low Space Warning
+2810	Lower Bound (30+)
+2811	Lower Opacity Amount
+2812	Lower Opacity on Cooldown
+2814	M+ timer, objectives, thresholds and spell bar text
+2816	Macro Name / Index
+2817	Macro Text
+2818	Macro Text Size
+2820	Maelstrom
+2821	Maelstrom Weapon
+2822	Mage
+2823	Magic
+2824	Mail
+2825	Mail Alert
+2826	Mail Offset X
+2827	Mail Offset Y
+2828	Mail Position
+2829	Mailbox Open All
+2830	Mailbox: Open All Button
+2831	Main Bags (%d / %d)
+2832	Main Chat Height
+2833	Main Chat Width
+2834	Main Frames
+2835	Main Frames Auras
+2836	Main Hand
+2837	Main Hand Color
+2838	MAIN TANK FRAMES
+2839	Major Bugfix/Feature Contributors
+2840	Major defensive cooldowns
+2841	Make Friendly Nameplates Name Only
+2842	Make Icon Part of the Bar
+2843	Makes this the override. It replaces the whole Visibility setting, so the conditions below no longer apply while it does. Click it again to remove the override.
+2846	Mana + Form Power
+2847	MANA BAR WHILE SHAPESHIFTED
+2848	Mana Color
+2849	Mana keeps the bar on Mana in Bear and Cat Form. Mana + Form Power also shows your Energy or Rage in a second bar.
+2850	Mana Regen Spark
+2851	Mana Text
+2852	Mana Ticks
+2853	Mana Value
+2854	Mana Value | Mana %
+2856	Mana Warning Settings
+2858	Manage Enhanced Tooltips
+2862	Manual width is required.
+2863	Many of ElvUI's modules are incompatible with EllesmereUI. Make sure to disable any conflicting modules.
+2864	Map Coordinates Text Size
+2865	Map Edge
+2866	Map Flag
+2867	Mark
+2868	Mark of the Wild
+2869	Marker Size
+2870	Marks elite, rare elite and rare targets; the Pixels Dragon style also marks players.
+2871	Marks where the cast will be when your interrupt is ready.
+2872	Marksmanship
+2873	Massive (200%)
+2874	Master
+2875	Master toggle for all aura, buff, and consumable reminders. Talent reminders are not affected.
+2876	Match Accent to Theme
+2877	Match Across Senders
+2878	Match All Conditions
+2879	Match All Filters
+2880	Match Any Condition
+2881	Match Any Filter
+2882	Match Damage Meters
+2883	Match Form
+2884	Match Frame
+2885	Match Frame Border
+2886	Match Frame draws the dragon with the portrait. A higher strata draws it over the rest of the frame, border included.
+2887	Match Meter Bars
+2888	Match Mode
+2889	Match Scale
+2890	Matches
+2891	Matches template
+2892	Matches text ignoring letter case and extra spaces, within the same chat type and channel. NPC dialogue and other system messages are always shown.
+2893	Matte
+2894	Max Buffs
+2895	Max Camera Distance
+2896	Max Count
+2897	Max Debuffs
+2898	Max Duration
+2899	Max Health Stripes
+2900	Max Health Style
+2901	Max Icons
+2902	Max Per Row
+2903	Max Stack
+2904	Max Stacks
+2905	Max Stacks Glow
+2906	Max Width
+2907	Maximum 16 palettes
+2908	Maximum 40 entries per bar
+2909	Maximum Buffs
+2910	Maximum Debuffs
+2911	Maximum Height
+2912	Maximum Icons
+2913	Maximum Width
+2914	Maybe Later
+2915	Medium
+2916	Medium Stripes
+2917	Melee
+2918	Melee 5 yd, Hunter 35 yd, casters 30 yd
+2920	Member Sorting
+2921	Member Spacing
+2922	Members currently in combat
+2923	Memory Readout
+2924	Memory Usage
+2925	Memory Usage:
+2927	Menu Elements
+2928	Menu Spacing
+2929	Menu, Bags & XP Bars
+2930	MENUS & POPUPS
+2931	Merchant
+2932	Merchant Item Levels
+2933	Merchant Mouse Wheel
+2934	Merchant: Mouse Wheel Pages
+2935	Merge Duplicate Items
+2936	Merge Pets With Owners
+2937	Message Fade Delay
+2939	Meter, breakdown and history bar textures
+2941	Micro Button Size
+2942	Micro Menu
+2943	MICRO MENU & BAGS
+2944	Micro Menu Skin
+2945	Micro Menu Strip
+2946	Micro Spacing
+2947	Middle
+2948	Middle click a bookmark to remove it.
+2949	Middle Click a reminder to hide it until the next load screen
+2950	Middle Click Menu
+2951	Middle-click an item to pin it. Drag categories on the sidebar to reorder; right-click them to rename or group.
+2952	Middle-click the minimap for character, talents, professions, group finder and other native shortcuts. Opens outside combat.
+2954	Mind Blast
+2955	MINE
+2956	Mini Frames
+2957	MINI PATCH
+2958	Minimal
+2960	Minimap Border Style
+2961	Minimap border style
+2962	Minimap Companion
+2963	Minimap layout and controls for Wrath.
+2965	Minimum (30)
+2966	Mirror Portrait
+2967	Miscellaneous
+2968	MISSING
+2969	Missing
+2970	Missing Enchant, Gem & Buckle Icons
+2971	Missing Pet
+2972	Mistweaver
+2973	Mode
+2974	Model
+2975	Model: left-drag rotates, right-drag pans, wheel zooms. The eye hides slot details.
+2976	Modern
+2977	Modern action bars built for performance and clarity.
+2978	Modern Background Style is required.
+2979	Modern chat enhancements with useful utilities.
+2980	Modern WoW Glow
+2981	Modifier
+2982	Module and row buttons also replace off glows, Blizzard Default, Blizzard Border and Solid Border.
+2983	Module Disabled
+2984	MODULE FONTS
+2985	MODULE GLOWS
+2986	Module Outline
+2987	MODULE STYLES

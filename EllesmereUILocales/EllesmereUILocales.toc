@@ -11,6 +11,7 @@ esES.lua
 esMX.lua
 frFR.lua
 koKR.lua
+ptBR.lua
 ruRU.lua
 zhCN.lua
 zhTW.lua

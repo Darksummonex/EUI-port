@@ -1,0 +1,450 @@
+1026	Disparo de cobra
+1027	Color de monedas
+1028	Iconos de monedas
+1029	Contraer
+1030	Iconos de menú contraído
+1031	COLECCIÓN E HISTORIAL
+1032	Colecciones
+1033	Aspecto de colecciones y guardarropa
+1035	Colorear jefes
+1036	Color según reutilización de interrupción
+1037	Color según interrumpible
+1038	Color según amenaza
+1039	Colorear AM/PM del reloj
+1040	Colorear bordes personalizados
+1041	Colorear letra de dificultad
+1042	Colorear élites en instancias
+1043	Colorear sufijo FPS/MS
+1044	Colorear huecos
+1045	Colorear fuera de alcance
+1046	Selector de color
+1047	Colorear el texto en su lugar
+1048	Colorea la barra de vida según la vida restante, en lugar de un color fijo. Clásico va de verde con la vida llena, pasando por amarillo, a rojo cuando está vacía. Colores personalizados mezcla las tres muestras de esta fila: llena (100%), media (50%) y vacía (0%). Reactivo de clase muestra el color de clase con la vida llena y se funde hacia los colores del 50% y 0% a medida que la unidad recibe daño. Desactivado deja al mando las muestras de Color de relleno; en ambos casos se sigue aplicando el Degradado de abajo, partiendo del color que se elija aquí.
+1049	COLORES
+1050	Colores
+1051	Colorea las barras de jugadores aliados según su clase. Los miembros del grupo o banda se identifican automáticamente; los demás aliados se aprenden del objetivo, el ratón o el foco.
+1052	Colorea el nivel de una unidad atacable según su dificultad, como la interfaz predeterminada.
+1053	Los colores se comparten globalmente desde el perfil \"%1$s\".\nCambia a él (o ajusta Tomar colores de a este perfil) para editarlos.
+1054	Colorea los nombres de los miembros del grupo y la banda en los mensajes de Decir, Gritar, Grupo y Banda.
+1055	Colorea el texto de nivel según la dificultad, de gris (trivial) pasando por verde, amarillo y naranja hasta rojo (5+ niveles por encima de ti).
+1056	Colorea el texto de la barra en lugar del relleno cuando se aplica el umbral.
+1057	Colorea el tramo del lanzamiento durante el que tu interrupción estará disponible.
+1058	Colorea los bordes por tipo de disipación con tus Colores de disipación en lugar de los de Blizzard.
+1059	Colorea el número según el estado de amenaza. Desactivado lo muestra en blanco.
+1060	Colorea el número cuando los huecos libres bajan de esta cantidad; la muestra elige el color. Cero lo desactiva.
+1061	Colorea la franja detrás del nombre del objetivo según su reacción.
+1062	Columnas
+1063	COMBATE
+1064	Combate
+1065	combate
+1066	Texto de combate y del mundo
+1067	Alerta de combate
+1068	Color de clase en alerta de combate
+1069	Tamaño del texto de alerta de combate
+1070	Datos de combate
+1071	Margen tras el combate (segundos)
+1072	Posición del icono de combate
+1073	Tamaño del icono de combate
+1074	Indicador de combate
+1075	Indicador de combate y retratos
+1076	Ajustes del indicador de combate
+1077	REGISTRO DE COMBATE
+1078	Estado de combate
+1079	Fuente del texto de combate
+1080	Fuente del texto de combate (requiere cerrar sesión)
+1081	Los cambios en la fuente del texto de combate requieren volver a la selección de personaje para aplicarse. Es una limitación del motor de WoW.
+1082	Tamaño del texto de combate
+1083	Temporizador de combate
+1084	Combinar manos
+1085	Combinar nombre del hechizo y objetivo
+1086	Se combina con las condiciones de abajo: se muestra directamente si al menos una se cumple; si no, sigue apareciendo al pasar el ratón. Un estado Ocultar marcado lo oculta igualmente, incluso al pasar el ratón.
+1087	Puntos de combo; segundos de recarga de runas del DK.
+1088	Puntos de combo
+1089	Puntos de combo en la placa de nombre del objetivo (pícaro y druida).
+1090	Próximamente
+1091	Próximamente
+1092	Separados por comas, p. ej. 3,5
+1093	Separados por comas, por ejemplo 25, 50, 75.
+1094	ID de hechizos separados por comas. Vacío significa sin entradas.
+1095	Grupos de huecos compactos
+1096	Color de completado
+1097	Efectos de cálculo: desactivados\n
+1098	Condicional
+1099	condicional
+1100	Anulaciones condicionales
+1101	Condicionales: atajo, mazmorra, banda, arena, CB, solo
+1102	Configura alertas cuando falte Señal de la Luz o Señal de fe.
+1103	Configura la apariencia y el comportamiento de los marcos de unidad.
+1105	Consolidar bolsas
+1106	CONSUMIBLES
+1107	Consumibles
+1108	Los contenedores esperan a vendedores, correo, banco y comercio
+1109	Contenido
+1110	Posición del contenido
+1111	Escala del contenido
+1112	Continuar
+1113	Contraste
+1114	Controla el orden en que se muestran los elementos superpuestos. Súbelo para mostrarlo por encima de otros elementos.
+1115	Controla el estilo de renderizado del texto en todos los elementos de la interfaz
+1116	Reutilización
+1117	Barra de reutilización
+1118	barras de reutilización
+1119	Las barras de reutilización se llenan a medida que se recupera la reutilización.
+1120	Borde de reutilización
+1121	GESTOR DE REUTILIZACIÓN
+1123	Gestor de reutilización centrado
+1124	El Gestor de reutilización tiene su propio sistema por especialización y no se puede anular aquí.
+1125	Iconos del Gestor de reutilización
+1126	No se importaron los hechizos del Gestor de reutilización del otro cliente del juego.
+1127	Números de reutilización
+1128	Sonido de reutilización lista
+1129	Estado de reutilización
+1130	Estados de reutilización
+1131	Barrido de reutilización
+1132	Texto de reutilización
+1133	Color del texto de reutilización
+1134	Posición del texto de reutilización
+1135	Tamaño del texto de reutilización
+1136	Texto de reutilización X
+1137	Texto de reutilización Y
+1138	Texto del temporizador de reutilización
+1139	Tamaño del texto del rastreador de reutilización
+1140	Reutilizaciones
+1141	Decimales de coordenadas
+1142	COORDENADAS
+1143	Coordenadas
+1144	Modo de coordenadas
+1145	Posición de coordenadas
+1146	Escala de coordenadas
+1147	Coordenadas\nDesactivadas
+1148	Coordenadas\nActivadas
+1149	Ajustes copiados de 
+1150	Copiado a 
+1151	Copiar
+1152	¿Copiar todos los ajustes compartidos de %1$s a %2$s?
+1153	Copiar líneas del búfer
+1154	Copiar chat
+1155	Copiar ventana de chat actual
+1156	Copia todos los ajustes compartidos de otro marco de este grupo a este marco.
+1157	Copiar del Gestor de beneficios de %1$s
+1158	Copiar del Gestor de beneficios principal
+1159	Copiar de:
+1160	Copiar hechizos incluidos/excluidos de:
+1161	Copiar perfil
+1162	Copiar ajustes de
+1163	Copia el texto de abajo y compártelo
+1164	Copiar esta barra al otro grupo de talentos
+1165	NÚCLEO
+1166	Addons principales
+1167	Beneficios de sanación básicos
+1168	POSICIONES PRINCIPALES
+1169	Posiciones principales
+1170	POSICIONES DE TEXTO PRINCIPALES
+1171	Las opciones de esquina colocan la barra pegada a esa esquina del objetivo y ajustan su dirección de crecimiento para mantenerla ahí cuando las barras cambian de tamaño.
+1172	Piedra de hogar cósmica
+1173	Color del coste
+1174	No se pudo generar el texto de exportación.
+1175	Cantidad
+1176	Texto de cantidad
+1177	Tamaño del texto de cantidad
+1178	Altura de la barra de cuenta atrás
+1179	Color del texto de cuenta atrás
+1180	Desplazamiento del texto de cuenta atrás
+1181	Tamaño del texto de cuenta atrás
+1182	Recuentos de Necesidad/Codicia/Desencantar/Pasar; pasa el ratón por un botón para ver nombres.
+1184	Crear
+1185	Crear barra
+1186	Crear grupo
+1187	Crear grupo con
+1188	Crear ventana de medidor
+1189	Crear nuevo (copia)
+1190	CREAR NUEVA DATABAR
+1191	Crear grupo de sincronización
+1192	Crea tu primera DataBar a partir de una plantilla inicial, o empieza vacía.
+1193	Creado 
+1194	Veneno entorpecedor
+1195	Golpe crítico
+1196	Cantidad de recorte
+1197	Recortado
+1198	recortado
+1199	Iconos recortados
+1200	Recorta el borde de cada icono de objeto en bolsas y banco. 0 muestra el icono completo.
+1201	Cruz
+1202	PUNTO DE MIRA Y COORDENADAS
+1203	Borde del punto de mira
+1204	Color del punto de mira
+1205	Longitud del punto de mira
+1206	Grosor del punto de mira
+1207	Visibilidad del punto de mira
+1208	Control de masas en icono de clase
+1209	Cristal
+1212	Ctrl + arrastrar con clic izquierdo: mover hasta cerrar la ventana
+1213	Ctrl + clic derecho: restablecer todos los datos
+1215	Modificador Ctrl
+1216	Ctrl+C para copiar, Escape para cerrar
+1218	Rodea con un dragón dorado el retrato de enemigos élite y jefes, y con uno plateado el de los raros.
+1219	Rodea el retrato con el dragón dorado de Blizzard.
+1220	Moneda
+1221	Actual
+1222	Actual / Máximo
+1223	Solo vida actual
+1224	Vida actual | Porcentaje
+1225	Segmento actual en combate
+1226	Especialización actual
+1227	Actual | Porcentaje
+1228	Maldición
+1232	Acción del cursor añadida
+1233	Círculo del cursor
+1234	Luz del cursor\nDesactivada
+1235	Luz del cursor\nActivada
+1236	Desplazamiento del cursor
+1237	Desplazamiento X del cursor
+1238	Desplazamiento Y del cursor
+1239	Posición del cursor
+1240	Tamaño del cursor
+1241	Textura del cursor
+1242	Estela del cursor
+1243	Curvado
+1244	Cuadrado curvado
+1246	Color de fondo personalizado
+1247	Niveles de barras personalizados
+1248	Estilo de borde personalizado
+1249	Gestor de beneficios personalizado
+1250	Gestores de beneficios personalizados
+1251	Seguimiento de beneficios, diseños, colores y bordes personalizados
+1252	Forma de botón personalizada
+1253	Color personalizado
+1254	Color personalizado
+1255	Relleno de color personalizado
+1256	Colores personalizados
+1257	Gestor de perjuicios personalizado
+1258	Gestores de perjuicios personalizados
+1259	Dinámico personalizado
+1260	Dinámico personalizado los mezcla según la vida
+1261	Color de relleno personalizado
+1262	Color de vida personalizado
+1263	Icono personalizado
+1264	ID de objeto personalizado
+1265	PALABRAS CLAVE PERSONALIZADAS
+1266	Etiqueta personalizada
+1267	Macro personalizada
+1268	Diseño y comportamiento personalizados de las placas de nombre.
+1269	Retrato personalizado de no jugadores
+1270	Color de recarga personalizado
+1271	RECORDATORIOS PERSONALIZADOS
+1272	Recordatorios personalizados
+1273	Recordatorios personalizados por personaje
+1274	Barras de recurso personalizadas con umbrales, marcas y más.
+1275	ID de hechizo personalizado
+1276	Color de texto personalizado
+1277	Tamaño de tooltip personalizado
+1278	Modo desbloqueo personalizado
+1279	Diseños de Modo desbloqueo y Gestores de beneficios personalizados por grupo
+1280	Modos desbloqueo personalizados
+1281	Personalizar Modo desbloqueo
+1282	Personalizando Modo desbloqueo: %s (los cambios solo se aplican a las especializaciones de este grupo)
+1283	Alternar marcas de objetivo
+1284	Alternar marcadores de mundo
+1285	Reinicio diario
+1286	Daño
+1287	Daño infligido
+1288	MEDIDORES DE DAÑO
+1290	Escudos de absorción en la barra de vida. 3.3.5 no informa de la cantidad de los escudos, así que se estiman a partir del registro de combate (valor base del rango más tu poder con hechizos, menos lo que haya absorbido cada escudo).
+1291	Daño recibido
+1292	Ajustes del texto de daño
+1293	DAÑO
+1295	Oscuro
+1296	MODO OSCURO
+1297	Modo oscuro
+1298	Modo oscuro (barra de recurso de clase)
+1299	Recurso de clase en modo oscuro
+1300	El Modo oscuro controla una condición de anulación de Modo oscuro y no se puede cambiar mientras editas una anulación
+1301	Color de relleno en modo oscuro
+1302	Opacidad del relleno en modo oscuro
+1303	Superposiciones oscuras\nDesactivadas
+1304	Superposiciones oscuras\nActivadas
+1305	Barras de datos
+1306	DataBar 
+1307	DataBars
+1308	Las DataBars no se pueden reestructurar en combate.
+1310	Desactivar vista previa de jefes
+1311	Desactivar modo grupo
+1312	MUERTO
+1313	Muerto
+1314	Fondo de muerto
+1315	Veneno mortal
+1316	Sonido de alerta de muerte
+1317	Espiral de la muerte
+1318	Caballero de la Muerte
+1319	Caballeros de la Muerte: avisa cuando un arma equipada no tiene runa (al hacer clic se abre Forja de runas).
+1320	Resumen de muerte: últimos 20 segundos, hasta 40 eventos.
+1321	Muertes
+1322	Las muertes de este nivel o superior siguen visibles; por ejemplo, 80 para seguir viendo muertes de nivel máximo. 81 oculta todas las muertes.
+1323	Alamuerte
+1324	Perjuicio
+1325	perjuicio
+1326	barra de perjuicio
+1327	Visualización de perjuicios
+1328	Duración del perjuicio
+1329	Tamaño de duración del perjuicio
+1330	Filtro de perjuicios
+1331	Opciones del filtro de perjuicios
+1332	FILTROS DE PERJUICIOS
+1333	Borde del icono de perjuicio
+1334	Iconos de perjuicio por fila
+1335	Gestor de perjuicios
+1336	Los cambios del Gestor de perjuicios en esta página solo se aplican a esta anulación.
+1337	Resplandores del Gestor de perjuicios
+1338	Texto del Gestor de perjuicios (por casilla)
+1339	Mover perjuicios
+1340	Posición de perjuicios
+1341	Ajustes de perjuicios
+1342	Tamaño de perjuicios
+1343	Tamaño de acumulaciones
+1344	Tamaño del texto de perjuicios
+1345	Perjuicios
+1346	Ubicación de perjuicios
+1347	Decimales
+1348	Decimales por debajo de
+1349	PREDETERMINADO
+1351	Tipo de bolsa predeterminado
+1352	Marcos predeterminados de Blizz
+1353	Modo de edición predeterminado
+1354	Predeterminado para todos los iconos de esta barra; los iconos pueden anularlo.
+1355	Preajuste predeterminado
+1356	Perfil predeterminado (para especializaciones sin asignar)
+1357	Predeterminado: izquierdo objetivo, derecho menú de unidad
+1358	Defensa
+1359	Actitud defensiva
+1360	Defensivos
+1361	defensivos
+1362	Déficit
+1363	Grados por segundo. 360 es una vuelta completa por segundo; 0 detiene las barras donde están.
+1365	Deja Character Stats entra en conflicto con la hoja de personaje de EllesmereUI. Desactiva Deja o el aspecto de la hoja de personaje en los ajustes de Interfaz Blizz mejorada.
+1367	Borrar
+1368	¿Borrar \"%1$s\"?
+1369	Borrar barra
+1370	Borrar categoría
+1371	Borrar grupo condicional
+1372	Borrar Gestor de beneficios personalizado
+1373	Borrar Gestor de perjuicios personalizado
+1374	Borrar Modo desbloqueo personalizado
+1375	Borrar DataBar
+1376	Borrar anclaje de anulación
+1377	Borrar grupo de anulación
+1378	Borrar perfil
+1379	Borrar personaje guardado
+1380	Borrar personajes guardados
+1381	Borrar ventana seleccionada
+1382	Borrar grupo de especialización
+1383	¿Borrar la condicional '%s'? Sus anulaciones capturadas y su modo desbloqueo personalizado se eliminarán con ella.
+1384	¿Borrar el Gestor de beneficios personalizado de '%s'? Sus condiciones vuelven a tu Gestor de beneficios predeterminado.
+1385	¿Borrar el Gestor de beneficios personalizado de '%s'? Sus especializaciones vuelven a tu Gestor de beneficios predeterminado.
+1386	¿Borrar el Gestor de perjuicios personalizado de '%s'? Sus condiciones vuelven a tu Gestor de perjuicios predeterminado.
+1387	¿Borrar el Gestor de perjuicios personalizado de '%s'? Sus especializaciones vuelven a tu Gestor de perjuicios predeterminado.
+1388	¿Borrar el modo desbloqueo personalizado de '%s'? Sus condiciones vuelven a tu diseño de modo desbloqueo predeterminado.
+1389	¿Borrar el modo desbloqueo personalizado de '%s'? Sus especializaciones vuelven a tu diseño de modo desbloqueo predeterminado.
+1390	¿Borrar el grupo '%s'? Sus anulaciones capturadas se eliminarán con él; los ajustes conservan sus valores actuales.
+1391	Borrar las bolsas, el banco y el oro guardados de 
+1392	Borra la barra seleccionada y todos sus bloques.
+1393	Demonio
+1394	Cazador de demonios
+1395	Demonología
+1396	Relleno decreciente
+1397	Efectos de profundidad: desactivados\n
+1399	Desaturar beneficios inactivos
+1400	Desaturar objetos basura
+1401	Desaturar en reutilización
+1402	Color de la descripción
+1403	El texto descriptivo (sufijos FPS/MS, AM/PM, letra de dificultad) sigue el color de acento.
+1404	Deselecciona una dirección de crecimiento para volver a centrado
+1405	Deseleccionar todo
+1406	Destrucción
+1407	Separado
+1408	Niveles de barras separadas
+1409	Separado abajo
+1410	Desplazamientos de posición separada
+1411	Barra de recurso separada
+1412	Barra de texto separada
+1413	Separado arriba
+1414	Separa la barra lateral del panel de chat con su propio borde.
+1415	Tamaño de fuente de detalles
+1417	Devastación
+1418	DESARROLLADOR
+1419	Aura de devoción
+1420	Devorador
+1421	Diálogo
+1422	Rombo
+1423	rombo
+1424	Difiere
+1425	Difiere (la plantilla muestra %s)
+1426	Difiere de la plantilla
+1427	Dificultad como texto
+1428	Color de dificultad
+1429	Desplazamiento X de dificultad
+1430	Desplazamiento Y de dificultad
+1431	Posición de dificultad
+1432	Tamaño del texto de dificultad
+1433	Colores por nivel de dificultad
+1434	Atenuar fuera de alcance
+1435	Atenuar las luces mientras esté activo
+1436	Atenuar zonas sin explorar
+1437	Atenuar sin JcJ activado
+1438	Atenuar entradas no utilizables
+1439	RENDIMIENTOS DECRECIENTES
+1440	Rendimientos decrecientes
+1441	Atenuador
+1443	desactivar
+1444	Desactivar 
+1445	Desactivar y recargar
+1446	Desactivar addons
+1447	Desactivar y recargar
+1448	Desactivar cambio de página por forma
+1449	Desactivar marcos de banda
+1450	Desactivar clic derecho en aliados en combate
+1451	Desactivar clic derecho en enemigos
+1452	Desactivar contorno Slug
+1453	Desactivar ajuste a la cuadrícula
+1454	Desactivar iconos de sincronización
+1455	Desactivar tooltips
+1458	Desactivado cuando el texto de nombre/nivel está centrado en la barra de vida por solapamiento de texto
+1459	Desactivado mientras %s esté activado.
+1460	Disolver
+1461	Disolver grupo
+1462	Disolver grupo de sincronización
+1463	Disciplina
+1464	Superposición de luces de discoteca para celebraciones.
+1466	Enfermedad
+1467	Desintegrar
+1468	Descartar
+1469	disipación
+1470	Borde de disipación
+1471	Colores de disipación
+1472	colores de disipación
+1473	Icono de disipación
+1474	Superposición de disipación
+1475	Bordes por tipo de disipación
+1476	Seguimiento de disipaciones, defensivos y auras privadas
+1477	Disipable
+1479	Disipaciones
+1480	disipaciones
+1481	Disipaciones y modo de vista previa
+1483	Visualización
+1484	Muestra Se liga al equiparse / Se liga al usarse en los objetos no ligados de tus bolsas y banco.
+1485	Muestra el nivel de objeto en el equipo del inventario.
+1486	Muestra los objetos basura con un estilo atenuado en gris.
+1487	Muestra el nombre del conjunto de equipo en la parte inferior de los objetos de las bolsas que pertenecen a uno de tus conjuntos de equipo.
+1488	Muestra el botón de ordenar en el encabezado de las bolsas.
+1489	Pantallas
+1490	Página de pantallas
+1491	Formato de distancia
+1492	Tamaño del texto de distancia
+1493	Dividir
+1494	Origen del color del divisor
+1498	Acoplar inspección junto al personaje
+1499	Se acopla cuando ambas ventanas caben en pantalla.
+1502	No volver a mostrar
+1503	No volver a mostrarme esto
+1504	Hecho
+1506	Guardia apocalíptico
+1507	Flechas dobles

@@ -45,6 +45,10 @@ for _,name in ipairs({'MerchantFrame','FriendsFrame','GuildBankFrame','AuctionFr
     for i=1,2 do local b=NativeButton(name..'Tab'..i,frame); b.id=i; b.label:SetText('Tab '..i); b.normal:SetTexture('Interface\\\\CharacterFrame\\\\UI-Character-Tab-Left'); b:ClearAllPoints(); b:SetPoint('BOTTOMLEFT',frame,'BOTTOMLEFT',(i-1)*85,4); tabs[i]=b end
     frame.selectedTab=2; otherTabs[#otherTabs+1]={frame=frame,tabs=tabs}
 end
+-- Native achievement pages put an unnamed border frame above the list rows.
+AchievementFrameAchievements=CreateFrame('Frame','AchievementFrameAchievements',AchievementFrame)
+AchievementRowsOverlay=CreateFrame('Frame',nil,AchievementFrameAchievements)
+AchievementRowsOverlay:SetBackdrop({edgeFile='Interface\\\\AchievementFrame\\\\UI-Achievement-WoodBorder',edgeSize=64})
 FriendsTabHeaderTab1=NativeButton('FriendsTabHeaderTab1',FriendsFrame)
 FriendsTabHeaderTab1.normal:SetTexture('Interface\\\\CharacterFrame\\\\UI-Character-Tab-Left')
 ''')
@@ -85,6 +89,9 @@ for _,entry in ipairs(otherTabs) do
     assert(a:GetWidth()==100 and a:GetID()==1 and select(4,b:GetPoint())==85,'Skin changed native tab geometry')
 end
 assert(BS.states[FriendsFrame].buttons[FriendsTabHeaderTab1])
+local rowsOverlay=BS.states[AchievementFrame].insets[AchievementRowsOverlay]
+assert(rowsOverlay and rowsOverlay.panel.background.color[4]==0,'Achievement border overlay must not fill over the rows')
+assert(BS.states[AchievementFrame].insets[AchievementFrameAchievements].panel.background.color[4]>.5,'Achievement page fill lost')
 -- Currency uses native sheet size/header, expanded paper doll only its tab.
 PaperDollFrame:Hide(); TokenFrame:Show(); BS.RequestRefresh(); BS.events:RunScript('OnUpdate',.3)
 local c=BS.states[CharacterFrame]
@@ -108,4 +115,4 @@ BS.SetValue('reskinLFGMenu',false); assert(LFDTestReward.iconTexture:GetDrawLaye
 BS.SetValue('themedCharacterSheet',false); assert(TokenFrameContainer.buttons[1].icon:GetDrawLayer()=='BACKGROUND' and TokenFrameContainer.buttons[1].label.textColor[1]==.1)
 BS.SetValue('themedCharacterSheet',true); TokenFrame:Hide(); PaperDollFrame:Show(); BS.Apply(); assert(c.character.enhanced and CharacterFrame:GetWidth()==660)
 ''')
-print('PASS: currency native sizing/text/icons, dungeon reward icons/tooltips/LOD refresh, talent icons/clicks/tab spacing, close button and footer at the scroll bar limit, tab backgrounds kept, native tab padding/selection across seven windows, combat deferral, layer/geometry restoration and frame reuse.')
+print('PASS: currency native sizing/text/icons, dungeon reward icons/tooltips/LOD refresh, talent icons/clicks/tab spacing, close button and footer at the scroll bar limit, tab backgrounds kept, achievement rows not covered by the page border, native tab padding/selection across seven windows, combat deferral, layer/geometry restoration and frame reuse.')

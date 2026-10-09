@@ -1,0 +1,350 @@
+1050	Cores
+1051	Colore as barras de jogadores aliados pela classe. Membros do grupo/raide são identificados automaticamente; outros aliados são aprendidos pelo alvo, passar o mouse ou foco.
+1052	Colore o nível de uma unidade atacável pela dificuldade, como a interface padrão faz.
+1053	As cores são compartilhadas globalmente do perfil \"%1$s\".\nMude para ele (ou defina Puxar Cores De para este perfil) para editar.
+1054	Colore os nomes de membros do grupo e da raide nas mensagens de Dizer, Gritar, Grupo e Raide.
+1055	Colore o texto do nível pela dificuldade, do cinza (trivial) passando por verde, amarelo e laranja até vermelho (5+ níveis acima de você).
+1056	Colore o texto da barra em vez do preenchimento quando o limite se aplica.
+1057	Colore o trecho do lançamento em que sua interrupção estará disponível.
+1058	Colore as bordas por tipo de dissipação com suas Cores de Dissipação em vez das da Blizzard.
+1059	Colore o número pelo estado de ameaça. Desligado mostra em branco.
+1060	Colore o número quando os espaços livres caem abaixo deste valor; a amostra escolhe a cor. Zero desliga.
+1061	Colore a faixa atrás do nome do alvo pela reação dele.
+1062	Colunas
+1063	COMBATE
+1064	Combate
+1065	combate
+1066	Texto de Combate e do Mundo
+1067	Alerta de Combate
+1068	Cor da Classe do Alerta de Combate
+1069	Tamanho do Texto do Alerta de Combate
+1070	Dados de Combate
+1071	Tolerância Pós-Combate (Segundos)
+1072	Posição do Ícone de Combate
+1073	Tamanho do Ícone de Combate
+1074	Indicador de Combate
+1075	Indicador de Combate e Retratos
+1076	Configurações do Indicador de Combate
+1077	REGISTRO DE COMBATE
+1078	Estado de Combate
+1079	Fonte do Texto de Combate
+1080	Fonte do Texto de Combate (requer logout)
+1081	Mudanças na fonte do texto de combate exigem logout para a seleção de personagem para ter efeito. É uma limitação do motor do WoW.
+1082	Tamanho do Texto de Combate
+1083	Cronômetro de Combate
+1084	Combinar Mãos
+1085	Combinar Nome do Feitiço e Alvo
+1086	Combina com as condições abaixo: aparece direto quando ao menos uma é atendida; caso contrário, ainda aparece ao passar o mouse. Um estado Ocultar marcado ainda oculta, inclusive ao passar o mouse.
+1087	Contagem de pontos de combo; segundos de recarga das runas do DK.
+1088	Pontos de Combo
+1089	Pontos de combo na placa de identificação do alvo (Ladino e Druida).
+1090	Em Breve
+1091	Em breve
+1092	Separado por vírgulas, ex.: 3,5
+1093	Separado por vírgulas, por exemplo 25, 50, 75.
+1094	IDs de feitiço separados por vírgulas. Vazio significa nenhuma entrada.
+1095	Grupos de Espaços Compactos
+1096	Cor de Concluído
+1097	Efeitos de Cálculo - Desativado\n
+1098	Condicional
+1099	condicional
+1100	Substituições Condicionais
+1101	Condicionais: Atalho, Masmorra, Raide, Arena, CB, Solo
+1102	Configure alertas para Foco da Luz ou Foco da Fé ausentes.
+1103	Configure a aparência e o comportamento dos quadros de unidade.
+1104	Confirmar
+1105	Consolidar Bolsas
+1106	CONSUMÍVEIS
+1107	Consumíveis
+1108	Contêineres aguardam vendedores, correio, banco e troca
+1109	Conteúdo
+1110	Posição do Conteúdo
+1111	Escala do Conteúdo
+1112	Continuar
+1113	Contraste
+1114	Controla a ordem em que elementos sobrepostos são exibidos. Valores maiores ficam acima de outros elementos.
+1115	Controla o estilo de renderização de texto usado em todos os elementos da interface
+1116	Tempo de Recarga
+1117	Barra de Recarga
+1118	barras de recarga
+1119	As barras de recarga se preenchem conforme a recarga se recupera.
+1120	Borda da Recarga
+1121	GERENCIADOR DE RECARGAS
+1122	Gerenciador de Recargas
+1123	Gerenciador de Recargas Centralizado
+1124	O Gerenciador de Recargas tem seu próprio sistema por especialização e não pode ser substituído aqui.
+1125	Ícones do Gerenciador de Recargas
+1126	Os feitiços do Gerenciador de Recargas do outro cliente do jogo não foram importados.
+1127	Números de Recarga
+1128	Som de Recarga Pronta
+1129	Estado da Recarga
+1130	Estados da Recarga
+1131	Varredura de Recarga
+1132	Texto de Recarga
+1133	Cor do Texto de Recarga
+1134	Posição do Texto de Recarga
+1135	Tamanho do Texto de Recarga
+1136	Texto de Recarga X
+1137	Texto de Recarga Y
+1138	Texto do Cronômetro de Recarga
+1139	Tamanho do Texto do Rastreador de Recargas
+1140	Recargas
+1141	Decimais das Coordenadas
+1142	COORDENADAS
+1143	Coordenadas
+1144	Modo das Coordenadas
+1145	Posição das Coordenadas
+1146	Escala das Coordenadas
+1147	Coordenadas\nDesativadas
+1148	Coordenadas\nAtivadas
+1149	Configurações copiadas de 
+1150	Copiado para 
+1151	Copiar
+1152	Copiar todas as configurações compartilhadas de %1$s para %2$s?
+1153	Copiar Linhas do Buffer
+1154	Copiar Bate-papo
+1155	Copiar Janela de Bate-papo Atual
+1156	Copia todas as configurações compartilhadas de outro quadro deste grupo para este quadro.
+1157	Copiar do Gerenciador de Bônus %1$s
+1158	Copiar do Gerenciador de Bônus principal
+1159	Copiar De:
+1160	Copiar Feitiços Incluídos/Excluídos De:
+1161	Copiar Perfil
+1162	Copiar Configurações De
+1163	Copie o texto abaixo e compartilhe
+1164	Copiar Esta Barra para o Outro Grupo de Talentos
+1165	NÚCLEO
+1166	Addons Principais
+1167	Bônus de Cura Principais
+1168	POSIÇÕES PRINCIPAIS
+1169	Posições Principais
+1170	POSIÇÕES DE TEXTO PRINCIPAIS
+1171	As opções de canto encostam a barra naquele canto do alvo e definem sua direção de crescimento para mantê-la ali quando as barras mudam de tamanho.
+1172	Pedra de Regresso Cósmica
+1173	Cor do Custo
+1174	Não foi possível gerar o texto de exportação.
+1175	Contagem
+1176	Texto de Contagem
+1177	Tamanho do Texto de Contagem
+1178	Altura da Barra de Contagem Regressiva
+1179	Cor do Texto da Contagem Regressiva
+1180	Deslocamento do Texto da Contagem Regressiva
+1181	Tamanho do Texto da Contagem Regressiva
+1182	Contagens de Necessidade/Ganância/Desencantar/Passar; passe o mouse num botão para ver os nomes.
+1183	Crazyyoungs
+1184	Criar
+1185	Criar Barra
+1186	Criar Grupo
+1187	Criar Grupo Com
+1188	Criar Janela de Medidor
+1189	Criar Novo (Cópia)
+1190	CRIAR NOVA BARRA DE DADOS
+1191	Criar Grupo de Sincronização
+1192	Crie sua primeira Barra de Dados a partir de um modelo inicial, ou comece vazia.
+1193	Criado 
+1194	Veneno Paralisante
+1195	Acerto Crítico
+1196	Quantidade de Corte
+1197	Cortado
+1198	cortado
+1199	Ícones Cortados
+1200	Corta a borda de cada ícone de item nas bolsas e no banco. 0 mostra o ícone inteiro.
+1201	Cruz
+1202	MIRA E COORDENADAS
+1203	Borda da Mira
+1204	Cor da Mira
+1205	Comprimento da Mira
+1206	Espessura da Mira
+1207	Visibilidade da Mira
+1208	Controle de Grupo no Ícone de Classe
+1209	Cristal
+1210	csquare
+1211	Ctrl
+1212	Ctrl + arrastar esquerdo: mover até a janela fechar
+1213	Ctrl + Clique Direito: Redefinir todos os dados
+1214	Ctrl + Shift
+1215	Modificador Ctrl
+1216	Ctrl+C para copiar, Escape para fechar
+1217	CTRL-
+1218	Enrola um dragão dourado ao redor do retrato de inimigos de elite e chefes, e um prateado ao redor de raros.
+1219	Enrola o dragão dourado da Blizzard ao redor do retrato.
+1220	Moeda
+1221	Atual
+1222	Atual / Máximo
+1223	Somente Vida Atual
+1224	Vida Atual | Porcentagem
+1225	Segmento Atual em Combate
+1226	Especialização Atual
+1227	Atual | Porcentagem
+1228	Maldição
+1229	CURSOR
+1230	Cursor
+1231	cursor
+1232	Ação do cursor adicionada
+1233	Círculo do Cursor
+1234	Luz do Cursor\nDesativada
+1235	Luz do Cursor\nAtivada
+1236	Deslocamento do Cursor
+1237	Deslocamento X do Cursor
+1238	Deslocamento Y do Cursor
+1239	Posição do Cursor
+1240	Tamanho do Cursor
+1241	Textura do Cursor
+1242	Rastro do Cursor
+1243	Curvado
+1244	Quadrado Curvado
+1245	Personalizado
+1246	Cor de Fundo Personalizada
+1247	Camadas de Barra Personalizadas
+1248	Estilo de Borda Personalizado
+1249	Gerenciador de Bônus Personalizado
+1250	Gerenciadores de Bônus Personalizados
+1251	Rastreamento de bônus, layouts, cores e bordas personalizados
+1252	Formato de Botão Personalizado
+1253	Cor Personalizada
+1254	Cor Personalizada
+1255	Preenchimento com Cor Personalizada
+1256	Cores Personalizadas
+1257	Gerenciador de Penalidades Personalizado
+1258	Gerenciadores de Penalidades Personalizados
+1259	Dinâmico Personalizado
+1260	Dinâmico Personalizado mescla estas pela vida
+1261	Cor de Preenchimento Personalizada
+1262	Cor de Vida Personalizada
+1263	Ícone Personalizado
+1264	ID de Item Personalizado
+1265	PALAVRAS-CHAVE PERSONALIZADAS
+1266	Rótulo Personalizado
+1267	Macro Personalizada
+1268	Design e comportamento personalizados das placas de identificação.
+1269	Retrato Personalizado de Não Jogadores
+1270	Cor de Recarga Personalizada
+1271	LEMBRETES PERSONALIZADOS
+1272	Lembretes Personalizados
+1273	Lembretes Personalizados por Personagem
+1274	Barras de Recurso Personalizadas com limites, linhas de marcação e mais.
+1275	ID de Feitiço Personalizado
+1276	Cor de Texto Personalizada
+1277	Tamanho de Dica Personalizado
+1278	Modo de Desbloqueio Personalizado
+1279	Layouts do Modo de Desbloqueio e Gerenciadores de Bônus personalizados por grupo
+1280	Modos de Desbloqueio Personalizados
+1281	Personalizar Modo de Desbloqueio
+1282	Personalizando o Modo de Desbloqueio: %s (as mudanças valem só para as especializações deste grupo)
+1283	Alternar Marcadores de Alvo
+1284	Alternar Marcadores de Mundo
+1285	Reinício diário
+1286	Dano
+1287	Dano Causado
+1288	MEDIDORES DE DANO
+1289	Medidores de Dano
+1290	Escudos de dano na barra de vida. O 3.3.5 não informa os valores de escudo, então eles são estimados pelo registro de combate (valor base da patente mais seu próprio poder mágico, menos o que cada escudo absorveu).
+1291	Dano Sofrido
+1292	Configurações do Texto de Dano
+1293	DANO
+1294	Danders Frames
+1295	Escuro
+1296	MODO ESCURO
+1297	Modo Escuro
+1298	Modo Escuro (Barra de Recurso de Classe)
+1299	Recurso de Classe no Modo Escuro
+1300	O Modo Escuro controla uma condição de substituição do Modo Escuro e não pode ser alterado ao editar uma substituição
+1301	Cor de Preenchimento do Modo Escuro
+1302	Opacidade do Preenchimento do Modo Escuro
+1303	Sobreposições Escuras\nDesativadas
+1304	Sobreposições Escuras\nAtivadas
+1305	Barras de Dados
+1306	Barra de Dados 
+1307	Barras de Dados
+1308	As Barras de Dados não podem ser reestruturadas em combate.
+1309	DBMv4-PT
+1310	Desativar Prévia de Chefe
+1311	Desativar Modo Grupo
+1312	MORTO
+1313	Morto
+1314	Fundo de Morto
+1315	Veneno Mortal
+1316	Som de Alerta de Morte
+1317	Espiral da Morte
+1318	Cavaleiro da Morte
+1319	Cavaleiros da Morte: avisa quando uma arma equipada não tem runa (o clique abre a Forja Rúnica).
+1320	Resumo da morte: últimos 20 segundos, até 40 eventos.
+1321	Mortes
+1322	Mortes neste nível ou acima continuam visíveis, por exemplo 80 para ainda ver mortes de nível máximo. 81 oculta todas as mortes.
+1323	Asa da Morte
+1324	Penalidade
+1325	penalidade
+1326	barra de penalidades
+1327	Exibição de Penalidades
+1328	Duração da Penalidade
+1329	Tamanho da Duração da Penalidade
+1330	Filtro de Penalidades
+1331	Opções do Filtro de Penalidades
+1332	FILTROS DE PENALIDADES
+1333	Borda do Ícone de Penalidade
+1334	Ícones de Penalidade por Linha
+1335	Gerenciador de Penalidades
+1336	As mudanças do Gerenciador de Penalidades nesta página valem só para esta substituição.
+1337	Brilhos do Gerenciador de Penalidades
+1338	Texto do Gerenciador de Penalidades (por bloco)
+1339	Movedor de Penalidades
+1340	Posição das Penalidades
+1341	Configurações de Penalidades
+1342	Tamanho da Penalidade
+1343	Tamanho do Acúmulo de Penalidade
+1344	Tamanho do Texto de Penalidade
+1345	Penalidades
+1346	Local das Penalidades
+1347	Decimais
+1348	Decimais Abaixo de
+1349	PADRÃO
+1350	Padrão
+1351	Tipo de Bolsa Padrão
+1352	Quadros Padrão da Blizz
+1353	Modo de Edição Padrão
+1354	Padrão para todos os ícones desta barra; os ícones podem substituí-lo.
+1355	Predefinição Padrão
+1356	Perfil Padrão (para especializações não atribuídas)
+1357	Padrão: esquerdo seleciona alvo, direito abre menu da unidade
+1358	Defesa
+1359	Postura Defensiva
+1360	Defensivas
+1361	defensivas
+1362	Déficit
+1363	Graus por segundo. 360 é uma volta completa por segundo; 0 deixa as barras paradas onde estão.
+1364	Deja Character Stats
+1365	Deja Character Stats conflita com a Ficha de Personagem do EllesmereUI. Desative o Deja ou o visual da Ficha de Personagem nas configurações do Blizzard UI Enhanced.
+1366	Delasteve
+1367	Excluir
+1368	Excluir \"%1$s\"?
+1369	Excluir Barra
+1370	Excluir Categoria
+1371	Excluir Grupo Condicional
+1372	Excluir Gerenciador de Bônus Personalizado
+1373	Excluir Gerenciador de Penalidades Personalizado
+1374	Excluir Modo de Desbloqueio Personalizado
+1375	Excluir Barra de Dados
+1376	Excluir Âncora de Substituição
+1377	Excluir Grupo de Substituição
+1378	Excluir Perfil
+1379	Excluir Personagem Salvo
+1380	Excluir Personagens Salvos
+1381	Excluir Janela Selecionada
+1382	Excluir Grupo de Especialização
+1383	Excluir a condicional '%s'? As substituições capturadas e o modo de desbloqueio personalizado dela serão removidos junto.
+1384	Excluir o Gerenciador de Bônus personalizado de '%s'? As condições dele voltam ao seu Gerenciador de Bônus padrão.
+1385	Excluir o Gerenciador de Bônus personalizado de '%s'? As especializações dele voltam ao seu Gerenciador de Bônus padrão.
+1386	Excluir o Gerenciador de Penalidades personalizado de '%s'? As condições dele voltam ao seu Gerenciador de Penalidades padrão.
+1387	Excluir o Gerenciador de Penalidades personalizado de '%s'? As especializações dele voltam ao seu Gerenciador de Penalidades padrão.
+1388	Excluir o modo de desbloqueio personalizado de '%s'? As condições dele voltam ao seu layout padrão do modo de desbloqueio.
+1389	Excluir o modo de desbloqueio personalizado de '%s'? As especializações dele voltam ao seu layout padrão do modo de desbloqueio.
+1390	Excluir o grupo '%s'? As substituições capturadas são removidas junto; as configurações mantêm os valores atuais.
+1391	Excluir as bolsas, o banco e o ouro salvos de 
+1392	Exclui a barra selecionada e todos os seus blocos.
+1393	Demônio
+1394	Caçador de Demônios
+1395	Demonologia
+1396	Esvaziar Preenchimento
+1397	Efeitos de Profundidade - Desativado\n
+1398	Derek
+1399	Dessaturar Bônus Inativos

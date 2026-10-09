@@ -2960,17 +2960,34 @@ local function CreateMainFrame()
             linkPopup._eb:SetText(url)
             linkPopup:ClearAllPoints()
             linkPopup:SetPoint("BOTTOM", anchorBtn, "TOP", 0, 8)
-            linkBackdrop:SetAlpha(0); linkBackdrop:Show(); linkBackdrop._fadeIn:Play()
-            linkPopup:SetAlpha(0); linkPopup:Show(); linkPopup._fadeIn:Play()
+            if _G.EUI_WOW_335 then
+                -- Wrath has no SetToFinalAlpha: a fade from 0 snaps back to invisible when it ends.
+                linkBackdrop:SetAlpha(1); linkBackdrop:Show()
+                linkPopup:SetAlpha(1); linkPopup:Show()
+            else
+                linkBackdrop:SetAlpha(0); linkBackdrop:Show(); linkBackdrop._fadeIn:Play()
+                linkPopup:SetAlpha(0); linkPopup:Show(); linkPopup._fadeIn:Play()
+            end
             linkPopup._eb:SetFocus(); linkPopup._eb:HighlightText()
         end
 
+        -- Wrath cannot read PNG: icons_335 holds TGA copies (prepare_social_icons.py).
+        local function SocialIcon(name)
+            if _G.EUI_WOW_335 then return EllesmereUI.MEDIA_PATH .. "icons_335\\" .. name .. ".tga" end
+            return ICONS_PATH .. name .. ".png"
+        end
         local socialDefs = {
-            { icon = ICONS_PATH .. "twitch-2.png",  url = "https://www.twitch.tv/ellesmere_gaming", tooltip = "Twitch" },
-            { icon = ICONS_PATH .. "discord-2.png", url = "https://discord.gg/FtCsUSC",             tooltip = "Discord" },
-            { icon = ICONS_PATH .. "donate-3.png",  url = "https://www.patreon.com/ellesmere",       tooltip = "Patreon" },
-            { icon = ICONS_PATH .. "paypal.png",    url = "https://www.paypal.biz/ellesmeregaming",  tooltip = "PayPal" },
+            { icon = SocialIcon("twitch-2"),  url = "https://www.twitch.tv/ellesmere_gaming", tooltip = "Twitch" },
+            { icon = SocialIcon("discord-2"), url = "https://discord.gg/FtCsUSC",             tooltip = "Discord" },
+            { icon = SocialIcon("donate-3"),  url = "https://www.patreon.com/ellesmere",       tooltip = "Patreon" },
+            { icon = SocialIcon("paypal"),    url = "https://www.paypal.biz/ellesmeregaming",  tooltip = "PayPal" },
         }
+        if _G.EUI_WOW_335 then
+            socialDefs = {
+                { icon = SocialIcon("github"), url = "https://github.com/Darksummonex/EUI-port/releases",
+                  tooltip = "GitHub (3.3.5 port)", copyTitle = "GitHub" },
+            }
+        end
 
         -- Anchor: rightmost icon sits SOCIAL_GAP to the left of where Done starts
         -- Done is at BOTTOMRIGHT -FOOTER_PAD, so first icon anchor = Done left edge - gap
@@ -3017,7 +3034,13 @@ local function CreateMainFrame()
                 target = 0; self:SetScript("OnUpdate", OnUpdate)
                 if EllesmereUI.HideWidgetTooltip then EllesmereUI.HideWidgetTooltip() end
             end)
-            btn:SetScript("OnClick", function() ShowLinkPopup(def.url, btn) end)
+            btn:SetScript("OnClick", function()
+                if def.copyTitle and EllesmereUI.ShowCopyPopup then
+                    EllesmereUI:ShowCopyPopup(def.copyTitle, EllesmereUI.L("Press Ctrl+C to copy, then Escape to close"), def.url)
+                else
+                    ShowLinkPopup(def.url, btn)
+                end
+            end)
         end
         EllesmereUI.ShowLinkPopup = ShowLinkPopup
     end

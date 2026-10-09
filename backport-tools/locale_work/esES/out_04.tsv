@@ -1,0 +1,450 @@
+2006	Posición de FPS
+2007	Escala de FPS
+2008	Tamaño de texto de FPS
+2009	Escala de FPS/MS
+2010	Marco
+2011	Borde del marco
+2012	Estilo del borde del marco
+2013	VISUALIZACIÓN DEL MARCO
+2014	Pie del marco
+2015	Alto del marco
+2016	Escala del marco
+2017	SELECCIÓN DE MARCO
+2018	TAMAÑOS DE MARCO
+2019	Origen del marco
+2020	Origen y visibilidad del marco
+2021	Espaciado de marcos
+2023	Estilo del marco
+2024	Ancho del marco
+2025	Estilos de borde de marco, poder y auras
+2026	MARCOS
+2027	Marcos
+2029	Libre
+2030	Libre (Shift-arrastrar)
+2031	Libre / Total
+2032	Mover botones libremente
+2033	Mover iconos libremente
+2035	Opacidad de fila de amigos
+2036	Amistoso
+2037	MARCOS DE JEFE AMISTOSOS
+2038	Marcos de jefe amistosos
+2039	Contorno de nombre amistoso
+2040	Tamaño de nombre amistoso
+2041	Tamaño de nombre amistoso (modo barra)
+2042	Tamaño de nombre amistoso (solo nombre)
+2043	Nombres amistosos
+2044	PNJ amistoso
+2045	Tamaño de nombre de PNJ amistoso
+2046	Jugador amistoso
+2047	Objetivo amistoso
+2048	Las unidades amistosas también usan el color de su nivel en lugar del dorado.
+2049	Amigos
+2050	Emblema de amigos
+2052	Máx. de filas de amigos
+2053	Botón de amigos conectados
+2055	Desde el borde inferior
+2056	Desde la izquierda
+2057	Desde el borde izquierdo
+2058	Desde el borde derecho
+2059	Desde el borde superior
+2061	Escarcha
+2062	Descarga de Escarcha
+2063	Completo (12345)
+2064	Barra llena en reposo
+2065	Exportación completa
+2066	Color de vida completa
+2067	Conjunto completo de atajos de lanzamiento al pasar el ratón
+2068	Superposición completa
+2069	Alto de pantalla completa
+2070	Ancho de pantalla completa
+2071	Pantalla completa
+2072	Diálogo a pantalla completa
+2073	Furia
+2077	Menú del juego
+2078	Escala del texto del juego
+2079	Mando
+2080	Separación
+2081	Separación entre el botón del menú principal y la fila de iconos.
+2082	Separación entre los iconos del micromenú.
+2083	Color de separación
+2085	Barra de TGR
+2086	Textura de barra de TGR
+2087	Textura de anillo de TGR
+2088	Mejoras de equipo
+2089	GearScore en descripciones
+2090	La línea de jugador propia de GearScoreLite lo sustituye cuando está activada.
+2091	GENERAL
+2092	General
+2093	Opciones generales para todos los addons de EllesmereUI.
+2094	TEXTO GENERAL
+2095	Necrófago
+2096	Gigante (150%)
+2097	Cristal
+2099	COLORES GLOBALES
+2100	Progreso del tiempo de reutilización global
+2102	Fuente global
+2103	Escala global
+2104	Ajustes globales
+2105	Ajustes globales > Estilo define el aspecto de toda la interfaz o de cada módulo.
+2106	Globales
+2107	Resplandor
+2108	Color del resplandor
+2109	Textura de línea de resplandor
+2110	Ajustes de resplandor
+2111	Estilo de resplandor
+2112	PLANTILLA DE RESPLANDOR
+2113	Resaltar los beneficios que puedes purgar o robar
+2114	Tipo de resplandor
+2115	Resplandor cuando
+2116	Resplandece cuando a un aura le queda un 30% o menos de su duración.
+2117	Resplandor al estar listo
+2118	Resplandor al estar listo y usable
+2119	Resplandores
+2120	Hace resplandecer los botones de acción (barras de EUI, Blizzard y ElvUI) mientras un aura esté activa o falte.
+2121	Resplandece en el último 30% de la duración.
+2122	Resplandor solo en combate
+2123	Resplandores definidos por entrada, que la plantilla nunca cambia
+2124	Los resplandores definidos por icono, indicador o filtro mantienen sus propios ajustes.
+2125	Resalta los beneficios que puedes purgar o robar.
+2126	Resalta los beneficios que puedes purgar o robar. Los beneficios resaltados encabezan la fila y tienen su propio límite de Máx. beneficios.
+2128	Glifo
+2129	Ir al ajuste
+2130	Ir a los ajustes
+2131	Oro
+2132	Los ajustes del borde dorado tienen anulaciones. Pasa el ratón por el icono de info para ver detalles.
+2133	Filtro de vendedores de oro
+2134	Resumen de oro
+2135	Seguimiento e historial de oro
+2136	Entendido
+2141	Degradado
+2142	Dirección del degradado
+2143	Degradado abajo
+2144	Color final del degradado
+2145	Degradado izquierda
+2146	Superposición de degradado
+2147	Degradado derecha
+2148	Ajustes de degradado
+2149	Degradado nítido
+2150	Degradado arriba
+2151	Gris fuera de combate
+2152	Sanación superior
+2153	Cuadrícula
+2154	Columnas de cuadrícula
+2155	Líneas de cuadrícula\nBrillantes
+2156	Líneas de cuadrícula\nAtenuadas
+2157	Líneas de cuadrícula\nDesactivadas
+2160	Desorden del suelo - Reducido a 1\n
+2161	GRUPO
+2162	Grupo
+2163	grupo
+2164	Grupo 
+2165	Grupo 1
+2166	Grupo 2
+2167	Grupo 3
+2168	Grupo 4
+2169	Chat de grupo y hermandad
+2170	Armería del grupo por ranura
+2171	Automatización de grupo
+2172	Agrupar por categoría
+2173	Alerta de muerte en el grupo
+2174	Tamaño de texto de alerta de muerte
+2175	Buscador de grupos
+2176	Disposición del grupo
+2177	Límite de grupos
+2178	Número de grupo
+2179	Tamaño del número de grupo
+2180	Números de grupo
+2181	Opciones de sorteo de grupo
+2182	SELECCIÓN DE GRUPO
+2183	AJUSTES DE GRUPO
+2184	Espaciado de grupos
+2185	Las barras agrupadas se apilan juntas y comparten un solo anclaje de movimiento.
+2186	AGRUPACIÓN
+2187	Grupos en horizontal
+2188	Grupos en vertical
+2189	Crecer
+2190	Crecer 
+2191	Crecer centrado
+2192	Crecer centrado horizontal
+2193	Crecer centrado vertical
+2194	Dirección de crecimiento
+2195	dirección de crecimiento
+2196	Crecer hacia abajo
+2197	Crecer a la izquierda
+2198	Crecer a la derecha
+2199	Agranda la ventana de bolsas (más columnas y más alta) para que quepan todas las casillas sin desplazarse.
+2200	Crecer hacia arriba
+2201	Crecimiento
+2203	Guardián
+2204	HERMANDAD
+2205	Hermandad
+2206	Rango de hermandad
+2207	Coinc. H
+2208	Coincidencia H
+2209	Color de vida media
+2211	Martillo de cólera
+2212	Manos
+2213	Posición de felicidad
+2214	Filtro de muertes hardcore
+2216	Tiene amenaza
+2217	Tiene amenaza (amenaza de tanque clásica)
+2218	Tiene duración
+2219	Color de marca
+2220	Porcentaje de línea de marca
+2221	Líneas de marca
+2222	Modo de marca
+2223	Valores de marca
+2224	Ancho de marca
+2225	Celeridad
+2226	Devastación
+2227	Cabeza
+2228	ENCABEZADO
+2229	Color de encabezado / pie
+2230	Opacidad de encabezado / pie
+2231	Color del borde del encabezado
+2233	Color del encabezado
+2234	Tamaño de fuente del encabezado
+2235	Alto del encabezado
+2236	Color del texto del encabezado
+2237	Tamaño del texto del encabezado
+2238	Cantidad de absorción de sanación
+2239	Barra de absorción de sanación
+2240	Opacidad de absorción de sanación
+2241	Representación de absorción de sanación
+2242	Absorción de sanación corta (80k)
+2243	Estilo de absorción de sanación
+2244	Tamaño de texto de absorción de sanación
+2245	Predicción de sanación y resurrección
+2246	PREDICCIÓN DE SANACIÓN
+2247	Predicción de sanación
+2248	Textura de predicción de sanación
+2249	Unidades de encuentro sanables (boss1-4), por ejemplo Valithria Caminasueños.
+2250	MANÁ DEL SANADOR
+2251	Mostrar maná del sanador
+2252	Tamaño de texto de maná del sanador
+2253	Vista previa de sanador
+2255	Solo sanadores
+2256	Sanación
+2257	Sanación / defensivos / externos; añade otros beneficios manualmente
+2258	Sanación realizada
+2259	La sanación excluye la sobresanación y los escudos inferidos.
+2260	Toque de sanación
+2261	Ola de sanación
+2262	Vida
+2263	vida
+2264	Vida #
+2265	Vida # - %
+2266	Vida # | %
+2267	Vida %
+2268	Vida % (sin signo)
+2269	Vida % - #
+2270	Vida % | #
+2271	BARRA DE VIDA Y LANZAMIENTO
+2272	Texturas de barra de vida y lanzamiento
+2273	VIDA Y PODER
+2274	Barras de vida y poder
+2276	Barra de vida
+2277	Texturas de barra de vida y absorción
+2278	Color de la barra de vida a vida vacía (0%)
+2279	Color de la barra de vida a vida completa (100%)
+2280	Color de la barra de vida a media vida (50%)
+2281	Relleno de barra de vida
+2282	Barra de vida para cada mascota enemiga bajo su dueño. Clic izquierdo para seleccionar, clic derecho para fijar foco.
+2283	Alto de barra de vida
+2284	Textura de barra de vida
+2285	Ancho de barra de vida
+2286	Color de vida
+2287	Texto numérico de vida
+2288	Texto de vida
+2289	Color del texto de vida
+2290	Color personalizado del texto de vida
+2291	Decimales del texto de vida
+2292	Posición del texto de vida
+2293	Tamaño del texto de vida
+2294	Desplazamiento X del texto de vida
+2295	Desplazamiento Y del texto de vida
+2296	Textura de vida
+2297	Vida | Poder %
+2298	Vida | Valor de poder
+2299	Texturas de vida, lanzamiento, absorción y resaltado
+2300	Texto de vida, poder, barra de lanzamiento y auras (por unidad)
+2301	Texto de vida, poder, recurso de clase, lanzamiento y barra de tótems
+2302	Piedra de salud
+2303	Piedra de hogar
+2304	Piedras de hogar
+2307	Desplazamiento de alto
+2308	en posesión de '%s'
+2309	Ayuda
+2310	Héroe
+2311	Jefe heroico derrotado
+2312	Mazmorras heroicas
+2313	Banda heroica
+2314	Golpe heroico, Rajar, Magullar o Golpe de raptor en cola.
+2316	Hexágono
+2317	hexágono
+2318	Oculto
+2319	oculto
+2320	Oculto en combate
+2321	Oculto en arenas
+2322	Registro de mensajes ocultos
+2323	Oculto mientras hay una barra de lanzamiento activa.
+2325	Ocultar 
+2326	Ocultar pestaña 'Añadir categoría'
+2327	Ocultar botones de addons
+2328	Ocultar todos los objetivos
+2329	Ocultar bolsas del banco en la barra lateral
+2330	Ocultar marcos de arena de Blizzard
+2331	Ocultar arte de barra de Blizzard
+2332	Ocultar marco de tótems de Blizzard
+2333	Ocultar borde
+2334	Ocultar bordes
+2335	Ocultar categorías con 0 objetos
+2336	Ocultar vista previa del indicador de combate
+2337	Oculta frases comunes en inglés y portugués de reclutamiento de hermandad o búsqueda de hermandad en el chat público. Se conservan anuncios de banda como <Guild> LF heal ICC. Requiere Chat público arriba.
+2338	Ocultar vista previa de superposición de disipación
+2339	Ocultar iconos de rol DPS
+2340	Ocultar casillas vacías en grupo
+2341	Ocultar nombre enemigo al lanzar
+2342	Ocultar placas de nombre enemigas fuera de combate
+2343	Ocultar mensajes de error
+2344	Oculta anuncios de venta de oro que incluyan una web o precio en dinero, incluidos anuncios como sell 5000 G = 19 Web. Activado por defecto. Usa Chat público, Chat de grupo y hermandad y Susurros entrantes de arriba.
+2345	Ocultar vista previa de absorción de sanación
+2346	Ocultar vista previa de predicción de sanación
+2347	Ocultar barra de vida
+2348	Ocultar iconos
+2349	Ocultar en Todos los objetos
+2350	Ocultar en forma de oso
+2351	Ocultar en formas de lanzador
+2352	Ocultar en forma felina
+2353	Ocultar en mazmorras
+2354	Ocultar en la casa
+2355	Ocultar en instancia
+2356	Ocultar en instancias
+2357	Ocultar en forma de lechúcico lunar
+2358	Ocultar en JcJ
+2359	Ocultar en bandas
+2360	Ocultar resplandores inactivos (%d)
+2361	Ocultar transformaciones de objetos
+2362	Ocultar texto de atajo
+2363	Ocultar texto de macro
+2364	Oculta los mensajes que contengan cualquier palabra o frase personalizada, en los ámbitos seleccionados arriba. Funciona independientemente del filtro de mensajes repetidos.
+2365	Ocultar objetos ausentes
+2366	Ocultar en reutilización
+2367	Ocultar en reutilización (mantener lugar)
+2368	Ocultar botón aleatorio de OneBag
+2369	Ocultar aviso de OneBag/MultiBag
+2370	Ocultar fuera de instancias
+2371	Ocultar botón del menú de pausa
+2372	Oculta los anuncios de logros de jugadores y de hermandad. Tus propios logros siguen visibles.
+2373	Oculta anuncios del chat público que contengan palabras completas como WTS, WTB, WTT, LFW, selling, buying, vendo o compro. Requiere Chat público arriba. No oculta todo el canal de Comercio.
+2374	Ocultar números de rango
+2375	Oculta los mensajes repetidos dentro del intervalo de repetición. Tus propios mensajes siempre se muestran. Requiere Activar chat.
+2376	Ocultar botón de restablecer
+2377	Ocultar iconos de rol en combate
+2378	Ocultar estado de captura de pantalla
+2379	Oculta los anuncios de muerte del servidor como \"Name the level 11 Gnome Warrior has been slain by ... in Westfall\". Funciona en todas las ventanas de chat, independientemente de los tipos de chat de arriba.
+2380	Ocultar fondo de la barra lateral
+2381	Oculta las categorías de la barra lateral que no tienen objetos.
+2382	Ocultar vista previa del coste del hechizo
+2383	Ocultar barrido
+2384	Oculta el contorno de 1 píxel alrededor de la barra.
+2385	Oculta la insignia de facción en PNJ de facción como los guardias.
+2386	Oculta el botón aleatorio (dado) en la vista de OneBag.
+2387	Oculta el texto de aviso en la parte superior de la vista de OneBag.
+2388	Ocultar estos en lugar de mostrarlos
+2389	Ocultar temporizador
+2390	Ocultar barra de título
+2391	Ocultar descripción al pasar el ratón
+2392	Ocultar ceros finales
+2393	Ocultar tutoriales
+2394	Ocultar botón de Modo de desbloqueo del menú
+2395	Ocultar entradas no usables
+2396	Ocultar en reposo
+2397	Ocultar en banda
+2398	Ocultar si está inactivo
+2399	Ocultar al ir montado
+2400	Ocultar al estar listo
+2401	Ocultar al estar listo (mantener lugar)
+2402	Ocultar en montura de vuelo dinámico
+2403	Ocultar mientras se cumpla esta condición
+2404	Ocultar sin objetivo enemigo
+2405	Ocultar sin objetivo
+2406	Oculta los objetos fijados. Vuelve a mostrarlos en los ajustes.
+2407	Oculta los objetos recientes. Vuelve a mostrarlos en los ajustes.
+2408	Oculta el botón Añadir categoría en la parte inferior de la barra lateral de bolsas.
+2409	Oculta los marcos de enemigos de arena predeterminados mientras estos estén activados.
+2410	Oculta el botón de EllesmereUI del menú de Escape/pausa del juego.
+2411	Oculta el encabezado de Objetivos y su botón de minimizar en la parte superior del rastreador.
+2412	Oculta el encabezado de Objetivos y su botón de minimizar en la parte superior del rastreador. Cuando se muestra, usa el Color del encabezado con un divisor en el Color de línea.
+2413	Oculta el control de redimensionado del marco de chat principal, evitando cambios de tamaño accidentales.
+2414	Oculta el barrido y mantiene el temporizador.
+2415	Oculta los iconos de sincronización en la lista de módulos de la barra lateral.
+2416	Oculta los divisores finos entre los mensajes, el campo de texto y la barra lateral.
+2417	Oculta el botón de Modo de desbloqueo del menú de Escape/pausa del juego. Aún puedes activar el Modo de desbloqueo desde el panel de opciones de EUI.
+2418	Oculta este elemento mientras vas en una montura de vuelo dinámico (capaz de planear), donde Blizzard muestra su HUD de vigor.
+2419	Alto
+2420	Resaltado
+2421	Resaltar último tic
+2422	Resaltar objetivo
+2423	Tipo de resaltado
+2424	Mantén pulsada una tecla asignada, apunta o desplaza para elegir y suelta para activar. Escape cancela.
+2425	Mantén pulsada una tecla para abrir un menú de acciones; apunta o desplaza para elegir y suelta para activar.
+2426	Mantén Shift y arrastra los botones de fila para ajustarlos. Restablecer posiciones de botones los devuelve.
+2427	Mantén Shift para arrastrar acciones fuera de barras bloqueadas.
+2428	Mantén Shift para revisar la comprobación de rol del Buscador de mazmorras
+2429	Mantén Shift para desplazarte arriba o abajo del todo.
+2430	Mantén Shift para omitir
+2431	Mantén la tecla para abrir y suelta para activar. El modo alternar mantiene el menú abierto: la tecla Seleccionar activa y la tecla del menú o Escape lo cierra.
+2432	Mantiene el bloque con este ancho y recorta el texto más largo, para que un plugin cuyo texto cambia de longitud nunca desplace los bloques contiguos. Cero ajusta el bloque a lo que muestre el plugin en ese momento.
+2433	Sagrado
+2434	Luz Sagrada
+2435	Sello de sabiduría de paladín Sagrado
+2436	Poder Sagrado
+2437	Lanza Sagrada
+2438	Inicio
+2440	Icono de honor
+2441	Retrato de honor
+2442	Horda
+2444	Las barras horizontales colocan los bloques de izquierda a derecha; las verticales los apilan de arriba abajo.
+2445	Marcos horizontales
+2446	Disposición horizontal
+2447	Marcos de grupo horizontales
+2448	Hostil
+2449	Objetivo hostil
+2450	Casa
+2451	Tamaño de texto de barra de favor de la casa
+2452	Textura de barra de favor de la casa
+2453	Vivienda
+2454	Panel de vivienda
+2455	Al pasar el ratón
+2456	Borde al pasar el ratón
+2457	Bordes al pasar el ratón
+2458	DESGLOSE AL PASAR EL RATÓN
+2459	Desglose al pasar el ratón
+2460	Color al pasar el ratón
+2461	Efecto al pasar el ratón
+2462	Pasa el ratón para ver miembros de hermandad y amigos conectados. Clic izquierdo en un nombre para susurrar, clic derecho para invitar.
+2463	Resaltar bloques al pasar el ratón
+2464	Marcadores al pasar el ratón para nombres, niveles y detalles de maestros de vuelo.
+2465	Textura al pasar el ratón
+2466	Pasa el ratón por el calendario para ver las instancias guardadas y la hora del servidor.
+2467	Pasa el ratón por el nivel de objeto para ver mejores objetos en tus bolsas.
+2468	Barra superior al pasar\nDesactivada
+2469	Barra superior al pasar\nActivada
+2471	Cuánto pueden extenderse las sanaciones entrantes más allá del final de la barra de vida, como porcentaje de su longitud. 0 las mantiene dentro de la barra.
+2472	Cuántos decimales lleva el número.
+2473	Precisión de las coordenadas. Más decimales hacen el bloque más ancho.
+2474	El ancho que mantiene el bloque, se llame como se llame la zona.
+2475	Viento aullante
+2477	Enorme (125%)
+2478	Cazador
+2481	Me faltan beneficios de otros
+2482	Entendido
+2483	Carámbanos
+2484	Icono
+2485	Fondo del icono
+2486	Borde del icono
+2487	Estilos de borde de icono (por barra)
+2488	Color del icono
+2489	VISUALIZACIÓN DE ICONOS
+2490	Divisor de icono

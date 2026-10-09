@@ -1,0 +1,100 @@
+5009	Akzentfarbe verwenden
+5011	Blizzard Stil verwenden
+5013	Klassisches WoW UI verwenden
+5014	Bannfarben verwenden
+5015	EllesmereUI Stil verwenden
+5016	EUI Schrifteinstellung verwenden
+5017	Zusätzliche Zauberreihenfolge verwenden
+5020	Indikator-Layout verwenden
+5021	Buchstaben verwenden
+5022	Meter-Schrifteinstellung verwenden
+5023	Schlachtzugslayout verwenden
+5024	Serverzeit verwenden
+5025	Verwende die Pfeile an jeder Abschnittsüberschrift zum Umsortieren.
+5026	Rahmenstil, -größe und -farbe der Zauberleiste um das Symbol verwenden.
+5027	Verwendet das EllesmereUI Taschenfenster statt der Standardtaschen. Nach dem Ausschalten /reload ausführen, um die Taschentasten vollständig an die Standardtaschen zurückzugeben.
+5028	Verwendet das EllesmereUI Bankfenster statt des Standard-Bankfensters.
+5029	Verwendet beim Tanken die Farbe 'Hat Bedrohung' statt der normalen Reaktionsfarbe.
+5030	WoW Forever verwenden
+5031	Belegt
+5032	Belegt / Gesamt
+5036	Verwendet Live-Auren von Ziel/Mouseover und den GUID-Aurencache für andere identifizierte Namensplaketten.
+5037	Verwendet Logs/WoWCombatLog.txt
+5038	Verwendet native Wrath Kampfereignisse
+5039	Verwendet Schlachtzugs /maintank und /mainassist
+5040	Verwendet die EllesmereUI Ressourcenfarbe Deiner Klasse.
+5041	Verwendet die Farbe 'Unterbrechungszauber auf Abklingzeit', solange Dein Unterbrechungszauber abklingt.
+5042	Verwendet die Schwellenfarbe unterhalb des Werts statt bei oder über ihm.
+5043	Verwendet die breite Zielverfolgungsbreite von Wrath.
+5044	Verwendet Dein Ziel, wenn kein Fokus zaubert.
+5046	Hilfsleiste
+5049	Wert
+5055	Vertikaler Rahmentrenner
+5060	Vertikaler Trenner
+5065	Videoanleitung
+5069	Sichtweite - auf 1 reduziert\n
+5071	EUI Team anzeigen
+5077	SICHTBARE GRUPPEN
+5078	Sichtbare Zeilen
+5080	Beleben
+5082	Leerwandler
+5088	Seelenstein nur für Hexenmeister
+5103	Was vor der Zahl steht. Symbol zeigt das Charaktersymbol; die Farbfelder links färben es ein.
+5106	Beim Heilen
+5107	'Beim Heilen' verwendet Deine Rolle oder Heiltalente
+5109	Wenn an, werden Fläschchen-/Essens-/Waffen-/Gift-Erinnerungen weiterhin (abgedunkelt) angezeigt, wenn Du keinen passenden Gegenstand in Deinen Taschen hast, als Hinweis zum Nachkaufen.\nWenn aus, werden sie vollständig ausgeblendet, wenn Du den Gegenstand nicht dabei hast.
+5110	Wenn entsperrt, halte Shift gedrückt und ziehe die Minikarte. Die Position ist auch im Freigabemodus verfügbar.
+5120	Welche Platzanzahl der Block anzeigt.
+5121	Welche Ansicht die Taschen standardmäßig öffnen.
+5122	Solange 'Nach Kategorie gruppieren' aktiv ist, den abschließenden Block leerer Plätze entfernen, sodass nur Gegenstände angezeigt werden.
+5129	Wirbelwind
+5135	Breite Zielverfolgung
+5143	FENSTER ZIEHEN
+5144	Fensterschriften und Tooltip-Textskalierung
+5146	Fenstername
+5148	Fensterskalierung %
+5150	FENSTEREINSTELLUNGEN
+5153	Fensterbreite
+5154	Fenster
+5158	Bei Texturen pro Leiste gilt die Leistentextur für die Klassenressource.
+5160	Weltkanäle als Buchstaben: Allgemein Ge, Handel T, LokaleVerteidigung LD, WeltVerteidigung WD, SucheNachGruppe LFG.
+5161	WELTKARTE
+5162	Weltkarte
+5163	Weltkarten-Overlay: QoL > Interface
+5164	Weltmarkierung 1-8
+5166	Weltmarkierungen am Mauszeiger
+5170	WoW Forever, Blizzard Stil und Klassisches WoW UI laden das UI einmal neu, um sich anzuwenden. Jedes Modul kann später einzeln umgeschaltet werden.
+5171	Umgibt Gesundheits-, Ressourcen- und Klassenressourcenleisten mit dem Zauberleistenrahmen des Klassischen WoW UI.
+5173	Wrath Kanalisierungs-Impulspositionen
+5174	Wrath Kanalisierungs-Impulspositionen.
+5175	Wrath Chatfenster mit dem EllesmereUI Panel, Reitern, Seitenleiste und Sprechblasen.
+5176	WRATH DATEN
+5177	Wrath Gesundheits-, Ressourcen-, Klassenressourcen-, Zauber-, GCD-, Schlag- und Totemleisten.
+5178	WRATH INVENTAR
+5179	WRATH OF THE LICH KING BACKPORT
+5180	Wrath hat nur für Todesritter-Runen eine Blizzard Klassenressourcenleiste.
+5181	Wrath Schlachtzugs- und Gruppenfenster mit nativen Einheitenklicks, Auren, Reichweite und Klickzaubern.
+5182	Wrath Zauber, Gegenstände und Auren. Zuweisungen werden für jede Talentgruppe der dualen Talentspezialisierung gespeichert.
+5183	Wraths native Quest- und Erfolgsverfolgung mit EUI Stil, Sichtbarkeitsregeln, automatischem Annehmen/Abgeben und einer Questgegenstand-Taste.
+5190	EP- & Ruf-Textgröße
+5192	EP- und Rufleisten verwenden die ElvUI Norm Textur.
+5206	Du hast den Standardwert einer Einstellung geändert, die Überschreibungen besitzt. Überschreibungen behalten ihre eigenen Werte, daher erreicht diese Änderung nicht die Spezialisierungen oder Bedingungen, die sie abdecken. Um sie für eine Überschreibung zu ändern, wähle diese Überschreibung über das Klassensymbol neben der Modulsuchleiste und bearbeite sie dort.
+5208	Du hast %1$s nicht erlernt.
+5210	Du darfst nur 
+5220	Zone
+5222	Stufenbereiche der Zonen
+5223	Zonen-Versatz X
+5224	Zonen-Versatz Y
+5226	Zonen-PvP-Farbe
+5227	Zonen-Skalierung
+5228	ZONENTEXT
+5229	Zonentext
+5230	Zonentext-Kontur
+5234	ZZZ am EUI Spielerfenster beim Ausruhen
+5235	|cff00ff00[EllesmereUI]|r Alle Hinweise zurückgesetzt. /reload, um sie erneut zu sehen.
+5236	|cff00ff00[EllesmereUI]|r UI-Skalierung zurückgesetzt. /reload, um sie erneut von Deiner Blizzard Skalierung zu übernehmen.
+5237	|cff00ff98EllesmereUI:|r Überschreibungs-Einführung zurückgesetzt. Das Ankündigungsfenster erscheint beim nächsten /reload; die Videoanleitung beim nächsten Klick auf das Überschreibungssymbol.
+5238	|cff00ff98EllesmereUI:|r Videoanleitungen und Tutorial-Tipps zurückgesetzt. Abzeichen sind zurück; einmalige Popups erscheinen erneut.
+5242	|cff888888...und %d weitere|r
+5244	|cffff6060[EllesmereUI]|r Freigabemodus kann im Kampf nicht aktiviert werden.
+5247	|cffff6060[EllesmereUI]|r Spezialisierung gewechselt: Freigabemodus geschlossen, ungespeicherte Layoutänderungen verworfen.

@@ -1,0 +1,450 @@
+4461	Dirección de la pila
+4462	Posición de la pila
+4463	Tamaño de la pila
+4464	Divisor de pila
+4465	Color del texto de acumulaciones
+4466	Posición del texto de acumulaciones
+4467	Tamaño del texto de acumulaciones
+4468	Color de umbral de acumulaciones
+4469	Marcas de acumulaciones
+4470	Acumulaciones X
+4471	Acumulaciones Y
+4472	Apilar placas de nombre
+4473	Acumulaciones / cantidad de objetos
+4474	Color de acumulaciones
+4475	Posición de acumulaciones
+4476	Tamaño de acumulaciones
+4477	Actitud
+4478	Barra de actitud
+4479	Las actitudes, formas y sigilo mantienen la barra de acción 1 en su propia página.
+4480	Independiente
+4481	CRONÓMETRO DE COMBATE INDEPENDIENTE
+4482	Cronómetro de combate independiente
+4483	Tamaño del cronómetro independiente
+4484	Estándar
+4485	Estrella
+4488	Empezar vacío
+4489	Diseño inicial para la próxima barra que crees.
+4490	Inicia la tira de pestañas en el borde de la barra lateral.
+4491	Encabezado de estadísticas
+4492	BARRA LATERAL DE ESTADÍSTICAS
+4494	Tamaño del texto de estado
+4496	Robable
+4497	Solo robables
+4501	Segmentos guardados
+4504	Anulaciones huérfanas
+4505	Nivel de marco
+4506	nivel de marco
+4507	Fuerza
+4508	Estira este bloque para ocupar el espacio que dejan libre los bloques con tamaño; exactamente un bloque por barra rellena.
+4509	Colores de franja
+4510	Rayado
+4511	Rayado inverso
+4512	Rayado grueso
+4513	Rayado grueso inverso
+4514	Rayas
+4516	ESTILO
+4517	Estilo
+4518	Se ha cambiado el estilo de este perfil. Es necesario recargar la interfaz para aplicarlo.
+4519	Dale a cada ventana tu propio estilo.
+4520	Sutileza
+4521	Apoyo
+4522	Líderes de apoyo
+4523	Equipo de apoyo
+4524	Suprimir errores de Lua
+4525	Supervivencia
+4527	Cambiar pociones agotadas
+4529	Temporizador de golpe
+4530	Opacidad del barrido
+4531	Cambiar tipo de medidor
+4532	Cambia a una especialización de este grupo para personalizar su Modo desbloqueo
+4533	Cambiar a experiencia
+4534	Cambiar a reputación
+4535	Sincronizar
+4536	Sincronizar 
+4537	Sincronizar borde con el panel de chat
+4538	Sincronizar opciones de iconos
+4539	Sincronizar selección de segmento
+4540	Sincronizar ajustes desde:
+4541	La sincronización te permite actualizar automáticamente todos los perfiles cada vez que cambias ajustes. Se puede activar por módulo.
+4542	Predeterminado del sistema
+4543	Color de fondo de pestaña
+4544	Fuente de pestaña
+4545	Color de fuente de pestaña
+4546	Origen del color de fuente de pestaña
+4547	Tamaño de fuente de pestaña
+4548	Altura de pestaña
+4549	Desplazamiento X de pestaña
+4550	Espaciado de pestañas
+4551	Textura de pestaña
+4552	Tabardo
+4553	Pestañas
+4554	Pestañas dentro del panel de chat
+4555	Las pestañas usan el estilo, tamaño y color del borde del panel de chat.
+4556	Recibido
+4557	Condición de talento
+4558	Condiciones de talento
+4559	El talento debe estar
+4560	Nombre del talento; la entrada solo se muestra cuando se cumple la condición.
+4561	Recordatorios de talentos
+4562	Talentos
+4563	Tanque
+4564	Tanque > Sanador > DPS
+4565	Amenaza de tanque
+4566	Reclamado
+4567	Objetivo
+4568	EFECTOS DE OBJETIVO Y FOCO
+4569	OBJETIVO Y VISIBILIDAD
+4570	Flechas de objetivo
+4571	Borde de objetivo
+4572	BARRA DE LANZAMIENTO DEL OBJETIVO
+4573	Barra de lanzamiento del objetivo
+4574	Tamaño del nombre en la barra de lanzamiento del objetivo
+4575	Tamaño del objetivo en la barra de lanzamiento del objetivo
+4576	Textura de la barra de lanzamiento del objetivo
+4577	Tamaño del temporizador de la barra de lanzamiento del objetivo
+4578	Color de objetivo
+4579	DISTANCIA AL OBJETIVO
+4580	Distancia al objetivo
+4581	Texto de distancia al objetivo
+4582	Tamaño del texto de distancia al objetivo
+4583	Efecto de objetivo
+4584	Color de resaltado de objetivo
+4585	Resplandor de lanzamiento importante del objetivo
+4586	Marcadores de objetivo
+4587	Objetivo del objetivo
+4588	Resplandor de beneficio purgable del objetivo
+4589	Textura de objetivo
+4590	Auras rastreadas del objetivo
+4591	EFECTOS DE OBJETIVO, FOCO Y PASAR EL RATÓN
+4592	Barras de objetivo/foco
+4593	Tamaño del nombre en barras dirigidas
+4594	Tamaño del objetivo en barras dirigidas
+4595	Textura de barras dirigidas
+4596	Tamaño del temporizador en barras dirigidas
+4597	BARRAS DE HECHIZOS DIRIGIDOS
+4598	Barras de hechizos dirigidos
+4599	Tamaño de hechizos dirigidos
+4600	HECHIZOS DIRIGIDOS
+4601	Hechizos dirigidos
+4602	Desplazamiento X de hechizos dirigidos
+4603	Desplazamiento Y de hechizos dirigidos
+4604	Sección de hechizos dirigidos
+4605	Objetivo:
+4606	Objetivos
+4607	Teletransporte a casa
+4608	Teletransportes
+4610	TellMeWhen se solapa con la arquitectura de posicionamiento central de EllesmereUI. Si SOLO lo usas para alertas de sonido debería ir bien, pero aun así puede causar problemas.
+4611	Terrible
+4612	Marcos de prueba
+4613	Marcos de prueba: esta página, Modo desbloqueo o /earena test
+4614	TEXTO
+4615	Texto
+4616	Alineación del texto
+4617	Anclaje del texto
+4618	BARRA DE TEXTO
+4619	Barra de texto
+4620	Cuadros de texto
+4622	VISUALIZACIÓN DE TEXTO
+4623	Grupo de texto
+4624	Opciones de contorno de texto
+4625	Estilos de contorno de texto
+4626	Posición del texto
+4627	Escala del texto
+4628	Escala del texto (por barra de datos)
+4629	Texto mostrado antes del nombre del objetivo.
+4631	Desplazamiento X del texto
+4632	Desplazamiento Y del texto
+4633	Textura
+4634	Textura dibujada sobre el color de fondo del chat.
+4635	Textura dibujada sobre los colores de fondo de las pestañas.
+4636	Textura dibujada con el color de fondo del chat.
+4637	Textura para todas las barras de lanzamiento de los marcos de unidad. Heredar sigue la textura de barra de cada unidad.
+4638	Textura para la barra de recurso de clase.
+4639	Textura para las barras de vida, recurso y recurso de clase.
+4640	Textura no encontrada
+4641	Resolución de texturas: establecer en Alta\n
+4642	Círculo con textura
+4643	Anillo de disipación con textura
+4644	Texturas
+4646	Ese ajuste se guarda por posición en la lista y no se puede anular de forma segura.
+4647	El Gestor de beneficios de la anulación activa está vinculado a la página abierta. Sal de la pestaña Gestor de beneficios para cambiar de anulación.
+4648	El %s personalizado de la anulación activa está vinculado a esta página. Sal de la pestaña %s para cambiar a otra anulación.
+4649	La Armería
+4650	El color de fondo detrás de las barras en Modo oscuro (Marcos de unidad, Marcos de banda, Barras de recurso).
+4651	El banco se abre desde cualquier lugar con el encabezado de Bolsas; lejos de un banquero muestra el último contenido guardado.
+4652	La barra muestra las acumulaciones sobre el máximo en lugar del tiempo.
+4653	La barra que edita esta página.
+4654	El indicador de combate no está disponible para el marco de foco.
+4655	¡El Gestor de reutilización puede hacer mucho más que mostrar reutilizaciones: también tiene ajustes por hechizo, resplandores de barra, barras de seguimiento y más! Echa un vistazo a algunos trucos y consejos para sacarle más partido.
+4656	El idioma de visualización del panel de opciones de EllesmereUI. Auto sigue a tu cliente del juego. El texto sin traducir se muestra en inglés.
+4657	el tema de EllesmereUI
+4658	El inverso exacto de Surcacielos (en el aire): todo lo que no sea estar en el aire con una montura capaz de planear o en forma de vuelo, incluido estar en el suelo.
+4659	El respaldo debe ser distinto\ndel objetivo de anclaje principal
+4660	El color de relleno plano que usan las barras con el Modo oscuro activado (Marcos de unidad, Marcos de banda, Barras de recurso).
+4661	que el origen del marco sea EllesmereUI
+4662	No se pudo engarzar la gema.
+4663	La línea de resplandor no se muestra con relleno vertical ni con la colocación Desde el borde izquierdo
+4664	La línea de resplandor no se muestra con relleno vertical ni con la colocación Desde el borde derecho
+4665	La línea de resplandor no se muestra con el estilo de absorción Ninguno
+4666	El Rey Exánime
+4667	el estilo de fondo Moderno
+4668	La ventana social nativa con iconos de clase, nombres con color de clase, estandartes de facción y aceptación automática de invitaciones; las acciones de amigos y todas las pestañas sociales siguen siendo nativas.
+4669	Los marcos, anillos y ranuras originales donde el juego los tiene, con las funciones de EllesmereUI.
+4670	El grupo de anulación '%s' ya proporciona el Modo desbloqueo personalizado para tu especialización actual. Personalízalo allí o quita esta especialización de ese grupo.
+4671	No se pudo leer por completo la cadena pegada. Vuelve a pegarla.
+4672	El marco de barra de la visualización de recursos personal, o el marco clásico de barra de lanzamiento, en las barras de vida, recurso y recurso de clase, con todas las funciones de barra de EllesmereUI.
+4673	Los ajustes de Pixel Glow que usan los resplandores por icono de esta barra. La plantilla nunca los cambia.
+4674	el activador Aleatorio
+4675	El Anillo del Valor
+4676	La CVar scriptProfile está activada.
+4677	La gema engarzada se destruirá. ¿Continuar?
+4678	Las CVars taintLog y scriptProfile están activadas.
+4679	La CVar taintLog está activada.
+4680	El seguimiento siempre se oculta en arenas
+4681	Son los mismos ajustes que hay en las páginas de cada módulo, no ajustes distintos.
+4682	Estos ajustes priorizan la tasa de fotogramas y la claridad visual sobre el detalle del entorno. Las texturas mantienen alta calidad para que tu personaje y el mundo sigan viéndose perfectos.
+4683	Estas especializaciones tienen valores de anulación que ya no alcanza el modo de edición de ningún grupo (quedaron por cambios de miembros). Siguen aplicándose. Quita una para devolver esa especialización al valor predeterminado compartido.
+4684	Grueso
+4686	Grosor
+4687	Grosor en píxeles. -1 sigue el ajuste de Borde de cada indicador de perjuicio, 0 oculta el borde de color de disipación.
+4689	Línea fina inferior
+4690	Línea fina superior
+4691	Esta barra ajusta el tamaño de sus bloques por sí misma, así que el ancho no lo elige este bloque.
+4692	Esta barra solo se mostrará si tienes un enemigo como objetivo
+4693	Este bloque ya es el bloque 'Rellenar espacio restante'. Marca otro bloque para mover la función.
+4694	Esto no puede cambiar qué hechizos rastrea el usuario en el CDM de Blizzard.\nSe recomienda compartir también tu diseño del CDM de Blizzard para cada especialización que elijas aquí.
+4695	Esto no se puede deshacer. Considera exportar este perfil como copia de seguridad primero.
+4696	Esto no se puede deshacer. Exporta primero tu propio perfil como copia de seguridad.
+4697	Esta condición llegará en una futura actualización.
+4698	Este condicional no está activo ahora mismo. Cumple primero una de sus condiciones (por ejemplo, entra en la mazmorra) para poder organizar el diseño en su contexto real.
+4699	Este control cambió de dirección recientemente: ahora copia DESDE el marco que elijas. Al confirmar se copiarán todos los ajustes compartidos DESDE %1$s A %2$s.
+4700	Este elemento no puede usar visibilidad basada en grupo.
+4701	Este elemento no admite igualar a la vez el alto y el ancho
+4702	Este elemento se muestra en cuanto UNA condición Mostrar se cumple. Ocultar mantiene su significado en ambos modos de coincidencia: un Ocultar marcado siempre oculta, en todas las filas.
+4703	Este elemento solo se mostrará mientras estés dentro de una casa o parcela
+4704	Este elemento solo se mostrará mientras vayas en montura
+4705	Esta exportación incluye ajustes entre perfiles que sobrescribirán los ajustes del usuario que importe, incluidos Calidad de vida, Hovercast y más, que normalmente no deberían compartirse con perfiles estándar. NO SE RECOMIENDA compartir perfiles públicamente así.
+4706	Esta función optimiza los ajustes gráficos del juego para darte la mejor combinación de FPS altos y claridad visual.\n\nPuedes revertir todos los cambios en cualquier momento haciendo clic en \"Restaurar mis ajustes\", que aparecerá tras optimizar.\n\n\nQué cambiamos:\n\n
+4707	Esta función requiere que Ajustar elementos esté activado
+4708	Los cambios de origen de este marco requieren recargar la interfaz para aplicarse.
+4709	Este resplandor está bloqueado en su página de ajustes.
+4710	El Gestor de beneficios personalizado de este grupo solo se puede activar o editar mientras juegas con una de sus especializaciones.
+4711	El Gestor de perjuicios personalizado de este grupo solo se puede activar o editar mientras juegas con una de sus especializaciones.
+4712	Esta es una cadena de diseño de barras del CDM, no una cadena de perfil.
+4713	Esta es una cadena antigua de diseño de barras del CDM. Este formato ya no es compatible. Usa la importación de perfil estándar.
+4714	Esta es la ventana de cola de hechizos; ayuda a evitar que puedas encolar demasiados hechizos a la vez, lo que hace que el juego parezca lento. La configuración recomendada suele ser un mínimo de 200 + tu latencia local. Si no sabes exactamente qué hace este ajuste, déjalo en 400.
+4715	Aquí puedes controlar los ajustes del Modo desbloqueo.\n\nLos elementos se pueden recolocar arrastrando o con las flechas (+Shift)\nAncla, iguala el alto o iguala el ancho de cualquier elemento.\nEl ajuste se basa en el elemento más cercano, pero puedes ajustarte solo a\n un elemento concreto con clic derecho o el icono de ajustes.
+4716	Hace que el ancho de la barra de lanzamiento incluya el icono, en lugar de colocarlo a la izquierda del ancho de la barra.
+4717	Este módulo no se puede anular. Sal de la sesión de edición de anulación para abrirlo.
+4718	Este módulo está excluido de las anulaciones de especialización.
+4719	Esta opción no se puede usar mientras el arte de recurso de clase de Blizzard esté activado en Barras de recurso.
+4720	Esta opción no se aplica al marco del jugador.
+4721	Esta opción no está disponible en el marco del jugador
+4722	Esta opción solo está disponible para formatos que muestran un porcentaje.
+4723	Esta opción solo está disponible para el tema de color personalizado
+4724	Esta opción solo está disponible cuando el Modo de retrato es Separado.
+4725	Esta opción solo afecta a los beneficios de banda que puedes lanzar
+4726	Esta opción solo se aplica al estilo Insignia.
+4727	Esta opción solo se aplica cuando se selecciona Nombre > Objetivo.
+4728	Esta opción solo se aplica cuando se selecciona Nombre > Objetivo u Objetivo.
+4729	Esta opción solo se aplica cuando se selecciona Objetivo.
+4730	Esta opción solo se aplica cuando el texto muestra un nombre.
+4732	Esta opción requiere un estilo de arte Retrato 2D o Clase.
+4733	Esta opción requiere un Tamaño del borde mayor que 0
+4734	Esta opción requiere un Tamaño del borde mayor que 0.
+4735	Esta opción requiere un Estilo del borde distinto de Heredar (marcos principales).
+4736	Esta opción requiere un Estilo del borde distinto de Sólido.
+4737	Esta opción requiere un estilo de borde con arte divisor y un Tamaño del borde mayor que 0.
+4738	Esta opción requiere una forma Círculo o Círculo de píxeles.
+4739	Esta opción requiere un Icono de clase distinto de Ninguno.
+4740	Esta opción requiere que haya una posición separada activa.
+4741	Esta opción requiere Superposición de disipación, Colorear bordes personalizados o Usar colores de disipación.
+4742	Esta opción requiere una selección distinta de Encima de la barra de vida
+4743	Esta opción requiere un Estilo de resplandor distinto de Ninguno
+4744	Esta opción requiere una posición de texto distinta de ninguna.
+4745	Esta opción requiere una selección de texto distinta de ninguna.
+4746	Esta opción requiere una Posición del icono de tipo distinta de Ninguna
+4747	Esta opción requiere un Retrato visible y Mostrar icono.
+4748	Esta opción requiere una barra de recurso unida, un Tamaño del borde mayor que 0 y un estilo de borde con arte de unión.
+4749	Esta opción requiere un marco de Objetivo o Foco de EllesmereUI.
+4750	Esta opción requiere un Anillo exterior distinto de Ninguno.
+4751	Esta opción requiere que el Estilo de arte sea Clase
+4752	Esta opción requiere que el Estilo Blizzard esté desactivado
+4753	Esta opción requiere que Recurso de clase esté en Moderno.
+4754	Esta opción requiere que Combinar nombre del hechizo y objetivo esté desactivado.
+4755	Esta opción requiere Estilo de borde personalizado, Mostrar icono y Hacer el icono parte de la barra, con el estilo EllesmereUI.
+4756	Esta opción requiere que los Bordes por tipo de disipación estén activados.
+4757	Esta opción requiere que el Modo de retrato esté en Separado.
+4758	Esta opción requiere Mostrar icono y Hacer el icono parte de la barra, con el estilo EllesmereUI.
+4759	Esta opción requiere Mostrar icono y el estilo EllesmereUI.
+4760	Esta opción requiere Mostrar icono junto a la barra de lanzamiento y el estilo EllesmereUI.
+4761	Esta opción requiere Mostrar nivel.
+4762	Esta opción requiere Sólido o un estilo de borde con arte divisor, y un Tamaño del borde mayor que 0.
+4763	Esta opción requiere el estilo de arte Clase.
+4764	Esta opción requiere el Borde de forma con color de clase y el Modo oscuro.
+4765	Esta opción requiere que el ajuste de posición esté separado
+4766	Esta opción requiere el estilo WoW Forever.
+4767	Esto sobrescribe los ajustes actuales de este marco. La posición, la visibilidad y el estado de activación del marco no cambian.
+4768	Esta página está excluida de las anulaciones.
+4769	Esto sobrescribe permanentemente los ajustes de este perfil con la anulación '%s': sus ajustes capturados y sus diseños personalizados de Modo desbloqueo y Gestor de beneficios (si existen) pasan a ser la base propia del perfil para todas las especializaciones. Después se eliminan TODOS los grupos de anulación por especialización de este perfil y la interfaz se recarga. Las anulaciones condicionales no se ven afectadas.
+4770	Esta cadena de perfil no contiene ajustes globales.
+4771	Esta cadena de perfil no contiene datos de anulación.
+4772	Esta cadena de perfil no contiene ajustes de Aspecto de ventanas y descripciones.
+4773	Este perfil se creó antes del reinicio de la beta y ya no es compatible. Crea una nueva exportación.
+4774	Este perfil se creó con una versión más reciente de EllesmereUI. Actualiza el addon.
+4775	Este perfil se hizo con una escala de interfaz del %1$d%%; la tuya es del %2$d%%. ¿Cambiar tu escala de interfaz para que coincida con el perfil importado? Todos los perfiles se mostrarán a esta escala, ya que la escala de la interfaz no es un ajuste por perfil, pero puedes volver a tu valor original en cualquier momento.
+4776	Esto restablece todos los addons de EUI, no solo el actual.
+4777	Este ajuste ya tiene una anulación para %s
+4778	Este ajuste no se puede anular.
+4779	Este ajuste tiene anulaciones
+4780	El Modo desbloqueo personalizado de esta especialización pertenece a '%s'. Personalízalo allí o quita la especialización de ese grupo.
+4781	Esta cadena es una exportación de CUENTA COMPLETA. Sustituye tus ajustes de toda la cuenta por los del remitente, incluidos Calidad de vida, atajos de HoverCast, configuraciones de hechizos del Gestor de reutilización, anclajes de desbloqueo, escala de la interfaz y atajos de perfil, no solo un perfil. Tus otros perfiles se conservan, pero un perfil con el mismo nombre se reemplaza.
+4782	Esta unidad usa el marco predeterminado de Blizzard: no hay ajustes de EllesmereUI que configurar aquí.
+4783	El marco de esta unidad está oculto: no hay ajustes de EllesmereUI que configurar aquí.
+4784	Esto creará un Gestor de beneficios totalmente único para este grupo condicional. Los cambios en tu Gestor de beneficios predeterminado ya no le afectarán.
+4785	Esto creará un Gestor de beneficios totalmente único para este grupo de anulación. Los cambios en tu Gestor de beneficios predeterminado ya no afectarán a estas especializaciones.
+4786	Esto creará un Gestor de perjuicios totalmente único para este grupo condicional. Tus ajustes actuales del Gestor de perjuicios se copian como punto de partida, y los cambios en tu Gestor de perjuicios predeterminado ya no le afectarán.
+4787	Esto creará un Gestor de perjuicios totalmente único para este grupo de anulación. Tus ajustes actuales del Gestor de perjuicios se copian como punto de partida, y los cambios en tu Gestor de perjuicios predeterminado ya no afectarán a estas especializaciones.
+4788	Esto creará un Modo desbloqueo totalmente único para este grupo condicional. Los cambios en tu Modo desbloqueo predeterminado ya no le afectarán.
+4789	Esto creará un Modo desbloqueo totalmente único para este grupo de anulación. Los cambios en tu Modo desbloqueo predeterminado ya no afectarán a estas especializaciones.
+4790	Esto no restablecerá la Configuración rápida específica de cada addon.
+4791	Esto reemplazará TUS ajustes de Interfaz Blizz mejorada (las pestañas Aspecto de ventanas y Descripciones, menús y ventanas emergentes) por los de quien comparte, en TODOS tus perfiles. Tus ajustes actuales de esas dos pestañas no se podrán recuperar después.
+4792	Esto crearía un anclaje circular
+4793	Esto crearía una igualación de alto circular
+4794	Esto crearía una igualación de ancho circular
+4795	amenaza
+4796	% de amenaza
+4797	Posición del % de amenaza
+4798	Amenaza y felicidad de mascota
+4799	Borde de amenaza
+4800	Color de amenaza
+4801	COLORES DE AMENAZA
+4802	Medidor de amenaza
+4803	Amenaza: valores nativos del objetivo actual.
+4804	Umbral %
+4805	Color de umbral
+4806	Recuento de umbral
+4807	Color de marca
+4808	Marcas en acumulaciones
+4811	Tiempo desde el último mensaje coincidente mostrado. Las repeticiones ocultas no amplían la ventana.
+4812	Temporizador
+4813	Fondo del temporizador
+4814	Textura de fondo del temporizador
+4815	Textura de barra del temporizador
+4816	Color del borde del temporizador
+4817	Tamaño del borde del temporizador
+4818	Color del temporizador
+4819	Fuente del temporizador
+4820	Capa del temporizador
+4821	Contorno del temporizador
+4822	Posición del temporizador
+4823	Tamaño del temporizador
+4824	Tamaño del texto del temporizador
+4825	Temporizador X
+4826	Temporizador Y
+4827	Texturas de temporizador, fuerzas y barra de hechizo
+4828	Marca de hora en todos los mensajes
+4829	Marcas de hora
+4830	Tiñe el dragón con tu color de clase en lugar de dorado o plateado.
+4831	Tiñe el dragón con tu color de clase en lugar de dorado.
+4832	Tiñe la ranura de este bloque con su propio color.
+4833	Diminuto (75%)
+4834	Rayas finas
+4835	Punta de la lanza
+4836	Color del título
+4837	Tamaño de fuente del título
+4838	Tamaño del título
+4839	Títulos
+4840	Alternar barra de acción
+4841	Alterna entre diseño de barra horizontal y vertical.
+4842	Alternar calendario
+4843	Alternar reloj
+4844	Activa o desactiva los botones opcionales de EllesmereUI: los botones del menú de Escape y el botón del minimapa.
+4845	Tecla de alternar
+4846	Atajo de alternar
+4847	Alternar menú abierto
+4848	El modo alternar necesita una tecla de selección; hasta que se asigne, el menú se activa al soltar.
+4849	Atajo de activar/desactivar
+4850	Alternar orientación
+4851	Alternar mapa del mundo
+4852	Alternar una barra de acción solo está disponible fuera de combate\n\nClic izquierdo para asignar un atajo.\nClic derecho para quitarlo.
+4853	Descripción emergente
+4854	descripción emergente
+4855	Opacidad del fondo de la descripción
+4856	Borde y fondo de la descripción
+4857	Tamaño del borde de la descripción
+4858	Bordes y fondo de la descripción
+4859	Escala de fuente de la descripción
+4860	Escala del tamaño de fuente de la descripción
+4861	INFORMACIÓN DE LA DESCRIPCIÓN
+4862	Opciones de descripción
+4863	POSICIÓN DE LA DESCRIPCIÓN
+4864	Escala del texto de la descripción y texto de encantamiento
+4865	Escala del texto de la descripción, texto de encantamiento y velocidad de vuelo dracónico
+4866	VISIBILIDAD DE LA DESCRIPCIÓN
+4867	Descripciones emergentes
+4868	Descripciones, menús y ventanas emergentes
+4870	Espacio superior
+4871	Arriba a la izquierda
+4872	Arriba a la izquierda, hacia abajo
+4873	Arriba a la izquierda, hacia la derecha
+4874	Tamaño del texto de la barra de nombre superior
+4875	Métricas de rendimiento de primer nivel
+4876	Desplazamiento superior
+4877	La posición superior solo está disponible en modo Separado
+4878	Arriba a la derecha
+4879	Arriba a la derecha, hacia abajo
+4880	Arriba a la derecha, hacia la izquierda
+4881	Borde superior de la pantalla
+4882	Texto superior
+4883	Tamaño del texto superior
+4884	De arriba abajo
+4885	Barra de información superior/inferior
+4888	BARRA DE TÓTEMS
+4889	Barra de tótems
+4890	Barras de tótems
+4891	Tamaño del temporizador de tótems
+4892	Rastrear
+4893	Rastrea y muestra al pasar el ratón el oro de todos tus personajes.
+4894	Rastrea consumibles y beneficios de banda para contenido instanciado.
+4895	Rastrear rendimientos decrecientes
+4896	AURAS RASTREADAS
+4897	Auras rastreadas
+4898	Barras de beneficios rastreados
+4899	Los ID rastreados se añaden; los ID excluidos siempre se ocultan
+4900	ID de hechizos rastreados
+4901	HECHIZOS RASTREADOS
+4902	Fuente del seguimiento y tamaños de texto por línea
+4903	Tamaño de icono del seguimiento
+4904	Escala del seguimiento
+4905	Rastreo
+4906	Texto de nombre, temporizador y acumulaciones de barras de seguimiento (por barra)
+4907	Textura y borde de barras de seguimiento (por barra)
+4908	Texturas de barras de seguimiento y bordes de iconos
+4909	BARRAS DE SEGUIMIENTO
+4910	Barras de seguimiento
+4911	Rastreo, calendario y correo. Los mapas redondos los colocan junto a un reloj superior.
+4912	Rastrea el abalorio JcJ y Cada uno por su cuenta (2 minutos de reutilización) desde el registro de combate.
+4913	Comercio
+4914	Anuncios de comercio incluyen LFW
+4915	Objetos comerciables
+4916	Entrenar todo
+4917	Instructor: botón Entrenar todo
+4918	Transformaciones: Halloween, Jardín Noble, pavo del Generoso, Brebaje de Hierbaferal
+4919	Traducción
+4920	Reutilizaciones de viaje
+4921	Triángulo
+4922	Abalorio
+4923	Rastreo de abalorios y control de masas
+4924	Reutilizaciones internas de abalorios
+4925	Lado del abalorio
+4926	Ranura de abalorio 
+4927	Activa Desactivar paginación por forma en la barra de acción 1 para darle sus propias casillas.
+4928	Desactiva los bocadillos de chat dentro de mazmorras, bandas, campos de batalla y arenas.
+4929	Activa o desactiva el Modo oscuro para la barra de recurso de clase.
+4930	Activa o desactiva el Modo oscuro para Marcos de unidad y Marcos de banda a la vez.
+4931	Gira el dragón para que mire hacia el otro lado del retrato.
+4932	Crepúsculo
+4934	Dos
+4935	Dos nuevas opciones en la lista de aspecto de ventanas

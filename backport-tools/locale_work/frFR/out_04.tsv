@@ -1,0 +1,450 @@
+3680	Recharger l'interface maintenant ?
+3681	Rechargez pour terminer l'importation.
+3682	Rechargez pour terminer le passage au nouveau profil.
+3684	Durée restante
+3686	Lignes mémorisées
+3687	Vous rappelle de prendre une Pierre de soins quand un démoniste est dans votre groupe. Les démonistes reçoivent un rappel cliquable Création de pierre de soins.
+3688	Couleur du rappel
+3689	Conditions du rappel
+3690	Lueur du rappel
+3691	Noms des rappels, nombres d'objets et alerte de mana
+3692	Taille du rappel
+3693	Son du rappel
+3694	Rappel X
+3695	Rappel Y
+3696	Vous rappelle quand l'amélioration de feu de camp Avantages du camp est absente.
+3697	Vous rappelle chaque fois que cette amélioration est absente. Supprimer arrête son suivi.
+3700	Supprime les sacs, la banque et l'or enregistrés d'un personnage du cache du compte. Le personnage sur lequel vous êtes connecté est réenregistré automatiquement et ne peut pas être supprimé.
+3701	Supprimer l'action
+3706	Supprimer l'entrée
+3709	Supprimer la barre sélectionnée
+3710	Supprimer le raccourci sélectionné
+3711	Supprimer l'indicateur sélectionné
+3713	Supprimer le remplacement orphelin
+3714	Supprimer le remplacement orphelin « %s » pour %s ? La spécialisation revient au réglage par défaut partagé.
+3715	Supprimé 
+3717	Supprime les codes couleur que le plugin écrit dans son propre texte, pour que la couleur du texte de ce bloc s'applique. Désactivé conserve les couleurs du plugin.
+3718	Retire ce bloc de la barre.
+3724	Renommer cette barre. Appuyez sur Entrée pour appliquer.
+3727	Tous les objets réparés pour 
+3728	Répare avec la banque de guilde quand votre limite de retrait couvre le coût, sinon avec votre propre or.
+3729	Fenêtre de répétition (secondes)
+3730	Filtre des messages répétés
+3731	MESSAGES RÉPÉTÉS
+3732	RÉPÉTITIONS ET MOTS-CLÉS DANS
+3733	Remplace la fenêtre de division de Blizzard pour les objets des sacs et de la banque par la fenêtre de division qui propose aussi la division automatique.
+3734	Remplace l'icône de classe par l'étourdissement, le silence, la peur, l'immobilisation ou l'immunité la plus forte sur cet ennemi.
+3735	Remplace le drapeau de difficulté par un affichage compact comme 25H.
+3736	Remplace la barre d'incantation standard du joueur.
+3738	Repositionner cet élément en mode Déverrouillage
+3742	Taille du texte de la barre de réputation
+3743	Texture de la barre de réputation
+3744	Nécessite un client avec les événements de vol plané.
+3745	Nécessite un affichage des affaiblissements
+3746	Nécessite Type de ressource : Mana + ressource de forme.
+3747	Nécessite Afficher le joueur. Les cadres de groupe sont masqués en raid.
+3748	Outil de secours pour un profil construit dans un remplacement : les réglages et dispositions du groupe sélectionné deviennent la base propre de ce profil, puis TOUS les groupes de remplacement de spécialisation sont supprimés. Les remplacements conditionnels ne sont pas affectés.
+3754	Réinitialiser toutes les positions de barre
+3757	Réinitialiser la position de la barre
+3758	Réinitialiser les positions des barres
+3759	Réinitialiser les positions des boutons
+3761	Raccourci de réinitialisation des données (exemple : CTRL-R)
+3762	Échec de la réinitialisation : des joueurs sont encore dans l'instance.
+3763	Réinitialiser les positions des icônes
+3764	Réinit. positions menu, sacs et XP
+3765	Message de réinitialisation
+3766	Réinitialiser la position
+3767	Réinitialiser la mémoire des répétitions
+3768	Réinitialiser les filtres d'auras sélectionnés
+3769	Réinitialiser la position de la barre sélectionnée
+3771	Réinitialiser couleurs et ordre des stats
+3772	Réinitialiser la position de ce groupe
+3774	Réinitialiser les barres de suivi
+3776	Réinitialiser les positions des fenêtres
+3778	Habiller Donjon prêt et Vérification des rôles
+3780	Habiller fenêtres et menus contextuels
+3781	Habiller les infobulles
+3787	Les quantités de ressource sont séparées par type de ressource.
+3788	Réglages de la barre de ressource
+3791	Couleur de la ressource
+3793	Textures des barres de ressource, d'incantation et de GCD
+3796	Décalage X de l'indicateur de repos
+3797	Décalage Y de l'indicateur de repos
+3798	Repos
+3801	Restaurer les attributions par défaut de cette barre
+3803	Relooker mon interface
+3804	Relooke les bulles de discussion du jeu et les active pour les canaux cochés.
+3806	Apparence Retail
+3807	Couloirs d'auras Retail
+3808	Fenêtre de sacs Retail
+3809	Modèle de barre Retail
+3810	Réglages de barre Retail
+3811	Styles de bordure Retail issus du catalogue de bordures partagé.
+3812	Panneau de chat Retail
+3813	Moteur et apparence Retail
+3814	Liste d'amis Retail
+3815	Disposition Retail
+3816	Apparence Retail
+3817	Pages Retail
+3818	Pages de réglages Retail
+3819	Infobulle Retail
+3820	Fenêtres Retail
+3822	Apparaît uniquement au survol. Se combine aux conditions ci-dessous : apparaît au survol tant qu'elles sont toutes remplies, reste masqué dès que l'une échoue.
+3823	Révéler les zones inexplorées
+3825	Inverser l'ordre des groupes
+3826	Inverser l'ordre des membres
+3832	Clic droit : retour depuis les détails, ou ouvrir les favoris du compteur.
+3834	À droite du curseur
+3836	À droite de la fenêtre
+3837	Bord droit de l'écran
+3839	Couleur de classe du texte droit
+3845	Le glisser droit fait toujours tourner la caméra
+3846	Anneau / Arc
+3850	Rayon de l'anneau
+3852	Épaisseur de l'anneau
+3859	rôle
+3860	Position de l'icône de rôle
+3862	Style de l'icône de rôle
+3863	Décalage X de l'icône de rôle
+3864	Décalage Y de l'icône de rôle
+3866	Ordre de la liste
+3869	Direction des lignes
+3870	Hauteur de ligne
+3876	Runeforge
+3878	Runes et points de combo
+3884	Même configuration, mêmes fonctionnalités EllesmereUI, nouveau look : passez au Style Blizzard ou à la nouvelle interface WoW Classic en un clic, et revenez quand vous voulez.
+3885	Chrono Rassasié / Épuisement
+3886	Satyre
+3889	Enregistrer le raccourci
+3890	Conserver l'historique entre les sessions
+3891	Enregistrer l'inventaire et recharger
+3893	RACCOURCIS ENREGISTRÉS
+3894	Enregistré pour ce personnage uniquement. Saisissez un ID de sort et appuyez sur Entrée pour être averti chaque fois que cette amélioration est absente sur vous.\nLes sorts de votre grimoire sont lançables d'un clic. Les ID inconnus sont ignorés.
+3895	Enregistré pour cette disposition de raid. Les groupes masqués ne laissent aucun espace vide.
+3896	Instances sauvegardées
+3898	Dire
+3899	Dire, Crier et canaux numérotés comme Général, Commerce et Monde. Délimite les filtres de répétition, de mots-clés, d'annonces commerciales et de recrutement.
+3905	Ajuste la taille du texte par défaut du jeu de Blizzard (menus, infobulles, journal de quêtes, etc.). Nécessite un rechargement de l'interface.
+3906	Ajuste l'échelle de la barre standard ; 30 correspond à sa taille normale.
+3907	Ajuste la taille du texte des infobulles de Blizzard.
+3908	Ajuste l'échelle du cadre entier. Les cadres Style Blizzard ont la taille standard, ce réglage remplace donc Largeur de barre et Hauteur de la barre de vie.
+3910	Centre de l'écran
+3911	Coordonnées d'écran
+3912	Couche d'écran sur laquelle cette barre s'affiche. Montez-la pour la dessiner au-dessus des autres cadres, baissez-la pour la placer derrière.
+3913	Position à l'écran
+3914	Décalage X à l'écran
+3915	Décalage Y à l'écran
+3916	Bouton de défilement sur le panneau de chat
+3917	Faites défiler la molette sur la fenêtre d'un marchand pour tourner ses pages d'objets.
+3919	Géant des mers
+3926	STATISTIQUES SECONDAIRES
+3928	Taille du texte des stats secondaires
+3929	Secondes d'affichage de l'état actif après une incantation, pour les sorts sans amélioration.
+3932	Segment
+3933	Sélectionner
+3934	Choisir un personnage
+3936	Choisir un plugin
+3939	Choisir une barre
+3941	Choisir un cadre
+3942	Choisir une lueur
+3943	Choisir un groupe
+3944	Choisir un indicateur
+3945	Touche de sélection : 
+3946	Choisir une palette
+3953	Choisir une fenêtre
+3954	Sélectionner...
+3955	Sélectionné : 
+3957	Aiguille de sélection
+3959	Destinataires du courrier
+3960	Courrier : liste des destinataires
+3961	Envoyer à DBM / BigWigs
+3964	Espacement séparé
+3965	Séparez les mots ou expressions par des virgules ou des points-virgules. Insensible à la casse, lettres accentuées comprises, correspondance littérale de sous-chaîne. Les entrées vides sont ignorées.
+3966	Séparé (12,345)
+3967	Séparateur
+3968	Avis des canaux du serveur
+3972	Réglez une lueur une fois. Tout appliquer modifie les lueurs personnalisées actives listées ci-dessous.
+3974	Définir la touche d'annulation
+3976	Options du texte du nom d'ensemble
+3977	Taille du texte du nom d'ensemble
+3978	Défini par filtre
+3979	Défini par filtre et tuile
+3980	Défini par indicateur
+3981	Définir la touche de sélection
+3984	Régler le volume
+3987	Définit la police des noms qui flottent au-dessus des joueurs, PNJ et ennemis dans le monde.\n\nDistincte de la Police globale : la modifier n'affecte pas le reste de l'interface, et la Police globale ne l'affecte pas.\n\nBlizzard Default laisse le texte des noms totalement intact.\n\n|cffff4d4dNécessite une reconnexion ou un redémarrage de WoW pour prendre effet.|r
+3991	Engrenage des réglages
+3993	Les Remplacements de réglages sont le système le plus puissant d'EllesmereUI, et le plus profond. Quelques minutes avec cette vidéo vous feront gagner des heures de tâtonnement.
+4004	Formes et bordures
+4005	Textures de barre SharedMedia
+4006	Polices, textures et sons SharedMedia
+4007	SharedMedia dans les menus de sons
+4008	Sons SharedMedia
+4009	Textures et sons SharedMedia
+4013	Absorptions de bouclier dans les soins
+4014	Estimations des boucliers
+4015	Les boucliers sont estimés sur 3.3.5
+4017	Shift + glisser gauche : enregistrer la position
+4020	Shift pendant le redimensionnement verrouille une direction
+4023	Shift+clic milieu pour toujours afficher tous les réglages
+4026	Shift-clic : attacher même catégorie
+4027	Shift-clic : attacher même catégorie
+4028	Shift-glissez les icônes pour les déplacer
+4033	Court (12.3k)
+4034	Texte de raccourci court
+4035	Noms de canaux abrégés
+4039	Afficher 
+4043	Afficher/Masquer inclut le chrono de combat
+4044	Afficher/Masquer inclut l'historique des sorts
+4045	Raccourci afficher/masquer les fenêtres (exemple : ALT-M)
+4046	Afficher 15 sorts (sinon 8)
+4048	Affiche une lueur sur la barre d'incantation quand l'unité lance un sort que Blizzard marque comme important.
+4051	Affiche un rappel quand vous n'avez aucun familier actif invoqué. S'applique uniquement aux classes à familier (chasseur, démoniste, chevalier de la mort Impie).\nChasseurs : le clic droit alterne entre Appel du familier et Ressusciter le familier. Démonistes : le clic droit fait défiler les démons.
+4052	Affiche un rappel quand votre familier actif est en position Passif. Un clic le met en Défensif.
+4054	Afficher l'étiquette de texte d'action
+4055	Afficher l'état actif
+4056	Afficher le statut AFK
+4059	Afficher les familiers d'arène
+4061	Afficher les infobulles d'aura au survol des icônes d'amélioration et d'affaiblissement sur tous les cadres d'unité sauf ceux des boss.
+4062	Afficher les infobulles d'aura au survol des icônes d'amélioration et d'affaiblissement sur les cadres de boss.
+4063	Afficher les auras
+4064	Afficher la barre d'emplacements de sacs
+4068	Afficher en dessous
+4069	Afficher le texte LqE
+4071	Afficher la bordure derrière
+4074	Afficher le calendrier
+4077	Afficher les ticks de canalisation
+4078	Afficher la banque du personnage
+4079	Afficher le nombre d'objets par personnage
+4081	Afficher les icônes de classe
+4083	Afficher le bouton Effacer
+4090	Afficher les coordonnées sur la carte du monde
+4091	Affiche les exemplaires d'un même objet répartis dans plusieurs emplacements sous une seule icône avec leurs quantités additionnées. En pause quand la fenêtre de courrier, d'échange, d'hôtel des ventes, de banque ou de banque de guilde est ouverte.
+4094	Afficher les décimales
+4095	Afficher la description
+4096	Afficher le drapeau de difficulté
+4098	Afficher dissipable sans affaiblissement de boss
+4099	Afficher DPS / HPS à côté du total
+4100	Afficher la durabilité
+4103	Noms d'enchantement au lieu des icônes
+4104	Afficher les améliorations ennemies
+4105	Afficher les barres d'info ennemies
+4107	Affiche toutes les améliorations qui ont une durée (masque les améliorations permanentes). Utilisez le couloir Masquer ci-dessous pour retirer des filtres précis.
+4108	Affiche toutes les améliorations. Utilisez le couloir Masquer ci-dessous pour retirer des filtres précis.
+4109	Affiche tous les affaiblissements. Utilisez le couloir Masquer ci-dessous pour retirer des filtres précis.
+4110	Afficher le bouton déroulant
+4111	Afficher FPS et latence
+4113	Afficher les notes d'amis
+4114	Afficher les boss alliés
+4115	Afficher les barres d'info alliées
+4116	Afficher les amis en ligne
+4117	Afficher le GearScore
+4118	Afficher le groupe 
+4119	Afficher les choix de jet du groupe
+4120	Afficher le bonheur
+4121	Afficher la ligne hachurée sur la cible
+4122	Icônes d'en-tête au survol
+4124	Afficher la prédiction de soins
+4125	Afficher l'aperçu de la prédiction de soins
+4126	Afficher les icônes de soigneur
+4129	Afficher les messages masqués
+4132	Afficher Toucher / Expertise / Pénétration d'armure
+4133	Affiche combien il vous reste de ce consommable dans vos sacs.
+4135	Afficher l'icône sur le portrait
+4137	Afficher dans
+4143	Afficher en instance
+4150	Affiche les infobulles d'objet ou de sort au survol des icônes de rappel.
+4151	Afficher les appuis de touche
+4153	Afficher les raccourcis
+4156	Afficher l'étiquette
+4157	Afficher les étiquettes
+4158	Afficher la latence
+4160	Afficher la latence locale
+4161	Afficher l'indicateur de courrier
+4162	Afficher les cadres des tanks principaux
+4163	Afficher la barre de mana en métamorphose
+4165	Afficher le marchand en liste
+4167	Afficher monture et statut de collection
+4169	Afficher les noms (raid)
+4173	Afficher à droite
+4175	Affiche une sous-catégorie par ensemble d'équipement (nommée d'après l'ensemble) sous Équipement d'ensemble.
+4177	Afficher uniquement en combat
+4178	Afficher hors combat
+4181	Afficher les cadres de groupe
+4182	Afficher les familiers du groupe
+4183	Afficher les bijoux passifs
+4184	Afficher le pourcentage
+4190	Afficher le joueur
+4195	Afficher le % de ressource
+4196	Afficher le bijou JcJ
+4197	Afficher les indicateurs de file
+4198	Afficher les cadres de raid
+4200	Afficher les familiers du raid
+4201	Afficher les outils de raid
+4202	Afficher les recharges prêtes
+4204	Affiche des rappels quand la durée restante de l'amélioration est inférieure à ce nombre de minutes.\n0 = uniquement une fois expirée.\nIgnoré en combat (alors uniquement quand l'amélioration a disparu).
+4205	Afficher le nom d'ensemble sur l'équipement
+4209	Afficher l'aperçu du coût des sorts
+4214	Afficher la sous-zone
+4215	Afficher les icônes de tank
+4216	Afficher la cible
+4219	Afficher les dixièmes de seconde
+4221	Affiche les contrôles de style et de taille de bordure de la barre d'incantation.
+4222	Affiche les emplacements de sacs équipés au-dessus de la fenêtre (aussi activé par le bouton d'en-tête Sacs).
+4223	Affiche les boutons d'amis et déroulant uniquement au survol de la carte.
+4224	Affiche le trousseau de clés dans la fenêtre des sacs.
+4227	Affiche le cadre du familier dès que vous avez un familier, en ignorant les réglages de visibilité du cadre du joueur.
+4230	Affiche l'infobulle de l'unité au survol du cadre lui-même.
+4231	Afficher cette barre
+4232	Afficher le % de menace sur cible et focalisation
+4233	Afficher les couleurs de menace
+4234	Afficher la menace sur la bordure
+4235	Afficher la menace sur la barre de vie
+4236	Afficher la menace sur le nom
+4237	Afficher l'heure
+4240	Afficher les données d'infobulle
+4241	Afficher l'infobulle pour
+4245	Afficher la barre de totems (chevalier de la mort)
+4246	Afficher la barre de totems (chaman)
+4247	Afficher le pistage
+4249	Afficher si vie manquante
+4251	Afficher en solo
+4252	Afficher la fenêtre
+4253	Afficher sans l'objet dans les sacs
+4254	Afficher la latence du monde
+4255	Afficher le bouton de la carte du monde
+4256	Afficher les boutons de zoom
+4258	Affichage de la valeur du remplacement « %s ». Modifiez-la depuis le mode d'édition de ce remplacement.
+4259	Cette aura est affichée quel que soit le lanceur ; cliquez pour vos incantations uniquement.
+4260	Cette aura est affichée pour vos incantations uniquement ; cliquez pour tout lanceur.
+4261	Affiché au niveau maximum. L'en-tête affiche le GearScore.
+4262	Affiché sur les membres morts en cours de résurrection (LibResComm-1.0, inclus).
+4264	Affiche une icône de maison ou de globe indiquant à quelle latence correspond chaque valeur.
+4267	Affiche un petit trait blanc là où en sera l'incantation quand votre interruption sera rechargée.
+4269	Affiche les affaiblissements correspondant à n'importe quel filtre Afficher coché (par défaut).
+4270	Affiche toutes les barres avec des icônes fictives tant que les options sont ouvertes.
+4271	Affiche tous les affaiblissements sur ce cadre.
+4272	Affiche les soins entrants au-delà de la barre de vie : les vôtres, puis ceux des autres joueurs.
+4273	Affiche les grands montants avec les suffixes K/M (284,208g devient 284.2Kg) au lieu du nombre complet. L'infobulle affiche toujours le montant exact.
+4274	Affiche uniquement les affaiblissements que Blizzard marque comme importants.
+4275	Affiche uniquement les affaiblissements correspondant à tous les filtres Afficher cochés (les types de dissipation comptent pour un) ; des opposés comme Auras non-joueur avec Lancé par vous n'affichent rien.
+4276	Affiche uniquement les affaiblissements que vous appliquez et que Blizzard marque aussi comme importants.
+4277	Affiche uniquement les affaiblissements que vous appliquez.
+4278	Affiche uniquement les auras suivies de ce cadre ; ajoutez-les avec Modifier les auras suivies en haut de ce menu.
+4280	Affiche l'icône audio à côté de la barre de volume.
+4281	Affiche l'icône de sac à côté du nombre d'emplacements.
+4283	Affiche le texte de statut de combat uniquement quand votre personnage est en combat.
+4284	Affiche le coût du sort en cours d'incantation sur la barre de ressource.
+4286	Affiche la description de la monnaie dans l'infobulle. Désactivez pour une infobulle compacte avec seulement le nom et le montant.
+4287	Affiche les affaiblissements que vous appliquez plus les affaiblissements importants de n'importe qui.
+4288	Affiche le cadre quand cette unité n'a pas toute sa vie ; une fois activé, un cadre masqué par son réglage de visibilité reste cliquable.
+4289	Affiche les éléments de texte de vie placés dans Positions du texte principal.
+4291	Réaffiche les dernières lignes de chaque fenêtre de chat après un rechargement ou une reconnexion.
+4294	Affiche l'affaiblissement de boss le plus important (ICC, Sanctum rubis, ToC, Ulduar, Naxxramas) sous forme de grande icône au centre du cadre.
+4295	Affiche la zone de latence réseau à la fin des incantations ou canalisations, sorts en file inclus.
+4297	Affiche la superposition uniquement pour les affaiblissements que vous pouvez dissiper actuellement.
+4298	Affiche l'icône propre du plugin à côté de son texte.
+4299	Affiche le texte du plugin. Désactivé laisse un bloc icône seule qui conserve l'infobulle et les clics du plugin.
+4300	Affiche les icônes de métier à côté du texte.
+4302	Affiche l'icône de spécialisation à côté du texte.
+4303	Affiche l'icône du sort sur le portrait pendant l'incantation et laisse la barre utiliser toute la largeur.
+4304	Affiche ici le cadre standard des runes ou points de combo au lieu des pastilles.
+4305	Affiche le niveau de l'unité dans le cercle de niveau du cadre, comme l'interface par défaut.
+4307	Affiche vos adversaires d'arène. Clic gauche pour cibler, clic droit pour définir la focalisation.
+4309	Affiche le bonheur de votre familier de chasseur à côté du cadre du familier.
+4310	Affiche votre interruption quand votre focalisation incante.
+4311	Affiche votre interruption quand votre focalisation ou votre cible incante.
+4312	Affiche votre pourcentage de menace sur les cadres de cible et de focalisation quand vous êtes en combat avec cette unité.
+4314	Barre latérale
+4330	La correspondance de taille n'est pas disponible avec les cadres d'unité Style Blizzard.
+4333	Taille du cadre Classic autour de la barre.
+4334	Taille du cadre de l'interface WoW Classic quand le style classique est activé.
+4335	Taille du dragon, en pourcentage de son ajustement autour du portrait.
+4336	Taille de l'anneau extérieur par rapport au portrait.
+4338	Dimensionne le texte libre, le numéro de barre et le compte à rebours d'icône de l'alerte de mouvement. Changer le mode d'affichage de l'alerte réinitialise cette valeur.
+4342	Crâne
+4344	Vol dynamique (en l'air)
+4345	ATH du vol dynamique
+4347	Monture de vol dynamique
+4349	Commandes slash
+4350	Glissement
+4351	Curseur
+4352	Emplacement
+4353	Fait lentement orbiter les éléments cochés quand le Mode Groupe est actif ; ils restent droits et se mettent en pause en combat.
+4359	Assistants de quête plus malins
+4361	Animation fluide
+4363	Barres d'incantation fluides
+4369	Aimanter aux autres fenêtres
+4376	Aimantation et verrouillage
+4379	Panneau de sertissage et gemmes en un clic
+4380	Icônes des gemmes serties
+4387	Options de tri
+4388	Trier les runes prêtes en premier
+4389	Trier en bas
+4390	Trié
+4395	Effets sonores
+4398	espacement
+4401	Filtre anti-spam
+4402	Préréglages et mots-clés du filtre anti-spam
+4403	Mode étincelle
+4405	Spé 
+4407	Icônes de spécialisation
+4408	Remplacement de spécialisation
+4410	Remerciements particuliers à Ellesmere
+4411	Remerciements particuliers à :
+4412	MISE À JOUR SPÉCIALE
+4413	Icônes de spécialisation
+4414	Spécialisations
+4417	sort
+4418	Sort 
+4419	ID de sort / d'objet
+4420	Recharge du sort
+4421	Couleur du coût du sort
+4422	Prédiction du coût des sorts
+4423	Densité des sorts - Réglée sur Essentiel\n
+4425	Texture de la barre d'historique des sorts
+4426	Taille du texte de l'historique des sorts
+4428	Les icônes de sort affichent votre propre amélioration courte issue de ce sort au lieu de la recharge.
+4430	ID du sort d'interruption à afficher. 0 utilise l'interruption de votre classe.
+4431	ID de sort ou chemin de texture.
+4432	ID de sort indisponible dans ce client
+4433	ID du sort...
+4434	ID des sorts dans les infobulles
+4436	Contour du nom du sort
+4437	Les noms de sorts apparaissent sur les barres d'info de la cible et du survol identifiés.
+4439	Couleur du texte du sort
+4440	Position du texte du sort
+4441	Taille du texte du sort
+4442	Texte du sort X
+4443	Texte du sort Y
+4447	sorts
+4449	Rotation
+4450	En rotation
+4453	Répartit les objets de la banque par catégorie, avec la même liste, le même ordre et les mêmes renommages que la vue Tous les objets des sacs.
+4454	Séparer l'équipement par ensemble
+4455	Diviser la pile
+4458	Cartes carrées et rectangulaires uniquement.
+4459	Habillages sombres carrés pour les fenêtres, infobulles, menus et fenêtres contextuelles de Wrath.
+4460	SSAO (occlusion ambiante) - Désactivé\n
+4464	Diviseur de piles
+4466	Position du texte de cumul
+4467	Taille du texte de cumul
+4468	Couleur du seuil de cumuls
+4469	Ticks de cumuls
+4473	Cumuls / nombre d'objets
+4474	Couleur des cumuls
+4475	Position des cumuls
+4476	Taille des cumuls
+4479	Les postures, formes et le camouflage gardent la barre d'action 1 sur sa propre page.
+4483	Taille du chrono autonome
+4485	Étoile
+4489	Disposition de départ pour la prochaine barre que vous créez.
+4490	Fait commencer la bande d'onglets au bord de la barre latérale.
+4491	En-tête des stats
+4492	BARRE LATÉRALE DES STATS
+4494	Taille du texte de statut
+4497	Volables uniquement
+4501	Segments stockés
+4504	Remplacements orphelins
+4506	niveau d'affichage
+4509	Retirer les couleurs

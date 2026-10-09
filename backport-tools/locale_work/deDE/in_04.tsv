@@ -1,0 +1,100 @@
+5009	Use Accent Color
+5011	Use Blizzard Style
+5013	Use Classic WoW UI
+5014	Use Dispel Colors
+5015	Use EllesmereUI Style
+5016	Use EUI Font Setting
+5017	Use Extra Spell Order
+5020	Use Indicator Layout
+5021	Use Letters
+5022	Use Meter Font Setting
+5023	Use Raid Layout
+5024	Use Server Time
+5025	Use the arrows on each section header to reorder.
+5026	Use the cast bar's border style, size and color around the icon.
+5027	Use the EllesmereUI bag window instead of the default bags. After turning it off, /reload to hand the bag keys fully back to the default bags.
+5028	Use the EllesmereUI bank window instead of the default bank frame.
+5029	Use the Has Aggro color while you tank instead of the normal reaction color.
+5030	Use WoW Forever
+5031	Used
+5032	Used / Total
+5036	Uses live target/mouseover auras and the GUID aura cache for other identified plates.
+5037	Uses Logs/WoWCombatLog.txt
+5038	Uses native Wrath combat events
+5039	Uses raid /maintank and /mainassist
+5040	Uses the EllesmereUI resource color for your class.
+5041	Uses the Interrupt on CD color while your interrupt is cooling down.
+5042	Uses the threshold color below the value instead of at or above it.
+5043	Uses Wrath's wide objectives tracker width.
+5044	Uses your target when no focus is casting.
+5046	Utility Bar
+5049	value
+5055	Vertical Border Separator
+5060	Vertical Separator
+5065	Video Guide
+5069	View Distance - Reduced to 1\n
+5071	View EUI Staff
+5077	VISIBLE GROUPS
+5078	Visible Rows
+5080	Vivify
+5082	Voidwalker
+5088	Warlock-Only Soulstone
+5103	What sits in front of the number. Icon shows the character icon; the color swatches on the left tint it.
+5106	When Healing
+5107	When Healing uses your role or healing talents
+5109	When on, flask/food/weapon/poison reminders still show (dimmed) when you have no matching item in your bags, as a prompt to restock.\nWhen off, they are hidden entirely if you don't carry the item.
+5110	When unlocked, hold Shift and drag the minimap. Position is also available in Unlock Mode.
+5120	Which slot count the block shows.
+5121	Which view the bags open to by default.
+5122	While Group by Category is on, drop the trailing block of empty slots so the view only shows items.
+5129	Whirlwind
+5135	Wide Tracker
+5143	WINDOW DRAGGING
+5144	Window fonts and tooltip text scale
+5146	Window Name
+5148	Window Scale %
+5150	WINDOW SETTINGS
+5153	Window Width
+5154	Windows
+5158	With per-bar textures on, Bar Texture applies to the class resource.
+5160	World channels as letters: General Ge, Trade T, LocalDefense LD, WorldDefense WD, LookingForGroup LFG.
+5161	WORLD MAP
+5162	World Map
+5163	World map overlay: QoL > Interface
+5164	World Marker 1-8
+5166	World Markers at Cursor
+5170	WoW Forever, Blizzard Style and Classic WoW UI reload the UI once to apply. Each module can be switched separately later.
+5171	Wraps the health, power and class resource bars in the Classic WoW UI cast bar frame.
+5173	Wrath channel pulse positions
+5174	Wrath channel pulse positions.
+5175	Wrath chat windows with the EllesmereUI panel, tabs, sidebar and chat bubbles.
+5176	WRATH DATA
+5177	Wrath health, power, class resources, cast, GCD, swing and totem bars.
+5178	WRATH INVENTORY
+5179	WRATH OF THE LICH KING BACKPORT
+5180	Wrath only has a Blizzard class resource bar for Death Knight runes.
+5181	Wrath raid and party frames with native unit clicks, auras, range and click casting.
+5182	Wrath spells, items and auras. Assignments are saved for each dual talent group.
+5183	Wrath's native quest and achievement tracker with EUI styling, visibility rules, auto-accept/turn-in and a quest-item hotkey.
+5190	XP & Reputation Text Size
+5192	XP and reputation bars use the ElvUI Norm texture.
+5206	You changed the default value of a setting that has overrides. Overrides keep their own values, so this change will not reach the specs or conditions they cover. To change it for an override, pick that override from the class glyph beside the module search bar and edit it there.
+5208	You have not learned %1$s.
+5210	You may only have 
+5220	Zone
+5222	Zone Level Ranges
+5223	Zone Offset X
+5224	Zone Offset Y
+5226	Zone PvP Color
+5227	Zone Scale
+5228	ZONE TEXT
+5229	Zone Text
+5230	Zone Text Outline
+5234	ZZZ on the EUI player frame while resting
+5235	|cff00ff00[EllesmereUI]|r All hints reset. /reload to see them again.
+5236	|cff00ff00[EllesmereUI]|r UI scale reset. /reload to re-snapshot from your Blizzard scale.
+5237	|cff00ff98EllesmereUI:|r Overrides intro reset. The announcement popup fires on your next /reload; the video guide fires on your next click of the overrides glyph.
+5238	|cff00ff98EllesmereUI:|r Video guides and tutorial tips reset. Badges are back; one-time popups will fire again.
+5242	|cff888888...and %d more|r
+5244	|cffff6060[EllesmereUI]|r Cannot enter Unlock Mode during combat.
+5247	|cffff6060[EllesmereUI]|r Spec changed: Unlock Mode closed, unsaved layout changes discarded.

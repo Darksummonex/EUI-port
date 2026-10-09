@@ -1,0 +1,350 @@
+1750	Digite um espaço de equipamento (1-19). Berloques são 13 e 14.
+1751	Digite um ID de item para rastrear:
+1752	Entrar e Sair
+1753	Digite a Cor
+1754	Digite o Nome
+1755	Digite o nome...
+1756	Digite IDs de feitiço positivos separados por vírgulas ou espaços.
+1757	Digite IDs de feitiço positivos separados por vírgulas.
+1758	Digite o Texto
+1759	Digite a duração máxima da penalidade em segundos:
+1760	Digite o ID de feitiço de um bônus ou penalidade para rastrear:
+1761	Digite o ID de feitiço para sempre mostrar neste quadro.
+1762	Digite o ID de feitiço para sempre mostrar.
+1763	Digite o ID de feitiço para excluir deste quadro.
+1764	Digite o ID de feitiço para excluir.
+1765	Entrando em Combate
+1766	Entrar em combate volta esta janela para Atual se estiver vendo um segmento anterior
+1767	Tipo de Entrada
+1768	Detalhe do Ambiente - Reduzido para 1\n
+1769	Equipar
+1770	Equipamento
+1771	Durabilidade do Equipamento
+1772	Níveis de Item no Menu de Equipamento
+1773	Níveis de Item do Equipamento
+1774	Conjunto de Equipamentos
+1775	Salvar Conjunto de Equipamentos
+1776	Espaço de Equipamento
+1777	Equipado
+1778	Equipado conta o equipamento vestido. Total também conta melhorias guardadas nas bolsas.
+1779	Nível de Item Equipado
+1780	Botões do Menu Esc
+1781	Español (EU)
+1782	Español (LatAm)
+1783	Essência
+1784	Surto da Eternidade
+1785	Botões da EUI
+1786	Números de recarga da EUI nos botões de ação (o Wrath não tem texto de recarga da Blizzard).
+1787	Padrão Global da EUI
+1788	Fonte Global da EUI
+1789	Contorno Global da EUI
+1790	Brilho da EUI
+1791	Idioma das Opções da EUI
+1792	Escala do Painel de Opções da EUI
+1793	Tema das Opções da EUI
+1794	Modo de Desbloqueio da EUI
+1795	Divisão Igual
+1796	Todo botão de ação com este feitiço brilha.
+1797	Todas as janelas de bate-papo. Escolher um tamanho no menu da aba atualiza este valor.
+1798	Todas as condições definidas precisam ser atendidas. O padrão.
+1799	Todo brilho deste módulo já segue o modelo ou está travado na sua página de configurações.
+1800	Todo brilho deste módulo está ativo.
+1801	Todo visual exceto o atual recarrega a interface uma vez para aplicar. Cada módulo pode ser trocado separadamente depois.
+1802	Todas as principais janelas da Blizzard com tema igual à EUI
+1803	Todas as Opções de Texto do Retail
+1804	Tudo
+1805	Conjurante
+1806	Exemplo: 2061
+1807	Excluir
+1808	PENALIDADES EXCLUÍDAS
+1809	IDs de Feitiço Excluídos
+1810	Brilho Pulsante de Execução
+1811	Executar, Martelo da Ira e Tiro Mortal a 20%; Drenar Alma a 25%.
+1812	Sair
+1813	Sair Sem Salvar
+1814	Exo
+1815	Exo.otf
+1816	Expandir
+1817	Experiência
+1818	Barras de Experiência e Reputação
+1819	Texto da barra de experiência e reputação.
+1820	BARRA DE EXPERIÊNCIA
+1821	Exportar
+1822	Exportar Todos os Dados com o Perfil
+1823	Exportar Feitiços do CDM
+1824	Falha ao Exportar
+1825	Exportar Perfil
+1826	A exportação incluirá %1$s de %2$s addons.
+1827	Expressway
+1828	Expressway (somente latino)
+1829	Expressway CAPS
+1830	Expressway CAPS.ttf
+1831	Estende o fundo do bate-papo atrás da faixa de abas.
+1832	defensivos externos
+1833	Externos
+1834	externos
+1835	Extra
+1836	OPÇÕES EXTRAS DE AURA
+1837	BOTÕES EXTRAS
+1838	Botões Extras ao Passar o Mouse
+1839	Altura Extra
+1840	IDs de Feitiço Extras
+1841	Texto Extra (completo)
+1842	Configurações de Texto Extra
+1843	Largura Extra
+1844	EXTRAS
+1845	Extras
+1846	Página de Extras
+1847	Raio Ocular
+1848	Olho da Tormenta
+1849	Facção (Automático)
+1850	Tamanho do Ícone de Facção
+1851	Indicador de Facção
+1852	Configurações do Indicador de Facção
+1853	Esmaecer
+1854	Esmaecer Após (Segundos, 0 = Nunca)
+1855	Atraso do Esmaecimento (segundos)
+1856	Esmaecer Mensagens Antigas
+1857	Esmaecer Fora de Combate
+1858	Esmaecer Fora de Alcance
+1859	Esmaecer à Direita
+1860	Intensidade do Esmaecimento
+1861	Esmaece os quadros de chefe quando o chefe está fora do alcance dos seus feitiços. Use 100% para desativar.
+1862	Esmaece inimigos além do alcance de 30-40 metros dos feitiços da sua classe.
+1863	Esmaece o bate-papo após um período sem mensagens, mouse ou digitação.
+1864	Esmaece o quadro inteiro (retrato, barras de vida e poder, texto) fora de combate.
+1865	Falhou
+1866	Lançamentos falhos e interrompidos aparecem em vermelho
+1867	Falha ao decodificar o texto
+1868	Falha ao descompactar os dados
+1869	Falha ao desserializar os dados
+1870	Falha ao ler os dados de importação
+1871	Alternativa
+1872	Âncora Alternativa: Alterar
+1873	Âncora Alternativa: Limpar
+1874	Âncora Alternativa: Selecionar
+1875	Direção Alternativa
+1876	Alternativa: %1$s
+1877	Usa a primeira penalidade que seu personagem pode remover.
+1878	Leque
+1879	Direção do Leque
+1880	Favoritos
+1881	Suavizado
+1882	Pés
+1883	Guarda Vil
+1884	Caçador Vil
+1885	Feral
+1886	Combate Feral
+1887	preenchimento
+1888	Preencher por Acúmulos
+1889	Cor de Preenchimento
+1890	Configurações da Cor de Preenchimento
+1891	Opacidade do Preenchimento
+1892	Opacidade do preenchimento das barras no Modo Escuro. Vale só para Quadros de Unidade e de Raide (Barras de Recurso ignoram).
+1893	Sobreposição do Preenchimento
+1894	Preencher o Espaço Restante
+1895	Preenche a barra de vida de baixo para cima em vez da esquerda para a direita. Preenchimento Invertido muda para cima para baixo.
+1896	Preencher para Cima
+1897	Filpet96
+1898	filtro
+1899	Filtrar Conquistas
+1900	Filtrar Vendedores de Ouro
+1901	Filtrar Recrutamento de Guilda
+1902	Filtrar Mortes Hardcore
+1903	Filtrar Palavras-chave
+1904	Filtrar Mensagens Repetidas
+1905	Filtrar Anúncios de Comércio
+1906	filtros
+1907	Os filtros são salvos separadamente para cada quadro
+1908	Encontre a qualquer hora: o glifo da classe ao lado da busca de módulos.
+1909	Fira Sans Bold
+1910	Fira Sans Light
+1911	Fira Sans Medium
+1912	FiraSans Bold.ttf
+1913	FiraSans Light.ttf
+1914	FiraSans Medium.ttf
+1915	Fogo
+1916	Sopro de Fogo
+1917	Bola de Fogo
+1918	Primeiro
+1919	Primeiro e Último
+1920	Primeiro Nome
+1921	CONFIGURAÇÃO INICIAL
+1922	Cinco vagas de grupo incluindo você
+1923	Regra dos Cinco Segundos
+1924	Regra dos cinco segundos e faísca de tique de mana na barra de mana.
+1925	Masmorras de cinco jogadores, incluindo Mítica+. Imersões, raides e cenários não contam.
+1926	Corrija Conflitos de Addons em Um Clique
+1927	Só Marcados
+1928	Arma de Labaredas
+1929	Piscar
+1930	Cura Relâmpago
+1931	Lampejo de Luz
+1932	Pisca LOW MANA durante a verificação de prontidão da raide fora de combate quando você é curador com menos de 80% de mana.
+1933	Pisca o ícone quando seu botão de ação é pressionado.
+1934	Frasco
+1935	Plano
+1936	PLANO E MODERNO
+1937	Plano, limpo e moderno. O visual para o qual a EllesmereUI foi criada.
+1938	Pontos de Voo
+1939	Voos: dourado neutro, azul Aliança, vermelho Horda, verde não descoberto.
+1940	Inverter Dragão
+1941	Espelha o retrato horizontalmente para virá-lo para o outro lado.
+1942	Texto de combate flutuante e nomes no mundo (configurações do motor)
+1943	Entrar Voando
+1944	Tamanho do Botão do Menu
+1945	Direção do Menu
+1946	Foco
+1947	BARRA DE LANÇAMENTO DO FOCO
+1948	Barra de Lançamento do Foco
+1949	Tamanho do Nome na Barra de Lançamento do Foco
+1950	Tamanho do Alvo na Barra de Lançamento do Foco
+1951	Textura da Barra de Lançamento do Foco
+1952	Tamanho do Tempo na Barra de Lançamento do Foco
+1953	Brilho de Lançamento Importante do Foco
+1954	Tamanho da Letra do Foco
+1955	Brilho de Bônus Dissipável do Foco
+1956	Alvo do Foco
+1957	Textura do Foco
+1958	Auras Rastreadas do Foco
+1959	Cor em Foco
+1960	FocusKick
+1961	Barra do FocusKick
+1962	OPÇÕES DO FOCUSKICK
+1963	Seguir Cor da Blizzard
+1964	Fonte
+1965	Fonte alterada. É preciso recarregar a interface para aplicar a nova fonte.
+1966	Só fonte e contorno
+1967	Contorno da Fonte
+1968	Configurações de Fonte
+1969	Tamanho da Fonte
+1970	Tamanho da fonte dos títulos de categoria na grade de conteúdo.
+1971	Tamanho da fonte dos números de nível de item nos equipamentos.
+1972	Tamanho da fonte dos acúmulos.
+1973	Fontes
+1974	As fontes seguem Configurações Globais > Fontes > Blizz UI Enhanced.
+1975	Comida
+1976	No quadro do jogador, mostra uma mini barra de lançamento simples abaixo dele. Para editar a barra de lançamento principal do jogador, %sclique aqui|r
+1977	Força os bônus do chefe em uma única coluna grande ajustada à altura do quadro.
+1978	Força as penalidades do chefe em uma única coluna grande ajustada à altura do quadro.
+1979	Forçar Centralizado
+1980	Forçar Unidades em Inglês (K/M/B)
+1981	Forçar coleta de lixo
+1982	Manter Rastreador de Missões na Tela
+1983	Força um contorno nítido no texto dos ícones (acúmulos, durações, atalhos). Desmarque um módulo para o texto dos ícones seguir o Modo de Contorno acima.
+1984	Força a Textura de Fundo
+1985	Força a Textura da Barra
+1986	Forever
+1987	ARTE FOREVER
+1988	Forever Essentials
+1989	Molduras de bronze, grifos e emblemas redondos do Forever, com os recursos da EllesmereUI.
+1990	Deslocamento X do Texto de Forma
+1991	Deslocamento Y do Texto de Forma
+1992	Fortitude
+1993	FPS
+1994	fps
+1995	Otimização de FPS e Gráficos
+1996	FPS E LATÊNCIA
+1997	Tamanho do Texto de FPS / Latência
+1998	FPS e Latência
+1999	Cores de Qualidade de FPS e Latência
+2000	CONTADOR DE FPS
+2001	Contador de FPS
+2002	Tamanho do Texto do Contador de FPS
+2003	FPS ao Passar o Mouse
+2004	Deslocamento X do FPS
+2005	Deslocamento Y do FPS
+2006	Posição do FPS
+2007	Escala do FPS
+2008	Tamanho do Texto do FPS
+2009	Escala de FPS/MS
+2010	Quadro
+2011	Borda do Quadro
+2012	Estilo da Borda do Quadro
+2013	EXIBIÇÃO DO QUADRO
+2014	Rodapé do Quadro
+2015	Altura do Quadro
+2016	Escala do Quadro
+2017	SELEÇÃO DE QUADRO
+2018	TAMANHOS DOS QUADROS
+2019	Origem do Quadro
+2020	Origem e Visibilidade do Quadro
+2021	Espaçamento do Quadro
+2022	Camada do Quadro
+2023	Estilo do Quadro
+2024	Largura do Quadro
+2025	Estilos de Borda de Quadro, Poder e Aura
+2026	QUADROS
+2027	Quadros
+2028	Français
+2029	Livre
+2030	Livre (Shift-arrastar)
+2031	Livre / Total
+2032	Mover Botões Livremente
+2033	Mover Ícones Livremente
+2034	Freschi
+2035	Opacidade da Linha de Amigo
+2036	Amistoso
+2037	QUADROS DE CHEFE AMISTOSO
+2038	Quadros de Chefe Amistoso
+2039	Contorno do Nome Amistoso
+2040	Tamanho do Nome Amistoso
+2041	Tamanho do Nome Amistoso (Modo Barra)
+2042	Tamanho do Nome Amistoso (Só Nome)
+2043	Nomes Amistosos
+2044	PNJ Amistoso
+2045	Tamanho do Nome de PNJ Amistoso
+2046	Jogador Amistoso
+2047	Alvo Amistoso
+2048	Unidades amistosas também recebem a cor do nível delas, em vez de dourado.
+2049	Amigos
+2050	Brasão de Amigos
+2051	Lista de Amigos
+2052	Máximo de Linhas de Amigos
+2053	Botão de Amigos Online
+2054	Friz Quadrata
+2055	Da Borda Inferior
+2056	Da Esquerda
+2057	Da Borda Esquerda
+2058	Da Borda Direita
+2059	Da Borda Superior
+2060	Frontals Gunshot
+2061	Gelo
+2062	Seta de Gelo
+2063	Completo (12345)
+2064	Barra Cheia Quando Ocioso
+2065	Exportação Completa
+2066	Cor de Vida Cheia
+2067	Conjunto completo de atalhos de lançamento ao passar o mouse
+2068	Sobreposição Completa
+2069	Altura da Tela Inteira
+2070	Largura da Tela Inteira
+2071	Tela Cheia
+2072	Diálogo em Tela Cheia
+2073	Fúria
+2074	Future X Black
+2075	Future X Black.otf
+2076	g
+2077	Menu do Jogo
+2078	Escala do Texto do Jogo
+2079	Controle
+2080	Espaço
+2081	Espaço entre o botão do menu principal e a linha de ícones.
+2082	Espaço entre os ícones do micromenu.
+2083	Cor do Espaço
+2084	GCD
+2085	Barra de GCD
+2086	Textura da Barra de GCD
+2087	Textura do Anel de GCD
+2088	Melhorias de Equipamento
+2089	GearScore nas Dicas
+2090	A linha de jogador do próprio GearScoreLite a substitui quando ativado.
+2091	GERAL
+2092	Geral
+2093	Opções gerais para todos os addons da EllesmereUI.
+2094	TEXTO GERAL
+2095	Carniçal
+2096	Gigante (150%)
+2097	Vidro
+2098	GLOBAL
+2099	CORES GLOBAIS

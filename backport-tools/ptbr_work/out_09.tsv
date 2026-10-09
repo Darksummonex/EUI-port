@@ -1,0 +1,350 @@
+3150	Indisponível para este estilo de indicador de combate.
+3151	Indisponível para barras verticais
+3152	Indisponível no Modo Escuro. As cores do Modo Escuro podem ser ajustadas em Configurações Globais -> Fontes e Cores.
+3153	Indisponível com um valor de visibilidade legado selecionado. Escolha Nunca ou Sempre primeiro.
+3154	Sem Atalho
+3155	Não personalizado
+3156	Cor de Mana Insuficiente
+3157	Sem guilda
+3158	Não Incluído
+3159	Não Carregado
+3160	não carregado
+3161	Não substituível
+3162	Não substituível. Estas condições são compartilhadas e só podem ser alteradas quando nenhuma substituição está sendo editada. Uma substituição troca a configuração de Visibilidade por completo -- Nunca, Sempre ou Passar o Mouse -- e ignora tudo o que foi definido aqui enquanto estiver ativa.
+3163	Fora da Pilotagem Aérea (No Ar)
+3164	Não Escolhido
+3165	Nada
+3166	Nada disponível
+3167	Nada Extra
+3168	Nada a adicionar nesta categoria
+3169	Nada a alterar: todos os brilhos aqui já correspondem ao modelo.
+3170	Nada a alterar: nenhum brilho personalizado ativo difere do modelo.
+3171	Formato de Número
+3172	Número de Ícones
+3173	Número de Linhas
+3174	Número de quadros de teste exibidos enquanto esta página está aberta ou no Modo de Desbloqueio.
+3175	Cor do Objetivo
+3176	Tamanho da Fonte do Objetivo
+3177	Tamanho dos Objetivos
+3178	DESL.
+3179	Desl.
+3180	Desligado colore o texto como o preenchimento.
+3181	Desligado colore o texto com a cor do poder.
+3182	Mão Secundária
+3183	Cor da Mão Secundária
+3184	Desligado usa a cor do tipo de poder.
+3185	Desligado usa a cor da sua classe.
+3186	Desligado: passar o mouse sobre um link de item, feitiço, missão ou conquista mostra sua dica.
+3187	Desligado: filtra repetições do mesmo remetente. Ligado: também oculta mensagens iguais enviadas por outros jogadores no mesmo canal.
+3188	Desligado: só o bate-papo de jogadores recebe horário, como faz o jogo.
+3189	Desligado: marcadores de mundo pedem um clique no chão.
+3190	Recargas Ofensivas
+3191	OFFLINE
+3192	Offline
+3193	Fundo Offline
+3194	Deslocamento X
+3195	Deslocamento Y
+3196	Mago Ogro
+3197	OH
+3198	OK
+3199	Ok
+3200	LIG.
+3201	Lig.
+3202	Ligado (padrão): a paleta de um perfil é compartilhada por todos os perfis (escolhido em Puxar Cores De). Desligado: cada perfil mantém suas próprias cores personalizadas (Poder, Recurso de Classe, Classe, Recurso).
+3203	Em Recarga
+3204	Ao Passar o Mouse
+3205	No Ícone
+3206	Um
+3207	Um botão de mochila; abre o inventário unificado.
+3208	Uma linha corpo a corpo mostrando o próximo golpe de qualquer mão.
+3209	OneBag
+3210	Só se aplica quando Nome > Alvo está selecionado.
+3211	Apenas Feitiços Atribuídos
+3212	Disponível apenas nos modos Destacado ou Interno
+3213	Apenas Abaixo do Limite
+3214	Apenas Dissipáveis por Você
+3215	Apenas Penalidades Dissipáveis
+3216	Ocultar Apenas Totalmente Sincronizados
+3217	Destaca apenas penalidades que seu personagem pode remover agora.
+3218	Apenas em Grupo
+3219	Apenas em Combate
+3220	Apenas em Combate
+3221	Apenas feitiços aprendidos aparecem
+3222	Mostrar apenas bônus com duração, excluindo os permanentes.
+3223	Mostrar apenas bônus com duração, excluindo os permanentes. Combina com os filtros abaixo.
+3224	Mostrar apenas bônus que você pode roubar ou expurgar.
+3225	Mostrar apenas penalidades com duração, excluindo as permanentes.
+3226	Mostrar apenas penalidades com duração, excluindo as permanentes. Combina com os filtros abaixo; marcado sozinho, mostra toda penalidade temporizada.
+3227	Mostrar apenas penalidades com duração, excluindo as permanentes. Auras Rastreadas sempre aparecem.
+3228	Mostrar apenas penalidades cuja duração total seja no máximo esta quantidade de segundos. Combina com os filtros; Ilimitado não aplica limite.
+3229	Mostrar Apenas Dissipáveis
+3230	Mostrar Apenas para % de Vida
+3231	Mostrar Apenas Membros do Grupo
+3232	Mostrar Apenas na Moradia
+3233	Mostrar Apenas em Instâncias
+3234	Mostrar Apenas Números
+3235	Mostrar a barra de lançamento apenas durante um lançamento; ocultá-la no resto do tempo.
+3236	Mostrar Apenas Montado
+3237	Apenas Bônus Roubáveis
+3238	Apenas Auras Temporizadas
+3239	Apenas Rastreadas
+3240	Apenas Auras Rastreadas
+3241	Apenas NO AR em uma montaria capaz de planar ou forma de voo. Para a própria montaria, incluindo no chão, use Montaria de Pilotagem Aérea.
+3242	Apenas Suas Penalidades
+3243	Opacidade
+3244	Opacidade de inimigos furtivos ou fora de vista.
+3245	Opacidade do preenchimento da barra; abaixo de 100 o mundo aparece através do preenchimento em vez do fundo.
+3246	Opacidade do fundo da barra; a amostra escolhe a cor Moderna.
+3247	Opacidade do preenchimento da barra de lançamento; abaixo de 100 o mundo aparece através do preenchimento em vez do fundo.
+3248	Abrir Tudo ignora correio COD e de GM
+3249	Animação de Abertura
+3250	Abrir Em
+3251	Abrir Bolsas
+3252	Abrir Bolsas em Combate
+3253	Abrir Ficha do Personagem
+3254	Abrir Moedas
+3255	Abrir EllesmereUI
+3256	Abra a qualquer momento pela barra lateral de Opções do EUI.
+3257	Abrir Profissão
+3258	Abrir Livro de Profissões
+3259	Abra Barras de Recurso e Lançamento > Barra de Lançamento
+3260	Abrir Configurações
+3261	Estilo de Abertura
+3262	Abrir Talentos
+3263	Abre o painel de configurações do EllesmereUI.
+3264	Abrir Modo de Desbloqueio
+3265	Mundo Aberto
+3266	Facção Oposta
+3267	Otimizar Meu FPS e Gráficos
+3268	Otimiza suas configurações gráficas para o máximo de FPS e clareza visual.
+3269	Ordem dos botões nesta barra; as opções de canto colocam o primeiro botão naquele canto.
+3270	Minério, ervas, tecido... equipamento BoE por qualidade
+3271	Orientação
+3272	CAJADO ORIGINAL
+3273	Equipe EUI
+3274	Outro
+3275	OUTRAS CORES
+3276	OUTRAS PLACAS DE IDENTIFICAÇÃO
+3277	Curas de outros jogadores
+3278	Outros estão sem meu bônus
+3279	Outros estão sem meu bônus: avisa quando um membro do grupo está sem um bônus que você pode lançar.\nEstou sem bônus de outros: avisa quando você está sem um bônus que um membro do grupo poderia lhe dar (só aparece quando alguém que pode lançá-lo está presente). Desligado por padrão.
+3280	Fora de Combate com Chefe
+3281	Fora de Combate
+3282	Opacidade Fora de Combate
+3283	Opacidade Fora de Combate
+3284	Fora de combate, avisa quando nenhum membro do grupo tem seu Escudo da Terra. Clicar lança-o no tanque do grupo (ou no seu foco).
+3285	Desatualizado
+3286	Opacidade Fora de Alcance
+3287	Cor Fora de Alcance
+3288	Coloração Fora de Alcance
+3289	Esmaecer Fora de Alcance
+3290	Opacidade Fora de Alcance
+3291	Esmaecer Fora de Alcance
+3292	Anel Externo
+3293	Tamanho do Anel Externo
+3294	Sussurros enviados e sussurros de GM sempre aparecem. Abrange os filtros de repetição e de palavras-chave.
+3295	Fora da Lei
+3296	Contorno
+3297	Contorno do texto de zona, subzona e status JxJ exibido ao entrar em uma área.
+3298	Contorno do Texto do Ícone
+3299	Modo de Contorno
+3300	Modo de Contorno - Desativado\n
+3301	Modo de contorno alterado. É preciso recarregar a interface para aplicar.
+3302	Contorno por Texto
+3303	Substituição do estilo de contorno para todos 
+3304	OUTLINE, SLUG
+3305	Fora do Localizador de Masmorras o Wrath não tem função de curador; usuários de mana de classes curadoras são listados.
+3306	Geral
+3307	Transbordar Para
+3308	Sobrecura
+3309	Sobreposição
+3310	Opacidade da Sobreposição
+3311	Prévia da Sobreposição
+3312	Sobreposição Invertida
+3313	Substituído por:
+3314	Substituição Ativa: %s
+3315	Substituir Âncora
+3316	Substituir Direção da Âncora
+3317	Substitua qualquer configuração para um grupo de especializações ou para o conteúdo em que você está. Todo o resto mantém as configurações normais do perfil.
+3318	Substituição a Promover
+3319	Substituições
+3320	Substituições travadas: o Gerenciador de Bônus personalizado desta página está ativo. Saia da aba do Gerenciador de Bônus para gerenciar substituições.
+3321	Substitui o tamanho da borda dos quadros principais apenas para este quadro. A cor e a textura da borda ainda seguem os quadros principais.
+3322	Substitui a Camada do Quadro definida nos quadros principais apenas para este quadro. Controla a ordem de exibição de quadros sobrepostos; aumente para mostrar acima de outros quadros.
+3323	AVISO DE SUBSTITUIÇÕES
+3324	Sobrescudo é a parte de uma absorção que excede sua vida vazia. Sempre preenche-o sobre a vida atual a partir da borda do escudo; Da Esquerda o faz crescer da ponta oposta da barra; Nunca o oculta.
+3325	Sobrescrever Configurações de Janela e Dica?
+3326	Apenas Auras Próprias
+3327	Próprias incluem seu ajudante e veículo
+3328	Apenas Próprias
+3329	J: %.0f, %.0f
+3330	Agrupa os itens ordenados nos últimos espaços para que os vazios fiquem no topo. Afeta OneBag, MultiBag e o banco.
+3331	Margem interna
+3332	Página
+3333	PAGINAÇÃO
+3334	Setas de Paginação
+3335	Paginação, compra e recompra continuam nativas.
+3336	Dor
+3337	supressão de dor
+3338	Paladino
+3339	RITOS DE PALADINO
+3340	Paleta 
+3341	Nome da Paleta
+3342	Paletas
+3343	BRILHO PANDÊMICO
+3344	Brilho Pandêmico
+3345	Cor do Brilho Pandêmico
+3346	Estilo do Brilho Pandêmico
+3347	Painel
+3348	Estilos de Borda de Painel e Aba
+3349	GRUPO
+3350	Grupo
+3351	Grupo e Raide
+3352	Quadros de Grupo
+3353	Textura de Vida do Grupo
+3354	MODO DE GRUPO
+3355	Modo de Grupo
+3356	Bate-papo de grupo, raide (incluindo avisos), campo de batalha, guilda e oficiais. Abrange os filtros de repetição e de palavras-chave.
+3357	Tamanhos de Texto do Grupo
+3358	Texturas do Grupo
+3359	Ajudante Passivo
+3360	Cole abaixo uma string de perfil do EllesmereUI
+3361	Colagem Interrompida
+3362	Cole sua string de perfil aqui...
+3363	Notas de Atualização
+3364	Patreon
+3365	PayPal
+3366	Modificador de Espiar
+3367	Por ícone
+3368	Texturas de fundo por barra
+3369	Escala de texto por barra
+3370	Configurações de brilho por ícone: o modelo nunca as altera.
+3371	Porcentagem
+3372	porcentagem
+3373	Apenas Porcentagem
+3374	Lembrete de Desempenho
+3375	Ajudante
+3376	Tamanhos de Texto de Ajudante e Alvo do Alvo (por unidade)
+3377	Espaços de ajudante e postura seguem o layout da Blizzard
+3378	Barra de Ajudante
+3379	Altura da Barra de Ajudante
+3380	QUADROS DE AJUDANTE
+3381	FELICIDADE DO AJUDANTE
+3382	A fusão de ajudante se aplica a eventos recém-coletados.
+3383	Texturas de Barra de Ajudante, Alvo do Alvo e Chefe
+3384	AJUDANTES
+3385	Ajudantes, Retornos Decrescentes e Alcance
+3386	Telefone
+3387	Ordenação Física
+3388	Escolha qualquer moeda que seu personagem já descobriu.
+3389	Escolha o que os PNJs mostram na arte de Classe em vez do retrato 2D.
+3390	Escolha em qual conteúdo os lembretes especiais de classe (venenos/ritos/encantamentos/escudos) aparecem.\nÁreas de descanso (cidades e estalagens) ficam sempre ocultas.
+3391	Escolha em qual conteúdo os lembretes personalizados aparecem.\nÁreas de descanso (cidades e estalagens) ficam sempre ocultas.
+3392	Escolha em qual conteúdo os lembretes do WoW Forever aparecem.\nÁreas de descanso (cidades e estalagens) ficam sempre ocultas.
+3393	Escolha em qual conteúdo estes lembretes de aura aparecem.\nÁreas de descanso (cidades e estalagens) ficam sempre ocultas.
+3394	Escolha em qual conteúdo estes lembretes de consumíveis aparecem.\nÁreas de descanso (cidades e estalagens) ficam sempre ocultas.
+3395	Escolha em qual conteúdo estes lembretes de Bruxo aparecem.\nÁreas de descanso (cidades e estalagens) ficam sempre ocultas.
+3396	Escolha em qual conteúdo os lembretes desta seção aparecem.\nÁreas de descanso (cidades e estalagens) ficam sempre ocultas.
+3397	Escolha quais demônios contam como corretos para Demônio Errado. Um demônio só conta se o feitiço de invocação for conhecido; sem nenhum escolhido (ou com todos), o lembrete nunca dispara.
+3398	Itens Fixados
+3399	Opções de Itens Fixados
+3400	Fixa a barra rente a uma borda da tela; mover a barra no modo de desbloqueio volta isto para Nenhum.
+3401	Fixa o conteúdo deste bloco no centro exato da barra; blocos anteriores se agrupam à esquerda, blocos seguintes à direita. Com Preencher Restante, o bloco também absorve o espaço livre ao redor do centro.
+3402	Fundo do Marcador
+3403	Fosso de Saron
+3404	Pixel
+3405	Brilho Pixel
+3406	Fundo do Brilho Pixel
+3407	Linhas do Brilho Pixel
+3408	Configurações do Brilho Pixel
+3409	Velocidade do Brilho Pixel
+3410	Espessura do Brilho Pixel
+3411	Pixels
+3412	Pixels Background
+3413	Pixels Circle
+3414	Pixels Comic
+3415	Pixels Dark
+3416	Pixels Dragon
+3417	Pixels Fill
+3418	Pixels Glow Line
+3419	Pixels Overshield Line
+3420	Pixels Ring
+3421	Pixels Ring Shadow
+3422	Pixels Shield
+3423	Pixels Shield Edge
+3424	Pixels Shield Fill
+3425	Pixels Textured
+3426	Pixels Textured Ring
+3427	Pixels Textured Ring Shadow
+3428	Coloca grupos menores de espaços do Arsenal lado a lado. Grupos grandes ainda usam linhas inteiras.
+3429	Coloca o ícone de lançamento no lado direito da barra em vez do esquerdo.
+3430	Posicionamento
+3431	Coloca os cinco quadros de grupo lado a lado em vez de empilhados.
+3432	Coloca seu próprio quadro primeiro ou por último no grupo. Usa a lista de nomes nativa, atualizada fora de combate.
+3433	Coloca seu próprio quadro primeiro ou por último no grupo. Usa a lista de nomes nativa, atualizada fora de combate.
+3434	Plater Nameplates
+3435	Revestimento
+3436	Platynator
+3437	Toca um som uma vez quando um lembrete desta seção aparece.
+3438	Tocar Som no Modo de Grupo
+3439	Jogador
+3440	Coordenadas do Jogador e do Cursor
+3441	Barras de Aura do Jogador
+3442	barras de aura do jogador
+3443	Brilhos de Ícone das Barras de Aura do Jogador
+3444	Texto das Barras de Aura do Jogador (por barra)
+3445	AURAS DO JOGADOR
+3446	Barra de Lançamento do Jogador
+3447	Sobreposição de Dissipação do Jogador
+3448	Dragão do Quadro do Jogador
+3449	Mini Barra de Lançamento do Quadro do Jogador
+3450	Ameaça do Jogador (Não Tanque)
+3451	Tamanhos de Texto de Jogador, Alvo e Foco (por unidade)
+3452	Apenas Jogadores
+3453	Toca a cada sussurro recebido, junto com o som de sussurro do próprio jogo.
+3454	Plugin
+3455	PM
+3456	Veneno
+3457	Poppins
+3458	Predefinições Populares
+3459	As predefinições populares agora ficam no novo site do EllesmereUI, com prévias completas, instruções de instalação passo a passo e novas predefinições adicionadas todo dia!
+3460	Pop-up
+3461	Estilos de Borda de Pop-up e Dica
+3462	Pop-ups
+3463	EQUIPE DO PORT
+3464	RETRATO
+3465	Retrato
+3466	retrato
+3467	Modo de Retrato
+3468	O Modo de Retrato está definido como Nenhum
+3469	Retrato à Direita
+3470	Deslocamentos de Posição do Retrato
+3471	Configurações do Retrato
+3472	Zoom do Retrato
+3473	Posição
+3474	posição
+3475	As configurações de posição e tamanho não são sincronizadas e mantêm os valores de cada perfil.
+3476	Configurações de Posição
+3477	Anuncia o feitiço que você ou seu ajudante interrompeu. Grupo e Raide usam o canal de campo de batalha dentro de campos de batalha.
+3478	Poção
+3479	Poções
+3480	Poções e Pedra de Vida
+3481	poder
+3482	Poder %
+3483	BARRA DE PODER
+3484	Barra de Poder
+3485	Preenchimento da Barra de Poder
+3486	Altura da Barra de Poder
+3487	Junção da Barra de Poder
+3488	Textura da Barra de Poder
+3489	Barras de Poder
+3490	Opções de Borda do Poder
+3491	Escurecer Cor do Poder
+3492	Cor do Poder
+3493	Fundo com Cor do Poder. As cores de poder podem ser ajustadas em Configurações Globais -> Fontes e Cores.
+3494	Preenchimento com Cor do Poder. As cores de poder podem ser ajustadas em Configurações Globais -> Fontes e Cores.
+3495	Texto com Cor do Poder
+3496	CORES DE PODER
+3497	Altura do Poder
+3498	Infusão de Poder
+3499	Texto de Poder

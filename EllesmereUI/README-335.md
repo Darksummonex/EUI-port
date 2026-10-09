@@ -1,5 +1,19 @@
 # EllesmereUI Wrath Core — 0.61
 
+Sem bump: no 3.3.5 o rodapé das opções mostra só o ícone do GitHub (releases do
+port), que abre o popup de cópia (o mesmo do Export). Os ícones eram PNG e não
+apareciam; agora há cópias TGA 64x64 em `media/icons_335`
+(`backport-tools/prepare_social_icons.py`), também usadas no cartão PORT STAFF. O
+popup de link antigo não usa mais fade no 3.3.5 (sem SetToFinalAlpha ele voltava a
+alpha 0). Bordas de 1px: o shim de `GetPhysicalScreenSize` devolve unidades de UI,
+então o "pixel" ficava menor que um pixel real e lados sumiam (ex.: borda esquerda
+do Close). `PP.borderPerfect` lê `gxResolution` e as bordas nunca ficam abaixo de
+1 pixel real; escala do painel e posições salvas não mudam.
+
+Sem bump: `EUI_Locale_335.lua` aceita `ptBR` (Português do Brasil) como idioma de exibição.
+O cliente 3.3.5 não tem ptBR nativo, então ele é escolhido manualmente em EUI Options
+Language; fontes latinas, sem troca de fonte.
+
 0.61: avisos de atualização (`EllesmereUI_UpdateCheck_335.lua`). O 3.3.5 não acessa a
 internet, então os clientes EUI trocam o número do release (`## X-EUI-Release` no TOC
 do Core, formato AAAAMMDDNN) por mensagens de addon na guilda, grupo, raide e BG.

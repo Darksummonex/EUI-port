@@ -1,0 +1,450 @@
+512	Atrás
+513	Atenuar fondo
+515	Color de fondo
+516	Oscuridad del fondo
+517	Fondo solo en los puntos
+518	Opacidad del fondo
+519	Opacidad del fondo de las barras en Modo oscuro. Solo se aplica a Marcos de unidad y Marcos de banda (las barras de recurso la ignoran).
+520	Estilo del fondo
+521	Textura del fondo
+522	Textura del fondo de esta barra, teñida con el color y la opacidad de la barra.
+523	Opacidad del respaldo
+524	Mochila
+525	Insignia
+526	Insignia muestra un pequeño icono; Pixels Dragon rodea el retrato con arte de clasificación.
+527	Barra de bolsas
+528	Aspecto de la barra de bolsas
+529	Tamaño del botón de bolsa
+530	Espaciado de bolsas
+533	Bolsas
+534	Bolsas y páginas del banco
+535	Iconos de bolsas
+536	Equilibrio
+538	Franja
+539	Banco
+540	Categorías del banco
+541	Icono de estandarte
+542	Barra
+543	Estilos de borde de barras y botones
+544	Texturas de barra y absorción de los marcos principales
+545	Animaciones de barra
+546	FONDO DE LA BARRA
+547	Fondo de la barra
+548	Color de fondo de la barra
+549	Color del borde de la barra
+550	Tamaño del borde de la barra
+551	Texto de botones de barra, texto de barra de PE/reputación
+553	Barra predeterminada
+554	VISUALIZACIÓN DE BARRA
+555	Visualización de barra
+556	Desplegable de barra y vista previa de icono
+557	RESPLANDORES DE BARRA
+558	Resplandores de barra
+559	Alto de la barra
+560	HISTORIAL DE BARRAS
+561	INTERACCIONES DE BARRA
+562	Capa de la barra
+563	DISPOSICIÓN DE BARRA
+564	Tamaño del texto izquierdo
+565	Nombre de la barra
+566	Opacidad de la barra
+567	Posición de la barra
+568	Tamaño del texto derecho
+569	AJUSTES DE BARRA
+570	Espaciado de barras
+571	Nivel de la barra
+572	TEXTO DE BARRA
+574	Textura de barra (recurso de clase)
+575	Textura de barra (por barra de datos)
+576	Textura de barra (por ventana)
+577	Ancho de la barra
+589	BARRAS
+590	Barras mostradas
+592	Básico
+593	RESURRECCIÓN EN COMBATE
+594	Tamaño del contador de resurrección
+595	Tamaño de duración de resurrección
+596	Fuente de resurrección en combate
+597	Contorno de resurrección en combate
+598	Tamaño del texto de resurrección
+599	Grito de batalla
+600	Actitud de batalla
+601	Campo de batalla
+602	Victoria en campo de batalla
+603	Recordatorios de Señal
+604	Forma de oso
+605	Bestias
+608	Debajo
+609	Debajo de la barra de absorción
+610	Debajo de la ventana inferior, izquierda
+611	Debajo de la ventana inferior, derecha
+612	Debajo del cursor
+613	Debajo de la barra de vida
+614	Debajo del icono
+615	Debajo del mapa
+616	Solo por debajo del umbral
+617	Actitud rabiosa
+619	Better Character Panel entra en conflicto con la hoja de personaje de EllesmereUI. Desactiva Better Character Panel o el aspecto de la hoja de personaje en los ajustes de Interfaz Blizz mejorada.
+622	Oscurecer color de recurso del fondo
+624	Defensivo grande
+626	atajo
+627	Los cambios de atajos se aplican fuera de combate
+629	Oscurece todos los colores de clase en esta cantidad, en todos los lugares donde se usan.
+630	Oscurece todos los colores de recurso de clase en esta cantidad, en todos los lugares donde se usan.
+631	Oscurece todos los colores de recurso en esta cantidad, en todos los lugares donde se usan.
+632	Oscurece los fondos de las barras de recurso con color de recurso (Marcos de unidad y Marcos de banda) en esta cantidad, además de Oscurecer color de recurso.
+633	Lista negra
+634	Los hechizos en la lista negra nunca se muestran.
+635	Arena Filospada
+636	Sangrado
+637	Encabezado de objetivo con color Blizz
+640	Anillo del botón de acción y resaltado al pulsar de Blizzard.
+641	Estilos Blizzard y Clásico
+642	ARTE DE BLIZZARD
+643	Borde de Blizzard
+644	Barra de habilidades del personaje de Blizzard
+645	Arte de recurso de clase de Blizzard
+646	Predeterminado de Blizzard
+647	Predeterminado de Blizzard mantiene el ajuste de marca de hora de las opciones de interfaz.
+649	Línea de resplandor de Blizzard
+650	Barra de banda de Blizzard
+651	Estilo Blizzard
+652	DESCRIPCIÓN EMERGENTE DE BLIZZARD
+653	Aspecto de ventanas de Blizzard
+654	Aspectos de ventanas de Blizzard
+656	Los bordes de aura de Blizzard en beneficios, perjuicios y encantamientos de arma, con todas las funciones de barra de EllesmereUI.
+657	El panel de barra y el marco de botón de acción de Blizzard, o el marco de barra clásico y el anillo de casilla, con todas las funciones del HUD de Skyriding de EllesmereUI.
+658	El arte de barra de beneficios de Blizzard, o el marco clásico de barra de lanzamiento, con todas las funciones de barra rastreada de EllesmereUI.
+659	El arte de barra de lanzamiento de Blizzard, o el marco clásico de barra de lanzamiento, con todas las funciones de barra de lanzamiento de EllesmereUI.
+660	Puede que el ajuste del Modo edición de Blizzard no funcione bien hasta que recargues la interfaz.
+661	El arte de marcos, retratos y formas de barra de Blizzard, o los marcos clásicos, con todas las funciones de marcos de EllesmereUI.
+662	El arte de barras de vida y lanzamiento de Blizzard, o las placas planas clásicas, con todas las funciones de placas de nombre de EllesmereUI.
+663	El arte de ventana y barras del medidor de Blizzard, o una ventana con el borde clásico de las pestañas de chat, con todas las funciones del medidor de EllesmereUI.
+664	El arte de ventana y barras del medidor de Blizzard, o una ventana con el borde clásico de las pestañas de chat, con todas las funciones del medidor de amenaza de EllesmereUI.
+665	La hoja de personaje propia de Blizzard tal como la dibuja el juego; WoW Forever mantiene el texto de objetos junto a las casillas y los colores de estadísticas siguen el estilo de EllesmereUI.
+666	La hoja de personaje propia de Blizzard con las estadísticas, el texto de casillas y el panel de ranuras de EllesmereUI añadidos; la pestaña Calc mantiene el estilo de EllesmereUI.
+667	La ventana de chat, pestañas y campo de entrada propios de Blizzard, o la misma ventana con el arte clásico de pestañas, con todas las funciones de chat de EllesmereUI.
+668	El arte propio de marcos y botones de Blizzard, con las funciones de EllesmereUI.
+669	La ventana y tarjetas de amigos propias de Blizzard, con los iconos de clase, nombres con color de clase e iconos de región de EllesmereUI añadidos. Ambos estilos originales se ven igual aquí.
+670	El seguimiento propio de Blizzard, con todas las funciones de seguimiento de EllesmereUI. Ambos estilos originales se ven igual aquí.
+671	El borde y los resaltados de marcos de banda de Blizzard, o los clásicos, con todas las funciones de marcos de banda de EllesmereUI.
+672	El minimapa redondo y su encabezado de Blizzard, o el anillo clásico, con todas las funciones de minimapa de EllesmereUI.
+673	El arte de botones redondeados de Blizzard, o las casillas cuadradas clásicas, con todas las funciones de barra de EllesmereUI.
+674	Los iconos de reutilización redondeados de Blizzard, o las casillas cuadradas clásicas, con todas las funciones de iconos de EllesmereUI.
+675	Las ventanas de Blizzard ahora siguen el tema de EllesmereUI con un tema oscuro WoW 2.0, desde la guía de mazmorras hasta la casa de subastas y más allá.
+676	Fondo del bloque
+677	Bloque a añadir
+678	Tipo de bloque que el botón Añadir bloque agrega al final de esta barra.
+679	Palabras clave bloqueadas
+680	Sangre
+681	Ansia de sangre / Heroísmo
+682	Tamaño del contador de Ansia de sangre
+683	Tamaño de duración de Ansia de sangre
+684	SEGUIMIENTO DE ANSIA DE SANGRE
+685	BoE
+686	Tamaño del texto BoE / Banda de guerra
+687	Opciones del texto BoE
+688	Tamaño del texto BoE
+689	BORDE
+691	borde
+692	Arte de borde alrededor de los marcos de jefe. Heredar (marcos principales) usa el borde de los marcos principales.
+693	Arte de borde alrededor de la barra de lanzamiento.
+695	El color del borde indica si el lanzamiento se puede interrumpir.
+696	Origen del color del borde
+698	Opacidad del borde
+699	Opciones de borde
+701	Tamaño del borde en píxeles; en un estilo con textura es el tamaño del arte del borde.
+704	Estilos de borde (por barra)
+705	Textura del borde
+706	Grosor del borde
+707	El borde envuelve el icono
+708	Jefe
+709	Filtro de beneficios de jefe
+710	Combate contra jefe
+711	Filtro de perjuicios de jefe
+712	Icono de perjuicio de jefe
+713	Marcos de jefe
+714	Auras de marcos de jefe
+715	Tamaños de texto de marcos de jefe
+716	Icono de jefe
+717	Sincronía de boss mod: líder o ayudante de banda, o líder de grupo
+718	Auras rastreadas de jefe
+719	Ambos
+721	Hueco inferior
+722	Barra de información inferior
+723	Abajo izquierda
+724	Tamaño del texto abajo izquierda
+725	Abajo izquierda, hacia la derecha
+726	Abajo izquierda, hacia arriba
+727	Abajo derecha
+728	Tamaño del texto abajo derecha
+729	Abajo derecha, hacia la izquierda
+730	Abajo derecha, hacia arriba
+731	Borde inferior de la pantalla
+732	Espaciado inferior
+733	De abajo arriba
+734	Arena de boxeo
+735	Categoría
+736	Textura de barra del desglose
+737	Posición del desglose
+738	Escala del desglose (%)
+739	Maestro cervecero
+740	Línea brillante en el borde del barrido (requiere un cliente con Cooldown:SetDrawEdge).
+741	Brillo
+742	Plugin de Broker
+743	Explora los perfiles de la comunidad.
+744	Ajustes del texto central de BTB
+745	Ajustes del texto izquierdo de BTB
+746	Ajustes del texto derecho de BTB
+747	Beneficio
+748	beneficio
+749	Beneficio / Perjuicio
+750	Barra de beneficios
+751	barra de beneficios
+752	Lista negra de beneficios
+753	Visualización de beneficios
+754	Tamaño de duración de beneficios
+755	Filtro de beneficios
+756	Opciones del filtro de beneficios
+757	FILTROS DE BENEFICIOS
+758	Resplandor de beneficio
+759	Iconos de beneficio por fila
+760	Gestor de beneficios
+761	Los cambios del Gestor de beneficios en esta página solo se aplican a esta anulación.
+762	Resplandores de iconos del Gestor de beneficios
+763	Texto del Gestor de beneficios (por indicador)
+764	Mover beneficios
+765	Beneficio o perjuicio a vigilar.
+766	Posición de beneficios
+767	Preajuste de beneficios
+768	Ajustes de beneficios
+769	Beneficio que se muestra como estado activo (0 = beneficio del mismo nombre).
+770	Tamaño de beneficios
+771	Tamaño de acumulaciones de beneficios
+772	Tamaño del texto de beneficios
+773	Beneficio que marca este hechizo como activado (0 = lista integrada).
+774	Beneficios
+775	BENEFICIOS Y PERJUICIOS
+776	Beneficios y perjuicios
+777	Los beneficios se unen a la pila de perjuicios como sus primeras filas; los perjuicios siguen en la fila siguiente y se mueven cuando cambian las filas de beneficios.
+778	Ubicación de beneficios
+779	Beneficios que puedes robar o purgar
+780	CORRECCIONES DE ERRORES
+781	BuildInlineCog: disabled needs a disabledTooltip
+783	Botón
+784	Botón 4
+785	Botón 5
+786	Fondos de botones
+787	Distancia de la fila de botones
+788	Posición de la fila de botones
+789	Espaciado de la fila de botones
+790	Tamaño de botón
+791	Espaciado de botones
+798	Calendario
+799	BARRA DE LLAMAR TÓTEMS
+800	Beneficios del campamento
+803	Cancelar forma
+804	Tecla de cancelar: 
+805	No se pueden abrir las opciones en combate.
+806	No se pueden abrir las opciones en combate
+807	No se puede recargar en combate. Escribe /reload en su lugar.
+808	No se puede cambiar el Modo desbloqueo en combate.
+809	No se puede usar en combate
+810	Barra de captura y estado de chat de MJ
+811	Las anulaciones capturadas hacen referencia a módulos desactivados (%s). Actívalos y recarga antes de promover, o esos ajustes se perderán.
+812	lanzamiento
+813	Progreso de lanzamiento / canalización
+814	Lanzar acciones al pulsar la tecla
+815	Barras de lanzamiento y TGR
+816	Fondo de lanzamiento
+817	BARRA DE LANZAMIENTO
+818	Barra de lanzamiento
+819	Alto de la barra de lanzamiento
+820	Tamaño del texto de la barra de lanzamiento
+821	Textura de la barra de lanzamiento
+822	Tamaño del temporizador de lanzamiento
+823	Ancho de la barra de lanzamiento
+824	Desplazamiento Y de la barra de lanzamiento
+825	Color de lanzamiento
+826	COLORES Y EFECTOS DE LANZAMIENTO
+827	Icono de lanzamiento
+828	Tamaño del nombre de lanzamiento
+829	Lanzar al pulsar la tecla
+830	Texto de recordatorio de lanzamiento
+831	Textura del anillo de lanzamiento
+832	Sonido de lanzamiento
+833	Chispa de lanzamiento
+834	Lanzar hechizo
+835	Barrido de lanzamiento
+836	Tamaño del objetivo del lanzamiento
+837	Tamaño del texto de lanzamiento
+838	Textura de lanzamiento
+839	Temporizador de lanzamiento
+840	Contorno del temporizador de lanzamiento
+841	Tamaño del temporizador de lanzamiento
+842	Barra de lanzamiento
+843	Forma felina
+846	Ponte al día con lo que te hayas perdido
+847	Categorías
+848	Categoría
+849	Barra lateral de categorías
+850	Tamaño del título de categoría
+851	Tamaño de duración de CC
+852	Opacidad del barrido de TdR
+853	Barras de CDM
+854	Iconos de CDM
+856	ACTIVADORES DE CELEBRACIÓN
+860	Centrar en pantalla
+861	Retícula central
+862	Texto central
+863	Ajustes del texto central
+864	Tamaño del texto central
+865	Centrado
+866	Cadena de relámpagos
+867	Campeón
+869	Cambia los atajos fuera de combate
+870	Cambiar visibilidad de vida fuera de combate
+871	Cambiar especialización
+872	Cambiar especialización
+873	Los cambios se aplican fuera de combate.
+874	Los cambios aquí editan el valor predeterminado compartido; las anulaciones mantienen sus propios valores.
+875	Los cambios hechos en OneBag afectarán a la posición de los objetos en las bolsas predeterminadas de Blizzard
+876	Cambiar el anclaje del cursor requiere recargar la interfaz.
+877	Cambiar el origen del marco requiere recargar la interfaz.
+878	Cambiar el idioma requiere recargar la interfaz.
+879	Cambiar el estilo requiere recargar la interfaz.
+880	Tics de canalización
+881	TICS DE CANALIZACIÓN Y LATENCIA
+882	Descarga de caos
+883	Personaje
+884	Retícula del personaje
+885	MEJORAS DEL PERSONAJE
+886	Hoja de personaje
+887	Mejoras de la hoja de personaje
+888	Personajes
+889	Personajes (encabezado) permite ver bolsas y bancos guardados.
+891	Texturas de fondo y pestañas del chat
+892	BOCADILLOS DE CHAT
+893	Bocadillos de chat
+894	Cuenta atrás en el chat
+895	Extras del chat
+896	Fuente del chat
+897	Tamaño de fuente del chat
+898	Modo de contorno del chat
+899	Opciones del filtro de spam del chat
+900	Ventanas de chat, pestañas y campo de entrada
+903	Marcar todo
+904	Revisar DPS
+905	Revisar sanadores
+906	Marca iconos para mostrarlos; arrastra filas para reordenar.
+907	Revisar tanques
+908	Los botones marcados salen del menú desplegable y se colocan en la fila de botones.
+909	Pecho
+912	Chonky Character Sheet entra en conflicto con la hoja de personaje de EllesmereUI. Desactiva Chonky o el aspecto de la hoja de personaje en los ajustes de Interfaz Blizz mejorada.
+913	Elige primero un texto para esta casilla.
+914	Elige primero un elemento para esta casilla.
+915	Elige EllesmereUI, Blizzard o Clásico.
+916	Elegir marco...
+917	Elige listas de hechizos en Filtros de auras
+918	Elegir textura por barra
+919	Elige qué addons importar. Los addons no incluidos usarán los ajustes de tu perfil activo en el nuevo perfil.
+920	Elige qué addons incluir en el perfil exportado. Marca todo para exportar un perfil completo.
+921	Elige qué addons quieres activar. Puedes cambiarlos más tarde en el panel de ajustes de EllesmereUI.
+922	Elige qué descripciones emergentes aparecen al pasar el ratón. Afecta a todos los marcos de unidad, incluidos los de jefe.
+923	ELIGE TU ESTILO
+924	Elegir...
+927	Círculo
+928	círculo
+929	Círculo y Retrato dibujan iconos redondos, y Diamante, Hexágono y Escudo recortan el icono con esa forma. Cuadrado y Cuadrado curvo contornean el icono cuadrado. El contorno usa el Tamaño del borde y el color de abajo.
+930	Opacidad del círculo
+931	Clase
+932	clase
+933	Recordatorios de clase y consumibles
+935	Oscurecer color de clase
+936	Nombres con color de clase
+937	Color de clase
+938	Fondo con color de clase
+939	Borde con color de clase
+940	Relleno con color de clase
+941	Vida con color de clase
+942	Barra de vida con color de clase
+943	Nombres con color de clase
+944	COLORES DE CLASE
+945	Icono de clase
+946	Icono de clase para amigos conectados; los desconectados muestran un icono atenuado.
+947	Ajustes del icono de clase
+948	Lado del icono de clase
+949	Estilo del icono de clase
+950	Tema del icono de clase
+951	Iconos de clase
+952	Reactivo por clase
+953	RECURSO DE CLASE
+954	Recurso de clase
+955	BARRA DE RECURSO DE CLASE
+956	COLORES DE RECURSO DE CLASE
+957	El recurso de clase debe estar en Moderno
+958	Posición del recurso de clase
+959	Tamaño del texto del recurso de clase
+960	Estilo de clase
+961	Tema de clase
+962	Zoom de clase
+963	Barras de clase, recurso y vida
+964	Clásico
+965	Clásico (% de vida)
+966	Estandarte clásico
+967	Estilo de barra clásico
+968	Tamaño de marco clásico
+969	Estilo de icono clásico
+970	Estilo clásico
+971	Barras de estilo clásico
+972	Amenaza de tanque clásica
+974	Resplandor clásico de WoW
+976	Marco de barra de lanzamiento de la interfaz clásica de WoW.
+977	La interfaz clásica de WoW usa el anillo vanilla, el letrero de zona, los botones de zoom y los indicadores con borde de anillo sobre un mapa redondo.
+978	Limpio (plano)
+979	Renovaciones visuales limpias y bonitas para los elementos de la interfaz de Blizzard.
+980	Placas de nombre limpias y ligeras con personalización infinita.
+981	Borrar
+982	Borrar y desactivar esta paleta
+983	Borrar historial de combate...
+984	Borrar atajos de la paleta
+985	Borrar teclas de seleccionar y cancelar
+986	Color de Rajar en cola
+987	clic
+988	Haz clic en un bloque para ir a sus ajustes. Clic derecho para quitarlo.
+989	Clic en un jugador: detalles de hechizos. Shift-clic: ventana completa.
+990	Acción de clic
+991	Haz clic en una dirección http, https o www para copiarla.
+992	Haz clic en un elemento\npara anclarte a él
+993	Haz clic en un elemento\npara igualar su alto
+994	Haz clic en un elemento\npara igualar su ancho
+995	Haz clic en un elemento\npara usarlo como anclaje alternativo
+996	Haz clic en un elemento\npara usarlo como anclaje de anulación
+997	Haz clic en una novedad para ir directamente al ajuste
+998	Haz clic en Asignar tecla y pulsa tu atajo.
+999	LANZAMIENTO CON CLIC
+1000	Lanzamiento con clic
+1001	Clic edita - Arrastrar reordena - Clic derecho quita - Suelta para añadir
+1002	Haz clic en elementos para ir a sus opciones y resaltarlas
+1003	Haz clic en el enlace y pulsa Ctrl+C para copiarlo
+1004	Clic a través
+1005	Haz clic para elegir una gema de tus bolsas
+1006	Clic para editar. Clic central para quitar.
+1007	Clic para desplazarte. Clic derecho para quitar.
+1008	Clic para fijar tecla
+1009	Usar con clic está desactivado en combate
+1010	URL clicables
+1012	Clique puede gestionar marcos con los atajos integrados desactivados
+1013	Clique controla el lanzamiento con clic en los mismos Marcos de banda que HoverCast de EllesmereUI, así que entran en conflicto. Desactiva el addon Clique para usar HoverCast.
+1014	Reloj
+1015	RELOJ Y ZONA
+1016	Formato del reloj
+1017	Reloj al pasar el ratón
+1018	Desplazamiento X del reloj
+1019	Desplazamiento Y del reloj
+1020	Posición del reloj
+1021	Escala del reloj
+1022	Texto de reloj, zona, coordenadas, FPS y dificultad
+1023	Cerrar
+1024	Cerca de la amenaza
+1025	Cerrar ventana

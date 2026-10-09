@@ -1,0 +1,350 @@
+4550	Espaçamento das Abas
+4551	Textura das Abas
+4552	Tabardo
+4553	Abas
+4554	Abas Dentro do Painel de Bate-papo
+4555	As abas usam o estilo, tamanho e cor da borda do painel de bate-papo.
+4556	Recebido
+4557	Condição de Talento
+4558	Condições de Talento
+4559	Talento Deve Ser
+4560	Nome do talento; a entrada só aparece quando a condição é atendida.
+4561	Lembretes de Talentos
+4562	Talentos
+4563	Tanque
+4564	Tanque > Curador > DPS
+4565	Ameaça do Tanque
+4566	Tomado
+4567	Alvo
+4568	EFEITOS DE ALVO E FOCO
+4569	ALVO E VISIBILIDADE
+4570	Setas do Alvo
+4571	Borda do Alvo
+4572	BARRA DE LANÇAMENTO DO ALVO
+4573	Barra de Lançamento do Alvo
+4574	Tamanho do Nome na Barra de Lançamento do Alvo
+4575	Tamanho do Alvo na Barra de Lançamento do Alvo
+4576	Textura da Barra de Lançamento do Alvo
+4577	Tamanho do Tempo na Barra de Lançamento do Alvo
+4578	Cor do Alvo
+4579	DISTÂNCIA DO ALVO
+4580	Distância do Alvo
+4581	Texto de Distância do Alvo
+4582	Tamanho do Texto de Distância do Alvo
+4583	Efeito do Alvo
+4584	Cor de Destaque do Alvo
+4585	Brilho de Lançamento Importante do Alvo
+4586	Marcadores de Alvo
+4587	Alvo do Alvo
+4588	Brilho de Bônus Purgável do Alvo
+4589	Textura do Alvo
+4590	Auras Rastreadas do Alvo
+4591	EFEITOS DE ALVO, FOCO E PASSAR O MOUSE
+4592	Barras de Alvo/Foco
+4593	Tamanho do Nome das Barras Direcionadas
+4594	Tamanho do Alvo das Barras Direcionadas
+4595	Textura das Barras Direcionadas
+4596	Tamanho do Tempo das Barras Direcionadas
+4597	BARRAS DE FEITIÇOS DIRECIONADOS
+4598	Barras de Feitiços Direcionados
+4599	Tamanho dos Feitiços Direcionados
+4600	FEITIÇOS DIRECIONADOS
+4601	Feitiços Direcionados
+4602	Deslocamento X dos Feitiços Direcionados
+4603	Deslocamento Y dos Feitiços Direcionados
+4604	Seção de Feitiços Direcionados
+4605	Mirando:
+4606	Alvos
+4607	Teleportar para Casa
+4608	Teleportes
+4609	TellMeWhen
+4610	O TellMeWhen se sobrepõe à arquitetura de posicionamento central do EllesmereUI. Se você usá-lo SOMENTE para alertas sonoros, deve funcionar, mas ainda pode causar problemas.
+4611	Terrível
+4612	Quadros de Teste
+4613	Quadros de teste: esta página, Modo de Desbloqueio ou /earena test
+4614	TEXTO
+4615	Texto
+4616	Alinhamento do Texto
+4617	Âncora do Texto
+4618	BARRA DE TEXTO
+4619	Barra de Texto
+4620	Caixas de Texto
+4621	Cor do Texto
+4622	EXIBIÇÃO DE TEXTO
+4623	Grupo de Texto
+4624	Opções de Contorno do Texto
+4625	Estilos de Contorno do Texto
+4626	Posição do Texto
+4627	Escala do Texto
+4628	Escala do Texto (por barra de dados)
+4629	Texto exibido antes do nome do alvo.
+4630	Tamanho do Texto
+4631	Deslocamento X do Texto
+4632	Deslocamento Y do Texto
+4633	Textura
+4634	Textura desenhada sobre a cor de fundo do bate-papo.
+4635	Textura desenhada sobre as cores de fundo das abas.
+4636	Textura desenhada com a cor de fundo do bate-papo.
+4637	Textura de todas as barras de lançamento dos quadros de unidade. Herdar segue a textura de barra de cada unidade.
+4638	Textura da barra de recurso de classe.
+4639	Textura das barras de vida, poder e recurso de classe.
+4640	Textura Não Encontrada
+4641	Resolução de Textura - Definir como Alta\n
+4642	Círculo Texturizado
+4643	Anel de Dissipar Texturizado
+4644	Texturas
+4645	TF0rd
+4646	Essa configuração é armazenada pela posição na lista e não pode ser sobrescrita com segurança.
+4647	O Gerenciador de Bônus da sobreposição ativa está vinculado à página aberta. Saia da aba do Gerenciador de Bônus para trocar de sobreposição.
+4648	O %s personalizado da sobreposição ativa está vinculado a esta página. Saia da aba %s para trocar para outra sobreposição.
+4649	O Arsenal
+4650	A cor de fundo atrás das barras do Modo Escuro (Quadros de Unidade, Quadros de Raide, Barras de Recurso).
+4651	O banco abre de qualquer lugar pelo cabeçalho das Bolsas; longe de um bancário, mostra o último conteúdo salvo.
+4652	A barra mostra os acúmulos sobre o máximo em vez do tempo.
+4653	A barra que esta página edita.
+4654	O Indicador de Combate não está disponível para o quadro de Foco.
+4655	O Gerenciador de Recargas faz muito mais do que mostrar recargas: ele também tem configurações por feitiço, brilhos de barra, barras de rastreamento e mais! Confira algumas dicas e truques para aproveitá-lo melhor.
+4656	O idioma de exibição do painel de opções do EllesmereUI. Automático segue o seu cliente do jogo. Textos não traduzidos aparecem em inglês.
+4657	o tema EllesmereUI
+4658	O inverso exato de Voo Dinâmico (No Ar): qualquer situação que não seja estar no ar em uma montaria capaz de planar ou forma de voo, incluindo estar no chão.
+4659	O substituto deve ser diferente\ndo alvo da âncora principal
+4660	A cor de preenchimento sólida usada pelas barras quando o Modo Escuro está ativado (Quadros de Unidade, Quadros de Raide, Barras de Recurso).
+4661	a Fonte do Quadro ser EllesmereUI
+4662	A gema não pôde ser engastada.
+4663	A linha de brilho não aparece com preenchimento vertical ou com o posicionamento A Partir da Borda Esquerda
+4664	A linha de brilho não aparece com preenchimento vertical ou com o posicionamento A Partir da Borda Direita
+4665	A linha de brilho não aparece com Estilo de Absorção Nenhum
+4666	O Lich Rei
+4667	o estilo de fundo Moderno
+4668	A janela social nativa com ícones de classe, nomes na cor da classe, estandartes de facção e aceitação automática de convites; as ações de amigos e todas as abas sociais continuam nativas.
+4669	Os quadros, anéis e espaços originais onde o jogo os possui, com os recursos do EllesmereUI.
+4670	O grupo de sobreposição '%s' já fornece o modo de desbloqueio personalizado para sua especialização atual. Personalize-o lá ou remova esta especialização daquele grupo.
+4671	O texto colado não pôde ser lido por completo. Cole-o novamente.
+4672	O quadro de barra do display de recursos pessoais, ou o quadro clássico da barra de lançamento, nas barras de vida, poder e recurso de classe, com todos os recursos de barra do EllesmereUI.
+4673	As configurações de Brilho de Pixel usadas pelos brilhos por ícone desta barra. O modelo nunca as altera.
+4674	o gatilho Aleatoriamente
+4675	O Anel do Valor
+4676	A CVar scriptProfile está ativada.
+4677	A gema engastada será destruída. Continuar?
+4678	As CVars taintLog e scriptProfile estão ativadas.
+4679	A CVar taintLog está ativada.
+4680	O rastreador sempre se oculta em arenas
+4681	Estas são as mesmas configurações das páginas de cada módulo, não configurações separadas.
+4682	Estas configurações priorizam a taxa de quadros e a clareza visual em vez dos detalhes do ambiente. As texturas continuam em alta qualidade para que seu personagem e o mundo ainda fiquem perfeitos.
+4683	Estas especializações têm valores de sobreposição que nenhum modo de edição de grupo alcança mais (deixados por mudanças de membros). Eles ainda se aplicam. Remova um para devolver essa especialização ao padrão compartilhado.
+4684	Grosso
+4685	Contorno Grosso
+4686	Espessura
+4687	Espessura em pixels. -1 segue a configuração de Borda de cada indicador de penalidade, 0 oculta a borda da cor de dissipar.
+4688	Fino
+4689	Linha Fina na Base
+4690	Linha Fina no Topo
+4691	Esta barra dimensiona os próprios blocos, então a largura não é definida por este bloco.
+4692	Esta barra só aparece se você tiver um inimigo como alvo
+4693	Este bloco já é o bloco 'Preencher Espaço Restante'. Marque outro bloco para mover a função.
+4694	Isto não altera quais feitiços o usuário rastreia no CDM da Blizzard.\nRecomenda-se também compartilhar seu layout do CDM da Blizzard para cada especialização escolhida aqui.
+4695	Isto não pode ser desfeito. Considere exportar este perfil como backup antes.
+4696	Isto não pode ser desfeito. Exporte seu próprio perfil como backup antes.
+4697	Esta condição chegará em uma atualização futura.
+4698	Esta condicional não está ativa agora. Atenda a uma de suas condições primeiro (por exemplo, entre na masmorra) para organizar o layout no contexto real.
+4699	Este controle mudou de direção recentemente: agora ele copia DO quadro que você escolher. Confirmar copiará todas as configurações compartilhadas DE %1$s PARA %2$s.
+4700	Este elemento não pode usar visibilidade baseada em grupo.
+4701	Este elemento não suporta correspondência de Altura e Largura ao mesmo tempo
+4702	Este elemento aparece assim que UMA condição de Mostrar for atendida. Ocultar mantém o significado nos dois modos: um Ocultar marcado sempre oculta, em todas as linhas.
+4703	Este elemento só aparece enquanto você estiver dentro de uma casa ou lote
+4704	Este elemento só aparece enquanto você estiver montado
+4705	Esta exportação inclui configurações entre perfis que sobrescreverão as configurações de quem importar, incluindo Qualidade de Vida, Hovercast e outras que normalmente não devem ser compartilhadas com perfis comuns. ISTO NÃO É RECOMENDADO para compartilhar perfis publicamente.
+4706	Este recurso otimiza suas configurações gráficas no jogo para oferecer a melhor combinação de FPS alto e clareza visual.\n\nVocê pode reverter todas as alterações a qualquer momento clicando em \"Restaurar Minhas Configurações\", que aparecerá após a otimização.\n\n\nO que alteramos:\n\n
+4707	Este recurso requer que Encaixar Elementos esteja ativado
+4708	As alterações de fonte deste quadro exigem recarregar a interface para ter efeito.
+4709	Este brilho está travado na página de configurações dele.
+4710	O Gerenciador de Bônus personalizado deste grupo só pode ser ativado ou editado jogando com uma de suas especializações.
+4711	O Gerenciador de Penalidades personalizado deste grupo só pode ser ativado ou editado jogando com uma de suas especializações.
+4712	Este é um texto de Layout de Barras do CDM, não um texto de perfil.
+4713	Este é um texto antigo de Layout de Barras do CDM. Este formato não é mais suportado. Use a importação de perfil padrão.
+4714	Esta é a Janela de Fila de Feitiços; ela ajuda a garantir que você não enfileire feitiços demais de uma vez, o que deixa o jogo com sensação de atraso. O recomendado geralmente é no mínimo 200 + seu ping local. Se não tiver certeza do que esta configuração faz, deixe em 400.
+4715	Aqui você controla as configurações do Modo de Desbloqueio.\n\nOs elementos podem ser reposicionados arrastando ou com as setas (+shift)\nAncore, iguale a Altura ou iguale a Largura de qualquer elemento.\nO encaixe é baseado no elemento mais próximo, mas você pode encaixar só em\n um elemento específico com clique direito ou pelo ícone de configurações.
+4716	Faz com que a largura da barra de lançamento inclua o ícone, em vez de posicioná-lo à esquerda da largura da barra.
+4717	Este módulo não pode ser sobreposto. Saia da sessão de edição de sobreposição para abri-lo.
+4718	Este módulo está excluído das Sobreposições de Especialização.
+4719	Esta opção não pode ser usada enquanto a Arte de Recurso de Classe da Blizzard estiver ativada em Barras de Recurso.
+4720	Esta opção não se aplica ao quadro do jogador.
+4721	Esta opção não está disponível no quadro do jogador
+4722	Esta opção só está disponível para formatos que exibem porcentagem.
+4723	Esta opção só está disponível para o Tema de Cor Personalizado
+4724	Esta opção só está disponível quando o Modo de Retrato é Destacado.
+4725	Esta opção só afeta Bônus de Raide que você pode lançar
+4726	Esta opção só se aplica ao estilo Emblema.
+4727	Esta opção só se aplica quando Nome > Alvo está selecionado.
+4728	Esta opção só se aplica quando Nome > Alvo ou Alvo está selecionado.
+4729	Esta opção só se aplica quando Alvo está selecionado.
+4730	Esta opção só se aplica quando o texto mostra um nome.
+4731	Esta opção requer que %1$s seja %2$s
+4732	Esta opção requer um Retrato 2D ou o Estilo de Arte de Classe.
+4733	Esta opção requer um Tamanho de Borda acima de 0
+4734	Esta opção requer um Tamanho de Borda acima de 0.
+4735	Esta opção requer um Estilo de Borda diferente de Herdar (Quadros Principais).
+4736	Esta opção requer um Estilo de Borda diferente de Sólido.
+4737	Esta opção requer um estilo de borda com arte divisória e um Tamanho de Borda acima de 0.
+4738	Esta opção requer o Formato Círculo ou Círculo de Pixels.
+4739	Esta opção requer um Ícone de Classe diferente de Nenhum.
+4740	Esta opção requer uma posição destacada ativa.
+4741	Esta opção requer Sobreposição de Dissipar, Colorir Bordas Personalizadas ou Usar Cores de Dissipar.
+4742	Esta opção requer uma seleção diferente de Acima da Barra de Vida
+4743	Esta opção requer um Estilo de Brilho diferente de Nenhum
+4744	Esta opção requer uma posição de texto diferente de nenhuma.
+4745	Esta opção requer uma seleção de texto diferente de nenhuma.
+4746	Esta opção requer uma Posição do Ícone de Tipo diferente de Nenhum
+4747	Esta opção requer um Retrato visível e Mostrar Ícone.
+4748	Esta opção requer uma Barra de Poder anexada, um Tamanho de Borda acima de 0 e um estilo de borda com arte de junção.
+4749	Esta opção requer um quadro de Alvo ou Foco do EllesmereUI.
+4750	Esta opção requer um Anel Externo diferente de Nenhum.
+4751	Esta opção requer que o Estilo de Arte seja Classe
+4752	Esta opção requer que o Estilo Blizzard esteja desativado
+4753	Esta opção requer que Recurso de Classe seja Moderno.
+4754	Esta opção requer que Combinar Nome do Feitiço e Alvo esteja desativado.
+4755	Esta opção requer Estilo de Borda Personalizado, Mostrar Ícone e Tornar o Ícone Parte da Barra, com o estilo EllesmereUI.
+4756	Esta opção requer que Bordas por Tipo de Dissipar estejam ativadas.
+4757	Esta opção requer que o Modo de Retrato seja Destacado.
+4758	Esta opção requer Mostrar Ícone e Tornar o Ícone Parte da Barra, com o estilo EllesmereUI.
+4759	Esta opção requer Mostrar Ícone e o estilo EllesmereUI.
+4760	Esta opção requer Mostrar Ícone ao lado da barra de lançamento e o estilo EllesmereUI.
+4761	Esta opção requer Mostrar Nível.
+4762	Esta opção requer Sólido ou um estilo de borda com arte divisória, e um Tamanho de Borda acima de 0.
+4763	Esta opção requer o Estilo de Arte de Classe.
+4764	Esta opção requer a Borda de Formato na Cor da Classe e o Modo Escuro.
+4765	Esta opção requer que a posição esteja destacada
+4766	Esta opção requer o estilo WoW Forever.
+4767	Isto sobrescreve as configurações atuais deste quadro. Posição, visibilidade e estado de ativação do quadro não são alterados.
+4768	Esta página está excluída das sobreposições.
+4769	Isto sobrescreve permanentemente as configurações deste perfil com a sobreposição '%s': suas configurações capturadas e seus layouts personalizados do Modo de Desbloqueio e do Gerenciador de Bônus (quando existirem) se tornam a base do perfil para todas as especializações. TODOS os grupos de sobreposição de especialização deste perfil são então excluídos e a interface é recarregada. Sobreposições condicionais não são afetadas.
+4770	Este texto de perfil não contém configurações globais.
+4771	Este texto de perfil não contém dados de sobreposição.
+4772	Este texto de perfil não contém configurações de Visuais de Janelas e Dicas.
+4773	Este perfil foi criado antes do reset da beta e não é mais compatível. Crie uma nova exportação.
+4774	Este perfil foi criado com uma versão mais nova do EllesmereUI. Atualize seu addon.
+4775	Este perfil foi feito com escala de interface de %1$d%%; a sua é %2$d%%. Alterar sua escala de interface para corresponder ao perfil importado? Todos os perfis serão exibidos nessa escala, pois a Escala da Interface não é uma configuração por perfil, mas pode ser revertida ao seu valor original a qualquer momento.
+4776	Isto redefine todos os addons EUI, não apenas o atual.
+4777	Esta configuração já tem uma sobreposição para %s
+4778	Esta configuração não pode ser sobreposta.
+4779	Esta Configuração Tem Sobreposições
+4780	O modo de desbloqueio personalizado desta especialização pertence a '%s'. Personalize-o lá ou remova a especialização daquele grupo.
+4781	Este texto é uma exportação de CONTA COMPLETA. Ele substitui suas configurações da conta inteira pelas do remetente, incluindo Qualidade de Vida, atalhos do HoverCast, configurações de feitiços do Gerenciador de Recargas, âncoras de desbloqueio, escala da interface e atalhos de perfil -- não apenas um perfil. Seus outros perfis são mantidos, mas um perfil com o mesmo nome é substituído.
+4782	Esta unidade usa o quadro padrão da Blizzard -- não há configurações do EllesmereUI para ajustar aqui.
+4783	O quadro desta unidade está oculto -- não há configurações do EllesmereUI para ajustar aqui.
+4784	Isto criará um Gerenciador de Bônus totalmente exclusivo para este grupo condicional. Alterações no seu Gerenciador de Bônus padrão não o afetarão mais.
+4785	Isto criará um Gerenciador de Bônus totalmente exclusivo para este grupo de sobreposição. Alterações no seu Gerenciador de Bônus padrão não afetarão mais estas especializações.
+4786	Isto criará um Gerenciador de Penalidades totalmente exclusivo para este grupo condicional. Suas configurações atuais do Gerenciador de Penalidades são copiadas como ponto de partida, e alterações no seu Gerenciador de Penalidades padrão não o afetarão mais.
+4787	Isto criará um Gerenciador de Penalidades totalmente exclusivo para este grupo de sobreposição. Suas configurações atuais do Gerenciador de Penalidades são copiadas como ponto de partida, e alterações no seu Gerenciador de Penalidades padrão não afetarão mais estas especializações.
+4788	Isto criará um modo de desbloqueio totalmente exclusivo para este grupo condicional. Alterações no seu modo de desbloqueio padrão não o afetarão mais.
+4789	Isto criará um modo de desbloqueio totalmente exclusivo para este grupo de sobreposição. Alterações no seu modo de desbloqueio padrão não afetarão mais estas especializações.
+4790	Isto não redefinirá a Configuração Rápida específica de cada addon.
+4791	Isto substituirá as SUAS configurações do Blizz UI Enhanced (as abas Visuais de Janelas e Dicas, Menus e Pop-ups) pelas de quem compartilhou, em TODOS os seus perfis. Suas configurações atuais nessas duas abas não poderão ser recuperadas depois.
+4792	Isto criaria uma âncora circular
+4793	Isto criaria uma correspondência de altura circular
+4794	Isto criaria uma correspondência de largura circular
+4795	ameaça
+4796	Ameaça %
+4797	Posição da Ameaça %
+4798	Ameaça e Felicidade do Ajudante
+4799	Borda de Ameaça
+4800	Cor de Ameaça
+4801	CORES DE AMEAÇA
+4802	Medidor de Ameaça
+4803	Ameaça: valores nativos do alvo atual.
+4804	Limite %
+4805	Cor do Limite
+4806	Contagem do Limite
+4807	Cor das Marcações
+4808	Marcações nos Acúmulos
+4809	TidyPlates
+4810	TidyPlates ThreatPlates
+4811	Tempo desde a última mensagem correspondente exibida. Repetições ocultas não estendem a janela.
+4812	Temporizador
+4813	Fundo do Temporizador
+4814	Textura de Fundo do Temporizador
+4815	Textura da Barra do Temporizador
+4816	Cor da Borda do Temporizador
+4817	Tamanho da Borda do Temporizador
+4818	Cor do Temporizador
+4819	Fonte do Temporizador
+4820	Camada do Temporizador
+4821	Contorno do Temporizador
+4822	Posição do Temporizador
+4823	Tamanho do Temporizador
+4824	Tamanho do Texto do Temporizador
+4825	Temporizador X
+4826	Temporizador Y
+4827	Texturas do temporizador, das forças e da barra de feitiço
+4828	Marcar Horário em Todas as Mensagens
+4829	Marcas de Horário
+4830	Tinge o dragão com a cor da sua classe em vez de dourado ou prateado.
+4831	Tinge o dragão com a cor da sua classe em vez de dourado.
+4832	Tinge o espaço deste bloco com a própria cor.
+4833	Minúsculo (75%)
+4834	Listras Finas
+4835	Ponta da Lança
+4836	Cor do Título
+4837	Tamanho da Fonte do Título
+4838	Tamanho do Título
+4839	Títulos
+4840	Alternar Barra de Ação
+4841	Alterna entre o layout de barra horizontal e vertical.
+4842	Alternar Calendário
+4843	Alternar Relógio
+4844	Alterna os botões opcionais do EllesmereUI: os botões do menu Esc e o botão do minimapa.
+4845	Tecla de Alternar
+4846	Atalho de Alternar
+4847	Alternar Menu Aberto
+4848	O modo Alternar precisa de uma tecla de Seleção; até ser definida, o menu dispara ao soltar.
+4849	Atalho para Ligar/Desligar
+4850	Alternar Orientação
+4851	Alternar Mapa-múndi
+4852	Alternar uma barra de ação só está disponível fora de combate\n\nClique esquerdo para definir um atalho.\nClique direito para remover o atalho.
+4853	Dica
+4854	dica
+4855	Opacidade do Fundo da Dica
+4856	Borda e fundo da dica
+4857	Tamanho da Borda da Dica
+4858	Bordas e Fundo das Dicas
+4859	Escala da Fonte da Dica
+4860	Escala do Tamanho da Fonte da Dica
+4861	INFORMAÇÕES DA DICA
+4862	Opções da Dica
+4863	POSIÇÃO DA DICA
+4864	Escala do texto da dica e texto de encantamento
+4865	Escala do texto da dica, texto de encantamento e velocidade de voo dinâmico
+4866	VISIBILIDADE DA DICA
+4867	Dicas
+4868	Dicas, Menus e Pop-ups
+4869	Topo
+4870	Espaço Superior
+4871	Topo Esquerdo
+4872	Topo Esquerdo, para Baixo
+4873	Topo Esquerdo, para a Direita
+4874	Tamanho do Texto da Barra de Nome Superior
+4875	Métricas de desempenho de primeira linha
+4876	Deslocamento Superior
+4877	A posição Topo só está disponível no modo Destacado
+4878	Topo Direito
+4879	Topo Direito, para Baixo
+4880	Topo Direito, para a Esquerda
+4881	Borda Superior da Tela
+4882	Texto Superior
+4883	Tamanho do Texto Superior
+4884	De Cima para Baixo
+4885	Barra de Informações Superior/Inferior
+4886	ToS
+4887	Total
+4888	BARRA DE TOTENS
+4889	Barra de Totens
+4890	Barras de Totens
+4891	Tamanho do Temporizador de Totem
+4892	Rastrear
+4893	Rastreia e exibe a quantidade de ouro de todos os seus personagens ao passar o mouse.
+4894	Rastreia consumíveis e bônus de raide em conteúdo instanciado.
+4895	Rastrear Retornos Decrescentes
+4896	AURAS RASTREADAS
+4897	Auras Rastreadas
+4898	Barras de Bônus Rastreados
+4899	IDs rastreados são adicionados; IDs excluídos sempre são ocultados

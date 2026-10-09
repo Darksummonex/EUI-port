@@ -1,0 +1,350 @@
+3850	Raio do Anel
+3851	Anel Grosso
+3852	Espessura do Anel
+3853	Anel Fino
+3854	RLP
+3855	Robot Blip
+3856	Ladino
+3857	VENENOS DE LADINO
+3858	Função
+3859	função
+3860	Posição do Ícone de Função
+3861	Tamanho do Ícone de Função
+3862	Estilo do Ícone de Função
+3863	Deslocamento X do Ícone de Função
+3864	Deslocamento Y do Ícone de Função
+3865	Ícones de Função
+3866	Ordem da Lista
+3867	Girar Minimapa
+3868	Quadrado Arredondado
+3869	Direção de Crescimento das Linhas
+3870	Altura da Linha
+3871	Configurações de Linha
+3872	Espaçamento das Linhas
+3873	Linhas
+3874	Ruínas de Lordaeron
+3875	Runa
+3876	Forja Rúnica
+3877	Runas
+3878	Runas e Pontos de Combo
+3879	Rúnico
+3880	Poder Rúnico
+3881	Russo One
+3882	Russo One.ttf
+3883	s
+3884	Mesma configuração, mesmos recursos do EllesmereUI, novo visual: mude para o Estilo Blizzard ou a nova interface Classic WoW com um clique, e volte quando quiser.
+3885	Temporizador de Saciado / Exaustão
+3886	Sátiro
+3887	Salvar
+3888	Salvar e Sair
+3889	Salvar Atalho
+3890	Salvar Histórico Entre Sessões
+3891	Salvar Inventário e Recarregar Interface
+3892	Salvo
+3893	ATALHOS SALVOS
+3894	Salvo apenas para este personagem. Digite um ID de feitiço e pressione Enter para ser lembrado sempre que esse bônus estiver faltando em você.\nFeitiços do seu grimório são clicáveis para lançar. IDs desconhecidos são ignorados.
+3895	Salvo para este layout de raide. Grupos ocultos não deixam espaço vazio.
+3896	Instâncias Salvas
+3897	Raide(s) Salva(s)
+3898	Dizer
+3899	Dizer, Gritar e canais numerados como Geral, Comércio e Mundo. Abrange filtros de repetição, palavra-chave, anúncio de comércio e recrutamento.
+3900	Escala
+3901	Aumente ou diminua a escala de qualquer janela com o Shifter
+3902	Escala das janelas de bolsas e banco.
+3903	Escalar Placa do Alvo
+3904	Escala todos os elementos de texto desta barra.
+3905	Escala o tamanho do texto padrão do jogo da Blizzard (menus, dicas, registro de missões e mais). Requer recarregar a interface.
+3906	Escala a barra original; 30 é o tamanho normal.
+3907	Escala o tamanho do texto das dicas da Blizzard.
+3908	Escala o quadro inteiro. Quadros no Estilo Blizzard têm o tamanho original, então isto substitui Largura da Barra e Altura da Barra de Vida.
+3909	Escala o conteúdo deste bloco como um grupo dentro do seu espaço.
+3910	Centro da Tela
+3911	Coordenadas da Tela
+3912	Camada da tela em que esta barra é desenhada. Aumente para desenhar sobre outros quadros, diminua para ficar atrás deles.
+3913	Posição na Tela
+3914	Deslocamento X na Tela
+3915	Deslocamento Y na Tela
+3916	Botão de Rolagem no Painel de Bate-papo
+3917	Role a roda do mouse sobre a janela de um vendedor para virar as páginas de itens.
+3918	Rolar até o Fim
+3919	Gigante do Mar
+3920	Buscar Recursos...
+3921	Buscar Configurações do Módulo...
+3922	Buscar...
+3923	Secundário
+3924	Profissões Secundárias
+3925	Exibição de Atributos Secundários
+3926	ATRIBUTOS SECUNDÁRIOS
+3927	Atributos Secundários
+3928	Tamanho do Texto dos Atributos Secundários
+3929	Segundos para mostrar o estado ativo após um lançamento, para feitiços sem bônus.
+3930	Seção
+3931	Veja os destaques de cada nova atualização
+3932	Segmento
+3933	Selecionar
+3934	Selecione um personagem
+3935	Selecione uma moeda
+3936	Selecione um plugin
+3937	Selecione um talento...
+3938	Selecionar Tudo
+3939	Selecionar Barra
+3940	Selecionar Masmorra/Raide/Zona JxJ
+3941	Selecionar Quadro
+3942	Selecionar Brilho
+3943	Selecionar Grupo
+3944	Selecionar Indicador
+3945	Tecla de seleção: 
+3946	Selecionar Paleta
+3947	Selecionar Segmento
+3948	Selecionar Alvo de Encaixe
+3949	Selecionar Talento
+3950	Selecione as condições que ativam este grupo:
+3951	Selecione as especializações que este grupo edita:
+3952	Selecione a quais especializações você quer atribuir %1$s
+3953	Selecionar Janela
+3954	Selecionar...
+3955	Selecionado: 
+3956	Selecionar um segmento muda todas as janelas sincronizadas para ele
+3957	Agulha de Seleção
+3958	Posição Própria
+3959	Destinatários de Correio
+3960	Enviar Correio: Lista de Destinatários
+3961	Enviar para DBM / BigWigs
+3962	Sensei Class Resource Bar
+3963	Barra Lateral Separada
+3964	Espaçamento Separado
+3965	Separe palavras ou frases com vírgulas ou ponto e vírgula. Não diferencia maiúsculas, incluindo letras acentuadas; busca por trecho literal. Entradas vazias são ignoradas.
+3966	Separado (12,345)
+3967	Separador
+3968	Avisos de Canal do Servidor
+3969	Hora do Servidor
+3970	Hora do servidor
+3971	Sessão
+3972	Defina um brilho uma vez. Aplicar a Todos altera os brilhos personalizados ativos listados abaixo.
+3973	Defina Tamanho da Borda acima de 0
+3974	Definir Tecla de Cancelar
+3975	Definir Foco
+3976	Opções do Texto de Nome do Conjunto
+3977	Tamanho do Texto de Nome do Conjunto
+3978	Definido por filtro
+3979	Definido por filtro e bloco
+3980	Definido por indicador
+3981	Definir Tecla de Seleção
+3982	Defina a tecla de alternância primeiro (ou desmarque Atalho).
+3983	Definir Escala da Interface para 0.5333
+3984	Definir Volume
+3985	Define uma largura personalizada para a barra de lançamento. Use 0 para igualar à largura do quadro do chefe.
+3986	Define a cor de destaque usada em todos os elementos do EllesmereUI (abas, brilhos, destaques, bordas). Padrão: a cor do seu tema.
+3987	Define a fonte dos nomes que flutuam acima de jogadores, PNJs e inimigos no mundo.\n\nSeparada da Fonte Global - alterar isto não afeta o resto da interface, e a Fonte Global não afeta isto.\n\nPadrão da Blizzard deixa o texto dos nomes completamente intocado.\n\n|cffff4d4dRequer relogar ou reiniciar o WoW para ter efeito.|r
+3988	Define a escala de toda a interface do jogo. Valores menores deixam tudo menor, valores maiores deixam tudo maior.
+3989	Define a escala da interface para o valor pixel-perfect exato usado por outros addons. O EllesmereUI não precisa disto para ser pixel-perfect.
+3990	Configurações
+3991	Engrenagem de Configurações
+3992	Substituições de Configurações
+3993	As Substituições de Configurações são o sistema mais poderoso do EllesmereUI, e o mais profundo. Alguns minutos com este vídeo vão poupar horas tentando entender sozinho.
+3994	SexyMap
+3995	Sombra
+3996	Seta Sombria
+3997	Forma de Sombra
+3998	Xamã
+3999	IMBUIÇÕES E ESCUDOS DE XAMÃ
+4000	Forma
+4001	Borda da Forma
+4002	Configurações da Borda da Forma
+4003	Brilho da Forma
+4004	Formas e Bordas
+4005	Texturas de Barra do SharedMedia
+4006	Fontes, Texturas e Sons do SharedMedia
+4007	SharedMedia nos Menus de Som
+4008	Sons do SharedMedia
+4009	Texturas e Sons do SharedMedia
+4010	Sheer
+4011	Escudo
+4012	escudo
+4013	Absorções de Escudo na Cura
+4014	Estimativas de Escudo
+4015	Escudos são estimados no 3.3.5
+4016	Shift
+4017	Shift + arrastar com botão esquerdo: salvar posição
+4018	Shift + clique direito para ocultar ícones de guia em vídeo
+4019	Modificador Shift
+4020	Shift ao redimensionar trava uma direção
+4021	Deslocar X
+4022	Deslocar Y
+4023	Shift+Clique do Meio para sempre mostrar todas as configurações
+4024	Shift+Clique Direito para ocultar a sobreposição temporariamente
+4025	SHIFT-
+4026	Shift-Clique Anexa Mesma Categoria
+4027	Shift-Clique: Anexar Mesma Categoria
+4028	Arraste os ícones com Shift para movê-los
+4029	Shifter
+4030	shifter
+4031	Shiyan66666
+4032	Loja
+4033	Curto (12.3k)
+4034	Texto de Atalho Curto
+4035	Nomes de Canal Abreviados
+4036	Ombros
+4037	Brado
+4038	Mostrar
+4039	Mostrar 
+4040	Mostrar %
+4041	Mostrar Decimal do %
+4042	Mostrar Lembrete 'Não Necessário'
+4043	Mostrar / Ocultar Inclui Temporizador de Combate
+4044	Mostrar / Ocultar Inclui Histórico de Feitiços
+4045	Atalho para Mostrar / Ocultar Janelas (Exemplo: ALT-M)
+4046	Mostrar 15 Feitiços (Senão 8)
+4047	Mostrar 2 para Chefe
+4048	Mostra um brilho na barra de lançamento quando a unidade lança um feitiço que a Blizzard marca como importante.
+4049	Mostra um ponto pulsante no botão Notas de Atualização sempre que o EllesmereUI atualizar para uma nova versão.
+4050	Mostra um lembrete até que sua própria Pedra da Alma esteja ativa em você ou em outro membro do grupo.
+4051	Mostra um lembrete quando você não tiver um ajudante ativo invocado. Só se aplica a classes com ajudante (Caçador, Bruxo, Cavaleiro da Morte Profano).\nCaçadores: clique direito alterna entre Chamar Ajudante e Reviver Ajudante. Bruxos: clique direito alterna os demônios.
+4052	Mostra um lembrete quando seu ajudante ativo estiver na postura Passiva. Clicar o define como Defensivo.
+4053	Mostra um lembrete quando o ajudante ativo do seu Bruxo não for um dos demônios escolhidos em Demônios Permitidos. Um demônio só conta se o feitiço de invocação for conhecido, então deixar só a Guarda Vil escolhida não alerta em especializações/builds sem o talento Evocar Guarda Vil.
+4054	Mostrar Rótulo de Texto da Ação
+4055	Mostrar Estado Ativo
+4056	Mostrar Status AFK
+4057	Mostrar Tudo
+4058	Mostrar Tudo ao Passar o Mouse
+4059	Mostrar Ajudantes da Arena
+4060	Mostrar Setas à Direita
+4061	Mostra dicas de auras ao passar o mouse sobre ícones de bônus e penalidades em todos os quadros de unidade, exceto quadros de chefe.
+4062	Mostra dicas de auras ao passar o mouse sobre ícones de bônus e penalidades nos quadros de chefe.
+4063	Mostrar Auras
+4064	Mostrar Barra de Espaços de Bolsa
+4065	Mostrar Espaço nas Bolsas
+4066	Mostrar Bolsas
+4067	Mostrar Atrás
+4068	Mostrar Abaixo
+4069	Mostrar Texto de VaE
+4070	Mostrar Borda
+4071	Mostrar Borda Atrás
+4072	Mostrar Detalhamento ao Passar o Mouse
+4073	Mostrar Bônus
+4074	Mostrar Calendário
+4075	Mostrar Barra de Lançamento
+4076	Mostrar Ícone de Lançamento
+4077	Mostrar Pulsos de Canalização
+4078	Mostrar Banco do Personagem
+4079	Mostrar Contagem de Itens dos Personagens
+4080	Mostrar Ícone da Classe
+4081	Mostrar Ícones de Classe
+4082	Mostrar Recurso da Classe
+4083	Mostrar Botão de Limpar
+4084	Mostrar Texto de Dano em Combate
+4085	Mostrar Texto de Cura em Combate
+4086	Mostrar prévia do indicador de combate
+4087	Mostrar Números de Recarga
+4088	Mostrar Texto de Recarga
+4089	Mostrar Coordenadas
+4090	Mostrar Coordenadas no Mapa-múndi
+4091	Mostra cópias do mesmo item em espaços separados como um único ícone com as quantidades somadas. Pausado enquanto a janela de correio, troca, casa de leilões, banco ou banco da guilda estiver aberta.
+4092	Mostrar Penalidades
+4093	Mostrar Decimal no Texto de Vida
+4094	Mostrar Decimais
+4095	Mostrar Descrição
+4096	Mostrar Marcador de Dificuldade
+4097	Mostrar prévia da sobreposição de dissipar
+4098	Mostrar Dissipável Quando Não Houver Penalidade de Chefe
+4099	Mostrar DPS / HPS ao Lado do Total
+4100	Mostrar Durabilidade
+4101	Mostrar Duração
+4102	Mostrar Duração (Dentro da Engrenagem)
+4103	Mostrar Nomes de Encantamentos em Vez de Ícones
+4104	Mostrar Bônus Inimigos
+4105	Mostrar Placas de Identificação Inimigas
+4106	Mostrar Placas de Ajudantes Inimigos
+4107	Mostra todo bônus que tem duração (oculta bônus permanentes). Use a faixa Ocultar abaixo para remover filtros específicos.
+4108	Mostra todos os bônus. Use a faixa Ocultar abaixo para remover filtros específicos.
+4109	Mostra todas as penalidades. Use a faixa Ocultar abaixo para remover filtros específicos.
+4110	Mostrar Botão de Menu Suspenso
+4111	Mostrar FPS e Latência
+4112	Mostrar Contador de FPS
+4113	Mostrar Notas de Amigos
+4114	Mostrar Chefes Amistosos
+4115	Mostrar Placas de Identificação Amistosas
+4116	Mostrar Amigos Online
+4117	Mostrar GearScore
+4118	Mostrar Grupo 
+4119	Mostrar Escolhas de Rolagem do Grupo
+4120	Mostrar Felicidade
+4121	Mostrar Linha de Marcação no Alvo
+4122	Mostrar Ícones do Cabeçalho ao Passar o Mouse
+4123	Mostrar prévia de absorção de cura
+4124	Mostrar Previsão de Cura
+4125	Mostrar prévia da previsão de cura
+4126	Mostrar Ícones de Curador
+4127	Mostrar Barra de Vida
+4128	Mostra texto de dica útil nos cabeçalhos das categorias Itens Fixados e Itens Recentes.
+4129	Mostrar Mensagens Ocultas
+4130	Mostrar Borda de Destaque
+4131	Mostrar Destaque ao Lançar Feitiço
+4132	Mostrar Acerto / Especialização / Penetração de Armadura
+4133	Mostra quantos do consumível você ainda tem nas bolsas.
+4134	Mostrar Ícone
+4135	Mostrar Ícone no Retrato
+4136	Mostrar Ícone à Direita
+4137	Mostrar Em
+4138	Mostrar em Todos os Itens
+4139	Mostrar na Arena
+4140	Mostrar em Campos de Batalha
+4141	Mostrar em Combate
+4142	Mostrar em Masmorras
+4143	Mostrar em Instâncias
+4144	Mostrar em OneBag/MultiBag
+4145	Mostrar no Mundo Aberto
+4146	Mostrar em Raides
+4147	Mostrar Efeito de Lampejo ao Interromper
+4148	Mostrar Contagem de Itens
+4149	Mostrar Nível de Item
+4150	Mostra dicas de item ou feitiço ao passar o mouse sobre ícones de lembrete.
+4151	Mostrar Teclas Pressionadas
+4152	Mostrar Texto de Atalho
+4153	Mostrar Atalhos
+4154	Mostrar Barra de Interrupção Pronta no Meio do Lançamento
+4155	Mostrar Marca de Interrupção Pronta no Meio do Lançamento
+4156	Mostrar Rótulo
+4157	Mostrar Rótulos
+4158	Mostrar Latência
+4159	Mostrar Nível
+4160	Mostrar Latência Local
+4161	Mostrar Indicador de Correio
+4162	Mostrar Quadros de Tanque Principal
+4163	Mostrar Barra de Mana em Forma Alterada
+4164	Mostrar Eu
+4165	Mostrar Mercador como Lista
+4166	Mostrar Botão do Minimapa
+4167	Mostrar Montaria e Status de Coleção
+4168	Mostrar Nome
+4169	Mostrar Nomes (Raide)
+4170	Mostrar Apelidos
+4171	Mostrar Em
+4172	Mostrar nos Quadros de Chefe
+4173	Mostrar à Direita
+4174	Mostra uma casa decimal no texto de vida: valores como 240.5k e porcentagens como 77.3%. O texto de poder não é afetado. Desativado por padrão.
+4175	Mostra uma subcategoria por conjunto de equipamento (com o nome do conjunto) em Equipamento de Conjunto.
+4176	Mostra selos únicos de guia em vídeo ao lado de recursos novos ou complexos. Cada selo some para sempre depois de clicado.
+4177	Mostrar Apenas em Combate
+4178	Mostrar Fora de Combate
+4179	Mostrar Escudo Excedente
+4180	Mostrar Setas de Página
+4181	Mostrar Quadros de Grupo
+4182	Mostrar Ajudantes do Grupo
+4183	Mostrar Berloques Passivos
+4184	Mostrar Porcentagem
+4185	Mostrar Dano Periódico
+4186	Mostrar Dano Corpo a Corpo do Ajudante
+4187	Mostrar Dano de Feitiço do Ajudante
+4188	Mostrar Dicas de Fixados e Recentes
+4189	Mostrar Itens Fixados
+4190	Mostrar Jogador
+4191	Mostra apelidos de jogadores de addons suportados em vez dos nomes dos personagens nos seus quadros principais.
+4192	Mostrar Títulos dos Jogadores
+4193	Mostrar Retrato
+4194	Mostrar Barra de Poder
+4195	Mostrar Porcentagem de Poder
+4196	Mostrar Berloque JxJ
+4197	Mostrar Indicadores de Fila
+4198	Mostrar Quadros de Raide
+4199	Mostrar Marcador de Raide

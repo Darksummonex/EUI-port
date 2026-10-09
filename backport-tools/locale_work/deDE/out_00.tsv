@@ -1,0 +1,450 @@
+2	 Aufschlüsselung
+3	 Mouseover ist auch hier für dieses Element gesperrt: Sein Hover-Mechanismus folgt der gemeinsamen Einstellung, daher könnte eine Überschreibung es nur sichtbar lassen.
+6	 Fenster aktiv
+22	'%1$s' ist jetzt für %2$s angepasst.
+23	's Todesübersicht
+28	(aktiv)|r
+53	...und %d weitere
+76	einen Leuchtstil
+82	Zum Anwenden ist ein Neuladen erforderlich.
+84	Auf der Stilseite ist ein Standard-Chatstil aktiv: Panel, Reiter und Seitenleiste behalten das Blizzard-Aussehen.
+85	Ein Standard-Chatstil ist aktiv: Der Chat behält Blizzards eigenen Hintergrund und die Reitergrafik.
+88	Eine dünne Kontur um den ausgewählten Reiter.
+89	Menge abkürzen
+91	Über
+93	Über Mauszeiger
+101	Über oberem Fenster, links
+102	Über oberem Fenster, rechts
+107	Absorptionsfarbe
+110	Absorptionsschilde
+113	Absorptionsstil und die Überlagerungsplatzierung
+116	Erhaltene Absorptionen: verbrauchte Schilde pro Spieler.
+117	Absorptionsbereich
+118	Akzent
+121	Kopfzeilentext in Akzentfarbe
+122	Timer in Akzentfarbe
+123	Akzent-Kopfzeile
+124	Akzent-Gestaltung
+125	HERVORGEHOBENER TEXT
+126	Annehmen
+127	Einladungen von Freunden & Gilde annehmen
+129	Nimmt Gruppeneinladungen von Deiner Freundesliste und Gildenmitgliedern an. Wird übersprungen, wenn Du im Dungeonbrowser angemeldet oder bereits in einer Gruppe bist.
+134	Aktion 
+135	Aktion hinzugefügt
+146	Aktionsleisten 7 bis 10
+147	Aktionsleisten können nur an andere\nAktionsleisten in der Breite angepasst werden
+149	Aktionsleisten, Blizzard HUD-Skins und Positionen der Spielerauren für Wrath.
+151	Zauber-ID der Aktionsschaltfläche
+152	Aktions-ID / Name / Text
+154	Aktionsmenü-Nummer
+156	Aktionstyp
+159	Leuchten bei aktiver Aura
+160	Aktive Aura-ID
+161	Quelle für aktiven Hintergrund
+162	Aktiver Rahmen
+164	Aktive Dauer
+165	Quelle für aktive Schriftfarbe
+166	Aktive Schadensminderung
+171	Schriftfarbe des aktiven Reiters
+176	AKTION HINZUFÜGEN
+178	Aktion vom Mauszeiger hinzufügen
+180	Block hinzufügen
+181	Stärkungszauber-Voreinstellung hinzufügen
+184	EINTRAG HINZUFÜGEN
+185	Eintrag hinzufügen
+186	Externen Abklingzeit-Indikator hinzufügen
+187	Leuchten hinzufügen
+188	Heiler-Stärkungszauber-Indikator hinzufügen
+189	Zeigt im Tooltip, wie viele Exemplare eines Gegenstands Deine anderen Charaktere besitzen.
+190	Gegenstands-Voreinstellung hinzufügen
+191	Erlernten Zauber hinzufügen
+193	Neue Leisten zur Gruppe hinzufügen
+194	Neuen Indikator hinzufügen
+195	Persönlichen Defensiv-Indikator hinzufügen
+196	Volksfähigkeit hinzufügen
+198	Ausgewählte Aktion hinzufügen
+200	Zaubermenü hinzufügen
+202	Verfolgungsleiste hinzufügen
+203	Hinzugefügt 
+204	Wird zur aktuellen Schlachtzugs- oder Gruppenfenstergröße addiert.
+205	Hinzugefügt. Nicht erlernte Zauber und leere Plätze bleiben ausgeblendet.
+209	Addon-Schaltflächen-Ausklappmenü
+210	ADDON-SCHALTFLÄCHEN
+214	Fügt einen zweiten Ring um ein rundes Porträt hinzu; An Fensterrahmen anpassen folgt Deinem Fensterrahmenstil.
+216	Fügt einen weichen Schatten innerhalb eines runden Porträts hinzu.
+217	Fügt die Blizzard-Schildleuchtlinie dort hinzu, wo der Schild auf die aktuelle Gesundheit trifft.
+230	Gezielter Schuss
+232	Warnungs- und Verfolgungstext
+239	Alle erlaubt
+256	Verbündete Namen behalten ihre Klassenfarbe auch ohne Ziel oder Mouseover. Gruppen-/Schlachtzugsmitglieder werden automatisch erkannt; andere Verbündete werden über Ziel, Mouseover oder Fokus gelernt.
+263	Entspricht bereits der Vorlage.
+264	Bereits auf 
+266	Zeigt den Drachen auch in Dungeons und Schlachtzügen, wo die meisten Gegner Elite sind.
+267	Auch Ziel beobachten
+274	Twinks erscheinen nach dem Einloggen auf jedem davon
+283	Immer: Verfolgung während des gesamten Schlachtzugs ausblenden.\nSchlachtzugskampf: bei jedem Kampf im Schlachtzug ausblenden.\nBosskampf: nur während Bossbegegnungen ausblenden.\nIn Arenen wird die Verfolgung immer ausgeblendet.
+286	Ein Pfeil neben dem Feld An listet Deine Twinks auf diesem Realm und dieser Fraktion, Gildenmitglieder und die zuletzt angeschriebenen Namen.
+287	Ein Element kann nicht an sich selbst verankert werden
+288	Ein derzeit registriertes EllesmereUI LibDataBroker-Plugin. Ein Block pro Plugin -- füge den Block erneut hinzu für ein zweites.
+290	Anker Versatz-X
+291	Anker Versatz-Y
+292	Ankerseite
+293	Dieses Element zuerst verankern
+301	Unterbrechungen ankündigen
+309	Gilt für dieses Profil. Behält Deine individuelle Fensterauswahl.
+312	Anwenden 
+323	Rahmengröße auf alle Fenster anwenden
+327	Zauberleisten-Rahmenstil auf alle Fenster anwenden
+328	Zauberleistenrahmen auf alle Fenster anwenden
+343	Leuchtvorlage anwenden
+346	Leuchten für wichtige Zauber auf Ziel und Fokus anwenden
+351	Nicht-Spieler-Porträt auf alle Fenster anwenden
+380	Vorlage auf die %d hier aufgeführten aktiven eigenen Leuchten anwenden?
+388	Bogendrehung (Grad)
+389	Bogenspanne (Grad)
+392	Arkanschlag
+398	Bist Du sicher, dass Du \"%s\" löschen möchtest?
+403	Arenafenster
+404	Arenafenster-Seite
+405	Arenafenster-Unterstützung
+406	Arena-Begleiter
+416	Grafikskalierung
+418	Grafik für die Leuchtlinie und den Überschildrand.
+419	Grafik für die Anführerkrone und das Assistentensymbol.
+421	Taste zuweisen
+427	Zugewiesene Reihenfolge
+428	ZUGEWIESENE ZAUBER
+429	Zuweisungen: 
+437	Angehängter Porträtmodus
+439	Auction Bell
+441	AUDIO
+451	Aura aktiv
+453	Aurendauer Größe
+454	Aurenfilter
+455	Aurensymbolgröße
+456	Aurensymbol-Tooltips nutzen Auren-Tooltips
+457	Aura fehlt
+458	Auren-Zauber-ID
+459	Aurenstapel Größe
+462	Aurentimer Größe
+463	Auren-Tooltips
+464	Aurentyp
+465	Aureneinheit
+466	Aurenlaufzeit: Summe der beobachteten Sekunden über alle Ziele.
+473	Auto (Haltung/Gestalt)
+480	Automatische Rasterspalten
+488	Auto behandelt Defensivhaltung, Bärengestalt, Zorn der Gerechtigkeit und Frostpräsenz als Tanken.
+491	Auto-Zoom zurücksetzen (Sekunden)
+493	Rollenabfrage automatisch annehmen
+500	Automatische Kampfaufzeichnung
+503	Automatisch nutzt die Instanzkapazität, dann die Gruppengröße
+507	Automatisierung und Anzeigen starten deaktiviert
+508	Automatisierungs-Layout
+516	Hintergrund-Dunkelheit
+517	Hintergrund nur auf Punkten
+525	Abzeichen
+526	Abzeichen zeigt ein kleines Symbol; Pixels Dragon umgibt das Porträt mit Klassifizierungsgrafik.
+528	Taschenleisten-Skin
+529	Taschenschaltflächengröße
+530	Taschenabstand
+534	Taschen- und Bankseiten
+538	Band
+540	Bankkategorien
+541	Bannersymbol
+549	Leistenrahmenfarbe
+550	Leistenrahmengröße
+553	Leistenstandard
+556	Leisten-Dropdown und Symbolvorschau
+557	LEISTENLEUCHTEN
+565	Leistenname
+574	Leistentextur (Klassenressource)
+576	Leistentextur (pro Fenster)
+590	Angezeigte Leisten
+602	Battleground Win
+608	Unter
+610	Unter unterem Fenster, links
+611	Unter unterem Fenster, rechts
+612	Unter Mauszeiger
+616	Nur unter Schwellenwert
+627	Änderungen der Tastenbelegung gelten außerhalb des Kampfes
+637	Blizz-farbige Zielkopfzeile
+640	Blizzard-Aktionsschaltflächenring und Drück-Hervorhebung.
+641	Blizzard- und klassische Stile
+644	Blizzard Charakterfertigkeitenleiste
+647	Blizzard Standard behält die Zeitstempel-Einstellung der Interface-Optionen.
+649	Blizzard Leuchtlinie
+657	Blizzards Leistenpanel und Aktionsschaltflächenrahmen oder der klassische Leistenrahmen und Platzring mit allen EllesmereUI Drachenreiten-HUD-Funktionen.
+664	Blizzards Meterfenster und Leistengrafik oder ein Fenster im klassischen Chat Reiterrahmen mit allen EllesmereUI Bedrohungsmeterfunktionen.
+665	Blizzards eigenes Charakterfenster, wie das Spiel es zeichnet; WoW Forever behält den Gegenstandstext neben den Plätzen, und die Wertefarben bleiben beim EllesmereUI Aussehen.
+666	Blizzards eigenes Charakterfenster mit hinzugefügten EllesmereUI Werten, Platztext und Sockelpanel; der Reiter Calc bleibt beim EllesmereUI Aussehen.
+677	Hinzuzufügender Block
+678	Blocktyp, den die Schaltfläche Block hinzufügen an das Ende dieser Leiste anhängt.
+679	Blockierte Schlüsselwörter
+681	Kampfrausch / Heldentum
+687	BoE Textoptionen
+688	BoE Textgröße
+692	Rahmengrafik um die Bossfenster. Erben (Hauptfenster) nutzt den Rahmen der Hauptfenster.
+693	Rahmengrafik um die Zauberleiste.
+695	Die Rahmenfarbe zeigt, ob der Zauber unterbrochen werden kann.
+696	Quelle der Rahmenfarbe
+701	Rahmengröße in Pixeln; bei einem texturierten Stil ist dies die Größe der Randgrafik.
+707	Rahmen umschließt Symbol
+712	Boss-Schwächungszaubersymbol
+716	Boss-Symbol
+717	Bossmod-Sync: Schlachtzugsleiter / Assistent oder Gruppenanführer
+724	Textgröße unten links
+725	Unten links, nach rechts
+726	Unten links, nach oben
+728	Textgröße unten rechts
+729	Unten rechts, nach links
+730	Unten rechts, nach oben
+732	Abstand unten
+737	Aufschlüsselungsposition
+738	Aufschlüsselungsskalierung (%)
+740	Helle Linie am Rand der Wischtextur (benötigt einen Client mit Cooldown:SetDrawEdge).
+747	Stärkungszauber
+749	Stärkungs-/Schwächungszauber
+755	Stärkungszauberfilter
+756	Stärkungszauberfilter-Optionen
+757	STÄRKUNGSZAUBERFILTER
+759	Stärkungszaubersymbole pro Reihe
+762	Stärkungszaubermanager Symbolleuchten
+764	Stärkungszauber-Verschieber
+765	Zu beobachtender Stärkungs- oder Schwächungszauber.
+767	Stärkungszauber-Voreinstellung
+769	Stärkungszauber, der als aktiver Zustand angezeigt wird (0 = gleichnamiger Stärkungszauber).
+773	Stärkungszauber, der diesen Zauber als ausgelöst markiert (0 = integrierte Liste).
+781	BuildInlineCog: disabled needs a disabledTooltip
+784	Taste 4
+785	Taste 5
+787	Entfernung der Schaltflächenreihe
+789	Abstand in der Schaltflächenreihe
+790	Schaltflächengröße
+799	TOTEMRUF-LEISTE
+800	Camp Benefits
+804	Abbruchtaste: 
+805	Optionen können im Kampf nicht geöffnet werden.
+807	Neuladen im Kampf nicht möglich. Gib stattdessen /reload ein.
+810	Eroberungsleiste und GM-Chat-Status
+813	Zauber-/Kanalisierungsfortschritt
+815	Zauber- und GCD-Leisten
+829	Zauber bei Tastendruck
+830	Zaubererinnerungstext
+832	Zauberklang
+833	Zauberfunke
+834	Zauber wirken
+835	Zauber-Wischtextur
+837	Zaubertextgröße
+838	Zaubertextur
+840	Kontur des Zaubertimers
+842	Zauberleiste
+848	Kategorie
+866	Kettenblitzschlag
+869	Tastenbelegungen außerhalb des Kampfes ändern
+870	Gesundheitssichtbarkeit außerhalb des Kampfes ändern
+873	Änderungen werden außerhalb des Kampfes übernommen.
+879	Eine Stiländerung erfordert ein Neuladen des UI.
+881	KANALISIERUNGSTICKS UND LATENZ
+882	Chaosblitz
+885	CHARAKTERVERBESSERUNG
+887	Charakterfenster-Verbesserungen
+889	Charaktere (Kopfzeile) durchsucht gespeicherte Taschen und Banken.
+892	SPRECHBLASEN
+894	Chat-Countdown
+895	Chat-Extras
+899	Chat-Spamfilter-Optionen
+906	Markiere Symbole, um sie anzuzeigen; ziehe Zeilen zum Neuordnen.
+908	Markierte Schaltflächen verlassen das Ausklappmenü und sitzen in der Schaltflächenreihe.
+913	Wähle zuerst einen Text für diesen Platz.
+914	Wähle zuerst ein Element für diesen Platz.
+915	Wähle EllesmereUI, Blizzard oder Klassisch.
+917	Zauberlisten unter Aurenfilter auswählen
+918	Textur pro Leiste wählen
+924	Auswählen...
+929	Kreis und Porträt zeichnen runde Symbole, und Raute, Sechseck und Schild schneiden das Symbol auf die Form zu. Quadrat und Abgerundetes Quadrat umranden das quadratische Symbol. Die Kontur nutzt die Rahmengröße und die Farbe unten.
+933	Klassen- und Verbrauchsgüter-Erinnerungen
+939	Klassenfarbener Rahmen
+941	Klassenfarbene Gesundheit
+942	Klassenfarbene Gesundheitsleiste
+946	Klassensymbol für Freunde online; Freunde offline zeigen ein abgedunkeltes Offline-Symbol.
+948	Klassensymbol-Seite
+949	Klassensymbol-Stil
+951	Klassensymbole
+960	Klassenstil
+962	Klassenzoom
+965	Klassisch (Gesundheit %)
+967	Klassischer Leistenstil
+968	Klassische Fenstergröße
+969	Klassischer Symbolstil
+970	Klassischer Stil
+971	Leisten im klassischen Stil
+976	Zauberleistenrahmen des klassischen WoW UI.
+977	Klassisches WoW UI trägt den Vanilla-Ring, das Zonenbanner, die Zoomschaltflächen und ringumrandete Indikatoren auf einer runden Karte.
+981	Leeren
+982	Diese Palette leeren und deaktivieren
+983	Kampfverlauf löschen...
+984	Paletten-Tastenbelegungen löschen
+985	Auswahl- und Abbruchtasten löschen
+986	Farbe bei eingereihtem Spalten
+988	Klicke auf einen Block, um zu seinen Einstellungen zu scrollen. Rechtsklick zum Entfernen.
+989	Klicke auf einen Spieler: Zauberdetails. Shift-Klick: ganzes Fenster.
+990	Klickaktion
+991	Klicke auf eine http-, https- oder www-Adresse, um sie zu kopieren.
+995	Klicke auf ein Element,\num es als Ausweichanker festzulegen
+996	Klicke auf ein Element,\num es als Überschreibungsanker festzulegen
+998	Klicke auf Taste zuweisen und drücke dann Deine Taste.
+999	KLICKZAUBER
+1000	Klickzauber
+1001	Klick bearbeitet - Ziehen ordnet neu - Rechtsklick entfernt - Ablegen zum Hinzufügen
+1005	Klicken, um einen Edelstein aus Deinen Taschen zu wählen
+1006	Klicken zum Bearbeiten. Mittelklick zum Entfernen.
+1007	Klicken zum Scrollen. Rechtsklick zum Entfernen.
+1010	Klickbare URLs
+1012	Clique kann Fenster verwalten, wenn die integrierten Belegungen aus sind
+1015	UHR & ZONE
+1016	Uhrformat
+1017	Uhr bei Hover
+1018	Uhr Versatz-X
+1019	Uhr Versatz-Y
+1026	Kobraschuss
+1030	Eingeklappte Menüsymbole
+1031	SAMMLUNG UND VERLAUF
+1033	Skins für Sammlungen und Kleiderschrank
+1035	Bosse einfärben
+1036	Nach Unterbrechungs-Abklingzeit färben
+1037	Nach Unterbrechbarkeit färben
+1038	Nach Bedrohung färben
+1039	AM/PM der Uhr einfärben
+1040	Eigene Rahmen einfärben
+1041	Schwierigkeitsbuchstaben einfärben
+1042	Elite in Instanzen einfärben
+1043	FPS/MS-Suffix einfärben
+1044	Lücken einfärben
+1047	Stattdessen Text einfärben
+1051	Färbt Leisten verbündeter Spieler nach ihrer Klasse. Gruppen-/Schlachtzugsmitglieder werden automatisch erkannt; andere Verbündete werden über Ziel, Mouseover oder Fokus gelernt.
+1054	Färbt Namen von Gruppen- und Schlachtzugsmitgliedern in Sagen-, Schreien-, Gruppen- und Schlachtzugsnachrichten.
+1056	Färbt den Leistentext statt der Füllung, wenn der Schwellenwert greift.
+1058	Färbt die Banntyp-Rahmen mit Deinen Bannfarben statt denen von Blizzard.
+1059	Färbt die Zahl nach Bedrohungsstatus. Aus zeigt sie in Weiß.
+1060	Färbt die Zahl, wenn die freien Plätze unter diesen Wert fallen; das Farbfeld wählt die Farbe. Null schaltet es aus.
+1061	Färbt den Streifen hinter dem Zielnamen nach dessen Gesinnung.
+1062	Spalten
+1068	Kampfwarnung Klassenfarbe
+1070	Kampfdaten
+1071	Kampfende-Nachlaufzeit (Sekunden)
+1072	Kampfsymbol-Position
+1075	Kampfindikator und Porträts
+1077	KAMPFAUFZEICHNUNG
+1087	Combopunktanzahl; DK-Runenaufladung in Sekunden.
+1089	Combopunkte auf der Namensplakette des Ziels (Schurke und Druide).
+1092	Kommagetrennt, z. B. 3,5
+1093	Kommagetrennt, zum Beispiel 25, 50, 75.
+1094	Kommagetrennte Zauber-IDs. Leer bedeutet keine Einträge.
+1097	Berechnungseffekte - Deaktiviert\n
+1101	Bedingungen: Tastenbelegung, Dungeon, Schlachtzug, Arena, BG, Solo
+1105	Taschen zusammenführen
+1108	Behälter warten auf Händler, Post, Bank und Handel
+1109	Inhalt
+1113	Kontrast
+1117	Abklingzeitleiste
+1119	Abklingzeitleisten füllen sich, während die Abklingzeit abläuft.
+1120	Abklingzeitrand
+1121	ABKLINGZEITEN MANAGER
+1124	Der Abklingzeiten Manager hat sein eigenes System pro Spezialisierung und kann hier nicht überschrieben werden.
+1126	Abklingzeiten Manager-Zauber des anderen Spielclients wurden nicht importiert.
+1128	Klang bei bereiter Abklingzeit
+1129	Abklingzeitstatus
+1130	Abklingzeitzustände
+1131	Abklingzeit-Wischtexturen
+1133	Abklingzeit Textfarbe
+1134	Abklingzeit Textposition
+1136	Abklingzeit Text-X
+1137	Abklingzeit Text-Y
+1138	Abklingzeit-Timertext
+1139	Abklingzeittracker Textgröße
+1141	Koordinaten-Dezimalstellen
+1142	KOORDINATEN
+1144	Koordinatenmodus
+1149	Einstellungen kopiert von 
+1150	Kopiert nach 
+1153	Pufferzeilen kopieren
+1155	Aktuelles Chatfenster kopieren
+1162	Einstellungen kopieren von
+1164	Diese Leiste in die andere Talentgruppe kopieren
+1169	Kernpositionen
+1172	Kosmischer Ruhestein
+1173	Kostenfarbe
+1176	Zähltext
+1177	Zähltextgröße
+1178	Countdown-Leistenhöhe
+1180	Countdown-Textversatz
+1181	Countdown-Textgröße
+1182	Zählt Bedarf/Gier/Entzaubern/Passen; fahre über eine Schaltfläche für Namen.
+1185	Leiste erstellen
+1188	Meterfenster erstellen
+1190	NEUE DATENLEISTE ERSTELLEN
+1193	Erstellt 
+1196	Zuschneidemenge
+1202	FADENKREUZ UND KOORDINATEN
+1203	Fadenkreuzrahmen
+1204	Fadenkreuzfarbe
+1205	Fadenkreuzlänge
+1206	Fadenkreuzdicke
+1207	Fadenkreuzsichtbarkeit
+1208	Kontrolleffekte auf Klassensymbol
+1212	Ctrl + Linksziehen: verschieben, bis das Fenster schließt
+1218	Legt einen goldenen Drachen um das Porträt von Elite- und Bossgegnern und einen silbernen um seltene.
+1219	Legt Blizzards goldenen Drachen um das Porträt.
+1222	Aktuell / Maximum
+1225	Aktuelles Segment bei Kampf
+1227	Aktuell | Prozent
+1232	Mauszeiger-Aktion hinzugefügt
+1237	Mauszeiger Versatz-X
+1238	Mauszeiger Versatz-Y
+1240	Mauszeigergröße
+1259	Eigene Dynamik
+1260	Eigene Dynamik mischt diese nach Gesundheit
+1261	Eigene Füllfarbe
+1262	Eigene Gesundheitsfarbe
+1265	EIGENE SCHLÜSSELWÖRTER
+1266	Eigene Beschriftung
+1269	Eigenes Nicht-Spieler-Porträt
+1271	EIGENE ERINNERUNGEN
+1272	Eigene Erinnerungen
+1273	Eigene Erinnerungen pro Charakter
+1279	Eigene Freigabemodus-Layouts und Stärkungszaubermanager pro Gruppe
+1288	SCHADENSMETER
+1290	Schadensschilde auf der Gesundheitsleiste. 3.3.5 meldet keine Schildwerte, daher werden sie aus dem Kampflog geschätzt (Grundwert des Rangs plus Deine eigene Zaubermacht, abzüglich dessen, was jeder Schild absorbiert hat).
+1306	Datenleiste 
+1308	Datenleisten können im Kampf nicht umstrukturiert werden.
+1314	Hintergrund bei Tod
+1316	Todeswarnung Klang
+1317	Todesmantel
+1319	Todesritter: erinnert Dich, wenn eine angelegte Waffe keine Rune hat (Klick öffnet Runenschmieden).
+1320	Todesübersicht: letzte 20 Sekunden, bis zu 40 Ereignisse.
+1322	Tode ab dieser Stufe bleiben sichtbar, zum Beispiel 80, um noch Tode auf Höchststufe zu sehen. 81 blendet jeden Tod aus.
+1323	Todesschwinge
+1324	Schwächungszauber
+1331	Schwächungszauberfilter-Optionen
+1332	SCHWÄCHUNGSZAUBERFILTER
+1334	Schwächungszaubersymbole pro Reihe
+1337	Schwächungszaubermanager Leuchten
+1339	Schwächungszauber-Verschieber
+1348	Dezimalstellen unter
+1354	Standard für jedes Symbol auf dieser Leiste; Symbole können ihn überschreiben.
+1357	Standard: links Ziel, rechts Einheitenmenü
+1379	Gespeicherten Charakter löschen
+1380	Gespeicherte Charaktere löschen
+1381	Ausgewähltes Fenster löschen
+1391	Gespeicherte Taschen, Bank und Gold löschen von 
+1392	Löscht die ausgewählte Leiste und alle ihre Blöcke.
+1397	Tiefeneffekte - Deaktiviert\n
+1399	Inaktive Stärkungszauber entsättigen
+1402	Beschreibungsfarbe
+1403	Beschreibungstext (FPS/MS-Suffixe, AM/PM, Schwierigkeitsbuchstabe) folgt der Akzentfarbe.
+1404	Wähle eine Wachstumsrichtung ab, um zur Zentrierung zurückzukehren
+1414	Löst die Seitenleiste mit eigenem Rahmen vom Chatpanel.
+1415	Schriftgröße Details
+1427	Schwierigkeit als Text
+1429	Schwierigkeit Versatz-X
+1430	Schwierigkeit Versatz-Y

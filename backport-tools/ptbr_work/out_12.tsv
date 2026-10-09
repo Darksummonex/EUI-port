@@ -1,0 +1,350 @@
+4200	Mostrar Ajudantes da Raide
+4201	Mostrar Ferramentas de Raide
+4202	Mostrar Recargas Prontas
+4203	Mostrar Itens Recentes
+4204	Mostra lembretes quando o tempo restante do bônus estiver abaixo destes minutos.\n0 = só quando expirar totalmente.\nIgnorado em combate (aí só quando o bônus sumir).
+4205	Mostrar Nome do Conjunto no Equipamento
+4206	Mostrar Prata e Cobre
+4207	Mostrar Ícone de Ordenação
+4208	Mostrar Faísca
+4209	Mostrar prévia do custo do feitiço
+4210	Mostrar Ícone do Feitiço
+4211	Mostrar ID do Feitiço na Dica
+4212	Mostrar Dicas de Feitiço ao Passar o Mouse
+4213	Mostrar Acúmulos
+4214	Mostrar Subzona
+4215	Mostrar Ícones de Tanque
+4216	Mostrar Alvo
+4217	Mostrar Feitiços Direcionados
+4218	Mostrar feitiços direcionados na prévia
+4219	Mostrar Décimos de Segundo
+4220	Mostrar Texto
+4221	Mostra os controles de estilo e tamanho da borda da barra de lançamento.
+4222	Mostra os espaços de bolsa equipados acima da janela (também alternado pelo botão Bolsas do cabeçalho).
+4223	Mostra os botões de amigos e menu suspenso só enquanto o mouse está sobre o mapa.
+4224	Mostra o chaveiro na janela de bolsas.
+4225	Mostra a borda de destaque ao passar o mouse dos quadros principais neste quadro. Desative para que este quadro nunca mude de cor ao passar o mouse. Sem efeito quando o Destaque está desativado nas Bordas ao Passar o Mouse dos quadros principais.
+4226	Mostra o nome de quem é alvo do lançamento do chefe.
+4227	Mostra o quadro do ajudante sempre que você tiver um, ignorando a visibilidade do quadro do Jogador.
+4228	Mostra a categoria Itens Fixados na barra lateral e na grade de conteúdo.
+4229	Mostra a categoria Itens Recentes na barra lateral e na grade de conteúdo para itens recém-obtidos.
+4230	Mostra a dica da unidade ao passar o mouse sobre o próprio quadro.
+4231	Mostrar Esta Barra
+4232	Mostrar % de Ameaça no Alvo e Foco
+4233	Mostrar Cores de Ameaça
+4234	Mostrar Ameaça na Borda
+4235	Mostrar Ameaça na Barra de Vida
+4236	Mostrar Ameaça no Nome
+4237	Mostrar Hora
+4238	Mostrar Cronômetro
+4239	Mostrar Dica
+4240	Mostrar Dados da Dica
+4241	Mostrar Dica Para
+4242	Mostrar Dicas
+4243	Mostrar Linha Superior
+4244	Mostrar Duração Total
+4245	Mostrar Barra de Totens (Cavaleiro da Morte)
+4246	Mostrar Barra de Totens (Xamã)
+4247	Mostrar Rastreamento
+4248	Mostrar Quando
+4249	Mostrar Quando Faltar Vida
+4250	Mostrar Montado
+4251	Mostrar Sozinho
+4252	Mostrar Janela
+4253	Mostrar Sem o Item nas Bolsas
+4254	Mostrar Latência do Mundo
+4255	Mostrar Botão do Mapa-múndi
+4256	Mostrar Botões de Zoom
+4257	Mostrar/Ocultar na Prévia
+4258	Mostrando o valor da exceção '%s'. Edite-o no modo de edição dessa exceção.
+4259	Mostrando esta aura de qualquer lançador; clique para só os seus lançamentos.
+4260	Mostrando esta aura só dos seus lançamentos; clique para qualquer lançador.
+4261	Mostrado no nível máximo. O cabeçalho mostra o GearScore.
+4262	Mostrado em membros mortos sendo ressuscitados (LibResComm-1.0, incluída).
+4263	Mostra um leve véu branco sobre cada bloco ao passar o mouse.
+4264	Mostra um ícone de casa ou globo indicando a qual latência cada valor se refere.
+4265	Mostra um ícone de descanso enquanto seu personagem está descansando.
+4266	Mostra uma pequena marca branca na barra de lançamento no ponto em que o lançamento estará quando sua interrupção sair da recarga.
+4267	Mostra uma pequena marca branca onde o lançamento estará quando sua interrupção sair da recarga.
+4268	Mostra um ícone de envelope quando você tem correio não lido.
+4269	Mostra penalidades que atendem a qualquer filtro Mostrar marcado (o padrão).
+4270	Mostra todas as barras com ícones de exemplo enquanto as opções estão abertas.
+4271	Mostra todas as penalidades neste quadro.
+4272	Mostra curas recebidas além da barra de vida: as suas, depois as de outros jogadores.
+4273	Mostra valores grandes com sufixos K/M (284,208g vira 284.2Kg) em vez do número completo. A dica sempre mostra o valor exato.
+4274	Mostra só penalidades que a Blizzard marca como importantes.
+4275	Mostra só penalidades que atendem a todos os filtros Mostrar marcados (tipos de dissipação contam como um); opostos como Auras de Não Jogadores com Lançado por Você não mostram nada.
+4276	Mostra só as penalidades que você aplica e que a Blizzard também marca como importantes.
+4277	Mostra só as penalidades que você aplica.
+4278	Mostra só as Auras Rastreadas deste quadro; adicione-as com Editar Auras Rastreadas no topo deste menu.
+4279	Mostra prata e cobre, não só ouro.
+4280	Mostra o ícone de áudio ao lado da barra de volume.
+4281	Mostra o ícone de bolsa ao lado da contagem de espaços.
+4282	Mostra o ícone de moeda ao lado do valor.
+4283	Mostra o texto de status de combate só enquanto seu personagem está em combate.
+4284	Mostra o custo do feitiço sendo lançado na barra de poder.
+4285	Mostra o ícone da moeda ao lado do valor.
+4286	Mostra o texto de descrição da moeda na dica. Desative para uma dica compacta só com o nome e o valor.
+4287	Mostra as penalidades que você aplica mais penalidades importantes de qualquer um.
+4288	Mostra o quadro enquanto esta unidade está abaixo da vida máxima; quando ativado, um quadro oculto pela visibilidade ainda pode ser clicado.
+4289	Mostra os elementos de texto de vida posicionados em Posições do Texto Principal.
+4290	Mostra o ícone ao lado da leitura de durabilidade.
+4291	Mostra novamente as últimas linhas de cada janela de bate-papo após recarregar ou relogar.
+4292	Mostra o marcador do mapa ao lado do nome da zona.
+4293	Mostra o ícone de marcador ao lado das coordenadas.
+4294	Mostra a penalidade de chefe mais importante (ICC, Ruby Sanctum, ToC, Ulduar, Naxxramas) como um ícone grande no meio do quadro.
+4295	Mostra a zona de latência de rede no fim de lançamentos ou canalizações, incluindo feitiços enfileirados.
+4296	Mostra os contadores de amigos e guilda online.
+4297	Mostra a sobreposição só para penalidades que você pode dissipar no momento.
+4298	Mostra o ícone do próprio plugin ao lado do texto.
+4299	Mostra o texto do plugin. Desativado deixa um bloco só com ícone que ainda mantém a dica e os cliques do plugin.
+4300	Mostra os ícones de profissão ao lado do texto.
+4301	Mostra o ícone de marcador de alvo de raide nos quadros de chefe.
+4302	Mostra o ícone da especialização ao lado do texto.
+4303	Mostra o ícone do feitiço sobre o retrato durante o lançamento e deixa a barra usar a largura total.
+4304	Mostra o quadro original de runas ou pontos de combo aqui em vez dos marcadores.
+4305	Mostra o nível da unidade no círculo de nível do quadro, como na interface padrão.
+4306	Mostra a zona e a subzona juntas em vez de só a subzona.
+4307	Mostra seus oponentes de arena. Clique esquerdo seleciona como alvo, clique direito define foco.
+4308	Mostra seus espaços livres nas bolsas.
+4309	Mostra a felicidade do seu ajudante de caçador ao lado do quadro do ajudante.
+4310	Mostra sua interrupção enquanto seu foco está lançando.
+4311	Mostra sua interrupção enquanto seu foco ou alvo está lançando.
+4312	Mostra sua porcentagem de ameaça nos quadros de alvo e foco enquanto você está em combate com essa unidade.
+4313	BARRA LATERAL
+4314	Barra Lateral
+4315	Tamanho dos Ícones da Barra Lateral
+4316	Ícones da Barra Lateral
+4317	Cor dos Ícones da Barra Lateral
+4318	Visibilidade da Barra Lateral
+4319	Largura da Barra Lateral
+4320	Silithid
+4321	Setas Simples
+4322	Exibição Simples de Bônus
+4323	Posição Simples de Bônus
+4324	Exibição Simples de Penalidades
+4325	Posição Simples de Penalidades
+4326	Lembretes simples de bônus de raide, auras, consumíveis e talentos.
+4327	Runas Simples
+4328	Quadros de unidade simples com estilo visual moderno.
+4329	Tamanho
+4330	A correspondência de tamanho não está disponível com Quadros de Unidade no Estilo Blizzard.
+4331	Tamanho da barra através do eixo do bloco, em pixels.
+4332	Tamanho da barra ao longo do eixo do bloco, em pixels.
+4333	Tamanho do quadro Clássico em volta da barra.
+4334	Tamanho do quadro da interface clássica do WoW quando o estilo clássico está ativo.
+4335	Tamanho do dragão, em porcentagem do seu encaixe em volta do retrato.
+4336	Tamanho do anel externo em relação ao retrato.
+4337	Dimensiona a barra para a extensão total da tela ao longo do seu eixo.
+4338	Dimensiona o texto livre, o número da barra e a contagem regressiva do ícone do alerta de movimento. Mudar o Modo de Exibição do alerta redefine este valor.
+4339	Pular Cinemáticas
+4340	Ignorado
+4341	Skiron Cooldown Manager
+4342	Caveira
+4343	Skurri
+4344	Skyriding (No Ar)
+4345	HUD de Skyriding
+4346	HUD de Skyriding com acompanhamento de velocidade, vigor e segundo fôlego.
+4347	Montaria de Skyriding
+4348	Slam
+4349	Comandos de Barra
+4350	Deslizar
+4351	Controle Deslizante
+4352	Espaço
+4353	Orbita lentamente os elementos marcados enquanto o Modo Festa está ativo; eles ficam em pé e pausam em combate.
+4354	O contorno Slug tem qualidade maior que o modo de contorno padrão do WoW, mas pode deixar os contornos um pouco mais grossos.
+4355	Pequeno (90%)
+4356	Listras Finas Densas
+4357	Listras Finas Espaçadas
+4358	Texto Inteligente
+4359	Ajudantes de Missão Mais Inteligentes
+4360	Smite
+4361	Animação Suave
+4362	Barras Suaves
+4363	Barras de Lançamento Suaves
+4364	Barras de Vida Suaves
+4365	Encaixar Elementos\nDesativado
+4366	Encaixar Elementos\nAtivado
+4367	Alvo do Encaixe
+4368	Alvo do Encaixe: %1$s
+4369	Encaixar em Outras Janelas
+4370	Encaixar na Borda da Tela
+4371	Encaixar em: %1$s
+4372	Encaixar em: Todos os Elementos
+4373	Encaixar em: Automático
+4374	Encaixar em: Nenhum
+4375	Encaixar em: Selecionar Elemento
+4376	Encaixe e Travamento
+4377	Snsei987
+4378	Social
+4379	Painel de Engaste e Gemas com Um Clique
+4380	Ícones de Gemas Engastadas
+4381	Sólido
+4382	Cor Sólida
+4383	Sozinho
+4384	Sozinho (fora de grupo)
+4385	Sonar
+4386	Ordenar
+4387	Opções de Ordenação
+4388	Ordenar Runas Prontas Primeiro
+4389	Ordenar para Baixo
+4390	Ordenado
+4391	Fragmentos de Alma
+4392	Fragmentos de Alma
+4393	Pedra da Alma
+4394	Som
+4395	Efeitos Sonoros
+4396	Espaçador
+4397	Espaçamento
+4398	espaçamento
+4399	Espaçamento X
+4400	Espaçamento Y
+4401	Filtro de Spam
+4402	Predefinições e Palavras-chave do Filtro de Spam
+4403	Modo da Faísca
+4404	Spaze
+4405	Especialização 
+4406	Grupos de especialização: edite uma vez, aplique a todas as especializações do grupo
+4407	Ícones de Especialização
+4408	Exceção por Especialização
+4409	Exceções por Especialização
+4410	Agradecimentos especiais a Ellesmere
+4411	Agradecimentos especiais a:
+4412	ATUALIZAÇÃO ESPECIAL
+4413	Ícones de Especialização
+4414	Especializações
+4415	Velocidade
+4416	Feitiço
+4417	feitiço
+4418	Feitiço 
+4419	ID de Feitiço / Item
+4420	Recarga do Feitiço
+4421	Cor do Custo do Feitiço
+4422	Previsão do Custo do Feitiço
+4423	Densidade de Feitiços - Definir como Essencial\n
+4424	Histórico de Feitiços
+4425	Textura da Barra do Histórico de Feitiços
+4426	Tamanho do Texto do Histórico de Feitiços
+4427	Ícone do Feitiço
+4428	Ícones de feitiço mostram seu próprio bônus curto daquele feitiço em vez da recarga.
+4429	ID do Feitiço
+4430	ID do feitiço de interrupção a mostrar. 0 usa a interrupção da sua classe.
+4431	ID do feitiço ou caminho da textura.
+4432	ID do feitiço indisponível neste cliente
+4433	ID do feitiço...
+4434	IDs de Feitiço nas Dicas
+4435	Nome do Feitiço
+4436	Contorno do Nome do Feitiço
+4437	Nomes de feitiço aparecem nas placas do alvo identificado e de passar o mouse.
+4438	Alvo do Feitiço
+4439	Cor do Texto do Feitiço
+4440	Posição do Texto do Feitiço
+4441	Tamanho do Texto do Feitiço
+4442	Texto do Feitiço X
+4443	Texto do Feitiço Y
+4444	Grimório
+4445	SpellID
+4446	Feitiços
+4447	feitiços
+4448	Gasto
+4449	Girar
+4450	Girando
+4451	Spinning Crane Kick
+4452	Dividir
+4453	Divide os itens do banco por categoria, usando a mesma lista, ordem e nomes de categoria da visão Todos os Itens das bolsas.
+4454	Separar Equipamento de Conjunto por Conjunto
+4455	Dividir Pilha
+4456	Quadrado
+4457	quadrado
+4458	Apenas mapas quadrados e retangulares.
+4459	Visuais escuros quadrados para janelas, dicas, menus e pop-ups do Wrath.
+4460	SSAO (Oclusão Ambiente) - Desativado\n
+4461	Direção do Acúmulo
+4462	Posição do Acúmulo
+4463	Tamanho do Acúmulo
+4464	Divisor de Pilhas
+4465	Cor do Texto de Acúmulos
+4466	Posição do Texto de Acúmulos
+4467	Tamanho do Texto de Acúmulos
+4468	Cor do Limite de Acúmulos
+4469	Marcas de Acúmulo
+4470	Acúmulo X
+4471	Acúmulo Y
+4472	Empilhar Placas de Identificação
+4473	Acúmulos / Contagem de Itens
+4474	Cor dos Acúmulos
+4475	Posição dos Acúmulos
+4476	Tamanho dos Acúmulos
+4477	Postura
+4478	Barra de Posturas
+4479	Posturas, formas e furtividade mantêm a Barra de Ação 1 em sua própria página.
+4480	Independente
+4481	CRONÔMETRO DE COMBATE INDEPENDENTE
+4482	Cronômetro de Combate Independente
+4483	Tamanho do Cronômetro Independente
+4484	Padrão
+4485	Estrela
+4486	Starfire
+4487	Start a Campfire
+4488	Começar Vazio
+4489	Layout inicial para a próxima barra que você criar.
+4490	Inicia a faixa de abas na borda da barra lateral.
+4491	Cabeçalho de Atributos
+4492	BARRA LATERAL DE ATRIBUTOS
+4493	Status
+4494	Tamanho do Texto de Status
+4495	Steady Shot
+4496	Roubável
+4497	Só Roubáveis
+4498	Stoley
+4499	Stone
+4500	Stone Golem
+4501	Segmentos Armazenados
+4502	Stormspren
+4503	Strand of the Ancients
+4504	Exceções Órfãs
+4505	Camada
+4506	camada
+4507	Força
+4508	Estica este bloco para ocupar o espaço que sobra dos blocos dimensionados; exatamente um bloco por barra preenche.
+4509	Remover Cores
+4510	Listrado
+4511	Listrado Invertido
+4512	Listrado Grosso
+4513	Listrado Grosso Invertido
+4514	Listras
+4515	Forte
+4516	ESTILO
+4517	Estilo
+4518	Estilo alterado para este perfil. É preciso recarregar a interface para aplicar.
+4519	Estilize cada janela do seu jeito.
+4520	Subterfúgio
+4521	Suporte
+4522	Líderes de Suporte
+4523	Equipe de Suporte
+4524	Suprimir Erros de Lua
+4525	Sobrevivência
+4526	Svart
+4527	Trocar Poções Esgotadas
+4528	Sweeping Strikes
+4529	Cronômetro de Golpe
+4530	Opacidade do Giro
+4531	Alternar Tipo de Medidor
+4532	Mude para uma especialização deste grupo para personalizar o Modo de Desbloqueio dela
+4533	Mudar para Experiência
+4534	Mudar para Reputação
+4535	Sincronizar
+4536	Sincronizar 
+4537	Sincronizar Borda com o Painel de Bate-papo
+4538	Opções de Sincronização de Ícone
+4539	Sincronizar Seleção de Segmento
+4540	Sincronizar configurações de:
+4541	A sincronização atualiza automaticamente todos os perfis sempre que você muda configurações. Pode ser ativada por módulo.
+4542	Padrão do Sistema
+4543	Cor de Fundo da Aba
+4544	Fonte da Aba
+4545	Cor da Fonte da Aba
+4546	Origem da Cor da Fonte da Aba
+4547	Tamanho da Fonte da Aba
+4548	Altura da Aba
+4549	Deslocamento X da Aba

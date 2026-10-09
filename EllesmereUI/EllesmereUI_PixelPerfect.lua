@@ -64,6 +64,13 @@ do
             PP.physicalWidth, PP.physicalHeight = 1920, 1080
         end
         PP.perfect = 768 / PP.physicalHeight
+        -- Wrath's GetPhysicalScreenSize shim reports UI units, so perfect can be thinner
+        -- than a real pixel. borderPerfect is the real pixel from gxResolution: border
+        -- strips never go below it, or sub-pixel sides vanish at some positions.
+        PP.borderPerfect = PP.perfect
+        local res = GetCVar and GetCVar("gxResolution")
+        local rh = type(res) == "string" and tonumber(res:match("^%d+x(%d+)"))
+        if rh and rh > 0 and 768 / rh > PP.perfect then PP.borderPerfect = 768 / rh end
     end
     PP.RefreshPhysical()
 
@@ -460,7 +467,7 @@ do
                 return
             end
         end
-        local onePixel = es > 0 and (PP.perfect / es) or PP.mult
+        local onePixel = es > 0 and ((PP.borderPerfect or PP.perfect) / es) or PP.mult
         local bs = borderSize or 1
         local edgeSize = bs > 0 and math.max(onePixel, math.floor(bs + 0.5) * onePixel) or 0
 

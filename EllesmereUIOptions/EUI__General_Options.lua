@@ -23,7 +23,7 @@ local PAGE_COLORS      = "Colors"    -- the color half of the old "Fonts & Color
 local PAGE_PROFILES    = "Profiles"
 local PAGE_PRESETS     = "Presets"   -- navigation tab over the presets subpage of the profiles page
 local PAGE_WHATSNEW    = "Patch Notes"
-local PAGE_STAFF       = "Original Staff"
+local PAGE_STAFF       = "EUI Staff"
 
 -- Profiles/Patch Notes are their own sidebar pages (single-page modules), not tabs under Global Settings. Keys match the sidebar buttons in EllesmereUI.lua.
 local PROFILES_KEY     = "_EUIProfiles"
@@ -668,7 +668,7 @@ end
 
 -------------------------------------------------------------------------------
 --  STAFF content (edited by hand): grouped team sections, one
---  { group, members } table per role, shown on the Original Staff page.
+--  { group, members } table per role, shown on the EUI Staff page.
 --  A member is a name, or { name, url } for a name with a GitHub link icon.
 -------------------------------------------------------------------------------
 EllesmereUI._PORT_STAFF = {
@@ -708,7 +708,7 @@ local function LP_FontFor(locale)
     return (fn and fn(locale)) or (EllesmereUI.MEDIA_PATH .. "fonts\\Expressway.TTF")
 end
 
--- The Original Staff page: a thanks title, then the port staff card and the
+-- The EUI Staff page: a thanks title, then the port staff card and the
 -- original team card in the Patch Notes hero design language (dark fill, faint
 -- border, accent bar) with each role group's members laid out in columns, so
 -- each card grows with its roster.
@@ -754,7 +754,7 @@ function EllesmereUI._BuildStaffPage(pageName, parent, yOffset)
         PP.Point(btn, "LEFT", nameFs, "LEFT", math.min(nameFs:GetStringWidth(), colW - 44) + 6, 0)
         local tex = btn:CreateTexture(nil, "ARTWORK")
         tex:SetAllPoints()
-        tex:SetTexture(EllesmereUI.ICONS_PATH .. "github.png")
+        tex:SetTexture(_G.EUI_WOW_335 and "Interface\\AddOns\\EllesmereUI\\media\\icons_335\\github.tga" or (EllesmereUI.ICONS_PATH .. "github.png"))
         tex:SetAlpha(0.6)
         btn:SetScript("OnEnter", function(self)
             tex:SetAlpha(1)
@@ -1119,9 +1119,9 @@ do
         version = "Options 0.113",
         heroes = {
             {
-                title = "Original Staff",
-                desc  = "The staff page is now Original Staff, opening with thanks to Ellesmere and the port staff card with a GitHub link to the releases. The header line crediting Ellesmere opens it.",
-                nav   = Nav("_EUIPatchNotes", "Original Staff"),
+                title = "EUI Staff",
+                desc  = "The EUI Staff page opens with thanks to Ellesmere and the port staff card with a GitHub link to the releases. The header line crediting Ellesmere opens it.",
+                nav   = Nav("_EUIPatchNotes", "EUI Staff"),
             },
             {
                 title = "Custom Reminders Per Character",
@@ -1406,6 +1406,7 @@ do
             },
         },
         fixes = {
+            { text = "The Achievements window no longer darkens the achievement list behind its border." },
             { text = "The AddOn List window skin toggle only shows when the client has an AddOn List window." },
             { text = "Send Mail shows the To, Subject and message boxes again, and the typing cursor stays visible in skinned edit boxes." },
             { text = "The fixed tooltip anchor no longer snaps back to its saved spot while you drag it in Unlock Mode." },
@@ -2556,12 +2557,13 @@ initFrame:SetScript("OnEvent", function(self)
                 ["frFR"] = { text = "Français" },
                 ["esES"] = { text = "Español (EU)" },
                 ["esMX"] = { text = "Español (LatAm)" },
+                ["ptBR"] = { text = "Português (Brasil)" },
                 ["ruRU"] = { text = "Русский" },
                 ["koKR"] = { text = "한국어 (Korean)" },
                 ["zhCN"] = { text = "简体中文 (Simplified Chinese)" },
                 ["zhTW"] = { text = "繁體中文 (Traditional Chinese)" },
             }
-            local langOrder = { "auto", "enUS", "deDE", "frFR", "esES", "esMX", "ruRU", "koKR", "zhCN", "zhTW" }
+            local langOrder = { "auto", "enUS", "deDE", "frFR", "esES", "esMX", "ptBR", "ruRU", "koKR", "zhCN", "zhTW" }
             -- Pin each entry to the plain font its own script needs, independent
             -- of whichever display locale is currently active.
             for _, key in ipairs(langOrder) do
@@ -6522,7 +6524,7 @@ initFrame:SetScript("OnEvent", function(self)
         })
 
         -- "Special thanks to: Ellesmere" beside the header's collapse button; a
-        -- click opens the Original Staff page. Built on the first open.
+        -- click opens the EUI Staff page. Built on the first open.
         local thanksBtn
         local function ShowThanks()
             local ca = EllesmereUI._clickArea
@@ -6543,7 +6545,7 @@ initFrame:SetScript("OnEvent", function(self)
                 thanksBtn:SetScript("OnEnter", function(self)
                     prefixFs:SetAlpha(0.75)
                     nameFs:SetAlpha(1)
-                    EllesmereUI.ShowWidgetTooltip(self, EllesmereUI.L("View Original Staff"))
+                    EllesmereUI.ShowWidgetTooltip(self, EllesmereUI.L("View EUI Staff"))
                 end)
                 thanksBtn:SetScript("OnLeave", function()
                     prefixFs:SetAlpha(0.45)

@@ -1,0 +1,450 @@
+1509	Download
+1511	DPS/HPS use combat duration.
+1512	DR Icon Size
+1513	DR Icons Side
+1514	drag
+1515	Drag bars in Unlock Mode; the cog opens these options.
+1516	Drag empty window backgrounds outside combat
+1517	Drag sidebar icons anywhere on the sidebar. Reset Icon Positions returns them.
+1518	Drag the header to move; mouse wheel scrolls rows.
+1519	Drag to Reorder
+1520	Drag to Reorder. Click to add custom glows, active/cooldown state effects and more.
+1521	Drag to Reorder. Click to override display settings and add custom effects per icon
+1522	Dragon Frame Level
+1523	Dragon Riding
+1524	Dragon Size
+1525	Dragon Strata
+1526	Dragonriding
+1527	Dragonriding Bar Texture
+1528	Dragonriding speed bar texture
+1529	Dragonriding Speed Text Size
+1530	Draw a divider between the integrated icon and the bar, using the cast bar's border appearance.
+1531	Draw square borders below the map surface.
+1532	Draw the custom cast bar border around the icon and the bar together. An icon with an offset keeps its own border.
+1533	Draws a border in the dispel type color around the health bar.
+1534	Draws a thin accent line at the top of the tracker background.
+1535	Draws the border behind the cast bar instead of over it.
+1536	Draws the border below the chat background.
+1537	Draws the border style's seam art between the health bar and an attached power bar.
+1538	Draws the dispel-colored ring in this border style's shape instead of flat lines.
+1539	Draws the selected border style between the attached portrait and the bars.
+1540	Draws your faction's banner behind each friend row (Wrath friends share your faction).
+1541	Dreadlord
+1542	Dressing Room
+1544	Drop spells, items, macros or mounts here, or use Add Action below.
+1545	Drop the individual Bank / Bank Bag entries once the category list is doing the navigating.
+1546	Druid
+1547	Druid Form (out of combat)
+1548	Druid Form Power
+1549	Druid travel, aquatic and flight forms count as mounted.
+1550	Due to Blizzard API restrictions, Blizzard's native 
+1551	Dungeon
+1552	Dungeon & Raid Entrances
+1553	Dungeon Finder
+1554	Dungeon Ready Countdown
+1555	Dungeoneer
+1556	Dungeons
+1557	Dungeons, raids, scenarios, arenas and battlegrounds. Garrisons do not count.
+1558	Durability
+1559	Durability Label
+1560	Durability Location
+1561	Durability Text Color
+1562	Durability Threshold %
+1563	Durability Warning Text Size
+1564	Duration
+1565	Duration & Stack
+1566	Duration Position
+1567	Duration Size
+1568	Duration Swipe
+1569	Duration Text
+1570	Duration Text Color
+1571	Duration Text Size
+1572	Duration X
+1573	Duration Y
+1574	Dynamic
+1575	Dynamic Color
+1576	Dynamic Color is on -- the fill color comes from the unit's health
+1577	Dynamic Colored
+1578	Each layout saves its settings and position
+1579	Each preset's page includes its import string.
+1580	Earned
+1581	Earthliving Weapon
+1582	Ebon Might
+1583	Edit
+1584	Edit Action
+1585	Edit Anchor
+1586	EDIT BINDING
+1587	Edit Blacklist
+1591	Edit Conditional Group
+1592	Edit Conditional: %s
+1593	Edit Entry
+1594	Edit Filters
+1595	Edit Group: %s
+1596	Edit in Aura Filters
+1597	Edit Mode Expanded
+1598	Edit normally: changes apply to your current spec
+1599	Edit Override Group
+1600	Edit Override: 
+1601	Edit Tracked Auras
+1602	Editing as %s
+1603	Editing Spec
+1604	Eight target markers, Ready Check, Pull and Disband
+1605	Element Options
+1606	Element Row
+1607	Element Row Distance
+1608	Element Row Position
+1609	Element Row Spacing
+1611	Elements cannot be anchored to\n
+1612	Elements cannot size match to\n
+1613	Elite Enemy Dragon
+1614	Elite Icon Size
+1615	Elite/Rare Indicator
+1616	Elite/Rare Indicator Settings
+1618	Ellesmere Logo
+1619	Ellesmere's Action Bars
+1620	Ellesmere's CDM Bar Glows
+1621	Ellesmere's Nameplates
+1622	Ellesmere's Unit Frames
+1625	EllesmereUI Background
+1627	EllesmereUI matches the window-skin shell; Modern is a flat color.
+1628	EllesmereUI on 3.3.5a
+1630	EllesmereUI Raid Frames are here! Clean, fully customizable, and built for performance.
+1631	EllesmereUI Style
+1632	EllesmereUI style shows them while the map is hovered.
+1633	EllesmereUI Style, Blizzard Style and Classic WoW UI reload the UI once to apply. Each module can be switched separately later.
+1634	ELLESMEREUI WEBSITE
+1636	EllesmereUI WonderBar was renamed to EllesmereUI DataBars. The old WonderBar addon is still installed and both create the same bar. Please disable or delete the EllesmereUIWonderBar addon.
+1639	Empty Action Menu
+1640	Empty Bar Color
+1641	Empty Preset
+1642	Empty Socket
+1643	Empty space reserved on this side of the block's content.
+1645	enable
+1646	Enable 
+1647	Enable %1$s to change its style.
+1648	Enable %1$s to edit its text settings.
+1649	Enable %1$s to edit its texture settings.
+1650	Enable %1$s to edit these settings.
+1651	Enable & Reload
+1652	Enable Accent Colors
+1653	Enable Action Bars
+1654	Enable Arena Frames
+1655	Enable AuraBuff Reminders
+1656	Enable Bags
+1657	Enable Bank
+1658	Enable Bar
+1659	Enable Bar Background
+1660	Enable Bar Glows
+1661	Enable Bar History
+1662	Enable BattleRes Icon
+1663	Enable Block Background
+1664	Enable Bloodlust Icon
+1665	Enable Boss Frames
+1666	Enable Built-in Click Casting
+1667	Enable Call Totem Bar
+1668	Enable Chat
+1669	Enable Chat Bubbles
+1670	Enable Class Resource
+1671	Enable Cooldown Manager
+1672	Enable Damage Meters
+1673	Enable Dark Mode (Global Settings, Fonts & Colors) to use this condition
+1674	Enable Dragon Riding Bar
+1675	Enable Elite Enemy Dragon
+1676	Enable Entry
+1677	Enable Experience Bar
+1678	Enable Faction Banners
+1679	Enable Fade Out of Combat first
+1680	Enable Focus Cast Bar
+1681	Enable Focus Target
+1682	Enable Friends Skin
+1683	Enable GCD Bar
+1684	Enable Glow
+1685	Enable Gradient
+1686	Enable Icon History
+1687	Enable Idle Fade
+1688	Enable Indicator
+1689	Enable Minimap
+1690	Enable Modern Styling
+1691	Enable Modules First
+1692	Enable Mouseover Mode
+1693	Enable Pet Frame
+1694	Enable Player Cast Bar
+1695	Enable Player Frame Dragon
+1696	Enable Quality of Life
+1697	Enable Quest Tracker
+1698	Enable Quickdraw
+1699	Enable Raid Frames Module
+1700	Enable Reputation Bar
+1701	Enable Resource Bars
+1702	Enable Snapping
+1703	Enable Swing Timer
+1704	Enable Target Cast Bar
+1705	Enable Target Color
+1706	Enable Target of Target
+1707	Enable Targeted Spell Bars
+1708	Enable Text
+1709	Enable Text Bar
+1710	Enable the indicators previewed above. Disable to return to the existing aura rows.
+1711	Enable This Palette
+1712	Enable this to display a reminder to untalent\nout of this when it is not needed\n(all other dungeons/raids not selected).
+1713	Enable Threshold
+1714	Enable Tutorial Tips
+1715	Enable Window Dragging
+1716	Enable Window Skins
+1717	Enable/disable any time via the options panel sidebar.
+1719	Enabled Categories
+1720	Enabled Currencies
+1721	Enables sharpening to improve image clarity. Especially noticeable at lower render scales.
+1722	Enchant Name Size
+1723	Enchant Text Size
+1724	Enchants on Equipment Slots
+1725	Encounter Bar
+1726	End Preview
+1727	Enemy
+1728	Enemy arena frames with PvP trinket, crowd control and cast tracking.
+1729	ENEMY COLORS
+1730	Enemy Colors
+1731	Enemy Damage Taken
+1732	Enemy Forces Text Size
+1733	Enemy Name
+1734	Enemy Name Text
+1735	Enemy Player Class Colors
+1736	Enemy Target
+1737	Energy
+1739	Enhanced Character Layout
+1740	Enhanced inventory system with sidebar categories, item levels, and quality borders.
+1741	Enhanced Tooltips
+1742	Enhancement
+1743	Enter a name for the new profile:
+1744	Enter a new name for \"%1$s\":
+1745	Enter a new name for \"%s\":
+1746	Enter a new name:
+1747	Enter a spell ID to track:
+1748	Enter a valid ID or equipment slot 1-19
+1749	Enter a valid spell ID for Cast Spell.
+1750	Enter an equipment slot (1-19). Trinkets are 13 and 14.
+1751	Enter an item ID to track:
+1752	Enter and Leave
+1753	Enter Color
+1755	Enter name...
+1756	Enter positive spell IDs separated by commas or spaces.
+1757	Enter positive spell IDs separated by commas.
+1758	Enter Text
+1759	Enter the maximum debuff duration in seconds:
+1760	Enter the spell ID of a buff or debuff to track:
+1761	Enter the spell ID to always show on this frame.
+1762	Enter the spell ID to always show.
+1763	Enter the spell ID to exclude from this frame.
+1764	Enter the spell ID to exclude.
+1765	Entering Combat
+1766	Entering combat switches this window back to Current if viewing a past segment
+1767	Entry Type
+1768	Environment Detail - Reduced to 1\n
+1769	Equip
+1770	Equipment
+1771	Equipment Durability
+1772	Equipment Flyout Item Levels
+1773	Equipment Item Levels
+1774	Equipment Set
+1775	Equipment Set Save
+1776	Equipment Slot
+1777	Equipped
+1778	Equipped counts your worn gear. Total also counts upgrades sitting in your bags.
+1779	Equipped Item Level
+1780	Esc Menu Buttons
+1783	Essence
+1784	Eternity Surge
+1785	EUI Buttons
+1786	EUI cooldown numbers on action buttons (Wrath has no Blizzard cooldown text).
+1788	EUI Global Font
+1789	EUI Global Outline
+1790	EUI Glow
+1791	EUI Options Language
+1792	EUI Options Panel Scale
+1793	EUI Options Theme
+1794	EUI Unlock Mode
+1795	Even Split
+1796	Every action button holding this spell glows.
+1797	Every chat window. A tab menu size choice updates this value.
+1798	Every condition you set has to match. The default.
+1799	Every glow in this module already matches the template or is locked on its settings page.
+1800	Every glow in this module is active.
+1801	Every look but the one in use reloads the UI once to apply. Each module can be switched separately later.
+1802	Every major Blizzard window themed to match EUI
+1803	Every Retail Text Choice
+1804	Everything
+1805	Evoker
+1806	Example: 2061
+1807	Exclude
+1808	EXCLUDED DEBUFFS
+1809	Excluded Spell IDs
+1810	Execute Pulse Glow
+1811	Execute, Hammer of Wrath and Kill Shot at 20%; Drain Soul at 25%.
+1812	Exit
+1813	Exit Without Saving
+1816	Expand
+1817	Experience
+1818	Experience & Reputation Bars
+1819	Experience and reputation bar text.
+1820	EXPERIENCE BAR
+1821	Export
+1822	Export All Data with Profile
+1823	Export CDM Spells
+1824	Export Failed
+1825	Export Profile
+1826	Export will include %1$s of %2$s addons.
+1828	Expressway (Latin only)
+1831	Extends the chat background behind the tab strip.
+1832	external defensives
+1833	Externals
+1834	externals
+1836	EXTRA AURA OPTIONS
+1837	EXTRA BUTTONS
+1838	Extra Buttons on Mouseover
+1839	Extra Height
+1840	Extra Spell IDs
+1841	Extra Text (full length)
+1842	Extra Text Settings
+1843	Extra Width
+1846	Extras Page
+1847	Eye Beam
+1848	Eye of the Storm
+1849	Faction (Auto)
+1850	Faction Icon Size
+1851	Faction Indicator
+1852	Faction Indicator Settings
+1853	Fade
+1854	Fade After (Seconds, 0 = Never)
+1855	Fade Delay (seconds)
+1856	Fade Old Messages
+1857	Fade Out of Combat
+1858	Fade Out of Range
+1859	Fade Right
+1860	Fade Strength
+1861	Fades boss frames when the boss is out of range of your spells. Set to 100% to disable the fade.
+1862	Fades enemies beyond your class's 30-40 yard spell range.
+1863	Fades the chat after a period without messages, hovering or typing.
+1864	Fades the entire frame (portrait, health and power bars, text) while out of combat.
+1865	Failed
+1866	Failed and interrupted casts show in red
+1867	Failed to decode string
+1868	Failed to decompress data
+1869	Failed to deserialize data
+1870	Failed to read import data
+1871	Fallback
+1872	Fallback Anchor: Change
+1873	Fallback Anchor: Clear
+1874	Fallback Anchor: Select
+1875	Fallback Direction
+1876	Fallback to %1$s
+1877	Falls back to the first debuff your character can remove.
+1878	Fan
+1879	Fan Direction
+1880	Favorites
+1881	Feathered
+1882	Feet
+1883	Felguard
+1884	Felhunter
+1886	Feral Combat
+1887	fill
+1888	Fill by Stacks
+1890	Fill Color Settings
+1891	Fill Opacity
+1892	Fill opacity for Dark Mode bars. Applies to Unit Frames and Raid Frames only (Resource Bars ignore it).
+1893	Fill Overlay
+1894	Fill Remaining Space
+1895	Fill the health bar bottom-to-top instead of left-to-right. Reverse Fill flips it to top-to-bottom.
+1896	Fill Up
+1898	filter
+1899	Filter Achievements
+1900	Filter Gold Sellers
+1901	Filter Guild Recruitment
+1902	Filter Hardcore Deaths
+1903	Filter Keywords
+1904	Filter Repeated Messages
+1905	Filter Trade Ads
+1906	filters
+1907	Filters are saved separately for each frame
+1908	Find it anytime: the class glyph beside the module search bar.
+1915	Fire
+1916	Fire Breath
+1917	Fireball
+1918	First
+1919	First and Last
+1920	First Name
+1921	FIRST TIME SETUP
+1922	Five party slots including yourself
+1923	Five Second Rule
+1924	Five second rule and mana tick spark on a mana bar.
+1925	Five-player dungeons, Mythic+ included. Delves, raids and scenarios do not count.
+1926	Fix Addon Conflicts in One Click
+1927	Flagged Only
+1928	Flametongue Weapon
+1929	Flash
+1930	Flash Heal
+1931	Flash of Light
+1932	Flashes LOW MANA during an out-of-combat raid ready check while you are a healer under 80% mana.
+1933	Flashes the icon when its action button is pressed.
+1934	Flask
+1935	Flat
+1936	FLAT & MODERN
+1937	Flat, clean and modern. The look EllesmereUI was designed around.
+1938	Flight Points
+1939	Flights: gold neutral, blue Alliance, red Horde, green undiscovered.
+1940	Flip Dragon
+1941	Flips the portrait horizontally so it faces the other way.
+1942	Floating combat text and world name text (engine settings)
+1943	Fly In
+1944	Flyout Button Size
+1945	Flyout Direction
+1946	Focus
+1947	FOCUS CAST BAR
+1948	Focus Cast Bar
+1949	Focus Cast Bar Name Size
+1950	Focus Cast Bar Target Size
+1951	Focus Cast Bar Texture
+1952	Focus Cast Bar Timer Size
+1953	Focus Important Cast Glow
+1954	Focus Letter Size
+1955	Focus Purgeable Buff Glow
+1956	Focus Target
+1957	Focus Texture
+1958	Focus Tracked Auras
+1959	Focused Color
+1961	FocusKick Bar
+1962	FOCUSKICK OPTIONS
+1963	Follow Blizzard Color
+1965	Font changed. A UI reload is needed to apply the new font.
+1966	Font face and outline only
+1968	Font Settings
+1970	Font size for category titles in the content grid.
+1971	Font size for item level numbers on equipment items.
+1972	Font size for stack counts.
+1973	Fonts
+1974	Fonts follow Global Settings > Fonts > Blizz UI Enhanced.
+1975	Food
+1976	For player frame, this provides a simple, mini castbar below player frame. To edit the main player cast bar, %sclick here|r
+1977	Force boss buffs into a single large column matched to the frame height.
+1978	Force boss debuffs into a single large column matched to the frame height.
+1979	Force Centered
+1980	Force English Units (K/M/B)
+1981	Force garbage collection
+1982	Force Quest Tracker on Screen
+1983	Forces a crisp outline on icon text (stack counts, durations, keybinds). Uncheck a module to make its icon text follow the Outline Mode setting above instead.
+1984	Forces Background Texture
+1985	Forces Bar Texture
+1987	FOREVER ART
+1989	Forever's bronze frames, gryphons and round badges, with EllesmereUI's features.
+1990	Form Text X Offset
+1991	Form Text Y Offset
+1995	FPS & Graphics Optimization
+1996	FPS & LATENCY
+1997	FPS / Latency Text Size
+1998	FPS and Latency
+1999	FPS and Latency Quality Colors
+2000	FPS COUNTER
+2001	FPS Counter
+2002	FPS Counter Text Size
+2003	FPS Hover
+2004	FPS Offset X
+2005	FPS Offset Y

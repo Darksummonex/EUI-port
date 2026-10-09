@@ -1,0 +1,450 @@
+2	 Détail
+3	 Le survol est aussi verrouillé ici pour cet élément : son mécanisme de survol suit le réglage partagé, un remplacement ne pourrait donc que le laisser affiché.
+5	 texte. Contour global EUI suit le réglage Mode de contour global ci-dessus.
+7	%1$s est actif. Les réglages qui ne s'appliquent qu'au style EllesmereUI sont masqués.
+8	%1$s est actif : la discussion garde l'arrière-plan et les onglets de Blizzard.
+9	%1$s est actif : le suivi garde le texte de Blizzard.
+13	%d actif(s)
+14	%d diffèrent du modèle
+16	%d d'entre elles sont désactivées ou utilisent un style Blizzard et passent à la lueur du modèle.
+17	%d d'entre elles ne peuvent pas afficher le style choisi et utilisent le plus proche.
+21	Remplacement %s actif
+23	– Récapitulatif de mort
+28	(actif)|r
+43	+ %d de plus
+49	Taille du texte du seuil +1
+50	Taille du texte du seuil +2
+51	Taille du texte du seuil +3
+71	\"%1$s\" a été enregistré mais ne peut pas être chargé car cette spé a un profil assigné.
+76	un style de lueur
+80	Un aperçu de tous les réglages de police en un seul endroit.
+81	Un aperçu de tous les réglages de texture en un seul endroit.
+82	Un rechargement est nécessaire pour appliquer ceci.
+83	Un remplacement de spé contrôle ce réglage, cette valeur conditionnelle ne s'applique donc jamais hors d'une session d'édition. Retirez le remplacement de spé pour la laisser passer.
+84	Un style de discussion d'origine est actif sur la page Style : le panneau, les onglets et la barre latérale gardent l'apparence de Blizzard.
+85	Un style de discussion d'origine est actif : la discussion garde l'arrière-plan et les onglets de Blizzard.
+87	Une cible que vous pouvez attaquer.
+88	Un fin contour autour de l'onglet sélectionné.
+89	Abréger le montant
+91	Au-dessus
+92	Au-dessus de la barre d'absorption
+93	Au-dessus du curseur
+97	Au-dessus de la ligne survolée
+100	Au-dessus du modèle
+101	Au-dessus de la fenêtre du haut, à gauche
+102	Au-dessus de la fenêtre du haut, à droite
+104	absorption
+107	Couleur d'absorption
+110	Boucliers d'absorption
+113	Style d'absorption et placement de la superposition
+115	ABSORPTIONS ET SOINS
+116	Absorptions reçues : boucliers consommés sur chaque joueur.
+117	Section Absorptions
+118	Accentuation
+121	Texte d'en-tête en couleur d'accentuation
+122	Délai en couleur d'accentuation
+123	En-tête accentué
+124	Style d'accentuation
+125	TEXTE ACCENTUÉ
+126	Accepter
+127	Accepter les invitations des amis et de la guilde
+129	Accepte les invitations de groupe de votre liste d'amis et des membres de votre guilde. Ignoré en file d'attente de l'Outil Donjons ou si vous êtes déjà groupé.
+134	Action 
+135	Action ajoutée
+146	Barres d'action 7 à 10
+147	Les barres d'action ne s'alignent\nque sur d'autres barres d'action
+149	Barres d'action, habillages du HUD Blizzard et positions des auras du joueur pour Wrath.
+151	ID de sort du bouton d'action
+152	ID / Nom / Texte de l'action
+153	Menu d'actions
+154	Numéro du menu d'actions
+155	CONFIGURATION DU MENU D'ACTIONS
+156	Type d'action
+159	Lueur d'aura active
+160	ID de l'aura active
+161	Source de l'arrière-plan actif
+162	Bordure active
+163	Couleur de bordure active
+164	Durée active
+165	Source de couleur de police active
+166	Atténuation active
+169	Arrière-plan de l'onglet actif
+170	Bordure de l'onglet actif
+171	Couleur de police de l'onglet actif
+172	Soulignement actif
+176	AJOUTER UNE ACTION
+177	Ajouter une action
+178	Ajouter l'action du curseur
+179	Menu Ajouter une action
+180	Ajouter un bloc
+181	Ajouter un préréglage d'amélioration
+184	AJOUTER UNE ENTRÉE
+185	Ajouter une entrée
+186	Ajouter un indicateur de recharge externe
+187	Ajouter une lueur
+188	Ajouter un indicateur d'amélioration de soigneur
+189	Ajoute à l'infobulle d'un objet le nombre d'exemplaires possédés par vos autres personnages.
+190	Ajouter un préréglage d'objet
+191	Ajouter un sort appris
+193	Ajouter les nouvelles barres au groupe
+194	Ajouter un nouvel indicateur
+195	Ajouter un indicateur défensif personnel
+196	Ajouter un racial
+198	Ajouter l'action sélectionnée
+199	Ajouter un ID de sort
+200	Menu Ajouter un sort
+202	Ajouter une barre de suivi
+203	Ajouté 
+204	Ajouté à la taille actuelle des cadres de raid ou de groupe.
+205	Ajouté. Les sorts non appris et les emplacements vides restent masqués.
+206	DÉCALAGE DE BARRE SUPPLÉMENTAIRE
+209	Menu déroulant des boutons d'addon
+210	BOUTONS D'ADDON
+214	Ajoute un second anneau autour d'un portrait rond ; Aligner sur la bordure du cadre suit votre style de bordure de cadre.
+216	Ajoute une ombre douce à l'intérieur d'un portrait rond.
+217	Ajoute la ligne de lueur du bouclier Blizzard à la jonction entre le bouclier et la vie actuelle.
+219	Régler le volume
+222	Préparation d'aventure
+225	Affliction
+231	Corne de brume
+232	Texte des alertes et du suivi
+234	Alertes, suivis, rés. de combat et texte des fenêtres contextuelles
+236	Aligner les onglets sur tout le panneau
+239	Tout autorisé
+240	Toutes les améliorations
+241	Toutes les améliorations ou avec durée
+242	Toutes les améliorations ou avec durée est sélectionné, donc toutes les améliorations s'affichent déjà. Utilisez plutôt la case rouge Masquer pour les exclure.
+243	Tous les affaiblissements
+244	Tous les affaiblissements est sélectionné, donc tous les affaiblissements s'affichent déjà. Utilisez plutôt la case rouge Masquer pour les exclure.
+245	Tous les DPS (hors Aug)
+248	Tous les soigneurs/Aug
+250	tous correspondent au modèle
+251	Tous les non-soigneurs/Aug
+255	Alliance
+256	Les noms alliés gardent leur couleur de classe sans cible ni survol. Les membres du groupe/raid sont identifiés automatiquement ; les autres alliés sont appris via la cible, le survol ou la focalisation.
+263	Correspond déjà au modèle.
+264	Déjà sur 
+265	Afficher aussi le badge en donjon et en raid, où la plupart des ennemis sont élites.
+266	Afficher aussi le dragon en donjon et en raid, où la plupart des ennemis sont élites.
+267	Surveiller aussi la cible
+274	Les rerolls apparaissent après connexion sur chacun d'eux
+279	Toujours afficher les réglages moins courants au lieu de les replier derrière un lien Afficher moins courants.
+280	Toujours afficher le cadre du familier
+283	Toujours : masque le suivi tout le temps en raid.\nCombat de raid : masque pendant tout combat de raid.\nCombat de boss : masque uniquement pendant les rencontres de boss.\nLes arènes masquent toujours le suivi.
+285	Ambiance
+286	Une flèche à côté du champ Destinataire liste vos rerolls de ce royaume et de cette faction, les membres de la guilde et les derniers noms à qui vous avez écrit.
+287	Un élément ne peut pas s'ancrer à lui-même
+288	Un module LibDataBroker EllesmereUI enregistré en ce moment. Un bloc par module -- ajoutez à nouveau le bloc pour un second.
+290	Décalage X de l'ancrage
+291	Décalage Y de l'ancrage
+292	Côté d'ancrage
+293	Ancrez d'abord cet élément
+294	Ancrer à
+297	Ancrer aux affaiblissements
+299	Ancré à : %1$s
+301	Annoncer les interruptions
+303	Un autre groupe de remplacement fournit déjà le gestionnaire d'affaiblissements personnalisé pour votre spé actuelle.
+308	Ajoute la cible de l'incantation au nom du sort (Nom du sort - Cible), coloré par classe, et désactive l'affichage séparé Cible du sort.
+309	S'applique à ce profil. Conserve vos choix de fenêtres individuels.
+312	Appliquer 
+315	Appliquer tous les réglages de
+323	Appliquer la taille de bordure à tous les cadres
+327	Appliquer le style de bordure de la barre d'incantation à tous les cadres
+328	Appliquer la bordure de la barre d'incantation à tous les cadres
+341	Appliquer la taille de l'icône de faction à tous les cadres
+342	Appliquer le niveau d'affichage à tous les cadres
+343	Appliquer le modèle de lueur
+346	Appliquer la lueur d'incantation importante à la cible et à la focalisation
+347	Appliquer la taille de l'icône de chef à tous les cadres
+348	Appliquer l'indicateur de chef à tous les cadres
+351	Appliquer le portrait non-joueur à tous les cadres
+362	Appliquer l'affichage de la barre d'incantation et sa couleur à la cible et à la focalisation
+367	Appliquer le modèle
+368	Appliquer le modèle à ce module
+377	Applique les réglages Habillages des fenêtres améliorés de Blizz UI et Infobulles, menus et fenêtres contextuelles de l'expéditeur. Ils sont liés au compte et remplaceront les vôtres sur TOUS les profils. Désactivé = garder les vôtres.
+378	Applique les polices, couleurs personnalisées, mode sombre, couleur d'accentuation et échelle d'interface de l'expéditeur. Désactivé = garder votre apparence globale et votre échelle ; seuls les réglages des modules sélectionnés sont importés.
+379	Appliquer le modèle à %d lueur(s) ?
+380	Appliquer le modèle aux %d lueur(s) personnalisée(s) active(s) listée(s) ici ?
+382	Appliquer à toutes les lueurs actives
+388	Rotation de l'arc (degrés)
+389	Étendue de l'arc (degrés)
+403	Cadres d'arène
+404	Page des cadres d'arène
+405	Prise en charge des cadres d'arène
+406	Familiers d'arène
+414	Options du groupe d'emplacements de l'armurerie
+418	Illustration utilisée pour la ligne de lueur et le bord du surbouclier.
+419	Illustration utilisée pour la couronne de chef et l'icône d'assistant.
+421	Assigner une touche
+425	AMÉLIORATIONS ASSIGNÉES
+426	AFFAIBLISSEMENTS ASSIGNÉS
+427	Ordre assigné
+428	SORTS ASSIGNÉS
+429	Assignations : 
+430	Assistant
+433	À cumuls
+437	Mode portrait attaché
+439	Cloche d'enchères
+441	AUDIO
+442	Audio
+443	Canal audio
+448	Augmentation
+451	Aura active
+452	barres d'aura
+453	Taille de la durée des auras
+454	Filtres d'aura
+455	Taille des icônes d'aura
+456	Les infobulles des icônes d'aura utilisent Infobulles d'aura
+457	Aura manquante
+458	ID de sort de l'aura
+459	Taille des cumuls d'aura
+461	Taille des cumuls d'aura
+462	Taille du délai des auras
+463	Infobulles d'aura
+464	Type d'aura
+465	Unité de l'aura
+466	Temps d'activité de l'aura : somme des secondes observées sur les cibles.
+470	Auras avec un type de dissipation que vous pouvez dissiper
+473	Auto (posture/forme)
+479	Déplier automatiquement les réglages moins courants
+480	Colonnes de grille auto
+486	Séparation auto
+488	Auto considère Posture défensive, Forme d'ours, Fureur vertueuse et Présence de givre comme un rôle de tank.
+491	Réinitialisation auto du zoom (secondes)
+493	Accepter auto la vérification de rôle
+495	Éclat d'incantation auto
+500	Journal de combat automatique
+503	Automatique utilise la capacité de l'instance, puis la taille du groupe
+507	L'automatisation et les affichages démarrent désactivés
+508	Disposition de l'automatisation
+516	Obscurité de l'arrière-plan
+517	Arrière-plan uniquement sur les segments
+522	Texture d'arrière-plan de cette barre, teintée par la couleur et l'opacité de la barre.
+525	Badge
+526	Badge affiche une petite icône ; Dragon pixels entoure le portrait de l'illustration de classification.
+528	Habillage de la barre des sacs
+529	Taille des boutons de sac
+530	Espacement des sacs
+534	Pages des sacs et de la banque
+538	Bande
+540	Catégories de la banque
+541	Icône de bannière
+543	Styles de bordure des barres et boutons
+544	Textures de barre et d'absorption des cadres principaux
+546	ARRIÈRE-PLAN DE BARRE
+549	Couleur de bordure de barre
+550	Taille de bordure de barre
+551	Texte des boutons de barre, texte des barres XP/Réputation
+553	Barre par défaut
+556	Liste déroulante de barre et aperçu d'icône
+562	Couche de barre
+564	Taille du texte gauche de barre
+565	Nom de la barre
+568	Taille du texte droit de barre
+571	Niveau d'affichage de barre
+574	Texture de barre (ressource de classe)
+575	Texture de barre (par barre de données)
+576	Texture de barre (par fenêtre)
+590	Barres affichées
+594	Taille du nombre de rés. de combat
+595	Taille de la durée de rés. de combat
+596	Police des rés. de combat
+597	Contour des rés. de combat
+598	Taille du texte des rés. de combat
+602	Victoire en champ de bataille
+603	Rappels de Guide
+608	En dessous
+610	Sous la fenêtre du bas, à gauche
+611	Sous la fenêtre du bas, à droite
+612	Sous le curseur
+616	Sous le seuil uniquement
+626	raccourci
+627	Les changements de raccourcis s'appliquent hors combat
+634	Les sorts en liste noire ne s'affichent jamais.
+637	En-tête de cible coloré Blizz
+640	Anneau et surbrillance d'appui des boutons d'action Blizzard.
+641	Styles Blizzard et Classic
+642	ILLUSTRATIONS BLIZZARD
+643	Bordure Blizzard
+645	Illustration Blizzard de ressource de classe
+647	Blizzard par défaut garde le réglage d'horodatage des options d'interface.
+649	Ligne de lueur Blizzard
+651	Style Blizzard
+656	Les bordures d'aura de Blizzard sur les améliorations, affaiblissements et enchantements d'arme, avec toutes les fonctions de barre EllesmereUI.
+657	Le panneau de barre et le cadre des boutons d'action de Blizzard, ou le cadre de barre et l'anneau d'emplacement classiques, avec toutes les fonctions du HUD Vol dynamique EllesmereUI.
+658	L'illustration de barre d'amélioration de Blizzard, ou le cadre de barre d'incantation classique, avec toutes les fonctions de barre suivie EllesmereUI.
+659	L'illustration de barre d'incantation de Blizzard, ou le cadre de barre d'incantation classique, avec toutes les fonctions de barre d'incantation EllesmereUI.
+661	Les illustrations de cadre, portraits et formes de barre de Blizzard, ou les cadres classiques, avec toutes les fonctions de cadre EllesmereUI.
+662	Les illustrations de barre de vie et d'incantation de Blizzard, ou les plaques plates classiques, avec toutes les fonctions de barres d'info EllesmereUI.
+663	La fenêtre de compteur et les barres de Blizzard, ou une fenêtre dans la bordure des onglets de discussion classiques, avec toutes les fonctions de compteur EllesmereUI.
+664	La fenêtre de compteur et les barres de Blizzard, ou une fenêtre dans la bordure des onglets de discussion classiques, avec toutes les fonctions de compteur de menace EllesmereUI.
+665	La fiche de personnage de Blizzard telle que le jeu l'affiche ; WoW Forever garde le texte des objets à côté des emplacements, et les couleurs des statistiques restent au style EllesmereUI.
+666	La fiche de personnage de Blizzard avec les statistiques, le texte d'emplacement et le panneau de châsses EllesmereUI ajoutés ; l'onglet Calc reste au style EllesmereUI.
+667	La fenêtre de discussion, les onglets et la zone de saisie de Blizzard, ou la même fenêtre avec les onglets classiques, avec toutes les fonctions de discussion EllesmereUI.
+668	Les illustrations de cadre et de bouton de Blizzard, avec les fonctions d'EllesmereUI.
+669	La fenêtre d'amis et les cartes de Blizzard, avec les icônes de classe, les noms colorés par classe et les icônes de région EllesmereUI ajoutés. Les deux styles d'origine sont identiques ici.
+670	Le suivi de Blizzard, avec toutes les fonctions de suivi EllesmereUI. Les deux styles d'origine sont identiques ici.
+671	Les bords et surbrillances des cadres de raid de Blizzard, ou les classiques, avec toutes les fonctions de cadres de raid EllesmereUI.
+672	La minicarte ronde et l'en-tête de Blizzard, ou l'anneau classique, avec toutes les fonctions de minicarte EllesmereUI.
+673	Les boutons arrondis de Blizzard, ou les emplacements carrés classiques, avec toutes les fonctions de barre EllesmereUI.
+674	Les icônes de recharge arrondies de Blizzard, ou les emplacements carrés classiques, avec toutes les fonctions d'icône EllesmereUI.
+677	Bloc à ajouter
+678	Type de bloc que le bouton Ajouter un bloc ajoute à la fin de cette barre.
+679	Mots-clés bloqués
+681	Furie sanguinaire / Héroïsme
+682	Taille du nombre de Furie sanguinaire
+683	Taille de la durée de Furie sanguinaire
+685	BoE
+686	Taille du texte BoE / lié au bataillon
+687	Options du texte BoE
+688	Taille du texte BoE
+689	BORDURE
+691	bordure
+692	Illustration de bordure autour des cadres de boss. Hériter (cadres principaux) utilise la bordure des cadres principaux.
+693	Illustration de bordure autour de la barre d'incantation.
+695	La couleur de bordure indique si l'incantation peut être interrompue.
+696	Source de couleur de bordure
+701	Taille de bordure en pixels ; pour un style texturé, c'est la taille de l'illustration de bord.
+704	Styles de bordure (par barre)
+707	Bordure autour de l'icône
+712	Icône d'affaiblissement de boss
+714	Auras des cadres de boss
+715	Tailles de texte des cadres de boss
+716	Icône de boss
+717	Synchro boss mod : chef de raid / assistant ou chef de groupe
+718	Auras suivies des boss
+724	Taille du texte bas gauche
+725	Bas gauche, vers la droite
+726	Bas gauche, vers le haut
+728	Taille du texte bas droite
+729	Bas droite, vers la gauche
+730	Bas droite, vers le haut
+731	Bord inférieur de l'écran
+732	Espacement inférieur
+737	Position du détail
+738	Échelle du détail (%)
+740	Ligne lumineuse sur le bord du balayage (nécessite un client avec Cooldown:SetDrawEdge).
+742	Module Broker
+747	Amélioration
+748	amélioration
+749	Amélioration / Affaiblissement
+751	barre d'amélioration
+752	Liste noire des améliorations
+755	Filtre d'améliorations
+756	Options du filtre d'améliorations
+757	FILTRES D'AMÉLIORATIONS
+759	Icônes d'amélioration par ligne
+762	Lueurs des icônes du gestionnaire d'améliorations
+763	Texte du gestionnaire d'améliorations (par indicateur)
+764	Déplaceur d'améliorations
+765	Amélioration ou affaiblissement à surveiller.
+767	Préréglage d'amélioration
+769	Amélioration affichée comme état actif (0 = amélioration du même nom).
+773	Amélioration qui marque ce sort comme déclenché (0 = liste intégrée).
+777	Les améliorations rejoignent la pile d'affaiblissements comme premières lignes ; les affaiblissements continuent à la ligne suivante et se déplacent selon les lignes d'améliorations.
+779	Améliorations que vous pouvez voler ou purger
+781	BuildInlineCog: disabled needs a disabledTooltip
+784	Bouton 4
+785	Bouton 5
+787	Distance entre lignes de boutons
+789	Espacement des lignes de boutons
+790	Taille des boutons
+799	BARRE D'APPEL DES TOTEMS
+800	Avantages du camp
+803	Annuler la forme
+804	Touche d'annulation : 
+807	Impossible de recharger en combat. Tapez plutôt /reload.
+809	Impossible à utiliser en combat
+810	Barre de capture et statut de discussion MJ
+811	Les remplacements capturés font référence à des modules désactivés (%s). Activez-les et rechargez avant de promouvoir, sinon ces réglages seraient perdus.
+812	incantation
+813	Progression d'incantation / canalisation
+815	Barres d'incantation et de temps de recharge global
+820	Taille du texte de la barre d'incantation
+822	Taille du délai de la barre d'incantation
+826	COULEURS ET EFFETS D'INCANTATION
+828	Taille du nom d'incantation
+829	Lancer à l'appui de la touche
+830	Texte de rappel d'incantation
+831	Texture de l'anneau d'incantation
+832	Son d'incantation
+833	Étincelle d'incantation
+834	Lancer le sort
+835	Balayage d'incantation
+836	Taille de la cible d'incantation
+837	Taille du texte d'incantation
+838	Texture d'incantation
+840	Contour du délai d'incantation
+841	Taille du délai d'incantation
+842	Barre d'incantation
+848	Catégorie
+849	Barre latérale des catégories
+851	Taille de la durée des contrôles
+861	Réticule central
+864	Taille du texte central
+869	Modifier les raccourcis hors combat
+870	Modifier la visibilité de la vie hors combat
+871	Changer de spé
+873	Les changements s'appliquent hors combat.
+874	Les changements ici modifient la valeur par défaut partagée ; les remplacements gardent leurs propres valeurs.
+879	Changer le style nécessite un rechargement de l'interface.
+881	TICKS DE CANALISATION ET LATENCE
+885	AMÉLIORATION DU PERSONNAGE
+887	Améliorations de la fiche de personnage
+888	Personnages
+889	Personnages (en-tête) parcourt les sacs et banques enregistrés.
+891	Textures d'arrière-plan et d'onglets de discussion
+892	BULLES DE DISCUSSION
+893	Bulles de discussion
+894	Compte à rebours en discussion
+895	Extras de discussion
+897	Taille de police de discussion
+898	Mode de contour de discussion
+899	Options du filtre anti-spam de discussion
+900	Fenêtres de discussion, onglets et champ de saisie
+906	Cochez des icônes pour les afficher ; glissez les lignes pour les réordonner.
+908	Les boutons cochés quittent le menu déroulant et se placent sur la ligne de boutons.
+913	Choisissez d'abord un texte pour cet emplacement.
+914	Choisissez d'abord un élément pour cet emplacement.
+915	Choisissez EllesmereUI, Blizzard ou Classic.
+917	Choisissez les listes de sorts dans Filtres d'aura
+918	Choisir la texture par barre
+920	Choisissez les addons à inclure dans votre profil exporté. Cochez tout pour un export de profil complet.
+922	Choisissez les infobulles qui apparaissent au survol. Affecte tous les cadres d'unité, y compris les cadres de boss.
+923	CHOISISSEZ VOTRE STYLE
+924	Choisir...
+929	Cercle et Portrait affichent des icônes rondes, et Losange, Hexagone et Bouclier rognent l'icône à la forme. Carré et Carré arrondi entourent l'icône carrée d'un contour. Le contour utilise la taille de bordure et la couleur ci-dessous.
+932	classe
+933	Rappels de classe et de consommables
+939	Bordure colorée par classe
+941	Vie colorée par classe
+942	Barre de vie colorée par classe
+943	Noms colorés par classe
+946	Icône de classe pour les amis en ligne ; les amis hors ligne affichent une icône hors ligne atténuée.
+948	Côté de l'icône de classe
+949	Style d'icône de classe
+951	Icônes de classe
+952	Réactif à la classe
+959	Taille du texte de ressource de classe
+960	Style de classe
+962	Zoom de classe
+965	Classic (vie %)
+966	Bannière Classic
+967	Style de barre Classic
+968	Taille de cadre Classic
+969	Style d'icône Classic
+970	Style Classic
+971	Barres style Classic
+976	Cadre de barre d'incantation de l'interface WoW Classic.
+977	L'interface WoW Classic porte l'anneau vanilla, la bannière de zone, les boutons de zoom et les indicateurs bordés d'anneau sur une carte ronde.
+981	Effacer
+982	Effacer et désactiver cette palette
+983	Effacer l'historique de combat...
+984	Effacer les raccourcis de la palette
+985	Effacer les touches de sélection et d'annulation
+986	Couleur de Fendoir en file
+987	clic
+988	Cliquez sur un bloc pour aller à ses réglages. Clic droit pour le retirer.
+989	Cliquez sur un joueur : détails des sorts. Shift-clic : fenêtre complète.
+990	Action au clic
+991	Cliquez sur une adresse http, https ou www pour la copier.

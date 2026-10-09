@@ -1,0 +1,450 @@
+0	 (banco de hermandad)
+1	 (banda)
+2	 Desglose
+3	 El aparecer al pasar el ratón también está bloqueado aquí para este elemento: su mecanismo sigue el ajuste compartido, así que una anulación solo podría dejarlo visible.
+4	 vista previa
+5	 texto. El contorno global de EUI sigue el ajuste Modo de contorno global de arriba.
+6	 ventanas activas
+7	%1$s está activo. Se ocultan los ajustes que solo se aplican al aspecto de EllesmereUI.
+8	%1$s está activo: el chat mantiene el fondo y el arte de pestañas propios de Blizzard.
+9	%1$s está activo: el seguimiento mantiene el texto propio de Blizzard.
+10	Módulo %1$s
+12	%d / %d objetos
+13	%d activos
+14	%d difieren de la plantilla
+15	%d objetos
+16	%d de ellos están desactivados o usan un estilo de Blizzard y pasan al resplandor de la plantilla.
+17	%d de ellos no pueden mostrar el estilo elegido y usan el más parecido.
+21	Anulación de %s activa
+22	'%s' ahora está personalizado para %s.
+23	: recapitulación de muerte
+28	(activo)|r
+29	(Se aplica al cerrar la ventana)
+30	(Se aplica a todas las unidades)
+31	(Vista rápida adicional, tus objetos también están en su categoría)
+33	(Clic central para añadir o quitar)
+35	(minutos)
+36	(Sin historial de chat)
+37	(uno por casilla)
+38	(segundos)
+39	(La especialización tiene prioridad en conflictos de ajustes)
+40	(mundo)
+41	*El ajuste de selección automática de Blizzard (objetivo suave) puede causar breves parpadeos cuando tu objetivo real muere pero aún hay un objetivo suave activo.
+42	*Introduce un nombre de perfil
+43	+ %d más
+44	+ Añadir barra de beneficios
+45	+ Añadir grupo condicional
+46	+ Añadir barra de reutilizaciones
+47	+ Añadir grupo de especialización
+48	+ Añadir barra de utilidad
+49	Tamaño de texto de umbral +1
+50	Tamaño de texto de umbral +2
+51	Tamaño de texto de umbral +3
+53	...y %d más
+62	Ancho de marco de 20 jugadores
+63	Reloj de 24 horas
+64	Retrato 2D
+65	Zoom 2D
+66	Retrato 3D
+67	Retratos 3D
+68	Los retratos 3D pueden reducir ligeramente el rendimiento. ¿Quieres activarlos?
+69	Zoom 3D
+70	[ Cadena de importación capturada (%1$s caracteres) ]
+71	\"%1$s\" se guardó, pero no se puede cargar porque esta especialización tiene un perfil asignado.
+72	\"%1$s\" se guardó, pero no se puede cargar porque esta especialización tiene un perfil asignado. Cambia de especialización o quita la asignación para usarlo.
+73	Una preciosa renovación visual de las bolsas de Blizzard con una organización intuitiva.
+74	Un sustituto del CDM centrado en rendimiento, personalización y alertas.
+75	Un rediseño limpio y actualizado del seguimiento de misiones de Blizzard.
+76	un estilo de resplandor
+77	Una lista de amigos moderna con herramientas de organización integradas.
+78	Un minimapa moderno con estilo limpio y opciones de diseño cuadrado.
+79	Ya existe un perfil llamado \"%1$s\". Elige otro nombre.
+80	Una vista rápida de todos los ajustes de fuente en un solo lugar.
+81	Una vista rápida de todos los ajustes de textura en un solo lugar.
+82	Es necesario recargar para aplicar esto.
+83	Una anulación de especialización controla este ajuste, así que este valor condicional nunca se aplica fuera de una sesión de edición. Quita la anulación de especialización para que se aplique.
+84	Hay un estilo de chat original activo en la página Estilo: el panel, las pestañas y la barra lateral mantienen el aspecto de Blizzard.
+85	Hay un estilo de chat original activo: el chat mantiene el fondo y el arte de pestañas propios de Blizzard.
+86	Un grupo de sincronización necesita al menos dos perfiles
+87	Un objetivo al que puedes atacar.
+88	Un contorno fino alrededor de la pestaña seleccionada.
+89	Abreviar cantidad
+90	Abreviar texto
+91	Encima
+92	Encima de la barra de absorción
+93	Encima del cursor
+94	Encima del marco, izquierda
+95	Encima del marco, derecha
+96	Encima de la barra de vida
+97	Encima de la fila señalada
+98	Encima del icono
+99	Encima del mapa
+100	Encima del modelo
+101	Encima de la ventana superior, izquierda
+102	Encima de la ventana superior, derecha
+104	absorción
+105	Cantidad de absorción
+106	Barra de absorción
+107	Color de absorción
+108	Opacidad de absorción
+109	Renderizado de absorción
+110	Escudos de absorción
+111	Absorción corta (230k)
+112	Estilo de absorción
+113	Estilo de absorción y colocación de la superposición
+114	ABSORCIONES
+115	ABSORCIONES Y SANACIONES
+116	Absorciones recibidas: escudos consumidos en cada jugador.
+117	Sección de absorciones
+118	Acento
+119	Color de acento
+120	Con color de acento
+121	Texto de encabezado con color de acento
+122	Temporizador con color de acento
+123	Encabezado de acento
+124	Estilo de acento
+125	TEXTO DE ACENTO
+126	Aceptar
+127	Aceptar invitaciones de amigos y hermandad
+128	Aceptar invitaciones de la hermandad
+129	Acepta invitaciones de grupo de tu lista de amigos y de miembros de tu hermandad. Se omite si estás en cola en el buscador de mazmorras o ya en un grupo.
+130	Logro
+131	Puntos de logro
+132	Logros
+133	Acción
+134	Acción 
+135	Acción añadida
+136	Barra de acción 10
+137	Barra de acción 2
+138	Barra de acción 3
+139	Barra de acción 4
+140	Barra de acción 5
+141	Barra de acción 6
+142	Barra de acción 7
+143	Barra de acción 8
+144	Barra de acción 9
+146	Barras de acción 7 a 10
+147	Las barras de acción solo pueden igualar\nsu ancho con otras barras de acción
+148	Iconos de barras de acción
+149	Barras de acción, aspectos del HUD de Blizzard y posiciones de auras del jugador para Wrath.
+150	Resplandor de botón de acción
+151	ID de hechizo del botón de acción
+152	ID / nombre / texto de acción
+153	Menú de acciones
+154	Número del menú de acciones
+155	CONFIGURACIÓN DEL MENÚ DE ACCIONES
+156	Tipo de acción
+157	Activar vista previa de jefes
+158	Activar modo grupo
+159	Resplandor de aura activa
+160	ID de aura activa
+161	Origen del fondo activo
+162	Borde activo
+163	Color del borde activo
+164	Duración activa
+165	Origen del color de fuente activo
+166	Mitigación activa
+167	Perfil activo
+168	RECORDATORIOS ACTIVOS
+169	Fondo de pestaña activa
+170	Borde de pestaña activa
+171	Color de fuente de pestaña activa
+172	Subrayado activo
+173	Añadir
+174	Añadir hechizo de beneficio
+175	Añadir hechizo de reutilización/utilidad
+176	AÑADIR ACCIÓN
+177	Añadir acción
+178	Añadir acción desde el cursor
+179	Menú de añadir acción
+180	Añadir bloque
+181	Añadir preajuste de beneficio
+182	Añadir categoría
+183	Añadir hechizo personalizado
+184	AÑADIR ENTRADA
+185	Añadir entrada
+186	Añadir indicador de reutilización externa
+187	Añadir resplandor
+188	Añadir indicador de beneficio de sanador
+189	Añade a la descripción de un objeto cuántas unidades tienen tus otros personajes.
+190	Añadir preajuste de objeto
+191	Añadir hechizo aprendido
+192	Añadir nuevo
+193	Añadir nuevas barras al grupo
+194	Añadir nuevo indicador
+195	Añadir indicador de defensivo personal
+196	Añadir racial
+197	Añadir recordatorio
+198	Añadir acción seleccionada
+199	Añadir ID de hechizo
+200	Menú de añadir hechizo
+201	Añadir al grupo
+202	Añadir barra de seguimiento
+203	Añadido 
+204	Se suma al tamaño actual del marco de banda o grupo.
+205	Añadido. Los hechizos no aprendidos y las casillas vacías permanecen ocultos.
+206	DESPLAZAMIENTO DE BARRA ADICIONAL
+207	FUNCIONES ADICIONALES
+209	Desplegable de botones de addons
+210	BOTONES DE ADDONS
+211	Botones de addons
+212	Lista de addons
+213	Addon no cargado
+214	Añade un segundo anillo alrededor de un retrato redondo; Igualar borde del marco sigue el estilo de borde de tu marco.
+215	Añade un borde de sombra a tu marco de jugador cuando atraes o mantienes la amenaza sin ser tanque. Solo activo en mazmorras, bandas y profundidades.
+216	Añade una sombra suave dentro de un retrato redondo.
+217	Añade la línea de resplandor de escudo de Blizzard donde el escudo se une con la vida actual.
+219	Ajustar volumen
+220	AVANZADO
+221	Guía de aventura
+222	Preparación de aventura
+223	Aventurero
+224	Tamaño del afijo
+225	Aflicción
+227	Tras anclar, arrastra a un borde y elige una dirección de crecimiento para mantener su esquina cuando las barras cambien de tamaño.
+229	Agilidad
+230	Disparo apuntado
+231	Bocina
+232	Texto de alertas y seguimiento
+233	Alertas
+234	Alertas, seguimiento, resurrección en combate y texto emergente
+235	Alinear contenido
+236	Alinear pestañas a todo el panel
+237	Alineación
+239	Todo permitido
+240	Todos los beneficios
+241	Todos los beneficios o con duración
+242	Está seleccionado Todos los beneficios o con duración, así que ya se muestran todos los beneficios. Usa la casilla roja Ocultar para excluir estos.
+243	Todos los perjuicios
+244	Está seleccionado Todos los perjuicios, así que ya se muestran todos los perjuicios. Usa la casilla roja Ocultar para excluir estos.
+245	Todos los DPS (sin Aum.)
+246	Todos los elementos
+247	Todos los addons de EUI
+248	Todos los sanadores/Aum.
+249	Todos los objetos
+250	todos coinciden con la plantilla
+251	Todos menos sanadores/Aum.
+252	Todos los perfiles seleccionados mantendrán sincronizados sus ajustes de %1$s: los cambios hechos en cualquiera de ellos se trasladan a los demás. Elige de qué perfil parte el grupo.
+253	Todas las especializaciones
+254	Todos los tanques
+255	Alianza
+256	Los nombres aliados mantienen su color de clase sin seleccionarlos ni pasar el ratón. Los miembros del grupo o banda se identifican automáticamente; los demás aliados se detectan al seleccionarlos, pasar el ratón o como foco.
+257	Permitir mover el seguimiento de misiones fuera de la pantalla
+260	Alfa
+261	Alfa en reutilización
+262	Ya asignado a %s
+263	Ya coincide con la plantilla.
+264	Ya en 
+265	Mostrar también la insignia en mazmorras y bandas, donde la mayoría de enemigos son élite.
+266	Mostrar también el dragón en mazmorras y bandas, donde la mayoría de enemigos son élite.
+267	Vigilar también el objetivo
+272	Modificador Alt
+274	Los alters aparecen tras iniciar sesión con cada uno
+276	Mostrar siempre
+277	Mostrar siempre beneficios
+278	Mostrar siempre botones
+279	Muestra siempre los ajustes menos comunes en lugar de ocultarlos tras un enlace Mostrar menos comunes.
+280	Mostrar siempre marco de mascota
+281	Mostrar siempre al jugador
+282	Usar siempre K/M/B en lugar de unidades localizadas.
+283	Siempre: oculta el seguimiento todo el tiempo que estés en una banda.\nCombate de banda: oculta durante cualquier combate de banda.\nCombate de jefe: oculta solo durante encuentros con jefes.\nEn arenas el seguimiento siempre se oculta.
+285	Ambiente
+286	Una flecha junto al campo Para muestra tus alters de este reino y facción, miembros de la hermandad y los últimos destinatarios de correo.
+287	Un elemento no puede anclarse a sí mismo
+288	Un plugin LibDataBroker de EllesmereUI registrado ahora mismo. Un bloque por plugin: añade el bloque otra vez para un segundo.
+290	Desplazamiento X del anclaje
+291	Desplazamiento Y del anclaje
+292	Lado de anclaje
+293	Ancla este elemento primero
+294	Anclar a
+295	Anclar a %1$s
+296	Anclar al cursor
+297	Anclar a perjuicios
+298	Anclado
+299	Anclado a: %1$s
+300	Anunciar reinicio de instancia
+301	Anunciar interrupciones
+302	Otro grupo de anulación ya proporciona el gestor de beneficios personalizado para tu especialización actual.
+303	Otro grupo de anulación ya proporciona el gestor de perjuicios personalizado para tu especialización actual.
+304	Cualquier ajuste que cambies ahora solo se aplica a las especializaciones de este grupo.
+305	Cualquier ajuste que cambies ahora solo se aplica mientras este condicional esté activo.
+307	APARIENCIA
+308	Añade el objetivo del lanzamiento al nombre del hechizo (Hechizo - Objetivo), con color de clase, y desactiva la visualización separada del objetivo del hechizo.
+309	Se aplica a este perfil. Mantiene tus elecciones individuales de ventana.
+310	Aplica tu fuente global al texto predeterminado del juego de Blizzard (menús, descripciones, registro de misiones, paneles de personaje y más). Requiere recargar la interfaz.
+312	Aplicar 
+313	Aplicar estilo, color y renderizado de absorción a todos los marcos
+314	Aplicar todos los ajustes
+315	Aplicar todos los ajustes de
+316	Aplicar estilo artístico a todos los marcos
+317	Aplicar fondo de barra a todos los marcos
+318	Aplicar color de barra a todos los marcos
+319	Aplicar opacidad de barra a todos los marcos
+320	Aplicar posición de barra a todos los marcos
+321	Aplicar textura de barra a todos los marcos
+322	Aplicar ancho de barra a todos los marcos
+323	Aplicar tamaño del borde a todos los marcos
+324	Aplicar estilo del borde a todos los marcos
+325	Aplicar borde a todos los marcos
+326	Aplicar ubicación de beneficios a todos los marcos
+327	Aplicar estilo del borde de barra de lanzamiento a todos los marcos
+328	Aplicar borde de barra de lanzamiento a todos los marcos
+329	Aplicar alto de barra de lanzamiento a todos los marcos
+330	Aplicar texto central a todos los marcos
+331	Aplicar colores de clase a todos los marcos
+332	Aplicar color de fondo del recurso de clase a todos los marcos
+333	Aplicar espaciado de barras del recurso de clase a todos los marcos
+334	Aplicar posición del recurso de clase a todos los marcos
+335	Aplicar tamaño del recurso de clase a todos los marcos
+336	Aplicar estilo del recurso de clase a todos los marcos
+337	Aplicar estilo del indicador de combate a todos los marcos
+338	Aplicar tamaño y color de duración a todos los marcos
+339	Aplicar Activar barra de texto a todos los marcos
+340	Aplicar texto adicional a todos los marcos
+341	Aplicar tamaño del icono de facción a todos los marcos
+342	Aplicar nivel de marco a todos los marcos
+343	Aplicar plantilla de resplandor
+344	Aplicar estilo, color y renderizado de absorción de sanación a todos los marcos
+345	Aplicar alto de barra de vida a todos los marcos
+346	Aplicar resplandor de lanzamiento importante a objetivo y foco
+347	Aplicar tamaño del icono de líder a todos los marcos
+348	Aplicar indicador de líder a todos los marcos
+349	Aplicar texto izquierdo a todos los marcos
+350	Aplicar tamaño de marca a todos los marcos
+351	Aplicar retrato de no jugador a todos los marcos
+352	Aplicar modo de retrato a todos los marcos
+353	Aplicar posición del retrato a todos los marcos
+354	Aplicar forma del retrato a todos los marcos
+355	Aplicar tamaño del retrato a todos los marcos
+356	Aplicar alto de barra de recurso a todos los marcos
+357	Aplicar formato del texto de recurso a todos los marcos
+358	Aplicar posición del texto de recurso a todos los marcos
+359	Aplicar marca de banda a todos los marcos
+360	Aplicar texto derecho a todos los marcos
+361	Aplicar borde de forma a todos los marcos
+362	Aplicar Mostrar barra de lanzamiento y color de lanzamiento a objetivo y foco
+363	Aplicar Mostrar barra de lanzamiento y color de relleno a todos los marcos
+364	Aplicar Mostrar icono a todos los marcos
+365	Aplicar tamaño y color del nombre del hechizo a todos los marcos
+366	Aplicar tamaño y color del objetivo del hechizo a todos los marcos
+367	Aplicar plantilla
+368	Aplicar plantilla a este módulo
+369	Aplicar texto central de barra de texto a todos los marcos
+370	Aplicar icono de clase de barra de texto a todos los marcos
+371	Aplicar alto de barra de texto a todos los marcos
+372	Aplicar texto izquierdo de barra de texto a todos los marcos
+373	Aplicar posición de barra de texto a todos los marcos
+374	Aplicar texto derecho de barra de texto a todos los marcos
+375	Aplicar ancho de barra de texto a todos los marcos
+376	Aplicar color del texto a todos los marcos
+377	Aplica los ajustes de Aspectos de ventanas y Descripciones, menús y ventanas emergentes de Interfaz Blizz mejorada de quien comparte. Son de toda la cuenta y sobrescribirán los tuyos en TODOS los perfiles. Desactivado = conservar los tuyos.
+378	Aplica las fuentes, colores personalizados, modo oscuro, color de acento y escala de interfaz de quien comparte. Desactivado = conservar tu aspecto global y escala; solo se importan los ajustes de los módulos seleccionados.
+379	¿Aplicar la plantilla a %d resplandor(es)?
+380	¿Aplicar la plantilla a los %d resplandores personalizados activos listados aquí?
+381	Aplicar a todo
+382	Aplicar a todos los resplandores activos
+383	Aplicar a todo el texto del juego
+384	Aplicar a todos los perfiles
+386	Aplicar visibilidad a todos los marcos
+387	Cuenca de Arathi
+388	Rotación del arco (grados)
+389	Amplitud del arco (grados)
+391	Arcano
+392	Explosión Arcana
+393	Cargas arcanas
+394	Intelecto Arcano
+397	¿Seguro que quieres %1$s %2$s?
+398	¿Seguro que quieres eliminar \"%s\"?
+399	¿Seguro que quieres restablecer todos los ajustes de %1$s a sus valores predeterminados? Esto recargará la interfaz.
+400	¿Seguro que quieres restablecer TODOS los ajustes de los addons de EUI a sus valores predeterminados? Esto recargará la interfaz.
+403	Marcos de arena
+404	Página de marcos de arena
+405	Compatibilidad con marcos de arena
+406	Mascotas de arena
+413	Armadura
+414	Opciones de grupo de casillas de la armería
+415	Armas
+416	Escala del arte
+417	Estilo artístico
+418	Arte usado para la línea de resplandor y el borde de sobreescudo.
+419	Arte usado para la corona de líder y el icono de ayudante.
+420	Asesinato
+421	Asignar tecla
+422	Asignar preajuste a especializaciones
+423	Asigna este perfil a las mismas especializaciones que tenía al exportarlo. Desactivado = tus asignaciones actuales se mantienen.
+424	Asignar a especialización
+425	BENEFICIOS ASIGNADOS
+426	PERJUICIOS ASIGNADOS
+427	Orden asignado
+428	HECHIZOS ASIGNADOS
+429	Asignaciones: 
+430	Ayudante
+431	Poder astral
+432	al menos un activador de celebración
+433	Con acumulaciones
+435	Unir beneficios importantes al cursor
+436	Unido
+437	Modo de retrato unido
+438	Atributos
+439	Campana de subasta
+440	Casa de subastas
+441	AUDIO
+442	Audio
+443	Canal de audio
+448	Aumento
+451	Aura activa
+452	barras de auras
+453	Tamaño de duración de auras
+454	Filtros de auras
+455	Tamaño del icono de aura
+456	Las descripciones de iconos de aura usan Descripciones de auras
+457	Aura ausente
+458	ID de hechizo de aura
+459	Tamaño de acumulaciones de aura
+460	Acumulaciones de aura
+461	Tamaño de acumulaciones de aura
+462	Tamaño del temporizador de aura
+463	Descripciones de auras
+464	Tipo de aura
+465	Unidad del aura
+466	Tiempo activo de aura: suma de segundos observados en todos los objetivos.
+468	Recordatorios de auras: beneficios de banda, auras y consumibles.
+470	Auras con un tipo de disipación que puedes disipar
+471	Auras, beneficios y consumibles
+472	Auto
+473	Auto (actitud/forma)
+474	Aceptar misiones automáticamente
+475	Ajustes de aceptación automática
+476	Asignar automáticamente a especializaciones
+477	Duración de celebración automática
+478	Actual automático en combate
+479	Expandir automáticamente ajustes menos comunes
+480	Columnas de cuadrícula automáticas
+481	Abrir contenedores automáticamente
+482	Reparación automática
+483	Ajustes de reparación automática
+484	Vender chatarra automáticamente
+485	Tamaño automático
+486	División automática
+487	Alternar actual/total automáticamente
+488	Auto trata Actitud defensiva, Forma de oso, Furia recta y Presencia de Escarcha como tanque.
+489	Entregar misiones automáticamente
+490	Ajustes de entrega automática
+491	Restablecer zoom automáticamente (segundos)
+492	Aceptar automáticamente invitaciones de amigos
+493	Aceptar comprobación de rol automáticamente
+494	Acepta automáticamente todas las invitaciones de grupo de las personas de tu lista de amigos
+495	Brillo de lanzamiento automático
+496	Rellenar confirmación de eliminación automáticamente
+497	Ajustar tamaño automáticamente
+498	Automático
+499	Automático (cliente)
+500	Registro de combate automático
+501	Automático sigue el nombre de la zona. Manual mantiene el bloque con un ancho fijo y recorta los nombres largos, así nunca desplaza los bloques de al lado.
+502	Automático muestra la experiencia al subir de nivel y la reputación al nivel máximo.
+503	Automático usa la capacidad de la instancia y luego el tamaño del grupo
+504	Repara automáticamente todo el equipo al visitar a un vendedor que repare.
+505	Vende automáticamente todos los objetos de chatarra al visitar a un vendedor.
+506	Escribe DELETE automáticamente al tirar un objeto valioso. También permite pulsar Intro para aceptar la eliminación.
+507	La automatización y las visualizaciones empiezan desactivadas
+508	Diseño de automatización

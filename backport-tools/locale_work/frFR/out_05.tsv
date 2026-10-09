@@ -1,0 +1,438 @@
+4512	Rayé épais
+4513	Rayé épais inversé
+4518	Style modifié pour ce profil. Un rechargement de l'UI est nécessaire pour l'appliquer.
+4522	Responsables du support
+4523	Équipe de support
+4527	Remplacer les potions épuisées
+4529	Chrono de swing
+4530	Opacité du balayage
+4533	Passer à l'expérience
+4534	Passer à la réputation
+4537	Synchroniser la bordure avec le panneau de chat
+4543	Couleur de fond des onglets
+4544	Police des onglets
+4545	Couleur de police des onglets
+4546	Source de couleur de police des onglets
+4547	Taille de police des onglets
+4548	Hauteur des onglets
+4549	Décalage X des onglets
+4550	Espacement des onglets
+4551	Texture des onglets
+4554	Onglets dans le panneau de chat
+4555	Les onglets utilisent le style, la taille et la couleur de bordure du panneau de chat.
+4556	Pris
+4557	Condition de talent
+4558	Conditions de talent
+4559	Le talent doit être
+4560	Nom du talent ; l'entrée ne s'affiche que si la condition est remplie.
+4564	Tank > Soigneur > DPS
+4568	EFFETS DE CIBLE ET FOCALISATION
+4569	CIBLE ET VISIBILITÉ
+4572	BARRE D'INCANTATION DE LA CIBLE
+4574	Taille du nom (incant. cible)
+4575	Taille de la cible (incant. cible)
+4576	Texture de la barre d'incant. cible
+4577	Taille du chrono (incant. cible)
+4578	Couleur de la cible
+4579	DISTANCE DE LA CIBLE
+4580	Distance de la cible
+4581	Texte de distance de la cible
+4582	Taille du texte de distance
+4584	Couleur de surbrillance de la cible
+4585	Lueur des incantations importantes de la cible
+4586	Marqueurs de cible
+4588	Lueur des améliorations purgeables de la cible
+4590	Auras suivies de la cible
+4592	Barres cible/focalisation
+4593	Taille du nom (barres ciblées)
+4594	Taille de la cible (barres ciblées)
+4595	Texture des barres ciblées
+4596	Taille du chrono (barres ciblées)
+4597	BARRES DE SORTS CIBLÉS
+4598	Barres de sorts ciblés
+4602	Décalage X des sorts ciblés
+4603	Décalage Y des sorts ciblés
+4604	Section des sorts ciblés
+4605	Cible :
+4608	Téléportations
+4611	Terrible
+4612	Cadres de test
+4613	Cadres de test : cette page, le Mode Déverrouillage ou /earena test
+4617	Ancrage du texte
+4620	Zones de texte
+4623	Groupe de texte
+4624	Choix de contour du texte
+4625	Styles de contour du texte
+4628	Échelle du texte (par barre de données)
+4629	Texte affiché avant le nom de la cible.
+4631	Décalage X du texte
+4632	Décalage Y du texte
+4634	Texture dessinée par-dessus la couleur de fond du chat.
+4635	Texture dessinée par-dessus les couleurs de fond des onglets.
+4636	Texture dessinée avec la couleur de fond du chat.
+4637	Texture de toutes les barres d'incantation des cadres d'unité. Hériter suit la texture de barre de chaque unité.
+4638	Texture de la barre de ressource de classe.
+4639	Texture des barres de vie, de puissance et de ressource de classe.
+4640	Texture introuvable
+4641	Résolution des textures - Réglée sur Haute\n
+4643	Anneau de dissipation texturé
+4644	Textures
+4648	Le %s personnalisé du remplacement actif est lié à cette page. Quittez l'onglet %s pour passer à un autre remplacement.
+4649	L'Armurerie
+4651	La banque s'ouvre n'importe où depuis l'en-tête des sacs ; loin d'un banquier, elle affiche le dernier contenu enregistré.
+4652	La barre affiche les cumuls sur le maximum au lieu du temps.
+4653	La barre modifiée par cette page.
+4654	L'indicateur de combat n'est pas disponible pour le cadre de focalisation.
+4658	L'inverse exact de Chevauchée céleste (en vol) : tout ce qui n'est pas en vol sur une monture capable de planer ou en forme de vol, y compris au sol.
+4659	Le repli doit être différent de\nla cible d'ancrage principale
+4661	la source de cadre doit être EllesmereUI
+4662	La gemme n'a pas pu être sertie.
+4663	La ligne lumineuse ne s'affiche pas avec un remplissage vertical ou le placement Depuis le bord gauche
+4664	La ligne lumineuse ne s'affiche pas avec un remplissage vertical ou le placement Depuis le bord droit
+4665	La ligne lumineuse ne s'affiche pas avec le style d'absorption Aucun
+4666	Le roi-liche
+4668	La fenêtre sociale native avec icônes de classe, noms colorés par classe, bannières de faction et acceptation auto des invitations ; les actions d'amis et tous les onglets sociaux restent natifs.
+4669	Les cadres, anneaux et emplacements d'origine là où le jeu les a, avec les fonctionnalités d'EllesmereUI.
+4670	Le groupe de remplacement '%s' fournit déjà le Mode Déverrouillage personnalisé de votre spécialisation actuelle. Personnalisez-le là-bas, ou retirez cette spécialisation de ce groupe.
+4672	Le cadre de barre de l'affichage des ressources personnelles, ou le cadre classique de barre d'incantation, sur les barres de vie, de puissance et de ressource de classe, avec toutes les fonctionnalités de barre d'EllesmereUI.
+4673	Les réglages de lueur pixel utilisés par les lueurs par icône de cette barre. Le modèle ne les modifie jamais.
+4676	La CVar scriptProfile est activée.
+4677	La gemme sertie sera détruite. Continuer ?
+4678	Les CVars taintLog et scriptProfile sont activées.
+4679	La CVar taintLog est activée.
+4680	Le suivi est toujours masqué en arène
+4681	Ce sont les mêmes réglages que sur les pages de chaque module, pas des réglages distincts.
+4683	Ces spécialisations ont des valeurs de remplacement qu'aucun mode d'édition de groupe ne peut plus atteindre (laissées par des changements d'appartenance). Elles s'appliquent toujours. Retirez-en une pour rendre à cette spécialisation la valeur par défaut partagée.
+4687	Épaisseur en pixels. -1 suit le réglage Bordure de chaque indicateur d'affaiblissement, 0 masque la bordure de couleur de dissipation.
+4695	Cette action est irréversible. Pensez d'abord à exporter ce profil en sauvegarde.
+4696	Cette action est irréversible. Exportez d'abord votre propre profil en sauvegarde.
+4699	Ce contrôle a récemment changé de sens : il copie maintenant DEPUIS le cadre choisi. Confirmer copiera tous les réglages partagés DE %1$s VERS %2$s.
+4700	Cet élément ne peut pas utiliser la visibilité basée sur le groupe.
+4702	Cet élément s'affiche dès qu'UNE condition Afficher est remplie. Masquer garde son sens dans les deux modes : un Masquer coché masque toujours, sur chaque ligne.
+4703	Cet élément ne s'affichera que lorsque vous êtes dans une maison ou un terrain
+4704	Cet élément ne s'affichera que lorsque vous êtes sur une monture
+4705	Cet export inclut des réglages inter-profils qui écraseront ceux de l'utilisateur qui l'importe, notamment Confort de jeu, Hovercast et d'autres qui ne devraient généralement pas être partagés avec des profils standard. CECI N'EST PAS RECOMMANDÉ pour le partage public de profils.
+4706	Cette fonctionnalité optimise vos réglages graphiques en jeu pour offrir la meilleure combinaison de FPS élevés et de clarté visuelle.\n\nVous pouvez annuler toutes les modifications à tout moment en cliquant sur \"Restaurer mes réglages\", qui apparaîtra après l'optimisation.\n\n\nCe que nous modifions :\n\n
+4709	Cette lueur est verrouillée sur sa page de réglages.
+4711	Le gestionnaire d'affaiblissements personnalisé de ce groupe ne peut être activé ou modifié qu'en jouant l'une de ses spécialisations.
+4712	Ceci est une chaîne de disposition de barres CDM, pas une chaîne de profil.
+4713	Ceci est une ancienne chaîne de disposition de barres CDM. Ce format n'est plus pris en charge. Utilisez plutôt l'importation de profil standard.
+4719	Cette option ne peut pas être utilisée tant que l'art de ressource de classe Blizzard est activé dans Barres de ressource.
+4720	Cette option ne s'applique pas au cadre du joueur.
+4721	Cette option n'est pas disponible sur le cadre du joueur
+4725	Cette option n'affecte que les améliorations de raid que vous pouvez lancer
+4726	Cette option ne s'applique qu'au style Badge.
+4727	Cette option ne s'applique que si Nom > Cible est sélectionné.
+4728	Cette option ne s'applique que si Nom > Cible ou Cible est sélectionné.
+4729	Cette option ne s'applique que si Cible est sélectionné.
+4730	Cette option ne s'applique que si le texte affiche un nom.
+4732	Cette option nécessite un portrait 2D ou le style graphique Classe.
+4733	Cette option nécessite une taille de bordure supérieure à 0
+4735	Cette option nécessite un style de bordure autre que Hériter (cadres principaux).
+4736	Cette option nécessite un style de bordure autre que Uni.
+4737	Cette option nécessite un style de bordure avec séparateurs et une taille de bordure supérieure à 0.
+4738	Cette option nécessite une forme Cercle ou Cercle pixels.
+4741	Cette option nécessite Superposition de dissipation, Colorer les bordures perso ou Utiliser les couleurs de dissipation.
+4743	Cette option nécessite un style de lueur autre que Aucun
+4746	Cette option nécessite une position d'icône de type autre que Aucune
+4747	Cette option nécessite un portrait visible et Afficher l'icône.
+4748	Cette option nécessite une barre de puissance attachée, une taille de bordure supérieure à 0 et un style de bordure avec jointure.
+4749	Cette option nécessite un cadre de cible ou de focalisation EllesmereUI.
+4750	Cette option nécessite un anneau extérieur autre que Aucun.
+4751	Cette option nécessite le style graphique Classe
+4752	Cette option nécessite que le style Blizzard soit désactivé
+4754	Cette option nécessite que Combiner nom du sort et cible soit désactivé.
+4755	Cette option nécessite un style de bordure perso, Afficher l'icône et Intégrer l'icône à la barre, avec le style EllesmereUI.
+4756	Cette option nécessite que les bordures de type de dissipation soient activées.
+4758	Cette option nécessite Afficher l'icône et Intégrer l'icône à la barre, avec le style EllesmereUI.
+4759	Cette option nécessite Afficher l'icône et le style EllesmereUI.
+4760	Cette option nécessite Afficher l'icône à côté de la barre d'incantation et le style EllesmereUI.
+4761	Cette option nécessite Afficher le niveau.
+4762	Cette option nécessite Uni ou un style de bordure avec séparateurs, et une taille de bordure supérieure à 0.
+4763	Cette option nécessite le style graphique Classe.
+4764	Cette option nécessite la bordure de forme colorée par classe et le mode sombre.
+4766	Cette option nécessite le style WoW Forever.
+4767	Ceci écrase les réglages actuels de ce cadre. La position, la visibilité et l'activation du cadre ne sont pas modifiées.
+4769	Ceci écrase définitivement les réglages de ce profil avec le remplacement '%s' : ses réglages capturés et ses dispositions personnalisées du Mode Déverrouillage et du gestionnaire d'améliorations (le cas échéant) deviennent la base du profil pour chaque spécialisation. TOUS les groupes de remplacement de spécialisation de ce profil sont ensuite supprimés et l'UI est rechargée. Les remplacements conditionnels ne sont pas affectés.
+4770	Cette chaîne de profil ne contient aucun réglage global.
+4771	Cette chaîne de profil ne contient aucune donnée de remplacement.
+4772	Cette chaîne de profil ne contient aucun réglage d'habillage des fenêtres et infobulles.
+4773	Ce profil a été créé avant la réinitialisation de la bêta et n'est plus compatible. Veuillez créer un nouvel export.
+4774	Ce profil a été créé avec une version plus récente d'EllesmereUI. Veuillez mettre à jour votre addon.
+4775	Ce profil a été créé avec une échelle d'UI de %1$d%% ; la vôtre est de %2$d%%. Changer votre échelle d'UI pour correspondre au profil importé ? Tous les profils s'afficheront à cette échelle car l'échelle d'UI n'est pas un réglage par profil, mais vous pouvez revenir à votre valeur d'origine à tout moment.
+4779	Ce réglage a des remplacements
+4780	Le Mode Déverrouillage personnalisé de cette spécialisation appartient à '%s'. Personnalisez-le là-bas, ou retirez la spécialisation de ce groupe.
+4781	Cette chaîne est un export de COMPTE COMPLET. Elle remplace vos réglages de compte par ceux de l'expéditeur, y compris Confort de jeu, les raccourcis HoverCast, les configurations de sorts du gestionnaire de recharge, les ancrages déverrouillés, l'échelle d'UI et les raccourcis de profil -- pas seulement un profil. Vos autres profils sont conservés, mais un profil portant le même nom est remplacé.
+4784	Ceci crée un gestionnaire d'améliorations entièrement unique pour ce groupe conditionnel. Les modifications de votre gestionnaire d'améliorations par défaut ne l'affecteront plus.
+4785	Ceci crée un gestionnaire d'améliorations entièrement unique pour ce groupe de remplacement. Les modifications de votre gestionnaire d'améliorations par défaut n'affecteront plus ces spécialisations.
+4786	Ceci crée un gestionnaire d'affaiblissements entièrement unique pour ce groupe conditionnel. Vos réglages actuels du gestionnaire d'affaiblissements servent de point de départ, et les modifications de votre gestionnaire par défaut ne l'affecteront plus.
+4787	Ceci crée un gestionnaire d'affaiblissements entièrement unique pour ce groupe de remplacement. Vos réglages actuels du gestionnaire d'affaiblissements servent de point de départ, et les modifications de votre gestionnaire par défaut n'affecteront plus ces spécialisations.
+4791	Ceci remplacera VOS réglages Blizz UI Enhanced (les onglets Habillage des fenêtres et Infobulles, menus et fenêtres) par ceux de l'expéditeur, sur TOUS vos profils. Vos réglages actuels de ces deux onglets ne pourront pas être récupérés ensuite.
+4792	Cela créerait un ancrage circulaire
+4793	Cela créerait une correspondance de hauteur circulaire
+4794	Cela créerait une correspondance de largeur circulaire
+4795	menace
+4796	Menace %
+4797	Position de la menace %
+4798	Menace et humeur du familier
+4799	Bordure de menace
+4800	Couleur de menace
+4802	Jauge de menace
+4803	Menace : valeurs natives pour la cible actuelle.
+4806	Nombre de seuil
+4807	Couleur des ticks
+4811	Temps depuis le dernier message correspondant affiché. Les répétitions masquées ne prolongent pas la fenêtre.
+4812	Chrono
+4813	Fond du chrono
+4814	Texture de fond du chrono
+4815	Texture de barre du chrono
+4816	Couleur de bordure du chrono
+4817	Taille de bordure du chrono
+4818	Couleur du chrono
+4820	Couche du chrono
+4821	Contour du chrono
+4822	Position du chrono
+4824	Taille du texte du chrono
+4825	Chrono X
+4826	Chrono Y
+4827	Textures du chrono, des forces et des barres de sort
+4828	Horodater tous les messages
+4830	Teinte le dragon avec votre couleur de classe au lieu de l'or ou de l'argent.
+4831	Teinte le dragon avec votre couleur de classe au lieu de l'or.
+4846	Raccourci de bascule
+4847	Basculer l'ouverture du menu
+4848	Le mode bascule nécessite une touche de sélection ; tant qu'elle n'est pas définie, le menu se déclenche au relâchement.
+4850	Basculer l'orientation
+4854	infobulle
+4855	Opacité du fond des infobulles
+4856	Bordure et fond des infobulles
+4857	Taille de bordure des infobulles
+4858	Bordures et fond des infobulles
+4859	Échelle de police des infobulles
+4860	Échelle de taille de police des infobulles
+4861	INFORMATIONS DE L'INFOBULLE
+4863	POSITION DE L'INFOBULLE
+4864	Échelle du texte des infobulles et texte d'enchantement
+4865	Échelle du texte des infobulles, texte d'enchantement et vitesse de vol draconique
+4866	VISIBILITÉ DE L'INFOBULLE
+4867	Infobulles
+4872	Haut gauche, vers le bas
+4873	Haut gauche, vers la droite
+4874	Taille du texte de la barre de nom
+4876	Décalage haut
+4879	Haut droite, vers le bas
+4880	Haut droite, vers la gauche
+4881	Bord supérieur de l'écran
+4885	Barre d'infos haut/bas
+4888	BARRE DE TOTEMS
+4890	Barres de totems
+4891	Taille du chrono des totems
+4892	Suivre
+4895	Suivre les rendements décroissants
+4896	AURAS SUIVIES
+4897	Auras suivies
+4898	Barres d'améliorations suivies
+4899	Les ID suivis sont ajoutés ; les ID exclus sont toujours masqués
+4900	ID de sorts suivis
+4901	SORTS SUIVIS
+4902	Police du suivi et tailles de texte par ligne
+4903	Taille d'icône du suivi
+4904	Échelle du suivi
+4906	Texte de nom, chrono et cumuls des barres de suivi (par barre)
+4907	Texture et bordure des barres de suivi (par barre)
+4908	Textures des barres de suivi et bordures d'icônes
+4909	BARRES DE SUIVI
+4911	Pistage, calendrier et courrier. Les cartes rondes les placent à côté d'une horloge en haut.
+4912	Suit le bijou JcJ et Chacun pour soi (recharge de 2 minutes) via le journal de combat.
+4913	Commerce
+4914	Annonces Commerce incluant LFW
+4917	Maître : bouton Tout apprendre
+4918	Transformations : Sanssaint, Jardin des nobles, dinde du Bienfaits du pèlerin, Elixir de Brouillecaboche
+4919	Traduction
+4921	Triangle
+4923	Suivi des bijoux et contrôles de foule
+4924	Recharges internes des bijoux
+4925	Côté des bijoux
+4926	Emplacement de bijou 
+4927	Activez Désactiver le changement de page par forme sur la barre d'action 1 pour lui donner ses propres emplacements.
+4928	Désactive les bulles de discussion en donjon, raid, champ de bataille et arène.
+4931	Retourne le dragon pour qu'il regarde dans l'autre sens autour du portrait.
+4932	Crépuscule
+4935	Deux nouvelles options dans la liste d'habillage des fenêtres
+4937	Tapez /reload dans le chat pour appliquer.
+4938	Tapez \"%s\" pour activer :
+4939	Saisissez une touche comme ALT-X. Elle utilise l'objet de votre quête suivie (ou le premier objet de quête) et n'est liée que tant qu'il existe. Mise à jour hors combat ; laissez vide pour désactiver.
+4940	Saisissez un ID de sort et appuyez sur Entrée pour être averti dès que cette amélioration manque.\nLes ID inconnus sont ignorés.
+4941	Position de l'icône de type
+4942	Type : 
+4943	Police de l'horloge du chrono M+. Tous les autres textes Mythique+ utilisent la police du module.
+4944	Police du suivi de quêtes. Ce choix local au module prime sur la police de module définie ci-dessus.
+4945	TYPOGRAPHIE
+4954	Échelle d'UI différente
+4957	Préréglages de style d'UI
+4959	Non lié
+4961	Décochez Tous les affaiblissements pour choisir comment les filtres Afficher se combinent.
+4962	Couleur du soulignement
+4963	Source de couleur du soulignement
+4964	Souligne l'onglet social sélectionné avec la couleur d'accentuation.
+4967	Boutons non groupés
+4970	Non interruptible
+4972	Couleur non interruptible
+4973	Bouclier non interruptible
+4974	Couleur d'unité en mode sombre
+4975	Cadre d'unité
+4976	FILTRES D'AURAS DES CADRES D'UNITÉ
+4979	Menu d'unité
+4980	Infobulle d'unité
+4984	Type de profil inconnu
+4986	Illimité
+4987	Déverrouiller les cadres d'arène
+4988	Déverrouiller les positions d'affichage
+4992	Disposition du Mode Déverrouillage
+4993	Poignées du Mode Déverrouillage
+4997	Ennemis invisibles
+4998	Opacité des invisibles
+5000	Jusqu'à 
+5001	Jusqu'à 20 familiers de raid
+5002	Intervalle de mise à jour (secondes)
+5003	Avis de mise à jour
+5007	Teinte d'utilisabilité
+5009	Utiliser la couleur d'accentuation
+5011	Utiliser le style Blizzard
+5013	Utiliser l'UI WoW Classic
+5014	Utiliser les couleurs de dissipation
+5015	Utiliser le style EllesmereUI
+5016	Utiliser la police EUI
+5017	Utiliser l'ordre de sorts supplémentaire
+5020	Utiliser la disposition d'indicateurs
+5021	Utiliser des lettres
+5022	Utiliser la police du compteur
+5023	Utiliser la disposition de raid
+5024	Utiliser l'heure du serveur
+5025	Utilisez les flèches de chaque en-tête de section pour réordonner.
+5026	Utiliser le style, la taille et la couleur de bordure de la barre d'incantation autour de l'icône.
+5027	Utiliser la fenêtre de sacs EllesmereUI au lieu des sacs par défaut. Après désactivation, faites /reload pour rendre entièrement les touches des sacs aux sacs par défaut.
+5028	Utiliser la fenêtre de banque EllesmereUI au lieu du cadre de banque par défaut.
+5029	Utiliser la couleur A l'aggro quand vous tankez au lieu de la couleur de réaction normale.
+5030	Utiliser WoW Forever
+5031	Utilisé
+5032	Utilisé / Total
+5033	Utilisé par le mode d'affichage Barre de l'alerte de mouvement.
+5036	Utilise les auras en direct de la cible/survol et le cache d'auras par GUID pour les autres barres identifiées.
+5037	Utilise Logs/WoWCombatLog.txt
+5038	Utilise les événements de combat natifs de Wrath
+5039	Utilise /maintank et /mainassist du raid
+5040	Utilise la couleur de ressource EllesmereUI de votre classe.
+5041	Utilise la couleur Interruption en recharge pendant la recharge de votre interruption.
+5042	Utilise la couleur de seuil sous la valeur au lieu d'à partir de celle-ci.
+5043	Utilise la largeur étendue du suivi d'objectifs de Wrath.
+5044	Utilise votre cible quand aucune focalisation n'incante.
+5046	Barre utilitaire
+5049	valeur
+5051	ART VANILLA
+5055	Séparateur de bordure vertical
+5057	Remplissage vertical
+5058	Décalage vertical
+5060	Séparateur vertical
+5065	Guide vidéo
+5069	Distance de vue - Réduite à 1\n
+5070	Voir les maisons
+5071	Voir l'équipe EUI
+5076	Visibilité réglée sur Toujours ou Jamais
+5077	GROUPES VISIBLES
+5078	Lignes visibles
+5079	Visiter
+5082	Marcheur du Vide
+5088	Pierre d'âme (démoniste uniquement)
+5095	À VOIR D'ABORD
+5103	Ce qui se trouve devant le nombre. Icône affiche l'icône du personnage ; les nuances de couleur à gauche la teintent.
+5107	Quand Soins utilise votre rôle ou vos talents de soins
+5109	Si activé, les rappels de flacon/nourriture/arme/poison s'affichent quand même (atténués) si vous n'avez pas l'objet correspondant dans vos sacs, pour vous inciter à vous réapprovisionner.\nSi désactivé, ils sont entièrement masqués si vous ne portez pas l'objet.
+5110	Une fois déverrouillée, maintenez Shift et faites glisser la minicarte. La position est aussi disponible dans le Mode Déverrouillage.
+5114	Où afficher
+5115	Le canal audio que règle la barre de volume du bloc.
+5116	Latence à afficher : domicile, monde, ou les deux côte à côte.
+5118	La partie de la rangée qui reste en place quand les rappels apparaissent et disparaissent.
+5119	Les sections affichées par l'infobulle d'or.
+5120	Le décompte d'emplacements affiché par le bloc.
+5121	La vue ouverte par défaut par les sacs.
+5122	Quand Grouper par catégorie est actif, retire le bloc final d'emplacements vides pour n'afficher que les objets.
+5123	Sur une monture capable de planer, y compris au sol, là où Blizzard affiche son ATH de vigueur. Chevauchée céleste (en vol) exige en plus que vous voliez.
+5124	Pendant que le Mode Groupe est actif. Le Mode Groupe peut démarrer en combat (Furie sanguinaire) ; les éléments sécurisés comme les barres d'action gardent alors leur visibilité actuelle jusqu'à la fin du combat.
+5125	Au repos, en ville ou dans une auberge.
+5126	Assis dans un véhicule.
+5127	Lorsque vous êtes dans une maison ou un terrain.
+5128	Pendant une incantation, affiche sur la barre le mana que coûtera le sort.
+5135	Suivi large
+5138	Décalage de largeur
+5141	Styles de bordure des fenêtres et barres
+5142	Habillage des fenêtres et infobulles
+5143	DÉPLACEMENT DES FENÊTRES
+5144	Polices des fenêtres et échelle du texte des infobulles
+5145	Texte d'en-tête, de barre et de chrono des fenêtres
+5146	Nom de la fenêtre
+5148	Échelle de la fenêtre %
+5149	L'échelle de la fenêtre, le zoom des icônes et les réglages de niveau d'objet sont partagés avec la page Sacs.
+5150	RÉGLAGES DE LA FENÊTRE
+5151	Habillage des fenêtres
+5152	Habillage des fenêtres modifié pour ce profil. Un rechargement de l'UI est nécessaire pour l'appliquer.
+5153	Largeur de la fenêtre
+5154	Fenêtres
+5158	Avec les textures par barre activées, Texture de barre s'applique à la ressource de classe.
+5160	Canaux mondiaux en lettres : Général Ge, Commerce T, DéfenseLocale LD, DéfenseUniverselle WD, RechercheDeGroupe LFG.
+5161	CARTE DU MONDE
+5163	Superposition de la carte du monde : Confort de jeu > Interface
+5164	Marqueur au sol 1-8
+5165	Marqueurs au sol
+5166	Marqueurs au sol au curseur
+5170	WoW Forever, le style Blizzard et l'UI WoW Classic rechargent l'UI une fois pour s'appliquer. Chaque module peut être changé séparément plus tard.
+5171	Entoure les barres de vie, de puissance et de ressource de classe du cadre de barre d'incantation de l'UI WoW Classic.
+5173	Positions des impulsions de canalisation Wrath
+5174	Positions des impulsions de canalisation Wrath.
+5175	Fenêtres de chat Wrath avec le panneau, les onglets, la barre latérale et les bulles de discussion EllesmereUI.
+5176	DONNÉES WRATH
+5177	Barres Wrath de vie, puissance, ressources de classe, incantation, GCD, swing et totems.
+5178	INVENTAIRE WRATH
+5179	BACKPORT WRATH OF THE LICH KING
+5180	Wrath n'a une barre de ressource de classe Blizzard que pour les runes du chevalier de la mort.
+5181	Cadres de raid et de groupe Wrath avec clics d'unité natifs, auras, portée et soins au clic.
+5182	Sorts, objets et auras Wrath. Les attributions sont enregistrées pour chaque groupe de talents.
+5183	Suivi natif des quêtes et hauts faits de Wrath avec style EUI, règles de visibilité, acceptation/rendu auto et raccourci d'objet de quête.
+5190	Taille du texte XP et réputation
+5192	Les barres d'XP et de réputation utilisent la texture ElvUI Norm.
+5193	Taille du texte de la barre d'XP
+5194	Texture de la barre d'XP
+5195	Textures des barres d'XP, de réputation et de faveur
+5200	Crier
+5203	Vous n'affichez AUCUNE amélioration.
+5204	Vous n'affichez AUCUN affaiblissement.
+5206	Vous avez modifié la valeur par défaut d'un réglage qui a des remplacements. Les remplacements gardent leurs propres valeurs, ce changement n'atteindra donc pas les spécialisations ou conditions qu'ils couvrent. Pour le modifier dans un remplacement, choisissez-le via le glyphe de classe à côté de la barre de recherche du module et modifiez-le là.
+5207	Vous n'avez pas cet objet dans vos sacs
+5208	Vous n'avez pas appris %1$s.
+5214	Votre spécialisation actuelle a son propre gestionnaire d'affaiblissements personnalisé, les gestionnaires conditionnels ne s'y appliquent donc jamais.
+5216	Vos soins
+5217	Votre nourriture préférée est épuisée - utilisation d'une alternative que vous possédez
+5218	Votre configuration et toutes les fonctionnalités d'EllesmereUI sont conservées ; seule l'apparence change. Appliquez un style à tous les modules en un clic, ou réglez chaque module ci-dessous. Changer de style recharge l'UI.
+5219	Votre UI, relookée en quelques secondes
+5222	Tranches de niveau des zones
+5223	Décalage X de la zone
+5224	Décalage Y de la zone
+5226	Couleur JcJ de la zone
+5227	Échelle de la zone
+5228	TEXTE DE ZONE
+5229	Texte de zone
+5230	Contour du texte de zone
+5231	Échelle du texte de zone
+5234	ZZZ sur le cadre du joueur EUI au repos
+5235	|cff00ff00[EllesmereUI]|r Toutes les astuces réinitialisées. Faites /reload pour les revoir.
+5236	|cff00ff00[EllesmereUI]|r Échelle d'UI réinitialisée. Faites /reload pour la reprendre depuis votre échelle Blizzard.
+5237	|cff00ff98EllesmereUI:|r Introduction des remplacements réinitialisée. La fenêtre d'annonce s'affichera à votre prochain /reload ; le guide vidéo à votre prochain clic sur le glyphe des remplacements.
+5238	|cff00ff98EllesmereUI:|r Guides vidéo et astuces réinitialisés. Les badges sont de retour ; les fenêtres uniques s'afficheront à nouveau.
+5244	|cffff6060[EllesmereUI]|r Impossible d'entrer en Mode Déverrouillage en combat.
+5245	|cffff6060[EllesmereUI]|r Impossible d'ouvrir les options en combat. Utilisez /eui pour voir les notes de mise à jour.
+5247	|cffff6060[EllesmereUI]|r Spécialisation changée : Mode Déverrouillage fermé, modifications de disposition non enregistrées abandonnées.
+5249	|cffFFFFFFCtrl + clic gauche :|r
+5253	|cffFFFFFFMolette :|r
+5256	简体中文 (Simplified Chinese)
+5257	繁體中文 (Traditional Chinese)
+5258	한국어 (Korean)
