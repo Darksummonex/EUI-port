@@ -23,7 +23,7 @@ local PAGE_COLORS      = "Colors"    -- the color half of the old "Fonts & Color
 local PAGE_PROFILES    = "Profiles"
 local PAGE_PRESETS     = "Presets"   -- navigation tab over the presets subpage of the profiles page
 local PAGE_WHATSNEW    = "Patch Notes"
-local PAGE_STAFF       = "EUI Staff"
+local PAGE_STAFF       = "Original Staff"
 
 -- Profiles/Patch Notes are their own sidebar pages (single-page modules), not tabs under Global Settings. Keys match the sidebar buttons in EllesmereUI.lua.
 local PROFILES_KEY     = "_EUIProfiles"
@@ -667,9 +667,15 @@ function EllesmereUI._BuildWhatsNewPage(pageName, parent, yOffset)
 end
 
 -------------------------------------------------------------------------------
---  EUI STAFF content (edited by hand): grouped team sections, one
---  { group, members } table per role, shown on the EUI Staff page.
+--  STAFF content (edited by hand): grouped team sections, one
+--  { group, members } table per role, shown on the Original Staff page.
+--  A member is a name, or { name, url } for a name with a GitHub link icon.
 -------------------------------------------------------------------------------
+EllesmereUI._PORT_STAFF = {
+    { group = "3.3.5a Backport", members = {
+        { name = "Laraystiri", url = "https://github.com/Darksummonex/EUI-port/releases" },
+    } },
+}
 EllesmereUI._STAFF = {
     { group = "Support Leads", members = {
         "Burne", "Mudd", "Kulia", "Dookie", "Lily",
@@ -702,9 +708,10 @@ local function LP_FontFor(locale)
     return (fn and fn(locale)) or (EllesmereUI.MEDIA_PATH .. "fonts\\Expressway.TTF")
 end
 
--- The EUI Staff page: the team, one card in the Patch Notes hero design
--- language (dark fill, faint border, accent bar) with each role group's
--- members laid out in columns, so the card grows with the roster.
+-- The Original Staff page: a thanks title, then the port staff card and the
+-- original team card in the Patch Notes hero design language (dark fill, faint
+-- border, accent bar) with each role group's members laid out in columns, so
+-- each card grows with its roster.
 function EllesmereUI._BuildStaffPage(pageName, parent, yOffset)
     local PP  = EllesmereUI.PanelPP
     local EG  = EllesmereUI.ELLESMERE_GREEN
@@ -715,13 +722,12 @@ function EllesmereUI._BuildStaffPage(pageName, parent, yOffset)
 
     parent._showRowDivider = nil
 
-    local staff  = EllesmereUI._STAFF or {}
     local y      = yOffset - 14
     local totalW = parent:GetWidth() - PAD * 2
 
     local title = MakeFont(parent, 25, nil, 1, 1, 1, 1)
     PP.Point(title, "TOP", parent, "TOP", 0, y)
-    title:SetText(L("EUI Staff"))
+    title:SetText(L("Special thanks to Ellesmere"))
 
     -- Flourish: two faint lines meeting an accent dot.
     local fy = y - 44
@@ -740,62 +746,102 @@ function EllesmereUI._BuildStaffPage(pageName, parent, yOffset)
 
     local COLS, ROW_H = 4, 22
     local colW = math.floor((totalW - 32) / COLS)
-    local card = CreateFrame("Frame", nil, parent)
-    card:SetFrameLevel(parent:GetFrameLevel() + 2)
-    -- Width first (height provisional): set again once the roster is laid out.
-    PP.Size(card, totalW, 100)
-    PP.Point(card, "TOPLEFT", parent, "TOPLEFT", PAD, y)
-    local bg = card:CreateTexture(nil, "BACKGROUND")
-    bg:SetAllPoints()
-    bg:SetColorTexture(0.06, 0.08, 0.10, 0.50)
-    MakeBorder(card, 1, 1, 1, 0.12, PP)
-    local accent = card:CreateTexture(nil, "ARTWORK", nil, 7)
-    accent:SetColorTexture(EG.r, EG.g, EG.b, 0.6)
-    PP.Point(accent, "TOPLEFT", card, "TOPLEFT", 1, -1)
-    PP.Point(accent, "TOPRIGHT", card, "TOPRIGHT", -1, -1)
-    accent:SetHeight(2)
-    if PP.DisablePixelSnap then PP.DisablePixelSnap(accent) end
 
-    local header = MakeFont(card, 13, nil, EG.r, EG.g, EG.b, 0.9)
-    PP.Point(header, "TOPLEFT", card, "TOPLEFT", 16, -16)
-    header:SetText(L("EUI STAFF"))
-    local div = card:CreateTexture(nil, "ARTWORK")
-    div:SetColorTexture(1, 1, 1, 0.08)
-    PP.Point(div, "TOPLEFT", card, "TOPLEFT", 16, -38)
-    PP.Point(div, "TOPRIGHT", card, "TOPRIGHT", -16, -38)
-    div:SetHeight(1)
-    if PP.DisablePixelSnap then PP.DisablePixelSnap(div) end
-
-    -- Each group: accent header, then dot-bulleted names filling COLS columns.
-    local cy = -46
-    for gi = 1, #staff do
-        local grp = staff[gi]
-        if gi > 1 then cy = cy - 10 end
-        local hdr = MakeFont(card, 12, nil, EG.r, EG.g, EG.b, 0.9)
-        PP.Point(hdr, "TOPLEFT", card, "TOPLEFT", 16, cy - 8)
-        hdr:SetJustifyH("LEFT")
-        hdr:SetText(L(grp.group or ""))
-        cy = cy - 28
-        local members = grp.members or {}
-        for i = 1, #members do
-            local x = 16 + ((i - 1) % COLS) * colW
-            local ry = cy - math.floor((i - 1) / COLS) * ROW_H
-            local bdot = card:CreateTexture(nil, "OVERLAY")
-            bdot:SetColorTexture(EG.r, EG.g, EG.b, 0.9)
-            PP.Size(bdot, 4, 4)
-            PP.Point(bdot, "TOPLEFT", card, "TOPLEFT", x + 4, ry - 9)
-            local nameFs = MakeFont(card, 14, nil, 1, 1, 1, 0.9)
-            PP.Point(nameFs, "TOPLEFT", card, "TOPLEFT", x + 16, ry - 4)
-            nameFs:SetWidth(colW - 20)
-            nameFs:SetJustifyH("LEFT")
-            nameFs:SetWordWrap(false)
-            nameFs:SetText(members[i])
-        end
-        cy = cy - math.ceil(#members / COLS) * ROW_H
+    local function LinkIcon(card, nameFs, url)
+        local btn = CreateFrame("Button", nil, card)
+        btn:SetFrameLevel(card:GetFrameLevel() + 2)
+        PP.Size(btn, 16, 16)
+        PP.Point(btn, "LEFT", nameFs, "LEFT", math.min(nameFs:GetStringWidth(), colW - 44) + 6, 0)
+        local tex = btn:CreateTexture(nil, "ARTWORK")
+        tex:SetAllPoints()
+        tex:SetTexture(EllesmereUI.ICONS_PATH .. "github.png")
+        tex:SetAlpha(0.6)
+        btn:SetScript("OnEnter", function(self)
+            tex:SetAlpha(1)
+            EllesmereUI.ShowWidgetTooltip(self, "GitHub")
+        end)
+        btn:SetScript("OnLeave", function()
+            tex:SetAlpha(0.6)
+            EllesmereUI.HideWidgetTooltip()
+        end)
+        btn:SetScript("OnClick", function(self)
+            EllesmereUI.HideWidgetTooltip()
+            if EllesmereUI.ShowLinkPopup then
+                EllesmereUI.ShowLinkPopup(url, self)
+            elseif EllesmereUI.ShowCopyPopup then
+                EllesmereUI:ShowCopyPopup("GitHub", "", url)
+            end
+        end)
+        return btn
     end
-    local cardH = math.abs(cy) + 14
-    PP.Size(card, totalW, cardH)
-    y = y - cardH - 20
+
+    local function Card(headerText, staff)
+        local card = CreateFrame("Frame", nil, parent)
+        card:SetFrameLevel(parent:GetFrameLevel() + 2)
+        -- Width first (height provisional): set again once the roster is laid out.
+        PP.Size(card, totalW, 100)
+        PP.Point(card, "TOPLEFT", parent, "TOPLEFT", PAD, y)
+        local bg = card:CreateTexture(nil, "BACKGROUND")
+        bg:SetAllPoints()
+        bg:SetColorTexture(0.06, 0.08, 0.10, 0.50)
+        MakeBorder(card, 1, 1, 1, 0.12, PP)
+        local accent = card:CreateTexture(nil, "ARTWORK", nil, 7)
+        accent:SetColorTexture(EG.r, EG.g, EG.b, 0.6)
+        PP.Point(accent, "TOPLEFT", card, "TOPLEFT", 1, -1)
+        PP.Point(accent, "TOPRIGHT", card, "TOPRIGHT", -1, -1)
+        accent:SetHeight(2)
+        if PP.DisablePixelSnap then PP.DisablePixelSnap(accent) end
+
+        local header = MakeFont(card, 13, nil, EG.r, EG.g, EG.b, 0.9)
+        PP.Point(header, "TOPLEFT", card, "TOPLEFT", 16, -16)
+        header:SetText(L(headerText))
+        local div = card:CreateTexture(nil, "ARTWORK")
+        div:SetColorTexture(1, 1, 1, 0.08)
+        PP.Point(div, "TOPLEFT", card, "TOPLEFT", 16, -38)
+        PP.Point(div, "TOPRIGHT", card, "TOPRIGHT", -16, -38)
+        div:SetHeight(1)
+        if PP.DisablePixelSnap then PP.DisablePixelSnap(div) end
+
+        -- Each group: accent header, then dot-bulleted names filling COLS columns.
+        local cy = -46
+        for gi = 1, #staff do
+            local grp = staff[gi]
+            if gi > 1 then cy = cy - 10 end
+            local hdr = MakeFont(card, 12, nil, EG.r, EG.g, EG.b, 0.9)
+            PP.Point(hdr, "TOPLEFT", card, "TOPLEFT", 16, cy - 8)
+            hdr:SetJustifyH("LEFT")
+            hdr:SetText(L(grp.group or ""))
+            cy = cy - 28
+            local members = grp.members or {}
+            for i = 1, #members do
+                local member = members[i]
+                local x = 16 + ((i - 1) % COLS) * colW
+                local ry = cy - math.floor((i - 1) / COLS) * ROW_H
+                local bdot = card:CreateTexture(nil, "OVERLAY")
+                bdot:SetColorTexture(EG.r, EG.g, EG.b, 0.9)
+                PP.Size(bdot, 4, 4)
+                PP.Point(bdot, "TOPLEFT", card, "TOPLEFT", x + 4, ry - 9)
+                local nameFs = MakeFont(card, 14, nil, 1, 1, 1, 0.9)
+                PP.Point(nameFs, "TOPLEFT", card, "TOPLEFT", x + 16, ry - 4)
+                nameFs:SetWidth(colW - 20)
+                nameFs:SetJustifyH("LEFT")
+                nameFs:SetWordWrap(false)
+                if type(member) == "table" then
+                    nameFs:SetText(member.name)
+                    if member.url then LinkIcon(card, nameFs, member.url) end
+                else
+                    nameFs:SetText(member)
+                end
+            end
+            cy = cy - math.ceil(#members / COLS) * ROW_H
+        end
+        local cardH = math.abs(cy) + 14
+        PP.Size(card, totalW, cardH)
+        y = y - cardH - 20
+    end
+
+    Card("PORT STAFF", EllesmereUI._PORT_STAFF or {})
+    Card("ORIGINAL STAFF", EllesmereUI._STAFF or {})
 
     return math.abs(y)
 end
@@ -990,8 +1036,13 @@ do
         },
     },
     {
-        version = "Core 0.60",
+        version = "Core 0.61",
         heroes = {
+            {
+                title = "Update Notices",
+                desc  = "When a guild or group member runs a newer EllesmereUI release, chat tells you once per session. Type /euiupdate for the download link. Wrath has no internet access, so the news comes from other EUI users.",
+                nav   = Nav("_EUIGlobal", "General"),
+            },
             { title = "Native Wrath Languages", desc = "The Locales addon provides community translations for all original Wrath client languages, with English fallback and Lua 5.1 formatting." },
             { title = "Collapsed Menu Icons", desc = "The collapsed menu displays the original Ellesmere E logo with the UI accent color and a working close icon on the Wrath client." },
             {
@@ -1065,8 +1116,13 @@ do
         },
     },
     {
-        version = "Options 0.112",
+        version = "Options 0.113",
         heroes = {
+            {
+                title = "Original Staff",
+                desc  = "The staff page is now Original Staff, opening with thanks to Ellesmere and the port staff card with a GitHub link to the releases. The header line crediting Ellesmere opens it.",
+                nav   = Nav("_EUIPatchNotes", "Original Staff"),
+            },
             {
                 title = "Custom Reminders Per Character",
                 desc = "Custom spell reminders, visibility and sounds are saved separately for each character, independently of shared profiles.",
@@ -2560,7 +2616,14 @@ initFrame:SetScript("OnEvent", function(self)
                   EllesmereUI:InvalidatePageCache()
                   EllesmereUI:RefreshPage(true)
               end },
-            { type="label", text="" });  y = y - h
+            _G.EUI_WOW_335 and { type="toggle", text="Update Notices",
+              tooltip="Tell you in chat when a guild or group member runs a newer EllesmereUI release. Type /euiupdate for the download link.",
+              getValue=function() return not (EllesmereUIDB and EllesmereUIDB.updateCheckDisabled) end,
+              setValue=function(v)
+                  if not EllesmereUIDB then EllesmereUIDB = {} end
+                  EllesmereUIDB.updateCheckDisabled = (not v) and true or nil
+              end }
+            or { type="label", text="" });  y = y - h
 
         _, h = W:Spacer(parent, y, 20);  y = y - h
 
@@ -6457,6 +6520,46 @@ initFrame:SetScript("OnEvent", function(self)
                 return EllesmereUI._BuildWhatsNewPage(pageName, parent, yOffset)
             end,
         })
+
+        -- "Special thanks to: Ellesmere" beside the header's collapse button; a
+        -- click opens the Original Staff page. Built on the first open.
+        local thanksBtn
+        local function ShowThanks()
+            local ca = EllesmereUI._clickArea
+            if not ca then return end
+            if not thanksBtn then
+                thanksBtn = CreateFrame("Button", nil, ca)
+                thanksBtn:SetFrameLevel(ca:GetFrameLevel() + 20)
+                thanksBtn:SetHeight(20)
+                thanksBtn:SetPoint("RIGHT", ca, "TOPRIGHT", -110, -31)
+                local EG = EllesmereUI.ELLESMERE_GREEN
+                local nameFs = EllesmereUI.MakeFont(thanksBtn, 13, nil, EG.r, EG.g, EG.b, 0.9)
+                nameFs:SetPoint("RIGHT", thanksBtn, "RIGHT", 0, 0)
+                nameFs:SetText("Ellesmere")
+                local prefixFs = EllesmereUI.MakeFont(thanksBtn, 13, nil, 1, 1, 1, 0.45)
+                prefixFs:SetPoint("RIGHT", nameFs, "LEFT", -4, 0)
+                prefixFs:SetText(EllesmereUI.L("Special thanks to:"))
+                thanksBtn:SetWidth(nameFs:GetStringWidth() + 4 + prefixFs:GetStringWidth())
+                thanksBtn:SetScript("OnEnter", function(self)
+                    prefixFs:SetAlpha(0.75)
+                    nameFs:SetAlpha(1)
+                    EllesmereUI.ShowWidgetTooltip(self, EllesmereUI.L("View Original Staff"))
+                end)
+                thanksBtn:SetScript("OnLeave", function()
+                    prefixFs:SetAlpha(0.45)
+                    nameFs:SetAlpha(0.9)
+                    EllesmereUI.HideWidgetTooltip()
+                end)
+                thanksBtn:SetScript("OnClick", function()
+                    EllesmereUI.HideWidgetTooltip()
+                    EllesmereUI:SelectModule(PATCHNOTES_KEY)
+                    EllesmereUI:SelectPage(PAGE_STAFF)
+                end)
+            end
+            thanksBtn:Show()
+        end
+        EllesmereUI:RegisterOnShow(ShowThanks)
+        if EllesmereUI._mainFrame and EllesmereUI._mainFrame:IsShown() then ShowThanks() end
     end
 
     -- Clean up profiles root when panel closes

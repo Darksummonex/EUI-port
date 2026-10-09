@@ -2,7 +2,8 @@
 ## Title: |cff0cd29fEllesmereUI|r
 ## Notes: Core UI backport for World of Warcraft 3.3.5
 ## Author: Ellesmere / 3.3.5 backport
-## Version: 3.3.5-core-0.60
+## Version: 3.3.5-core-0.61
+## X-EUI-Release: 2026100902
 ## SavedVariables: EllesmereUIDB
 ## IconTexture: Interface\AddOns\EllesmereUI\media\eg-logo.tga
 EllesmereUI_3.3.5_Compat.lua
@@ -58,3 +59,4 @@ EUI_TooltipIDs_335.lua
 EUI_ChannelTicks_335.lua
 EUI_AuraFilters_335.lua
 EUI_AuraIndicators_335.lua
+EllesmereUI_UpdateCheck_335.lua

@@ -1,5 +1,6 @@
 """Patch Notes module on Wrath: backport notes only (no Retail entries), the
-Legends/donor content and header thanks line removed, EUI Staff kept, both
+Legends/donor content removed, the header thanks line fixed to Ellesmere,
+Original Staff page with the port staff card and its GitHub link, both
 pages built through the real General Options registration in Lua 5.1, and the
 new-patch dot stamp re-arming on backport version changes."""
 from pathlib import Path
@@ -35,13 +36,14 @@ RETAIL_TITLES = ['Target of Target and Bottom Text', 'First Install Keeps Your L
 
 # --- Static source checks -------------------------------------------------
 for s in ['_LEGENDS', '_PickLegendsThanks', '_BuildLegendsPage', 'Seasonal Top Donors', 'ALL-TIME DONORS',
-          'Special thanks to', 'View EUI Legends', 'EUI Legends', 'GENERATED DONORS']:
+          'View EUI Legends', 'EUI Legends', 'GENERATED DONORS', 'EUI STAFF', '"EUI Staff"']:
     assert s not in general, 'removed content still present: ' + s
 for name in DONOR_ONLY:
     assert not re.search(r'"%s"' % re.escape(name), general), 'donor name still listed: ' + name
 for t in RETAIL_TITLES:
     assert t not in general, 'Retail patch note still present: ' + t
-assert 'EllesmereUI._STAFF = {' in general and '"EUI STAFF"' in general
+assert 'EllesmereUI._STAFF = {' in general and '"ORIGINAL STAFF"' in general and '"PORT STAFF"' in general
+assert (root / 'EllesmereUI/media/icons/github.png').is_file(), 'GitHub icon missing'
 
 # --- Lua environment (same adapter as validate_themes_presets.py) ---------
 def make_runtime(addons_loaded):
@@ -80,6 +82,7 @@ C_AddOns=C_AddOns or {}; C_AddOns.IsAddOnLoaded=nil
 E.ELLESMERE_GREEN={r=.05,g=.82,b=.62}
 E.PanelPP=E.PP
 E.CONTENT_PAD=45
+E.ICONS_PATH=E.ICONS_PATH or "Interface\\\\AddOns\\\\EllesmereUI\\\\media\\\\icons\\\\"
 E.L=function(s) return s end
 E.Lf=function(s) return s end
 E.MakeFont=function(parent) return parent:CreateFontString() end
@@ -134,7 +137,7 @@ lua = make_runtime(True)
 E = lua.globals().EllesmereUI
 cfg = lua.globals().registrations['_EUIPatchNotes']
 assert cfg is not None, 'Patch Notes module not registered'
-assert list(cfg.pages.values()) == ['Patch Notes', 'EUI Staff'], list(cfg.pages.values())
+assert list(cfg.pages.values()) == ['Patch Notes', 'Original Staff'], list(cfg.pages.values())
 for k in ['_LEGENDS', '_LEGENDS_SEASONS', '_PickLegendsThanks', '_BuildLegendsPage']:
     assert E[k] is None, k + ' should be gone'
 
@@ -218,24 +221,50 @@ hit:GetScript("OnClick")(hit)
 assert(#navCalls==1 and type(navCalls[1][1])=="string" and type(navCalls[1][2])=="string")
 ''')
 
-staff_text = page_texts(lua, 'EUI Staff')
-for s in ['EUI Staff', 'EUI STAFF', 'Support Leads', 'Support Team', 'Major Bugfix/Feature Contributors',
+staff_text = page_texts(lua, 'Original Staff')
+for s in ['Special thanks to Ellesmere', 'PORT STAFF', '3.3.5a Backport', 'Laraystiri', 'ORIGINAL STAFF',
+          'Support Leads', 'Support Team', 'Major Bugfix/Feature Contributors',
           'Multi-language Support Contributors', 'Burne', 'Bierbauch', 'TF0rd', 'Shiyan66666']:
     assert s in staff_text, 'staff page missing ' + s
-staff_names = sum(len(list(g.members.values())) for g in E._STAFF.values())
-assert len(staff_text) == 2 + len(list(E._STAFF.values())) + staff_names, 'unexpected extra text on staff page'
+groups = list(E._PORT_STAFF.values()) + list(E._STAFF.values())
+staff_names = sum(len(list(g.members.values())) for g in groups)
+assert len(staff_text) == 3 + len(groups) + staff_names, 'unexpected extra text on staff page'
 for s in DONOR_ONLY + ['Seasonal Top Donors', 'ALL-TIME DONORS', 'Thank you', 'Unclaimed']:
     assert s not in staff_text, 'donor content on staff page: ' + s
+# Laraystiri's GitHub icon opens the copy-link popup with the releases URL.
+lua.execute('''
+local shown
+EllesmereUI.ShowLinkPopup=function(url) shown=url end
+local parent=CreateFrame("Frame"); parent:SetWidth(900)
+local before=#allFrames
+registrations._EUIPatchNotes.buildPage("Original Staff",parent,-6)
+local icon
+for i=before+1,#allFrames do
+ local f=allFrames[i]
+ if f.kind=="Button" and f:GetScript("OnClick") then assert(not icon,"one link icon expected"); icon=f end
+end
+assert(icon,"GitHub icon button missing")
+icon:GetScript("OnClick")(icon)
+assert(shown=="https://github.com/Darksummonex/EUI-port/releases", tostring(shown))
+''')
 
-# The header thanks line is gone: no panel-open callback draws it.
+# The header thanks line names Ellesmere and opens the Original Staff page.
 lua.execute('''
 EllesmereUI._clickArea=CreateFrame("Frame")
 local before=#allFrames
 for _,fn in ipairs(onShow) do pcall(fn) end
+local texts, btn={}, nil
 for i=before+1,#allFrames do
- local t=allFrames[i].text
- assert(not (type(t)=="string" and t:find("thanks")), "thanks line drawn on panel open")
+ local f=allFrames[i]
+ if type(f.text)=="string" then texts[f.text]=true end
+ if f.kind=="Button" and f:GetScript("OnClick") then btn=f end
 end
+assert(texts["Special thanks to:"] and texts["Ellesmere"], "header thanks line missing")
+local mod, page
+EllesmereUI.SelectModule=function(_,m) mod=m end
+EllesmereUI.SelectPage=function(_,p) page=p end
+btn:GetScript("OnClick")(btn)
+assert(mod=="_EUIPatchNotes" and page=="Original Staff", tostring(mod).." "..tostring(page))
 ''')
 
 # Without the target modules loaded, entries render static (no dead links).
@@ -291,6 +320,6 @@ assert(dotUpdates==5)
 
 for w in warnings:
     print('NOTE:', w)
-print('PASS: %d backport patch-note entries (no Retail notes), %d deep links checked; Legends/donors/thanks removed; '
-      'EUI Staff page built with %d names; both pages build in the Lua 5.1 mocks; patch dot re-arms on backport updates'
+print('PASS: %d backport patch-note entries (no Retail notes), %d deep links checked; Legends/donors removed; '
+      'header thanks to Ellesmere; Original Staff page built with %d names and the port GitHub link; both pages build in the Lua 5.1 mocks; patch dot re-arms on backport updates'
       % (len(patches), navs, staff_names))

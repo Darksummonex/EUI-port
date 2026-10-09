@@ -1,5 +1,12 @@
 # EllesmereUI 3.3.5a — Handoff — 2026-10-06
 
+## Latest (2026-10-09) — Update notices (Core 0.61) and Original Staff (Options 0.113)
+
+- `EllesmereUI/EllesmereUI_UpdateCheck_335.lua` (last in the Core TOC): release stamp = Core TOC `## X-EUI-Release: YYYYMMDDNN` (now `2026100902`). **Raise it for every GitHub release/RC**, or clients never see a newer one.
+- Prefix `EUIVER`, payload = stamp. Sends to GUILD 15 s after login and to BATTLEGROUND/RAID/PARTY on roster changes; 60 s throttle per channel/target. A lower stamp gets ours back on the same channel (WHISPER to the sender); a higher one prints one chat notice per session unless `EllesmereUIDB.updateCheckDisabled` (toggle "Update Notices", Global Settings > General). `/euiupdate` opens `ShowCopyPopup` with the releases URL. No clickable chat link: unknown hyperlink types error in Blizzard `SetItemRef` without EUI Chat.
+- Patch Notes: tab `PAGE_STAFF = "Original Staff"`; page title "Special thanks to Ellesmere", cards PORT STAFF (`EllesmereUI._PORT_STAFF`, Laraystiri + GitHub icon -> `EllesmereUI.ShowLinkPopup`, exposed from the Panel footer) and ORIGINAL STAFF (`_STAFF`). Header line "Special thanks to: Ellesmere" restored (opens that page). Icon `EllesmereUI/media/icons/github.png` from `backport-tools/make_github_icon.py` (Octicons mark).
+- Validators: new `validate_update_check.py`; `validate_patch_notes.py` updated.
+
 ## Latest (2026-10-09) — Hidden 3.3.5 dead options (no bumps)
 
 - Global Settings Reset: `EllesmereUI._applyHideBlizzardPartyFrame` (Retail-only) is called only if defined; the reset now finishes and reloads.
@@ -278,10 +285,10 @@ Working-tree backups: `backport-tools/backup_project.py` writes
 
 ## Current versions
 
-Core 0.60; Action Bars 0.19; Arena 0.3; AuraBuff Reminders 0.7; Bags 0.11;
+Core 0.61; Action Bars 0.19; Arena 0.3; AuraBuff Reminders 0.7; Bags 0.11;
 Blizz UI Enhanced (BlizzardSkin) 0.28; Chat 0.49; Cooldown Manager 0.7;
 Damage Meters 0.8; Data Bars 0.5; Friends 0.3; Minimap 0.4; Nameplates 0.14;
-Options 0.112; Locales 0.1; QoL 0.15; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.18;
+Options 0.113; Locales 0.1; QoL 0.15; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.18;
 Resource Bars 0.5; Unit Frames 0.18.
 
 Git: branch `cursor/eui-shapes-bars-skins-qol`, built on

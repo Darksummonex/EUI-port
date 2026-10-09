@@ -1,4 +1,10 @@
-# Options 3.3.5 — 0.112
+# Options 3.3.5 — 0.113
+
+0.113: Patch Notes: a aba "EUI Staff" virou "Original Staff". No topo, "Special
+thanks to Ellesmere" e o cartão PORT STAFF (Laraystiri, com ícone do GitHub que
+abre o link dos releases para copiar); abaixo, o cartão ORIGINAL STAFF. A linha
+"Special thanks to: Ellesmere" volta ao cabeçalho e abre essa página.
+Global Settings > General: opção "Update Notices" (avisos de nova versão do Core).
 
 0.112: seção TARGETED SPELLS em Raid Frames (Party/Raid): Show Targeted Spells,
 prévia, tamanho, máximo de ícones, posição, direção, offsets, varredura, timer e

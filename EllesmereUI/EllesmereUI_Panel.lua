@@ -3019,6 +3019,7 @@ local function CreateMainFrame()
             end)
             btn:SetScript("OnClick", function() ShowLinkPopup(def.url, btn) end)
         end
+        EllesmereUI.ShowLinkPopup = ShowLinkPopup
     end
 
     -- Close  (right side, FOOTER_PAD from right edge, green, closes window)

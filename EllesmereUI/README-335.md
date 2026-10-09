@@ -1,4 +1,11 @@
-# EllesmereUI Wrath Core — 0.60
+# EllesmereUI Wrath Core — 0.61
+
+0.61: avisos de atualização (`EllesmereUI_UpdateCheck_335.lua`). O 3.3.5 não acessa a
+internet, então os clientes EUI trocam o número do release (`## X-EUI-Release` no TOC
+do Core, formato AAAAMMDDNN) por mensagens de addon na guilda, grupo, raide e BG.
+Quem tem release mais antigo recebe um aviso no chat (uma vez por sessão);
+`/euiupdate` mostra o link dos releases no GitHub para copiar. Opção "Update
+Notices" em Global Settings > General.
 
 0.60: estimativa de escudos (absorbs) em `EllesmereUI_Absorbs_335.lua`, usada
 pelos Raid Frames e Unit Frames. O 3.3.5 não informa o valor dos escudos: o Core
