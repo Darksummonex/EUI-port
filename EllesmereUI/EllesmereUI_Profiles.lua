@@ -4533,7 +4533,22 @@ local function BuildStringPopup(title, subtitle, readOnly, onConfirm, confirmLab
     local function RefreshHeight()
         C_Timer.After(0.01, function()
             local lineH = (editBox.GetLineHeight and editBox:GetLineHeight()) or 14
-            local h = editBox:GetNumLines() * lineH
+            local h
+            if editBox.GetNumLines then
+                h = editBox:GetNumLines() * lineH
+            else
+                -- 3.3.5 EditBoxes cannot report wrapped lines; measure the text in a matching FontString.
+                local m = editBox._eMeasure
+                if not m then
+                    m = sc:CreateFontString(nil, "BACKGROUND"); m:Hide(); m:SetJustifyH("LEFT")
+                    if m.SetNonSpaceWrap then m:SetNonSpaceWrap(true) end
+                    editBox._eMeasure = m
+                end
+                local font, size, flags = editBox:GetFont()
+                if font then m:SetFont(font, size, flags) end
+                m:SetWidth(math.max(1, editBox:GetWidth() or 1)); m:SetText(editBox:GetText() or "")
+                h = math.max(lineH, m:GetStringHeight() or 0)
+            end
             local sfH = sf:GetHeight() or 100
             -- Only grow scroll child beyond the visible area when content is taller
             if h <= sfH then

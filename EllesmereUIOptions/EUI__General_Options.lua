@@ -1099,6 +1099,7 @@ do
             },
         },
         fixes = {
+            { text = "The profile Import and Export boxes no longer error with \"attempt to call method 'GetNumLines'\" and scroll to fit long strings." },
             { text = "The collapsed menu shows the Ellesmere E logo again instead of a plain black circle." },
             { text = "Action button tooltips show the real spell ID instead of the spellbook slot." },
             { text = "Fixed an \"attempt to call global 'issecretvalue'\" error from Cooldown Manager glows before the options panel was first opened." },

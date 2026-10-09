@@ -1,5 +1,10 @@
 # EllesmereUI Wrath Core — 0.61
 
+Sem bump: as caixas de Import/Export de perfis davam erro "attempt to call
+method 'GetNumLines'" (`EllesmereUI_Profiles.lua`), porque a EditBox do 3.3.5 não
+tem esse método. Agora a altura do texto é medida num FontString escondido com a
+mesma fonte e largura, e a rolagem acompanha strings longas.
+
 Sem bump: no 3.3.5 o rodapé das opções mostra só o ícone do GitHub (releases do
 port), que abre o popup de cópia (o mesmo do Export). Os ícones eram PNG e não
 apareciam; agora há cópias TGA 64x64 em `media/icons_335`

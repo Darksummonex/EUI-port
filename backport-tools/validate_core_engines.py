@@ -22,6 +22,10 @@ toc = [l.strip() for l in toc if l.strip() and not l.startswith('#')]
 for name in NEW + ['Libs\\LibDeflate\\LibDeflate.lua']:
     assert name in toc, name
 assert toc.index('Libs\\LibDeflate\\LibDeflate.lua') < toc.index('EllesmereUI_Profiles.lua')
+# 3.3.5 EditBoxes have no GetNumLines; the import/export popup must measure instead.
+profiles_src = (core / 'EllesmereUI_Profiles.lua').read_text(encoding='utf-8-sig')
+assert profiles_src.count(':GetNumLines()') == profiles_src.count('if editBox.GetNumLines then'), 'unguarded EditBox:GetNumLines'
+assert 'm:GetStringHeight()' in profiles_src
 assert toc.index('Libs\\LibStub\\LibStub.lua') < toc.index('Libs\\LibDeflate\\LibDeflate.lua')
 assert toc.index('EllesmereUI_Panel.lua') < toc.index('EllesmereUI_PartyMode_335.lua')
 assert toc.index('EllesmereUI_Ticker.lua') < toc.index('EllesmereUI_PartyMode_335.lua')
