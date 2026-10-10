@@ -147,7 +147,7 @@ end
 
 function ns.Capture(plate,native)
     local p=ns.GetSettings()
-    local s={native=native,plate=plate,originalAlpha={},auras={},buffs={},pips={},debuffList={},buffList={},
+    local s={native=native,plate=plate,originalAlpha={},auras={},buffs={},ccs={},pips={},debuffList={},buffList={},ccList={},
         originalThreatTexture=native.threat:GetTexture()}
     for _,region in pairs(native) do
         if region.GetAlpha and region.SetAlpha then s.originalAlpha[region]=region:GetAlpha() end
@@ -185,6 +185,7 @@ function ns.Capture(plate,native)
     for i=1,5 do s.pips[i]=Tex(s.textHost,"OVERLAY") end
     for i=1,ns.MAX_DEBUFFS do s.auras[i]=Aura(root) end
     for i=1,ns.MAX_BUFFS do s.buffs[i]=Aura(root) end
+    for i=1,ns.MAX_CC do s.ccs[i]=Aura(root) end
     -- The options header caches the preview by hiding it; it must repaint, not reset, on return.
     plate:HookScript("OnHide",function() if s.isPreview then return end; ns.ClearUnit(s); s.root:Hide() end)
     plate:HookScript("OnShow",function()
@@ -371,7 +372,10 @@ local function Layout(s,p,nameOnly)
     for _,a in ipairs(s.buffs) do
         Size(a,p.buffSize,p.buffSize); Font(a.count,p.auraStackTextSize,p.auraStackTextOutline); Font(a.time,p.auraDurationTextSize,p.auraDurationTextOutline)
     end
-    for _,pool in ipairs({s.auras,s.buffs}) do
+    for _,a in ipairs(s.ccs) do
+        Size(a,p.ccSize,p.ccSize); Font(a.count,p.auraStackTextSize,p.auraStackTextOutline); Font(a.time,p.auraDurationTextSize,p.auraDurationTextOutline)
+    end
+    for _,pool in ipairs({s.auras,s.buffs,s.ccs}) do
         for _,a in ipairs(pool) do
             a.time:ClearAllPoints()
             if p.auraTimerPosition=="center" then a.time:SetPoint("CENTER",a,"CENTER",0,0)
@@ -514,13 +518,40 @@ local function PaintTarget(s,p,leftExtent,rightExtent)
     s.root:SetAlpha(p.opacity/100*(UnitExists("target") and not s.isTarget and p.nonTargetAlpha/100 or 1))
 end
 
+-- Rare/Quest Indicator. Plates carry no unit, so rares are learned by name while a plate is bound
+-- to target/mouseover; elites come from the native elite region, quest mobs from ns.questMobs.
+local CLASS_TEXTURES={elite=MEDIA.."class-elite",rareelite=MEDIA.."class-rareelite",rare=MEDIA.."class-rare",
+    quest="Interface\\GossipFrame\\AvailableQuestIcon"}
+ns.rareNames={}
+local function ClassKind(s,p)
+    if s.isPreview then
+        if ns.previewHidden.classification then return end
+        if not p.classificationHideQuest then return "quest" end
+        if not p.classificationHideRare then return "elite" end
+        return
+    end
+    if s.nameOnly or (InInstance() and not p.classificationShowInInstances) then return end
+    local name=s.native.name and s.native.name:GetText()
+    if not name then return end
+    if s.unit and UnitClassification then
+        local c=UnitClassification(s.unit)
+        if c=="rare" or c=="rareelite" then ns.rareNames[name]=c end
+    end
+    if not p.classificationHideQuest and ns.questMobs and ns.questMobs[name] then return "quest" end
+    if p.classificationHideRare then return end
+    if s.native.boss and s.native.boss:IsShown() then return "boss" end
+    if ns.rareNames[name] then return ns.rareNames[name] end
+    if s.native.elite and s.native.elite:IsShown() then return "elite" end
+end
 local function PaintIcons(s,p)
     if p.showRaidMarker and s.raidPlaced and s.native.raid and s.native.raid:IsShown() then
         s.raid:SetTexture(s.native.raid:GetTexture()); s.raid:SetTexCoord(s.native.raid:GetTexCoord()); s.raid:Show()
     else s.raid:Hide() end
-    local boss=s.native.boss and s.native.boss:IsShown()
-    if p.showClassification and s.classPlaced and boss and not s.nameOnly then
+    local kind=p.showClassification and s.classPlaced and ClassKind(s,p)
+    if kind=="boss" then
         s.class:SetTexture(s.native.boss:GetTexture()); s.class:SetTexCoord(s.native.boss:GetTexCoord()); s.class:Show()
+    elseif kind then
+        s.class:SetTexture(CLASS_TEXTURES[kind]); s.class:SetTexCoord(0,1,0,1); s.class:Show()
     else s.class:Hide() end
 end
 
@@ -539,8 +570,9 @@ local function FillAuras(pool,list,now)
     end
     return shown
 end
-local function PlaceAuras(pool,n,s,p,slot,size,yOffset)
-    local spacing,side=p.auraSpacing or 2,p.sideAuraXOffset or 2
+local function PlaceAuras(pool,n,s,p,slot,size,yOffset,spacing)
+    local side=p.sideAuraXOffset or 2
+    spacing=spacing or p.auraSpacing or 2
     for i=1,n do
         local a,step=pool[i],(i-1)*(size+spacing)
         a:ClearAllPoints()
@@ -563,12 +595,14 @@ local function PaintAuras(s,p)
     local now=GetTime()
     local debuffs=FillAuras(s.auras,s.debuffList or {},now)
     local buffs=FillAuras(s.buffs,s.buffList or {},now)
-    local key=debuffs..":"..buffs..":"..(s.topText and s.topText:GetText() and "t" or "")
+    local ccs=FillAuras(s.ccs,s.ccList or {},now)
+    local key=debuffs..":"..buffs..":"..ccs..":"..(s.topText and s.topText:GetText() and "t" or "")
     if s.auraKey~=key then
         s.auraKey=key
         local l1,r1=PlaceAuras(s.auras,debuffs,s,p,p.debuffSlot,p.auraSize,p.debuffYOffset or 2)
         local l2,r2=PlaceAuras(s.buffs,buffs,s,p,p.buffSlot,p.buffSize,p.debuffYOffset or 2)
-        s.leftExtent,s.rightExtent=math.max(l1,l2),math.max(r1,r2)
+        local l3,r3=PlaceAuras(s.ccs,ccs,s,p,p.ccSlot,p.ccSize,p.debuffYOffset or 2,p.ccSpacing)
+        s.leftExtent,s.rightExtent=math.max(l1,l2,l3),math.max(r1,r2,r3)
     end
     return s.leftExtent or 0,s.rightExtent or 0
 end
@@ -616,6 +650,7 @@ end
 local PREVIEW_DEBUFFS={"Interface\\Icons\\Spell_Shadow_ShadowWordPain","Interface\\Icons\\Spell_Shadow_AbominationExplosion",
     "Interface\\Icons\\Spell_Shadow_CurseOfSargeras","Interface\\Icons\\Spell_Nature_Slow"}
 local PREVIEW_BUFFS={"Interface\\Icons\\Spell_Holy_PowerWordShield","Interface\\Icons\\Spell_Nature_Bloodlust"}
+local PREVIEW_CC={"Interface\\Icons\\Spell_Nature_Polymorph","Interface\\Icons\\Spell_Holy_SealOfMight"}
 ns.previewHidden={}
 function ns.CreatePreview(parent)
     local s=ns.preview
@@ -628,7 +663,7 @@ function ns.CreatePreview(parent)
     local native={threat=Region(),border=Region(),castBorder=Region(),shield=Region(),icon=Region(),highlight=Region(),
         name=Region("font"),level=Region("font"),boss=Region(),raid=Region(),elite=Region()}
     native.threat:SetTexture("Interface\\TargetingFrame\\UI-TargetingFrame-Flash"); native.threat:Hide()
-    native.shield:Hide(); native.highlight:Hide(); native.elite:Hide()
+    native.shield:Hide(); native.highlight:Hide(); native.elite:Hide(); native.boss:Hide()
     native.icon:SetTexture("Interface\\Icons\\Spell_Fire_FlameBolt")
     native.name:SetText("Enemy Name Text"); native.name:SetTextColor(1,1,1)
     native.level:SetText("80"); native.level:SetTextColor(1,.82,0)
@@ -656,16 +691,17 @@ function ns.PaintPreview()
     s.layoutKey=nil
     s.debuffList=(p.showAuras and p.showDebuffs and p.debuffSlot~="none") and Samples(PREVIEW_DEBUFFS,math.min(2,p.maxAuras or 2),4) or {}
     s.buffList=(p.showAuras and p.showBuffs and p.buffSlot~="none") and Samples(PREVIEW_BUFFS,1,8) or {}
+    s.ccList=(p.showAuras and p.ccSlot and p.ccSlot~="none") and Samples(PREVIEW_CC,ns.MAX_CC,2) or {}
+    if p.showAuras and p.debuffIncludeCC and #s.debuffList>0 and #s.ccList==0 then
+        table.insert(s.debuffList,1,Samples(PREVIEW_CC,1,2)[1])
+        if #s.debuffList>(p.maxAuras or 2) then s.debuffList[#s.debuffList]=nil end
+    end
     s.previewCast=p.showCastBar and {"Spell Name","Interface\\Icons\\Spell_Fire_FlameBolt",2.3,.6,false,5,false} or nil
     if p.showCastBar then s.native.cast:Show() else s.native.cast:Hide() end
     if hidden.raidmarker then s.native.raid:Hide() else s.native.raid:Show() end
-    if hidden.classification then s.native.boss:Hide() else s.native.boss:Show() end
     ns.Paint(s,p)
-    -- The sample skull only demonstrates the icon slot; keep the bar and level of a normal enemy.
-    if not hidden.classification then
-        s.native.boss:Hide(); s.health:SetStatusBarColor(ns.HealthColor(s,p)); s.native.boss:Show()
-    end
-    local top=p.height/2+(p.nameYOffset or 4)+p.nameSize+((#s.debuffList>0 and p.debuffSlot=="top") and p.auraSize+(p.debuffYOffset or 2) or 0)
+    local topAura=math.max((#s.debuffList>0 and p.debuffSlot=="top") and p.auraSize or 0,(#s.ccList>0 and p.ccSlot=="top") and p.ccSize or 0)
+    local top=p.height/2+(p.nameYOffset or 4)+p.nameSize+(topAura>0 and topAura+(p.debuffYOffset or 2) or 0)
     local bottom=p.height/2+(p.showCastBar and p.castHeight-(p.castBarOffsetY or 0) or 0)
         +(p.showClassPower and math.floor(3*(p.classPowerScale or 1.8)+.5)+4 or 0)
     s.plate:ClearAllPoints(); s.plate:SetPoint("CENTER",s.plate:GetParent(),"TOP",0,-(top+12))

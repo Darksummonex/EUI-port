@@ -69,7 +69,7 @@ function UnitCastingInfo(u) local t=units[u]; if t and t.cast then return 'Fireb
 function UnitChannelInfo(u) local t=units[u]; if t and t.channel then return 'Drain Life','Rank 1','Drain Life','drain-icon',1000,6000,false,t.locked end end
 function UnitAura(u,i,filter)
     local t=units[u]; local a=t and t.auras and t.auras[filter]; a=a and a[i]
-    if a then return a.name,'Rank 1',a.icon or 'debuff-icon',a.stacks or 1,nil,10,a.expires or 12,a.caster end
+    if a then return a.name,'Rank 1',a.icon or 'debuff-icon',a.stacks or 1,nil,10,a.expires or 12,a.caster,nil,nil,a.spellID end
 end
 combat=false
 function InCombatLockdown() return combat end

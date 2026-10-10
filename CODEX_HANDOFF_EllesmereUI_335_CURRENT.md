@@ -337,7 +337,7 @@ Working-tree backups: `backport-tools/backup_project.py` writes
 
 Core 0.66; Action Bars 0.22; Arena 0.3; AuraBuff Reminders 0.7; Bags 0.12;
 Blizz UI Enhanced (BlizzardSkin) 0.33; Chat 0.49; Cooldown Manager 0.9;
-Damage Meters 0.9; Data Bars 0.5; Friends 0.3; Minimap 0.4; Nameplates 0.18;
+Damage Meters 0.9; Data Bars 0.5; Friends 0.3; Minimap 0.4; Nameplates 0.19;
 Options 0.114; Locales 0.1; QoL 0.19; Quest Tracker 0.3; Quickdraw 0.4; Raid Frames 0.24;
 Resource Bars 0.5; Unit Frames 0.25.
 

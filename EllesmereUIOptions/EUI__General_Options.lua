@@ -924,8 +924,18 @@ do
         },
     },
     {
-        version = "Nameplates 0.18",
+        version = "Nameplates 0.19",
         heroes = {
+            {
+                title = "Rare and Quest Indicators",
+                desc  = "The Boss Icon slot is now the Retail Rare/Quest Indicator. It marks elites and rares, and mobs your active quests still need. Pick Rare Indicator, Quest Indicator or both in Core Positions; the slot cog adds Show In Instances.",
+                nav   = Nav("EllesmereUINameplates", "Display", "CORE POSITIONS"),
+            },
+            {
+                title = "Crowd Control Slot",
+                desc  = "Crowd control on enemies (stuns, fears, polymorphs, roots, silences) gets its own Core Positions slot, from any caster, as on Retail. Or pick Debuffs + CC to show it first in the debuff row.",
+                nav   = Nav("EllesmereUINameplates", "Display", "CORE POSITIONS"),
+            },
             {
                 title = "Raid Debuffs Filter",
                 desc  = "The Debuff Filter gets Raid Debuffs and Own and Raid Debuffs, with the same raid debuff list as the Unit Frames.",

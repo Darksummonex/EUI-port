@@ -1,4 +1,35 @@
-# Nameplates 3.3.5 — 0.18
+# Nameplates 3.3.5 — 0.19
+
+0.19: o elemento "Boss Icon" das Core Positions vira o Rare/Quest Indicator do
+Retail. O dropdown oferece "Rare/Quest Indicator", "Rare Indicator" e "Quest
+Indicator" (as duas metades dividem o mesmo slot, `classificationHideRare` /
+`classificationHideQuest`); o cog do slot tem Size, as duas metades e Show In
+Instances (`classificationShowInInstances`, desligado: some em party/raid, como
+no Retail). Prioridade: quest > skull de boss > rare/rare elite > elite. No 3.3.5
+a placa não tem unit e o tooltip não lista objetivos, então quest mob = nome da
+placa igual a um objetivo de matar ainda incompleto do quest log
+(`GetQuestLogLeaderBoard`, padrão de `QUEST_MONSTERS_KILLED`, refeito em
+QUEST_LOG_UPDATE); rare é aprendido pelo nome quando a placa está ligada a
+target/mouseover (`UnitClassification`); elite vem da região nativa de elite.
+Os atlas do Retail não existem no 3.3.5: estrela dourada (elite), estrela
+prateada (rare elite) e losango prateado (rare) em `Media_335/class-*.tga`
+(`backport-tools/prepare_nameplate_class_icons.py`), e o "!" do cliente
+(`Interface\GossipFrame\AvailableQuestIcon`) para quest. Não portado: "Replace
+Quest Icon with Objective" (contagem no lugar do ícone), Faction e
+"Rare/Quest + Faction".
+
+0.19 também traz o Crowd Control do Retail às Core Positions: "Crowd Control"
+(slot próprio `ccSlot`, padrão "right" como no Retail, até 2 ícones,
+`ccSize` 24 / `ccSpacing` 2 no cog, com X Offset) e "Debuffs + CC"
+(`debuffIncludeCC`: o CC entra primeiro na fileira de debuffs e o slot próprio
+fica "none"). O 3.3.5 não tem a flag CROWD_CONTROL: CC = feitiço da tabela de DR
+do LibAuraInfo (`drSpells`, lista do DRData com todos os ranks; toda categoria
+menos taunt), por spell ID e, para outros ranks, por nome. Como no Retail, CC
+de qualquer caster vai ao slot de CC e sai da fileira de debuffs; sem nenhum
+elemento de CC posicionado, os debuffs ficam como antes. Perfis antigos que já
+usam o slot "right" ficam com `ccSlot = "none"` (Migrate). O preview mostra
+Polymorph e Hammer of Justice. Não portado: listas de inclusão/exclusão próprias
+do CC, Cropped Icons e Hide Border por elemento.
 
 0.18: as texturas de barra do EllesmereUI (Melli, Atrocity, Fade, Matte...,
 `EllesmereUI.BuildBarTextureTables(true)`) entram nos dropdowns de textura de

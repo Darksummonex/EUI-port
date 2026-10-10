@@ -108,6 +108,19 @@ local savedAuras=units.target.auras
 units.target.auras={HARMFUL={}}; for i=1,20 do units.target.auras.HARMFUL[i]={name='many',caster='player'} end
 p.maxAuras=100; NP.Apply(); assert(a.auras[8]:IsShown() and #a.auras==8)
 units.target.auras=savedAuras; p.maxAuras=5; p.onlyPlayerDebuffs=true; NP.Apply()
+-- Crowd Control: DR-table spells (by ID, other ranks by name) from any caster go to the CC slot right of the bar.
+local oldLib=NP.auraLib; spellNames[118]='Polymorph'; NP.auraLib={drSpells={[118]='disorient',[355]='taunt'}}
+assert(NP.IsCrowdControl(118) and NP.IsCrowdControl(12826,'Polymorph') and not NP.IsCrowdControl(355,'Taunt') and not NP.IsCrowdControl(1,'Other'))
+units.target.auras={HARMFUL={{name='Polymorph',caster='party1',spellID=12826,icon='poly-icon'},{name='Taunt',caster='player',spellID=355},{name='mine',caster='player'}}}
+NP.Apply()
+assert(a.ccs[1]:IsShown() and not a.ccs[2]:IsShown() and a.ccs[1].icon.texture=='poly-icon')
+assert(a.ccs[1].point[1]=='BOTTOMLEFT' and a.ccs[1].point[3]=='BOTTOMRIGHT' and a.ccs[1]:GetWidth()==24)
+assert(a.auras[1]:IsShown() and a.auras[2]:IsShown() and not a.auras[3]:IsShown(),'CC leaves the debuff row; taunt stays a debuff')
+p.ccSlot='none'; p.debuffIncludeCC=true; NP.Apply()
+assert(not a.ccs[1]:IsShown() and a.auras[3]:IsShown() and a.auras[1].icon.texture=='poly-icon','Debuffs + CC lists CC first')
+p.maxAuras=1; NP.Apply(); assert(a.auras[1].icon.texture=='poly-icon' and not a.auras[2]:IsShown()); p.maxAuras=5
+p.debuffIncludeCC=false; NP.Apply(); assert(not a.auras[3]:IsShown(),'no CC element: own-debuff filter as before')
+p.ccSlot='right'; NP.auraLib=oldLib; units.target.auras=savedAuras; NP.Apply()
 units.mouseover={name='Other',guid='GUID-B',auras={HARMFUL={{name='hover',caster='player'}}}}
 b.native.highlight:Show(); NP.Update(); assert(b.unit=='mouseover' and b.auras[1]:IsShown() and b.hover:IsShown())
 -- Same-name candidates at full alpha are ambiguous: never clone target data.
@@ -229,12 +242,25 @@ Find('Border').setValue('none'); assert(p.showBorder==false and not a.border.t:I
 assert(a.castBorder:IsShown(),'Border None must keep cast text, timer, shield and kick tick')
 Find('Border').setValue('basic'); assert(a.border.t:IsShown() and a.castBorder.l:IsShown() and a.border.t.height==1)
 -- Core positions: one element per slot, written back as the engine's per-element slot.
-assert(Find('Top').getValue()=='debuffs' and Find('Left').getValue()=='buffs' and Find('Right').getValue()=='none')
+assert(Find('Top').getValue()=='debuffs' and Find('Left').getValue()=='buffs' and Find('Right').getValue()=='ccs')
 assert(Find('Top Right').getValue()=='raidmarker' and Find('Top Left').getValue()=='classification' and Find('Bottom').getValue()=='none')
-Find('Right').setValue('debuffs'); assert(p.debuffSlot=='right' and Find('Top').getValue()=='none')
+-- Crowd Control has its own slot; Debuffs + CC is the debuff row with CC merged in (no CC slot then).
+assert(Find('Right').values.ccs=='Crowd Control' and Find('Right').values.debuffsccs=='Debuffs + CC')
+Find('Top').setValue('debuffsccs'); assert(p.debuffSlot=='top' and p.debuffIncludeCC and p.ccSlot=='none' and Find('Top').getValue()=='debuffsccs' and Find('Right').getValue()=='none')
+Find('Bottom').setValue('ccs'); assert(p.ccSlot=='bottom' and not p.debuffIncludeCC and Find('Top').getValue()=='debuffs')
+Find('Bottom').setValue('none'); Find('Right').setValue('ccs'); assert(p.ccSlot=='right' and Find('Bottom').getValue()=='none')
+Find('Right').setValue('debuffs'); assert(p.debuffSlot=='right' and p.ccSlot=='none' and Find('Top').getValue()=='none')
 Find('Top Right').setValue('buffs'); assert(p.buffSlot=='topright' and p.raidMarkerSlot=='none')
 Find('Bottom').setValue('raidmarker'); assert(p.raidMarkerSlot=='bottom' and a.raid.point[1]=='TOP' and a.raid.point[2]==a.cast)
-p.debuffSlot,p.buffSlot,p.raidMarkerSlot='top','left','topright'; NP.Apply()
+p.debuffSlot,p.buffSlot,p.raidMarkerSlot,p.ccSlot='top','left','topright','right'; NP.Apply()
+-- Rare and Quest Indicators are the two halves of the classification slot.
+local tl=Find('Top Left')
+assert(tl.values.classification=='Rare/Quest Indicator' and tl.values.rare=='Rare Indicator' and tl.values.quest=='Quest Indicator')
+tl.setValue('rare'); assert(p.classificationSlot=='topleft' and p.classificationHideQuest and not p.classificationHideRare and tl.getValue()=='rare')
+Find('Bottom').setValue('quest'); assert(p.classificationSlot=='bottom' and p.classificationHideRare and not p.classificationHideQuest and tl.getValue()=='none')
+Find('Bottom').setValue('debuffs'); assert(p.classificationSlot=='none' and p.debuffSlot=='bottom')
+tl.setValue('classification'); assert(p.classificationSlot=='topleft' and not p.classificationHideRare and not p.classificationHideQuest)
+p.debuffSlot='top'; NP.Apply()
 Find('Right Text').setValue('enemyName'); assert(p.textSlotRight=='enemyName' and p.textSlotTop=='none' and a.name.slot=='right')
 p.textSlotTop,p.textSlotRight='enemyName','healthPercent'; NP.Apply()
 -- Older Wrath profiles stored the enemy name as 'name'.
@@ -362,6 +388,17 @@ for _,f in ipairs(eyes) do if f.shown and f.regions[1].texture=='eye' then f.scr
 local anyHidden=false; for k,v in pairs(NP.previewHidden) do if v then anyHidden=true end end
 assert(anyHidden and NP.previewHidden.classification==nil,'eye toggles its element on the preview')
 for k in pairs(NP.previewHidden) do NP.previewHidden[k]=nil end
+-- Rare/Quest Indicator cog: Size, the two halves (unticking the last one empties the slot), Show In Instances.
+p.classificationSlot='topleft'; p.classificationHideRare,p.classificationHideQuest=false,false
+local classCog
+for _,b in ipairs(cogs) do if b.opts.title=='Slot' and b.opts.show then b.opts.show(b); if popups[#popups].title=='Rare/Quest Indicator' then classCog=b; break end end end
+assert(classCog,'Rare/Quest Indicator slot cog')
+local rr=popups[#popups].rows
+assert(rr[1].label=='Size' and rr[2].label=='Rare Indicator' and rr[3].label=='Quest Indicator' and rr[4].label=='Show In Instances')
+assert(rr[2].tooltip:find('Elite and rare marks',1,true) and rr[3].tooltip:find('active quests',1,true))
+rr[2].set(false); assert(p.classificationHideRare and rr[3].get() and p.classificationSlot=='topleft')
+rr[3].set(false); assert(p.classificationSlot=='none' and not p.classificationHideRare and not p.classificationHideQuest)
+p.classificationSlot='topleft'; rr[4].set(true); assert(p.classificationShowInInstances==true); rr[4].set(false)
 -- Header cache cycle: hiding the preview must not reset it, showing it repaints it.
 local pv=NP.preview
 pv.plate.hooks.OnHide(); assert(pv.root:IsShown() and pv.isTarget,'cache hide reset the preview')
@@ -464,6 +501,25 @@ p.friendlyNameOnly=true; NP.Apply(); assert(not s.health:IsShown())
 p.enabled=false; NP.Apply()
 assert(s.native.threat:GetTexture()=='Interface\\\\TargetingFrame\\\\UI-TargetingFrame-Flash.blp' and s.native.threat:GetAlpha()==1)
 p.enabled=true; NP.Apply(); assert(s.native.threat:GetTexture()=='')
+-- Rare/Quest Indicator: unfinished kill objectives by name, rares learned from target, elites from the native region.
+p.friendlyNameOnly=false; p.classificationSlot='topleft'; s.native.health:SetStatusBarColor(1,0,0)
+s.native.elite:Hide(); s.native.boss:Hide(); NP.Apply(); assert(not s.class:IsShown())
+s.native.elite:Show(); NP.Update(); assert(s.class:IsShown() and s.class.texture:find('class-elite',1,true))
+GetNumQuestLogEntries=function() return 2 end
+GetQuestLogTitle=function(i) if i==1 then return 'Zone',nil,nil,nil,1 end return 'Kill',80 end
+GetNumQuestLeaderBoards=function() return 2 end
+GetQuestLogLeaderBoard=function(j) if j==1 then return 'Mob slain: 2/8','monster',nil end return 'Rat slain: 8/8','monster',1 end
+NP.events:RunScript('OnEvent','QUEST_LOG_UPDATE'); assert(NP.questMobs.Mob and not NP.questMobs.Rat)
+NP.Update(); assert(s.class.texture=='Interface\\\\GossipFrame\\\\AvailableQuestIcon')
+p.classificationHideQuest=true; NP.Update(); assert(s.class.texture:find('class-elite',1,true))
+local oldClass=UnitClassification; UnitClassification=function() return 'rareelite' end
+units.target={name='Mob',guid='GUID-RARE'}; NP.Update(); assert(s.unit=='target' and s.class.texture:find('class-rareelite',1,true))
+units.target=nil; UnitClassification=oldClass; NP.Update(); assert(s.class.texture:find('class-rareelite',1,true),'rares stay learned by name')
+p.classificationHideRare=true; NP.Update(); assert(not s.class:IsShown())
+p.classificationHideRare,p.classificationHideQuest=false,false
+IsInInstance=function() return 1,'party' end; NP.Update(); assert(not s.class:IsShown(),'open world only by default')
+p.classificationShowInInstances=true; NP.Update(); assert(s.class:IsShown()); p.classificationShowInInstances=false
+IsInInstance=nil; GetNumQuestLogEntries=nil; NP.RefreshQuestMobs(); NP.rareNames.Mob=nil; s.native.elite:Hide(); NP.Update()
 ''')
 lua.execute('''
 -- Options header preview: the real renderer on a stand-in plate, outside the live plate list.
@@ -475,6 +531,7 @@ assert(s.name:GetText()=='Enemy Name Text' and s.healthText:GetText()=='72%' and
 assert(s.auras[1]:IsShown() and s.auras[1].count:GetText()==3 and s.auras[2]:IsShown() and s.buffs[1]:IsShown())
 assert(s.castText:GetText()=='Spell Name' and s.castTimer:GetText()=='2.3' and s.castIcon:IsShown())
 assert(s.raid:IsShown() and s.class:IsShown() and s.plate.point[3]=='TOP')
+assert(s.ccs[1]:IsShown() and s.ccs[2]:IsShown() and s.ccs[1].icon.texture:find('Polymorph',1,true),'preview shows sample CC')
 NP.previewHidden.raidmarker=true; NP.previewHidden.classification=true; NP.PaintPreview()
 assert(not s.raid:IsShown() and not s.class:IsShown())
 NP.previewHidden.raidmarker=nil; NP.previewHidden.classification=nil

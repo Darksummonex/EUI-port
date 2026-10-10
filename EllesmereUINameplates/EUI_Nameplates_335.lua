@@ -40,12 +40,14 @@ local defaults={enabled=true,
     showAuras=true,showDebuffs=true,showBuffs=true,onlyPlayerDebuffs=true,buffHasDuration=true,
     debuffSlot="top",buffSlot="left",auraSize=26,buffSize=24,auraSpacing=2,maxAuras=5,maxBuffs=4,
     debuffYOffset=2,sideAuraXOffset=2,auraTimerPosition="topleft",
+    ccSlot="right",ccSize=24,ccSpacing=2,debuffIncludeCC=false,
     showRaidMarker=true,raidMarkerSlot="topright",raidMarkerSize=24,
     showClassification=true,classificationSlot="topleft",classificationSize=20,
+    classificationHideRare=false,classificationHideQuest=false,classificationShowInInstances=false,
     friendlyNameOnly=true,friendlyNameSize=15,hideEnemiesOutOfCombat=false,
 }
 ns.defaults=defaults
-ns.MAX_DEBUFFS,ns.MAX_BUFFS=8,6
+ns.MAX_DEBUFFS,ns.MAX_BUFFS,ns.MAX_CC=8,6,2
 local states,active,pending={},false,false
 ns.plates=states
 local elapsed,scanElapsed=0,0
@@ -93,9 +95,10 @@ function ns.ClearUnit(s)
     s.friendlyClass=nil
     s.auraGUID,s.auraName,s.auraVerified=nil,nil,nil
     s.flashUntil=nil
-    s.debuffList,s.buffList,s.auraDirty={},{},true
+    s.debuffList,s.buffList,s.ccList,s.auraDirty={},{},{},true
     if s.auras then for _,a in ipairs(s.auras) do a:Hide() end end
     if s.buffs then for _,a in ipairs(s.buffs) do a:Hide() end end
+    if s.ccs then for _,a in ipairs(s.ccs) do a:Hide() end end
 end
 function ns.Ratio(bar)
     local low,high=bar:GetMinMaxValues(); local value=bar:GetValue()
@@ -280,9 +283,26 @@ function ns.CastInfo(s)
     if left<=0 then return end
     return name,icon,left,channel and left/duration or 1-left/duration,locked,duration,channel,endTime/1000
 end
+-- Crowd Control: Wrath auras carry no CC flag, so the CC set is LibAuraInfo's DR table
+-- (DRData, every category but taunt), matched by spell ID, then by name for other ranks.
+local ccNames
+function ns.IsCrowdControl(spellID,name)
+    local dr=ns.auraLib and ns.auraLib.drSpells
+    if not dr then return false end
+    local category=spellID and dr[spellID]
+    if category then return category~="taunt" end
+    if not ccNames then
+        ccNames={}
+        for id,kind in pairs(dr) do
+            local spell=kind~="taunt" and GetSpellInfo and GetSpellInfo(id)
+            if spell then ccNames[spell]=true end
+        end
+    end
+    return name~=nil and ccNames[name]==true
+end
 local function CollectAuras(s,p)
-    local debuffs,buffs={},{}
-    s.debuffList,s.buffList=debuffs,buffs
+    local debuffs,buffs,ccs={},{},{}
+    s.debuffList,s.buffList,s.ccList=debuffs,buffs,ccs
     if not p.showAuras or (p.friendlyNameOnly and ns.Friendly(s)) then return end
     local direct=s.guid and s.unit and UnitGUID(s.unit)==s.guid
     local cached=auraLib and s.auraVerified and s.auraGUID
@@ -296,9 +316,8 @@ local function CollectAuras(s,p)
         syncingAuraCache=false
     end
     if cached then auraLib:GetNumGUIDAuras(s.auraGUID) end -- expires cached entries
-    local function Add(filter,list,limit)
+    local function Scan(filter,visit)
         for i=1,40 do
-            if #list>=limit then return end
             local name,icon,stacks,duration,expires,caster,stealable,spellID,mine
             if direct then
                 local rank,dtype
@@ -311,17 +330,44 @@ local function CollectAuras(s,p)
                 mine=sourceGUID and (sourceGUID==UnitGUID("player") or sourceGUID==UnitGUID("pet") or sourceGUID==UnitGUID("vehicle"))
             end
             if not name then break end
-            local prefix=filter=="HARMFUL" and "debuff" or "buff"
-            local include=filter~="HARMFUL" or not p.onlyPlayerDebuffs or mine
-            if E.WrathAuraFilters then include=E.WrathAuraFilters.Allow(p,prefix,spellID,mine,duration,stealable,name) end
-            if include then list[#list+1]={icon=icon,stacks=stacks,expires=expires} end
+            if visit(name,icon,stacks,duration,expires,stealable,spellID,mine) then return end
         end
+    end
+    local function Allowed(prefix,name,duration,stealable,spellID,mine)
+        local include=prefix~="debuff" or not p.onlyPlayerDebuffs or mine
+        if E.WrathAuraFilters then include=E.WrathAuraFilters.Allow(p,prefix,spellID,mine,duration,stealable,name) end
+        return include
     end
     local maxDebuffs=math.max(1,math.min(ns.MAX_DEBUFFS,tonumber(p.maxAuras) or 5))
     local maxBuffs=math.max(1,math.min(ns.MAX_BUFFS,tonumber(p.maxBuffs) or 4))
-    if p.showDebuffs and p.debuffSlot~="none" then Add("HARMFUL",debuffs,maxDebuffs) end
+    local debuffsOn=p.showDebuffs and p.debuffSlot~="none"
+    local ccOwn=p.ccSlot~=nil and p.ccSlot~="none"
+    local ccMerged=not ccOwn and debuffsOn and p.debuffIncludeCC
+    -- With a CC element placed, CC (any caster) leaves the debuff row as on Retail; Debuffs + CC
+    -- lists it first in the debuff row.
+    if debuffsOn or ccOwn then
+        local merged={}
+        Scan("HARMFUL",function(name,icon,stacks,duration,expires,stealable,spellID,mine)
+            local entry={icon=icon,stacks=stacks,expires=expires}
+            if (ccOwn or ccMerged) and ns.IsCrowdControl(spellID,name) then
+                if ccOwn then if #ccs<ns.MAX_CC then ccs[#ccs+1]=entry end
+                elseif #merged<maxDebuffs then merged[#merged+1]=entry end
+            elseif debuffsOn and #debuffs<maxDebuffs and Allowed("debuff",name,duration,stealable,spellID,mine) then
+                debuffs[#debuffs+1]=entry
+            end
+            if ccMerged then return #merged>=maxDebuffs end
+            return (not debuffsOn or #debuffs>=maxDebuffs) and (not ccOwn or #ccs>=ns.MAX_CC)
+        end)
+        for i=#merged,1,-1 do table.insert(debuffs,1,merged[i]) end
+        for i=#debuffs,maxDebuffs+1,-1 do debuffs[i]=nil end
+    end
     -- Buffs are only interesting on enemies.
-    if p.showBuffs and p.buffSlot~="none" and not ns.Friendly(s) then Add("HELPFUL",buffs,maxBuffs) end
+    if p.showBuffs and p.buffSlot~="none" and not ns.Friendly(s) then
+        Scan("HELPFUL",function(name,icon,stacks,duration,expires,stealable,spellID,mine)
+            if Allowed("buff",name,duration,stealable,spellID,mine) then buffs[#buffs+1]={icon=icon,stacks=stacks,expires=expires} end
+            return #buffs>=maxBuffs
+        end)
+    end
 end
 -- Execute-range spells known by the player (rank-independent name lookup).
 local EXECUTE={WARRIOR={5308,.2},PALADIN={24275,.2},HUNTER={53351,.2},WARLOCK={1120,.25}}
@@ -353,6 +399,30 @@ function ns.Update()
             ns.Paint(s,p)
         else s.root:Hide() end
     end
+end
+-- Quest Indicator: Wrath plates carry no unit and unit tooltips list no objectives, so a quest
+-- mob is a plate whose name matches an unfinished kill objective in the quest log.
+local function QuestKillPattern()
+    local fmt=(QUEST_MONSTERS_KILLED or "%s slain: %d/%d"):gsub("%%%d%$","%%")
+    fmt=fmt:gsub("([%(%)%.%+%-%*%?%[%]%^%$])","%%%1")
+    fmt=fmt:gsub("%%s","(.-)"):gsub("%%d","%%d+")
+    return "^"..fmt.."$"
+end
+function ns.RefreshQuestMobs()
+    local mobs,pattern={},QuestKillPattern()
+    for i=1,(GetNumQuestLogEntries and GetNumQuestLogEntries() or 0) do
+        local _,_,_,_,header,_,complete=GetQuestLogTitle(i)
+        if not header and complete~=1 then
+            for j=1,(GetNumQuestLeaderBoards(i) or 0) do
+                local text,kind,done=GetQuestLogLeaderBoard(j,i)
+                if text and kind=="monster" and not done then
+                    local mob=text:match(pattern) or text:match("^(.-):%s*%d+/%d+$")
+                    if mob and mob~="" then mobs[mob]=true end
+                end
+            end
+        end
+    end
+    ns.questMobs=mobs
 end
 function ns.UpdateHealth(s)
     local p=ns.GetSettings(); if p and active then ns.PaintHealth(s,p) end
@@ -390,6 +460,11 @@ local function Migrate(p)
     if p.showTargetBorder==false then p.targetEffect="none" end
     if p.borderSize==0 then p.showBorder,p.borderSize=false,1 end
     p.threatColors,p.tankMode,p.showTargetBorder=nil,nil,nil
+    -- Crowd Control arrived with a Retail default slot; an older profile may already use it.
+    for _,key in ipairs({"debuffSlot","buffSlot","raidMarkerSlot","classificationSlot"}) do
+        if p.ccSlot~="none" and p[key]==p.ccSlot then p.ccSlot="none" end
+    end
+    if p.debuffIncludeCC and p.ccSlot~="none" then p.debuffIncludeCC=false end
     for _,slot in ipairs({"Top","Left","Right","Center"}) do
         if p["textSlot"..slot]=="name" then p["textSlot"..slot]="enemyName" end
     end
@@ -440,14 +515,15 @@ function addon:OnEnable()
     local f=CreateFrame("Frame"); ns.events=f
     for _,event in ipairs({"PLAYER_ENTERING_WORLD","PLAYER_REGEN_ENABLED","PLAYER_REGEN_DISABLED","PLAYER_TARGET_CHANGED",
         "UPDATE_MOUSEOVER_UNIT","UNIT_AURA","PARTY_MEMBERS_CHANGED","RAID_ROSTER_UPDATE","UNIT_SPELLCAST_INTERRUPTED",
-        "SPELLS_CHANGED","LEARNED_SPELL_IN_TAB"}) do f:RegisterEvent(event) end
+        "SPELLS_CHANGED","LEARNED_SPELL_IN_TAB","QUEST_LOG_UPDATE"}) do f:RegisterEvent(event) end
     f:SetScript("OnEvent",function(_,event,unit)
         if event=="PLAYER_REGEN_ENABLED" then
             for key,value in pairs(pendingCVars or {}) do ns.SetCVar(key,value) end; pendingCVars=nil
             if pending then ns.Apply() end
             ApplyCombatVisibility(false)
         elseif event=="PLAYER_REGEN_DISABLED" then ApplyCombatVisibility(true)
-        elseif event=="PLAYER_ENTERING_WORLD" then observedClasses={}; ns.RefreshFriendlyRoster(); ns.RefreshExecute(); ns.Apply()
+        elseif event=="PLAYER_ENTERING_WORLD" then observedClasses={}; ns.RefreshFriendlyRoster(); ns.RefreshExecute(); ns.RefreshQuestMobs(); ns.Apply()
+        elseif event=="QUEST_LOG_UPDATE" then ns.RefreshQuestMobs()
         elseif event=="PARTY_MEMBERS_CHANGED" or event=="RAID_ROSTER_UPDATE" then ns.RefreshFriendlyRoster(); ns.Update()
         elseif event=="SPELLS_CHANGED" or event=="LEARNED_SPELL_IN_TAB" then ns.RefreshExecute()
         elseif event=="UNIT_SPELLCAST_INTERRUPTED" then if unit then FlashInterrupted(unit) end; ns.Update()

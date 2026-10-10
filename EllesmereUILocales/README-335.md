@@ -1,5 +1,10 @@
 # Locales 3.3.5 — 0.1
 
+Sem bump: Rare/Quest Indicator das Nameplates 0.19 (IDs 5828-5836: nomes do
+dropdown, dicas do cog, Show In Instances e o item das Patch Notes) e Crowd
+Control / Debuffs + CC (IDs 5837-5840; rótulos com o texto do catálogo Retail)
+traduzidos em todos os idiomas.
+
 Sem bump: Patch Notes traduzidas. Os 580 textos de `_WHATSNEW_PATCHES`
 (eyebrow, title, desc, text, module) já passam por `EllesmereUI.L`; os 349 que
 faltavam viraram IDs 5479-5827 (`append_locale_keys.py --patch-notes`, lista de

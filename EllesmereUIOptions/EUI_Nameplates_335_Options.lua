@@ -134,32 +134,71 @@ init:SetScript("OnEvent",function(self)
     end
 
     -- Core positions: Retail picks one element per slot; the engine stores a slot per element.
-    local CORE_KEYS={debuffs="debuffSlot",buffs="buffSlot",raidmarker="raidMarkerSlot",classification="classificationSlot"}
-    local CORE_VALUES={debuffs="Debuffs",buffs="Buffs",raidmarker="Raid Marker",classification="Boss Icon",none="None"}
-    local CORE_ORDER={"debuffs","buffs","raidmarker","classification","none"}
+    local CORE_KEYS={debuffs="debuffSlot",buffs="buffSlot",ccs="ccSlot",raidmarker="raidMarkerSlot",classification="classificationSlot"}
+    local CORE_VALUES={debuffs="Debuffs",buffs="Buffs",ccs="Crowd Control",debuffsccs="Debuffs + CC",raidmarker="Raid Marker",
+        classification="Rare/Quest Indicator",rare="Rare Indicator",quest="Quest Indicator",none="None"}
+    local CORE_ORDER={"debuffs","buffs","ccs","debuffsccs","raidmarker","classification","rare","quest","none"}
+    -- Rare and Quest are the two halves of the classification element: one slot, two hide flags.
+    local HALVES={classification={false,false},rare={false,true},quest={true,false}}
+    -- Choices stored on another element's slot key: "Debuffs + CC" is the debuff row with CC merged in.
+    local BASE={rare="classification",quest="classification",debuffsccs="debuffs"}
     local function ElementAt(slot)
-        for element,key in pairs(CORE_KEYS) do if Get(key)==slot then return element end end
+        for element,key in pairs(CORE_KEYS) do
+            if Get(key)==slot then
+                if element=="classification" then
+                    if Get("classificationHideQuest") then return "rare" end
+                    if Get("classificationHideRare") then return "quest" end
+                end
+                if element=="debuffs" and Get("debuffIncludeCC") then return "debuffsccs" end
+                return element
+            end
+        end
         return "none"
     end
     local function SetElementAt(slot,element)
         local p=P(); if not p then return end
         local old=ElementAt(slot)
-        if old~="none" then p[CORE_KEYS[old]]="none" end
+        if old~="none" then p[CORE_KEYS[BASE[old] or old]]="none" end
+        if old=="debuffsccs" then p.debuffIncludeCC=false end
+        local half=HALVES[element]
+        if half then p.classificationHideRare,p.classificationHideQuest=half[1],half[2] end
+        if element=="debuffs" or element=="ccs" then p.debuffIncludeCC=false
+        elseif element=="debuffsccs" then p.debuffIncludeCC,p.ccSlot=true,"none" end
+        element=BASE[element] or element
         if element~="none" then p[CORE_KEYS[element]]=slot end
         Refresh()
         if E.RefreshPage then E:RefreshPage() end
+    end
+    local function HalfToggle(key,other,label,tip)
+        return {type="toggle",label=label,tooltip=tip,get=function() return not Get(key) end,set=function(v)
+            local p=P(); if not p then return end
+            if not v and p[other] then p.classificationSlot,p[key],p[other]="none",false,false
+            else p[key]=not v end
+            Refresh()
+            if E.RefreshPage then E:RefreshPage() end
+        end}
     end
     local CORE_ROWS={
         debuffs={title="Debuffs",rows={CogSlider("auraSize","Size",12,40),CogSlider("maxAuras","Max Debuffs",1,ns.MAX_DEBUFFS),
             CogSlider("auraSpacing","Spacing",0,8),CogSlider("debuffYOffset","Y Offset",-10,20)}},
         buffs={title="Buffs",rows={CogSlider("buffSize","Size",12,40),CogSlider("maxBuffs","Max Buffs",1,ns.MAX_BUFFS),
             CogSlider("auraSpacing","Spacing",0,8),CogSlider("sideAuraXOffset","X Offset",0,20)}},
+        ccs={title="Crowd Control",rows={CogSlider("ccSize","Size",12,40),CogSlider("ccSpacing","Spacing",0,8),
+            CogSlider("sideAuraXOffset","X Offset",0,20)}},
         raidmarker={title="Raid Marker",rows={CogSlider("raidMarkerSize","Size",12,40)}},
-        classification={title="Boss Icon",rows={CogSlider("classificationSize","Size",10,32)}},
+        classification={title="Rare/Quest Indicator",rows={CogSlider("classificationSize","Size",10,32),
+            HalfToggle("classificationHideRare","classificationHideQuest","Rare Indicator",
+                "Elite and rare marks. Always in the same slot as the Quest Indicator."),
+            HalfToggle("classificationHideQuest","classificationHideRare","Quest Indicator",
+                "Marks mobs for your active quests. Always in the same slot as the Rare Indicator."),
+            CogToggle("classificationShowInInstances","Show In Instances")}},
     }
+    CORE_ROWS.debuffsccs={title="Debuffs + CC",rows=CORE_ROWS.debuffs.rows}
     local corePopups={}
     local function ShowCorePopup(slot,btn)
-        local element=ElementAt(slot); local def=CORE_ROWS[element]
+        local element=ElementAt(slot)
+        if HALVES[element] then element="classification" end
+        local def=CORE_ROWS[element]
         if not def or not E.BuildCogPopup then return end
         if not corePopups[element] then corePopups[element]=select(2,E.BuildCogPopup({title=def.title,rows=def.rows})) end
         corePopups[element](btn)
@@ -291,7 +330,7 @@ init:SetScript("OnEvent",function(self)
         castIcon=At("barHeader","castShow","right"),castName=At("barHeader","castText","left"),castTimer=At("barHeader","castText","right"),
         targetArrows=At("targetHeader","targetEffect","right"),classResource=At("classHeader","classPower","left"),
         auraStack=At("generalHeader","auraText","left"),auraDuration=At("generalHeader","auraText","right"),
-        debuffIcon=CoreAt("debuffs"),buffIcon=CoreAt("buffs"),raidMarker=CoreAt("raidmarker"),classIcon=CoreAt("classification"),
+        debuffIcon=CoreAt("debuffs"),buffIcon=CoreAt("buffs"),ccIcon=CoreAt("ccs"),raidMarker=CoreAt("raidmarker"),classIcon=CoreAt("classification"),
         enemyName=TextAt("enemyName"),healthText=TextAt("healthPercent"),levelText=TextAt("level"),
     }
     -- Preview text strings by engine key; the remaining elements navigate under their own name.
@@ -338,7 +377,7 @@ init:SetScript("OnEvent",function(self)
         Hit(s.raid,"raidMarker"); Hit(s.class,"classIcon")
         Hit(s.arrowL,"targetArrows"); Hit(s.arrowR,"targetArrows")
         for _,pip in ipairs(s.pips) do Hit(pip,"classResource") end
-        Auras(s.auras,"debuffIcon","auraDuration"); Auras(s.buffs,"buffIcon","auraDuration")
+        Auras(s.auras,"debuffIcon","auraDuration"); Auras(s.buffs,"buffIcon","auraDuration"); Auras(s.ccs,"ccIcon","auraDuration")
         SyncOverlays()
     end
 
