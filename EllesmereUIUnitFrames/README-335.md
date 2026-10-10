@@ -1,4 +1,12 @@
-# Unit Frames 3.3.5 — 0.25
+# Unit Frames 3.3.5 — 0.26
+
+0.26: um bloco escuro aparecia à esquerda da barra de vida e crescia com a vida
+perdida. Era o fundo (`healAbsorbBar._bg`) da barra de heal absorb do Retail: o
+3.3.5 não tem `UnitGetTotalHealAbsorbs` (valor sempre 0) e a StatusBar não corta
+(`SetClipsChildren`) nem preenche invertido, então o fundo preso ao fill vazio
+saía para fora da barra. Sem `UnitGetTotalHealAbsorbs` nativo a barra fica
+escondida; um stub de outro addon (global inseguro, `issecurevariable` falso)
+não conta, como em `EllesmereUI_Absorbs_335.lua`.
 
 0.25: com Classic WoW UI ou Blizzard Style, o ícone de líder em Top Left (padrão)
 fica no canto de cima do retrato, como no PlayerFrame do 3.3.5 (coroa de 16px a

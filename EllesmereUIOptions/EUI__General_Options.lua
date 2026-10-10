@@ -1731,7 +1731,7 @@ do
         },
     },
     {
-        version = "Unit Frames 0.25",
+        version = "Unit Frames 0.26",
         heroes = {
             { title = "Clear Focus Click", desc = "Clear your focus by clicking the focus frame (Shift + Right Click by default, or Ctrl/Alt + Right Click, Middle Click, Shift + Left Click). Set it on the Focus frame page. Works in combat.", nav = Nav("EllesmereUIUnitFrames", "Main Frames") },
             {
@@ -1798,6 +1798,7 @@ do
             },
         },
         fixes = {
+            { text = "A dark block no longer appears to the left of the health bar and grows as health drops (the heal absorb overlay, which 3.3.5 does not have)." },
             { text = "Under Classic WoW UI and Blizzard Style, the leader crown sits on the portrait's top corner, as on the original frames, instead of inside the health bar." },
             { text = "The party leader icon on unit frames shows on the leader only instead of on several party members." },
             { text = "Set Focus and Clear Focus in the unit frame right-click menu work out of combat without the 'blocked from an action' popup; in combat they are hidden." },

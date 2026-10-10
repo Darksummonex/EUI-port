@@ -5508,3 +5508,4 @@ L["The Boss Icon slot is now the Retail Rare/Quest Indicator. It marks elites an
 L["Crowd Control"] = "Controle de Grupo"
 L["Crowd Control Slot"] = "Slot de Controle de Grupo"
 L["Crowd control on enemies (stuns, fears, polymorphs, roots, silences) gets its own Core Positions slot, from any caster, as on Retail. Or pick Debuffs + CC to show it first in the debuff row."] = "Controle de grupo nos inimigos (atordoamentos, medos, metamorfoses, raízes, silêncios) ganha um slot próprio nas Posições Principais, de qualquer lançador, como no Retail. Ou escolha Debuffs + CC para mostrá-lo primeiro na fileira de debuffs."
+L["A dark block no longer appears to the left of the health bar and grows as health drops (the heal absorb overlay, which 3.3.5 does not have)."] = "Um bloco escuro não aparece mais à esquerda da barra de vida crescendo conforme a vida cai (a sobreposição de absorção de cura, que o 3.3.5 não tem)."

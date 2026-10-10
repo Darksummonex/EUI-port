@@ -7174,7 +7174,11 @@ local function CreateAbsorbBar(frame, unit, settings)
             -- StatusBar:SetValue and let the bar render zero width when the value is 0.
             if ha then
                 local haStyle = (s and s.healAbsorbStyle) or "clean"
-                if haStyle == "none" then
+                -- Wrath has no heal absorbs (an addon stub is not the native API); its
+                -- StatusBar cannot clip or reverse-fill, so the zero-value fill's backing
+                -- would land outside the health bar.
+                if haStyle == "none" or not UnitGetTotalHealAbsorbs
+                   or (issecurevariable and not issecurevariable("UnitGetTotalHealAbsorbs")) then
                     ha:Hide()
                 else
                     local hc = (s and s.healAbsorbColor) or { r = 0.8, g = 0.15, b = 0.15 }
