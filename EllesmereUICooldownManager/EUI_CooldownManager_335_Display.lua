@@ -5,6 +5,7 @@ local white="Interface\\Buttons\\WHITE8X8"
 local QUESTION="Interface\\Icons\\INV_Misc_QuestionMark"
 local CLASSIC_RING="Interface\\Buttons\\UI-Quickslot2"
 local PUSHED="Interface\\Buttons\\UI-Quickslot-Depress"
+local CIRCLE="Interface\\AddOns\\EllesmereUI\\media\\portraits\\circle_mask.tga"
 local D={}
 ns.D=D
 function D.Size(f,w,h) f:SetWidth(math.max(.01,w)); f:SetHeight(math.max(.01,h)) end
@@ -59,7 +60,7 @@ function D.SetGlow(host,style,w,h,r,g,b,bar,now)
     D.PaintEdges(host.edges,2,r or 1,g or .8,b or .2,.55+.4*math.sin((now or 0)*5)^2)
 end
 local function Tooltip(self)
-    local st=self.state; if not st or not (st.bar.showTooltip or ns.preview) then return end
+    local st=self.state; if not st or st.meta.kind=="empty" or not (st.bar.showTooltip or ns.preview) then return end
     local e,m=st.entry,st.meta; GameTooltip:SetOwner(self,"ANCHOR_RIGHT")
     if m.kind=="spell" and GameTooltip.SetSpell then GameTooltip:SetSpell(m.slot,m.book)
     elseif m.kind=="slot" and GameTooltip.SetInventoryItem then GameTooltip:SetInventoryItem("player",m.slot)
@@ -197,6 +198,18 @@ function D.StyleIcon(b,bar,classic,cls)
     b.keybind:ClearAllPoints(); local ka=bar.keybindAnchor or "TOPLEFT"; b.keybind:SetPoint(ka,b.host,ka,bar.keybindOffsetX or 2,bar.keybindOffsetY or -2)
     b.cooldown:SetAlpha((bar.onlyShowNumbers or bar.chargesOnly) and 0 or ns.Clamp(bar.swipeAlpha or .7,0,1))
     if b.cooldown.SetDrawEdge then b.cooldown:SetDrawEdge(bar.showCooldownEdge and true or false) end
+    -- Swipe Style "texture": drawn sweep that follows the icon shape and color.
+    local textured=bar.swipeStyle=="texture" and E.CreateTextureSwipe and true or false
+    if textured and not b.swipe then
+        b.swipe=E.CreateTextureSwipe(b); b.swipe:SetAllPoints(b.icon); b.swipe:SetFrameLevel(b.cooldown:GetFrameLevel())
+    end
+    b.useSwipe=textured
+    if b.swipe then
+        b.swipe:SetArt(b.circle and CIRCLE or white)
+        b.swipe:SetTint(bar.swipeR or 0,bar.swipeG or 0,bar.swipeB or 0,(bar.onlyShowNumbers or bar.chargesOnly) and 0 or ns.Clamp(bar.swipeAlpha or .7,0,1))
+        if not textured then b.swipe:Stop() end
+    end
+    b.lastStart=nil
     b.icon:SetAlpha((bar.onlyShowNumbers or bar.chargesOnly) and 0 or 1)
     b.glowW,b.glowH=w,h
 end
@@ -276,7 +289,7 @@ end
 function D.PaintIcon(b,item,bar,now,combat)
     local st=item and item.st; b.state=st
     if not st then
-        b.icon:SetTexture(QUESTION); b.icon:SetDesaturated(false); b.icon:SetVertexColor(1,1,1,1); b.cooldown:Hide(); b.timer:SetText(""); b.count:SetText(""); b.keybind:SetText("")
+        b.icon:SetTexture(QUESTION); b.icon:SetDesaturated(false); b.icon:SetVertexColor(1,1,1,1); b.cooldown:Hide(); if b.swipe then b.swipe:Stop() end; b.lastStart=nil; b.timer:SetText(""); b.count:SetText(""); b.keybind:SetText("")
         D.SetGlow(b.glow); b.push:Hide(); b:SetAlpha(1); return
     end
     local m,e=st.meta,st.entry
@@ -303,11 +316,15 @@ function D.PaintIcon(b,item,bar,now,combat)
     local remaining=st.activeAura and math.max(0,(st.activeAura.expires or 0)-now) or st.remaining or 0
     if cd and cd>0 and remaining>0 and not ns.Eff(st,"hideCDSwipe") then
         if b.lastStart~=cs or b.lastDuration~=cd or b.lastRev~=rev then
-            if b.cooldown.SetReverse then b.cooldown:SetReverse(rev) end
-            b.cooldown:SetCooldown(cs,cd); b.lastStart,b.lastDuration,b.lastRev=cs,cd,rev
+            if b.useSwipe then b.cooldown:Hide(); b.swipe:Start(cs,cd,rev)
+            else
+                if b.cooldown.SetReverse then b.cooldown:SetReverse(rev) end
+                b.cooldown:SetCooldown(cs,cd)
+            end
+            b.lastStart,b.lastDuration,b.lastRev=cs,cd,rev
         end
-        b.cooldown:Show()
-    else b.cooldown:Hide(); b.lastStart,b.lastDuration=nil,nil end
+        if not b.useSwipe then b.cooldown:Show() end
+    else b.cooldown:Hide(); if b.swipe then b.swipe:Stop() end; b.lastStart,b.lastDuration=nil,nil end
     local text=bar.showCooldownText and not bar.chargesOnly and D.TimeText(remaining) or ""
     if b.timer:GetText()~=text then b.timer:SetText(text) end
     local count=st.count or 0; local ctext=""

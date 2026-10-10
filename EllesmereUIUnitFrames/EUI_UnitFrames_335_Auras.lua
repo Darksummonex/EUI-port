@@ -45,6 +45,12 @@ local STOCK_DISPEL = {
     Curse = { r = 0.6, g = 0, b = 1 }, Disease = { r = 0.6, g = 0.4, b = 0 },
     Poison = { r = 0, g = 0.6, b = 0 },
 }
+-- Retail's type icons are Retail-only atlases; these are the Wrath dispel spells.
+local DISPEL_ICONS = {
+    Magic = "Interface\\Icons\\Spell_Holy_DispelMagic", Curse = "Interface\\Icons\\Spell_Nature_RemoveCurse",
+    Disease = "Interface\\Icons\\Spell_Holy_NullifyDisease", Poison = "Interface\\Icons\\Spell_Nature_NullifyPoison",
+}
+ns.UF_WrathDispelIcons = DISPEL_ICONS
 local GRADIENT_TEXTURE = "Interface\\AddOns\\EllesmereUI\\media\\textures\\gradient-tb.tga"
 local GRADIENT_SHARP_TEXTURE = "Interface\\AddOns\\EllesmereUI\\media\\textures\\gradient-sharp.tga"
 local CB_UNITS = { player = true, target = true, focus = true }
@@ -540,7 +546,7 @@ local function PaintLane(entry, isBuff, s)
             if isBuff and s.buffStealable and not stealable then include = false end
             if isBuff and s.buffHasDuration and (not duration or duration <= 0) then include = false end
         end
-        if not isBuff and SATED_DEBUFFS[spellID] then include = false end
+        if not isBuff and s.debuffHideExhaustion ~= false and SATED_DEBUFFS[spellID] then include = false end
         if isBuff and unit ~= "player" and s.buffDurOnly == true and (not duration or duration <= 0) then include = false end
         if include and not excluded and shownCount < cap then
             shownCount = shownCount + 1
@@ -603,7 +609,12 @@ local function DispelState(entry)
     local tex = host:CreateTexture(nil, "ARTWORK")
     local bd = CreateFrame("Frame", nil, frame)
     bd:SetAllPoints(frame.unifiedBorder or frame)
-    d = { host = host, tex = tex, border = bd }
+    local iconHost = CreateFrame("Frame", nil, frame.Health or frame)
+    iconHost:SetAllPoints(frame.Health or frame)
+    local icon = iconHost:CreateTexture(nil, "OVERLAY")
+    icon:SetTexCoord(.08, .92, .08, .92)
+    icon:Hide()
+    d = { host = host, tex = tex, border = bd, iconHost = iconHost, icon = icon }
     entry.dispel = d
     return d
 end
@@ -611,6 +622,7 @@ end
 local function HideDispel(d)
     if not d then return end
     d.tex:Hide()
+    d.icon:Hide()
     if d.borderOn then
         EllesmereUI.ApplyBorderStyle(d.border, 0, 0, 0, 0, 0, "solid")
         d.border:Hide()
@@ -625,7 +637,8 @@ local function PaintDispel(entry)
     if not (p and frame and frame.Health) then return end
     local mode = p.dispelOverlay or "none"
     local cbOn = p.dispelCustomBorder == true and ns.UF_CustomBorderOn and ns.UF_CustomBorderOn(p.player)
-    if mode == "none" and not cbOn then HideDispel(entry.dispel); return end
+    local iconOn = p.showDispelIcons == true
+    if mode == "none" and not cbOn and not iconOn then HideDispel(entry.dispel); return end
     local filter = (p.dispelOverlayByMe == true) and "HARMFUL|RAID" or "HARMFUL"
     local best
     for i = 1, 40 do
@@ -658,6 +671,19 @@ local function PaintDispel(entry)
         tex:SetColorTexture(r, g, b, alpha)
         tex:SetVertexColor(1, 1, 1, 1)
         tex:Show()
+    end
+    -- Type Icon Position: the dispel type's icon on a point of the health bar.
+    if iconOn then
+        local icon, size = d.icon, math.max(8, math.min(48, tonumber(p.dispelIconSize) or 16))
+        local point = (p.dispelIconPosition or "right"):upper()
+        d.iconHost:SetFrameLevel(health:GetFrameLevel() + 5)
+        icon:ClearAllPoints()
+        icon:SetSize(size, size)
+        icon:SetPoint(point, health, point, p.dispelIconOffsetX or 0, p.dispelIconOffsetY or 0)
+        icon:SetTexture(DISPEL_ICONS[slot.key])
+        icon:Show()
+    else
+        d.icon:Hide()
     end
     if cbOn then
         local s = p.player

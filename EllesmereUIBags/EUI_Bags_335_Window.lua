@@ -167,6 +167,8 @@ local function ItemButton(f,item,which)
     b.setName=Text(t,9); b.setName:SetPoint("BOTTOM",b,"BOTTOM",0,2); b.setName:SetWidth(SLOT)
     b.quest=t:CreateTexture(nil,"OVERLAY"); Size(b.quest,22,22); b.quest:SetPoint("BOTTOMLEFT",b,"BOTTOMLEFT",-3,2)
     b.quest:SetTexture("Interface\\GossipFrame\\AvailableQuestIcon"); b.quest:Hide()
+    b.junkCoin=t:CreateTexture(nil,"OVERLAY"); Size(b.junkCoin,14,14); b.junkCoin:SetPoint("TOPRIGHT",b,"TOPRIGHT",-1,-1)
+    b.junkCoin:SetTexture("Interface\\Icons\\INV_Misc_Coin_01"); b.junkCoin:SetTexCoord(.08,.92,.08,.92); b.junkCoin:Hide()
     b:SetNormalTexture("")
     b:SetPushedTexture(MEDIA.."highlight-3")
     local pushed=b.GetPushedTexture and b:GetPushedTexture()
@@ -200,7 +202,9 @@ local function Paint(b,item,p,live,interactive)
     if item.link then
         local z=p.bagItemIconZoom or .08
         b.icon:SetTexture(item.icon); b.icon:SetTexCoord(z,1-z,z,1-z); b.icon:Show(); b.iconBg:Hide()
-        b.icon:SetDesaturated((item.locked or (p.bagDesaturateJunkItems and item.quality==0)) and true or false)
+        local junk=CM:IsJunk(item.itemID,item.quality)
+        b.icon:SetDesaturated((item.locked or (p.bagDesaturateJunkItems and (item.quality==0 or junk))) and true or false)
+        Shown(b.junkCoin,junk and p.bagShowJunkCoin)
         local bind,unusable; if live then bind,unusable=Scan(item) end
         if unusable then b.icon:SetVertexColor(1,.1,.1) else b.icon:SetVertexColor(1,1,1) end
         local r,g,bl=QualityColor(item.quality)
@@ -222,7 +226,7 @@ local function Paint(b,item,p,live,interactive)
         b.icon:SetTexture(nil); b.icon:SetDesaturated(false); b.icon:Hide(); b.iconBg:Show(); b.iconBg:SetAlpha(interactive and .6 or .35)
         ns.BorderColor(b.edges,.15,.15,.15,.5); ns.BorderSize(b.edges,1)
         b.stackCount:SetText(""); b.stackCount:Hide(); b.level:SetText(""); b.level:Hide()
-        b.bind:SetText(""); b.bind:Hide(); b.setName:SetText(""); b.setName:Hide(); b.quest:Hide()
+        b.bind:SetText(""); b.bind:Hide(); b.setName:SetText(""); b.setName:Hide(); b.quest:Hide(); b.junkCoin:Hide()
     end
     local s,d,e=0,0,0
     if live and item.link then s,d,e=GetContainerItemCooldown(item.bag,item.slot) end
@@ -911,12 +915,16 @@ function ns.EnterSelectMode(f,mode,key)
         c:SetScript("OnClick",function(_,button)
             if button=="RightButton" then ns.ExitSelectMode(); return end
             local b=sel.hover; local id=b and b._item and b._item.itemID; if not id then return end
-            if sel.mode=="pin" then ns.TogglePin(id) else CM:AssignItem(id,sel.key); ns.RefreshAll() end
+            if sel.mode=="pin" then ns.TogglePin(id)
+            elseif sel.mode=="junk" then CM:ToggleJunk(id); ns.RefreshAll()
+            else CM:AssignItem(id,sel.key); ns.RefreshAll() end
         end)
     end
     local ar,ag,ab=ns.Accent(); ns.BorderColor(sel.hl.edges,ar,ag,ab,1)
     sel.f,sel.mode,sel.key=f,mode,key
-    sel.tip:SetText(mode=="pin" and "Click items to pin or unpin them. Right-click or Escape to finish." or "Click items to move them into this category. Right-click or Escape to finish.")
+    sel.tip:SetText(mode=="pin" and "Click items to pin or unpin them. Right-click or Escape to finish."
+        or mode=="junk" and "Click items to mark or unmark them as junk. Right-click or Escape to finish."
+        or "Click items to move them into this category. Right-click or Escape to finish.")
     f.scroll:SetFrameStrata("FULLSCREEN_DIALOG")
     sel.catcher:ClearAllPoints(); sel.catcher:SetAllPoints(f.scroll); sel.catcher:SetFrameLevel(f.scroll:GetFrameLevel()+40)
     SpecialFrames(true); sel:Show()
@@ -934,6 +942,59 @@ function ns.PlusClick(f,o)
         ClearCursor(); ns.RefreshAll(); return
     end
     ns.EnterSelectMode(f,o.mode,o.key)
+end
+
+---------------------------------------------------------------------------
+-- Junk Marker: the header coin (mark mode) and Sell Junk at merchants
+---------------------------------------------------------------------------
+function ns.JunkClick(f)
+    if InCombatLockdown() then return end
+    local ctype,id=GetCursorInfo()
+    if ctype=="item" and id then CM:ToggleJunk(id); ClearCursor(); ns.RefreshAll(); return end
+    ns.EnterSelectMode(f,"junk")
+end
+-- Marked or grey junk worth something, outside equipment sets and pins; one
+-- item every 0.15 s while the merchant stays open, out of combat, with an
+-- empty cursor (a sale waiting on a confirmation stops the sweep).
+function ns.SellJunk()
+    if ns.junkSelling or InCombatLockdown() or not ns.merchantOpen then return end
+    CM:RebuildSetLookup()
+    local pins,slots,kept=PinSet(),{},0
+    for bag=0,4 do
+        for slot=1,GetContainerNumSlots(bag) or 0 do
+            local link=GetContainerItemLink(bag,slot); local id=link and tonumber(link:match("item:(%d+)"))
+            if id then
+                local _,_,quality,_,_,_,_,_,_,_,price=GetItemInfo(link)
+                if CM:IsJunk(id,quality) then
+                    if (price or 0)<=0 or pins[id] or CM:SetNameAt(bag,slot) then kept=kept+1
+                    else slots[#slots+1]={bag=bag,slot=slot,id=id,price=price} end
+                end
+            end
+        end
+    end
+    ns.junkSelling=true
+    local i,sold,earned=0,0,0
+    local function Finish()
+        ns.junkSelling=nil
+        local tag="|cff0cd29fEllesmereUI:|r "
+        if sold>0 then
+            local msg=format("Sold %d junk item(s)",sold)
+            if earned>0 and GetCoinTextureString then msg=msg.."  "..GetCoinTextureString(earned) end
+            print(tag..msg)
+        end
+        local left=kept+#slots-sold
+        if left>0 then print(tag..format("%d junk item(s) could not be sold.",left)) end
+    end
+    local function Step()
+        if not ns.merchantOpen or InCombatLockdown() or CursorHasItem() then return Finish() end
+        i=i+1; local s=slots[i]; if not s then return Finish() end
+        local link=GetContainerItemLink(s.bag,s.slot); local _,count,locked=GetContainerItemInfo(s.bag,s.slot)
+        if link and tonumber(link:match("item:(%d+)"))==s.id and not locked then
+            UseContainerItem(s.bag,s.slot); sold=sold+1; earned=earned+s.price*(count or 1)
+        end
+        ns.After(.15,Step)
+    end
+    Step()
 end
 
 ---------------------------------------------------------------------------
@@ -1218,10 +1279,14 @@ local function HideAll(f)
 end
 local function LayoutHeader(f,live,p)
     local list={}
-    for _,b in ipairs({f.settingsBtn,f.sortBtn,f.randomBtn,f.bagsBtn,f.characters,f.bankButton}) do b:Hide() end
+    for _,b in ipairs({f.settingsBtn,f.sortBtn,f.randomBtn,f.bagsBtn,f.characters,f.bankButton,f.junkBtn,f.sellBtn}) do b:Hide() end
     list[1]=f.settingsBtn
     if live and p.bagShowSortIcon then list[#list+1]=f.sortBtn end
     if live and f.kind=="bags" and f.view=="onebag" and not p.bagHideRandomize then list[#list+1]=f.randomBtn end
+    if live and f.junkBtn and CM:IsJunkMarkerEnabled() then
+        list[#list+1]=f.junkBtn
+        if ns.merchantOpen then list[#list+1]=f.sellBtn end
+    end
     list[#list+1]=f.bagsBtn; list[#list+1]=f.characters
     if f.bankButton then list[#list+1]=f.bankButton end
     local prev=f.search
@@ -1328,6 +1393,10 @@ function ns.MakeView(kind)
     f.sortBtn=ns.IconButton(h,MEDIA.."clean-up",24,"Sort","All Items: restore the default order. OneBag / MultiBag / Bank: physically sort the items.",function() ns.SortClick(f) end,.9)
     f.randomBtn=ns.IconButton(h,"Interface\\Buttons\\UI-GroupLoot-Dice-Up",22,"Randomize","Shuffle every item in your bags into random slots.",function() ns.RandomizeClick(f) end,.9)
     f.bagsBtn=ns.IconButton(h,"Interface\\Buttons\\Button-Backpack-Up",20,"Bags","Show or hide your equipped bag slots.",function() local p=P(); p.bagShowSlots=not p.bagShowSlots; ns.Refresh(kind) end,.9)
+    if kind=="bags" then
+        f.junkBtn=ns.IconButton(h,"Interface\\MoneyFrame\\UI-GoldIcon",16,"Junk Marker","Click items to mark or unmark them as junk. With an item on the cursor, marks or unmarks that item.",function() ns.JunkClick(f) end,.9)
+        f.sellBtn=ns.FlatButton(h,"Sell Junk",64,function() ns.SellJunk() end); f.sellBtn:SetHeight(18)
+    end
     f.settingsBtn=ns.IconButton(h,MEDIA.."eui-settings",18,"Settings","Open the EllesmereUI "..(kind=="bank" and "Bank" or "Bags").." settings.",function() ns.OpenSettings(kind) end,.7)
     -- Sidebar
     local sb=CreateFrame("Frame",nil,f); f.Sidebar=sb; sb.dividers={}

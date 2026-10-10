@@ -206,6 +206,7 @@ function ns.Bind(index,key,force)
  if key=="" or key=="ESCAPE" or key:find("MOUSEWHEEL") then return false,"Choose a holdable key other than Escape or mouse wheel" end
  local current=GetBindingAction(key)
  if not force and current and current~="" and current~="EUI_RADIAL"..index then return false,"conflict",current end
+ if E.NoteBinding then E.NoteBinding(key,current) end
  if SetBinding(key,"EUI_RADIAL"..index) then if SaveBindings then SaveBindings(GetCurrentBindingSet()) end; ns.Apply(); return true end
  return false,"Invalid binding key"
 end

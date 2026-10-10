@@ -61,8 +61,10 @@ init:SetScript("OnEvent",function(self)
     O.glowD={default="Bar Default",[0]="None"}; O.glowDOrder={"default",0}
     for _,i in ipairs(ns.GLOW_ORDER) do O.glowD[i]=ns.GLOW_NAMES[i]; O.glowDOrder[#O.glowDOrder+1]=i end
     O.cse={none="Always Show",lowerAlphaOnCD="Lower Opacity on Cooldown",hiddenOnCDShift="Hide on Cooldown",hiddenReadyShift="Hide When Ready",
-        hiddenOnCD="Hide on Cooldown (Keep Place)",hiddenReady="Hide When Ready (Keep Place)",pixelGlowReady="Glow When Ready",pixelGlowReadyUsable="Glow When Ready and Usable"}
-    O.cseOrder={"none","lowerAlphaOnCD","hiddenOnCDShift","hiddenReadyShift","hiddenOnCD","hiddenReady","pixelGlowReady","pixelGlowReadyUsable"}
+        hiddenOnCD="Hide on Cooldown (Keep Place)",hiddenReady="Hide When Ready (Keep Place)",pixelGlowReady="Glow When Ready",pixelGlowReadyUsable="Glow When Ready and Usable",
+        hiddenUnusableShift="Hide Until Usable",hiddenFormShift="Hide Outside Form/Stance",hiddenUnusable="Hide Until Usable (Keep Place)",hiddenForm="Hide Outside Form/Stance (Keep Place)"}
+    O.cseOrder={"none","lowerAlphaOnCD","hiddenOnCDShift","hiddenReadyShift","hiddenUnusableShift","hiddenFormShift","hiddenOnCD","hiddenReady","hiddenUnusable","hiddenForm","pixelGlowReady","pixelGlowReadyUsable"}
+    O.cseTip="Hide Until Usable: only shown while usable and off cooldown, such as Overpower or Victory Rush after a proc; low resources do not hide it. Hide Outside Form/Stance: only shown in the form or stance the spell needs, even on cooldown. Keep Place leaves the gap; the others close it."
     O.cseD={default="Bar Default"}; O.cseDOrder={"default"}
     for _,k in ipairs(O.cseOrder) do O.cseD[k]=O.cse[k]; O.cseDOrder[#O.cseDOrder+1]=k end
     O.strata={BACKGROUND="Background",LOW="Low",MEDIUM="Medium",HIGH="High",DIALOG="Dialog"}
@@ -409,6 +411,7 @@ init:SetScript("OnEvent",function(self)
             Add("Custom Spell ID",nil,false,Popup("Custom Spell ID","Enter a spell ID to track:","spell"))
             Add("Custom Item ID",nil,false,Popup("Custom Item ID","Enter an item ID to track:","item"))
             Add("Equipment Slot",nil,false,Popup("Equipment Slot","Enter an equipment slot (1-19). Trinkets are 13 and 14.","slot"))
+            Add("Empty Slot",nil,false,Close(function() O.AddEntry("empty") end))
             Div()
             for n,s in ipairs({13,14}) do
                 Add("Trinket Slot "..n,GetInventoryItemTexture and GetInventoryItemTexture("player",s),used.slot[s],Close(function() O.AddEntry("slot",s) end))
@@ -612,7 +615,9 @@ init:SetScript("OnEvent",function(self)
         B.Row(O.T(s,"showTooltip","Show Tooltip"),O.T(s,"desaturateOnCD","Desaturate on Cooldown"))
         B.Row(O.T(s,"showRange","Out of Range Color"),O.C(s,"range","Range Color",false,function() return not O.Get(s,"showRange") end))
         B.Row(O.T(s,"showNoMana","Not Enough Mana Color"),O.C(s,"mana","Mana Color",false,function() return not O.Get(s,"showNoMana") end))
-        B.Row(O.P(s,"swipeAlpha","Swipe Opacity"),O.T(s,"showCooldownEdge","Cooldown Edge",function() return not hasEdge end,"Bright line on the swipe edge (needs a client with Cooldown:SetDrawEdge)."))
+        B.Row(O.P(s,"swipeAlpha","Swipe Opacity"),O.T(s,"showCooldownEdge","Cooldown Edge",function() return not hasEdge or O.Get(s,"swipeStyle")=="texture" end,"Bright line on the swipe edge (needs a client with Cooldown:SetDrawEdge; native swipe only)."))
+        B.Row(O.D(s,"swipeStyle","Swipe Style",{native="Native",texture="Shaped"},{"native","texture"},nil,"Native: the client's dark square sweep. Shaped: a drawn sweep that follows round icons and takes the Swipe Color.","native"),
+            O.C(s,"swipe","Swipe Color",false,function() return O.Get(s,"swipeStyle")~="texture" end))
         B.Row(O.T(s,"onlyShowNumbers","Only Show Numbers",nil,"Hides the swipe and keeps the timer."),O.T(s,"pressMirror","Show Key Presses",nil,"Flashes the icon when its action button is pressed."))
         B.Row(O.T(s,"showPassiveTrinkets","Show Passive Trinkets"),O.T(s,"hideItemsIfMissing","Hide Missing Items"))
         if ns.IsBuffBar(O.Bar()) then
@@ -623,7 +628,7 @@ init:SetScript("OnEvent",function(self)
     function O.Extras(B)
         local s,d=O.Bar,O.Defaults
         B.Section("EXTRAS")
-        B.Row(O.D(d,"cdStateEffect","Cooldown State",O.cse,O.cseOrder,nil,"Default for every icon on this bar; icons can override it.","none"),O.P(d,"cdStateLowerAlpha","Lower Opacity Amount"))
+        B.Row(O.D(d,"cdStateEffect","Cooldown State",O.cse,O.cseOrder,nil,"Default for every icon on this bar; icons can override it. "..O.cseTip,"none"),O.P(d,"cdStateLowerAlpha","Lower Opacity Amount"))
         B.Row(O.D(s,"procGlowStyle","Proc Glow",O.glow,O.glowOrder),O.D(d,"activeGlow","Active Aura Glow",O.glow,O.glowOrder,nil,nil,0))
         B.Row(O.T(s,"activeState","Show Active State",nil,"Spell icons show your own short buff from that spell instead of the cooldown."),O.D(s,"buffGlow","Buff Glow",O.glow,O.glowOrder,nil,nil,0))
         B.Row(O.T(s,"pandemicGlow","Pandemic Glow",nil,"Glow when an aura has 30% or less of its duration left."),O.D(s,"pandemicGlowStyle","Pandemic Glow Style",O.glow,O.glowOrder,function() return not O.Get(s,"pandemicGlow") end))
@@ -646,6 +651,8 @@ init:SetScript("OnEvent",function(self)
             B.Row(O.T(Ent,"ownOnly","Own Auras Only"),O.T(Ent,"alwaysShow","Always Show",nil,"Keeps the icon visible (dimmed) while the aura is down."))
             B.Row(O.ED("buffGlow","Buff Glow",O.glowD,O.glowDOrder),O.S(Ent,"maxStacks","Max Stacks",0,20,1,nil,"0 = off"))
             B.Row(O.D(Ent,"maxStacksGlow","Max Stacks Glow",O.glow,O.glowOrder,nil,nil,0),O.C(Ent,"glowColor","Glow Color",false))
+        elseif e.kind=="empty" then
+            B.Row(O.Label("Empty Slot: keeps this position free on the bar."),O.spacer)
         else
             B.Row(O.ED("cdStateEffect","Cooldown State",O.cseD,O.cseDOrder),O.ED("cdStateGlowStyle","Ready Glow Style",O.glowD,O.glowDOrder))
             if e.kind=="spell" then
@@ -670,6 +677,10 @@ init:SetScript("OnEvent",function(self)
     function O.AddEntry(kind,id)
         local l=O.List(); local isPreset=kind=="preset" or kind=="buffpreset"
         if #l>=40 then O.status="Maximum 40 entries per bar"; O.Refresh(); return end
+        if kind=="empty" then
+            l[#l+1]={kind="empty",enabled=true}; O.entry=#l
+            O.status="Empty Slot added."; ns.Apply(); O.Refresh(); return
+        end
         if not isPreset then
             id=tonumber(id)
             if not id or id<1 or id~=math.floor(id) or kind=="slot" and id>19 then O.status="Enter a valid ID or equipment slot 1-19"; O.Refresh(); return end
@@ -684,7 +695,7 @@ init:SetScript("OnEvent",function(self)
     function O.Add(B)
         O.addY=B.y
         B.Section("ADD ENTRY")
-        O.addRow=B.Row({type="dropdown",text="Entry Type",values={spell="Spell Cooldown",aura="Buff / Debuff",item="Item Cooldown",slot="Equipment Slot"},order={"spell","aura","item","slot"},
+        O.addRow=B.Row({type="dropdown",text="Entry Type",values={spell="Spell Cooldown",aura="Buff / Debuff",item="Item Cooldown",slot="Equipment Slot",empty="Empty Slot"},order={"spell","aura","item","slot","empty"},
             getValue=function() return O.addKind end,setValue=function(v) O.addKind=v end},{type="input",text="Spell / Item ID",getValue=function() return O.addID end,setValue=function(v) O.addID=v end})
         B.Button("Add Entry",function() O.AddEntry(O.addKind,O.addID) end)
         local learned,lo={},{}

@@ -480,6 +480,15 @@ init:SetScript("OnEvent",function(self)
                 Row(Toggle("showAuras","Show Auras","Uses live target/mouseover auras and the GUID aura cache for other identified plates."),
                     Toggle("onlyPlayerDebuffs","Only Your Debuffs","Includes debuffs cast by your pet."))
                 Row(Toggle("showDebuffs","Show Debuffs"),Toggle("showBuffs","Show Enemy Buffs"))
+                -- Wrath has no "important" aura flag: timed buffs stand in for Retail's Important.
+                Row({type="dropdown",text="Enemy Buff Filter",values={timed="Timed Buffs",dispellable="Only Dispellable",showall="Show All"},order={"timed","dispellable","showall"},
+                    tooltip="Which buffs enemy nameplates show. Fine-tune it on the Aura Filters page.",
+                    disabled=function() return not Get("showBuffs") end,disabledTooltip="Show Enemy Buffs",
+                    getValue=function() if Get("buffStealable") then return "dispellable" end; return Get("buffHasDuration") and "timed" or "showall" end,
+                    setValue=function(v) local p=P(); if not p then return end
+                        p.buffHasDuration=v=="timed"; p.buffStealable=v=="dispellable"
+                        if v=="showall" then p.buffFilterMode="all"; p.onlyPlayerBuffs=false end
+                        Refresh() end},SPACER)
 
                 Section("TARGET AND FOCUS EFFECTS")
                 local hashOff={disabled=function() return not Get("hashLineEnabled") end,disabledTooltip="Show Hash Line on Target"}

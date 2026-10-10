@@ -109,6 +109,12 @@ assert(assigned and assigned.debuffs[1]:IsShown() and not raid.debuffs[1]:IsShow
 now=19; event:RunScript('OnUpdate',.3); assert(not assigned.debuffs[1]:IsShown() and assigned.borderColor[1]==0,'Expired debuff retained its highlight')
 combat=false; R.GetSettings('raid').orientation='vertical'; R.GetSettings('raid').maxGroups=2; R.Apply(); assert(R.holders.raid:GetWidth()==637 and R.holders.raid:GetHeight()==120)
 assert(not R.headers.raid[3]:IsShown() and R.headers.raid[1]:GetAttribute('point')=='LEFT')
+do local c=R.GetSettings('raid'); local layout=R.activeRaidLayout; R.activeRaidLayout=25; c.orientation='grid'; c.maxGroups=5; c.hiddenGroups={}; R.Apply()
+    assert(R.holders.raid:GetWidth()==3*637+2*16 and R.holders.raid:GetHeight()==120,'Down and then Right footprint '..R.holders.raid:GetWidth()..'x'..R.holders.raid:GetHeight())
+    local function At(i) return select(4,R.headers.raid[i]:GetPoint(1)),select(5,R.headers.raid[i]:GetPoint(1)) end
+    local x2,y2=At(2); local x3,y3=At(3); local x5,y5=At(5)
+    assert(x2==0 and y2==-68 and x3==653 and y3==0 and x5==1306 and y5==0,'Down and then Right slots')
+    R.activeRaidLayout=layout; c.orientation='vertical'; c.maxGroups=2; R.Apply() end
 local mover=unlockByFolder.EllesmereUIRaidFrames[1]; mover.savePos(nil,'TOPLEFT','BOTTOMLEFT',300,0); R.Apply(); assert(select(5,R.holders.raid:GetPoint(1))==0)
 p.enabled=false; R.Apply(); assert(not R.holders.raid:IsShown() and PartyMemberFrame1:GetParent()==UIParent and select(4,PartyMemberFrame1:GetPoint(1))==10 and PartyMemberFrame1.events.UNIT_HEALTH)
 p.enabled=true; R.Apply(); raidCount=0; partyCount=0; TickHeaders(); assert(not R.holders.party:IsShown())
@@ -179,7 +185,30 @@ def tile(file,next_name):
 lua.execute('rows={}')
 tile('EUI_Fonts_Options.lua','TileCooldownManager')(lua.globals().UIParent,0,lua.globals().EllesmereUI.Widgets,lua.table(folder='EllesmereUIRaidFrames',display='Raid Frames'))
 lua.execute("FindRow('Text Group').setValue('party'); FindRow('Name Size').setValue(14); assert(R.GetSettings('party').nameSize==14 and R.GetSettings('raid').nameSize==11)")
-lua.execute('rows={}')
+# Name Outline: per group, from the Fonts tile, reaching the name FontString only.
+lua.execute('''
+EllesmereUI.TEXT_OUTLINE_VALUES={module='Module Default',none='None',outline='Outline',thick='Thick Outline',shadow='Shadow'}
+EllesmereUI.TEXT_OUTLINE_ORDER={'module','none','outline','thick','shadow'}
+EllesmereUI.ApplyTextOutline=function(fs,path,size,mode)
+    if mode==nil or mode=='module' then fs._outlineMode=nil; return false end
+    fs._outlineMode,fs._outlineSize=mode,size; return true
+end
+rows={}''')
+tile('EUI_Fonts_Options.lua','TileCooldownManager')(lua.globals().UIParent,0,lua.globals().EllesmereUI.Widgets,lua.table(folder='EllesmereUIRaidFrames',display='Raid Frames'))
+lua.execute('''
+FindRow('Name Outline').setValue('thick')
+assert(R.GetSettings('party').nameOutline=='thick' and R.GetSettings('raid').nameOutline=='module')
+local party,raid
+for _,b in ipairs(R.buttons) do
+    if b._euiKind=='party' and not party then party=b elseif b._euiKind~='party' and not raid then raid=b end
+end
+assert(party and raid,'no party/raid button')
+R.LayoutButton(party); R.LayoutButton(raid)
+assert(party.name._outlineMode=='thick' and party.name._outlineSize==14 and not party.healthText._outlineMode)
+assert(not raid.name._outlineMode,'raid name took the party outline')
+R.GetSettings('party').nameOutline='module'; R.LayoutButton(party); assert(not party.name._outlineMode)
+EllesmereUI.ApplyTextOutline,EllesmereUI.TEXT_OUTLINE_VALUES,EllesmereUI.TEXT_OUTLINE_ORDER=nil,nil,nil
+rows={}''')
 tile('EUI_Textures_Options.lua','TileCooldownManager')(lua.globals().UIParent,0,lua.globals().EllesmereUI.Widgets,lua.table(folder='EllesmereUIRaidFrames'))
 lua.execute("FindRow('Raid Health Texture').setValue('fade'); assert(R.GetSettings('raid').healthBarTexture=='fade' and R.GetSettings('party').healthBarTexture=='atrocity')")
 lua.execute('''

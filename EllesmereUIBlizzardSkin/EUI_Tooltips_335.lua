@@ -7,7 +7,8 @@ local Items=ns.Items
 for key,value in pairs({tooltipPlayerTitles=false,tooltipItemLevel=true,tooltipShowGearScore=true,tooltipShowMount=false,tooltipShowGuildRank=false,
     tooltipShowTarget=false,tooltipShowMode="always",tooltipShowModifier="none",tooltipGrowthDirection="auto",
     uberTooltips=true,uberTooltipsManual=false,tooltipHideHealthStrip=true,tooltipAnchorCursor=false,
-    tooltipCursorPosition="top",tooltipCursorOffsetX=0,tooltipCursorOffsetY=0}) do ns.defaults[key]=value end
+    tooltipCursorPosition="top",tooltipCursorOffsetX=0,tooltipCursorOffsetY=0,
+    tooltipShowBuffs=false,tooltipBuffSize=20,tooltipBuffsPerRow=8,tooltipBuffPosition="bottom",tooltipBuffOffsetX=0,tooltipBuffOffsetY=0}) do ns.defaults[key]=value end
 local T={}; ns.Tooltips=T
 table.insert(ns.extras,T)
 local function On(key) return ns.GetValue(key) and ns.GetValue("customTooltips")~=false end
@@ -90,6 +91,57 @@ local function AddItemLevel(tip,unit)
         pending={guid=guid,unit=unit,since=GetTime(),tries=0}
     end
 end
+-- Hovered player's buffs as icons beside the tooltip (Retail tooltipShowBuffs):
+-- up to 16, parented to GameTooltip so they hide with it.
+local MAX_BUFFS=16
+-- position = { container point, tooltip point, x step sign, y step sign, x, y }
+local BUFF_POS={
+    bottom={"TOPLEFT","BOTTOMLEFT",1,-1,0,-2},
+    top={"BOTTOMLEFT","TOPLEFT",1,1,0,2},
+    left={"TOPRIGHT","TOPLEFT",-1,-1,-2,0},
+    right={"TOPLEFT","TOPRIGHT",1,-1,2,0},
+}
+T.BUFF_POS=BUFF_POS
+local buffBox
+local function BuffBox(tip)
+    if buffBox then return buffBox end
+    buffBox=CreateFrame("Frame",nil,tip); buffBox:Hide(); buffBox.icons={}
+    for i=1,MAX_BUFFS do
+        local b=CreateFrame("Frame",nil,buffBox)
+        b.bg=b:CreateTexture(nil,"BACKGROUND"); b.bg:SetTexture("Interface\\Buttons\\WHITE8X8"); b.bg:SetVertexColor(0,0,0,1); b.bg:SetAllPoints(b)
+        b.icon=b:CreateTexture(nil,"ARTWORK"); b.icon:SetPoint("TOPLEFT",b,"TOPLEFT",1,-1); b.icon:SetPoint("BOTTOMRIGHT",b,"BOTTOMRIGHT",-1,1); b.icon:SetTexCoord(.08,.92,.08,.92)
+        b.count=b:CreateFontString(nil,"OVERLAY","NumberFontNormalSmall"); b.count:SetPoint("BOTTOMRIGHT",b,"BOTTOMRIGHT",0,1)
+        b:Hide(); buffBox.icons[i]=b
+    end
+    tip:HookScript("OnTooltipCleared",function() buffBox:Hide() end)
+    T.buffBox=buffBox
+    return buffBox
+end
+function T.ShowBuffs(tip,unit)
+    if not (On("tooltipShowBuffs") and unit and UnitIsPlayer(unit)) then if buffBox then buffBox:Hide() end; return end
+    local box=BuffBox(tip)
+    local size=math.max(10,math.min(40,tonumber(ns.GetValue("tooltipBuffSize")) or 20))
+    local perRow=math.max(1,math.min(16,tonumber(ns.GetValue("tooltipBuffsPerRow")) or 8))
+    local p=BUFF_POS[ns.GetValue("tooltipBuffPosition")] or BUFF_POS.bottom
+    local n=0
+    for i=1,40 do
+        if n>=MAX_BUFFS then break end
+        local name,_,icon,count=UnitAura(unit,i,"HELPFUL")
+        if not name then break end
+        n=n+1
+        local b=box.icons[n]
+        b:SetWidth(size); b:SetHeight(size); b:ClearAllPoints()
+        local col,row=(n-1)%perRow,math.floor((n-1)/perRow)
+        b:SetPoint(p[1],box,p[1],p[3]*col*(size+2),p[4]*row*(size+2))
+        b.icon:SetTexture(icon); b.count:SetText((count or 0)>1 and count or ""); b:Show()
+    end
+    for i=n+1,MAX_BUFFS do box.icons[i]:Hide() end
+    if n==0 then box:Hide(); return end
+    local cols=math.min(n,perRow); local rows=math.ceil(n/perRow)
+    box:SetWidth(cols*(size+2)-2); box:SetHeight(rows*(size+2)-2)
+    box:ClearAllPoints(); box:SetPoint(p[1],tip,p[2],p[5]+(tonumber(ns.GetValue("tooltipBuffOffsetX")) or 0),p[6]+(tonumber(ns.GetValue("tooltipBuffOffsetY")) or 0))
+    box:Show()
+end
 local function AddUnitInfo(tip)
     if ns.GetValue("customTooltips")==false then return end
     local _,unit=tip:GetUnit()
@@ -119,6 +171,7 @@ local function AddUnitInfo(tip)
         end
         AddItemLevel(tip,unit)
     end
+    T.ShowBuffs(tip,unit)
     if On("tooltipShowTarget") and UnitExists(unit.."target") and not HasLine(tip,"Targeting:") then
         local target=unit.."target"
         local who=UnitIsUnit(target,"player") and "|cffff3333>> YOU <<|r" or UnitHex(target)..(UnitName(target) or "").."|r"
@@ -214,7 +267,10 @@ function T.Apply()
     T.ApplyHealthStrip(); T.UpdateVisibility()
     -- ns.Apply runs this on every skin refresh; in Unlock Mode the mover owns the anchor.
     if not E._unlockActive then T.PositionFixed() end
-    if ns.GetValue("uberTooltipsManual") and SetCVar then SetCVar("UberTooltips",ns.GetValue("uberTooltips") and "1" or "0") end
+    if ns.GetValue("uberTooltipsManual") and SetCVar then
+        local v=ns.GetValue("uberTooltips") and "1" or "0"
+        if E.SetCVar then E.SetCVar("UberTooltips",v,"EllesmereUIBlizzardSkin") else SetCVar("UberTooltips",v) end
+    end
 end
 local function InspectTick()
     if not pending then return end

@@ -22,7 +22,7 @@ init:SetScript("OnEvent",function(self)
     end
     E:RegisterModule("EllesmereUIBlizzardSkin",{
         title="Blizz UI Enhanced",description="Square dark skins for Wrath windows, tooltips, menus and popups.",
-        pages={"Blizzard Window Skins","Tooltips, Menus & Popups"},searchTerms="blizzard skin character inspect quest merchant trade mail auction talent spellbook tooltip popup menu font collections wardrobe transmog mount gem socket enchant durability cursor resurrect queue gearscore barber pvp arena battleground score minimap help gm ticket breath fatigue timer stopwatch pullout debug ace3 loot roll need greed",
+        pages={"Blizzard Window Skins","Tooltips, Menus & Popups"},searchTerms="blizzard skin character inspect quest merchant trade mail auction talent spellbook tooltip popup menu font collections wardrobe transmog mount gem socket enchant durability cursor resurrect queue gearscore barber pvp arena battleground score minimap help gm ticket breath fatigue timer stopwatch pullout debug ace3 loot roll need greed buffs auras stat highlight",
         buildPage=function(page,parent,y)
             local W=E.Widgets
             local function Row(left,right) local _,h=W:DualRow(parent,y,left,right); y=y-h end
@@ -52,11 +52,17 @@ init:SetScript("OnEvent",function(self)
                 Row({type="label",text="Fonts follow Global Settings > Fonts > Blizz UI Enhanced."},{type="label",text="Changes apply outside combat."})
                 Section("STATS SIDEBAR")
                 for _,spec in ipairs(ns.statGroups or {}) do Row(Toggle("showStatCategory_"..spec.key,"Show "..spec.text),StatColor(spec)) end
+                local highlight=Toggle("highlightStatItems","Highlight Items on Stat Hover")
+                highlight.tooltip="Hovering a stat in the sidebar glows the equipped items that give it (Hit, Crit, Haste, Defense, Strength...)."
+                Row(highlight,{type="label",text="Reads the item's own stats; enchants and gems are not counted."})
                 Row({type="button",text="Reset Stat Colors & Order",onClick=function()
                     local p=ns.GetSettings(); p.statCategoryColors,p.statCategoryUseColor,p.statSectionsOrder=nil,nil,nil; ns.Apply(); E:InvalidatePageCache()
                 end},{type="label",text="Use the arrows on each section header to reorder."})
                 Section("INSPECT")
                 Row(Toggle("inspectShowItemLevel","Inspect Item Levels"),Toggle("inspectShowEnchants","Inspect Enchants"))
+                Row(When(Toggle("inspectEnchantNames","Show Inspect Enchant Names Instead of Icons"),On("inspectShowEnchants")),
+                    When(Slider("inspectEnchantSize","Inspect Enchant Name Size",6,16),On("inspectEnchantNames")))
+                Row(Toggle("inspectMissingEnhancements","Inspect Missing Enchant, Gem & Buckle Icons"),{type="label",text="Shown at max level. Profession bonuses are only checked on your own sheet."})
                 Row(Toggle("inspectDock","Dock Inspect Beside Character"),{type="label",text="Docks when both windows fit on screen."})
                 Section("MERCHANT")
                 Row(Toggle("merchantShowAsList","Show Merchant as List"),When(Slider("merchantListRowHeight","List Row Height",24,44),On("merchantShowAsList")))
@@ -76,6 +82,12 @@ init:SetScript("OnEvent",function(self)
                 Row(When(Toggle("tooltipShowGuildRank","Guild Rank"),tips),When(Toggle("tooltipShowTarget","Show Target"),tips))
                 Row(When(Toggle("tooltipShowMount","Show Mount & Collected Status"),tips),When(Toggle("tooltipHideHealthStrip","Hide Health Bar"),tips))
                 Row(When(Toggle("tooltipShowGearScore","Show GearScore"),tips),{type="label",text="GearScoreLite's own player line replaces it when enabled."})
+                local buffs=function() return tips() and ns.GetValue("tooltipShowBuffs") end
+                local showBuffs=When(Toggle("tooltipShowBuffs","Show Player Buffs"),tips)
+                showBuffs.tooltip="Shows the hovered player's buffs as icons next to the tooltip (up to 16)."
+                Row(showBuffs,When(Drop("tooltipBuffPosition","Buff Position",{bottom="Bottom",top="Top",left="Left",right="Right"},{"bottom","top","left","right"}),buffs))
+                Row(When(Slider("tooltipBuffSize","Buff Icon Size",10,40),buffs),When(Slider("tooltipBuffsPerRow","Buffs Per Row",1,16),buffs))
+                Row(When(Slider("tooltipBuffOffsetX","Buff X Offset",-50,50),buffs),When(Slider("tooltipBuffOffsetY","Buff Y Offset",-50,50),buffs))
                 Section("TOOLTIP POSITION")
                 local cursor=function() return tips() and ns.GetValue("tooltipAnchorCursor") end
                 Row(When(Toggle("tooltipAnchorCursor","Anchor to Cursor"),tips),When(Drop("tooltipCursorPosition","Cursor Position",

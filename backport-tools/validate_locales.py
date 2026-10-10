@@ -13,10 +13,17 @@ engine = (root / 'EllesmereUI/EUI_Locale_335.lua').read_text(encoding='utf-8')
 # Port-only translations live after MARKER (build_locale_additions.py); only the
 # part above it must match Retail.
 MARKER = b'-- == 3.3.5 port additions (backport-tools/build_locale_additions.py) =='
+# The trim was made from the Retail 9.3.4 catalogs, kept untrimmed in commit
+# 4654752; later Retail versions reword or drop keys the port still uses.
+RETAIL_SOURCE = '4654752'
+GIT = r'C:\Program Files\Git\cmd\git.exe'
 _subset = {}
 def subset_of_retail(path, retail):
     if path not in _subset:
-        theirs = iter(retail.read_bytes().splitlines())
+        import subprocess
+        source = subprocess.run([GIT, '-C', str(root), 'show', RETAIL_SOURCE + ':' + retail],
+                                capture_output=True, check=True).stdout
+        theirs = iter(source.splitlines())
         ours = path.read_bytes().split(MARKER, 1)[0].splitlines()
         _subset[path] = all(any(line == other for other in theirs) for line in ours if line.strip())
     return _subset[path]
@@ -48,8 +55,7 @@ CreateFrame=function() return {
             for code in codes:
                 path = root / 'EllesmereUILocales' / (code + '.lua')
                 if code not in port_only:
-                    retail = Path('D:/World of Warcraft/_retail_/Interface/AddOns/EllesmereUILocales') / path.name
-                    assert subset_of_retail(path, retail), code
+                    assert subset_of_retail(path, 'EllesmereUILocales/' + path.name), code
                 lua.execute(path.read_text(encoding='utf-8-sig'))
         return not missing
     g.C_AddOns = lua.table(LoadAddOn=load)

@@ -1,4 +1,21 @@
-# Quality of Life 3.3.5 — 0.15
+# Quality of Life 3.3.5 — 0.17
+
+0.17: Self Combat Text do Retail (Displays > SELF COMBAT TEXT). Dano recebido,
+cura recebida, esquivas/aparos/erros e entrar/sair de combate sobem acima do
+player frame no lugar do combat text da Blizzard, que fica oculto enquanto está
+ligado. Animação Straight, Fountain ou Static, para cima ou para baixo, distância,
+duração, críticos maiores, Stagger Hits, fonte, contorno, sombra, números
+abreviados e cor por tipo. Move-se no Unlock Mode. O Wrath não tem C_CombatText
+nem animações Path: os valores vêm do combat log (jogador ou veículo como alvo).
+Arquivo novo (EUI_QoL_335_CombatText.lua): reinicie o cliente.
+
+0.16: Auto Select Single Gossip (Retail 9.4). Quando o NPC tem uma única opção
+de diálogo, ela é escolhida sozinha. Segurar Shift pula; desligado em
+instâncias por padrão; NPCs com missão para pegar ou entregar não são tocados.
+Engrenagem "Auto Gossip Settings": Hold Shift to Skip, Disable in Instances e
+Ignore Low Level Quests (pula missões triviais, a menos que o Quest Tracker
+aceite automaticamente as triviais). Cada diálogo é escolhido uma vez só até
+fechar a janela. API Wrath (GetGossipOptions/SelectGossipOption).
 
 0.15: Send Mail ganha uma seta ao lado do campo "To" com a lista de destinatários:
 Alts (personagens deste reino e facção, salvos na conta ao logar em cada um),

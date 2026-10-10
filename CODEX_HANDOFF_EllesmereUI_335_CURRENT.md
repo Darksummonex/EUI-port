@@ -307,11 +307,48 @@ Working-tree backups: `backport-tools/backup_project.py` writes
 
 ## Current versions
 
-Core 0.61; Action Bars 0.19; Arena 0.3; AuraBuff Reminders 0.7; Bags 0.11;
-Blizz UI Enhanced (BlizzardSkin) 0.28; Chat 0.49; Cooldown Manager 0.7;
-Damage Meters 0.8; Data Bars 0.5; Friends 0.3; Minimap 0.4; Nameplates 0.14;
-Options 0.113; Locales 0.1; QoL 0.15; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.18;
-Resource Bars 0.5; Unit Frames 0.18.
+Core 0.63; Action Bars 0.21; Arena 0.3; AuraBuff Reminders 0.7; Bags 0.12;
+Blizz UI Enhanced (BlizzardSkin) 0.30; Chat 0.49; Cooldown Manager 0.9;
+Damage Meters 0.8; Data Bars 0.5; Friends 0.3; Minimap 0.4; Nameplates 0.15;
+Options 0.113; Locales 0.1; QoL 0.17; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.20;
+Resource Bars 0.5; Unit Frames 0.21.
+
+Retail reference is EUI 9.4 (2026-10-09). `backport-tools/sync_retail_references.py`
+(dry run; `--apply` backs up first) refreshes unloaded Retail copies and adds new
+Retail files; it skips TOC-loaded files, `.toc`, `Bindings.xml` and EllesmereUILocales.
+`compare_retail_update.py` reports Retail vs project differences. The locale
+catalogs stay trimmed from the 9.3.4 catalogs: `validate_locales.py` checks them
+against commit 4654752 (untrimmed 9.3.4), not the live Retail folder.
+Retail 9.4 batch ported (easy items): QoL Auto Select Single Gossip, Raid Frames
+"Down and then Right", Nameplates Enemy Buff Filter (Show All), Unit Frames Hide
+Sated / Exhaustion, Action Bars Show Equipped Item Color.
+!!!ClassicAPI (other 3.3.5 polyfill addon) injects a SetClipsChildren that reparents
+the frame into a ScrollFrame sized at call time (EUI dropdowns never opened) and a
+CreateMaskTexture that returns nil. EUI never calls them on its frames: Core helpers
+`EUI335.SetClipsChildren` (no-op), `EUI335.CreateMaskTexture` (hidden fake mask) and
+`EUI335.OwnFrame` (per-frame overrides, metatables untouched), used by
+`EllesmereUI.CreateOptionsFrame`; UF `PatchRegion` always sets a no-op clip.
+`validate_classicapi_compat.py` simulates ClassicAPI.
+Ideas taken from ClassicAPI (own code, no dependency): Unit Frames 0.20 Heal
+Prediction (`EUI_UnitFrames_335_HealPred.lua`, LibHealComm-4.0 bundled in UF too;
+validate_uf_heal_prediction.py) and Core 0.62 `EllesmereUI.CreateTextureSwipe`
+(four ScrollFrame quarters + a wedge turned by a zero-length Rotation animation;
+validate_texture_swipe.py), used by Cooldown Manager 0.8 Swipe Style "Shaped".
+Both add files: a full client restart is needed. Confirmed working in game.
+Retail 9.4 easy-medium batch: Cooldown Manager 0.9 Hide Until Usable / Hide Outside
+Form/Stance (ns.CD_STATE_HIDE; form from the tooltip "Requires <form>" line, red when
+unmet, Retail caster-form fallback) and Empty Slot entries (kind "empty");
+validate_cdm_hide_modes.py. Unit Frames 0.21 player Type Icon Position (dispel icon,
+Wrath spell icons) and focus aura border options. Blizz UI Enhanced 0.29 inspect
+enchant icon/hover or names (inspectEnchantNames, inspectEnchantSize).
+General/QoL/Bags/Skins+ batch: Core 0.63 Uninstall EUI (EllesmereUI_Uninstall_335.lua:
+E.SetCVar/SetChatWindowSize/NoteBinding/OnUninstall/Uninstall, per-character records in
+EllesmereUIDB.restoreOnUninstall; Minimap, Nameplates, Chat, QoL, Tooltips and Quickdraw
+write through it; validate_uninstall.py). Bags 0.12 Junk Marker (bagShowJunkIcon,
+bagShowJunkCoin, Junk category, bagJunkPrev, ns.SellJunk; validate_bag_junk.py). QoL 0.17
+Self Combat Text (EUI_QoL_335_CombatText.lua, combat log, OnUpdate scroll;
+validate_qol_combattext.py). Blizz UI Enhanced 0.30 tooltipShowBuffs icons and
+highlightStatItems glow (validate_blizzardskin_extras.py). Two new files: full restart.
 
 Git: branch `cursor/eui-shapes-bars-skins-qol`, built on
 `cursor/eui-arena-and-fixes`. Neither is merged into `main`; no PR is open.

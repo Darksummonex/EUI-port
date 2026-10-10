@@ -979,9 +979,8 @@ local function _EnsureAnimAnts(wrapper)
     if d then return d end
     d = { strips = {}, masks = {}, groups = {}, trs = {}, bgs = {} }
     for i = 1, 4 do
-        local mask
-        if wrapper.CreateMaskTexture then
-            mask = wrapper:CreateMaskTexture()
+        local mask = EUI335.CreateMaskTexture(wrapper)
+        if mask then
             mask:SetTexture(ANIM_MASK_TEX, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
         end
         local strip = wrapper:CreateTexture(nil, "OVERLAY", nil, 7)

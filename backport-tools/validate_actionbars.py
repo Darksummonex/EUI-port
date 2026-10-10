@@ -290,7 +290,7 @@ assert(experience.rested.barColor[1]==.5 and experience.rested.barColor[2]==0 an
 assert(experience.fill:GetPoint(1)=='TOPLEFT' and select(4,experience.fill:GetPoint(1))==1 and select(5,experience.fill:GetPoint(1))==-1)
 assert(experience.fill:GetPoint(2)=='BOTTOMRIGHT' and select(4,experience.fill:GetPoint(2))==-1 and select(5,experience.fill:GetPoint(2))==1)
 assert(rep.fill.value==1500 and rep.fill.maximum==6000 and rep:IsShown() and rep.fill.text==nil)
-experience:RunScript('OnEnter'); assert(GameTooltip.owner==experience and #GameTooltip.lines==3)
+experience:RunScript('OnEnter'); assert(GameTooltip.owner==experience and #GameTooltip.lines==4)
 experience:RunScript('OnMouseDown','RightButton'); assert(xpRightClick[1]==MainMenuExpBar and xpRightClick[2]=='RightButton')
 xp=600; rested=0; H.events:RunScript('OnEvent','PLAYER_XP_UPDATE','player')
 assert(experience.fill.value==600 and experience.rested.value==0 and not experience.rested:IsShown())
@@ -299,6 +299,57 @@ assert(experience.fill.value==0 and experience.rested.value==0 and not experienc
 assert(experience.fill.barColor[1]==0 and experience.fill.barColor[2]==.4 and experience.fill.barColor[3]==1 and experience.bgColor[1]==.06)
 xp=600; rested=800; H.UpdateData(); assert(experience.rested.value==1000 and experience.rested:IsShown())
 rested=nil; H.UpdateData(); assert(experience.rested.value==0 and not experience.rested:IsShown())
+-- XP bar extras: texts, Quest XP Overlay (selection restored), dividers + Smart Ticks, colours.
+do
+    local XP,hud=H.XP,AB.GetSettings().nativeHUD
+    local snapshot={}; for k,v in pairs(hud) do snapshot[k]=v end
+    assert(XP.FmtNum(6811)=='6,811' and XP.FmtNum(17600)=='17.6K' and XP.FmtPct(25)=='25%' and XP.FmtPct(89.6)=='89.6%')
+    assert(XP.FmtDur(90)=='1m' and XP.FmtDur(5040)=='1h 24m' and XP.FmtDur(273600)=='3d 4h')
+    local log={{'Elwynn',true},{'Done',false,1,100},{'Open',false,nil,120},{'Failed',false,-1,900},{'Westfall',true},{'Far',false,1,50}}
+    local selected,zone=3,'Elwynn'
+    function GetNumQuestLogEntries() return #log end
+    function GetQuestLogTitle(i) local q=log[i]; return q[1],1,nil,nil,q[2],nil,q[3] end
+    function GetQuestLogSelection() return selected end
+    function SelectQuestLogEntry(i) selected=i end
+    function GetQuestLogRewardXP() local q=log[selected]; return q and q[4] or 0 end
+    function GetRealZoneText() return zone end
+    hud.xpQuestOverlay=true; hud.xpTextLeft='questVal'; hud.xpTextRight='curMaxRem'; hud.xpTextTopLeft='level'
+    hud.xpDividers=true; hud.xpSmartTicks=true; hud.xpDividerText=true; hud.xpFillStyle='flat'; hud.xpColor={r=1,g=0,b=0}
+    level=20; xp=500; rested=0; H.Apply(); XP.QuestsDirty(); H.UpdateData()
+    assert(selected==3,'quest selection not restored')
+    assert(experience.questDone.value==650 and experience.questOpen.value==770 and experience.questDone:IsShown())
+    assert(experience.xpTexts.Left:GetText()=='Completed: 150' and experience.xpTexts.Right:GetText()=='500 / 1,000 (Remaining: 500)')
+    assert(experience.xpTexts.TopLeft:GetText()==(LEVEL or 'Level')..' 20' and experience.text:GetText()=='XP: 50.0%')
+    assert(experience.fill.barColor[1]==1 and experience.fill:GetFrameLevel()>experience.questDone:GetFrameLevel())
+    assert(experience.xpTickLabels[2]:GetText()=='10%' and experience.xpTicks[2].count==1 and experience.xpTicks[1].count>1)
+    assert(not experience.xpTicks[9][1]:IsShown() and experience.xpTicks[11][1]:IsShown(),'Smart Ticks')
+    hud.xpQuestZone=true; hud.xpQuestCompleted=true; XP.QuestsDirty(); XP.ScanQuests(hud)
+    local all,done,open=XP.QuestXP(); assert(all==150 and done==100 and open==0)
+    hud.xpTextLeft='none'; H.Apply(); assert(not experience.xpTexts.Left:IsShown())
+    hud.xpTextCenter='none'; H.Apply(); H.UpdateData(); assert(not experience.text:IsShown())
+    hud.xpQuestOverlay=false; hud.xpDividers=false; H.Apply(); H.UpdateData()
+    assert(not experience.questDone:IsShown() and not experience.xpTickHost:IsShown())
+    -- Luxthos layout: combined texts, rested after the quest XP, spark.
+    XP.ApplyLuxthos(hud); XP.ScanQuests(hud); rested=100; H.Apply(); H.UpdateData()
+    local t=experience.xpTexts
+    assert(t.Left:GetText()==(LEVEL or 'Level')..' 20' and experience.text:GetText()=='500 / 1,000 (Remaining: 500)')
+    assert(t.Right:GetText()=='50% (65%)',t.Right:GetText())
+    assert(t.BottomRight:GetText()=='Completed: |cFFFF970015%|r - Rested: |cFF4F90FF10%|r',t.BottomRight:GetText())
+    assert(t.TopRight:GetText():find('Time this session',1,true) and t.BottomLeft:GetText():find('Leveling in',1,true))
+    assert(experience.rested.value==870 and experience.xpSpark:IsShown() and hud.xpColor.r==.3 and hud.xpFillStyle=='HORIZONTAL')
+    -- Show at Max Level: full bar, Max Level, time played, no quest or rate texts.
+    level=80; hud.xpShowMaxLevel=true; H.UpdateData()
+    assert(experience:IsShown() and experience.fill.value==experience.fill.maximum and experience.text:GetText()=='Max Level')
+    assert(t.Right:GetText()=='' and t.TopLeft:GetText()=='Time played: --' and not experience.questDone:IsShown())
+    XP.OnPlayed(18000,600); H.UpdateData(); assert(t.TopLeft:GetText()=='Time played: 5h 0m',t.TopLeft:GetText())
+    hud.xpShowMaxLevel=false; H.UpdateData(); assert(not experience:IsShown())
+    XP.Save(); local saved=EllesmereUIDB.xpBarChars[UnitGUID('player')]; assert(saved and saved.total==18000 and saved.levelBase==600)
+    EllesmereUIDB.xpBarChars=nil
+    for k in pairs(hud) do hud[k]=nil end; for k,v in pairs(snapshot) do hud[k]=v end
+    rested=0
+    GetNumQuestLogEntries,GetQuestLogTitle,GetQuestLogSelection,SelectQuestLogEntry,GetQuestLogRewardXP,GetRealZoneText=nil,nil,nil,nil,nil,nil
+    level=79; xp=600; H.Apply(); H.UpdateData(); assert(experience.text:IsShown() and experience.text:GetText()=='XP: 60.0%')
+end
 faction={'Another Faction',5,-3000,0,-1200}; H.events:RunScript('OnEvent','UPDATE_FACTION')
 assert(rep.fill.value==1800 and rep.fill.maximum==3000 and rep.faction=='Another Faction')
 level=80; faction={}; H.UpdateData(); assert(not experience:IsShown() and not rep:IsShown())
@@ -580,5 +631,24 @@ assert(MainMenuExpBar:GetAlpha()==0,'DataBars handoff restored duplicate native 
 local elems=AB.NativeHUD.Elements(); assert(elems[3].isHidden() and not elems[4].isHidden())
 EllesmereUI._ModuleNS.EllesmereUIDataBars=nil; AB.NativeHUD.UpdateData()
 assert(AB.NativeHUD.holders.xp:IsShown() and not elems[3].isHidden(),'Removing DataBars did not restore HUD XP')
+''')
+lua.execute('''
+-- Show Equipped Item Color: LAB's equipped border hidden by default, rarity colored when on.
+local b=AB.bars.bar1.buttons[1]; local bd=b.border
+function bd:SetVertexColor(...) self.vc={...} end
+local equipped,info,tex=IsEquippedAction,GetActionInfo,GetActionTexture
+IsEquippedAction=function(slot) return slot==b._state_action end
+GetActionInfo=function(slot) if slot==b._state_action then return "item",4242 end; return info(slot) end
+GetInventoryItemID=function(_,slot) return slot==13 and 4242 or nil end
+GetInventoryItemQuality=function(_,slot) return slot==13 and 4 or nil end
+GetInventoryItemTexture=function() return nil end
+GetItemQualityColor=function(q) assert(q==4); return .64,.21,.93,'ffa335ee' end
+b:UpdateAction(true); assert(not bd:IsShown(),'Equipped border shown while off')
+local p=AB.GetSettings(); p.showEquippedBorder=true; AB.Apply(); b:UpdateAction(true)
+assert(bd:IsShown() and bd.vc[1]==.64 and bd.vc[3]==.93 and bd.vc[4]==1,'Equipped border not rarity colored')
+GetInventoryItemID=function() return nil end; GetItemInfo=function() return nil end; b:UpdateAction(true)
+assert(bd.vc[1]==0 and bd.vc[2]==1 and bd.vc[4]==.5,'Unknown equipped item must fall back to green')
+p.showEquippedBorder=false; AB.Apply(); b:UpdateAction(true); assert(not bd:IsShown())
+IsEquippedAction,GetActionInfo,GetActionTexture=equipped,info,tex
 ''')
 print('PASS: real Wrath LAB/secure paging/bindings/vehicle/drag; ElvUI XP texture/colors/empty/rested layers; native HUD and aura movers, combat/restore; reversible art toggle; DataBars XP/rep handoff and fallback; Retail pages (Bar Display with live clickable preview, Menu/Bags/XP, Bar Animations), per-bar text/visibility/paging, scoped position resets and mover shortcuts; shared cards, real Core profile migration/MakeUnlockElement and XML. Native taint/rendering require in-game testing.')

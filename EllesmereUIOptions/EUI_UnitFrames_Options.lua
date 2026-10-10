@@ -4915,6 +4915,28 @@ initFrame:SetScript("OnEvent", function(self)
                 elseif cbPv then
                     cbPv:Hide()
                 end
+                -- Type Icon Position: the eye also previews the Magic icon.
+                local icPv = pf._pvDispelIcon
+                if showDispelOverlayPreview and db.profile.showDispelIcons == true then
+                    if not icPv then
+                        local host = CreateFrame("Frame", nil, pf)
+                        host:SetAllPoints(health)
+                        icPv = host:CreateTexture(nil, "OVERLAY")
+                        icPv:SetTexCoord(.08, .92, .08, .92)
+                        pf._pvDispelIcon = icPv
+                    end
+                    local p = db.profile
+                    local sz = math.max(8, math.min(48, tonumber(p.dispelIconSize) or 16))
+                    local pt = (p.dispelIconPosition or "right"):upper()
+                    icPv:GetParent():SetFrameLevel(health:GetFrameLevel() + 5)
+                    icPv:ClearAllPoints()
+                    icPv:SetSize(sz, sz)
+                    icPv:SetPoint(pt, health, pt, p.dispelIconOffsetX or 0, p.dispelIconOffsetY or 0)
+                    icPv:SetTexture(ns.UF_WrathDispelIcons and ns.UF_WrathDispelIcons.Magic or "Interface\\Icons\\Spell_Holy_DispelMagic")
+                    icPv:Show()
+                elseif icPv then
+                    icPv:Hide()
+                end
             end
 
             -- Buff icons -- reposition based on anchor/growth/size/offset settings
@@ -13147,7 +13169,7 @@ initFrame:SetScript("OnEvent", function(self)
         -- Built here with the aura section's helpers, but appended only after
         -- all other buff/debuff controls so the border row stays last.
         local function AddAuraBorderSettings()
-        if selectedUnit == "player" or selectedUnit == "target" then
+        if selectedUnit == "player" or selectedUnit == "target" or selectedUnit == "focus" then
             local texValues, texOrder = EllesmereUI.GetBorderTextureDropdown()
             local auraBorderRow
             auraBorderRow, h = W:DualRow(parent, y,
@@ -13871,10 +13893,6 @@ initFrame:SetScript("OnEvent", function(self)
                         { type="slider", label="Overlay Opacity", min=5, max=100, step=1,
                           get=function() return db.profile.dispelOverlayOpacity or 100 end,
                           set=function(v) db.profile.dispelOverlayOpacity = v; DispelRefresh() end },
-                        { type="toggle", label="Only Dispellable by You",
-                          tooltip="Shows the overlay only for debuffs you can currently dispel.",
-                          get=function() return db.profile.dispelOverlayByMe == true end,
-                          set=function(v) db.profile.dispelOverlayByMe = v and true or false; DispelRefresh() end },
                         { type="toggle", label="Color Custom Borders",
                           tooltip="Recolors the frame border in the dispel type color while a debuff of that type is shown.",
                           -- Copies the frame's own border: only over a custom border (CustomBorderOff).
@@ -13887,6 +13905,54 @@ initFrame:SetScript("OnEvent", function(self)
                               db.profile.dispelCustomBorder = v and true or false
                               DispelRefresh(); EllesmereUI:RefreshPage()
                           end },
+                    },
+                })
+            end
+
+            -- Type Icon Position (Raid Frames parity: the dispel type's icon on a
+            -- point of the health bar, its size and offsets in the cog) | Only
+            -- Dispellable by You, which narrows the overlay, icon and border alike.
+            local iconPosOrder = { "none" }
+            for i, k in ipairs(EllesmereUI.POSITION_GRID_ORDER) do iconPosOrder[i + 1] = k end
+            local iconRow
+            iconRow, h = W:DualRow(parent, y,
+                { type="dropdown", text="Type Icon Position",
+                  values=EllesmereUI.POSITION_GRID_VALUES_NONE, order=iconPosOrder,
+                  getValue=function()
+                      local p = db.profile
+                      if p.showDispelIcons ~= true then return "none" end
+                      return p.dispelIconPosition or "right"
+                  end,
+                  setValue=function(v)
+                      local p = db.profile
+                      if v == "none" then
+                          p.showDispelIcons = false
+                      else
+                          p.showDispelIcons = true
+                          p.dispelIconPosition = v
+                      end
+                      DispelRefresh(); EllesmereUI:RefreshPage()
+                  end },
+                { type="toggle", text="Only Dispellable by You",
+                  tooltip="Shows the overlay, type icon and border colors only for debuffs you can currently dispel.",
+                  getValue=function() return db.profile.dispelOverlayByMe == true end,
+                  setValue=function(v) db.profile.dispelOverlayByMe = v and true or false; DispelRefresh() end });  y = y - h
+            if not EllesmereUI._prebuilding then
+                EllesmereUI.BuildInlineCog(iconRow._leftRegion, {
+                    icon = EllesmereUI.RESIZE_ICON,
+                    disabled = function() return db.profile.showDispelIcons ~= true end,
+                    disabledTooltip = "This option requires a Type Icon Position other than None",
+                    title = "Dispel Icon",
+                    rows = {
+                        { type="slider", label="Icon Size", min=8, max=48, step=1,
+                          get=function() return db.profile.dispelIconSize or 16 end,
+                          set=function(v) db.profile.dispelIconSize = v; DispelRefresh() end },
+                        { type="slider", label="Offset X", min=-50, max=50, step=1,
+                          get=function() return db.profile.dispelIconOffsetX or 0 end,
+                          set=function(v) db.profile.dispelIconOffsetX = v; DispelRefresh() end },
+                        { type="slider", label="Offset Y", min=-50, max=50, step=1,
+                          get=function() return db.profile.dispelIconOffsetY or 0 end,
+                          set=function(v) db.profile.dispelIconOffsetY = v; DispelRefresh() end },
                     },
                 })
             end

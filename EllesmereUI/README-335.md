@@ -1,4 +1,31 @@
-# EllesmereUI Wrath Core — 0.61
+# EllesmereUI Wrath Core — 0.63
+
+0.63: botão "Uninstall EUI" em Global Settings > General, como no Retail: devolve
+as configurações do jogo que o EUI mudou (CVars de nameplates, minimapa, chat,
+tooltips e tutoriais, tamanho da fonte das janelas de chat e as teclas que o
+Quickdraw tomou), desliga os addons EllesmereUI deste personagem e recarrega.
+Só volta o que ainda tem o valor do EUI; o que você mudou depois fica. Contas
+de antes deste registro voltam os CVars ao padrão do jogo. Os perfis ficam
+guardados. Wrath: sem Edit Mode; DisableAddOn vale só para o personagem atual.
+Arquivo novo (EllesmereUI_Uninstall_335.lua): reinicie o cliente.
+
+0.62: `EllesmereUI_TextureSwipe_335.lua` (arquivo novo, reinicie o cliente):
+`EllesmereUI.CreateTextureSwipe(parent)` desenha o giro do cooldown com
+texturas (quatro ScrollFrames recortam os quartos; a cunha gira por uma
+animação Rotation de duração zero com texcoords compensados). Aceita forma
+(`SetArt`) e cor (`SetTint`); `Start(start, duração, reverso)`/`Stop()`.
+Ideia tirada do !!!ClassicAPI, código próprio.
+
+Sem bump: compatível com o addon !!!ClassicAPI. O SetClipsChildren dele
+move o frame para dentro de um ScrollFrame e o CreateMaskTexture retorna nil;
+o EUI agora usa `EUI335.SetClipsChildren`/`EUI335.CreateMaskTexture`/
+`EUI335.OwnFrame` (por frame, sem mexer nas metatables compartilhadas).
+Painel, Unlock Mode e glows animados não chamam mais as versões dele.
+
+Sem bump: abrir as opções dava erro "attempt to index local 'mask'"
+(`EllesmereUI_Panel.lua`) em clientes onde outro addon cria um
+CreateMaskTexture que retorna nil. As três máscaras do painel (anel e emblema
+do logo, ponto de patch novo) agora são ignoradas quando vêm nil.
 
 Sem bump: as caixas de Import/Export de perfis davam erro "attempt to call
 method 'GetNumLines'" (`EllesmereUI_Profiles.lua`), porque a EditBox do 3.3.5 não

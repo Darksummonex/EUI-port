@@ -282,3 +282,24 @@ EUI335.RegisterEventSafe = EUI335.RegisterEventSafe or function(frame, event)
     return pcall(frame.RegisterEvent, frame, event)
 end
 
+-- 3.3.5 has no native clipping or masks, so any SetClipsChildren/CreateMaskTexture
+-- found on a frame belongs to another addon. !!!ClassicAPI reparents a clipped frame
+-- into a ScrollFrame sized at call time (dropdowns never open) and returns nil masks.
+-- EUI frames opt out per instance; the shared widget metatables stay untouched.
+local function EUI335_FakeMask(self)
+    local mask = self:CreateTexture()
+    mask:Hide()
+    mask._eui335FakeMask = true
+    return mask
+end
+EUI335.SetClipsChildren = EUI335_NoOp
+EUI335.CreateMaskTexture = function(frame)
+    return frame and frame.CreateTexture and EUI335_FakeMask(frame) or nil
+end
+EUI335.OwnFrame = function(frame)
+    if type(frame) ~= "table" then return frame end
+    if frame.SetPoint then frame.SetClipsChildren = EUI335_NoOp end
+    if frame.CreateTexture then frame.CreateMaskTexture = EUI335_FakeMask end
+    return frame
+end
+

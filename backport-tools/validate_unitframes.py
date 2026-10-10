@@ -429,6 +429,12 @@ settings.debuffExclude={}; settings.debuffFilterMode="tracked"; settings.debuffI
 UF.UF_ReloadAuraContainers(frame,"target"); assert(debuffs.buttons[1].icon.texture=="other-icon" and not debuffs.buttons[2].shown)
 settings.debuffIncludeMine={[101]=true}; UF.UF_ReloadAuraContainers(frame,"target"); assert(not debuffs.shown)
 settings.debuffIncludeMine={}; settings.debuffHasDuration=true; UF.UF_ReloadAuraContainers(frame,"target"); assert(debuffs.shown)
+do local ua=UnitAura; settings.debuffHasDuration=false; settings.debuffFilterMode="all"; settings.debuffInclude={}
+    UnitAura=function(u,i,f) if f=="HARMFUL" then if i==1 then return "Sated",nil,"sated-icon",1,nil,600,700,"other",nil,nil,57724 end; return nil end; return ua(u,i,f) end
+    UF.UF_ReloadAuraContainers(frame,"target"); assert(not debuffs.shown,"Sated shown while hidden by default")
+    settings.debuffHideExhaustion=false; UF.UF_ReloadAuraContainers(frame,"target"); assert(debuffs.shown and debuffs.buttons[1].icon.texture=="sated-icon")
+    settings.debuffHideExhaustion=nil; UnitAura=ua; settings.debuffHasDuration=true; settings.debuffFilterMode="tracked"; settings.debuffInclude={[101]=true}
+    UF.UF_ReloadAuraContainers(frame,"target") end
 settings.buffFilterMode="tracked"; settings.buffInclude={[100]=true}; UF.UF_ReloadAuraContainers(frame,"target"); assert(buffs.shown)
 settings.buffExclude={[100]=true}; UF.UF_ReloadAuraContainers(frame,"target"); assert(not buffs.shown)
 settings.showBuffs=false; UF.UF_ReloadAuraContainers(frame,"target"); assert(not buffs.shown)
@@ -518,6 +524,10 @@ profile.dispelOverlayByMe=true; UF.UF_ReloadAuraContainers(pf,"player")
 assert(not d.tex.shown and d.type == nil, "By Me reads HARMFUL|RAID only")
 profile.dispelOverlayByMe=nil; profile.dispelOverlay="none"; UF.UF_ReloadAuraContainers(pf,"player")
 assert(not d.tex.shown)
+-- Type Icon Position: the type's icon on the chosen point, even with the overlay off.
+profile.showDispelIcons=true; profile.dispelIconPosition="topleft"; profile.dispelIconSize=99; UF.UF_ReloadAuraContainers(pf,"player")
+assert(d.icon.shown and d.icon.texture:find("DispelMagic", 1, true) and d.icon.point[1] == "TOPLEFT" and d.icon.width == 48 and not d.tex.shown)
+profile.showDispelIcons=nil; UF.UF_ReloadAuraContainers(pf,"player"); assert(not d.icon.shown)
 UF.UF_GetProfile = getProfile
 GetWeaponEnchantInfo, GetInventoryItemTexture, CancelUnitBuff, CancelItemTempEnchantment = nil, nil, nil, nil
 methods.SetPoint, methods.SetFrameLevel, EllesmereUI.ApplyBorderStyle = setPoint, setLevel, border

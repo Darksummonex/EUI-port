@@ -1,4 +1,35 @@
-# Action Bars 3.3.5 — 0.19
+# Action Bars 3.3.5 — 0.21
+
+0.21: barra de experiência do Retail (Menu, Bags & XP Bars). Fill Style (plano ou
+gradiente horizontal/vertical) com cor do XP e cor final, fundo com cor e opacidade,
+Show Rested XP com cor própria. Quest XP Overlay: XP das quests completas à frente
+do preenchimento (verde) e das incompletas depois (dourado), com Completed Quests
+Only e Current Zone Only. Show Dividers: linha a cada 10% e marca a cada 5% (Dashed,
+Dotted, Solid ou None), Smart Ticks esconde as marcas já passadas e Divider Text
+escreve 10%..90%. EXPERIENCE BAR TEXT: sete posições (centro, esquerda, direita e
+os quatro cantos fora da barra), cada uma mostrando um item: XP e Rested % (o texto
+antigo, padrão do centro), porcentagem, valores, restante, rested, XP das quests
+completas, nível, XP por hora, tempo para upar, tempo nesta sessão e tempo neste
+nível. Tooltip mostra o restante, as quests completas e o XP por hora.
+Wrath: o XP das quests vem da entrada selecionada do quest log (a seleção é
+restaurada) e quests sob cabeçalhos recolhidos não contam. Time This Level pede
+/played uma vez por sessão (o jogo imprime as duas linhas no chat). A sessão e o XP
+por hora recomeçam no /reload. Sem os estilos de arte do Retail (Professions,
+flipbook, Forever): usam atlas que o 3.3.5 não tem.
+Também na 0.21, o layout da WeakAura "[Merfin] Experience Bar (Luxthos)": itens
+"Percent (with Completed)" (50% (65%)) e "Completed % - Rested %" (laranja e azul),
+Rested After Quest XP (o rested começa onde termina o overlay de quests), Show
+Spark, Show at Max Level (barra cheia com nível e "Time played" no lugar de Time
+This Level) e Keep Session on Reload (sessão e XP por hora seguem após um /reload
+feito em até cinco minutos; o tempo neste nível é sempre guardado, sem outro
+/played). O botão "Apply Luxthos Layout" aplica as sete posições, o gradiente
+azul-roxo e as cores da WeakAura. Diferença: quests falhadas não contam como XP
+de quests completas.
+
+0.20: "Show Equipped Item Color" (Retail 9.4) em ICON EFFECTS. Desligado por
+padrão: a borda verde redonda da Blizzard em itens equipados some. Ligado: a
+borda usa a arte quadrada (ou o formato do botão) na cor da raridade do item,
+lida do slot equipado; verde a 50% quando o item não é encontrado.
 
 0.19: as setas de página da Barra 1 chamavam `ChangeActionBarPage`, que no
 3.3.5 é exclusiva da Blizzard (popup "blocked from an action"). Agora são

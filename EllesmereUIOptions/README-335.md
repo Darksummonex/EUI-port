@@ -1,5 +1,9 @@
 # Options 3.3.5 — 0.113
 
+Sem bump: com o !!!ClassicAPI instalado nenhum dropdown abria (o
+SetClipsChildren dele prendia o menu num ScrollFrame vazio). Todo frame
+criado por `EllesmereUI.CreateOptionsFrame` passa por `EUI335.OwnFrame`.
+
 Sem bump: EUI Options Language lista "Português (Brasil)" entre o espanhol e o russo.
 
 0.113: Patch Notes: a aba "EUI Staff" (nome mantido). No topo, "Special

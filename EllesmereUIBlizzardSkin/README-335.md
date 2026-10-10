@@ -1,4 +1,20 @@
-# Blizz UI Enhanced 3.3.5 — 0.28
+# Blizz UI Enhanced 3.3.5 — 0.30
+
+0.30: dois recursos do Retail. "Show Player Buffs" mostra os buffs do jogador sob
+o mouse como ícones ao lado do tooltip (até 16), com posição, tamanho, ícones
+por linha e offsets. "Highlight Items on Stat Hover" (STATS SIDEBAR) faz brilhar
+os itens equipados que dão o atributo sob o mouse (Hit, Crit, Haste, Defense,
+Strength...), lendo os atributos do próprio item; encantos e gemas não contam.
+
+0.29: encantamentos na janela de Inspect como no Retail e na ficha do
+personagem: por padrão um ícone com o nome no hover; com "Show Inspect
+Enchant Names Instead of Icons" o nome, com contorno e tingido pela
+qualidade do item, limitado a 45% do vão entre as colunas (nome completo no
+hover), em tamanho próprio ("Inspect Enchant Name Size"). O Inspect também
+marca, no nível máximo, encantamento faltando, socket vazio e fivela de cinto
+faltando, com os mesmos ícones vermelhos da ficha ("Inspect Missing Enchant,
+Gem & Buckle Icons"). As profissões dos outros não são visíveis, então anel de
+encantador e sockets de ferreiro só são cobrados na sua própria ficha.
 
 0.28 (sem bump): a janela de Conquistas não escurece mais a lista. A moldura
 sem nome que o Blizzard põe acima das linhas (Conquistas, Resumo, Estatísticas e

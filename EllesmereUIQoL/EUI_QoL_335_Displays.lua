@@ -454,6 +454,7 @@ function ns.RegisterElementSettings()
     E._ELEMENT_SETTINGS_MAP=E._ELEMENT_SETTINGS_MAP or {}
     for _,c in ipairs(layout) do if c[8] then E._ELEMENT_SETTINGS_MAP[c[8]]={module=ADDON_NAME,page="Displays",sectionName=c[9],highlightText=c[10]} end end
     E._ELEMENT_SETTINGS_MAP.EUI_RaidTools={module=ADDON_NAME,page="Raid Tools",sectionName="RAID TOOLS",highlightText="Show Raid Tools"}
+    E._ELEMENT_SETTINGS_MAP.EUI_SelfCombatText={module=ADDON_NAME,page="Displays",sectionName="SELF COMBAT TEXT",highlightText="Self Combat Text"}
 end
 function ns.RegisterMovers()
     ns.RegisterElementSettings()
@@ -475,5 +476,6 @@ function ns.RegisterMovers()
             loadPos=function() local p=ns.GetSettings(); return p and p.positions.raidTools end,
             clearPos=function() local p=ns.GetSettings(); if p then p.positions.raidTools=nil; ns.Apply() end end,applyPos=ns.Apply})
     end
+    if ns.SCT_UnlockElement then elements[#elements+1]=ns.SCT_UnlockElement() end
     E:RegisterUnlockElements(elements,ADDON_NAME)
 end

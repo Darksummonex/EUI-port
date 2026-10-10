@@ -364,21 +364,24 @@ function ns.Restore()
         for region,alpha in pairs(s.originalAlpha) do region:SetAlpha(alpha) end
         s.native.threat:SetTexture(s.originalThreatTexture)
     end
-    if castCVarOriginal~=nil then SetCVar("showVKeyCastbar",castCVarOriginal); castCVarOriginal=nil end
+    if castCVarOriginal~=nil then ns.SetCVar("showVKeyCastbar",castCVarOriginal); castCVarOriginal=nil end
+end
+function ns.SetCVar(key,value)
+    if E.SetCVar then E.SetCVar(key,value,ADDON_NAME) else SetCVar(key,value) end
 end
 local NATIVE_CVARS={nameplateShowEnemies=true,nameplateShowFriends=true,nameplateAllowOverlap=true,
     ShowClassColorInNameplate=true,nameplateShowEnemyPets=true}
 function ns.SetNativeCVar(key,value)
     if not NATIVE_CVARS[key] then return end
     if InCombatLockdown() then pendingCVars=pendingCVars or {}; pendingCVars[key]=value and "1" or "0"; return end
-    SetCVar(key,value and "1" or "0")
+    ns.SetCVar(key,value and "1" or "0")
 end
 -- "Hide Enemy Nameplates out of Combat": the CVar is only writable out of
 -- combat, so plates are revealed on REGEN_DISABLED before lockdown applies.
 local function ApplyCombatVisibility(inCombat)
     local p=ns.GetSettings()
     if not p or not p.enabled or not p.hideEnemiesOutOfCombat or InCombatLockdown() then return end
-    SetCVar("nameplateShowEnemies",inCombat and "1" or "0")
+    ns.SetCVar("nameplateShowEnemies",inCombat and "1" or "0")
 end
 ns.ApplyCombatVisibility=ApplyCombatVisibility
 local function Migrate(p)
@@ -399,7 +402,7 @@ function ns.Apply()
     Migrate(p)
     if not p.enabled then ns.Restore(); return end
     if castCVarOriginal==nil then castCVarOriginal=GetCVar("showVKeyCastbar") end
-    SetCVar("showVKeyCastbar","1")
+    ns.SetCVar("showVKeyCastbar","1")
     ApplyCombatVisibility(false)
     for _,s in pairs(states) do s.auraDirty=true end
     active=true; ns.layoutVersion=ns.layoutVersion+1; ns.Scan(); ns.Update()
@@ -440,7 +443,7 @@ function addon:OnEnable()
         "SPELLS_CHANGED","LEARNED_SPELL_IN_TAB"}) do f:RegisterEvent(event) end
     f:SetScript("OnEvent",function(_,event,unit)
         if event=="PLAYER_REGEN_ENABLED" then
-            for key,value in pairs(pendingCVars or {}) do SetCVar(key,value) end; pendingCVars=nil
+            for key,value in pairs(pendingCVars or {}) do ns.SetCVar(key,value) end; pendingCVars=nil
             if pending then ns.Apply() end
             ApplyCombatVisibility(false)
         elseif event=="PLAYER_REGEN_DISABLED" then ApplyCombatVisibility(true)

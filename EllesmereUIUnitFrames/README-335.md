@@ -1,4 +1,28 @@
-# Unit Frames 3.3.5 — 0.18
+# Unit Frames 3.3.5 — 0.21
+
+0.21: "Type Icon Position" no Dispel Overlay do player (como no Retail e no
+Raid Frames): o ícone do tipo de debuff dispelável de maior prioridade num
+ponto da barra de vida, com tamanho e offsets na engrenagem; funciona mesmo
+com o overlay em None. Usa ícones das magias de dispel do Wrath (os do Retail
+são atlas). "Only Dispellable by You" saiu da engrenagem e fica ao
+lado, valendo para overlay, ícone e bordas. O focus ganhou Border Style,
+tamanho e cor das auras, como player e target.
+
+0.20: Heal Prediction funciona no 3.3.5 (player, target e focus). O elemento
+do Retail depende de APIs que o Wrath não tem; `EUI_UnitFrames_335_HealPred.lua`
+(arquivo novo, reinicie o cliente) desenha seus heals e os dos outros depois
+da barra de vida, com as chaves do Retail (cor, outra cor, opacidade, textura,
+Overheal). Valores do LibHealComm-4.0, agora embutido também aqui (o LibStub
+mantém uma cópia só com o Raid Frames).
+
+Sem bump: com o !!!ClassicAPI instalado, barras e retratos eram movidos para
+ScrollFrames pelo SetClipsChildren dele. `PatchRegion` agora sempre usa um
+SetClipsChildren vazio no próprio frame.
+
+0.19: filtro "Hide Sated / Exhaustion" (Retail 9.4) na aba Aura Filters. Antes
+Sated e Exhaustion eram sempre escondidos; agora dá para mostrar. Ligado por
+padrão (debuffHideExhaustion, como na Retail). Raid Frames já tinham o "Hide
+Bloodlust Debuff". Player Aura Bars da Retail não existem no port.
 
 0.18: escudos (absorbs) nas barras de vida de player, target, focus e boss
 (estilo do target, com "Show on Boss Frames"). Seção ABSORBS no 3.3.5: Absorb

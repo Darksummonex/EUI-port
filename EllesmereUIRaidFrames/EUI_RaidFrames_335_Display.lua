@@ -149,7 +149,8 @@ function ns.LayoutButton(b)
     b._healthW,b._healthH=w-2*bs,h-2*bs-power
     b.Power:ClearAllPoints(); b.Power:SetPoint("BOTTOMLEFT",b,"BOTTOMLEFT",bs,bs); ns.Size(b.Power,w-2*bs,math.max(1,power)); if power>0 then b.Power:Show() else b.Power:Hide() end
     b.Health:SetStatusBarTexture(Texture(c.healthBarTexture)); b.Power:SetStatusBarTexture(Texture(c.healthBarTexture)); b.healPred:SetTexture(Texture(c.healthBarTexture))
-    ns.Font(b.name,c.nameSize); ns.Font(b.healthText,c.healthTextSize); ns.Font(b.powerText,c.powerTextSize); ns.Font(b.status,c.statusTextSize)
+    if not (E.ApplyTextOutline and E.ApplyTextOutline(b.name,nil,math.max(8,tonumber(c.nameSize) or 11),c.nameOutline,"raidFrames")) then ns.Font(b.name,c.nameSize) end
+    ns.Font(b.healthText,c.healthTextSize); ns.Font(b.powerText,c.powerTextSize); ns.Font(b.status,c.statusTextSize)
     -- Name and health text share a row when both sit on the same edge.
     local namePos,healthPos=c.namePosition or "topleft",c.healthTextPosition or "topright"
     local roleSize=math.max(8,math.min(32,tonumber(c.roleIconSize) or 13))

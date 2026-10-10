@@ -20,7 +20,7 @@ ns.BAR_DEFAULTS={enabled=true,barType="cooldowns",iconSize=36,numRows=1,spacing=
  pixelGlowThickness=2,pixelGlowLines=8,pixelGlowSpeed=4,onlyShowNumbers=false,chargesOnly=false,hideZeroChargeText=false,hideItemsIfMissing=false,
  showPassiveTrinkets=false,pressMirror=false,desaturateOnCD=true,showRange=true,rangeR=.85,rangeG=.15,rangeB=.15,showNoMana=true,manaR=.35,manaG=.45,manaB=1,
  showInactiveBuffIcons=false,desaturateInactiveBuffs=true,hidePlaceholderIcon=false,buffGlow=0,pandemicGlow=false,pandemicGlowStyle=1,
- procGlowStyle=1,activeState=true,swipeAlpha=.7,sort="assigned"}
+ procGlowStyle=1,activeState=true,swipeAlpha=.7,swipeStyle="native",swipeR=0,swipeG=0,swipeB=0,sort="assigned"}
 ns.TYPE_DEFAULTS={cooldowns={iconSize=42},utility={iconSize=36},buffs={iconSize=32,showKeybind=false},focuskick={iconSize=40,showKeybind=true,
  focusReminderEnabled=true,focusReminderUseAccent=true,focusReminderR=1,focusReminderG=.2,focusReminderB=.2,focusReminderSize=14,focusReminderOffsetX=0,focusReminderOffsetY=4,
  focusKickUseTarget=false,focusCastSoundKey="RaidWarning",focusKickInterruptSpellID=0}}
@@ -232,6 +232,8 @@ function ns.ProcCooldown(procs)
 end
 function ns.Resolve(entry,bar)
     local kind=entry.kind or "spell"
+    -- Empty Slot: reserves one grid position, nothing drawn.
+    if kind=="empty" then return {kind="empty",name="Empty Slot"} end
     if kind=="preset" then
         local p=ns.ITEM_PRESET_BY_KEY[entry.id]; if not p then return end
         local icon=GetItemIcon and GetItemIcon(p.items[1])
@@ -347,7 +349,8 @@ function ns.PresetChoice(st)
 end
 function ns.UpdateState(st,now)
     local m,e,bar=st.meta,st.entry,st.bar
-    st.icon=m.icon; st.proc=false; st.outOfRange,st.noMana,st.missing=false,false,false
+    st.icon=m.icon; st.proc=false; st.outOfRange,st.noMana,st.missing,st.notUsable=false,false,false,false
+    if m.kind=="empty" then st.onCD,st.active,st.usable,st.remaining,st.count,st.activeAura=false,false,false,0,0,nil; return end
     if m.kind=="aura" then AuraState(st,now); return end
     local start,duration,enabled,itemID
     if m.kind=="spell" then start,duration,enabled=GetSpellCooldown(m.slot,m.book)
@@ -363,6 +366,7 @@ function ns.UpdateState(st,now)
         local usable,noMana=IsUsableSpell(m.name)
         if usable~=nil then st.usable=st.usable and not not usable end
         st.noMana=noMana and true or false
+        st.notUsable=usable~=nil and not usable and not noMana or false
     end
     st.count=0
     if m.kind=="item" or m.kind=="preset" then
@@ -402,7 +406,7 @@ end
 -- Which glow an icon shows (Retail priority: active, proc, max stacks/pandemic/buff, CD ready).
 function ns.GlowFor(st,now)
     local p,bar,e=ns.Profile(),st.bar,st.entry
-    if p.glowsOnlyInCombat and not ns.inCombat then return end
+    if st.meta.kind=="empty" or p.glowsOnlyInCombat and not ns.inCombat then return end
     local style,r,g,b=nil,tonumber(ns.Eff(st,"glowColorR")),tonumber(ns.Eff(st,"glowColorG")),tonumber(ns.Eff(st,"glowColorB"))
     if st.activeAura and (tonumber(ns.Eff(st,"activeGlow")) or 0)>0 then style=tonumber(ns.Eff(st,"activeGlow"))
     elseif st.proc then style=tonumber(ns.Eff(st,"procGlow")) or bar.procGlowStyle
@@ -420,9 +424,62 @@ function ns.GlowFor(st,now)
     if not style or style<=0 then return end
     return style,r,g,b
 end
+-- Hidden Outside Form/Stance: the spell tooltip's "Requires <form>" line, which
+-- the client draws red while the current form or stance does not meet it; read
+-- once per spell and form. A spell naming no form is outside its form while
+-- shapeshifted when it cannot be cast for a reason other than power, provided it
+-- could be cast when last seen in caster form (a warrior never is). Items never are.
+do
+    local outside,casterOK,formNames,formCount,tip={},{},nil,nil,nil
+    local NO_LINE="noline"
+    local template=type(SPELL_REQUIRED_FORM)=="string" and SPELL_REQUIRED_FORM or "Requires %s"
+    local at=template:find("%s",1,true)
+    local prefix=at and template:sub(1,at-1) or "Requires "
+    local function NamesForm(text)
+        if text:sub(1,#prefix)~=prefix then return false end
+        local n=GetNumShapeshiftForms and GetNumShapeshiftForms() or 0
+        if n~=formCount then
+            formCount,formNames=n,{}
+            for i=1,n do local _,name=GetShapeshiftFormInfo(i); if name then formNames[#formNames+1]=name end end
+        end
+        for _,name in ipairs(formNames) do if text:find(name,1,true) then return true end end
+        return false
+    end
+    local function Read(m)
+        if not tip then tip=CreateFrame("GameTooltip","EUI335CdmFormScan",nil,"GameTooltipTemplate") end
+        tip:SetOwner(WorldFrame,"ANCHOR_NONE"); tip:ClearLines(); tip:SetSpell(m.slot,m.book)
+        local lines=tip:NumLines() or 0
+        if lines==0 then return end
+        for i=2,lines do
+            local fs=_G["EUI335CdmFormScanTextLeft"..i]; local text=fs and fs:GetText()
+            if text and NamesForm(text) then local r,g,b=fs:GetTextColor(); return r>=.9 and g<=.2 and b<=.2 end
+        end
+        return NO_LINE
+    end
+    function ns.OutsideForm(st)
+        local m=st.meta
+        if m.kind~="spell" or not m.slot then return false end
+        local form=GetShapeshiftForm and GetShapeshiftForm() or 0
+        local row=outside[m.name]; local v=row and row[form]
+        if v==nil then
+            v=Read(m)
+            if v==nil then return false end
+            row=row or {}; outside[m.name]=row; row[form]=v
+        end
+        if v~=NO_LINE then return v end
+        if form==0 then casterOK[m.name]=not st.notUsable; return false end
+        return casterOK[m.name]==true and st.notUsable
+    end
+    function ns.WipeFormCache() wipe(outside); wipe(casterOK); formCount=nil end
+end
+-- Retail ns.CD_STATE_HIDE: each hide effect is a base test plus shift (removed,
+-- the bar closes the gap) or keep (slot reserved, invisible).
+ns.CD_STATE_HIDE={hiddenOnCD={},hiddenReady={ready=true},hiddenUnusable={usable=true},hiddenForm={form=true},
+    hiddenOnCDShift={shift=true},hiddenReadyShift={ready=true,shift=true},hiddenUnusableShift={usable=true,shift=true},hiddenFormShift={form=true,shift=true}}
 -- Retail cdStateEffect / Always Show Buffs / Keep Buffs in Same Place: "show", "keep" (slot reserved, invisible) or nil (removed).
 function ns.Placement(st)
     local bar,e=st.bar,st.entry
+    if st.meta.kind=="empty" then return "keep" end
     if st.meta.kind=="aura" then
         if st.active then return "show" end
         if bar.showInactiveBuffIcons or e.alwaysShow then return "show","inactive" end
@@ -430,9 +487,14 @@ function ns.Placement(st)
         return
     end
     if st.missing and bar.hideItemsIfMissing then return end
-    local cse=ns.Eff(st,"cdStateEffect")
-    if cse=="hiddenOnCDShift" and st.onCD or cse=="hiddenReadyShift" and not st.onCD and not st.activeAura then return end
-    if cse=="hiddenOnCD" and st.onCD or cse=="hiddenReady" and not st.onCD and not st.activeAura then return "keep" end
+    local hide=ns.CD_STATE_HIDE[ns.Eff(st,"cdStateEffect") or ""]
+    if hide then
+        local off
+        if hide.form then off=ns.OutsideForm(st)
+        elseif hide.ready then off=not st.onCD and not st.activeAura
+        else off=st.onCD or hide.usable and st.notUsable end
+        if off then if hide.shift then return end; return "keep" end
+    end
     return "show"
 end
 function ns.Update()
@@ -448,6 +510,7 @@ function ns.Update()
 end
 function ns.Apply()
     if not ns.Profile() or not ns.ready then return end
+    ns.WipeFormCache()
     ns.ScanSpells(); ns.ScanTalents(); ns.Compile(); ns.ScanAuras()
     if ns.Layout then ns.Layout() end
     if ns.LayoutTrackingBars then ns.LayoutTrackingBars() end
@@ -478,7 +541,7 @@ end
 local EVENTS={"PLAYER_ENTERING_WORLD","SPELLS_CHANGED","ACTIVE_TALENT_GROUP_CHANGED","PLAYER_TALENT_UPDATE","CHARACTER_POINTS_CHANGED","UNIT_PET","UNIT_AURA",
  "PLAYER_TARGET_CHANGED","PLAYER_FOCUS_CHANGED","SPELL_UPDATE_COOLDOWN","SPELL_UPDATE_USABLE","BAG_UPDATE_COOLDOWN","BAG_UPDATE","UNIT_INVENTORY_CHANGED",
  "PLAYER_REGEN_DISABLED","PLAYER_REGEN_ENABLED","ACTIONBAR_SLOT_CHANGED","ACTIONBAR_PAGE_CHANGED","UPDATE_BINDINGS","ADDON_LOADED","GET_ITEM_INFO_RECEIVED",
- "UNIT_SPELLCAST_SUCCEEDED","UPDATE_MACROS"}
+ "UNIT_SPELLCAST_SUCCEEDED","UPDATE_MACROS","UPDATE_SHAPESHIFT_FORM"}
 function ns.OnEvent(_,event,unit,arg2,...)
     if event=="COMBAT_LOG_EVENT_UNFILTERED" then ns.OnCombatLog(unit,arg2,...)
     elseif event=="UNIT_AURA" or event=="PLAYER_TARGET_CHANGED" or event=="PLAYER_FOCUS_CHANGED" then
@@ -489,7 +552,7 @@ function ns.OnEvent(_,event,unit,arg2,...)
         ns.Update()
     elseif event=="ACTIONBAR_SLOT_CHANGED" or event=="ACTIONBAR_PAGE_CHANGED" or event=="UPDATE_BINDINGS" or event=="UPDATE_MACROS" then
         if ns.BuildKeybinds then ns.BuildKeybinds() end; ns.Update()
-    elseif event=="SPELL_UPDATE_COOLDOWN" or event=="SPELL_UPDATE_USABLE" or event=="BAG_UPDATE_COOLDOWN" then ns.Update()
+    elseif event=="SPELL_UPDATE_COOLDOWN" or event=="SPELL_UPDATE_USABLE" or event=="BAG_UPDATE_COOLDOWN" or event=="UPDATE_SHAPESHIFT_FORM" then ns.Update()
     elseif event=="UNIT_SPELLCAST_SUCCEEDED" then ns.OnSpellCast(unit,arg2)
     elseif event=="BAG_UPDATE" or event=="GET_ITEM_INFO_RECEIVED" or event=="UNIT_INVENTORY_CHANGED" then
         if event~="UNIT_INVENTORY_CHANGED" or unit=="player" then ns.Compile(); if ns.Layout then ns.Layout() end; ns.Update() end

@@ -81,6 +81,7 @@ do
                 template = #keep > 0 and table.concat(keep, ",") or nil
             end
             local frame = orig(kind, name, parent, template, id)
+            if EUI335 and EUI335.OwnFrame then EUI335.OwnFrame(frame) end
             -- Wrath EditBoxes can retain keyboard focus after their parent is hidden.
             -- Make every options-created EditBox opt-in to focus and always release it
             -- on hide. This also covers dropdown/search boxes created outside the main

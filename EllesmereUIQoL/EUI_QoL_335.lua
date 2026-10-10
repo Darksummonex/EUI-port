@@ -6,6 +6,7 @@ local addon=E.Lite.NewAddon(ADDON_NAME)
 E._ModuleNS[ADDON_NAME]=ns
 ns.addon,ns.EQOL,ns.IsWrath=addon,addon,true
 local defaults={profile={enabled=true,autoRepair=false,guildRepair=false,autoSellJunk=false,quickLoot=false,
+    autoGossip=false,autoGossipShiftSkip=true,autoGossipDisableInstance=true,autoGossipIgnoreTrivial=false,
     trainAll=false,fillDelete=false,skipCinematics=false,hideErrors=false,hideTutorials=false,mailOpenAll=true,mailBulkAttach=true,mailRecipients=true,merchantWheel=true,
     hideScreenshot=false,autoOpen=false,resetAnnounce=false,resetMessage="",roleCheck=false,mapCoords=false,
     rightClickEnemy=false,rightClickAlly=false,hideTransforms=false,flyoutIlvl=false,
@@ -24,7 +25,11 @@ local defaults={profile={enabled=true,autoRepair=false,guildRepair=false,autoSel
     cursor={enabled=false,size=36,combatOnly=false,classColor=false,trail=false,gcd=false,cast=false,texture="ring_normal",
         color={r=.05,g=.82,b=.62},opacity=100,instancesOnly=false,reticle=false},
     shifter={enabled=false,positions={}},raidTools={enabled=false,groupOnly=true,pullSeconds=10,pullSync=true,pullChat=true,scale=100},
-    logging={enabled=false,raids=true,dungeons=false},positions={}}}
+    logging={enabled=false,raids=true,dungeons=false},
+    selfCombatText={enabled=false,size=16,critScale=1.5,rise=80,duration=1.9,stagger=true,anim="straight",direction="up",
+        font="__combat",outline="OUTLINE",shadow=false,abbreviate=false,damage=true,heal=true,avoid=true,combat=true,
+        damageColor={r=1,g=.1,b=.1},healColor={r=.1,g=1,b=.1},avoidColor={r=1,g=1,b=1},combatColor={r=1,g=.1,b=.1}},
+    positions={}}}
 ns.defaults=defaults
 local pending,merchant,merchantUntil,sellAttempts,trainerUntil,trainerAttempts=false,false,0,{},0,{}
 local logOwned=false
@@ -38,6 +43,7 @@ function ns.Font(fs,size)
 end
 local function Enabled(key) local p=ns.GetSettings(); return p and p.enabled and p[key] end
 ns.Enabled=Enabled
+function ns.SetCVar(key,value) if E.SetCVar then E.SetCVar(key,value,ADDON_NAME) else SetCVar(key,value) end end
 function ns.Print(text) if DEFAULT_CHAT_FRAME then DEFAULT_CHAT_FRAME:AddMessage("|cff0cd29fEllesmereUI:|r "..text) end end
 function ns.Money(cost)
     local g,s,c=math.floor(cost/10000),math.floor(cost%10000/100),cost%100
@@ -98,6 +104,40 @@ local function QuickLoot()
         if not locked then LootSlot(i) end
     end
 end
+-- Auto Select Single Gossip: picks the only dialog option unless the NPC offers
+-- a quest or has one ready. Each page/option pair is picked once per conversation,
+-- so two single-option pages that lead to each other cannot loop.
+local gossipPicked={}
+local function GossipStride(count,...) return count>0 and math.floor(select("#",...)/count) or 0 end
+function ns.AutoGossip()
+    local p=ns.GetSettings()
+    if not Enabled("autoGossip") or not GetNumGossipOptions or GetNumGossipOptions()~=1 then return end
+    if p.autoGossipShiftSkip~=false and IsShiftKeyDown() then return end
+    if p.autoGossipDisableInstance~=false and IsInInstance() then return end
+    local key=(GetGossipText and GetGossipText() or "").."\0"..tostring((GetGossipOptions()))
+    if gossipPicked[key] then return end
+    -- Low level quests only stay ignorable if Quest Tracker auto-accept also ignores them.
+    local qtDB=_G._EQT_DB
+    local qt=qtDB and qtDB.profile and qtDB.profile.questTracker
+    local ignoreTrivial=p.autoGossipIgnoreTrivial and not (qt and qt.enabled~=false and qt.autoAccept and not qt.autoAcceptIgnoreTrivial)
+    local available=GetNumGossipAvailableQuests and GetNumGossipAvailableQuests() or 0
+    if available>0 then
+        -- 3.3.5 returns title, level, low-level flag per available quest.
+        local step=GossipStride(available,GetGossipAvailableQuests())
+        if not ignoreTrivial or step<3 then return end
+        for i=1,available do if not select((i-1)*step+3,GetGossipAvailableQuests()) then return end end
+    end
+    local active=GetNumGossipActiveQuests and GetNumGossipActiveQuests() or 0
+    if active>0 then
+        -- Title, level, low-level, complete per active quest; without the flag, stay manual.
+        local step=GossipStride(active,GetGossipActiveQuests())
+        if step<4 then return end
+        for i=1,active do if select((i-1)*step+4,GetGossipActiveQuests()) then return end end
+    end
+    gossipPicked[key]=true
+    SelectGossipOption(1)
+end
+function ns.GossipClosed() wipe(gossipPicked) end
 -- Wrath reports free primary profession slots as the second character point value.
 local function FreeProfessionSlots()
     if not UnitCharacterPoints then return 2 end
@@ -213,15 +253,16 @@ function ns.Apply()
     end
     if Enabled("hideTutorials") then
         if tutorialOriginal==nil then tutorialOriginal=GetCVar("showTutorials") end
-        SetCVar("showTutorials","0"); if TutorialFrame then TutorialFrame:Hide() end
+        ns.SetCVar("showTutorials","0"); if TutorialFrame then TutorialFrame:Hide() end
     elseif tutorialOriginal~=nil then
-        if GetCVar("showTutorials")=="0" then SetCVar("showTutorials",tutorialOriginal) end; tutorialOriginal=nil
+        if GetCVar("showTutorials")=="0" then ns.SetCVar("showTutorials",tutorialOriginal) end; tutorialOriginal=nil
     end
     if ns.ApplyDisplays then ns.ApplyDisplays() end
     if ns.ApplyPanels then ns.ApplyPanels() end
     if ns.ApplyMail then ns.ApplyMail() end
     if ns.ApplyExtras then ns.ApplyExtras() end
     if ns.ApplyGroup then ns.ApplyGroup() end
+    if ns.ApplySelfCombatText then ns.ApplySelfCombatText() end
     ns.UpdateLogging()
 end
 function addon:OnInitialize()
@@ -240,11 +281,13 @@ function addon:OnEnable()
         ns.Apply()
     end) end
     local f=CreateFrame("Frame"); ns.events=f
-    for _,event in ipairs({"PLAYER_ENTERING_WORLD","PLAYER_REGEN_ENABLED","PLAYER_REGEN_DISABLED","ADDON_LOADED","MERCHANT_SHOW","MERCHANT_CLOSED","LOOT_OPENED","TRAINER_CLOSED","CINEMATIC_START","PLAY_MOVIE","ZONE_CHANGED_NEW_AREA","UNIT_AURA"}) do f:RegisterEvent(event) end
+    for _,event in ipairs({"PLAYER_ENTERING_WORLD","PLAYER_REGEN_ENABLED","PLAYER_REGEN_DISABLED","ADDON_LOADED","MERCHANT_SHOW","MERCHANT_CLOSED","LOOT_OPENED","TRAINER_CLOSED","CINEMATIC_START","PLAY_MOVIE","ZONE_CHANGED_NEW_AREA","UNIT_AURA","GOSSIP_SHOW","GOSSIP_CLOSED"}) do f:RegisterEvent(event) end
     f:SetScript("OnEvent",function(_,event,unit)
         if event=="MERCHANT_SHOW" then merchant=true; merchantUntil=GetTime()+8; sellAttempts={}; Repair(); SellJunk()
         elseif event=="MERCHANT_CLOSED" then merchant=false
         elseif event=="LOOT_OPENED" then QuickLoot()
+        elseif event=="GOSSIP_SHOW" then ns.AutoGossip()
+        elseif event=="GOSSIP_CLOSED" then ns.GossipClosed()
         elseif event=="TRAINER_CLOSED" then trainerUntil=0
         elseif event=="CINEMATIC_START" and Enabled("skipCinematics") then if CinematicFrame_CancelCinematic then CinematicFrame_CancelCinematic() end
         elseif event=="PLAY_MOVIE" and Enabled("skipCinematics") then if MovieFrame and MovieFrame.StopMovie then MovieFrame:StopMovie() end

@@ -287,7 +287,12 @@ local function TileRaidFrames(parent, y, W, tile)
         _,h=W:DualRow(parent,y,size("Name Size","nameSize"),size("Health Text Size","healthTextSize")); y=y-h
         _,h=W:DualRow(parent,y,size("Power Text Size","powerTextSize"),size("Status Text Size","statusTextSize")); y=y-h
         _,h=W:DualRow(parent,y,size("Aura Duration Size","auraDurationTextSize"),size("Aura Stack Size","auraStackTextSize")); y=y-h
-        _,h=W:DualRow(parent,y,size("Group Number Size","groupNumberSize"),BLANK()); y=y-h
+        local nameOutline=BLANK()
+        if EllesmereUI.TEXT_OUTLINE_VALUES then
+            nameOutline={type="dropdown",text="Name Outline",values=EllesmereUI.TEXT_OUTLINE_VALUES,order=EllesmereUI.TEXT_OUTLINE_ORDER,
+                getValue=function() return db().nameOutline or "module" end,setValue=function(v) db().nameOutline=v; ns.Apply() end}
+        end
+        _,h=W:DualRow(parent,y,size("Group Number Size","groupNumberSize"),nameOutline); y=y-h
         return LinkRow(parent,y,"Raid / Party Aura Filters",tile.folder,"Aura Filters")
     end
     local function db() return ns.db and ns.db.profile end

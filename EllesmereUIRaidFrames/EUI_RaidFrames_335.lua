@@ -25,7 +25,7 @@ local function Config(width,height)
         healthVerticalFill=false,healPrediction=false,healPredColor=RGB(102/255,243/255,102/255),healPredOpacity=75,
         absorbStyle="striped",absorbOpacity=90,absorbColor=RGB(1,1,1),absorbEdgeMode="overlay",showOvershield=true,
         borderSize=1,borderColor=RGB(0,0,0),hoverBorderEnabled=true,hoverBorderColor=RGB(1,1,1),targetBorderColor=RGB(.05,.82,.61),threatBorderColor=RGB(1,.15,.15),
-        nameColorMode="class",nameCustomColor=RGB(1,1,1),namePosition="topleft",nameOffsetX=0,nameOffsetY=0,nameMaxLength=0,
+        nameColorMode="class",nameCustomColor=RGB(1,1,1),namePosition="topleft",nameOutline="module",nameOffsetX=0,nameOffsetY=0,nameMaxLength=0,
         healthTextPosition="topright",healthTextOffsetX=0,healthTextOffsetY=0,healthTextColorMode="custom",healthTextCustomColor=RGB(1,1,1),statusShowAFK=true,
         roleIconStyle="modern",roleIconSize=13,roleIconPosition="bottomleft",roleIconOffsetX=0,roleIconOffsetY=0,showRoleForTank=true,showRoleForHealer=true,roleIconHideInCombat=false,
         raidMarkerSize=16,raidMarkerPosition="center",raidMarkerOffsetX=0,raidMarkerOffsetY=0,
@@ -318,19 +318,27 @@ local function LayoutGroup(kind,p)
     local slots,visibleGroups={},0
     for group=1,groups do if not raid or not c.hiddenGroups[group] then slots[group]=visibleGroups; visibleGroups=visibleGroups+1 end end
     local across=raid and c.orientation=="horizontal"
+    -- "Down and then Right" (Retail grid flow): two groups per column, columns run right.
+    local grid=raid and c.orientation=="grid"
     local unitsVertical=across or (not raid and not c.partyHorizontal)
     if raid and not across and c.showGroupNumber then gap=math.max(gap,(tonumber(c.groupNumberSize) or 10)+6) end
     local groupW=unitsVertical and w or 5*w+4*spacing
     local groupH=unitsVertical and 5*height+4*spacing or height
     local drawn=math.max(1,visibleGroups)
+    local function Footprint(count)
+        local cols,rows=1,count
+        if across then cols,rows=count,1 elseif grid then cols,rows=math.ceil(count/2),math.min(count,2) end
+        return cols*groupW+(cols-1)*gap,rows*groupH+(rows-1)*gap
+    end
     local holder,ph=ns.holders[kind],ns.previewHolders[kind]
-    ns.Size(holder,across and drawn*groupW+(drawn-1)*gap or groupW,across and groupH or drawn*groupH+(drawn-1)*gap)
+    ns.Size(holder,Footprint(drawn))
     holder:SetFrameStrata(ns.Strata(c)); ph:SetFrameStrata(ns.Strata(c))
     Position(kind)
     local reverseUnits=c.reverseUnits and true or false; local reverseGroups=raid and c.reverseGroups
     local point,corner,xOffset,yOffset=ns.GrowthAnchors(unitsVertical,reverseUnits,spacing)
     local function Origin(slot,count)
         local index=reverseGroups and ((count or drawn)-1-slot) or slot
+        if grid then return math.floor(index/2)*(groupW+gap),-(index%2)*(groupH+gap) end
         return across and index*(groupW+gap) or 0,across and 0 or -index*(groupH+gap)
     end
     for group,h in ipairs(ns.headers[kind]) do
@@ -373,8 +381,7 @@ local function LayoutGroup(kind,p)
             if s~=nil and s<count then b:Show(); ns.UpdateFrame(b,true) else b:Hide() end
         end
         if oc then
-            local cw=across and count*groupW+(count-1)*gap or groupW
-            local chh=across and groupH or count*groupH+(count-1)*gap
+            local cw,chh=Footprint(count)
             ns.Size(oc,cw+pad*2,chh+pad*2+top)
             for group=1,8 do
                 local lbl=ns.OverlayLabel(group); local s=slots[group]

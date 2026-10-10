@@ -46,7 +46,11 @@ function E.BuildWrathAuraFilters(folder,parent,y,selectedPrefix)
         Row({type="toggle",text="Only Timed Auras",getValue=function() local s=Settings(); return s and s[pre.."HasDuration"] or false end,
             setValue=function(v) local s=Settings(); if s then s[pre.."HasDuration"]=v; Apply() end end},
             pre=="buff" and {type="toggle",text="Only Stealable Buffs",getValue=function() local s=Settings(); return s and s.buffStealable or false end,
-            setValue=function(v) local s=Settings(); if s then s.buffStealable=v; Apply() end end} or {type="label",text="Own includes your pet and vehicle"})
+            setValue=function(v) local s=Settings(); if s then s.buffStealable=v; Apply() end end}
+            or uf and {type="toggle",text="Hide Sated / Exhaustion",tooltip="Hides the Bloodlust and Heroism lockout debuffs.",
+            getValue=function() local s=Settings(); return not s or s.debuffHideExhaustion~=false end,
+            setValue=function(v) local s=Settings(); if s then s.debuffHideExhaustion=v; Apply() end end}
+            or {type="label",text="Own includes your pet and vehicle"})
     end
     local _,h=W:WideButton(parent,"Reset Selected Aura Filters",y,function()
         local s=Settings(); if not s then return end

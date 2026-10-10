@@ -5,6 +5,9 @@ if not E or not E.Lite or not Minimap then return end
 E._ModuleNS[ADDON_NAME] = ns
 local addon = E.Lite.NewAddon(ADDON_NAME)
 ns.addon, ns.IsWrath = addon, true
+function ns.SetRotateCVar(v)
+    if E.SetCVar then E.SetCVar("rotateMinimap", v, ADDON_NAME) else SetCVar("rotateMinimap", v) end
+end
 local floor, max, min, format = math.floor, math.max, math.min, string.format
 local WHITE = "Interface\\Buttons\\WHITE8X8"
 local MEDIA = "Interface\\AddOns\\EllesmereUIMinimap\\"
@@ -1210,7 +1213,7 @@ function ns.Restore()
     Minimap:SetScript("OnMouseWheel",original.wheel); Minimap:SetScript("OnMouseUp",original.mouseUp)
     Minimap:EnableMouseWheel(original.wheelEnabled==true); Minimap:SetMovable(original.movable==true)
     if original.clamped~=nil then Minimap:SetClampedToScreen(original.clamped) end
-    Minimap:SetZoom(original.zoom); SetCVar("rotateMinimap",original.rotate)
+    Minimap:SetZoom(original.zoom); ns.SetRotateCVar(original.rotate)
     for f,s in pairs(original.decorations) do
         f:SetAlpha(s.alpha); if s.mouse~=nil and f.EnableMouse then f:EnableMouse(s.mouse) end
     end
@@ -1309,7 +1312,7 @@ function ns.Apply()
     ApplyBorder(p,size,shape,classic)
     ApplyClassic(classic,size)
     for f in pairs(original.decorations) do f:SetAlpha(0); if f.EnableMouse then f:EnableMouse(false) end end
-    SetCVar("rotateMinimap",p.rotateMinimap and "1" or "0")
+    ns.SetRotateCVar(p.rotateMinimap and "1" or "0")
     Minimap:SetScript("OnMouseUp",MouseUp)
     Minimap:EnableMouseWheel(p.scrollZoom)
     Minimap:SetScript("OnMouseWheel",p.scrollZoom and Wheel or original.wheel)

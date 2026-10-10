@@ -1,4 +1,14 @@
-# Bags 3.3.5a — 0.11
+# Bags 3.3.5a — 0.12
+
+0.12: Junk Marker do Retail. A moeda no cabeçalho das bolsas entra no modo de
+marcar: clique nos itens para marcar ou desmarcar como lixo (com um item no
+cursor, clicar na moeda marca esse item). Itens cinza e marcados vão para a nova
+categoria Junk (sempre a última); desmarcar devolve o item à categoria de onde
+veio. Com um vendedor aberto aparece "Sell Junk" ao lado da moeda: vende um item
+por vez, pula itens sem preço, de equipment set e fixados, e para se o vendedor
+fechar, em combate ou com item no cursor. Na engrenagem, "Show Coin on Junk" põe
+uma moedinha no canto dos itens marcados; Desaturate Junk Items vale também
+para eles. Desligar o Junk Marker remove a moeda, a categoria e o botão.
 
 0.11 permite abrir e fechar as bolsas em combate pelos atalhos normais.
 Atualizações do layout e operações restritas continuam adiadas até sair do combate.

@@ -96,7 +96,13 @@ init:SetScript("OnEvent",function(self)
             Row(Toggle("bagHideEmptyCategories","Hide Categories with 0 Items","Hide sidebar categories that have no items in them."),
                 Toggle("bagAutoSize","Auto-Size to Fit","Grow the bag window (more columns and taller) so every slot fits without scrolling."))
             Row(Toggle("bagMergeDuplicates","Merge Duplicate Items","Show copies of the same item in separate slots as one icon with their counts added together. Paused while the mail, trade, auction house, bank or guild bank window is open."),
-                Toggle("bagDesaturateJunkItems","Desaturate Junk Items","Display junk items in a greyed-out style."))
+                Toggle("bagDesaturateJunkItems","Desaturate Junk Items","Display junk items (grey quality and items you marked as junk) in a greyed-out style."))
+            row=Row({type="toggle",text="Junk Marker",tooltip="Show the coin button in the bag header. Click it, then click items to mark or unmark them as junk. Junk goes into its own Junk category, and a Sell Junk button appears next to the coin while a merchant is open.",
+                 getValue=function() return P().bagShowJunkIcon~=false end,
+                 setValue=function(v) P().bagShowJunkIcon=v and true or false; if not v and ns.ExitSelectMode then ns.ExitSelectMode() end; ns.CM:Invalidate(); ns.Apply(); if E.RefreshPage then E:RefreshPage() end end},
+                {type="label",text="Sell Junk skips items with no vendor price, equipment set gear and pinned items."})
+            Cog(row and row._leftRegion,{chain=false,disabled=function() return P().bagShowJunkIcon==false end,disabledTooltip="Junk Marker",title="Junk Marker Options",
+                rows={CogToggle("bagShowJunkCoin","Show Coin on Junk","Show a small coin in the corner of items marked as junk.")}})
             row=Row({type="toggle",text="Split Set Gear by Set",tooltip="Show one sub-category per equipment set (named after the set) under Item Set Gear.",
                  getValue=function() return P().bagSplitSetGearBySet end,setValue=function(v) P().bagSplitSetGearBySet=v; ns.CM:OnEquipmentSetsChanged(); ns.Apply() end},
                 Toggle("bagShowSetGearName","Show Set Name on Gear","Display the equipment set's name at the bottom of bag items that belong to one of your equipment sets.",true))

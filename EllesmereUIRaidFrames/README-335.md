@@ -1,4 +1,14 @@
-# Raid Frames 3.3.5 — 0.18
+# Raid Frames 3.3.5 — 0.20
+
+0.20: nova opção "Name Outline" em TEXT DISPLAY, separada para Raid e Party:
+Module Default (segue o contorno da fonte de Raid Frames na página Fonts), None,
+Outline, Thick Outline ou Shadow, aplicada só aos nomes. O Retail só tem o
+contorno do módulo inteiro.
+
+0.19: novo Group Layout "Down and then Right" (Retail 9.4): dois grupos por
+coluna, depois a próxima coluna à direita (raid de 20 vira um bloco 2x2).
+Membros correm na horizontal dentro do grupo, como em "Groups Down". Holder,
+preview e overlay usam o mesmo cálculo de tamanho.
 
 0.18: Targeted Spells do Retail: ícone do feitiço inimigo no quadro do membro
 (party e raid) que o inimigo está mirando, com varredura do tempo de conjuração,

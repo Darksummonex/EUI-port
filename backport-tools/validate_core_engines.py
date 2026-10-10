@@ -26,6 +26,11 @@ assert toc.index('Libs\\LibDeflate\\LibDeflate.lua') < toc.index('EllesmereUI_Pr
 profiles_src = (core / 'EllesmereUI_Profiles.lua').read_text(encoding='utf-8-sig')
 assert profiles_src.count(':GetNumLines()') == profiles_src.count('if editBox.GetNumLines then'), 'unguarded EditBox:GetNumLines'
 assert 'm:GetStringHeight()' in profiles_src
+# Some 3.3.5 clients/addons expose a CreateMaskTexture that returns nil.
+import re
+panel_src = (core / 'EllesmereUI_Panel.lua').read_text(encoding='utf-8-sig')
+for name in re.findall(r'local (\w+) = \w+:CreateMaskTexture\(\)', panel_src):
+    assert re.search(r'local %s = \w+:CreateMaskTexture\(\)\s*\n(\s*--[^\n]*\n)?\s*if %s then' % (name, name), panel_src), 'unguarded mask ' + name
 assert toc.index('Libs\\LibStub\\LibStub.lua') < toc.index('Libs\\LibDeflate\\LibDeflate.lua')
 assert toc.index('EllesmereUI_Panel.lua') < toc.index('EllesmereUI_PartyMode_335.lua')
 assert toc.index('EllesmereUI_Ticker.lua') < toc.index('EllesmereUI_PartyMode_335.lua')

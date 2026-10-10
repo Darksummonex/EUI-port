@@ -1,4 +1,9 @@
-# Nameplates 3.3.5 — 0.14
+# Nameplates 3.3.5 — 0.15
+
+0.15: "Enemy Buff Filter" (Retail 9.4) na seção EXTRA AURA OPTIONS da aba
+General: Timed Buffs (padrão; Wrath não tem a flag "important" da Retail),
+Only Dispellable e Show All (todos os buffs). Usa os mesmos campos da aba Aura
+Filters (Only Timed Auras / Only Stealable Buffs).
 
 0.14: texturas de vida e de cast bar incluem a LibSharedMedia e chaves
 `sm:` são resolvidas em jogo.

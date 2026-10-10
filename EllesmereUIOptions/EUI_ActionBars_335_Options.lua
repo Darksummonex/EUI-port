@@ -492,7 +492,8 @@ init:SetScript("OnEvent",function(self)
         Swatch(Inline(row and row._leftRegion),SB,"outOfRangeColor",false,function() return not SB().outOfRangeColoring end)
         Sync(Inline(row and row._leftRegion),"Out of Range Coloring",{"outOfRangeColoring","outOfRangeColor"})
         Row(RootSlider("alphaWhenOnCD","Alpha when on CD",0,100,5),RootSlider("cdSwipeAlpha","CD Swipe Opacity",0,100,5))
-        Row(RootToggle("lockActions","Lock Action Dragging",{tooltip="Hold Shift to drag actions off locked bars."}),Blank())
+        Row(RootToggle("lockActions","Lock Action Dragging",{tooltip="Hold Shift to drag actions off locked bars."}),
+            RootToggle("showEquippedBorder","Show Equipped Item Color",{tooltip="Equipped items get a rarity color border."}))
 
         if key=="bar1" then
             Section("PAGING")
@@ -548,6 +549,63 @@ init:SetScript("OnEvent",function(self)
         local xpOff=HUDOff("xp","Enable Experience Bar")
         Row(HUDToggle("xp","Enable Experience Bar"),RootSlider("fontSize","Text Size",8,20,1,{tooltip="Experience and reputation bar text."}))
         Row(HUDCfg("slider","xpWidth","Width",120,1000,1,"barWidth",xpOff),HUDCfg("slider","xpHeight","Height",8,32,1,"barHeight",xpOff))
+        local XPB=ns.NativeHUD and ns.NativeHUD.XP
+        if XPB then
+            local function XOff(extra)
+                extra=extra or {}
+                local inner=extra.disabled
+                extra.disabled=function() return xpOff.disabled() or (inner and inner() or false) end
+                if not extra.disabledTooltip then extra.disabledTooltip=xpOff.disabledTooltip end
+                return extra
+            end
+            local function XDD(key,label,values,order,extra)
+                extra=XOff(extra); extra.values,extra.order=values,order
+                return HUDCfg("dropdown",key,label,nil,nil,nil,nil,extra)
+            end
+            local function XToggle(key,label,extra) return HUDCfg("toggle",key,label,nil,nil,nil,nil,XOff(extra)) end
+            local function XOffFn() return xpOff.disabled() end
+            local function Gradient() return HUD().xpFillStyle=="HORIZONTAL" or HUD().xpFillStyle=="VERTICAL" end
+            local fill=XDD("xpFillStyle","Fill Style",XPB.FILL_VALUES,XPB.FILL_ORDER,
+                {tooltip="Flat paints the XP color. The gradients run from the XP color to the end color."})
+            local bg=HUDCfg("slider","xpBgOpacity","Background",0,100,5,nil,XOff())
+            local row=Row(fill,bg)
+            local rgn=Inline(row and row._leftRegion)
+            Swatch(rgn,HUD,"xpGradEnd",true,function() return XOffFn() or not Gradient() end,"Gradient end color")
+            Swatch(rgn,HUD,"xpColor",true,XOffFn,"XP color")
+            Swatch(Inline(row and row._rightRegion),HUD,"xpBgColor",false,XOffFn,"Background color")
+            row=Row(XToggle("xpShowRested","Show Rested XP"),XToggle("xpQuestOverlay","Quest XP Overlay",
+                {tooltip="Completed quest XP shows ahead of the fill in green, incomplete quest XP after it in gold. Quests under collapsed quest log headers are not counted."}))
+            Swatch(Inline(row and row._leftRegion),HUD,"xpRestedColor",true,function() return XOffFn() or HUD().xpShowRested==false end,"Rested color")
+            rgn=Inline(row and row._rightRegion)
+            local function NoOverlay() return XOffFn() or not HUD().xpQuestOverlay end
+            Cog(rgn,"Quest XP Overlay",{CogToggle(HUD,"xpQuestCompleted","Completed Quests Only"),CogToggle(HUD,"xpQuestZone","Current Zone Only")},
+                {disabled=NoOverlay,disabledTooltip="Quest XP Overlay"})
+            Swatch(rgn,HUD,"xpQuestColor",true,NoOverlay,"Incomplete quests")
+            Swatch(rgn,HUD,"xpQuestDoneColor",true,NoOverlay,"Completed quests")
+            local function NoDividers() return not HUD().xpDividers end
+            row=Row(XToggle("xpDividers","Show Dividers",{tooltip="A line at every 10% and a tick at every 5% across the bar."}),
+                XDD("xpTickStyle","5% Line Style",XPB.TICK_VALUES,XPB.TICK_ORDER,{disabled=NoDividers,disabledTooltip="Show Dividers"}))
+            Cog(Inline(row and row._leftRegion),"Dividers",{CogToggle(HUD,"xpSmartTicks","Smart Ticks"),CogToggle(HUD,"xpDividerText","Divider Text")},
+                {disabled=function() return XOffFn() or NoDividers() end,disabledTooltip="Show Dividers"})
+            Row(XToggle("xpRestedAfterQuests","Rested After Quest XP",{tooltip="The rested segment starts where the Quest XP Overlay ends instead of at your current XP.",
+                    disabled=function() return not HUD().xpQuestOverlay end,disabledTooltip="Quest XP Overlay"}),
+                XToggle("xpSpark","Show Spark",{tooltip="A bright spark at the edge of the fill."}))
+            Row(XToggle("xpShowMaxLevel","Show at Max Level",{tooltip="Keeps the bar at max level, full, with the level and times. Time This Level shows total time played there."}),
+                XToggle("xpKeepSession","Keep Session on Reload",{tooltip="Time This Session and XP per Hour carry on through a /reload (a load within five minutes) instead of starting over."}))
+            Section("EXPERIENCE BAR TEXT")
+            local function TextDD(pos)
+                local cfg=XDD("xpText"..pos,XPB.POSITION_LABELS[pos],XPB.ITEM_VALUES,XPB.ITEM_ORDER)
+                cfg.getValue=function() return XPB.TextValue(HUD(),pos) end
+                return cfg
+            end
+            local list=XPB.POSITIONS
+            for i=1,#list,2 do Row(TextDD(list[i]),list[i+1] and TextDD(list[i+1]) or Blank()) end
+            Button("Apply Luxthos Layout",function()
+                XPB.ApplyLuxthos(HUD()); ns.Apply()
+                if E.InvalidatePageCache then E:InvalidatePageCache() end
+                if E.RefreshPage then E:RefreshPage(true) end
+            end)
+        end
         Section("REPUTATION BAR")
         local repOff=HUDOff("reputation","Enable Reputation Bar")
         Row(HUDToggle("reputation","Enable Reputation Bar"),Blank())
@@ -580,7 +638,7 @@ init:SetScript("OnEvent",function(self)
     E:RegisterModule("EllesmereUIActionBars",{
         title="Action Bars",description="Action bars, Blizzard HUD skins and player aura positions for Wrath.",
         pages={PAGE_DISPLAY,PAGE_HUD,PAGE_ANIM},
-        searchTerms="action bar keybind macro paging stance pet micro menu bag experience reputation buff debuff highlight pushed cooldown button shape circle round",
+        searchTerms="action bar keybind macro paging stance pet micro menu bag experience reputation buff debuff highlight pushed cooldown button shape circle round xp bar quest xp overlay dividers smart ticks rested gradient xp per hour leveling time played",
         buildPage=function(page,parent,y)
             C.W,C.parent,C.y=E.Widgets,parent,y
             parent._showRowDivider=true

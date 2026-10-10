@@ -794,10 +794,13 @@ local function CreateMainFrame()
         ring:SetPoint("CENTER", mini, "TOPLEFT", H / 2, -H / 2)
         if mini.CreateMaskTexture and ring.AddMaskTexture then
             local ringMask = mini:CreateMaskTexture()
-            ringMask:SetTexture(MASK, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
-            ringMask:SetSize((H + 4) * 128 / 104, (H + 4) * 128 / 104)   -- mask circle = 104/128
-            ringMask:SetPoint("CENTER", ring, "CENTER")
-            ring:AddMaskTexture(ringMask)
+            -- Some 3.3.5 clients/addons expose a CreateMaskTexture that returns nil.
+            if ringMask then
+                ringMask:SetTexture(MASK, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+                ringMask:SetSize((H + 4) * 128 / 104, (H + 4) * 128 / 104)   -- mask circle = 104/128
+                ringMask:SetPoint("CENTER", ring, "CENTER")
+                ring:AddMaskTexture(ringMask)
+            end
         end
         -- Wrath cannot mask textures; baked alpha and a separate frame keep
         -- the solid ring from covering the emblem in its texture batching.
@@ -816,11 +819,13 @@ local function CreateMainFrame()
             or badgeHost:CreateTexture(nil, "ARTWORK", nil, 2)
         if mini.CreateMaskTexture and badge.AddMaskTexture and badgeOv.AddMaskTexture then
             local badgeMask = mini:CreateMaskTexture()
-            badgeMask:SetTexture(MASK, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
-            badgeMask:SetSize(H * 128 / 104, H * 128 / 104)
-            badgeMask:SetPoint("CENTER", badge, "CENTER")
-            badge:AddMaskTexture(badgeMask)
-            badgeOv:AddMaskTexture(badgeMask)
+            if badgeMask then
+                badgeMask:SetTexture(MASK, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+                badgeMask:SetSize(H * 128 / 104, H * 128 / 104)
+                badgeMask:SetPoint("CENTER", badge, "CENTER")
+                badge:AddMaskTexture(badgeMask)
+                badgeOv:AddMaskTexture(badgeMask)
+            end
         end
 
         -- A theme's accent overlay (EllesmereUI.THEME_ACCENT_OVERLAYS) cut to the
@@ -1292,10 +1297,12 @@ local function CreateMainFrame()
                 -- Round: run the solid color through the portrait circle mask.
                 if dot.CreateMaskTexture and t.AddMaskTexture then
                     local mask = dot:CreateMaskTexture()
-                    mask:SetTexture("Interface\\AddOns\\EllesmereUI\\media\\portraits\\circle_mask.tga",
-                        "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
-                    mask:SetAllPoints(t)
-                    t:AddMaskTexture(mask)
+                    if mask then
+                        mask:SetTexture("Interface\\AddOns\\EllesmereUI\\media\\portraits\\circle_mask.tga",
+                            "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+                        mask:SetAllPoints(t)
+                        t:AddMaskTexture(mask)
+                    end
                 end
                 local ag = dot:CreateAnimationGroup()
                 ag:SetLooping("REPEAT")
@@ -1493,7 +1500,7 @@ local function CreateMainFrame()
     addonScrollFrame:SetPoint("TOPLEFT", sidebar, "TOPLEFT", 0, ADDON_NAV_TOP)
     addonScrollFrame:SetFrameLevel(sidebar:GetFrameLevel() + 1)
     addonScrollFrame:EnableMouseWheel(true)
-    if addonScrollFrame.SetClipsChildren then addonScrollFrame:SetClipsChildren(true) end
+    EUI335.SetClipsChildren(addonScrollFrame, true)
 
     local addonScrollChild = CreateFrame("Frame", nil, addonScrollFrame)
     addonScrollChild:SetWidth(SIDEBAR_W)
@@ -2334,7 +2341,7 @@ local function CreateMainFrame()
     contentHeaderFrame:SetScript("OnMouseWheel", function(_, delta)
         if scrollFrame then scrollFrame:GetScript("OnMouseWheel")(scrollFrame, delta) end
     end)
-    if contentHeaderFrame.SetClipsChildren then contentHeaderFrame:SetClipsChildren(true) end
+    EUI335.SetClipsChildren(contentHeaderFrame, true)
     contentHeaderFrame:Hide()
     EllesmereUI._contentHeader = contentHeaderFrame
     local contentHeaderH = 0   -- current header height
@@ -2384,7 +2391,7 @@ local function CreateMainFrame()
     scrollFrame:EnableMouseWheel(true)
     -- Clip children to the viewport so off-screen widgets are skipped; without it every
     -- widget on the page renders each frame regardless of scroll position.
-    if scrollFrame.SetClipsChildren then scrollFrame:SetClipsChildren(true) end
+    EUI335.SetClipsChildren(scrollFrame, true)
 
     scrollChild = CreateFrame("Frame", nil, scrollFrame)
     PanelPP.Size(scrollChild, rightW, 1)
@@ -4754,7 +4761,7 @@ local function ShowSidebarUnlockTip()
         local arrowClip = CreateFrame("Frame", nil, tip)
         arrowClip:SetFrameStrata("FULLSCREEN_DIALOG")
         arrowClip:SetFrameLevel(tip:GetFrameLevel() + 10)
-        if arrowClip.SetClipsChildren then arrowClip:SetClipsChildren(true) end
+        EUI335.SetClipsChildren(arrowClip, true)
         local clipH = ARROW_SZ
         arrowClip:SetSize(ARROW_SZ * 2, clipH)
         arrowClip:SetPoint("BOTTOM", tip, "TOP", 0, -1)

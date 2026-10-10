@@ -4,7 +4,7 @@
 ## Group: EllesmereUI
 ## Notes: Native Wrath conveniences, cursor, displays, window dragging and raid tools.
 ## Author: Ellesmere
-## Version: 9.3.4-335-0.15
+## Version: 9.3.4-335-0.17
 ## Dependencies: EllesmereUI
 ## X-Part-Of: EllesmereUI
 # Core Lite owns module profile storage in EllesmereUIDB.
@@ -17,5 +17,6 @@ EUI_QoL_335_Panels.lua
 EUI_QoL_335_Mail.lua
 EUI_QoL_335_Extras.lua
 EUI_QoL_335_Group.lua
+EUI_QoL_335_CombatText.lua
 
 # Options

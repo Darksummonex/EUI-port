@@ -2854,7 +2854,7 @@ local function MakeGhostSet(opts)
 
         local labelFrame = CreateFrame("Frame", nil, g)
         labelFrame:SetAllPoints()
-        if labelFrame.SetClipsChildren then labelFrame:SetClipsChildren(true) end
+        EUI335.SetClipsChildren(labelFrame, true)
         labelFrame:SetFrameLevel(g:GetFrameLevel() + 2)
         local fs = labelFrame:CreateFontString(nil, "OVERLAY")
         EllesmereUI.PrimeFontShadow(fs, true)
@@ -6943,7 +6943,7 @@ local function CreateMover(barKey)
     -- Label — on a higher-level frame so it renders above the border
     local labelFrame = CreateFrame("Frame", nil, mover)
     labelFrame:SetAllPoints()
-    if labelFrame.SetClipsChildren then labelFrame:SetClipsChildren(true) end
+    EUI335.SetClipsChildren(labelFrame, true)
     labelFrame:SetFrameLevel(mover:GetFrameLevel() + 3)
     local nameFS = labelFrame:CreateFontString(nil, "OVERLAY")
     EllesmereUI.PrimeFontShadow(nameFS, true)
@@ -13016,7 +13016,7 @@ local function CreateOpenAnimFrame(parent)
     sweepClip:SetSize(CONTAINER_SZ * 0.75, CONTAINER_SZ * 0.75)
     sweepClip:SetPoint("CENTER", container, "CENTER", 0, 0)
     sweepClip:SetFrameLevel(container:GetFrameLevel() + 5)
-    if sweepClip.SetClipsChildren then sweepClip:SetClipsChildren(true) end
+    EUI335.SetClipsChildren(sweepClip, true)
     openAnimFrame._sweepClip = sweepClip
 
     local sweep = sweepClip:CreateTexture(nil, "OVERLAY", nil, 7)
@@ -13073,7 +13073,7 @@ function ns.ShowUnlockTip()
         local arrowClip = CreateFrame("Frame", nil, tip)
         arrowClip:SetFrameStrata("TOOLTIP")
         arrowClip:SetFrameLevel(tip:GetFrameLevel() + 10)
-        if arrowClip.SetClipsChildren then arrowClip:SetClipsChildren(true) end
+        EUI335.SetClipsChildren(arrowClip, true)
         -- Clip region: tall enough for the top half of the diamond
         local clipH = ARROW_SZ
         arrowClip:SetSize(ARROW_SZ * 2, clipH)

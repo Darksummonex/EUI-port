@@ -37,9 +37,14 @@ local defaults = {profile={enabled=true,lockActions=true,clickOnDown=false,fontS
     slotBgColor=RGB(.15,.15,.15),slotBgOpacity=50,mouseoverShowAll=false,
     pushedTextureType=2,pushedUseClassColor=false,pushedCustomColor=RGB(.973,.839,.604,1),pushedBorderSize=4,
     highlightTextureType=2,highlightUseClassColor=false,highlightCustomColor=RGB(.973,.839,.604,1),highlightBorderSize=4,
-    showCastHighlight=true,bars={},barPositions={},
+    showCastHighlight=true,showEquippedBorder=false,bars={},barPositions={},
     nativeHUD={micro=true,bags=true,bagsConsolidate=false,xp=true,reputation=true,
-        buffs=true,debuffs=true,buttonSize=28,spacing=4,barWidth=400,barHeight=14,auraColumns=8}}}
+        buffs=true,debuffs=true,buttonSize=28,spacing=4,barWidth=400,barHeight=14,auraColumns=8,
+        xpFillStyle="flat",xpColor=RGB(0,.4,1),xpGradEnd=RGB(.3,.75,1),xpBgColor=RGB(.06,.06,.06),xpBgOpacity=95,
+        xpShowRested=true,xpRestedColor=RGB(.5,0,.5,.8),xpQuestOverlay=false,xpQuestCompleted=false,xpQuestZone=false,
+        xpQuestDoneColor=RGB(.2,.8,.2,.6),xpQuestColor=RGB(1,.8,0,.6),xpDividers=false,xpTickStyle="dashed",
+        xpSmartTicks=false,xpDividerText=false,xpTextCenter="classic",xpShowMaxLevel=false,xpSpark=false,
+        xpRestedAfterQuests=false,xpKeepSession=false}}}
 for i,d in ipairs(definitions) do
     defaults.profile.bars[d.key]={enabled=not d.optional,buttons=d.count or 12,
         buttonsPerRow=d.count or 12,size=d.native and 30 or 36,spacing=4,
@@ -650,7 +655,39 @@ local function Skin(button,d)
     StyleInteractions(button,ShapeOf(s))
     ApplyShape(button,s,button.icon,button.cooldown,button.flash)
     ns.UpdateCooldownLook(button)
+    ns.EquippedBorderLook(button)
 end
+-- Show Equipped Item Color (Retail Icon Effects): LAB's equipped-item border in the
+-- button's square or shaped art and the item's rarity color, read from the slot
+-- holding it (green at half opacity when the item cannot be found).
+local function EquippedQuality(button)
+    local kind,value=button._state_type,button._state_action
+    if kind=="item" then return select(3,GetItemInfo(value)) end
+    if kind~="action" or not value then return end
+    local aType,id=GetActionInfo(value)
+    local tex=aType~="item" and GetActionTexture(value)
+    if aType~="item" and not tex then return end
+    for slot=1,19 do
+        local hit
+        if aType=="item" then hit=GetInventoryItemID and GetInventoryItemID("player",slot)==id
+        else hit=GetInventoryItemTexture("player",slot)==tex end
+        if hit then return GetInventoryItemQuality("player",slot) end
+    end
+    if aType=="item" then return select(3,GetItemInfo(id)) end
+end
+function ns.EquippedBorderLook(button)
+    local bd=button.border
+    if not bd or not button._euiBarKey or not ns.GetSettings().showEquippedBorder or not bd:IsShown() then return end
+    local shape=ShapeOf(ns.GetSettings(button._euiBarKey))
+    bd:SetTexCoord(0,1,0,1)
+    if shape~="none" then ns.FitShape(bd,button,button:GetWidth(),shape); bd:SetTexture(ns.ShapeTexture(shape,"border"))
+    else bd:ClearAllPoints(); bd:SetAllPoints(button); bd:SetTexture(HIGHLIGHT_TEXTURES[1]) end
+    local q=EquippedQuality(button)
+    if q and GetItemQualityColor then local r,g,b=GetItemQualityColor(q); bd:SetVertexColor(r,g,b,1)
+    else bd:SetVertexColor(0,1,0,.5) end
+    bd:SetAlpha(1)
+end
+LAB.RegisterCallback(ns,"OnButtonUpdate",function(_,button) ns.EquippedBorderLook(button) end)
 -- Pet/stance buttons stay Blizzard's (their events own the slots); only the
 -- EUI look is layered on, and every change is undone when the module turns off.
 local function SkinNative(button,d,scale)
@@ -684,7 +721,7 @@ local function Config(d)
     return {showGrid=s.showEmpty,clickOnDown=p.clickOnDown,tooltip=s.disableTooltips and "disabled" or "enabled",
         outOfRangeColoring=s.outOfRangeColoring==false and "none" or "button",useColoring=true,keyBoundTarget=false,
         colors={range={c.r,c.g,c.b},mana={.5,.5,1},usable={1,1,1},notUsable={.4,.4,.4}},
-        hideElements={macro=s.hideMacroText==true,hotkey=s.hideKeybind==true,equipped=false}}
+        hideElements={macro=s.hideMacroText==true,hotkey=s.hideKeybind==true,equipped=not ns.GetSettings().showEquippedBorder}}
 end
 local function CreateBar(d)
     local bar=CreateFrame("Frame","EllesmereUIActionBars_"..d.key,UIParent,"SecureHandlerStateTemplate")

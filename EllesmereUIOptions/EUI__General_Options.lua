@@ -924,8 +924,13 @@ do
         },
     },
     {
-        version = "Nameplates 0.14",
+        version = "Nameplates 0.15",
         heroes = {
+            {
+                title = "Enemy Buff Filter",
+                desc  = "Choose which buffs enemy nameplates show: Timed Buffs, Only Dispellable or Show All, which shows every buff.",
+                nav   = Nav("EllesmereUINameplates", "General", "EXTRA AURA OPTIONS"),
+            },
             {
                 title = "Outline per Text",
                 desc  = "Every nameplate text has an Outline choice under its Size: None, Outline, Thick Outline or Shadow, or keep the module default. Covers names, level, health, Target of Target, cast texts, aura text and friendly names.",
@@ -971,8 +976,10 @@ do
         },
     },
     {
-        version = "Raid Frames 0.18",
+        version = "Raid Frames 0.20",
         heroes = {
+            { title = "Name Outline", desc = "Raid and party names each get their own outline: None, Outline, Thick Outline, Shadow, or the Raid Frames font default.", nav = Nav("EllesmereUIRaidFrames", "Raid", "TEXT DISPLAY", "Name Outline") },
+            { title = "Down and then Right", desc = "A new Group Layout stacks two raid groups per column, then starts the next column to the right, so a 20-player raid forms a 2x2 block.", nav = Nav("EllesmereUIRaidFrames", "Raid") },
             { title = "Ready Check Icons", desc = "Ready check icons appear above debuffs and keep each player result for ten seconds after the check finishes.", nav = Nav("EllesmereUIRaidFrames", "Raid") },
             { title = "No Duplicate Debuff Icon", desc = "The debuff displayed in the central Raid Debuff icon is excluded from the regular debuff bar, leaving room for other debuffs.", nav = Nav("EllesmereUIRaidFrames", "Raid") },
             { title = "Out-of-Range Fade", desc = "Raid and party frames dim outside range on Wrath, including in combat. Dim Out of Range and Out of Range Alpha control the fade.", nav = Nav("EllesmereUIRaidFrames", "Raid") },
@@ -1036,8 +1043,14 @@ do
         },
     },
     {
-        version = "Core 0.61",
+        version = "Core 0.63",
         heroes = {
+            {
+                title = "Uninstall EUI",
+                desc  = "A button on Global Settings puts back the game settings EUI changed (nameplate, minimap, chat and tooltip options, chat font sizes and keys Quickdraw took), then turns EUI off for this character and reloads. Your profiles are kept.",
+                nav   = Nav("_EUIGlobal", "General"),
+            },
+            { title = "Shaped Cooldown Swipe", desc = "A drawn cooldown sweep for modules that want round or colored swipes; the Wrath client's own swipe is always a dark square. Cooldown Manager uses it first." },
             {
                 title = "Update Notices",
                 desc  = "When a guild or group member runs a newer EllesmereUI release, chat tells you once per session. Type /euiupdate for the download link. Wrath has no internet access, so the news comes from other EUI users.",
@@ -1099,6 +1112,8 @@ do
             },
         },
         fixes = {
+            { text = "Works alongside !!!ClassicAPI: its clipping and mask functions are no longer used on EUI frames, so animated glows and the options panel stop erroring." },
+            { text = "Opening the options no longer errors with \"attempt to index local 'mask'\" on clients where another addon adds an empty mask function." },
             { text = "The profile Import and Export boxes no longer error with \"attempt to call method 'GetNumLines'\" and scroll to fit long strings." },
             { text = "The collapsed menu shows the Ellesmere E logo again instead of a plain black circle." },
             { text = "Action button tooltips show the real spell ID instead of the spellbook slot." },
@@ -1260,6 +1275,7 @@ do
             },
         },
         fixes = {
+            { text = "Dropdowns open again with !!!ClassicAPI installed; its clipping function no longer moves the menus into an empty scroll frame." },
             { text = "Resetting Global Settings no longer stops partway with an error and reloads the UI again." },
             { text = "Options that do nothing on the Wrath client are hidden: image sharpening, Lag Tolerance, Combat Text Size, Swiftmend dim, Slug outline, class resource dark mode and colors, Retail-only class and power colors, and cursor ring textures." },
             { text = "Global Settings no longer shows the Gamepad page, which has nothing to control on the Wrath client." },
@@ -1282,8 +1298,18 @@ do
         },
     },
     {
-        version = "Quality of Life 0.15",
+        version = "Quality of Life 0.17",
         heroes = {
+            {
+                title = "Self Combat Text",
+                desc  = "Damage taken, healing, avoids and entering or leaving combat scroll above the player frame instead of Blizzard's combat text, with Straight, Fountain or Static animations, colors per type and a mover in Unlock Mode.",
+                nav   = Nav("EllesmereUIQoL", "Displays", "SELF COMBAT TEXT"),
+            },
+            {
+                title = "Auto Select Single Gossip",
+                desc  = "Picks an NPC's only dialog option for you. Hold Shift to skip it; instances and NPCs with quests to take or turn in are left alone. Its cog can also skip past low level quests.",
+                nav   = Nav("EllesmereUIQoL", "QoL", "AUTOMATION"),
+            },
             {
                 title = "Send Mail Recipients",
                 desc  = "An arrow next to the To box lists your alts on this realm and faction, guild members and the last names you mailed. Click a name to fill it in.",
@@ -1365,8 +1391,23 @@ do
         },
     },
     {
-        version = "Blizz UI Enhanced 0.28",
+        version = "Blizz UI Enhanced 0.30",
         heroes = {
+            {
+                title = "Player Buffs on Tooltips",
+                desc  = "Show Player Buffs puts the hovered player's buffs as icons beside the tooltip, with position, size, icons per row and offsets.",
+                nav   = Nav("EllesmereUIBlizzardSkin", "Tooltips, Menus & Popups", "TOOLTIP INFORMATION", "Show Player Buffs"),
+            },
+            {
+                title = "Stat Hover Highlight",
+                desc  = "Hovering a stat in the character sheet sidebar glows the equipped items that give it.",
+                nav   = Nav("EllesmereUIBlizzardSkin", "Blizzard Window Skins", "STATS SIDEBAR", "Highlight Items on Stat Hover"),
+            },
+            {
+                title = "Inspect Enchants and Missing Enhancements",
+                desc  = "Inspect enchants show as an icon with the name on hover, or as names tinted by item quality, in their own size. At max level, red badges flag missing enchants, empty sockets and a missing belt buckle, as on your character sheet.",
+                nav   = Nav("EllesmereUIBlizzardSkin", "Blizzard Window Skins"),
+            },
             { title = "Equipment Set Save", desc = "Saving an equipment set rebuilds the native icon picker even when already open, preventing the PaperDollFrame nil comparison error." },
             {
                 title = "Group Roll Choices",
@@ -1424,8 +1465,23 @@ do
         },
     },
     {
-        version = "Cooldown Manager 0.7",
+        version = "Cooldown Manager 0.9",
         heroes = {
+            {
+                title = "Hide Until Usable and Hide Outside Form/Stance",
+                desc  = "New Cooldown States: Hide Until Usable shows a spell only while it can be cast and is off cooldown (Overpower, Revenge, Victory Rush, Execute); low resources do not hide it. Hide Outside Form/Stance shows it only in the form or stance it needs. Both can close the gap or keep the place.",
+                nav   = Nav("EllesmereUICooldownManager", "CDM Bars"),
+            },
+            {
+                title = "Empty Slot",
+                desc  = "The + menu adds an Empty Slot that keeps a position free on the bar, to group icons.",
+                nav   = Nav("EllesmereUICooldownManager", "CDM Bars"),
+            },
+            {
+                title = "Swipe Style",
+                desc  = "Bars can switch to a Shaped swipe that follows round icons and takes a Swipe Color, instead of the client's dark square sweep.",
+                nav   = Nav("EllesmereUICooldownManager", "CDM Bars"),
+            },
             {
                 title = "Retail Bar Model",
                 desc  = "Cooldowns, Utility and Buffs bars plus custom bars and a FocusKick bar, tracked from your spellbook, cooldowns and auras. Lists are saved per talent group.",
@@ -1603,8 +1659,28 @@ do
         },
     },
     {
-        version = "Unit Frames 0.18",
+        version = "Unit Frames 0.21",
         heroes = {
+            {
+                title = "Dispel Type Icon",
+                desc  = "Type Icon Position puts the icon of the player's highest dispellable debuff type on a point of the health bar, with its size and offsets in the cog. Only Dispellable by You now sits beside it and narrows the overlay, icon and border colors alike.",
+                nav   = Nav("EllesmereUIUnitFrames", "Main Frames"),
+            },
+            {
+                title = "Focus Aura Borders",
+                desc  = "The focus frame gets the aura Border Style, size and color settings, as player and target have.",
+                nav   = Nav("EllesmereUIUnitFrames", "Main Frames"),
+            },
+            {
+                title = "Heal Prediction",
+                desc  = "Player, target and focus show incoming heals past the health fill: yours and other players' in their own colors, from LibHealComm-4.0 (only healers running a HealComm addon are seen).",
+                nav   = Nav("EllesmereUIUnitFrames", "Main Frames"),
+            },
+            {
+                title = "Hide Sated / Exhaustion",
+                desc  = "The debuff filters can now show or hide Sated, Exhaustion and the other Bloodlust lockout debuffs. They stay hidden by default.",
+                nav   = Nav("EllesmereUIUnitFrames", "Aura Filters"),
+            },
             {
                 title = "Outline per Text",
                 desc  = "Left, Right, Center and Extra Text, the Bottom Text Bar texts and Power Percent each have an Outline choice under Size: None, Outline, Thick Outline or Shadow, or the module default.",
@@ -1644,6 +1720,7 @@ do
             },
         },
         fixes = {
+            { text = "Unit frame bars and portraits no longer get moved into scroll frames when !!!ClassicAPI is installed." },
             { text = "Important Cast Glow is hidden for target and focus cast bars; the Wrath client cannot tell which spells are important." },
             { text = "Channel cast bars show the spell's name instead of \"Channeling\"." },
             { text = "Boss frames now update health, power and text while the boss is not your target or focus." },
@@ -1659,8 +1736,18 @@ do
         },
     },
     {
-        version = "Action Bars 0.19",
+        version = "Action Bars 0.21",
         heroes = {
+            {
+                title = "Experience Bar Overhaul",
+                desc  = "The XP bar gets Retail's Quest XP Overlay (completed quests in green, incomplete in gold), dividers with Smart Ticks, gradient fills, background and rested colors, and seven text positions showing values, completed quest XP, XP per hour, time to level and time played. Apply Luxthos Layout recreates the popular Luxthos XP bar WeakAura, with Show at Max Level, a spark and rested XP after quest XP.",
+                nav   = Nav("EllesmereUIActionBars", "Menu, Bags & XP Bars", "EXPERIENCE BAR"),
+            },
+            {
+                title = "Show Equipped Item Color",
+                desc  = "Buttons holding an equipped item, such as a trinket, can show a border in its rarity color. Off by default.",
+                nav   = Nav("EllesmereUIActionBars", "Bar Display"),
+            },
             {
                 title = "Action Bars 7 to 10",
                 desc  = "Four extra bars, off by default, each with its own keybinds, Unlock Mode mover and the full Bar Display settings. Warriors, Druids, Rogues and Priests see which stance or form shares a bar's slots.",
@@ -1758,8 +1845,13 @@ do
         },
     },
     {
-        version = "Bags 0.11",
+        version = "Bags 0.12",
         heroes = {
+            {
+                title = "Junk Marker",
+                desc  = "A coin in the bag header marks items as junk: click it, then click items. Grey and marked items go to a Junk category, and a Sell Junk button appears next to the coin at merchants. Its cog adds a coin badge on marked items.",
+                nav   = Nav("EllesmereUIBags", "Bags"),
+            },
             { title = "Open Bags In Combat", desc = "Bag keybinds open and close the existing layout during combat. Layout refreshes wait until combat ends.", nav = Nav("EllesmereUIBags", "Bags") },
             {
                 title = "Retail Bags Window",
@@ -2866,8 +2958,65 @@ initFrame:SetScript("OnEvent", function(self)
             _, h = W:Spacer(parent, y, 20);  y = y - h
         end
 
-        -- Reset ALL EUI Addon Settings (wide warning button)
+        -- Uninstall EUI: puts back the game settings EllesmereUI changed, turns its
+        -- addons off for this character and reloads (EllesmereUI_Uninstall_335.lua).
         y = y - 30  -- spacer
+        if EllesmereUI.Uninstall then
+            local DARK_BG = EllesmereUI.DARK_BG or { r = 0.05, g = 0.07, b = 0.09 }
+            local btn = CreateFrame("Button", nil, parent)
+            btn:SetSize(300, 38)
+            btn:SetPoint("TOP", parent, "TOP", 0, y)
+            btn:SetFrameLevel(parent:GetFrameLevel() + 5)
+            btn:SetAlpha(0.85)
+            local brd = EllesmereUI.MakeBorder(btn, 0.8, 0.2, 0.2, 0.5, EllesmereUI.PanelPP)
+            local bg = EllesmereUI.SolidTex(btn, "BACKGROUND", DARK_BG.r, DARK_BG.g, DARK_BG.b, 0.92)
+            bg:SetAllPoints()
+            local lbl = EllesmereUI.MakeFont(btn, 13, nil, 0.9, 0.3, 0.3)
+            lbl:SetAlpha(0.7)
+            lbl:SetPoint("CENTER")
+            lbl:SetText(EllesmereUI.L("Uninstall EUI"))
+            btn:SetScript("OnEnter", function()
+                lbl:SetTextColor(1, 0.35, 0.35, 1); brd:SetColor(0.8, 0.2, 0.2, 0.8)
+                GameTooltip:SetOwner(btn, "ANCHOR_TOP")
+                GameTooltip:SetText(EllesmereUI.L("Puts back the game settings EUI changed, then turns EUI off and reloads."), 1, 1, 1, 1, true)
+                GameTooltip:Show()
+            end)
+            btn:SetScript("OnLeave", function()
+                lbl:SetTextColor(0.9, 0.3, 0.3, 0.7); brd:SetColor(0.8, 0.2, 0.2, 0.5)
+                GameTooltip:Hide()
+            end)
+            local function Refused()
+                if not InCombatLockdown() then return false end
+                EllesmereUI:ShowConfirmPopup({
+                    title       = EllesmereUI.L("Uninstall EUI"),
+                    message     = EllesmereUI.L("Uninstalling reloads the UI and cannot run in combat. Leave combat and try again."),
+                    confirmText = EllesmereUI.L("OK"),
+                    hideCancel  = true,
+                })
+                return true
+            end
+            btn:SetScript("OnClick", function()
+                if Refused() then return end
+                EllesmereUI:ShowConfirmPopup({
+                    title       = EllesmereUI.L("Uninstall EUI"),
+                    message     = EllesmereUI.L("Puts back the game settings EUI changed, such as nameplate, minimap, chat and tooltip options, chat font sizes and the keys Quickdraw took, and turns EUI off for this character, then reloads the UI.") .. "\n\n"
+                        .. EllesmereUI.L("Your profiles are kept, so you can turn EUI back on later in the AddOns list."),
+                    disclaimer  = (not EllesmereUI.UninstallKnowsOriginals())
+                        and EllesmereUI.L("EUI was installed before it kept a record of your original settings, so the settings it still manages go back to the game's defaults.")
+                        or nil,
+                    confirmText = EllesmereUI.L("Uninstall & Reload"),
+                    cancelText  = EllesmereUI.L("Cancel"),
+                    onConfirm   = function()
+                        if Refused() then return end
+                        EllesmereUI.RequestReload(EllesmereUI.L("Uninstall EUI"),
+                            EllesmereUI.L("Reload to finish uninstalling EUI."), EllesmereUI.Uninstall)
+                    end,
+                })
+            end)
+            y = y - 38 - 12
+        end
+
+        -- Reset ALL EUI Addon Settings (wide warning button)
         do
             local BTN_W, BTN_H = 300, 38
             local lerp = EllesmereUI.lerp
@@ -2957,8 +3106,10 @@ initFrame:SetScript("OnEvent", function(self)
                                 savedQoL[k] = EllesmereUIDB[k]
                             end
                         end
+                        local restoreRecord = EllesmereUIDB.restoreOnUninstall
                         _G["EllesmereUIDB"] = {}
                         EllesmereUIDB = _G["EllesmereUIDB"]
+                        EllesmereUIDB.restoreOnUninstall = restoreRecord
                         if oldScale then EllesmereUIDB.ppUIScale = oldScale end
                         if oldScaleAuto ~= nil then EllesmereUIDB.ppUIScaleAuto = oldScaleAuto end
                         if savedFriends then

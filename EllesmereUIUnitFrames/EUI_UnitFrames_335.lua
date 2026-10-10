@@ -252,6 +252,8 @@ local function PatchRegion(obj)
         "SetCamDistanceScale", "SetPortraitZoom", "SetWordWrap" }) do
         if not obj[key] then obj[key] = noop end
     end
+    -- Any clipping found here is another addon's ScrollFrame reparenting polyfill.
+    if obj.CreateTexture then obj.SetClipsChildren = noop end
     if not obj.SetSize then function obj:SetSize(w, h) self:SetWidth(w); self:SetHeight(h) end end
     if not obj.SetShown then function obj:SetShown(v) if v then self:Show() else self:Hide() end end end
     if not obj.SetAlphaFromBoolean then function obj:SetAlphaFromBoolean(v, a, b) self:SetAlpha(v and (a or 1) or (b or 0)) end end

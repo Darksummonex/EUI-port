@@ -1,4 +1,18 @@
-# EllesmereUI Cooldown Manager — Wrath 3.3.5a — 0.7
+# EllesmereUI Cooldown Manager — Wrath 3.3.5a — 0.9
+
+0.9: novos Cooldown States do Retail 9.4: "Hide Until Usable" (só aparece
+utilizável e fora de cooldown, como Overpower, Revenge, Victory Rush e Execute;
+falta de recurso não esconde) e "Hide Outside Form/Stance" (só na forma ou
+stance que a magia pede, mesmo em cooldown). Cada um fecha o espaço ou mantém
+o lugar (Keep Place). A forma vem da linha "Requires <forma>" do tooltip, que
+o cliente pinta de vermelho fora dela; sem essa linha vale a regra do Retail
+(usável em forma de caster, inutilizável transformado). Itens sempre aparecem.
+Novo "Empty Slot" no menu "+" (e no tipo de Add Entry): reserva uma posição
+na barra sem desenhar nada.
+
+0.8: novo "Swipe Style" nas barras: Native (o giro quadrado do cliente) ou
+Shaped (o giro de textura do Core 0.62), que segue ícones redondos e usa a
+"Swipe Color". "Cooldown Edge" fica só para o Native.
 
 0.7: os botões "+" do cabeçalho do CDM Bars abrem o menu de adicionar do Retail,
 ancorado no botão. O "+" principal lista Custom Spell ID, Custom Item ID e

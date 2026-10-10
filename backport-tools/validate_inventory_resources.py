@@ -62,8 +62,8 @@ assert(sword:GetName()=='EUI335Item_Bags_0_1' and sword.kind=='CheckButton' and 
 local function Labels(list,field) local out={}; for _,o in ipairs(list) do if o:IsShown() then out[#out+1]=field(o) end end; return table.concat(out,'|') end
 local function Headers() return Labels(f.headers,function(h) return h.label:GetText() end) end
 local function Sidebar() return Labels(f.sbButtons,function(b) return b.entry.label end) end
-assert(Sidebar()=='All Items|OneBag|MultiBag|Pinned Items|Recent Items|The Armory|Weapons / Trinkets|Armor|Adventure Prep|Consumables|Keys|Miscellaneous|Add Category',Sidebar())
-assert(Headers()=='Pinned Items|Recent Items|The Armory (2)|Adventure Prep (1)|Keys (1)|Miscellaneous (1)',Headers())
+assert(Sidebar()=='All Items|OneBag|MultiBag|Pinned Items|Recent Items|The Armory|Weapons / Trinkets|Armor|Adventure Prep|Consumables|Keys|Junk|Add Category',Sidebar())
+assert(Headers()=='Pinned Items|Recent Items|The Armory (2)|Adventure Prep (1)|Keys (1)|Junk (1)',Headers())
 assert(sword:GetScript('OnClick')==NativeItemClick and sword:GetScript('OnDragStart')==NativeItemDrag and sword:GetScript('OnReceiveDrag')==NativeItemDrag)
 sword:RunScript('OnClick','RightButton'); armor:RunScript('OnDragStart')
 assert(itemActions[1][1]==0 and itemActions[1][2]==1 and itemActions[2][1]==1 and itemActions[2][2]==1)
@@ -151,7 +151,7 @@ FindRow('Window Scale').setValue(120); assert(p.bagScale==1.2 and FindRow('Windo
 for _,label in ipairs({'Icon Zoom','Hide Categories with 0 Items','Auto-Size to Fit','Merge Duplicate Items','Desaturate Junk Items','Split Set Gear by Set','Show Set Name on Gear',
     'Default Bag Type','Show BoE Text','Category Title Size','Show Item Level','Enabled Categories','Enabled Currencies','Item Count Text Size','Item Level Text Size',
     'Show Sort Icon','Gold Tracking and History','Show Pinned Items','Show Recent Items','Show Pinned & Recent Tips',"Hide 'Add Category' Tab",'Move Bags Without Shift',
-    'Hide OneBag/MultiBag Warning','Group Armory by Slot','Hide OneBag Randomize Button','Stack Splitter','Show Bag Slot Bar','Show Character Item Counts','Include Keyring'}) do FindRow(label) end
+    'Hide OneBag/MultiBag Warning','Junk Marker','Group Armory by Slot','Hide OneBag Randomize Button','Stack Splitter','Show Bag Slot Bar','Show Character Item Counts','Include Keyring'}) do FindRow(label) end
 FindRow('Default Bag Type').setValue('onebag'); assert(p.bagDefaultBagType=='onebag' and BAGS.views.bags.view=='onebag')
 FindRow('Default Bag Type').setValue('all')
 buttons['Show Bags'](); assert(BAGS.views.bags:IsShown() and BAGS.views.bags.sortBtn:IsShown())

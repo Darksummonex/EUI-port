@@ -54,7 +54,11 @@ local DEFAULT_CATEGORIES={
     {name="Professions",types={IC_RECIPE},icon=ICON.."Trade_Engineering"},
     {name="Keys",types={IC_KEY},icon=ICON.."INV_Misc_Key_04"},
     {name="Miscellaneous",types={IC_MISC,IC_CONTAINER,IC_QUIVER},isCatchAll=true,icon=ICON.."INV_Misc_Gear_01"},
+    -- Junk: always last, and only while the Junk Marker is on.
+    {name="Junk",types={},isJunk=true,noGroup=true,icon=ICON.."INV_Misc_Coin_01"},
 }
+CM.JUNK_KEY="Junk"
+function CM:IsJunkMarkerEnabled() return BP().bagShowJunkIcon~=false end
 CM.DEFAULT_CATEGORIES=DEFAULT_CATEGORIES
 CM.DEFAULT_ICON=ICON.."INV_Misc_QuestionMark"
 
@@ -117,10 +121,11 @@ function CM:InitCategories()
     else
         for _,def in ipairs(DEFAULT_CATEGORIES) do ordered[#ordered+1]=def end
     end
-    local top,rest={}, {}
-    for _,def in ipairs(DEFAULT_CATEGORIES) do if def.noMove then top[#top+1]=def end end
-    for _,def in ipairs(ordered) do if not def.noMove then rest[#rest+1]=def end end
+    local top,rest,junk={}, {}, nil
+    for _,def in ipairs(DEFAULT_CATEGORIES) do if def.noMove then top[#top+1]=def elseif def.isJunk then junk=def end end
+    for _,def in ipairs(ordered) do if not def.noMove and not def.isJunk then rest[#rest+1]=def end end
     ordered={}; for _,d in ipairs(top) do ordered[#ordered+1]=d end; for _,d in ipairs(rest) do ordered[#ordered+1]=d end
+    if junk and self:IsJunkMarkerEnabled() then ordered[#ordered+1]=junk end
     local cats,inserted={}, {}
     local function Custom(uc)
         local state=userState[uc.key]
@@ -135,7 +140,7 @@ function CM:InitCategories()
             local group; if state and state.groupName~=nil then group=state.groupName or nil end
             cats[#cats+1]={_defaultName=def.name,name=(state and state.rename) or def.name,types=def.types,icon=def.icon,
                 equipSlots=def.equipSlots,excludeEquipSlots=def.excludeEquipSlots,isCatchAll=def.isCatchAll,isSetGear=def.isSetGear,
-                isPinned=def.isPinned,isRecent=def.isRecent,noGroup=def.noGroup,noMove=def.noMove,groupName=group,
+                isPinned=def.isPinned,isRecent=def.isRecent,isJunk=def.isJunk,noGroup=def.noGroup,noMove=def.noMove,groupName=group,
                 groupNameCustom=state and state.groupNameCustom}
             if def.isSetGear and p.bagSplitSetGearBySet then
                 for _,set in ipairs(EquipmentSets()) do
@@ -145,7 +150,7 @@ function CM:InitCategories()
             end
         end
     end
-    local catchIdx=#cats+1; for i,c in ipairs(cats) do if c.isCatchAll then catchIdx=i; break end end
+    local catchIdx=#cats+1; for i,c in ipairs(cats) do if c.isCatchAll or c.isJunk then catchIdx=i; break end end
     for _,uc in ipairs(p.bagUserCategories or {}) do
         if not inserted[uc.key] then table.insert(cats,catchIdx,Custom(uc)); catchIdx=catchIdx+1 end
     end
@@ -155,9 +160,10 @@ end
 function CM:SaveState()
     local cats=self._categories; local p=ns.GetSettings(); if not cats or not p then return end
     local state,order,user={}, {}, {}
+    local old=p.bagCategoryState
     for _,cat in ipairs(cats) do
         if not cat.isEquipSet then
-            order[#order+1]=cat._defaultName
+            if not cat.isJunk then order[#order+1]=cat._defaultName end
             local entry,has={},false
             if cat.name~=cat._defaultName and not cat.isUserCreated then entry.rename=cat.name; has=true end
             if cat.isUserCreated and cat.name~=cat._userName then entry.rename=cat.name; has=true end
@@ -167,6 +173,8 @@ function CM:SaveState()
             if cat.isUserCreated then user[#user+1]={key=cat._defaultName,name=cat._userName or cat.name,icon=cat.icon} end
         end
     end
+    -- Junk is out of the list while the Junk Marker is off: keep its rename.
+    if not self:IndexOf(self.JUNK_KEY) and old and old[self.JUNK_KEY] then state[self.JUNK_KEY]=old[self.JUNK_KEY] end
     p.bagCategoryState,p.bagCategoryOrder,p.bagUserCategories=state,order,#user>0 and user or nil
 end
 
@@ -205,6 +213,8 @@ function CM:ClassifyItem(item)
     local cats=self:GetCategories()
     local assigned=item.itemID and DB().bagItemAssignments and DB().bagItemAssignments[item.itemID]
     if assigned then for i,cat in ipairs(cats) do if cat._defaultName==assigned then return i end end end
+    -- Grey items go to Junk while the Junk Marker is on (quest items never do).
+    if item.quality==0 and not item.isQuest then for i,cat in ipairs(cats) do if cat.isJunk then return i end end end
     if item.isQuest then for i,cat in ipairs(cats) do if HasType(cat,IC_QUEST) then return i end end end
     local class=self:ClassOf(item.itemType,item.itemSubType)
     if class==nil then for i,cat in ipairs(cats) do if cat.isCatchAll then return i end end; return #cats end
@@ -263,7 +273,8 @@ function CM:RenameCategory(index,name)
 end
 function CM:ReorderCategory(from,to)
     local cats=self:GetCategories()
-    if not cats[from] or from==to or cats[from].isEquipSet or to<1 or to>#cats+1 then return end
+    if not cats[from] or from==to or cats[from].isEquipSet or cats[from].isJunk or to<1 or to>#cats+1 then return end
+    if cats[#cats].isJunk and to>#cats then to=#cats end
     local entry=table.remove(cats,from)
     table.insert(cats,from<to and to-1 or to,entry)
     self:SaveState()
@@ -332,7 +343,7 @@ function CM:AddCustomCategory(name,icon)
     local n=0; for _,uc in ipairs(p.bagUserCategories) do n=math.max(n,tonumber(uc.key:match("Custom_(%d+)")) or 0) end
     local key="Custom_"..(n+1)
     local cats=self:GetCategories(); local at=#cats+1
-    for i,c in ipairs(cats) do if c.isCatchAll then at=i; break end end
+    for i,c in ipairs(cats) do if c.isCatchAll or c.isJunk then at=i; break end end
     table.insert(cats,at,{_defaultName=key,_userName=name,name=name,types={},icon=icon or CM.DEFAULT_ICON,isUserCreated=true})
     self:SaveState(); return at
 end
@@ -345,15 +356,46 @@ function CM:RemoveCustomCategory(index)
     if not cat or not cat.isUserCreated then return false end
     local assignments=DB().bagItemAssignments
     for id,key in pairs(assignments or {}) do if key==cat._defaultName then assignments[id]=nil end end
+    local prev=DB().bagJunkPrev
+    for id,key in pairs(prev or {}) do if key==cat._defaultName then prev[id]=nil end end
     table.remove(cats,index)
     local p=ns.GetSettings(); if p and p.bagDisabledCategories then p.bagDisabledCategories[cat._defaultName]=nil end
     self:SaveState(); return true
 end
+-- A Junk mark remembers the category the item was filed in (bagJunkPrev), so
+-- unmarking puts it back there.
+local function SetJunkPrev(itemID,key)
+    local db=DB(); local prev=db.bagJunkPrev
+    if key then if not prev then prev={}; db.bagJunkPrev=prev end; prev[itemID]=key
+    elseif prev then prev[itemID]=nil; if not next(prev) then db.bagJunkPrev=nil end end
+end
 function CM:AssignItem(itemID,key)
     if not itemID then return end
-    local db=DB(); db.bagItemAssignments=db.bagItemAssignments or {}; db.bagItemAssignments[itemID]=key
+    local db=DB(); db.bagItemAssignments=db.bagItemAssignments or {}
+    local current=db.bagItemAssignments[itemID]
+    if key==self.JUNK_KEY then if current~=self.JUNK_KEY then SetJunkPrev(itemID,current) end
+    elseif current==self.JUNK_KEY then SetJunkPrev(itemID,nil) end
+    db.bagItemAssignments[itemID]=key
 end
-function CM:UnassignItem(itemID) local a=DB().bagItemAssignments; if a and itemID then a[itemID]=nil end end
+function CM:UnassignItem(itemID)
+    local a=DB().bagItemAssignments; if not (a and itemID) then return end
+    if a[itemID]==self.JUNK_KEY then
+        local prev=DB().bagJunkPrev; a[itemID]=prev and prev[itemID] or nil; SetJunkPrev(itemID,nil)
+    else a[itemID]=nil end
+end
+-- Junk: marked items, and grey items (unmarked), while the Junk Marker is on.
+function CM:IsJunk(itemID,quality)
+    if not itemID or not self:IsJunkMarkerEnabled() then return false end
+    local a=DB().bagItemAssignments
+    if a and a[itemID]==self.JUNK_KEY then return true end
+    return quality==0
+end
+function CM:ToggleJunk(itemID)
+    if not itemID then return end
+    local a=DB().bagItemAssignments
+    if a and a[itemID]==self.JUNK_KEY then self:UnassignItem(itemID) else self:AssignItem(itemID,self.JUNK_KEY) end
+end
+function CM:RebuildSetLookup() BuildSetLookup(true) end
 function CM:CanAssignToCategory(index)
     local cat=self:GetCategories()[index]
     return cat and not cat.isPinned and not cat.isRecent and not cat.isEquipSet or false

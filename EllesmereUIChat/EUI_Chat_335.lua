@@ -1107,7 +1107,13 @@ bubbleScan:SetScript("OnUpdate",function(self,elapsed)
     scanTick=0; ns.ScanBubbles()
     if GetTime()>scanUntil then self:Hide() end
 end)
-local function SetCVarIfChanged(name,value) if GetCVar(name)~=value then SetCVar(name,value) end end
+local function SetCVarIfChanged(name,value)
+    if GetCVar(name)==value then return end
+    if E.SetCVar then E.SetCVar(name,value,ADDON_NAME) else SetCVar(name,value) end
+end
+function ns.SetChatFontSize(i,size)
+    if E.SetChatWindowSize then E.SetChatWindowSize(i,size) else SetChatWindowSize(i,size) end
+end
 function ns.ApplyBubbles()
     local cfg=ns.GetBubbleSettings(); if not cfg then return end
     if cfg.enabled then
@@ -1184,7 +1190,7 @@ function ns.Apply()
     for _,name in ipairs(CHAT_FRAMES or {}) do frames[name]=true end
     if not sizeSynced and SetChatWindowSize then
         sizeSynced=true
-        for i=1,NUM_CHAT_WINDOWS or 10 do if _G["ChatFrame"..i] then SetChatWindowSize(i,p.chatFontSize) end end
+        for i=1,NUM_CHAT_WINDOWS or 10 do if _G["ChatFrame"..i] then ns.SetChatFontSize(i,p.chatFontSize) end end
     end
     if Skinned() then
         EnsureSidebar()
@@ -1224,7 +1230,7 @@ function ECHAT.ApplyChatFontSize(size)
     local p=ns.GetSettings(); if not p then return end
     if type(size)=="number" and size>0 then
         p.chatFontSize=size
-        if SetChatWindowSize then for i=1,NUM_CHAT_WINDOWS or 10 do if _G["ChatFrame"..i] then SetChatWindowSize(i,size) end end end
+        if SetChatWindowSize then for i=1,NUM_CHAT_WINDOWS or 10 do if _G["ChatFrame"..i] then ns.SetChatFontSize(i,size) end end end
     end
     ns.Apply()
 end

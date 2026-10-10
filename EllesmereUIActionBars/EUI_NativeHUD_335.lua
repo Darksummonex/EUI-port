@@ -168,6 +168,7 @@ local function DataBar(key,f)
         GameTooltip:SetOwner(f,"ANCHOR_TOP"); GameTooltip:AddLine(key=="xp" and "Experience" or f.faction or "Reputation",1,1,1)
         GameTooltip:AddLine(string.format("%d / %d (%.1f%%)",f.current or 0,f.maximum or 1,100*(f.current or 0)/(f.maximum or 1)),.9,.9,.9)
         if key=="xp" and GetXPExhaustion and GetXPExhaustion() then GameTooltip:AddLine("Rested: "..GetXPExhaustion(),.3,.6,1) end
+        if key=="xp" and H.XP then H.XP.Tooltip(f) end
         GameTooltip:Show()
     end)
     f:SetScript("OnLeave",function() GameTooltip:Hide() end)
@@ -175,6 +176,353 @@ local function DataBar(key,f)
         local native=key=="xp" and MainMenuExpBar or ReputationWatchBar
         local handler=native and native:GetScript("OnMouseDown"); if handler then handler(native,button) end
     end)
+end
+-- Experience bar extras (Retail XP Bar tab): fill style, background, rested colour, Quest XP
+-- Overlay, dividers with Smart Ticks and seven text positions. Retail's art styles (Professions
+-- frame, flipbook fill, Forever border) need atlases this client does not have.
+local XP={}
+H.XP=XP
+XP.POSITIONS={"Center","Left","Right","TopLeft","TopRight","BottomLeft","BottomRight"}
+XP.POSITION_LABELS={Center="Center Text",Left="Left Text",Right="Right Text",TopLeft="Top Left Text",
+    TopRight="Top Right Text",BottomLeft="Bottom Left Text",BottomRight="Bottom Right Text"}
+XP.ITEM_VALUES={none="None",classic="XP and Rested %",pct="Percent",pctProjected="Percent (with Completed)",cur="Current XP",
+    curMax="Current / Max",curMaxRem="Current / Max (Remaining)",restVal="Rested XP",restPct="Rested %",questVal="Completed Quest XP",
+    questPct="Completed Quest %",completedRested="Completed % - Rested %",level="Level",xpPerHour="XP per Hour",
+    levelingIn="Leveling In",timeLevel="Time This Level",timeSession="Time This Session"}
+XP.ITEM_ORDER={"none","classic","pct","pctProjected","cur","curMax","curMaxRem","restVal","restPct","questVal","questPct",
+    "completedRested","level","xpPerHour","levelingIn","timeLevel","timeSession"}
+-- The "[Merfin] Experience Bar (Luxthos)" WeakAura's layout and colours.
+XP.LUXTHOS={xpTextLeft="level",xpTextCenter="curMaxRem",xpTextRight="pctProjected",xpTextBottomLeft="levelingIn",
+    xpTextBottomRight="completedRested",xpTextTopLeft="timeLevel",xpTextTopRight="timeSession",
+    xpFillStyle="HORIZONTAL",xpColor={r=.3,g=.35,b=.97,a=1},xpGradEnd={r=.71,g=.34,b=1,a=1},
+    xpQuestOverlay=true,xpQuestCompleted=false,xpQuestZone=false,xpQuestDoneColor={r=1,g=.59,b=0,a=.6},
+    xpQuestColor={r=1,g=.8,b=0,a=.35},xpShowRested=true,xpRestedColor={r=.31,g=.56,b=1,a=.6},xpRestedAfterQuests=true,xpSpark=true}
+function XP.ApplyLuxthos(p)
+    for k,v in pairs(XP.LUXTHOS) do
+        if type(v)=="table" then p[k]={r=v.r,g=v.g,b=v.b,a=v.a} else p[k]=v end
+    end
+end
+-- Items with nothing to show at max level (the bar there carries the level and times).
+local XP_MAX_HIDDEN={pct=true,pctProjected=true,restVal=true,restPct=true,questVal=true,questPct=true,
+    completedRested=true,xpPerHour=true,levelingIn=true}
+local XP_MAX_TEXT={classic=true,cur=true,curMax=true,curMaxRem=true}
+XP.FILL_VALUES={flat="Flat",HORIZONTAL="Horizontal Gradient",VERTICAL="Vertical Gradient"}
+XP.FILL_ORDER={"flat","HORIZONTAL","VERTICAL"}
+XP.TICK_VALUES={dashed="Dashed",dotted="Dotted",solid="Solid",none="None"}
+XP.TICK_ORDER={"dashed","dotted","solid","none"}
+-- Text point, holder point, x, y, justification. Corners sit outside the bar.
+local XP_PLACE={Center={"CENTER","CENTER",0,0,"CENTER"},Left={"LEFT","LEFT",4,0,"LEFT"},Right={"RIGHT","RIGHT",-4,0,"RIGHT"},
+    TopLeft={"BOTTOMLEFT","TOPLEFT",0,2,"LEFT"},TopRight={"BOTTOMRIGHT","TOPRIGHT",0,2,"RIGHT"},
+    BottomLeft={"TOPLEFT","BOTTOMLEFT",0,-2,"LEFT"},BottomRight={"TOPRIGHT","BOTTOMRIGHT",0,-2,"RIGHT"}}
+local XP_QUEST_ITEMS={questVal=true,questPct=true,pctProjected=true,completedRested=true}
+local XP_CLOCK_ITEMS={xpPerHour=true,levelingIn=true,timeLevel=true,timeSession=true}
+local xpSession={gained=0}
+local xpLevel={}
+local xpQuest={done=0,open=0,all=0,dirty=true,last=-10}
+local function XPColor(c,r,g,b,a)
+    if type(c)~="table" then return r,g,b,a end
+    return c.r or r,c.g or g,c.b or b,c.a or a
+end
+function XP.TextValue(p,pos)
+    local v=p and p["xpText"..pos]
+    if v==nil then v=pos=="Center" and "classic" or "none" end
+    return XP.ITEM_VALUES[v] and v or "none"
+end
+-- In full below 10,000 (6,811), abbreviated from there (17.6K, 1.2M).
+function XP.FmtNum(n)
+    n=math.floor((tonumber(n) or 0)+.5)
+    if n>=1e6 then return string.format("%.1fM",n/1e6) elseif n>=1e4 then return string.format("%.1fK",n/1e3) end
+    local s=tostring(n); local k
+    repeat s,k=s:gsub("^(-?%d+)(%d%d%d)","%1,%2") until k==0
+    return s
+end
+function XP.FmtPct(v)
+    v=tonumber(v) or 0
+    if v==math.floor(v) then return string.format("%d%%",v) end
+    return string.format("%.1f%%",v)
+end
+function XP.FmtDur(sec)
+    sec=math.max(0,math.floor(tonumber(sec) or 0))
+    local d,h,m=math.floor(sec/86400),math.floor(sec%86400/3600),math.floor(sec%3600/60)
+    if d>0 then return string.format("%dd %dh",d,h) elseif h>0 then return string.format("%dh %dm",h,m) end
+    return string.format("%dm",m)
+end
+-- XP per hour counts every gain since the UI loaded; a level-up adds what the old level
+-- still needed plus the XP into the new one. A lower reading on the same level is taken
+-- mid level-up and waits for the settled one.
+-- The session, rate and level time are saved at logout (EllesmereUIDB.xpBarChars[guid]) and
+-- taken back on a load within five minutes (a /reload): the level time always, which spares a
+-- second /played, the session and rate only with Keep Session on Reload. GetTime() counts
+-- on through a reload.
+local XP_RESUME_WINDOW=300
+function XP.Save()
+    local guid=UnitGUID and UnitGUID("player"); if not guid then return end
+    if not EllesmereUIDB then EllesmereUIDB={} end
+    if not EllesmereUIDB.xpBarChars then EllesmereUIDB.xpBarChars={} end
+    local s=xpSession
+    EllesmereUIDB.xpBarChars[guid]={saved=GetTime(),start=s.start,gained=s.gained,cur=s.cur,max=s.max,level=s.level,
+        levelBase=xpLevel.base,levelStamp=xpLevel.stamp,total=xpLevel.total,totalStamp=xpLevel.totalStamp}
+end
+function XP.Resume(p)
+    local store=EllesmereUIDB and EllesmereUIDB.xpBarChars
+    local guid=UnitGUID and UnitGUID("player")
+    local e=store and guid and store[guid]
+    if not e then return end
+    store[guid]=nil
+    local now=GetTime()
+    if not (e.saved and e.saved<=now and now-e.saved<=XP_RESUME_WINDOW) then return end
+    if e.levelBase and e.levelStamp and e.levelStamp<=now then
+        xpLevel.base,xpLevel.stamp,xpLevel.total,xpLevel.totalStamp,xpLevel.asked=e.levelBase,e.levelStamp,e.total,e.totalStamp,true
+    end
+    if p and p.xpKeepSession and e.start and e.start<=now then
+        xpSession.start,xpSession.gained,xpSession.cur,xpSession.max,xpSession.level=e.start,e.gained or 0,e.cur,e.max,e.level
+    end
+end
+function XP.Track(cur,mx,level)
+    local s=xpSession
+    if not s.start then s.start=GetTime() end
+    if s.level then
+        if level>s.level then s.gained=s.gained+math.max(0,s.max-s.cur)+cur
+        elseif level==s.level then
+            if cur<s.cur then return end
+            s.gained=s.gained+cur-s.cur
+        end
+    end
+    s.cur,s.max,s.level=cur,mx,level
+end
+function XP.Rate(now)
+    local s=xpSession; local elapsed=now-(s.start or now)
+    if elapsed<60 or s.gained<=0 then return 0 end
+    return s.gained/elapsed*3600
+end
+function XP.OnPlayed(total,thisLevel)
+    local now=GetTime()
+    if tonumber(thisLevel) then xpLevel.base,xpLevel.stamp=tonumber(thisLevel),now end
+    if tonumber(total) then xpLevel.total,xpLevel.totalStamp=tonumber(total),now end
+end
+function XP.OnLevelUp()
+    xpLevel.base,xpLevel.stamp=0,GetTime(); xpQuest.dirty=true
+end
+function XP.QuestsDirty() xpQuest.dirty=true end
+-- Quest XP from the log. Completed quests feed the texts (every zone); the overlay's
+-- completed and incomplete totals follow Completed Quests Only and Current Zone Only.
+-- The Wrath reward XP reads the selected entry, so the selection is put back after.
+-- Quests under collapsed headers are not listed by the client and are not counted.
+function XP.ScanQuests(p)
+    local all,done,open=0,0,0
+    if GetNumQuestLogEntries and GetQuestLogTitle and SelectQuestLogEntry and GetQuestLogRewardXP then
+        local previous=GetQuestLogSelection and GetQuestLogSelection() or 0
+        local zone=GetRealZoneText and GetRealZoneText(); local header
+        for i=1,GetNumQuestLogEntries() or 0 do
+            local title,_,_,_,isHeader,_,isComplete=GetQuestLogTitle(i)
+            if isHeader then header=title
+            elseif title and isComplete~=-1 then
+                SelectQuestLogEntry(i)
+                local xp=tonumber(GetQuestLogRewardXP()) or 0
+                local inZone=not p.xpQuestZone or header==zone
+                if isComplete==1 then all=all+xp; if inZone then done=done+xp end
+                elseif inZone and not p.xpQuestCompleted then open=open+xp end
+            end
+        end
+        SelectQuestLogEntry(previous)
+    end
+    xpQuest.all,xpQuest.done,xpQuest.open,xpQuest.dirty,xpQuest.last=all,done,open,false,GetTime()
+end
+function XP.QuestXP() return xpQuest.all,xpQuest.done,xpQuest.open end
+local function XPPct(v,mx) return XP.FmtPct(math.floor(v/mx*1000+.5)/10) end
+function XP.ItemText(id,cur,mx,rested,level,now,atMax)
+    local L=E.L or function(s) return s end
+    if atMax then
+        if XP_MAX_HIDDEN[id] then return "" elseif XP_MAX_TEXT[id] then return L("Max Level") end
+        if id=="timeLevel" then
+            return string.format(L("Time played: %s"),xpLevel.total and XP.FmtDur(xpLevel.total+now-xpLevel.totalStamp) or "--")
+        end
+    end
+    if id=="pctProjected" then
+        local t=XPPct(cur,mx)
+        if xpQuest.all>0 then t=t.." ("..XPPct(math.min(mx,cur+xpQuest.all),mx)..")" end
+        return t
+    elseif id=="completedRested" then
+        return string.format(L("Completed: %s - Rested: %s"),"|cFFFF9700"..XPPct(xpQuest.all,mx).."|r","|cFF4F90FF"..XPPct(rested,mx).."|r")
+    elseif id=="classic" then
+        if rested>0 then return string.format("XP: %.1f%%  R: %.1f%%",100*cur/mx,100*rested/mx) end
+        return string.format("XP: %.1f%%",100*cur/mx)
+    elseif id=="pct" then return XP.FmtPct(math.floor(cur/mx*1000+.5)/10)
+    elseif id=="cur" then return XP.FmtNum(cur)
+    elseif id=="curMax" then return XP.FmtNum(cur).." / "..XP.FmtNum(mx)
+    elseif id=="curMaxRem" then return string.format("%s / %s (%s)",XP.FmtNum(cur),XP.FmtNum(mx),string.format(L("Remaining: %s"),XP.FmtNum(mx-cur)))
+    elseif id=="restVal" then return string.format(L("Rested: %s"),XP.FmtNum(rested))
+    elseif id=="restPct" then return string.format(L("Rested: %s"),XP.FmtPct(math.floor(rested/mx*1000+.5)/10))
+    elseif id=="questVal" then return string.format(L("Completed: %s"),XP.FmtNum(xpQuest.all))
+    elseif id=="questPct" then return string.format(L("Completed: %s"),XP.FmtPct(math.floor(xpQuest.all/mx*1000+.5)/10))
+    elseif id=="level" then return string.format("%s %d",LEVEL or "Level",level)
+    elseif id=="xpPerHour" then return string.format(L("%s XP/Hour"),XP.FmtNum(XP.Rate(now)))
+    elseif id=="levelingIn" then
+        local rate=XP.Rate(now)
+        return string.format(L("Leveling in: %s (%s XP/Hour)"),rate>0 and XP.FmtDur((mx-cur)/rate*3600) or "--",XP.FmtNum(rate))
+    elseif id=="timeLevel" then
+        return string.format(L("Time this level: %s"),xpLevel.base and XP.FmtDur(xpLevel.base+now-xpLevel.stamp) or "--")
+    elseif id=="timeSession" then
+        return string.format(L("Time this session: %s"),xpSession.start and XP.FmtDur(now-xpSession.start) or "--")
+    end
+    return ""
+end
+local function XPOverlayBar(f)
+    local b=CreateFrame("StatusBar",nil,f); b:SetPoint("TOPLEFT",f,"TOPLEFT",1,-1); b:SetPoint("BOTTOMRIGHT",f,"BOTTOMRIGHT",-1,1)
+    b:SetStatusBarTexture(dataTexture); b:SetMinMaxValues(0,1); b:SetValue(0); b:Hide(); return b
+end
+-- One tick: a solid line, or a run of dashes/dots across the bar's height.
+local function XPTick(f,index,x,innerH,style)
+    local pool=f.xpTicks[index]
+    if not pool then pool={}; f.xpTicks[index]=pool end
+    local seg,gap=innerH,0
+    if style=="dashed" then seg,gap=2,2 elseif style=="dotted" then seg,gap=1,1 end
+    local count=gap>0 and math.max(1,math.floor((innerH+gap)/(seg+gap))) or 1
+    local start=gap>0 and math.floor((innerH-(count*(seg+gap)-gap))/2) or 0
+    for i=1,math.max(count,#pool) do
+        local t=pool[i]
+        if i<=count then
+            if not t then t=f.xpTickHost:CreateTexture(nil,"OVERLAY"); t:SetTexture(flat); pool[i]=t end
+            t:ClearAllPoints(); t:SetWidth(1); t:SetHeight(seg)
+            t:SetPoint("TOPLEFT",f,"TOPLEFT",x,-(1+start+(i-1)*(seg+gap))); t:SetVertexColor(0,0,0,.6); t:Show()
+        elseif t then t:Hide() end
+    end
+    pool.count,pool.at=count,0
+end
+-- Layout pass (size and style changes): background, overlay bars, ticks, text hosts.
+function XP.Layout(f,p)
+    if not (f and p) then return end
+    local br,bg,bb=XPColor(p.xpBgColor,.06,.06,.06)
+    f:SetBackdropColor(br,bg,bb,Clamp(p.xpBgOpacity or 95,0,100)/100)
+    local base=f.rested:GetFrameLevel()
+    if p.xpQuestOverlay and not f.questOpen then f.questOpen=XPOverlayBar(f); f.questDone=XPOverlayBar(f) end
+    if f.questOpen then
+        f.questOpen:SetFrameLevel(base+1); f.questDone:SetFrameLevel(base+2)
+        if not p.xpQuestOverlay then f.questOpen:Hide(); f.questDone:Hide() end
+    end
+    f.fill:SetFrameLevel(base+3)
+    if not f.xpTextHost then
+        f.xpTextHost=CreateFrame("Frame",nil,f); f.xpTextHost:SetAllPoints(f); f.text:SetParent(f.xpTextHost)
+        f.xpTexts={Center=f.text}
+    end
+    f.xpTextHost:SetFrameLevel(base+5)
+    for _,pos in ipairs(XP.POSITIONS) do
+        local value=XP.TextValue(p,pos); local fs=f.xpTexts[pos]
+        if value~="none" and not fs then fs=f.xpTextHost:CreateFontString(nil,"OVERLAY"); f.xpTexts[pos]=fs end
+        if fs then
+            local place=XP_PLACE[pos]
+            fs:ClearAllPoints(); fs:SetPoint(place[1],f,place[2],place[3],place[4]); fs:SetJustifyH(place[5])
+            if value=="none" then fs:SetText(""); fs:Hide() else fs:Show() end
+            fs._xpLast=nil
+        end
+    end
+    local w,h=f:GetWidth()-2,f:GetHeight()-2
+    if p.xpDividers then
+        if not f.xpTickHost then f.xpTickHost=CreateFrame("Frame",nil,f); f.xpTickHost:SetAllPoints(f); f.xpTicks={}; f.xpTickLabels={} end
+        f.xpTickHost:SetFrameLevel(base+4); f.xpTickHost:Show()
+        local style=XP.TICK_VALUES[p.xpTickStyle] and p.xpTickStyle or "dashed"
+        for k=1,19 do
+            local major=k%2==0
+            local x=1+math.floor(w*k/20+.5)
+            if major or style~="none" then XPTick(f,k,x,h,major and "solid" or style)
+            elseif f.xpTicks[k] then for _,t in ipairs(f.xpTicks[k]) do t:Hide() end; f.xpTicks[k].count=0 end
+            if f.xpTicks[k] then f.xpTicks[k].frac=k/20 end
+            if major then
+                local label=f.xpTickLabels[k]
+                if p.xpDividerText then
+                    if not label then label=f.xpTickHost:CreateFontString(nil,"OVERLAY"); f.xpTickLabels[k]=label end
+                    label:SetFont(E.GetFontPath("actionBars"),math.max(7,Clamp(ns.GetSettings().fontSize,8,20)-3),"OUTLINE")
+                    label:ClearAllPoints(); label:SetPoint("CENTER",f,"LEFT",x,0); label:SetText((k*5).."%"); label:Show()
+                elseif label then label:Hide() end
+            end
+        end
+    elseif f.xpTickHost then f.xpTickHost:Hide() end
+    if p.xpSpark and not f.xpSpark then
+        f.xpSpark=f.xpTextHost:CreateTexture(nil,"ARTWORK")
+        f.xpSpark:SetTexture("Interface\\CastingBar\\UI-CastingBar-Spark"); f.xpSpark:SetBlendMode("ADD")
+    end
+    if f.xpSpark then
+        f.xpSpark:SetWidth(math.max(8,h)); f.xpSpark:SetHeight(h*2.2)
+        if not p.xpSpark then f.xpSpark:Hide() end
+    end
+    f._xpLayout=true
+end
+-- Smart Ticks: marks the fill has passed hide, the ones ahead stay.
+local function XPSmartTicks(f,p,frac)
+    if not (p.xpDividers and f.xpTicks) then return end
+    for k=1,19 do
+        local pool=f.xpTicks[k]
+        if pool and pool.count then
+            local hide=p.xpSmartTicks and frac>=(pool.frac or 1)
+            for i=1,pool.count do if hide then pool[i]:Hide() else pool[i]:Show() end end
+        end
+    end
+end
+local function XPSetText(fs,text)
+    if fs._xpLast~=text then fs._xpLast=text; fs:SetText(text) end
+end
+local function XPPaintFill(f,p)
+    local r,g,b,a=XPColor(p.xpColor,0,.4,1,1)
+    local style=p.xpFillStyle
+    if style=="HORIZONTAL" or style=="VERTICAL" then
+        local er,eg,eb,ea=XPColor(p.xpGradEnd,.3,.75,1,1)
+        f.fill:SetStatusBarColor(1,1,1,1)
+        local tex=f.fill:GetStatusBarTexture()
+        if tex and tex.SetGradientAlpha then tex:SetGradientAlpha(style,r,g,b,a,er,eg,eb,ea) end
+    else f.fill:SetStatusBarColor(r,g,b,a) end
+end
+function XP.Update(f,p,cur,mx,rested,level,atMax)
+    if not f._xpLayout then XP.Layout(f,p) end
+    if not xpSession.resumed then xpSession.resumed=true; XP.Resume(p) end
+    local now=GetTime()
+    XP.Track(cur,mx,level)
+    XPPaintFill(f,p)
+    if atMax then rested=0 end
+    local needQuest,needPlayed=p.xpQuestOverlay and not atMax,false
+    for _,pos in ipairs(XP.POSITIONS) do
+        local v=XP.TextValue(p,pos)
+        if XP_QUEST_ITEMS[v] and not atMax then needQuest=true elseif v=="timeLevel" then needPlayed=true end
+    end
+    if needQuest and xpQuest.dirty and now-xpQuest.last>=1 then XP.ScanQuests(p) end
+    if needPlayed and not xpLevel.asked and RequestTimePlayed then xpLevel.asked=true; RequestTimePlayed() end
+    -- Rested After Quest XP: the rested segment starts where the quest overlay ends.
+    local restFrom=cur
+    if p.xpRestedAfterQuests and p.xpQuestOverlay then restFrom=cur+xpQuest.done+xpQuest.open end
+    if rested>0 and p.xpShowRested~=false then
+        f.rested:SetMinMaxValues(0,mx); f.rested:SetValue(math.min(mx,restFrom+rested)); f.rested:Show()
+    else f.rested:SetMinMaxValues(0,1); f.rested:SetValue(0); f.rested:Hide() end
+    f.rested:SetStatusBarColor(XPColor(p.xpRestedColor,.5,0,.5,.8))
+    if f.questOpen and p.xpQuestOverlay and atMax then f.questDone:Hide(); f.questOpen:Hide()
+    elseif f.questOpen and p.xpQuestOverlay then
+        local dr,dg,db,da=XPColor(p.xpQuestDoneColor,.2,.8,.2,.6)
+        local or_,og,ob,oa=XPColor(p.xpQuestColor,1,.8,0,.6)
+        f.questDone:SetStatusBarColor(dr,dg,db,da); f.questOpen:SetStatusBarColor(or_,og,ob,oa)
+        f.questDone:SetMinMaxValues(0,mx); f.questDone:SetValue(math.min(mx,cur+xpQuest.done))
+        f.questOpen:SetMinMaxValues(0,mx); f.questOpen:SetValue(math.min(mx,cur+xpQuest.done+xpQuest.open))
+        if xpQuest.done>0 then f.questDone:Show() else f.questDone:Hide() end
+        if xpQuest.open>0 then f.questOpen:Show() else f.questOpen:Hide() end
+    end
+    local path,size=E.GetFontPath("actionBars"),Clamp(ns.GetSettings().fontSize,8,20)
+    for _,pos in ipairs(XP.POSITIONS) do
+        local fs=f.xpTexts and f.xpTexts[pos]; local v=XP.TextValue(p,pos)
+        if fs and v~="none" then
+            if pos~="Center" then fs:SetFont(path,size,"OUTLINE") end
+            XPSetText(fs,XP.ItemText(v,cur,mx,rested,level,now,atMax))
+        end
+    end
+    XPSmartTicks(f,p,cur/mx)
+    if f.xpSpark then
+        if p.xpSpark and cur>0 and cur<mx then
+            f.xpSpark:ClearAllPoints(); f.xpSpark:SetPoint("CENTER",f,"LEFT",1+(f:GetWidth()-2)*cur/mx,0); f.xpSpark:Show()
+        else f.xpSpark:Hide() end
+    end
+end
+function XP.Tooltip(f)
+    local mx=f.maximum or 1; local cur=f.current or 0
+    GameTooltip:AddLine(string.format("Remaining: %s",XP.FmtNum(mx-cur)),.9,.9,.9)
+    if xpQuest.all>0 then GameTooltip:AddLine(string.format("Completed quests: %s",XP.FmtNum(xpQuest.all)),.2,.8,.2) end
+    local rate=XP.Rate(GetTime())
+    if rate>0 then GameTooltip:AddLine(string.format("%s XP/Hour",XP.FmtNum(rate)),.9,.9,.9) end
 end
 function H.UpdateData()
     for _,key in ipairs({"xp","reputation"}) do
@@ -186,17 +534,11 @@ function H.UpdateData()
             local current,maximum=0,1; local show=false
             if key=="xp" then
                 current=UnitXP and UnitXP("player") or 0; maximum=math.max(1,UnitXPMax and UnitXPMax("player") or 1)
-                show=UnitLevel("player")<(MAX_PLAYER_LEVEL or 80)
-                local rested=GetXPExhaustion and GetXPExhaustion() or 0
-                if rested>0 then
-                    f.rested:SetMinMaxValues(0,maximum); f.rested:SetValue(math.min(maximum,current+rested)); f.rested:Show()
-                    f.text:SetText(string.format("XP: %.1f%%  R: %.1f%%",100*current/maximum,100*rested/maximum))
-                else
-                    f.rested:SetMinMaxValues(0,1); f.rested:SetValue(0); f.rested:Hide()
-                    f.text:SetText(string.format("XP: %.1f%%",100*current/maximum))
-                end
-                f.fill:SetStatusBarColor(0,.4,1,1)
-                f.rested:SetStatusBarColor(.5,0,.5,.8)
+                local p=Settings(); local level=UnitLevel("player") or 1
+                local atMax=level>=(MAX_PLAYER_LEVEL or 80)
+                show=not atMax or p.xpShowMaxLevel==true
+                if atMax then current=maximum end
+                XP.Update(f,p,current,maximum,GetXPExhaustion and GetXPExhaustion() or 0,level,atMax)
             else
                 local name,standing,minRep,maxRep,value
                 if GetWatchedFactionInfo then name,standing,minRep,maxRep,value=GetWatchedFactionInfo() end
@@ -277,6 +619,7 @@ function H.Apply(forcePosition)
             if d.key=="micro" or d.key=="bags" then LayoutButtons(d.key,f)
             elseif d.key=="xp" or d.key=="reputation" then
                 local p=Settings(); Size(f,Clamp(p[d.key.."Width"] or p.barWidth,120,1000),Clamp(p[d.key.."Height"] or p.barHeight,8,32)); DataBar(d.key,f)
+                if d.key=="xp" then XP.Layout(f,p) end
                 local names=d.key=="xp" and {"MainMenuExpBar","MainMenuBarMaxLevelBar","ExhaustionLevelFillBar","ExhaustionTick"} or {"ReputationWatchBar"}
                 for _,name in ipairs(names) do
                     local native=_G[name]
@@ -317,9 +660,14 @@ function H.Enable()
     if H.events then return end
     local f=CreateFrame("Frame"); H.events=f
     for _,event in ipairs({"PLAYER_ENTERING_WORLD","PLAYER_REGEN_ENABLED","PLAYER_XP_UPDATE","PLAYER_LEVEL_UP",
-        "UPDATE_EXHAUSTION","UPDATE_FACTION","UNIT_AURA","BAG_UPDATE","ADDON_LOADED"}) do f:RegisterEvent(event) end
-    f:SetScript("OnEvent",function(_,event,unit)
+        "UPDATE_EXHAUSTION","UPDATE_FACTION","UNIT_AURA","BAG_UPDATE","ADDON_LOADED",
+        "QUEST_LOG_UPDATE","ZONE_CHANGED_NEW_AREA","TIME_PLAYED_MSG","PLAYER_LOGOUT"}) do f:RegisterEvent(event) end
+    f:SetScript("OnEvent",function(_,event,unit,arg2)
         if event=="UNIT_AURA" and unit~="player" then return end
+        if event=="QUEST_LOG_UPDATE" or event=="ZONE_CHANGED_NEW_AREA" then XP.QuestsDirty(); if event=="QUEST_LOG_UPDATE" then return end end
+        if event=="TIME_PLAYED_MSG" then XP.OnPlayed(unit,arg2); return end
+        if event=="PLAYER_LOGOUT" then XP.Save(); return end
+        if event=="PLAYER_LEVEL_UP" then XP.OnLevelUp() end
         if event=="PLAYER_XP_UPDATE" or event=="UPDATE_EXHAUSTION" or event=="UPDATE_FACTION" then H.UpdateData()
         elseif event=="UNIT_AURA" then H.UpdateAuras()
         else H.dirty=true end

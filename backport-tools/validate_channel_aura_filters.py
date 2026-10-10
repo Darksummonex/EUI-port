@@ -183,6 +183,7 @@ Find('Select Frame').setValue('target'); assert(UF.selectedWrathAuraUnit=='targe
 Find('Tracked Spell IDs',1).setValue('172'); assert(settings.target.debuffInclude[172] and settings.player.debuffInclude==nil and ufReloaded)
 Find('Select Frame').setValue('boss1'); Find('Debuff Filter').setValue('own')
 assert(settings.boss1.debuffFilterMode=='own' and settings.target.debuffFilterMode==nil)
+assert(Find('Hide Sated / Exhaustion').getValue()==true); Find('Hide Sated / Exhaustion').setValue(false); assert(settings.boss1.debuffHideExhaustion==false)
 -- All UF frames can be disabled before the aura-container getter is exported.
 UF.UF_GetSettings=nil; UF.db={profile={boss={}}}
 Find('Tracked Spell IDs',1).setValue('172'); assert(UF.db.profile.boss.debuffInclude[172])

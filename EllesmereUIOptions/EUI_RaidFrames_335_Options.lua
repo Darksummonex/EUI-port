@@ -121,7 +121,7 @@ init:SetScript("OnEvent",function(self)
                 getValue=function() return S("raidDebuffOffsetY") or 0 end,setValue=function(v) Set("raidDebuffOffsetY",v) end})
     end
     E:RegisterModule("EllesmereUIRaidFrames",{title="Raid Frames",description="Wrath raid and party frames with native unit clicks, auras, range and click casting.",pages={"Raid","Party","Buffs","Debuffs","Extras","Aura Filters","Click Casting"},
-        searchTerms="raid party group 10 25 40 players layout hide healer health mana power class name range threat aggro dispel buffs debuffs filter click casting healing ready leader marker preview mode overlay real horizontal frames heal prediction healcomm resurrection combat main tank pets boss valithria healer mana role icon border hover gradient sated dispels dispel overlay opacity frame border type icon dispel colors only show dispellable absorb absorbs shield shields overshield targeted spells targeted spell enemy cast casting incoming",
+        searchTerms="raid party group 10 25 40 players layout hide healer health mana power class name range threat aggro dispel buffs debuffs filter click casting healing ready leader marker preview mode overlay real horizontal frames heal prediction healcomm resurrection combat main tank pets boss valithria healer mana role icon border hover gradient sated dispels dispel overlay opacity frame border type icon dispel colors only show dispellable absorb absorbs shield shields overshield targeted spells targeted spell enemy cast casting incoming name outline font shadow thick",
         buildPage=function(page,parent,y)
             if page=="Aura Filters" then return E.BuildWrathAuraFilters("EllesmereUIRaidFrames",parent,y) end
             local W=E.Widgets; local kind=page=="Party" and "party" or "raid"
@@ -199,7 +199,7 @@ init:SetScript("OnEvent",function(self)
                 Row(selfPos,Toggle(kind,"reverseUnits","Reverse Member Order"))
             else
                 local size=tonumber(ns.selectedRaidLayout or ns.activeRaidLayout or "40")
-                Row(Slider(kind,"maxGroups","Group Limit",1,size/5),DD(kind,"orientation","Group Layout",{horizontal="Groups Across",vertical="Groups Down"},{"horizontal","vertical"}))
+                Row(Slider(kind,"maxGroups","Group Limit",1,size/5),DD(kind,"orientation","Group Layout",{horizontal="Groups Across",vertical="Groups Down",grid="Down and then Right"},{"horizontal","vertical","grid"}))
                 Section("VISIBLE GROUPS")
                 local function Group(group)
                     return {type="toggle",text="Show Group "..group,tooltip="Saved for this raid layout. Hidden groups leave no empty space.",
@@ -269,6 +269,11 @@ init:SetScript("OnEvent",function(self)
             Row(Slider(kind,"nameSize","Name Size",8,24),Slider(kind,"healthTextSize","Health Text Size",8,24))
             Row(DD(kind,"namePosition","Name Position",P,PO),DD(kind,"nameColorMode","Name Color",textModes,textOrder))
             Row(Color(kind,"nameCustomColor","Name Custom Color"),Slider(kind,"nameMaxLength","Name Max Length",0,20))
+            if E.TEXT_OUTLINE_VALUES then
+                local outline=DD(kind,"nameOutline","Name Outline",E.TEXT_OUTLINE_VALUES,E.TEXT_OUTLINE_ORDER)
+                outline.tooltip="Module Default follows the Raid Frames font outline from the Fonts page."
+                Row(outline,Label(""))
+            end
             Row(Slider(kind,"nameOffsetX","Name X Offset",-50,50),Slider(kind,"nameOffsetY","Name Y Offset",-50,50))
             Row(DD(kind,"healthDisplay","Health Text",{none="None",percent="Percent",current="Current",missing="Missing",both="Current / Maximum"},{"none","percent","current","missing","both"}),DD(kind,"healthTextPosition","Health Text Position",P,PO))
             Row(DD(kind,"healthTextColorMode","Health Text Color",textModes,textOrder),Color(kind,"healthTextCustomColor","Health Text Custom Color"))

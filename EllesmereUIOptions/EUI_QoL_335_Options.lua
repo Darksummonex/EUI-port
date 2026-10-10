@@ -40,7 +40,7 @@ init:SetScript("OnEvent",function(self)
     if ns.RegisterElementSettings then ns.RegisterElementSettings() end
     local unlock=function() if E.ToggleUnlockMode then E:ToggleUnlockMode() end end
     E:RegisterModule("EllesmereUIQoL",{title="Quality of Life",description="Native Wrath conveniences, displays, cursor, window dragging and raid tools.",pages={"QoL","Displays","Cursor","Shifter","Raid Tools","Logging"},
-        searchTerms="qol repair junk sell loot mail open all attach recipient alts merchant vendor wheel pages delete cinematic train screenshot containers reset role check map coordinates right click rested transform flyout item level fps latency stats crit haste hit coordinates crosshair durability death combat alert sound distance zone text rebirth bloodlust sated movement cursor shifter raid ready markers pull disband interrupt announce invite accept guild friends dbm bigwigs logging",
+        searchTerms="qol repair junk sell loot gossip dialog npc mail open all attach recipient alts merchant vendor wheel pages delete cinematic train screenshot containers reset role check map coordinates right click rested transform flyout item level fps latency stats crit haste hit coordinates crosshair durability death combat alert sound distance zone text rebirth bloodlust sated movement cursor shifter raid ready markers pull disband interrupt announce invite accept guild friends dbm bigwigs logging self combat text scrolling damage taken healing received",
         buildPage=function(page,parent,y)
             local W=E.Widgets
             local function Row(a,b) local row,h=W:DualRow(parent,y,a,b or Label("")); y=y-h; return row end
@@ -69,7 +69,21 @@ init:SetScript("OnEvent",function(self)
                 Row(Toggle(nil,"autoOpen","Auto Open Containers"),Label("Containers wait for vendors, mail, bank and trade"))
                 local wheel=Toggle(nil,"merchantWheel","Merchant: Mouse Wheel Pages")
                 wheel.tooltip="Scroll the mouse wheel over a vendor window to turn its item pages."
-                Row(wheel,Label(""))
+                local gossip=Toggle(nil,"autoGossip","Auto Select Single Gossip")
+                gossip.tooltip="Picks an NPC's only dialog option for you."
+                local gossipRow=Row(wheel,gossip)
+                if gossipRow and gossipRow._rightRegion and E.BuildInlineCog and not E._prebuilding then
+                    local function GossipToggle(key,label,default)
+                        return {type="toggle",label=label,
+                            get=function() local p=Store(); if not p then return default end; if default then return p[key]~=false end; return p[key] or false end,
+                            set=function(v) local p=Store(); if p then p[key]=v end end}
+                    end
+                    E.BuildInlineCog(gossipRow._rightRegion,{title="Auto Gossip Settings",
+                        disabled=function() local p=Store(); return not (p and p.autoGossip) end,disabledTooltip="Auto Select Single Gossip",
+                        rows={GossipToggle("autoGossipShiftSkip","Hold Shift to Skip",true),
+                            GossipToggle("autoGossipDisableInstance","Disable in Instances",true),
+                            GossipToggle("autoGossipIgnoreTrivial","Ignore Low Level Quests",false)}})
+                end
                 Section("MAIL")
                 Row(Toggle(nil,"mailOpenAll","Mailbox: Open All Button"),Toggle(nil,"mailBulkAttach","Shift-Click: Attach Same Category"))
                 Row(Label("Open All skips COD and GM mail"),Label("Ore, herbs, cloth... BoE gear by quality"))
@@ -121,6 +135,26 @@ init:SetScript("OnEvent",function(self)
                 zoneOutline.getValue=function() local p=Store(); return p and p.zoneTextOutline or "module" end
                 zoneOutline.tooltip="Outline for the zone, sub-zone and PvP status text shown when entering an area."
                 Row(zone,zoneOutline)
+                Section("SELF COMBAT TEXT")
+                local sct=Toggle("selfCombatText","enabled","Self Combat Text")
+                sct.tooltip="Shows your damage taken, healing, avoids and combat enter/leave above the player frame instead of Blizzard's combat text, whose other messages are hidden while this is on. Move it in Unlock Mode."
+                Row(sct,Slider("selfCombatText","size","Combat Text Size",10,48))
+                local function Decimal(key,label,min,max,step)
+                    local row=Field("selfCombatText",key,label,"slider",min,max); row.step=step; return row
+                end
+                Row(Dropdown("selfCombatText","anim","Animation",{straight="Straight",fountain="Fountain",static="Static"},{"straight","fountain","static"}),
+                    Dropdown("selfCombatText","direction","Direction",{up="Up",down="Down"},{"up","down"}))
+                Row(Slider("selfCombatText","rise","Scroll Distance",20,300),Decimal("duration","Duration (seconds)",.5,5,.1))
+                local stagger=Toggle("selfCombatText","stagger","Stagger Hits")
+                stagger.tooltip="Pushes older messages along so a new one never overlaps them."
+                Row(stagger,Decimal("critScale","Crit Size Multiplier",1,3,.1))
+                Row(Dropdown("selfCombatText","font","Font",{__combat="Combat Text Font",__global="EllesmereUI Font"},{"__combat","__global"}),
+                    Dropdown("selfCombatText","outline","Outline",{NONE="None",OUTLINE="Outline",THICKOUTLINE="Thick Outline"},{"NONE","OUTLINE","THICKOUTLINE"}))
+                Row(Toggle("selfCombatText","shadow","Text Shadow"),Toggle("selfCombatText","abbreviate","Abbreviate Numbers"))
+                Row(Toggle("selfCombatText","damage","Damage Taken"),Color("selfCombatText","damageColor","Damage Color"))
+                Row(Toggle("selfCombatText","heal","Healing Received"),Color("selfCombatText","healColor","Healing Color"))
+                Row(Toggle("selfCombatText","avoid","Misses, Dodges and Parries"),Color("selfCombatText","avoidColor","Avoid Color"))
+                Row(Toggle("selfCombatText","combat","Entering / Leaving Combat"),Color("selfCombatText","combatColor","Combat Color"))
                 Section("ALERTS")
                 Row(Toggle(nil,"durability","Low Durability Warning"),Slider(nil,"durabilityThreshold","Durability Threshold %",5,90))
                 Row(Color(nil,"durabilityColor","Durability Text Color"),Label("Hidden during combat"))

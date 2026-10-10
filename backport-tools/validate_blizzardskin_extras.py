@@ -113,6 +113,7 @@ scanLines['item:1:0:3520:0:0:0:0:0']={{'Helm'}}
 scanLines['item:1:3817:0:0:0:0:0:0']={{'Helm'},{enchantText,0,1,0}}
 scanLines['item:1:0:0:0:0:0:0:0']={{'Helm'}}
 scanLines['player1']={{'Helm'},{'Red Socket'}}
+scanLines['target1']={{'Helm'},{'Red Socket'}}
 local baseLink=GetInventoryItemLink
 function GetInventoryItemLink(unit,id)
     if id==1 and unit=='player' then return headLink end
@@ -228,6 +229,18 @@ Hover('player',{'Me'}); assert(Find('Item Level:') and Find('GearScore:'),'own i
 tipUnit='mouseover'; GameTooltipStatusBar:RunScript('OnValueChanged',50); assert(GameTooltipStatusBar.barColor[1]==.77,'class health bar')
 assert(GameTooltipStatusBar:GetAlpha()==0); BS.SetValue('tooltipHideHealthStrip',false); assert(GameTooltipStatusBar:GetAlpha()==1)
 BS.SetValue('tooltipHideHealthStrip',true)
+-- Player buffs as icons beside the tooltip (off by default).
+Hover('mouseover',arthas); assert(not (BS.Tooltips.buffBox and BS.Tooltips.buffBox:IsShown()),'buffs shown while off')
+BS.SetValue('tooltipShowBuffs',true); Hover('mouseover',arthas)
+local box=BS.Tooltips.buffBox
+assert(box and box:IsShown() and box.icons[1]:IsShown() and not box.icons[2]:IsShown(),'one buff icon')
+assert(box.point[1]=='TOPLEFT' and box.point[2]==GameTooltip and box.point[3]=='BOTTOMLEFT' and box.point[5]==-2,'bottom position')
+assert(box.icons[1]:GetWidth()==20,'default size')
+BS.SetValue('tooltipBuffPosition','left'); BS.SetValue('tooltipBuffSize',30); BS.SetValue('tooltipBuffOffsetY',5); Hover('mouseover',arthas)
+assert(box.point[1]=='TOPRIGHT' and box.point[3]=='TOPLEFT' and box.point[4]==-2 and box.point[5]==5 and box.icons[1]:GetWidth()==30,'left position, size and offset')
+GameTooltip:RunScript('OnTooltipCleared'); assert(not box:IsShown(),'cleared with the tooltip')
+Hover('player',{'Me'}); assert(not box:IsShown(),'no auras: hidden')
+BS.SetValue('tooltipShowBuffs',false); BS.SetValue('tooltipBuffPosition','bottom'); BS.SetValue('tooltipBuffSize',20); BS.SetValue('tooltipBuffOffsetY',0)
 -- Visibility modes keep the tooltip shown inside a hidden host.
 BS.SetValue('tooltipShowMode','outOfCombat'); assert(GameTooltip:GetParent()==UIParent)
 fighting=true; BS.Tooltips.events:RunScript('OnEvent','PLAYER_REGEN_DISABLED')
@@ -346,10 +359,20 @@ BS.Inspect.events:RunScript('OnEvent','ADDON_LOADED','Blizzard_InspectUI')
 InspectFrame:Show(); BS.Inspect.events:RunScript('OnUpdate')
 local I=BS.Inspect
 assert(tostring(I.labels.Head.level:GetText())=='201' and I.labels.Head.level:IsShown(),'inspect item level')
-assert(not I.labels.Shirt.level:IsShown() and I.labels.Head.enchant:GetText()==enchantText and not I.labels.Neck.enchant:IsShown())
+local hh=I.labels.Head.hover
+assert(not I.labels.Shirt.level:IsShown() and not I.labels.Head.enchant:IsShown() and hh:IsShown() and hh.icon:IsShown() and hh.tip==enchantText and not I.labels.Neck.hover:IsShown(),'inspect enchant icon')
+-- Missing enhancements: the target's head has an empty red socket, badged after the enchant icon.
+local hf=I.labels.Head.flags
+assert(hf and hf[1]:IsShown() and hf[1].tip=='Empty socket' and not hf[2]:IsShown() and hf[1].point[4]==20 and hh.point[4]==4,'inspect missing socket')
+BS.SetValue('inspectEnchantNames',true)
+assert(I.labels.Head.enchant:GetText()==enchantText and I.labels.Head.enchant:IsShown() and hh:IsShown() and not hh.icon:IsShown() and not I.labels.Neck.enchant:IsShown(),'inspect enchant names')
+assert(hf[1]:IsShown() and hf[1].point[4]==4,'badge leads the row in name mode')
+BS.SetValue('inspectEnchantNames',false)
+BS.SetValue('inspectMissingEnhancements',false); assert(not hf[1]:IsShown() and hh:IsShown(),'missing badges off')
+BS.SetValue('inspectMissingEnhancements',true)
 assert(I.average:GetText():find('209.8',1,true),'inspect average')
 UpdateUIPanelPositions(); assert(InspectFrame.point[2]==CharacterFrame and InspectFrame.point[4]==-19,'inspect dock')
-BS.SetValue('inspectShowEnchants',false); assert(not I.labels.Head.enchant:IsShown() and I.labels.Head.level:IsShown())
+BS.SetValue('inspectShowEnchants',false); assert(not I.labels.Head.enchant:IsShown() and not hh:IsShown() and I.labels.Head.level:IsShown())
 BS.SetValue('inspectShowItemLevel',false); assert(not I.labels.Head.level:IsShown() and not I.average:IsShown())
 BS.SetValue('inspectShowItemLevel',true); BS.SetValue('inspectShowEnchants',true)
 
@@ -417,7 +440,7 @@ for _,page in ipairs(testModule.pages) do
 end
 for _,text in ipairs({'Enchants on Equipment Slots','Show Enchant Names Instead of Icons','Enchant Name Size','Socketed Gem Icons',
     'Show Durability','Durability Location','Durability Label','Socket Panel & One-Click Gems','Reset Stat Colors & Order',
-    'Inspect Item Levels','Inspect Enchants','Dock Inspect Beside Character','Show Merchant as List','List Row Height','Merchant Item Levels',
+    'Inspect Item Levels','Inspect Enchants','Show Inspect Enchant Names Instead of Icons','Inspect Enchant Name Size','Inspect Missing Enchant, Gem & Buckle Icons','Dock Inspect Beside Character','Show Merchant as List','List Row Height','Merchant Item Levels',
     'Show Player Titles','Inspect Item Level','Show GearScore','Guild Rank','Show Target','Show Mount & Collected Status','Hide Health Bar',
     'Anchor to Cursor','Cursor Position','Cursor Offset X','Cursor Offset Y','Growth Direction','Show Tooltips','Peek Modifier',
     'Manage Enhanced Tooltips','Enhanced Tooltips','Resurrect Accept Glow','Dungeon Ready Countdown','Countdown Bar Height',
@@ -433,6 +456,21 @@ local db=BS.GetSettings(); db.statSectionsOrder={'Ranged'}; db.statCategoryColor
 seen['Reset Stat Colors & Order'].onClick(); assert(db.statSectionsOrder==nil and db.statCategoryColors==nil)
 db.statSectionsOrder={'Ranged'}; testModule.onReset(); db=BS.GetSettings()
 assert(db.statSectionsOrder==nil and db.queueTimerTextColor==nil,'reset kept extras')
+-- Stat hover highlight: the equipped slots whose own stats grant the hovered stat.
+assert(BS.StatModsFor('|cffffffffHit Rating:|r')[1]=='ITEM_MOD_HIT_RATING_SHORT' and BS.StatModsFor('Crit Chance:') and BS.StatModsFor('Defense:'))
+assert(BS.StatModsFor('Unknown Stat:')==nil)
+local headLink=GetInventoryItemLink('player',1)
+local baseStats=GetItemStats
+function GetItemStats(link) if headLink and link==headLink then return {ITEM_MOD_HIT_RATING_SHORT=30} end; return {} end
+local row=_G.EUI335CharacterStatsMelee4; row.label:SetText('Hit Rating:')
+row:RunScript('OnEnter'); assert(not next(BS.statGlows),'highlight while off')
+BS.SetValue('highlightStatItems',true); row.label:SetText('Hit Rating:'); row:RunScript('OnEnter')
+assert(headLink and BS.statGlows.Head and BS.statGlows.Head:IsShown(),'head glows for Hit Rating')
+for slot,f in pairs(BS.statGlows) do assert(slot=='Head' or not f:IsShown(),'only slots with the stat glow') end
+row:RunScript('OnLeave'); for _,f in pairs(BS.statGlows) do assert(not f:IsShown(),'glow stops on leave') end
+row.label:SetText('Strength:'); row:RunScript('OnEnter'); for _,f in pairs(BS.statGlows) do assert(not f:IsShown(),'no item has Strength') end
+row:RunScript('OnLeave'); GetItemStats=baseStats; BS.SetValue('highlightStatItems',false)
+assert(seen['Highlight Items on Stat Hover'] and seen['Show Player Buffs'] and seen['Buff Position'] and seen['Buff Icon Size'] and seen['Buffs Per Row'] and seen['Buff X Offset'])
 assert(not next(lifecycleErrors),lifecycleErrors[1])
 assert(not C_Item and not C_Timer and not C_Spell and rotationCalls==0)
 ''')

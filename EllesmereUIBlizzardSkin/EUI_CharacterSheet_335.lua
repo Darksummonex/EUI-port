@@ -18,8 +18,76 @@ local groups={
 ns.statGroups=groups
 for key,value in pairs({showEnchants=true,showGems=true,charSheetEnchantNames=false,charSheetEnchantSize=9,
     showCharSheetDurability=false,charSheetDurabilityLocation="model",charSheetDurabilityShowLabel=true,
-    charSheetSocketPanel=true}) do ns.defaults[key]=value end
+    charSheetSocketPanel=true,highlightStatItems=false}) do ns.defaults[key]=value end
 for _,spec in ipairs(groups) do ns.defaults["showStatCategory_"..spec.key]=true end
+-- Stat hover highlight (Retail highlightSecondaryItems): hovering a stat row
+-- glows the equipped slots whose item stats grant it. Rows are labelled by
+-- Blizzard's UpdatePaperdollStats, so labels map to the ITEM_MOD_* keys
+-- GetItemStats returns through the client's own strings, English as fallback.
+local statMods
+local function StatMods()
+    if statMods then return statMods end
+    statMods={}
+    local function Add(mods,...)
+        for i=1,select("#",...) do local name=select(i,...); if type(name)=="string" and name~="" then statMods[name]=mods end end
+    end
+    Add({"ITEM_MOD_STRENGTH_SHORT"},_G.SPELL_STAT1_NAME,"Strength")
+    Add({"ITEM_MOD_AGILITY_SHORT"},_G.SPELL_STAT2_NAME,"Agility")
+    Add({"ITEM_MOD_STAMINA_SHORT"},_G.SPELL_STAT3_NAME,"Stamina")
+    Add({"ITEM_MOD_INTELLECT_SHORT"},_G.SPELL_STAT4_NAME,"Intellect")
+    Add({"ITEM_MOD_SPIRIT_SHORT"},_G.SPELL_STAT5_NAME,"Spirit")
+    Add({"RESISTANCE0_NAME","ITEM_MOD_EXTRA_ARMOR_SHORT"},_G.ARMOR,"Armor")
+    Add({"ITEM_MOD_HIT_RATING_SHORT","ITEM_MOD_HIT_MELEE_RATING_SHORT","ITEM_MOD_HIT_RANGED_RATING_SHORT","ITEM_MOD_HIT_SPELL_RATING_SHORT"},_G.COMBAT_RATING_NAME6,"Hit Rating")
+    Add({"ITEM_MOD_CRIT_RATING_SHORT","ITEM_MOD_CRIT_MELEE_RATING_SHORT","ITEM_MOD_CRIT_RANGED_RATING_SHORT","ITEM_MOD_CRIT_SPELL_RATING_SHORT"},_G.MELEE_CRIT_CHANCE,_G.SPELL_CRIT_CHANCE,_G.RANGED_CRIT_CHANCE,"Crit Chance")
+    Add({"ITEM_MOD_HASTE_RATING_SHORT","ITEM_MOD_HASTE_SPELL_RATING_SHORT"},_G.SPELL_HASTE,"Haste Rating","Haste")
+    Add({"ITEM_MOD_EXPERTISE_RATING_SHORT"},_G.COMBAT_RATING_NAME24,"Expertise")
+    Add({"ITEM_MOD_DEFENSE_SKILL_RATING_SHORT"},_G.DEFENSE,"Defense")
+    Add({"ITEM_MOD_DODGE_RATING_SHORT"},_G.STAT_DODGE,"Dodge")
+    Add({"ITEM_MOD_PARRY_RATING_SHORT"},_G.STAT_PARRY,"Parry")
+    Add({"ITEM_MOD_BLOCK_RATING_SHORT","ITEM_MOD_BLOCK_VALUE_SHORT"},_G.STAT_BLOCK,"Block")
+    Add({"ITEM_MOD_RESILIENCE_RATING_SHORT"},_G.STAT_RESILIENCE,"Resilience")
+    Add({"ITEM_MOD_ATTACK_POWER_SHORT","ITEM_MOD_RANGED_ATTACK_POWER_SHORT"},_G.ATTACK_POWER_TOOLTIP,"Attack Power","Power")
+    Add({"ITEM_MOD_SPELL_POWER_SHORT"},_G.BONUS_DAMAGE,_G.BONUS_HEALING,"Bonus Damage","Bonus Healing","Spell Power")
+    Add({"ITEM_MOD_MANA_REGENERATION_SHORT","ITEM_MOD_POWER_REGEN0_SHORT","ITEM_MOD_SPIRIT_SHORT"},_G.MANA_REGEN,"Mana Regen")
+    return statMods
+end
+function ns.StatModsFor(label)
+    if type(label)~="string" then return nil end
+    label=label:gsub("|c%x%x%x%x%x%x%x%x",""):gsub("|r",""):gsub("[:%s]+$","")
+    return StatMods()[label]
+end
+local statGlows,statGlowsLit={},false
+ns.statGlows=statGlows
+function ns.StopStatHighlights()
+    if not statGlowsLit then return end
+    statGlowsLit=false
+    for _,f in pairs(statGlows) do
+        if f:IsShown() then if E.Glows and E.Glows.StopGlow then E.Glows.StopGlow(f) end; f:Hide() end
+    end
+end
+function ns.StartStatHighlights(row)
+    ns.StopStatHighlights()
+    if not ns.GetValue("highlightStatItems") or not GetItemStats then return end
+    local mods=ns.StatModsFor(row and row.label and row.label:GetText())
+    if not mods then return end
+    for slot,id in pairs(ids) do
+        local button=_G["Character"..slot.."Slot"]
+        local link=button and button:IsVisible() and GetInventoryItemLink("player",id)
+        local stats=link and GetItemStats(link)
+        local has=false
+        if stats then for _,key in ipairs(mods) do local v=stats[key]; if type(v)=="number" and v>0 then has=true; break end end end
+        if has then
+            local f=statGlows[slot]
+            if not f then f=CreateFrame("Frame",nil,button); f:SetAllPoints(button); statGlows[slot]=f end
+            f:SetFrameLevel(button:GetFrameLevel()+5); f:Show()
+            local w,h=button:GetWidth(),button:GetHeight()
+            if not w or w<1 then w=37 end
+            if not h or h<1 then h=w end
+            if E.Glows and E.Glows.StartGlow then E.Glows.StartGlow(f,6,w,1,1,1,nil,h) end
+            statGlowsLit=true
+        end
+    end
+end
 local backdrop="Interface\\AddOns\\EllesmereUIBlizzardSkin\\Media\\character-bg.tga"
 -- GearScoreLite formula; GearScoreLite itself is preferred when loaded.
 local gsSlotMod={INVTYPE_RELIC=.3164,INVTYPE_TRINKET=.5625,INVTYPE_2HWEAPON=2,INVTYPE_WEAPONMAINHAND=1,
@@ -136,13 +204,15 @@ local function MissingFor(id,link,equip,ctx)
     if needsEnchant and fields[2]==0 then miss[#miss+1]="enchant" end
     local filled=0
     for i=3,6 do if fields[i]~=0 then filled=filled+1 end end
-    local empty=CountEmptySockets("SetInventoryItem","player",id)
+    local empty=CountEmptySockets("SetInventoryItem",ctx.unit or "player",id)
     if empty>0 then miss[#miss+1]="sockets"; miss.sockets=empty end
     if (id==6 or ctx.blacksmith and (id==9 or id==10)) and fields[1]>0 then
         if empty+filled<=CountEmptySockets("SetHyperlink","item:"..fields[1]) then miss[#miss+1]=id==6 and "buckle" or "socket" end
     end
     return miss
 end
+-- Shared with the inspect sheet (ctx.unit; other players' professions are unknown).
+ns.MissingFor=MissingFor
 local function Own(obj) ns.owned[obj]=true; return obj end
 local function Font(fs,size)
     local flags=E.GetFontOutlineFlag and E.GetFontOutlineFlag("blizzardSkin") or ""
@@ -157,6 +227,7 @@ local function Text(parent,size,name)
     fs:SetTextColor(.9,.9,.9,1); return fs
 end
 local flagTips={enchant="Missing enchant",sockets="Empty socket",buckle="Missing belt buckle",socket="Missing Blacksmithing socket"}
+ns.missingArt,ns.missingTips=flagArt,flagTips
 local MAX_BADGES=7
 local function FlagIcons(c,slot)
     local icons=c.flags[slot]; if icons then return icons end
@@ -760,8 +831,8 @@ local function Build(s,c)
             row.label=Text(row,11,name.."Label"); row.label:SetPoint("LEFT",row,"LEFT",0,0); row.label:SetWidth(92); row.label:SetJustifyH("LEFT")
             row.value=Text(row,11,name.."StatText"); row.value:SetPoint("RIGHT",row,"RIGHT",0,0); row.value:SetWidth(100); row.value:SetJustifyH("RIGHT")
             row:EnableMouse(true)
-            row:SetScript("OnEnter",function(self) if PaperDollStatTooltip then PaperDollStatTooltip(self) end end)
-            row:SetScript("OnLeave",function() GameTooltip:Hide() end)
+            row:SetScript("OnEnter",function(self) if PaperDollStatTooltip then PaperDollStatTooltip(self) end; ns.StartStatHighlights(self) end)
+            row:SetScript("OnLeave",function() GameTooltip:Hide(); ns.StopStatHighlights() end)
             section.rows[i]=row
         end
         c.sections[#c.sections+1]=section

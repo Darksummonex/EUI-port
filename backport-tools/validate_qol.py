@@ -117,6 +117,25 @@ TrainerServices={{name='A',rank='1',kind='available',cost=100},{name='B',rank='1
 Q.trainButton:RunScript('OnEnter'); assert(GameTooltip.tooltipText=='Learn 2 skills for 3s',GameTooltip.tooltipText)
 UnitCharacterPoints=function() return 0,0 end; TrainerServices[2].prof=true; Q.trainButton:RunScript('OnEnter'); assert(GameTooltip.tooltipText=='Learn 1 skill for 1s')
 UnitCharacterPoints=nil; p.trainAll=false; Q.Apply(); assert(not Q.trainButton:IsShown())
+-- Auto Select Single Gossip: Wrath gossip API (flat title/level/trivial[/complete] returns).
+local picked={}; local opts={'Teleport me','gossip'}; local avail={}; local active={}
+GetNumGossipOptions=function() return #opts/2 end; GetGossipOptions=function() return unpack(opts) end
+GetGossipText=function() return 'Hello' end; SelectGossipOption=function(i) picked[#picked+1]=i end
+GetNumGossipAvailableQuests=function() return (avail.n or 0)/3 end; GetGossipAvailableQuests=function() return unpack(avail,1,avail.n or 0) end
+GetNumGossipActiveQuests=function() return (active.n or 0)/4 end; GetGossipActiveQuests=function() return unpack(active,1,active.n or 0) end
+e:RunScript('OnEvent','GOSSIP_SHOW'); assert(#picked==0,'Gossip picked while off')
+local wasInside=inside; inside=false
+p.autoGossip=true; e:RunScript('OnEvent','GOSSIP_SHOW'); assert(#picked==1 and picked[1]==1)
+e:RunScript('OnEvent','GOSSIP_SHOW'); assert(#picked==1,'Same gossip picked twice'); e:RunScript('OnEvent','GOSSIP_CLOSED')
+shift=true; e:RunScript('OnEvent','GOSSIP_SHOW'); assert(#picked==1,'Shift must skip'); shift=false
+inside=true; e:RunScript('OnEvent','GOSSIP_SHOW'); assert(#picked==1,'Instances must skip'); inside=false
+opts={'A','gossip','B','vendor'}; e:RunScript('OnEvent','GOSSIP_SHOW'); assert(#picked==1,'Two options picked'); opts={'Teleport me','gossip'}
+avail={'Quest',80,1,n=3}; e:RunScript('OnEvent','GOSSIP_SHOW'); assert(#picked==1,'Available quest ignored')
+p.autoGossipIgnoreTrivial=true; e:RunScript('OnEvent','GOSSIP_SHOW'); assert(#picked==2,'Trivial quests must be ignorable'); e:RunScript('OnEvent','GOSSIP_CLOSED')
+avail={'Quest',80,nil,n=3}; e:RunScript('OnEvent','GOSSIP_SHOW'); assert(#picked==2,'Non-trivial quest ignored'); avail={}
+active={'Done',80,nil,1,n=4}; e:RunScript('OnEvent','GOSSIP_SHOW'); assert(#picked==2,'Completable quest ignored')
+active={'Busy',80,nil,nil,n=4}; e:RunScript('OnEvent','GOSSIP_SHOW'); assert(#picked==3); e:RunScript('OnEvent','GOSSIP_CLOSED')
+active={}; p.autoGossip=false; p.autoGossipIgnoreTrivial=false; inside=wasInside
 StaticPopup1:Hide(); StaticPopup1.editBox.SetFocus=function(self) self.focus=true end; StaticPopup1.which='DELETE_GOOD_ITEM'; StaticPopup1:Show()
 assert(StaticPopup1.editBox.focus and StaticPopup1.editBox:GetText()=='DELETE'); StaticPopup1:Hide(); p.fillDelete=false
 ActionStatus=CreateFrame('Frame','ActionStatus',UIParent); x:RunScript('OnEvent','SCREENSHOT_SUCCEEDED'); assert(ActionStatus:IsShown(),'Screenshot hidden while off')
@@ -412,6 +431,7 @@ for _,el in ipairs(unlockByFolder.EllesmereUIQoL) do
 end
 assert(mapped==12 and map.EUI_TargetDistance.page=='Displays' and map.EUI_FPS.page=='Displays' and map.EUI_ZoneText==nil)
 rows={}; module.buildPage('QoL',UIParent,0); FindRow('Auto Repair').setValue(false); assert(not Q.GetSettings().autoRepair)
+local gossipRow=FindRow('Auto Select Single Gossip'); gossipRow.setValue(true); assert(Q.GetSettings().autoGossip); gossipRow.setValue(false)
 -- Retail layout: Quick Loot | Auto-Fill Delete, then Auto Repair (guild funds in its cog) | Auto Sell Junk.
 assert(rows[3].text=='Quick Loot' and rows[4].text=='Auto-Fill Delete Confirmation' and rows[5].text=='Auto Repair' and rows[6].text=='Auto Sell Junk')
 assert(FindRow('Quick Loot').tooltip:find('Shift',1,true) and not pcall(FindRow,'Use Guild Repair First'))

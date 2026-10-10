@@ -13,7 +13,7 @@ local defaults={profile={enhancedBags=true,enhancedBank=true,bagScale=1,bagItemI
     bagSortToBottom=false,bagHideRandomize=false,bagDefaultBagType="all",bankGroupByCategory=false,bankCategorySidebar=false,
     bankHideTabsInSidebar=false,bankHideEmptyWhenNested=false,bagArmoryGroupBySlot=false,bagCompactArmorySlotGroups=false,
     bagHideOneBagWarning=false,bagHideAddCategory=false,bagMoveNoShift=false,bagStackSplitter=false,enableGoldTracking=true,
-    bagDesaturateJunkItems=false,bagDisplayBindType=false,bagBindTypeFontSize=11,
+    bagDesaturateJunkItems=false,bagShowJunkIcon=true,bagShowJunkCoin=false,bagDisplayBindType=false,bagBindTypeFontSize=11,
     bagIncludeKeyring=true,bagShowSlots=false,bagShowAltCounts=true,positions={},}}
 ns.defaults=defaults
 local views,bankOpen,nativeBank,pending,bankSnapshot={},false,false,false,nil
@@ -214,9 +214,10 @@ function addon:OnEnable()
     for _,event in ipairs({"ADDON_LOADED","PLAYER_ENTERING_WORLD","PLAYER_LOGOUT","PLAYER_REGEN_ENABLED","BAG_UPDATE","BAG_UPDATE_COOLDOWN",
         "ITEM_LOCK_CHANGED","PLAYER_MONEY","BANKFRAME_OPENED","BANKFRAME_CLOSED","PLAYERBANKSLOTS_CHANGED","PLAYERBANKBAGSLOTS_CHANGED",
         "EQUIPMENT_SETS_CHANGED","CURRENCY_DISPLAY_UPDATE","PLAYER_LEVEL_UP","SKILL_LINES_CHANGED","MAIL_SHOW","MAIL_CLOSED","TRADE_SHOW",
-        "TRADE_CLOSED","AUCTION_HOUSE_SHOW","AUCTION_HOUSE_CLOSED","GUILDBANKFRAME_OPENED","GUILDBANKFRAME_CLOSED"}) do events:RegisterEvent(event) end
+        "TRADE_CLOSED","AUCTION_HOUSE_SHOW","AUCTION_HOUSE_CLOSED","GUILDBANKFRAME_OPENED","GUILDBANKFRAME_CLOSED","MERCHANT_SHOW","MERCHANT_CLOSED"}) do events:RegisterEvent(event) end
     events:SetScript("OnEvent",function(_,event)
         if event=="ADDON_LOADED" then ns.InitializeBroker(); return end
+        if event=="MERCHANT_SHOW" then ns.merchantOpen=true elseif event=="MERCHANT_CLOSED" then ns.merchantOpen=false end
         local panel=PANEL_EVENTS[event]
         if panel then ns.panels[panel[1]]=panel[2] end
         if event=="EQUIPMENT_SETS_CHANGED" then ns.CM:OnEquipmentSetsChanged() end

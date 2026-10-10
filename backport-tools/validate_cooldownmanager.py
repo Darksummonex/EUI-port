@@ -9,7 +9,7 @@ sys.path.insert(0,str(root/'.codex-tools'))
 from lupa.lua51 import LuaRuntime
 module=root/'EllesmereUICooldownManager'
 toc=(module/'EllesmereUICooldownManager.toc').read_text(encoding='utf-8-sig')
-assert '## Version: 9.3.4-335-0.7' in toc
+assert '## Version: 9.3.4-335-0.9' in toc
 files=[l.strip() for l in toc.splitlines() if l.strip().endswith('.lua')]
 assert files==['EUI_CooldownManager_335_Catalog.lua','EUI_CooldownManager_335_TrinketData.lua','EUI_CooldownManager_335.lua','EUI_CooldownManager_335_Display.lua',
     'EUI_CooldownManager_335_TrackingBars.lua','EUI_CooldownManager_335_Glows.lua'],files
