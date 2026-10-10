@@ -8,6 +8,14 @@ local FLAT="Interface\\Buttons\\WHITE8X8"
 local SPARK="Interface\\AddOns\\EllesmereUI\\media\\cast_spark.tga"
 local textures={flat=FLAT,blizzard="Interface\\TargetingFrame\\UI-StatusBar"}
 ns.textureValues,ns.textureOrder={flat="Flat",blizzard="Blizzard"},{"flat","blizzard"}
+if E.BuildBarTextureTables then
+    local tex,names,order=E.BuildBarTextureTables(true)
+    for _,k in ipairs(order) do
+        if tex[k] and not textures[k] then
+            textures[k]=tex[k]; ns.textureValues[k]=names[k] or k; ns.textureOrder[#ns.textureOrder+1]=k
+        end
+    end
+end
 if E.AppendSharedMediaTextures then E.AppendSharedMediaTextures(ns.textureValues,ns.textureOrder,nil,textures) end
 ns.TARGET_TEXTURES={none="None",["striped-v2"]="Striped",["striped-wide-v2"]="Striped Wide",["striped-tiny"]="Striped Tiny",
     ["stripes-medium"]="Stripes Medium",["stripes-small-close"]="Stripes Small Close",["stripes-small-spread"]="Stripes Small Spread"}
@@ -499,7 +507,10 @@ local function PaintTarget(s,p,leftExtent,rightExtent)
     else s.arrowL:Hide(); s.arrowR:Hide() end
     local hovered=s.native.highlight and s.native.highlight:IsShown()
     if not s.nameOnly and hovered and p.hoverEffect=="highlight" then s.hover:Show() else s.hover:Hide() end
-    s.root:SetScale(s.isTarget and p.targetScale or 1)
+    -- Retail stores this as a percent (100); a stray Retail value must not blow the plate up.
+    local targetScale=tonumber(p.targetScale) or 1
+    if targetScale>5 then targetScale=targetScale/100 end
+    s.root:SetScale(s.isTarget and math.max(.5,math.min(2,targetScale)) or 1)
     s.root:SetAlpha(p.opacity/100*(UnitExists("target") and not s.isTarget and p.nonTargetAlpha/100 or 1))
 end
 

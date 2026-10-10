@@ -39,7 +39,6 @@ if EUI_CLIENT_BLOCKED then return end -- pre-12.1 client failsafe (EllesmereUI_C
 
 local GLOBAL_KEY     = "_EUIGlobal"
 local PAGE_STYLE     = "Style"
-local SECTION_STYLES = "MODULE STYLES"
 
 local function NS(folder) return EllesmereUI._ModuleNS and EllesmereUI._ModuleNS[folder] end
 
@@ -84,6 +83,8 @@ local function MinimapProfile()
 end
 local function DMProfile()
     local d = _G._EDM_DB
+    -- The Wrath meter keeps its settings on the profile root, not under dm.
+    if _G.EUI_WOW_335 then return d and d.profile end
     return d and d.profile and d.profile.dm
 end
 local function QTProfile()
@@ -226,9 +227,12 @@ Register("unitframes",   "EllesmereUIUnitFrames",      "Unit Frames",
         local uf = NS("EllesmereUIUnitFrames")
         if uf and uf.UF_SeedStock then uf.UF_SeedStock(p, styleKey) end
     end)
+-- The Wrath aura bars have no stock look.
+if not _G.EUI_WOW_335 then
 Register("playerauras",  "EllesmereUIUnitFrames",      "Player Aura Bars",
     "Blizzard's aura borders on the buffs, debuffs and weapon enchants, with every EllesmereUI bar feature.",
     PABProfile, "useBlizzardStyle", "useClassicStyle", "PAB_Style")
+end
 if not (NS("EllesmereUINameplates") and NS("EllesmereUINameplates").IsWrath) then
 Register("nameplates",   "EllesmereUINameplates",      "Nameplates",
     "Blizzard's health and cast bar art, or the classic flat plates, with every EllesmereUI nameplate feature.",
@@ -384,6 +388,23 @@ Register("friends",      "EllesmereUIFriends",         "Friends List",
     FriendsProfile, "useBlizzardStyle", "useClassicStyle", "FR_Style")
 end
 
+-- Wrath: these modules draw only the EllesmereUI look and Classic WoW UI,
+-- so their rows offer just those two and Apply to All skips the rest.
+if _G.EUI_WOW_335 then
+    local EUI_CLASSIC = { "eui", "classic" }
+    for _, key in ipairs({ "cdmicons", "cdmbars", "minimap", "damagemeters" }) do
+        if BY_KEY[key] then BY_KEY[key].styles = EUI_CLASSIC end
+    end
+    BY_KEY.damagemeters.tooltip = "The classic tooltip box around the meter window, with vanilla header buttons and every EllesmereUI meter feature."
+end
+-- True when module `m` can draw look `key` (every look unless m.styles says).
+local function Supports(m, key)
+    local list = m.styles
+    if not list then return true end
+    for i = 1, #list do if list[i] == key then return true end end
+    return false
+end
+
 -------------------------------------------------------------------------------
 --  Per-style slots. Every setting a style's defaults write (the onEnable
 --  seeds above) is kept once per style: switching a module from style A to
@@ -491,6 +512,20 @@ if EllesmereUI.IS_FOREVER then
             return "classicSeeded"
         end }
 end
+-- The Wrath meter seeds each window (bgColor, barTexture, barBgColor tables).
+if _G.EUI_WOW_335 then
+    SLOT_KEYS.damagemeters = { stamps = { "classicSeeded" },
+        keys = function()
+            local k = {}
+            for i = 1, 5 do
+                k[#k + 1] = "windows." .. i .. ".bgColor"
+                k[#k + 1] = "windows." .. i .. ".barTexture"
+                k[#k + 1] = "windows." .. i .. ".barBgColor"
+            end
+            return k
+        end,
+        seededBy = function() return "classicSeeded" end }
+end
 -- WoW Forever's own seeds (the Nameplates Left Text its level box stands in
 -- for, the Unit Frames class resource its combo point arc takes) swap only
 -- across the variant (foreverOnly), in a spec of their own (m.fvSlots) kept
@@ -533,18 +568,19 @@ for key, spec in pairs(SLOT_KEYS) do
     if BY_KEY[key] then BY_KEY[key].slots = spec end
 end
 
--- A missing table on the way reads nil and makes a write a no-op.
+-- A missing table on the way reads nil and makes a write a no-op. A numeric
+-- segment indexes an array (the Wrath meter's windows.1.bgColor).
 local function PathGet(t, path)
     local a, b = path:match("^([^.]+)%.(.+)$")
     if not a then return t[path] end
-    local s = t[a]
+    local s = t[tonumber(a) or a]
     if type(s) ~= "table" then return nil end
     return PathGet(s, b)
 end
 local function PathSet(t, path, v)
     local a, b = path:match("^([^.]+)%.(.+)$")
     if not a then t[path] = v; return end
-    local s = t[a]
+    local s = t[tonumber(a) or a]
     if type(s) == "table" then PathSet(s, b, v) end
 end
 
@@ -705,11 +741,9 @@ local BlizzStyle = {}
 EllesmereUI.BlizzStyle = BlizzStyle
 
 local STYLE_VALUES = { eui = "EllesmereUI Style", blizzard = "Blizzard Style", classic = "Classic WoW UI" }
-local STYLE_ORDER  = { "eui", "blizzard", "classic" }
--- The WoW Forever variant is offered on the Forever client only, second.
+-- The WoW Forever variant is offered on the Forever client only.
 if IS_FOREVER then
     STYLE_VALUES.forever = "WoW Forever"
-    table.insert(STYLE_ORDER, 2, "forever")
 end
 
 -- The style the module currently RENDERS (its session latch, not the profile
@@ -836,7 +870,7 @@ function BlizzStyle.ApplyAll(styleKey)
     local legacy = InferredStockStyle()
     for i = 1, #MODULES do
         local m = MODULES[i]
-        if m.profile() then SwitchModuleStyle(m, styleKey) end
+        if m.profile() and Supports(m, styleKey) then SwitchModuleStyle(m, styleKey) end
     end
     ApplyWholeUIFont(styleKey, legacy)
     ApplyWholeUIWindows(styleKey, legacy)
@@ -962,17 +996,16 @@ function BlizzStyle.Note(parent, y, key)
     PP.Size(btn, 122, 26)
     btn:SetPoint("RIGHT", row, "RIGHT", -20, 0)
     btn:SetFrameLevel(row:GetFrameLevel() + 2)
-    local display = m.display
     EllesmereUI.MakeStyledButton(btn, "Open Style", 11, EllesmereUI.WB_COLOURS, function()
-        EllesmereUI:NavigateToElementSettings(GLOBAL_KEY, PAGE_STYLE, SECTION_STYLES, nil, display)
+        EllesmereUI:NavigateToElementSettings(GLOBAL_KEY, PAGE_STYLE)
     end)
     return y - ROW_H
 end
 
 -- Reload prompt: the flags are written only on confirm, right before the
 -- reload, so cancelling (button, escape or click-outside) changes nothing.
--- `changes` lists { m = module, key = styleKey } pairs: one for a row's
--- dropdown, every differing module for Apply to All (one prompt for the batch).
+-- `changes` lists { m = module, key = styleKey } pairs: the dropdown moves for
+-- Apply Styles, every differing module for Apply to All (one prompt per batch).
 -- `wholeUIStyle` (Apply to All only) also applies the matching global font
 -- and window skins, either of which alone is reason enough to prompt.
 local function PromptStyleChanges(changes, wholeUIStyle)
@@ -1006,17 +1039,13 @@ local function PromptStyleChanges(changes, wholeUIStyle)
         end,
     })
 end
-local function PromptStyleChange(m, styleKey)
-    if m.get() == styleKey then return end
-    PromptStyleChanges({ { m = m, key = styleKey } })
-end
 -- Apply to All's batch for `styleKey`: every loaded module whose flag differs
 -- (disabled modules have no profile to write; matching ones need no reload).
 local function StyleChangesFor(styleKey)
     local changes = {}
     for i = 1, #MODULES do
         local m = MODULES[i]
-        if NS(m.folder) ~= nil and m.get() ~= styleKey then
+        if NS(m.folder) ~= nil and m.get() ~= styleKey and Supports(m, styleKey) then
             changes[#changes + 1] = { m = m, key = styleKey }
         end
     end
@@ -1027,41 +1056,24 @@ end
 --  Page builder (dispatched from the Global Settings module registration)
 -------------------------------------------------------------------------------
 
-local function StyleRowCfg(m)
-    local loaded = NS(m.folder) ~= nil
-    return {
-        type = "dropdown", text = m.display, tooltip = m.tooltip,
-        values = STYLE_VALUES, order = STYLE_ORDER,
-        -- Reload-gated and per-profile: never captured into spec overrides.
-        noCapture = true,
-        getValue = function() return m.get() end,
-        setValue = function(v) PromptStyleChange(m, v) end,
-        disabled = function() return not loaded end,
-        disabledTooltip = function()
-            return EllesmereUI.Lf("Enable %1$s to change its style.", EllesmereUI.L(m.enableName or m.display))
-        end,
-        rawTooltip = true,
-    }
-end
-
 function _G._EUI_BuildStylePage(pageName, parent, yOffset)
-    local W = EllesmereUI.Widgets
     local PP = EllesmereUI.PanelPP
     local y = yOffset
-    local _, h
-
-    parent._showRowDivider = true
 
     -- Header: the first-install picker's look cards (three; four with WoW
     -- Forever on that client; EllesmereUI_StyleCards.lua), each one Apply
     -- to All for its look through the single reload prompt. The card for the
     -- look every loaded module already uses is marked IN USE, and its button
     -- stays live only while that look still has a font or window-skin change
-    -- to apply.
+    -- to apply. Under each card, a checkbox dropdown of the modules that use
+    -- its look, and under those Apply Styles.
     -- Sized host + single TOPLEFT point per the search framework's geometry
     -- contract; the search prebuild only needs the y advance.
     local CARDS_TOP = 140
-    local HERO_H = CARDS_TOP + (EllesmereUI.STYLE_CARD_H or 296) + 4
+    local DD_GAP, DD_H, BTN_GAP, BTN_W, BTN_H = 14, 30, 26, 252, 45
+    local DD_TOP = CARDS_TOP + (EllesmereUI.STYLE_CARD_H or 296) + DD_GAP
+    local BTN_TOP = DD_TOP + DD_H + BTN_GAP
+    local HERO_H = BTN_TOP + BTN_H + 4
     local hasHero = EllesmereUI.BuildStyleCards ~= nil
     if hasHero and not EllesmereUI._prebuilding then
         local FONT = EllesmereUI._font or "Interface\\AddOns\\EllesmereUI\\media\\fonts\\Expressway.ttf"
@@ -1093,6 +1105,9 @@ function _G._EUI_BuildStylePage(pageName, parent, yOffset)
 
         local cards = EllesmereUI.BuildStyleCards(host, -CARDS_TOP, {
             buttonText = "Apply to All",
+            -- The card in use fades to half; its larger badge stays whole.
+            inUseAlpha = 0.5,
+            badgeSize = 13,
             onPick = function(styleKey)
                 PromptStyleChanges(StyleChangesFor(styleKey), styleKey)
             end,
@@ -1107,7 +1122,7 @@ function _G._EUI_BuildStylePage(pageName, parent, yOffset)
                     local differ = 0
                     for i = 1, #MODULES do
                         local m = MODULES[i]
-                        if NS(m.folder) ~= nil and m.get() ~= key then differ = differ + 1 end
+                        if NS(m.folder) ~= nil and m.get() ~= key and Supports(m, key) then differ = differ + 1 end
                     end
                     local inUse = loaded > 0 and differ == 0
                     local pickable = differ > 0 or FontPending(key)
@@ -1121,20 +1136,87 @@ function _G._EUI_BuildStylePage(pageName, parent, yOffset)
             -- Re-run on every page refresh and cached-page restore: a font or
             -- window skin set elsewhere changes what a card has to apply.
             EllesmereUI.RegisterWidgetRefresh(RefreshCards)
+
+            -- Module picks: every module sits in exactly one look's dropdown,
+            -- its saved style until moved, and shows there checked and locked:
+            -- it moves only by being picked under another look (picking it
+            -- under its saved look again undoes a move). Nothing is written
+            -- until Apply Styles, whose reload prompt writes every move at
+            -- once; leaving the page drops the picks. A look the module cannot
+            -- draw on this client leaves it out of that look's list.
+            local pending = {}   -- module key -> picked style, only where it differs
+            local function Loaded(m) return NS(m.folder) ~= nil end
+            local function PickOf(m) return pending[m.key] or m.get() end
+            local function Pick(m, styleKey)
+                pending[m.key] = (styleKey ~= m.get()) and styleKey or nil
+            end
+            local refreshers, applyBtn = {}, nil
+            local function RefreshPicks()
+                -- A profile switch can make a pick match its module again.
+                for k, s in pairs(pending) do
+                    local m = BY_KEY[k]
+                    if not m or s == m.get() then pending[k] = nil end
+                end
+                for i = 1, #refreshers do refreshers[i]() end
+                if applyBtn then
+                    local on = next(pending) ~= nil
+                    applyBtn:SetAlpha(on and 1 or 0.3)
+                    applyBtn:EnableMouse(on)
+                end
+            end
+            for styleKey, handle in pairs(cards) do
+                local items = {}
+                for i = 1, #MODULES do
+                    local m = MODULES[i]
+                    if Supports(m, styleKey) or m.get() == styleKey then
+                        local function Off() return not Loaded(m) end
+                        items[#items + 1] = { key = m.key, label = m.display, excludeFromSummaryFn = Off,
+                            lockedFn = function() return Off() or PickOf(m) == styleKey end,
+                            -- Only a disabled module explains itself; a checked one
+                            -- just reads as fixed here.
+                            lockedTooltip = function()
+                                if not Off() then return nil end
+                                return EllesmereUI.Lf("Enable %1$s to change its style.", EllesmereUI.L(m.enableName or m.display))
+                            end }
+                    end
+                end
+                local dd, ddRefresh = EllesmereUI.BuildVisOptsCBDropdown(
+                    host, handle.card:GetWidth(), host:GetFrameLevel() + 3, items,
+                    function(key) return PickOf(BY_KEY[key]) == styleKey end,
+                    function(key, checked)
+                        if checked then Pick(BY_KEY[key], styleKey) end
+                    end,
+                    RefreshPicks, 10, nil, nil, nil, { dimLocked = true })
+                PP.Point(dd, "TOP", handle.card, "BOTTOM", 0, -DD_GAP)
+                refreshers[#refreshers + 1] = ddRefresh
+            end
+
+            applyBtn = CreateFrame("Button", nil, host)
+            applyBtn:SetFrameLevel(host:GetFrameLevel() + 3)
+            PP.Size(applyBtn, BTN_W, BTN_H)
+            PP.Point(applyBtn, "TOP", host, "TOP", 0, -BTN_TOP)
+            EllesmereUI.MakeStyledButton(applyBtn, "Apply Styles", 16, EllesmereUI.WB_COLOURS, function()
+                local changes = {}
+                for i = 1, #MODULES do
+                    local m = MODULES[i]
+                    local s = pending[m.key]
+                    if s and Loaded(m) and s ~= m.get() then
+                        changes[#changes + 1] = { m = m, key = s }
+                    end
+                end
+                PromptStyleChanges(changes)
+            end)
+            RefreshPicks()
+            EllesmereUI.RegisterWidgetRefresh(RefreshPicks)
+            host:HookScript("OnHide", function()
+                if next(pending) then
+                    wipe(pending)
+                    RefreshPicks()
+                end
+            end)
         end
     end
     y = y - 20 - (hasHero and (HERO_H + 20) or 0)
-
-    _, h = W:SectionHeader(parent, SECTION_STYLES, y);  y = y - h
-
-    local i = 1
-    while i <= #MODULES do
-        local left = StyleRowCfg(MODULES[i])
-        local rightM = MODULES[i + 1]
-        local right = rightM and StyleRowCfg(rightM) or { type = "label", text = "" }
-        _, h = W:DualRow(parent, y, left, right);  y = y - h
-        i = i + 2
-    end
 
     -- Framework contract: return the positive total content height.
     return math.abs(y)

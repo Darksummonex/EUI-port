@@ -1,0 +1,213 @@
+5259	Eine leere Leiste, die du von Grund auf aufbaust.
+5260	Ein heller Funke am Rand der Füllung.
+5261	Ein freundlicher Fokus hat Vorrang vor dem Tank. Der Fokus wird beim Drücken geprüft, auch im Kampf.
+5262	Ein Gruppenmitglied, das als Tank verwendet wird. Leer nutzt den Haupttank des Schlachtzugs, dann die Tankrolle des Dungeonbrowsers. Wird außerhalb des Kampfes aktualisiert.
+5263	Eine Linie bei jeweils 10 % und eine Markierung bei jeweils 5 % über die Leiste.
+5264	Ein Schlachtzugsbedienfeld mit Bereitschaftsabfrage, Pull-Timer und Zielmarkierungen. Im Schlachtzug wird es nur angezeigt, wenn du Anführer oder Assistent bist, da keine seiner Tasten ohne diese Rechte funktioniert; in einer Gruppe wird es immer angezeigt.
+5265	Zahlen abkürzen
+5266	Animation
+5267	Stile anwenden
+5268	Einstellungen für automatischen Dialog
+5269	Einzelne Dialogoption automatisch wählen
+5270	Ausweichfarbe
+5271	Hintergrundfarbe
+5273	Blizz Standard stellt auch die Rufleiste auf die von Blizzard um.
+5274	Beide Spezialisierungen
+5275	Helle Linie am Rand der Wischtextur (benötigt einen Client mit Cooldown:SetDrawEdge; nur native Wischtextur).
+5276	Größe der Stärkungszaubersymbole
+5277	Stärkungszauber X-Versatz
+5278	Stärkungszauber Y-Versatz
+5279	Stärkungszauber pro Reihe
+5280	Klassischer WoW UI Stil
+5281	Fokus per Klick entfernen
+5282	Markierungen entfernen
+5284	Entfernt deinen Fokus, wenn du so auf das Fokusfenster klickst. Funktioniert im Kampf, wo das Rechtsklickmenü den Fokus nicht entfernen kann.
+5285	Schließe zuerst den Bearbeitungsmodus und versuche es dann erneut.
+5286	Kampffarbe
+5287	Kompaktes Band
+5288	Kompaktes Band legt Markierungen, Bereitschaftsabfrage und Pull-Timer in eine Reihe, deren Größe du im Freigabemodus ändern kannst. Die anderen Optionen behalten die Fensterlayouts bei.
+5289	Kompakte Uhr- und FPS-Anzeige.
+5290	EP aus abgeschlossenen Quests erscheinen grün vor der Füllung, EP aus unvollständigen Quests golden danach. Quests unter eingeklappten Überschriften im Questlog werden nicht gezählt.
+5291	Abgeschlossene Quests
+5292	Nur abgeschlossene Quests
+5293	Countdown-Dauer in Sekunden. Kompaktes Band nutzt den ersten mit Strg + Linksklick, den zweiten mit Umschalt + Linksklick, den dritten mit Linksklick, und Rechtsklick stoppt den Timer. Setze einen Timer auf 0, um diese Tastenkombination zu deaktivieren.
+5295	Multiplikator für kritische Größe
+5296	Nur aktuelle Zone
+5297	Schadensfarbe
+5298	Aussehen der Datenleistenseite
+5299	Standard für jedes Symbol dieser Leiste; Symbole können ihn überschreiben. 
+5300	Beim Anzeigen standardmäßig eingeklappt
+5301	Richtung
+5302	In Instanzen deaktivieren
+5303	Symbol für Banntyp
+5304	Müll (Gegenstände grauer Qualität und als Müll markierte Gegenstände) ausgegraut anzeigen.
+5305	Trennertext
+5306	Trennlinien
+5307	Nach unten, dann nach rechts
+5308	Unten links
+5309	Unten rechts
+5310	Dauer (Sekunden)
+5311	EllesmereUI Leistentexturen
+5312	EllesmereUI Schriftart
+5313	Leer = Haupttank des Schlachtzugs, dann Tankrolle
+5314	Leerer Platz
+5315	Leerer Platz hinzugefügt.
+5316	Leerer Platz: hält diese Position auf der Leiste frei.
+5317	Einstellungen der Endkappen
+5318	Endkappen
+5319	Filter für gegnerische Stärkungszauber
+5320	Kampfbeginn / Kampfende
+5321	Angelegte Gegenstände erhalten einen Rahmen in Seltenheitsfarbe.
+5322	Überarbeitete Erfahrungsleiste
+5323	ERFAHRUNGSLEISTENTEXT
+5324	Füllstil
+5325	Erster Timer
+5326	Flach färbt in der EP-Farbe. Die Farbverläufe gehen von der EP-Farbe zur Endfarbe.
+5327	Fokus Aurenrahmen
+5328	Fokus zuerst
+5329	Fontäne
+5330	Leiste über die volle Breite mit den klassischen Infoblöcken.
+5331	Nur Vollfenstermodi. Startet als kleines Symbol, und die Tastenbelegung wechselt zwischen dem Symbol und den vollständigen Fenstern.
+5332	Nur Vollfenstermodi. In welche Richtung sich die Fenster beim Öffnen vom eingeklappten Symbol aus ausdehnen.
+5333	GitHub (3.3.5 Port)
+5334	Aktionsreihe der globalen Einstellungen
+5335	Endfarbe des Farbverlaufs
+5336	GRUPPENTASTEN
+5337	Heilungsfarbe
+5338	Erhaltene Heilung
+5339	Größe des Hilfssymbols
+5340	Außerhalb von Gestalt/Haltung ausblenden
+5341	Außerhalb von Gestalt/Haltung ausblenden (Platz behalten)
+5342	Gesättigt / Erschöpfung ausblenden
+5343	Bis benutzbar ausblenden
+5344	Bis benutzbar ausblenden (Platz behalten)
+5345	Bis benutzbar ausblenden: nur angezeigt, solange benutzbar und nicht in Abklingzeit, etwa Überwältigen oder Siegesrausch nach einem Proc; zu wenig Ressourcen blendet es nicht aus. Außerhalb von Gestalt/Haltung ausblenden: nur in der Gestalt oder Haltung angezeigt, die der Zauber benötigt, auch während der Abklingzeit. Platz behalten lässt die Lücke; die anderen schließen sie.
+5346	Blendet die Sperr-Schwächungszauber von Kampfrausch und Heldentum aus.
+5347	Gegenstände beim Überfahren von Werten hervorheben
+5348	Beim Überfahren eines Werts in der Seitenleiste leuchten die angelegten Gegenstände, die ihn gewähren (Trefferwertung, Kritisch, Tempo, Verteidigung, Stärke...).
+5349	Jäger und Schurken: ein Symbol zum Anklicken (oder unter Tastaturbelegung > EllesmereUI Quality of Life belegbar), das Irreführung oder Schurkenhandel auf deinen Fokus wirkt, sonst auf den Tank, sonst auf ein freundliches Ziel
+5350	Niedrigstufige Quests ignorieren
+5351	In aktives Profil importieren?
+5352	In aktuelles Profil importieren (%1$s)
+5353	In dein aktuelles Profil importieren
+5354	Retail-Profile importieren
+5355	In jeder Gruppe
+5356	Unvollständige Quests
+5357	Größe des Verzauberungsnamens beim Betrachten
+5358	Symbole für fehlende Verzauberung, Edelsteine & Gürtelschnalle beim Betrachten
+5359	Mausrad umkehren
+5360	Gegenstands-ID im Tooltip
+5361	Müllmarkierung
+5362	Optionen der Müllmarkierung
+5363	Nur die Tasten des Mikromenüs.
+5364	Sitzung beim Neuladen behalten
+5365	Hält die Leiste auf Höchststufe voll, mit Stufe und Zeiten. Zeit auf dieser Stufe zeigt die dort insgesamt gespielte Zeit.
+5366	Linke Endkappe
+5367	Linke oder rechte Endkappe
+5368	Luxthos
+5369	Makroalternative: /click EUI335QoLRedirect
+5370	Wachstumsrichtung des Menüs
+5371	IRREFÜHRUNG / SCHURKENHANDEL HELFER
+5372	Irreführung / Schurkenhandel Helfer
+5373	Verfehlen, Ausweichen und Parieren
+5374	Modulstandard folgt der Schriftkontur der Schlachtzugsfenster von der Seite Schriftarten.
+5375	Namenskontur
+5376	Nativ
+5377	Nativ: die dunkle quadratische Wischtextur des Clients. Geformt: eine gezeichnete Wischtextur, die runden Symbolen folgt und die Wischfarbe übernimmt.
+5378	Verschachtelungsabstand
+5379	Verschachtelungsabstand und -größe
+5380	Größe verschachtelter Symbole
+5381	Keine Datenleisten
+5382	Ein Fenster
+5383	Nur bannbare
+5384	Nur Gruppe & Pull
+5385	Nur Markierungen
+5386	Eigene und Schlachtzug Schwächungszauber
+5387	Eigene Tastenbelegung
+5388	Prozent der normalen Größe der Endkappen.
+5389	Wählt die einzige Dialogoption eines NPCs für dich.
+5390	Stärkungszauber des Spielers in Tooltips
+5391	Positive Werte bewegen beide Endkappen von der Leiste weg.
+5392	Primäre Spezialisierung
+5394	Schiebt ältere Meldungen weiter, damit eine neue sie nie überlappt.
+5395	Quest-EP-Überlagerung
+5396	Filter für Schlachtzug Schwächungszauber
+5397	Schlachtzug Schwächungszauber zeigt die üblichen Schlachtzug-Schwächungszauber (Rüstung, erlittener Zauber- und körperlicher Schaden, erlittene kritische Treffer, Angriffskraft, Angriffs- und Zaubertempo, erhaltene Heilung, Richturteile, Mal des Jägers) von allen an.
+5398	Liest die eigenen Werte des Gegenstands; Verzauberungen und Edelsteine werden nicht gezählt.
+5399	Neu laden, um das Zurücksetzen von EUI abzuschließen.
+5400	Neu laden, um die Deinstallation von EUI abzuschließen.
+5401	Datenleiste umbenennen
+5402	Erholt nach Quest-EP
+5403	Erholungsfarbe
+5404	Setzt jedes EUI Addon auf seine Standardwerte zurück.
+5405	Macht die Änderungen von EUI rückgängig und deaktiviert es.
+5406	Rechte Endkappe
+5407	Scrollweite
+5408	Zweiter Timer
+5409	Sekundäre Spezialisierung
+5410	Auswahlfarbe
+5411	Auswahlfarbe: Eigene Farbe
+5412	EIGENER KAMPFTEXT
+5413	Eigener Kampftext
+5414	Müll verkaufen überspringt Gegenstände ohne Händlerpreis, Gegenstände aus Ausrüstungssets und angeheftete Gegenstände.
+5415	Geformt
+5416	Geformte Abklingzeit-Wischtextur
+5417	Tastenbelegung teilen mit
+5418	Umschalt + Klick Weltmarker
+5419	Umschalt + Linksklick auf ein Markierungssymbol benutzt dessen Weltmarker-Gegenstand, dann auf den Boden klicken. Nur Markierungen, deren Gegenstand in deinen Taschen ist, erhalten dies; die übrigen behalten Umschalt + Klick zum Entfernen der Zielmarkierung. Umschalt + Linksklick auf das Entfernen-Symbol drückt die Taste Markierungen zurücksetzen des Servers.
+5420	Zeigt eine kleine Münze in der Ecke von als Müll markierten Gegenständen.
+5422	Auf Höchststufe anzeigen
+5423	Münze bei Müll anzeigen
+5424	In Schlachtzug umwandeln anzeigen
+5426	Trennlinien anzeigen
+5427	Farbe angelegter Gegenstände anzeigen
+5428	Verzauberungsnamen statt Symbolen beim Betrachten anzeigen
+5429	Gegenstandssymbolnamen anzeigen
+5430	Gegenstands-ID im Tooltip anzeigen
+5431	Stärkungszauber des Spielers anzeigen
+5432	Neu einladen anzeigen
+5433	Erholte EP anzeigen
+5434	Zielnamen anzeigen
+5435	Zeigt die Münztaste in der Taschenkopfzeile. Klicke darauf und dann auf Gegenstände, um sie als Müll zu markieren oder die Markierung aufzuheben. Müll kommt in eine eigene Kategorie Müll, und neben der Münze erscheint eine Taste Müll verkaufen, solange ein Händler geöffnet ist.
+5436	Wird auf Höchststufe angezeigt. Berufsboni werden nur in deinem eigenen Charakterfenster geprüft.
+5437	Zeigt die üblichen Schlachtzug-Schwächungszauber von allen an: Rüstung, erlittener Zauber- und körperlicher Schaden, erlittene kritische Treffer, Angriffskraft, Angriffs- und Zaubertempo, erhaltene Heilung, Richturteile und Mal des Jägers.
+5438	Zeigt die Taste In Schlachtzug umwandeln. In einem Schlachtzug mit fünf oder weniger Spielern lautet sie In Gruppe umwandeln: alle werden entfernt und erneut in eine neue Gruppe eingeladen.
+5439	Zeigt die von dir gewirkten Schwächungszauber sowie die üblichen Schlachtzug-Schwächungszauber von allen.
+5440	Zeigt die Taste Auflösen. Sie fragt vor dem Auflösen immer nach, aber durch das Ausblenden ist sie dauerhaft außer Reichweite von Fehlklicks.
+5441	Zeigt die Stärkungszauber des überfahrenen Spielers als Symbole neben dem Tooltip (bis zu 16).
+5442	Zeigt Überlagerung, Typsymbol und Rahmenfarben nur für Schwächungszauber, die du gerade bannen kannst.
+5443	Zeigt die Taste Neu einladen. Sie fragt zuerst nach, entfernt dann alle und lädt sie erneut in dieselbe Gruppenart ein. Die Spieler müssen die neue Einladung annehmen.
+5444	Zeigt erlittenen Schaden, Heilung, Vermeidungen sowie Kampfbeginn/-ende über dem Spielerfenster statt des Blizzard-Kampftexts an, dessen andere Meldungen ausgeblendet sind, solange dies aktiv ist. Im Freigabemodus verschieben.
+5445	Intelligente Markierungen
+5446	Zauber-IDs in der Aufschlüsselung
+5448	Treffer staffeln
+5449	Hervorhebung beim Überfahren von Werten
+5450	Statisch
+5451	Gerade
+5452	Menüs im Aussehen der Stilseite
+5453	Wischfarbe
+5454	Wischstil
+5455	Tankname
+5456	Textschatten
+5457	Die [Merfin] Experience Bar (Luxthos) WeakAura: Farbverlauf von Blau zu Lila, Quest-EP-Überlagerung, Funke, Erholt nach Quest-EP und sieben Texte mit Stufe, Zeiten und Zeit bis zum Stufenaufstieg.
+5458	Der klassische Tooltip-Rahmen um das Meterfenster, mit Vanilla-Kopfzeilentasten und jeder EllesmereUI Meterfunktion.
+5459	Der Abstand zwischen den Symbolen eines verschachtelten Menüs und dem Eintrag, der es öffnet.
+5460	Der Erholt-Abschnitt beginnt dort, wo die Quest-EP-Überlagerung endet, statt bei deinen aktuellen EP.
+5461	Die Talentgruppe, in der dieses Aktionsmenü funktioniert. Außerhalb davon bewirkt die Tastenbelegung nichts, und das Menü ist dort ausgeblendet, wo es verschachtelt ist.
+5462	Dritter Timer
+5463	Diese Option benötigt ein EllesmereUI Fokusfenster.
+5464	Diese Option benötigt den EP-Leistenstil EllesmereUI oder Luxthos
+5465	Zeit dieser Sitzung und EP pro Stunde laufen über ein /reload (ein Laden innerhalb von fünf Minuten) weiter, statt neu zu beginnen.
+5466	Zeitlich begrenzte Stärkungszauber
+5467	Schlachtzugswerkzeuge umschalten
+5468	Schaltet die Schlachtzugswerkzeuge-Felder um, im oder außerhalb des Kampfes.\n\nLinksklick, um eine Tastenbelegung festzulegen.\nRechtsklick, um die Belegung aufzuheben.
+5469	Zwei Fenster
+5470	Deinstallieren & neu laden
+5471	EUI deinstallieren
+5472	Oben links
+5473	Oben rechts
+5474	Nutzt die Tastenbelegung eines anderen Aktionsmenüs, solange dieses Menü nicht geladen ist. Beide Menüs müssen unterschiedlichen Spezialisierungen zugewiesen sein.
+5475	Welche Stärkungszauber gegnerische Namensplaketten zeigen. Feinabstimmung auf der Seite Aurenfilter.
+5476	An welchen Enden der Leiste die Greifen angezeigt werden.
+5477	EP-Leistenstil
+5478	EP-Farbe

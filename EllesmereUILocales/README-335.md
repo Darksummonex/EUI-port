@@ -1,5 +1,19 @@
 # Locales 3.3.5 — 0.1
 
+Sem bump: Patch Notes traduzidas. Os 580 textos de `_WHATSNEW_PATCHES`
+(eyebrow, title, desc, text, module) já passam por `EllesmereUI.L`; os 349 que
+faltavam viraram IDs 5479-5827 (`append_locale_keys.py --patch-notes`, lista de
+`patch_note_strings.py`) e foram traduzidos em todos os idiomas. Nomes de
+produto, APIs, comandos e mensagens de erro citadas ficam em inglês.
+
+Sem bump: 220 textos novos do port (Raid Tools, Reinvite, marcadores de chão,
+Quickdraw 0.4, DataBars/XP, End Caps, CDM, Junk, Item ID etc.) traduzidos em
+todos os idiomas (ptBR 220, deDE 213, frFR 217, ruRU 218, koKR 213, zhCN/zhTW
+212, esES/esMX 220; o resto já existia no catálogo Retail). IDs 5259-5478
+anexados a `ptbr_work/keys.tsv` sem renumerar, por
+`backport-tools/append_locale_keys.py`; `find_new_locale_keys.py` lista chaves
+novas e as antigas que o port não usa mais (38, mantidas no catálogo).
+
 Sem bump: os outros idiomas foram completados com os textos do port que faltavam
 (deDE +1871, frFR +2664, ruRU +3224, koKR +1716, zhCN +1692, zhTW +1713, esES/esMX
 +4775). As adições ficam no fim de cada catálogo Retail, depois da linha

@@ -88,6 +88,22 @@ EllesmereUIDB.spellIDModifier="none"
 t:ClearLines(); t:AddDoubleLine("SpellID","123"); EllesmereUI._wrathTooltipIDs.Add(t,123); assert(t:NumLines()==1)
 t:ClearLines(); t:AddDoubleLine("|cFFCA3C3CID|r 123",""); EllesmereUI._wrathTooltipIDs.Add(t,123); assert(t:NumLines()==1)
 t:ClearLines(); EllesmereUI._wrathTooltipIDs.Add(t,nil); EllesmereUI._wrathTooltipIDs.Add(t,0); assert(t:NumLines()==0)
+-- Items: ItemID and the icon file name ride Spell ID, each with its own opt-out.
+local m=getmetatable(UIParent).__index
+function m:GetItem() return "Rune", self.itemLink end
+function m:SetItem(link) self:ClearLines(); self.itemLink=link; self:Run("OnTooltipSetItem") end
+GetItemIcon=function(id) return id==6948 and "Interface\\\\Icons\\\\INV_Misc_Rune_01" or nil end
+t:SetItem("|cffffffff|Hitem:6948:0:0:0:0:0:0:0:80|h[Hearthstone]|h|r")
+assert(t:NumLines()==2 and t.lines[1][1]=="Item ID" and t.lines[1][2]=="6948" and t.lines[2][1]=="Icon" and t.lines[2][2]=="INV_Misc_Rune_01")
+t:Run("OnTooltipSetItem"); assert(t:NumLines()==2,"no duplicate on a repeated set")
+EllesmereUIDB.showIconID=false; t:SetItem("item:6948"); assert(t:NumLines()==1 and t.lines[1][2]=="6948")
+EllesmereUIDB.showItemID=false; t:SetItem("item:6948"); assert(t:NumLines()==0)
+EllesmereUIDB.showIconID=nil; t:SetItem("item:6948"); assert(t:NumLines()==1 and t.lines[1][1]=="Icon")
+EllesmereUIDB.showItemID=nil; t:ClearLines(); t:AddDoubleLine("ItemID","6948"); EllesmereUI._wrathTooltipIDs.AddItem(t,"item:6948"); assert(t:NumLines()==2 and t.lines[2][1]=="Icon","another addon's ItemID line is kept")
+t:SetItem("item:12345"); assert(t:NumLines()==1 and t.lines[1][2]=="12345","uncached icon is skipped")
+t:SetItem(nil); assert(t:NumLines()==0)
+EllesmereUIDB.spellIDModifier="shift"; shift=false; t:SetItem("item:6948"); assert(t:NumLines()==0); shift=true; EllesmereUIDB.spellIDModifier="none"
+EllesmereUIDB.showSpellID=false; t:SetItem("item:6948"); assert(t:NumLines()==0)
 EllesmereUIDB.showSpellID=false; t:SetUnitBuff("player",1); assert(t:NumLines()==0)
 ''')
 lua.execute(source)  # idempotent file/event initialization
@@ -101,4 +117,4 @@ end
 assert(#GameTooltip.hooks.OnTooltipSetSpell==1)
 GameTooltip:SetSpellByID(321); assert(GameTooltip:NumLines()==1)
 ''')
-print('PASS: spell/action/macro/aura/chat-link tooltip IDs; default/toggle/modifiers, refresh/dedup, other-addon coexistence, invalid IDs and idempotent registration')
+print('PASS: spell/action/macro/aura/chat-link tooltip IDs; item ID and icon name with opt-outs; default/toggle/modifiers, refresh/dedup, other-addon coexistence, invalid IDs and idempotent registration')

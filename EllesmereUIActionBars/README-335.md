@@ -1,4 +1,33 @@
-# Action Bars 3.3.5 — 0.21
+# Action Bars 3.3.5 — 0.22
+
+0.22 (XP Bar Style): como no Retail 9.4, a seção EXPERIENCE BAR começa com o
+dropdown XP Bar Style no lugar do toggle Enable Experience Bar: EllesmereUI (barra
+do EUI), Luxthos (a barra do EUI com o layout da WeakAura Luxthos) ou Blizz Default
+(barras da Blizzard). Como no Retail, Blizz Default é uma
+chave só para XP e reputação (grava `nativeHUD.xp` e `nativeHUD.reputation`); passar
+o mouse em Blizz Default ou Luxthos no menu explica cada um. Luxthos substitui o
+botão Apply Luxthos Layout: aplica `XP.LUXTHOS` e o menu mostra Luxthos enquanto as
+chaves batem (`XP.IsLuxthos`); mudar uma delas volta a mostrar EllesmereUI, e escolher
+EllesmereUI vindo de Luxthos devolve essas chaves aos padrões (`XP.ApplyEllesmere`).
+As opções da barra ficam cinza com
+"This option requires XP Bar Style EllesmereUI or Luxthos". O atalho do Unlock Mode e o link
+da página Textures destacam a nova linha. Não portado: os estilos Professions e
+Forever (atlas do Retail que o 3.3.5 não tem). Enable Reputation Bar continua
+separado.
+
+0.22: End Caps do Retail 9.4 (Bar Display, fim da seção LAYOUT). Checklist Left
+Endcap / Right Endcap por barra (`endCapLeft`/`endCapRight`, desligado por padrão),
+cog com Size (50-200%), X Offset e Y Offset (padrão 5), e link Apply to All.
+Novo `EUI_ActionBars_335_EndCaps.lua` (carregado depois do arquivo principal, só
+`ns.*`): pinta os grifos vanilla (`UI-MainMenuBar-EndCap-Dwarf`, o direito
+espelhado) com a geometria Classic do Retail (unit 36, 128x128, nível +17 sobre a
+barra; âncoras "near" numa linha e "far" com várias), escala só para baixo com o
+tamanho do ícone. O host é filho da barra, então some e esmaece junto. Só barras
+horizontais; numa vertical a linha fica cinza. O preview do cabeçalho mostra os
+grifos e abre espaço para eles. Não portado: as artes Modern e WoW Forever (atlas
+do Retail que o 3.3.5 não tem, por isso não há dropdown de arte), os grifos do Micro
+Menu e da Bag Bar, e o "span" do primeiro install que passa os grifos da barra 1
+para a barra vizinha.
 
 0.21: barra de experiência do Retail (Menu, Bags & XP Bars). Fill Style (plano ou
 gradiente horizontal/vertical) com cor do XP e cor final, fundo com cor e opacidade,

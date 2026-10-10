@@ -913,6 +913,7 @@ local defaults = {
             smoothBars = false,
         },
         focus = {
+            clearFocusClick = "shift2",
             frameWidth = 160,
             healthHeight = 34,
             powerHeight = 6,
@@ -6430,6 +6431,22 @@ ns.UF_LEADER_ART = {
     pixels   = { leader = "Interface\\AddOns\\EllesmereUI\\media\\icons\\roles\\pixels-leader.tga",
                  assist = "Interface\\AddOns\\EllesmereUI\\media\\icons\\roles\\pixels-assist.tga" },
 }
+-- Stock styles seat the Top Left crown on the portrait ring's outer top corner,
+-- as on the 3.3.5 PlayerFrame (16px crown 6,-8 into a 64px portrait), mirrored
+-- on a right-side portrait. False when the kit has no portrait.
+function ns.UF_PlaceStockLeader(tex, G, mirror, portrait, ox, oy)
+    local gp = G and G.portrait
+    if not (gp and portrait) then return false end
+    local k = (gp.size or 64) / 64
+    local right = (gp.point or ""):find("RIGHT") ~= nil
+    if mirror then right = not right end
+    if right then
+        tex:SetPoint("CENTER", portrait, "TOPRIGHT", -6 * k + (ox or 0), -8 * k + (oy or 0))
+    else
+        tex:SetPoint("CENTER", portrait, "TOPLEFT", 6 * k + (ox or 0), -8 * k + (oy or 0))
+    end
+    return true
+end
 -- Elite/Rare Indicator Pixels Dragon art (eliteIndicatorStyle "pixelsDragon"),
 -- keyed by classification plus "player" for player targets. The art wraps a
 -- circle 120 texels across on its 512 canvas, so the texture spans the
@@ -13028,6 +13045,7 @@ local function ReloadFrames()
     local ok, err = pcall(ReloadFramesBody)
     ns._ufReloadSweep = nil
     if not ok then geterrorhandler()(err) end
+    if EUI_WOW_335 and ns.Wrath.ApplyClearFocusClick then ns.Wrath.ApplyClearFocusClick(db.profile.focus) end
 end
 ReloadFramesBody = function()
     ResolveFontPath()
@@ -16399,6 +16417,7 @@ function InitializeFrames()
         ns.UF_AttachEngineFrame(frames.focus, "focus")
         ApplyFramePosition(frames.focus, "focus")
         SetupUnitMenu(frames.focus, "focus")
+        if EUI_WOW_335 then ns.frames = frames; ns.Wrath.ApplyClearFocusClick(db.profile.focus) end
     elseif focusFrameSource == "hidden" then
         ns.Engine.HideBlizzardUnitFrame("focus")
     end
@@ -16593,7 +16612,12 @@ function InitializeFrames()
                 local leader = uf._leaderIndicator
                 leader:SetSize(sz, sz)
                 leader:ClearAllPoints()
-                if pos == "portrait" and uf.Portrait and uf.Portrait.backdrop then
+                local G = pos == "topleft" and ns.UF_Blizz() and ns.UF_BlizzGeom(uf)
+                local bd = uf.Portrait and uf.Portrait.backdrop
+                local stock = G and bd and ns.UF_PlaceStockLeader(leader, G, uf._blizzMirror, bd, ox, oy)
+                if stock then
+                    -- placed on the portrait ring
+                elseif pos == "portrait" and uf.Portrait and uf.Portrait.backdrop then
                     leader:SetPoint("CENTER", uf.Portrait.backdrop, "CENTER", ox, oy)
                 else
                     local anchor =

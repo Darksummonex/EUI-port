@@ -674,6 +674,10 @@ local function CreateMainFrame()
     clickArea:SetPoint("CENTER", mainFrame, "CENTER", 0, 0)
     clickArea:SetFrameLevel(mainFrame:GetFrameLevel() + 1)
     clickArea:EnableMouse(true)
+    -- Shift + mouse wheel over any part of the panel without a wheel of its own (the
+    -- header, the footer, the margins) scales it too; a plain wheel there does nothing.
+    clickArea:EnableMouseWheel(true)
+    clickArea:SetScript("OnMouseWheel", function(_, delta) EllesmereUI._ShiftWheelScale(delta) end)
     clickArea:SetMovable(true)
     clickArea:RegisterForDrag("LeftButton")
     -- No SetClampedToScreen: the whole window moves as one and drags freely off any edge.
@@ -1617,6 +1621,7 @@ local function CreateMainFrame()
     end)
 
     addonScrollFrame:SetScript("OnMouseWheel", function(self, delta)
+        if EllesmereUI._ShiftWheelScale(delta) then return end
         local maxScroll = EllesmereUI.SafeScrollRange(self) or 0
         if maxScroll <= 0 then return end
         local scale = self:GetEffectiveScale()
@@ -2090,6 +2095,16 @@ local function CreateMainFrame()
     versionText:SetPoint("BOTTOMLEFT", sidebar, "BOTTOMLEFT", 18, 18)
     versionText:SetText("v" .. (EllesmereUI.VERSION or "1.0"))
     versionText:SetAlpha(0.5)
+    -- Wrath: the backport release stamp (Core TOC X-EUI-Release) under the Retail base version.
+    local build = _G.EUI_WOW_335 and GetAddOnMetadata and GetAddOnMetadata("EllesmereUI", "X-EUI-Release")
+    if build and build ~= "" then
+        versionText:ClearAllPoints()
+        versionText:SetPoint("BOTTOMLEFT", sidebar, "BOTTOMLEFT", 18, 24)
+        local buildText = MakeFont(sidebar, 9, nil, TEXT_DIM.r, TEXT_DIM.g, TEXT_DIM.b, TEXT_DIM.a)
+        buildText:SetPoint("TOPLEFT", versionText, "BOTTOMLEFT", 0, -3)
+        buildText:SetText("3.3.5 build " .. build)
+        buildText:SetAlpha(0.4)
+    end
 
     ---------------------------------------------------------------------------
     --  Build deferred opacity slider: vertical above versionText in the
@@ -2254,13 +2269,13 @@ local function CreateMainFrame()
     resCpuLabel:SetPoint("BOTTOMRIGHT", resCpuText, "TOPRIGHT", 0, 3)
     resCpuLabel:SetJustifyH("RIGHT")
     resCpuLabel:SetAlpha(0.5)
-    resCpuLabel:SetText("Memory Usage:")
+    resCpuLabel:SetText(EllesmereUI.L("Memory Usage:"))
 
     local resPerfLabel = MakeFont(sidebar, 10, nil, TEXT_DIM.r, TEXT_DIM.g, TEXT_DIM.b, TEXT_DIM.a)
     resPerfLabel:SetPoint("BOTTOMRIGHT", resCpuLabel, "TOPRIGHT", 0, 11)
     resPerfLabel:SetJustifyH("RIGHT")
     resPerfLabel:SetAlpha(0.5)
-    resPerfLabel:SetText("All EUI Addons")
+    resPerfLabel:SetText(EllesmereUI.L("All EUI Addons"))
 
     local resDivider = sidebar:CreateTexture(nil, "ARTWORK")
     resDivider:SetColorTexture(1, 1, 1, 0.15)
@@ -2526,6 +2541,7 @@ local function CreateMainFrame()
     end
 
     scrollFrame:SetScript("OnMouseWheel", function(self, delta)
+        if EllesmereUI._ShiftWheelScale(delta) then return end
         local maxScroll = EllesmereUI.SafeScrollRange(self)
         if maxScroll <= 0 then return end
         -- Accumulate on top of the current target (not current position) for responsive chained scrolls
@@ -2641,7 +2657,7 @@ local function CreateMainFrame()
         for _, c in ipairs(ch) do c:Hide(); c:SetParent(nil) end
         local rg = { contentHeaderFrame:GetRegions() }
         for _, r in ipairs(rg) do
-            if r ~= contentHeaderBg and r ~= contentHeaderDiv then r:Hide(); r:SetParent(nil) end
+            if r ~= contentHeaderBg and r ~= contentHeaderDiv then r:Hide(); r:SetParent(_chStash) end
         end
         contentHeaderFrame:Hide()
         contentHeaderFrame:SetHeight(1)
@@ -2698,7 +2714,7 @@ local function CreateMainFrame()
     local function InvalidateContentHeaderCache()
         for key, entry in pairs(_contentHeaderCache) do
             for _, c in ipairs(entry.children) do c:Hide(); c:SetParent(nil) end
-            for _, r in ipairs(entry.regions) do r:Hide(); r:SetParent(nil) end
+            for _, r in ipairs(entry.regions) do r:Hide(); r:SetParent(_chStash) end
             _contentHeaderCache[key] = nil
         end
     end
@@ -3927,7 +3943,8 @@ ClearContent = function()
     local children = { scrollChild:GetChildren() }
     for _, child in ipairs(children) do child:Hide(); child:SetParent(nil) end
     local regions = { scrollChild:GetRegions() }
-    for _, region in ipairs(regions) do region:Hide(); region:SetParent(nil) end
+    -- 3.3.5 rejects SetParent(nil) on textures and font strings; hidden in place there.
+    for _, region in ipairs(regions) do region:Hide(); if not _G.EUI_WOW_335 then region:SetParent(nil) end end
 end
 
 -------------------------------------------------------------------------------
@@ -4881,31 +4898,62 @@ function EllesmereUI:IsShown() return mainFrame and mainFrame:IsShown() end
 function EllesmereUI:GetMainFrame() return mainFrame end
 function EllesmereUI:GetActivePage() return activePage end
 
+-- The options-panel scale moves in 5% steps from 75% to 200% (the header's Window
+-- Scale slider, Shift + mouse wheel).
+EllesmereUI.PANEL_SCALE_MIN, EllesmereUI.PANEL_SCALE_MAX = 0.75, 2.00
+
 --- Apply a user-defined panel scale on top of the pixel-perfect base scale.
---- @param userScale number  multiplier (1.0 = default, 0.5-1.5 range)
+--- @param userScale number  multiplier (1.0 = default, PANEL_SCALE_MIN-MAX)
+--- @param pin table|string|nil  what stays put on screen while the panel glides to
+---   the new scale: a region of the panel (the header's Window Scale slider passes
+---   its track), "cursor" (Shift + mouse wheel), or nil for the panel's own centre.
 do
     local scaleAnimFrame = CreateFrame("Frame")
     local scaleFrom, scaleTo, scaleElapsed
-    local SCALE_DUR = 0.10
+    local SCALE_DUR = 0.12
     local isAnimating = false
+    -- Zoom origin: the pin's screen point (effective-scale-1 units) and its offset
+    -- from mainFrame's bottom-left in panel units. pinX nil = no pin.
+    local pinX, pinY, pinOX, pinOY
+
+    -- Re-anchor the panel so the pin's point lands back on its screen spot at the
+    -- current scale. The final call measures the same spot from the screen centre,
+    -- so a centred panel stays centred through later resolution changes.
+    local function HoldPin(final)
+        if not pinX then return end
+        local s = mainFrame:GetEffectiveScale()
+        local x, y = pinX / s - pinOX, pinY / s - pinOY
+        mainFrame:ClearAllPoints()
+        if final then
+            local k = UIParent:GetEffectiveScale() / s
+            mainFrame:SetPoint("CENTER", UIParent, "CENTER",
+                x + (mainFrame:GetWidth() - UIParent:GetWidth() * k) / 2,
+                y + (mainFrame:GetHeight() - UIParent:GetHeight() * k) / 2)
+        else
+            mainFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", x, y)
+        end
+    end
 
     local function OnScaleUpdate(self, dt)
         scaleElapsed = scaleElapsed + dt
         local t = math.min(1, scaleElapsed / SCALE_DUR)
         local ease = t * (2 - t)  -- ease-out quad
-        local cur = scaleFrom + (scaleTo - scaleFrom) * ease
-        if mainFrame then mainFrame:SetScale(cur) end
-        if t >= 1 then
+        local done = t >= 1
+        if mainFrame then
+            mainFrame:SetScale(done and scaleTo or (scaleFrom + (scaleTo - scaleFrom) * ease))
+            HoldPin(done)
+        end
+        if done then
             self:SetScript("OnUpdate", nil)
             isAnimating = false
-            if mainFrame then mainFrame:SetScale(scaleTo) end
+            pinX = nil
             if EllesmereUI._onScaleChanged then
                 for _, fn in ipairs(EllesmereUI._onScaleChanged) do fn() end
             end
         end
     end
 
-    function EllesmereUI:SetPanelScale(userScale)
+    function EllesmereUI:SetPanelScale(userScale, pin)
         if not mainFrame then return end
         local physW = (GetPhysicalScreenSize())
         local baseScale = GetScreenWidth() / physW
@@ -4913,16 +4961,60 @@ do
         if EllesmereUIDB then EllesmereUIDB.panelScale = userScale end
         -- Recalculate PanelPP mult for the new scale
         if EllesmereUI.PanelPP then EllesmereUI.PanelPP.UpdateMult() end
-        if isAnimating then
-            -- Already animating: just redirect the target without restarting.
-            scaleTo = targetScale
-        else
-            scaleFrom = mainFrame:GetScale()
-            scaleTo = targetScale
-            scaleElapsed = 0
+        pinX = nil
+        if pin then
+            local cx, cy
+            if pin == "cursor" then
+                local s = mainFrame:GetEffectiveScale()
+                local x, y = GetCursorPosition()
+                cx, cy = x / s, y / s
+            else
+                cx, cy = pin:GetCenter()
+            end
+            local ml, mb = mainFrame:GetLeft(), mainFrame:GetBottom()
+            if cx and cy and ml and mb then
+                local s = mainFrame:GetEffectiveScale()
+                pinOX, pinOY = cx - ml, cy - mb
+                pinX, pinY = cx * s, cy * s
+            end
+        end
+        -- Every change glides on from where the panel is now, so a new target
+        -- mid-glide (a fast scroll) carries on smoothly instead of jumping.
+        scaleFrom = mainFrame:GetScale()
+        scaleTo = targetScale
+        scaleElapsed = 0
+        if not isAnimating then
             isAnimating = true
             scaleAnimFrame:SetScript("OnUpdate", OnScaleUpdate)
         end
+    end
+
+    --- One 5% step of the panel scale (delta > 0 grows), clamped to
+    --- PANEL_SCALE_MIN-MAX. An off-step value steps to the next 5% mark.
+    --- True when it changed.
+    function EllesmereUI:StepPanelScale(delta, pin)
+        local cur = ((EllesmereUIDB and EllesmereUIDB.panelScale) or 1) * 100
+        local v
+        if delta > 0 then
+            v = math.floor(cur / 5 + 1e-6) * 5 + 5
+        else
+            v = math.ceil(cur / 5 - 1e-6) * 5 - 5
+        end
+        v = math.max(EllesmereUI.PANEL_SCALE_MIN * 100, math.min(EllesmereUI.PANEL_SCALE_MAX * 100, v))
+        if math.abs(v - cur) < 0.01 then return false end
+        self:SetPanelScale(v / 100, pin)
+        return true
+    end
+
+    -- Shift + mouse wheel anywhere on the panel: one step about the cursor, then
+    -- the header's Window Scale control lights up (EllesmereUI._FlashWindowScale,
+    -- set by that control once it is built). True = the wheel was used here.
+    function EllesmereUI._ShiftWheelScale(delta)
+        if not IsShiftKeyDown() or EllesmereUI._sliderDragging then return false end
+        if EllesmereUI:StepPanelScale(delta, "cursor") and EllesmereUI._FlashWindowScale then
+            EllesmereUI._FlashWindowScale()
+        end
+        return true
     end
 end
 

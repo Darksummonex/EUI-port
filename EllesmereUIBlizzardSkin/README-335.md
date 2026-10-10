@@ -1,4 +1,24 @@
-# Blizz UI Enhanced 3.3.5 — 0.30
+# Blizz UI Enhanced 3.3.5 — 0.33
+
+0.33: quem iniciava o ready check via um painel preto vazio: no 3.3.5 o
+ReadyCheckFrame abre para o iniciador com o ReadyCheckListenerFrame (Yes/No)
+escondido, e a skin pintava o fundo. Agora um hooksecurefunc em ShowReadyCheck
+esconde o frame quando o iniciador é o jogador ou o listener está escondido
+(como no ElvUI). Quem precisa responder continua vendo a janela normal.
+O mesmo painel ficava na tela depois de responder (o Yes/No esconde só o
+listener) até o fim do check. A skin agora vai no ReadyCheckListenerFrame, como
+no Retail, e o ReadyCheckFrame vazio nunca é pintado.
+
+0.32: a aba Titles da ficha do personagem abria o PlayerTitlePickerFrame da
+Blizzard sem a lista montada (vazio). Agora a barra lateral tem a própria lista:
+None primeiro e os títulos conhecidos em ordem alfabética (GetNumTitles,
+IsTitleKnown, GetTitleName), o atual em dourado, clique chama SetCurrentTitle,
+com rolagem pela roda. Atualiza com KNOWN_TITLES_UPDATE, NEW_TITLE_EARNED,
+OLD_TITLE_LOST e UNIT_NAME_UPDATE do jogador. O picker nativo não é mais movido.
+
+0.31: a caixa larga dos popups (Guild Message Of The Day e afins) é mais alta
+que a linha de texto; o painel do skin cobria o título e os botões. Agora
+enquadra só a linha (24 px, centralizada, 6 px de folga dos lados).
 
 0.30: dois recursos do Retail. "Show Player Buffs" mostra os buffs do jogador sob
 o mouse como ícones ao lado do tooltip (até 16), com posição, tamanho, ícones

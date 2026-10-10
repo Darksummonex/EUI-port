@@ -45,6 +45,43 @@ function A.Add(tooltip, id)
     tooltip:Show()
 end
 
+-- Retail shows ItemID and IconID with Spell ID on; showItemID/showIconID opt out.
+-- Wrath item icons are texture paths, so the icon line shows the file name.
+local function HasItemLine(tooltip, id)
+    local name = tooltip:GetName()
+    if not name or not tooltip.NumLines then return false end
+    for i = 1, tooltip:NumLines() do
+        local fs = _G[name .. "TextLeft" .. i]
+        local text = fs and fs:GetText()
+        if text then
+            text = text:gsub("|c%x%x%x%x%x%x%x%x", ""):gsub("|r", "")
+            local right = _G[name .. "TextRight" .. i]
+            if (text == "Item ID" or text == "ItemID") and right and tonumber(right:GetText()) == id
+                or text:match("^ItemID%s*:?%s*" .. id .. "%f[%D]") then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+function A.AddItem(tooltip, link)
+    local id = type(link) == "string" and tonumber(link:match("item:(%d+)")) or nil
+    if not Enabled() or not tooltip or not id or id <= 0 then return end
+    if tooltip._eui335ItemID == id then return end
+    tooltip._eui335ItemID = id
+    local db = EllesmereUIDB
+    local showItem, showIcon = db.showItemID ~= false, db.showIconID ~= false
+    if not showItem and not showIcon then return end
+    if showItem and HasItemLine(tooltip, id) then showItem = false end
+    local icon = showIcon and GetItemIcon and GetItemIcon(id)
+    if not showItem and type(icon) ~= "string" then return end
+    local r, g, b = E.GetAccentColor()
+    if showItem then tooltip:AddDoubleLine("Item ID", tostring(id), r, g, b, 1, 1, 1) end
+    if type(icon) == "string" then tooltip:AddDoubleLine("Icon", icon:match("([^\\/]+)$") or icon, r, g, b, 1, 1, 1) end
+    tooltip:Show()
+end
+
 local function Hook(tooltip, method, callback)
     if type(tooltip[method]) == "function" then hooksecurefunc(tooltip, method, callback) end
 end
@@ -52,7 +89,12 @@ end
 local function Register(tooltip)
     if not tooltip or A[tooltip] then return end
     A[tooltip] = true
-    tooltip:HookScript("OnTooltipCleared", function(self) self._eui335SpellID = nil end)
+    tooltip:HookScript("OnTooltipCleared", function(self) self._eui335SpellID = nil; self._eui335ItemID = nil end)
+    tooltip:HookScript("OnTooltipSetItem", function(self)
+        if not self.GetItem then return end
+        local _, link = self:GetItem()
+        A.AddItem(self, link)
+    end)
     tooltip:HookScript("OnTooltipSetSpell", function(self)
         if not self.GetSpell then return end
         local _, second, third = self:GetSpell()
@@ -80,9 +122,12 @@ local function Register(tooltip)
     end)
 end
 
-Register(GameTooltip)
-Register(ItemRefTooltip)
+local function RegisterAll()
+    Register(GameTooltip); Register(ItemRefTooltip)
+    Register(_G.ShoppingTooltip1); Register(_G.ShoppingTooltip2)
+end
+RegisterAll()
 local events = CreateFrame("Frame")
 events:RegisterEvent("PLAYER_LOGIN")
 events:RegisterEvent("ADDON_LOADED")
-events:SetScript("OnEvent", function() Register(GameTooltip); Register(ItemRefTooltip) end)
+events:SetScript("OnEvent", RegisterAll)

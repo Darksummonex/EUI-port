@@ -213,3 +213,4 @@ function EllesmereUI.PP.CreateBorder() return {} end
 function EllesmereUI.PP.GetBorders() end
 function EllesmereUI.PP.SetInside(f,p) f:SetAllPoints(p) end
 function EllesmereUI.PP.SetOutside(f,p) f:SetAllPoints(p) end
+if not GetItemCount then function GetItemCount() return 0 end end

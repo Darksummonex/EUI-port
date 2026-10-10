@@ -109,6 +109,7 @@ local function KnownSpell(id)
     end
     return name,icon
 end
+ns.KnownSpell=KnownSpell
 local function Cooldown(key,id,allowed)
     local p,f=ns.GetSettings(),frames[key]
     local name,icon=KnownSpell(id)
@@ -294,7 +295,7 @@ function ns.UpdateDisplays()
     if p.bloodlust then for i=1,40 do
         local name,_,icon,_,_,duration,expiry,_,_,_,id=UnitAura("player",i,"HARMFUL")
         if not name then break end
-        if id==57723 or id==57724 then lockout={icon=icon,duration=duration or 0,expiry=expiry or 0}; break end
+        if id==57723 or id==57724 or id==81005 then lockout={icon=icon,duration=duration or 0,expiry=expiry or 0}; break end
     end end
     local f=frames.bloodlust
     if lockout then
@@ -453,8 +454,11 @@ end
 function ns.RegisterElementSettings()
     E._ELEMENT_SETTINGS_MAP=E._ELEMENT_SETTINGS_MAP or {}
     for _,c in ipairs(layout) do if c[8] then E._ELEMENT_SETTINGS_MAP[c[8]]={module=ADDON_NAME,page="Displays",sectionName=c[9],highlightText=c[10]} end end
-    E._ELEMENT_SETTINGS_MAP.EUI_RaidTools={module=ADDON_NAME,page="Raid Tools",sectionName="RAID TOOLS",highlightText="Show Raid Tools"}
+    for _,key in ipairs({"EUI_RaidTools","EUI_RaidTools_Markers","EUI_RaidTools_Compact"}) do
+        E._ELEMENT_SETTINGS_MAP[key]={module=ADDON_NAME,page="Raid Tools",sectionName="GENERAL",highlightText="Show Raid Tools"}
+    end
     E._ELEMENT_SETTINGS_MAP.EUI_SelfCombatText={module=ADDON_NAME,page="Displays",sectionName="SELF COMBAT TEXT",highlightText="Self Combat Text"}
+    E._ELEMENT_SETTINGS_MAP.EUI_Redirect={module=ADDON_NAME,page="Displays",sectionName="MISDIRECTION / TRICKS HELPER",highlightText="Misdirection / Tricks Helper"}
 end
 function ns.RegisterMovers()
     ns.RegisterElementSettings()
@@ -468,14 +472,8 @@ function ns.RegisterMovers()
             loadPos=function() local p=ns.GetSettings(); return p and p.positions[key] end,
             clearPos=function() local p=ns.GetSettings(); if p then p.positions[key]=nil; ns.Apply() end end,applyPos=ns.Apply}) end
     end
-    if ns.raidFrame then
-        elements[#elements+1]=E.MakeUnlockElement({key="EUI_RaidTools",label="Raid Tools",group="Quality of Life",order=920,noResize=true,noAnchorTo=true,
-            getFrame=function() return ns.raidFrame end,getSize=function() return ns.raidFrame:GetWidth(),ns.raidFrame:GetHeight() end,
-            isHidden=function() return not ns.raidFrame:IsShown() end,
-            savePos=function(_,point,relPoint,x,y) local p=ns.GetSettings(); if p then p.positions.raidTools={point=point,relPoint=relPoint,x=x,y=y} end end,
-            loadPos=function() local p=ns.GetSettings(); return p and p.positions.raidTools end,
-            clearPos=function() local p=ns.GetSettings(); if p then p.positions.raidTools=nil; ns.Apply() end end,applyPos=ns.Apply})
-    end
+    if ns.RaidToolsUnlockElements then for _,el in ipairs(ns.RaidToolsUnlockElements()) do elements[#elements+1]=el end end
     if ns.SCT_UnlockElement then elements[#elements+1]=ns.SCT_UnlockElement() end
+    if ns.Redirect_UnlockElement then elements[#elements+1]=ns.Redirect_UnlockElement() end
     E:RegisterUnlockElements(elements,ADDON_NAME)
 end

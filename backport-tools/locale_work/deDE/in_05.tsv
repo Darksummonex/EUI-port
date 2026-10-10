@@ -1,0 +1,213 @@
+5259	A blank bar to build from scratch.
+5260	A bright spark at the edge of the fill.
+5261	A friendly focus wins over the tank. The focus is checked at the moment you press it, also in combat.
+5262	A group member to use as the tank. Empty uses the raid Main Tank, then the Dungeon Finder tank role. Updates out of combat.
+5263	A line at every 10% and a tick at every 5% across the bar.
+5264	A raid control panel with ready check, pull timer and target markers. In a raid it only shows while you are the leader or an assistant, since none of its buttons work without that; in a party it always shows.
+5265	Abbreviate Numbers
+5266	Animation
+5267	Apply Styles
+5268	Auto Gossip Settings
+5269	Auto Select Single Gossip
+5270	Avoid Color
+5271	Background color
+5273	Blizz Default also switches the reputation bar to Blizzard's.
+5274	Both Specs
+5275	Bright line on the swipe edge (needs a client with Cooldown:SetDrawEdge; native swipe only).
+5276	Buff Icon Size
+5277	Buff X Offset
+5278	Buff Y Offset
+5279	Buffs Per Row
+5280	Classic WoW UI Style
+5281	Clear Focus Click
+5282	Clear Markers
+5284	Clears your focus when you click the focus frame this way. Works in combat, where the right-click menu cannot clear focus.
+5285	Close Edit Mode first, then try again.
+5286	Combat Color
+5287	Compact Band
+5288	Compact Band puts markers, ready check and pull timer in one row you can resize in Unlock Mode. The other choices keep the window layouts.
+5289	Compact clock and FPS readout.
+5290	Completed quest XP shows ahead of the fill in green, incomplete quest XP after it in gold. Quests under collapsed quest log headers are not counted.
+5291	Completed quests
+5292	Completed Quests Only
+5293	Countdown length in seconds. Compact Band uses First with Ctrl + Left Click, Second with Shift + Left Click, Third with Left Click, and Right Click stops the timer. Set a timer to 0 to disable that shortcut.
+5295	Crit Size Multiplier
+5296	Current Zone Only
+5297	Damage Color
+5298	DataBars Page Look
+5299	Default for every icon on this bar; icons can override it. 
+5300	Default to Collapsed When Shown
+5301	Direction
+5302	Disable in Instances
+5303	Dispel Type Icon
+5304	Display junk items (grey quality and items you marked as junk) in a greyed-out style.
+5305	Divider Text
+5306	Dividers
+5307	Down and then Right
+5308	Down Left
+5309	Down Right
+5310	Duration (seconds)
+5311	EllesmereUI Bar Textures
+5312	EllesmereUI Font
+5313	Empty = raid Main Tank, then tank role
+5314	Empty Slot
+5315	Empty Slot added.
+5316	Empty Slot: keeps this position free on the bar.
+5317	End Cap Settings
+5318	End Caps
+5319	Enemy Buff Filter
+5320	Entering / Leaving Combat
+5321	Equipped items get a rarity color border.
+5322	Experience Bar Overhaul
+5323	EXPERIENCE BAR TEXT
+5324	Fill Style
+5325	First Timer
+5326	Flat paints the XP color. The gradients run from the XP color to the end color.
+5327	Focus Aura Borders
+5328	Focus First
+5329	Fountain
+5330	Full-width bar with the classic info blocks.
+5331	Full-window modes only. Shows start as a small icon, and the keybind switches between the icon and the full windows.
+5332	Full-window modes only. Which way the windows extend from the collapsed icon when they open.
+5333	GitHub (3.3.5 port)
+5334	Global Settings Action Row
+5335	Gradient end color
+5336	GROUP BUTTONS
+5337	Healing Color
+5338	Healing Received
+5339	Helper Icon Size
+5340	Hide Outside Form/Stance
+5341	Hide Outside Form/Stance (Keep Place)
+5342	Hide Sated / Exhaustion
+5343	Hide Until Usable
+5344	Hide Until Usable (Keep Place)
+5345	Hide Until Usable: only shown while usable and off cooldown, such as Overpower or Victory Rush after a proc; low resources do not hide it. Hide Outside Form/Stance: only shown in the form or stance the spell needs, even on cooldown. Keep Place leaves the gap; the others close it.
+5346	Hides the Bloodlust and Heroism lockout debuffs.
+5347	Highlight Items on Stat Hover
+5348	Hovering a stat in the sidebar glows the equipped items that give it (Hit, Crit, Haste, Defense, Strength...).
+5349	Hunters and Rogues: an icon you click (or bind in Key Bindings > EllesmereUI Quality of Life) that casts Misdirection or Tricks of the Trade on your focus, else the tank, else a friendly target
+5350	Ignore Low Level Quests
+5351	Import Into Active Profile?
+5352	Import into current profile (%1$s)
+5353	Import Into Your Current Profile
+5354	Import Retail Profiles
+5355	In Any Group
+5356	Incomplete quests
+5357	Inspect Enchant Name Size
+5358	Inspect Missing Enchant, Gem & Buckle Icons
+5359	Invert Scroll Wheel
+5360	Item ID on Tooltip
+5361	Junk Marker
+5362	Junk Marker Options
+5363	Just the micro menu buttons.
+5364	Keep Session on Reload
+5365	Keeps the bar at max level, full, with the level and times. Time This Level shows total time played there.
+5366	Left Endcap
+5367	Left Endcap or Right Endcap
+5368	Luxthos
+5369	Macro alternative: /click EUI335QoLRedirect
+5370	Menu Grow Direction
+5371	MISDIRECTION / TRICKS HELPER
+5372	Misdirection / Tricks Helper
+5373	Misses, Dodges and Parries
+5374	Module Default follows the Raid Frames font outline from the Fonts page.
+5375	Name Outline
+5376	Native
+5377	Native: the client's dark square sweep. Shaped: a drawn sweep that follows round icons and takes the Swipe Color.
+5378	Nest Distance
+5379	Nest Distance and Size
+5380	Nest Icon Size
+5381	No DataBars
+5382	One Window
+5383	Only Dispellable
+5384	Only Group & Pull
+5385	Only Markers
+5386	Own and Raid Debuffs
+5387	Own Keybind
+5388	Percent of the end caps' normal size.
+5389	Picks an NPC's only dialog option for you.
+5390	Player Buffs on Tooltips
+5391	Positive values move both end caps away from the bar.
+5392	Primary Spec
+5394	Pushes older messages along so a new one never overlaps them.
+5395	Quest XP Overlay
+5396	Raid Debuffs Filter
+5397	Raid Debuffs shows the common raid debuffs (armor, spell and physical damage taken, crit taken, attack power, attack and cast speed, healing taken, Judgements, Hunter's Mark) from anyone.
+5398	Reads the item's own stats; enchants and gems are not counted.
+5399	Reload to finish resetting EUI.
+5400	Reload to finish uninstalling EUI.
+5401	Rename DataBar
+5402	Rested After Quest XP
+5403	Rested color
+5404	Return every EUI addon to its defaults.
+5405	Revert EUI's changes and disable.
+5406	Right Endcap
+5407	Scroll Distance
+5408	Second Timer
+5409	Secondary Spec
+5410	Selection Color
+5411	Selection Color: Custom Color
+5412	SELF COMBAT TEXT
+5413	Self Combat Text
+5414	Sell Junk skips items with no vendor price, equipment set gear and pinned items.
+5415	Shaped
+5416	Shaped Cooldown Swipe
+5417	Share Keybind With
+5418	Shift + Click World Markers
+5419	Shift + Left Click a marker icon to use its world marker item, then click the ground. Only markers whose item is in your bags get it; the rest keep Shift + Click to clear the target marker. Shift + Left Click the clear icon presses the server's Reset Markers button.
+5420	Show a small coin in the corner of items marked as junk.
+5422	Show at Max Level
+5423	Show Coin on Junk
+5424	Show Convert to Raid
+5426	Show Dividers
+5427	Show Equipped Item Color
+5428	Show Inspect Enchant Names Instead of Icons
+5429	Show Item Icon Name
+5430	Show Item ID on Tooltip
+5431	Show Player Buffs
+5432	Show Reinvite
+5433	Show Rested XP
+5434	Show Target Name
+5435	Show the coin button in the bag header. Click it, then click items to mark or unmark them as junk. Junk goes into its own Junk category, and a Sell Junk button appears next to the coin while a merchant is open.
+5436	Shown at max level. Profession bonuses are only checked on your own sheet.
+5437	Shows the common raid debuffs from anyone: armor, spell and physical damage taken, crit taken, attack power, attack and cast speed, healing taken, Judgements and Hunter's Mark.
+5438	Shows the Convert to Raid button. In a raid of five or fewer it reads Convert to Party: everyone is removed and invited back to a new party.
+5439	Shows the debuffs you apply plus the common raid debuffs from anyone.
+5440	Shows the Disband button. It always asks before disbanding, but hiding it puts it out of misclick range for good.
+5441	Shows the hovered player's buffs as icons next to the tooltip (up to 16).
+5442	Shows the overlay, type icon and border colors only for debuffs you can currently dispel.
+5443	Shows the Reinvite button. It asks first, then removes everyone and invites them back to the same kind of group. Players have to accept the new invite.
+5444	Shows your damage taken, healing, avoids and combat enter/leave above the player frame instead of Blizzard's combat text, whose other messages are hidden while this is on. Move it in Unlock Mode.
+5445	Smart Ticks
+5446	Spell IDs in the Breakdown
+5448	Stagger Hits
+5449	Stat Hover Highlight
+5450	Static
+5451	Straight
+5452	Style Page Look Menus
+5453	Swipe Color
+5454	Swipe Style
+5455	Tank Name
+5456	Text Shadow
+5457	The [Merfin] Experience Bar (Luxthos) WeakAura: blue to purple gradient, Quest XP Overlay, spark, rested after quest XP and seven texts with level, times and time to level.
+5458	The classic tooltip box around the meter window, with vanilla header buttons and every EllesmereUI meter feature.
+5459	The gap between a nested menu's icons and the entry that opens it.
+5460	The rested segment starts where the Quest XP Overlay ends instead of at your current XP.
+5461	The talent group this action menu works in. Outside it the keybind does nothing and the menu is hidden where it is nested.
+5462	Third Timer
+5463	This option requires an EllesmereUI Focus frame.
+5464	This option requires XP Bar Style EllesmereUI or Luxthos
+5465	Time This Session and XP per Hour carry on through a /reload (a load within five minutes) instead of starting over.
+5466	Timed Buffs
+5467	Toggle Raid Tools
+5468	Toggles the Raid Tools panels, in or out of combat.\n\nLeft-click to set a keybind.\nRight-click to unbind.
+5469	Two Windows
+5470	Uninstall & Reload
+5471	Uninstall EUI
+5472	Up Left
+5473	Up Right
+5474	Use another action menu's keybind while that menu is not loaded. Both menus must be assigned to different specs.
+5475	Which buffs enemy nameplates show. Fine-tune it on the Aura Filters page.
+5476	Which ends of the bar show the gryphons.
+5477	XP Bar Style
+5478	XP color

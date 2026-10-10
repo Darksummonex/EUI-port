@@ -2,7 +2,7 @@
 ## Title: |cff0cd29fEllesmereUI|r Options
 ## Notes: EllesmereUI settings panel (3.3.5 backport). Loads on demand when you open EllesmereUI options.
 ## Author: Ellesmere / 3.3.5 backport
-## Version: 9.3.4-335-0.113
+## Version: 9.3.4-335-0.114
 ## Dependencies: EllesmereUI
 ## X-Part-Of: EllesmereUI
 ## LoadOnDemand: 1

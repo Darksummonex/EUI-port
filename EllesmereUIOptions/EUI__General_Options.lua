@@ -924,8 +924,13 @@ do
         },
     },
     {
-        version = "Nameplates 0.15",
+        version = "Nameplates 0.18",
         heroes = {
+            {
+                title = "Raid Debuffs Filter",
+                desc  = "The Debuff Filter gets Raid Debuffs and Own and Raid Debuffs, with the same raid debuff list as the Unit Frames.",
+                nav   = Nav("EllesmereUINameplates", "Aura Filters"),
+            },
             {
                 title = "Enemy Buff Filter",
                 desc  = "Choose which buffs enemy nameplates show: Timed Buffs, Only Dispellable or Show All, which shows every buff.",
@@ -947,6 +952,11 @@ do
             },
         },
         features = {
+            {
+                title = "EllesmereUI Bar Textures",
+                desc  = "Health and cast bars offer the EllesmereUI textures (Melli, Atrocity, Fade, Matte and more), as on Retail",
+                nav   = Nav("EllesmereUINameplates", "Display"),
+            },
             {
                 title = "SharedMedia Bar Textures",
                 desc  = "Health and cast bar textures include textures from SharedMedia and other addons",
@@ -970,13 +980,14 @@ do
             },
         },
         fixes = {
+            { text = "A profile imported from Retail no longer blows the target nameplate up to fill the screen." },
             { text = "Border None now hides only the borders, not the cast bar text, timer, shield and kick mark." },
             { text = "The options preview plate no longer disappears after switching tabs or closing the panel." },
             { text = "The Interrupt on CD cast color now shows while your interrupt recharges, as on Retail, instead of the reverse." },
         },
     },
     {
-        version = "Raid Frames 0.20",
+        version = "Raid Frames 0.24",
         heroes = {
             { title = "Name Outline", desc = "Raid and party names each get their own outline: None, Outline, Thick Outline, Shadow, or the Raid Frames font default.", nav = Nav("EllesmereUIRaidFrames", "Raid", "TEXT DISPLAY", "Name Outline") },
             { title = "Down and then Right", desc = "A new Group Layout stacks two raid groups per column, then starts the next column to the right, so a 20-player raid forms a 2x2 block.", nav = Nav("EllesmereUIRaidFrames", "Raid") },
@@ -1037,14 +1048,23 @@ do
             },
         },
         fixes = {
+            { text = "Ready check icons show a green check for players who accepted and for the one who started the check, instead of a red X when the check ended." },
+            { text = "The party leader icon shows on the leader only instead of on several party members." },
+            { text = "Set Focus and Clear Focus in the raid and party frame menu work out of combat without the 'blocked from an action' popup; in combat they are hidden, use a Click Casting Focus binding there." },
+            { text = "Ready check icons show on raid and party frames again." },
+            { text = "Hide Sated / Exhaustion also hides the 81005 Bloodlust lockout debuff." },
             { text = "Pet frames no longer throw a SecureTemplates strupper error when they first appear." },
             { text = "The Buffs/Debuffs editor's Add New menu no longer closes on the first click." },
             { text = "Element Options for raid and party frames now open the matching settings." },
         },
     },
     {
-        version = "Core 0.63",
+        version = "Core 0.66",
         heroes = {
+            {
+                title = "Import Retail Profiles",
+                desc  = "Profile strings exported from Retail EllesmereUI import everything this client supports: each module keeps its current settings and takes the Retail values it understands. Retail-only modules, spec setups and Cooldown Manager spells are skipped, and chat reports how many settings came in.",
+            },
             {
                 title = "Uninstall EUI",
                 desc  = "A button on Global Settings puts back the game settings EUI changed (nameplate, minimap, chat and tooltip options, chat font sizes and keys Quickdraw took), then turns EUI off for this character and reloads. Your profiles are kept.",
@@ -1081,6 +1101,11 @@ do
         },
         features = {
             {
+                title = "Item ID on Tooltip",
+                desc  = "With Show Spell ID on Tooltip on, item tooltips add the item ID and icon file name. Each line has its own toggle",
+                nav   = Nav("_EUIGlobal", "General"),
+            },
+            {
                 title = "Shield Estimates",
                 desc  = "Raid and Unit Frames read absorb shields from a shared estimate: rank base value plus your own spell power, minus what each shield absorbs in the combat log. Clients with a native absorb API use it directly",
             },
@@ -1112,6 +1137,12 @@ do
             },
         },
         fixes = {
+            { text = "The sidebar sync button opens its profile list again instead of erroring when you have more than one profile." },
+            { text = "Retail profile strings bring their element positions: action, XP and menu bars, CDM bars, raid and party frames, chat, damage meter windows, QoL displays, resource bars and the fixed tooltip land where the creator placed them." },
+            { text = "Nameplates-only Retail profile strings are recognised as Retail; bar width and height, cast bar height and color, name size and aura sizes carry over." },
+            { text = "Unlock Mode: the top bar toggle icons and labels are brighter, so they no longer read dark grey on the banner." },
+            { text = "Set Focus and Clear Focus in right-click menus from EUI frames go through a secure button out of combat instead of being blocked; in combat they are hidden." },
+            { text = "Unlock Mode: the arrow keys move the selected element 1 pixel again (hold Shift for 100)." },
             { text = "Works alongside !!!ClassicAPI: its clipping and mask functions are no longer used on EUI frames, so animated glows and the options panel stop erroring." },
             { text = "Opening the options no longer errors with \"attempt to index local 'mask'\" on clients where another addon adds an empty mask function." },
             { text = "The profile Import and Export boxes no longer error with \"attempt to call method 'GetNumLines'\" and scroll to fit long strings." },
@@ -1132,8 +1163,32 @@ do
         },
     },
     {
-        version = "Options 0.113",
+        version = "Options 0.114",
         heroes = {
+            {
+                title = "DataBars Page Look",
+                desc  = "Like Retail 9.4, the DataBars page opens with a bar selector at the top: rename or delete a bar right in its menu, or pick + Create New DataBar. + New Bar shows the four starter templates as cards, and with no bars yet the page shows them as a card grid.",
+                nav   = Nav("EllesmereUIDataBars", "DataBars"),
+            },
+            {
+                title = "Window Scale",
+                desc  = "Like Retail 9.4, the options window has a Window Scale slider in its top corner that resizes it in smooth 5% steps; the mouse wheel over it, or Shift + mouse wheel anywhere on the window, works too. The credit to Ellesmere now sits under the close button.",
+            },
+            {
+                title = "Global Settings Action Row",
+                desc  = "Global Settings opens with Reset ALL EUI Addon Settings and Uninstall EUI side by side, like Retail 9.4. Reset ALL now asks you to type Confirm. Optimize My FPS and Graphics is gone: the graphics settings it changed do not exist on this client.",
+                nav   = Nav("_EUIGlobal", "General"),
+            },
+            {
+                title = "Style Page Look Menus",
+                desc  = "Like Retail 9.4, each look card on the Style page has a menu of the modules using it: tick modules under another look, then press Apply Styles to switch them all with one reload. The menus list only looks this client can draw: Cooldown Manager, Minimap and Damage Meters offer EllesmereUI and Classic WoW UI, Player Aura Bars is gone, and Apply to All skips modules without that look.",
+                nav   = Nav("_EUIGlobal", "Style"),
+            },
+            {
+                title = "Import Into Your Current Profile",
+                desc  = "The import page can update your current profile instead of making a new one: tick Import into current profile and the string's selected modules (for example only Nameplates) replace their settings there while the rest of the profile stays.",
+                nav   = Nav("_EUIGlobal", "Profiles"),
+            },
             {
                 title = "EUI Staff",
                 desc  = "The EUI Staff page opens with thanks to Ellesmere and the port staff card with a GitHub link to the releases. The header line crediting Ellesmere opens it.",
@@ -1275,6 +1330,7 @@ do
             },
         },
         fixes = {
+            { text = "The Active Profile dropdown shows the rename, delete and keybind icons on each profile again." },
             { text = "Dropdowns open again with !!!ClassicAPI installed; its clipping function no longer moves the menus into an empty scroll frame." },
             { text = "Resetting Global Settings no longer stops partway with an error and reloads the UI again." },
             { text = "Options that do nothing on the Wrath client are hidden: image sharpening, Lag Tolerance, Combat Text Size, Swiftmend dim, Slug outline, class resource dark mode and colors, Retail-only class and power colors, and cursor ring textures." },
@@ -1298,8 +1354,10 @@ do
         },
     },
     {
-        version = "Quality of Life 0.17",
+        version = "Quality of Life 0.19",
         heroes = {
+            { title = "Raid Tools", desc = "The Retail raid panel: show it never, in raids, in any group or always, as a resizable Compact Band, one or two windows, or only one part. It can start as a small icon, opens and closes with a keybind even in combat, and has three pull timers, Convert and Disband. Reinvite removes everyone and invites them back to the same kind of group, and Convert to Party rebuilds a raid of five or fewer as a party the same way. Shift + Left Click a marker to place its world marker when the marker item is in your bags, or Shift + Left Click the clear icon to reset world markers. In a raid it only shows for the leader and assistants.", nav = Nav("EllesmereUIQoL", "Raid Tools", "GENERAL") },
+            { title = "Misdirection / Tricks Helper", desc = "One key casts Misdirection or Tricks of the Trade on your focus, the tank (typed name, Main Tank or tank role), your friendly target or your pet. An icon shows who it will go to, the buff timer and the cooldown. Bind it in Key Bindings.", nav = Nav("EllesmereUIQoL", "Displays", "MISDIRECTION / TRICKS HELPER") },
             {
                 title = "Self Combat Text",
                 desc  = "Damage taken, healing, avoids and entering or leaving combat scroll above the player frame instead of Blizzard's combat text, with Straight, Fountain or Static animations, colors per type and a mover in Unlock Mode.",
@@ -1384,6 +1442,7 @@ do
             },
         },
         fixes = {
+            { text = "Raid Tools keeps its size after importing a Retail profile." },
             { text = "Shift-click mail attach no longer replaces the bag item click handler, so bag clicks stay free of taint." },
             { text = "Hiding DBM and BigWigs bars while AbilityTimeline is active moved to AbilityTimeline itself, as on Retail: Hide DBM bars and Hide BigWigs bars on its Sources page. The Raid Tools option is gone." },
             { text = "Logging out, exiting, releasing spirit and other Blizzard confirmation popups no longer trigger the \"EllesmereUIQoL has been blocked from an action only available to the Blizzard UI\" message." },
@@ -1391,7 +1450,7 @@ do
         },
     },
     {
-        version = "Blizz UI Enhanced 0.30",
+        version = "Blizz UI Enhanced 0.33",
         heroes = {
             {
                 title = "Player Buffs on Tooltips",
@@ -1448,6 +1507,9 @@ do
             },
         },
         fixes = {
+            { text = "Ready checks no longer leave an empty black panel for the leader or after you answer." },
+            { text = "The character sheet Titles tab lists your known titles again; click one to wear it." },
+            { text = "The Guild Message Of The Day popup (and other wide text popups) no longer covers its title and buttons with the input box." },
             { text = "The Achievements window no longer darkens the achievement list behind its border." },
             { text = "The AddOn List window skin toggle only shows when the client has an AddOn List window." },
             { text = "Send Mail shows the To, Subject and message boxes again, and the typing cursor stays visible in skinned edit boxes." },
@@ -1659,8 +1721,14 @@ do
         },
     },
     {
-        version = "Unit Frames 0.21",
+        version = "Unit Frames 0.25",
         heroes = {
+            { title = "Clear Focus Click", desc = "Clear your focus by clicking the focus frame (Shift + Right Click by default, or Ctrl/Alt + Right Click, Middle Click, Shift + Left Click). Set it on the Focus frame page. Works in combat.", nav = Nav("EllesmereUIUnitFrames", "Main Frames") },
+            {
+                title = "Raid Debuffs Filter",
+                desc  = "Two new debuff filter modes: Raid Debuffs shows the common raid debuffs from anyone (armor, spell and physical damage taken, crit taken, attack power, attack and cast speed, healing taken, Judgements and Hunter's Mark), and Own and Raid Debuffs adds yours.",
+                nav   = Nav("EllesmereUIUnitFrames", "Aura Filters"),
+            },
             {
                 title = "Dispel Type Icon",
                 desc  = "Type Icon Position puts the icon of the player's highest dispellable debuff type on a point of the health bar, with its size and offsets in the cog. Only Dispellable by You now sits beside it and narrows the overlay, icon and border colors alike.",
@@ -1720,6 +1788,10 @@ do
             },
         },
         fixes = {
+            { text = "Under Classic WoW UI and Blizzard Style, the leader crown sits on the portrait's top corner, as on the original frames, instead of inside the health bar." },
+            { text = "The party leader icon on unit frames shows on the leader only instead of on several party members." },
+            { text = "Set Focus and Clear Focus in the unit frame right-click menu work out of combat without the 'blocked from an action' popup; in combat they are hidden." },
+            { text = "Hide Sated / Exhaustion also hides the 81005 Bloodlust lockout debuff." },
             { text = "Unit frame bars and portraits no longer get moved into scroll frames when !!!ClassicAPI is installed." },
             { text = "Important Cast Glow is hidden for target and focus cast bars; the Wrath client cannot tell which spells are important." },
             { text = "Channel cast bars show the spell's name instead of \"Channeling\"." },
@@ -1736,8 +1808,18 @@ do
         },
     },
     {
-        version = "Action Bars 0.21",
+        version = "Action Bars 0.22",
         heroes = {
+            {
+                title = "XP Bar Style",
+                desc  = "Like Retail 9.4, the Experience Bar section opens with XP Bar Style: EllesmereUI for the EUI bar, Luxthos for the EUI bar in the Luxthos WeakAura layout, or Blizz Default for Blizzard's own XP and reputation bars. It replaces Enable Experience Bar and the Apply Luxthos Layout button.",
+                nav   = Nav("EllesmereUIActionBars", "Menu, Bags & XP Bars", "EXPERIENCE BAR"),
+            },
+            {
+                title = "End Caps",
+                desc  = "Like Retail 9.4, any horizontal bar can show the classic gryphons at its left end, right end or both, from the End Caps menu at the end of LAYOUT. The cog sets their size and offsets, and Apply to All copies them to every bar. The live preview shows them too.",
+                nav   = Nav("EllesmereUIActionBars", "Bar Display", "LAYOUT"),
+            },
             {
                 title = "Experience Bar Overhaul",
                 desc  = "The XP bar gets Retail's Quest XP Overlay (completed quests in green, incomplete in gold), dividers with Smart Ticks, gradient fills, background and rested colors, and seven text positions showing values, completed quest XP, XP per hour, time to level and time played. Apply Luxthos Layout recreates the popular Luxthos XP bar WeakAura, with Show at Max Level, a spark and rested XP after quest XP.",
@@ -1986,8 +2068,18 @@ do
         },
     },
     {
-        version = "Damage Meters 0.8",
+        version = "Damage Meters 0.9",
         heroes = {
+            {
+                title = "Classic WoW UI Style",
+                desc  = "Pick Classic WoW UI for Damage Meters on the Style page: each window gets the classic tooltip border, a tooltip header band and vanilla header icons, and keeps every EllesmereUI meter feature.",
+                nav   = Nav("_EUIGlobal", "Style"),
+            },
+            {
+                title = "Spell IDs in the Breakdown",
+                desc  = "A spell's breakdown tooltip shows its Spell ID, and each spell row in the detailed window ends with its ID.",
+                nav   = Nav("EllesmereUIDamageMeters", "Windows"),
+            },
             {
                 title = "Shield Absorbs in Healing",
                 desc = "Consumed shield absorbs count toward Healing Done and HPS when the caster can be identified, with an Absorbs Done view.",
@@ -2033,8 +2125,13 @@ do
         },
     },
     {
-        version = "Quickdraw 0.3",
+        version = "Quickdraw 0.4",
         heroes = {
+            {
+                title = "Assign to Spec",
+                desc  = "Load an action menu only in your primary or secondary talent group, and let two menus share one keybind across specs.",
+                nav   = Nav("EllesmereUIQuickdraw", "Palettes"),
+            },
             {
                 title = "Radial Palettes",
                 desc  = "Hold a key, point or scroll to choose, release to fire. Up to 16 palettes of 20 entries in ring, arc, fan or grid layouts.",
@@ -2046,6 +2143,18 @@ do
             },
         },
         features = {
+            {
+                title = "Selection Color",
+                desc  = "Accent, class or custom color for the selected entry, needle and nested highlight",
+            },
+            {
+                title = "Nest Distance and Size",
+                desc  = "Set the gap between a nested menu and its entry, and the nested icon size",
+            },
+            {
+                title = "Invert Scroll Wheel",
+                desc  = "Reverse which way a wheel tick moves the selection",
+            },
             {
                 title = "Key Capture",
                 desc  = "Assign Key captures the next key with modifiers and asks before rebinding",
@@ -2156,8 +2265,6 @@ initFrame:SetScript("OnEvent", function(self)
         SetCVarSafe("scriptErrors", "0")
     end
 
-    -- Optimized graphics settings are NOT re-applied on login: SetCVar already persists, so re-applying would override the user's manual adjustments.
-
     ---------------------------------------------------------------------------
     --  General page
     ---------------------------------------------------------------------------
@@ -2171,158 +2278,153 @@ initFrame:SetScript("OnEvent", function(self)
         _, h = W:Spacer(parent, y, 20);  y = y - h
 
         -------------------------------------------------------------------
-        --  Optimized graphics CVar table + buttons (above all sections)
+        --  TOP SECTION: one row, Reset ALL EUI Addon Settings | Uninstall EUI.
+        --  Retail's middle Optimize My FPS and Graphics card is left out: its
+        --  graphics CVars do not exist on 3.3.5.
         -------------------------------------------------------------------
-        local OPTIMIZED_CVARS = {
-            { "graphicsShadowQuality",      "1" },
-            { "graphicsLiquidDetail",       "0" },
-            { "graphicsParticleDensity",    "5" },
-            { "graphicsSSAO",              "0" },
-            { "graphicsDepthEffects",       "0" },
-            { "graphicsComputeEffects",     "0" },
-            { "graphicsOutlineMode",        "0" },
-            { "graphicsTextureResolution",  "2" },
-            { "graphicsSpellDensity",       "0" },
-            { "graphicsProjectedTextures",  "1" },
-            { "graphicsViewDistance",        "0" },
-            { "graphicsEnvironmentDetail",  "0" },
-            { "graphicsGroundClutter",      "0" },
-            { "RAIDsettingsEnabled",        "0" },
-            { "ResampleAlwaysSharpen",      "1" },
-            -- Reverb runs a full effect bus over the mix; disabling it trims audio DSP work and keeps spell/interrupt cues dry and crisp.
-            { "Sound_EnableReverb",         "0" },
-        }
+        local MEDIA_ICONS = "Interface\\AddOns\\EllesmereUI\\media\\icons_335\\"
+        -- Red for stop: fixed, never the theme accent.
+        local WARN = { r = 0.9, g = 0.3, b = 0.3 }
 
-        local function ApplyOptimizedGfx()
-            if not EllesmereUIDB then EllesmereUIDB = {} end
-            -- One-time store: only snapshot if no backup exists yet
-            if not EllesmereUIDB.gfxBackup then
-                local backup = {}
-                for _, entry in ipairs(OPTIMIZED_CVARS) do
-                    backup[entry[1]] = SafeGetCVar(entry[1])
-                end
-                backup["Contrast"] = SafeGetCVar("Contrast")
-                EllesmereUIDB.gfxBackup = backup
-            else
-                -- Backfill CVars added to the list after the original snapshot so Restore covers them too.
-                local backup = EllesmereUIDB.gfxBackup
-                for _, entry in ipairs(OPTIMIZED_CVARS) do
-                    if backup[entry[1]] == nil then
-                        backup[entry[1]] = SafeGetCVar(entry[1])
-                    end
-                end
+        -- Reset ALL's wipe: every EUI addon back to its defaults.
+        local function ResetAllNow()
+            -- Nuclear wipe: same logic as the beta-exit popup
+            local svNames = {
+                "EllesmereUIActionBarsDB",
+                "EllesmereUIAuraBuffRemindersDB",
+                "EllesmereUICooldownManagerDB",
+                "EllesmereUINameplatesDB",
+                "EllesmereUIResourceBarsDB",
+                "EllesmereUIUnitFramesDB",
+            }
+            for _, name in ipairs(svNames) do
+                _G[name] = {}
             end
-            for _, entry in ipairs(OPTIMIZED_CVARS) do
-                SetCVarSafe(entry[1], entry[2])
+            local oldScale = EllesmereUIDB and EllesmereUIDB.ppUIScale
+            local oldScaleAuto = EllesmereUIDB and EllesmereUIDB.ppUIScaleAuto
+            -- Preserve friend group data across reset
+            local oldGlobal = EllesmereUIDB and EllesmereUIDB.global
+            local savedFriends
+            if oldGlobal then
+                savedFriends = {
+                    friendGroups = oldGlobal.friendGroups,
+                    friendAssignments = oldGlobal.friendAssignments,
+                    friendGroupOrder = oldGlobal.friendGroupOrder,
+                    friendGroupColors = oldGlobal.friendGroupColors,
+                    friendNotes = oldGlobal.friendNotes,
+                    friendFavCollapsed = oldGlobal.friendFavCollapsed,
+                    friendPendingCollapsed = oldGlobal.friendPendingCollapsed,
+                    friendUngroupedCollapsed = oldGlobal.friendUngroupedCollapsed,
+                }
             end
-            local curContrast = tonumber(SafeGetCVar("Contrast")) or 50
-            if curContrast <= 55 then
-                SetCVarSafe("Contrast", curContrast + 10)
-            end
-            local rl = EllesmereUI._widgetRefreshList
-            if rl then for i = 1, #rl do rl[i]() end end
-        end
-
-        local function RestoreGfxSettings()
-            if not EllesmereUIDB or not EllesmereUIDB.gfxBackup then return end
-            local backup = EllesmereUIDB.gfxBackup
-            for _, entry in ipairs(OPTIMIZED_CVARS) do
-                local saved = backup[entry[1]]
-                if saved then SetCVarSafe(entry[1], saved) end
-            end
-            if backup["Contrast"] then SetCVarSafe("Contrast", backup["Contrast"]) end
-            EllesmereUIDB.gfxBackup = nil
-            local rl2 = EllesmereUI._widgetRefreshList
-            if rl2 then for i = 1, #rl2 do rl2[i]() end end
-        end
-
-        do
-            local ROW_H = 52
-            local gfxFrame = CreateFrame("Frame", nil, parent)
-            local totalW = parent:GetWidth() - EllesmereUI.CONTENT_PAD * 2
-            PP.Size(gfxFrame, totalW, ROW_H)
-            PP.Point(gfxFrame, "TOPLEFT", parent, "TOPLEFT", EllesmereUI.CONTENT_PAD, y)
-
-            -- Optimize button (always visible)
-            local optBtn = CreateFrame("Button", nil, gfxFrame)
-            local OPT_W = 300
-            PP.Size(optBtn, OPT_W, 42)
-            PP.Point(optBtn, "TOP", gfxFrame, "TOP", 0, 0)
-            optBtn:SetFrameLevel(gfxFrame:GetFrameLevel() + 1)
-            EllesmereUI.MakeStyledButton(optBtn, "Optimize My FPS and Graphics", 14,
-                EllesmereUI.WB_COLOURS, ApplyOptimizedGfx)
-            optBtn:HookScript("OnEnter", function()
-                EllesmereUI.ShowWidgetTooltip(optBtn, "Optimizes your graphics settings for maximum FPS and visual clarity.")
-            end)
-            optBtn:HookScript("OnLeave", function() EllesmereUI.HideWidgetTooltip() end)
-
-            -- Restore button (only visible when backup exists)
-            local restBtn = CreateFrame("Button", nil, gfxFrame)
-            local REST_W = 128
-            PP.Size(restBtn, REST_W, 29)
-            PP.Point(restBtn, "LEFT", optBtn, "RIGHT", 30, 0)
-            restBtn:SetFrameLevel(gfxFrame:GetFrameLevel() + 1)
-            restBtn:SetAlpha(0.7)
-            local _, _, restLbl = EllesmereUI.MakeStyledButton(restBtn, "Restore My Settings", 10,
-                EllesmereUI.RB_COLOURS, RestoreGfxSettings)
-            restBtn:HookScript("OnEnter", function() restBtn:SetAlpha(1) end)
-            restBtn:HookScript("OnLeave", function() restBtn:SetAlpha(0.7) end)
-
-            local function RefreshRestoreVisibility()
-                if EllesmereUIDB and EllesmereUIDB.gfxBackup then
-                    restBtn:Show()
-                    -- Shift optimize button left to make room
-                    optBtn:ClearAllPoints()
-                    PP.Point(optBtn, "TOP", gfxFrame, "TOP", -(REST_W / 2 + 15), 0)
-                else
-                    restBtn:Hide()
-                    optBtn:ClearAllPoints()
-                    PP.Point(optBtn, "TOP", gfxFrame, "TOP", 0, 0)
+            -- Preserve QoL settings (stored on EllesmereUIDB root)
+            local qolKeys = {
+                "autoOpenContainers", "autoSellJunk", "autoRepair",
+                "autoRepairGuild", "hideScreenshotStatus", "autoUnwrapCollections",
+                "trainAllButton", "ahCurrentExpansion", "quickLoot",
+                "autoFillDelete", "skipCinematics", "skipCinematicsAuto",
+                "bonusRollConfirmation", "bonusRollOnly",
+                "autoInsertKeystone", "quickSignup",
+                "persistSignupNote", "signupNote", "hideBlizzardPartyFrame",
+                "instanceResetAnnounce", "instanceResetAnnounceMsg",
+                "macroFactory",
+            }
+            local savedQoL = {}
+            for _, k in ipairs(qolKeys) do
+                if EllesmereUIDB[k] ~= nil then
+                    savedQoL[k] = EllesmereUIDB[k]
                 end
             end
-            RefreshRestoreVisibility()
-            EllesmereUI.RegisterWidgetRefresh(RefreshRestoreVisibility)
-
-            -- "More Information" accent-colored clickable text
-            local infoBtn = CreateFrame("Button", nil, gfxFrame)
-            infoBtn:SetFrameLevel(gfxFrame:GetFrameLevel() + 1)
-            local EG = EllesmereUI.ELLESMERE_GREEN
-            local infoFS = infoBtn:CreateFontString(nil, "OVERLAY")
-            infoFS:SetFont(EllesmereUI.EXPRESSWAY, 12, EllesmereUI.GetFontOutlineFlag())
-            infoFS:SetTextColor(EG.r, EG.g, EG.b, 0.70)
-            infoFS:SetText(EllesmereUI.L("More Information"))
-            infoFS:SetPoint("CENTER")
-            infoBtn:SetSize(infoFS:GetStringWidth() + 10, 18)
-            PP.Point(infoBtn, "TOP", optBtn, "BOTTOM", 0, -4)
-            infoBtn:SetScript("OnEnter", function() infoFS:SetTextColor(EG.r, EG.g, EG.b, 1) end)
-            infoBtn:SetScript("OnLeave", function() infoFS:SetTextColor(EG.r, EG.g, EG.b, 0.70) end)
-            infoBtn:SetScript("OnClick", function()
-                EllesmereUI:ShowInfoPopup({
-                    title = "FPS & Graphics Optimization",
-                    content = "This feature optimizes your in-game graphics settings to give you the best combination of high FPS and visual clarity.\n\nYou can revert all changes at any time by clicking \"Restore My Settings\" which will appear after optimizing.\n\n\nWhat we change:\n\n"
-                        .. "Shadow Quality - Fair (balanced quality/FPS)\n"
-                        .. "Liquid Detail - Disabled\n"
-                        .. "Particle Density - Set to Ultra (keeps important spell effects)\n"
-                        .. "SSAO (Ambient Occlusion) - Disabled\n"
-                        .. "Depth Effects - Disabled\n"
-                        .. "Compute Effects - Disabled\n"
-                        .. "Outline Mode - Disabled\n"
-                        .. "Texture Resolution - Set to High\n"
-                        .. "Spell Density - Set to Essential\n"
-                        .. "Projected Textures - Enabled (needed for ground effects)\n"
-                        .. "View Distance - Reduced to 1\n"
-                        .. "Environment Detail - Reduced to 1\n"
-                        .. "Ground Clutter - Reduced to 1\n"
-                        .. "Raid/Dungeon Settings - Uses same settings everywhere\n"
-                        .. "Resample Sharpening - Enabled (crisper image)\n"
-                        .. "Contrast - Boosted by +10 (if currently 55 or below)\n"
-                        .. "Enable Reverb - Disabled (spell and interrupt audio cues stay crisp)\n\n"
-                        .. "These settings prioritize frame rate and visual clarity over environmental detail. Textures stay high quality so your character and the world still look perfect.",
-                })
-            end)
-
-            y = y - ROW_H
+            -- Game settings, not EUI ones: the record of the settings from
+            -- before EUI, which Uninstall EUI puts back.
+            local oldRestore = EllesmereUIDB.restoreOnUninstall
+            _G["EllesmereUIDB"] = {}
+            EllesmereUIDB = _G["EllesmereUIDB"]
+            EllesmereUIDB.restoreOnUninstall = oldRestore
+            if oldScale then EllesmereUIDB.ppUIScale = oldScale end
+            if oldScaleAuto ~= nil then EllesmereUIDB.ppUIScaleAuto = oldScaleAuto end
+            if savedFriends then
+                if not EllesmereUIDB.global then EllesmereUIDB.global = {} end
+                for k, v in pairs(savedFriends) do
+                    EllesmereUIDB.global[k] = v
+                end
+            end
+            for k, v in pairs(savedQoL) do
+                EllesmereUIDB[k] = v
+            end
         end
+
+        -- Reset ALL: a typed confirm, then the wipe and a reload.
+        local function ConfirmResetAll()
+            EllesmereUI:ShowConfirmPopup({
+                title         = "Reset ALL Settings",
+                -- The wipe replaces the whole account store, profiles included.
+                message       = "Are you sure you want to reset ALL EUI addon settings to their defaults? This deletes ALL of your profiles, not just the current one, and reloads your UI.",
+                disclaimer    = "Every profile on this account is deleted. Export any profile you want to keep first.",
+                typeToConfirm = "Confirm",
+                confirmText   = "Reset All & Reload",
+                cancelText    = "Cancel",
+                onConfirm     = function()
+                    EllesmereUI.RequestReload(EllesmereUI.L("Reset ALL Settings"),
+                        EllesmereUI.L("Reload to finish resetting EUI."), ResetAllNow)
+                end,
+            })
+        end
+
+        -- Uninstall EUI reloads, so it is refused in combat. True when refused.
+        local function UninstallRefused()
+            local msg
+            if InCombatLockdown() then
+                msg = EllesmereUI.L("Uninstalling reloads the UI and cannot run in combat. Leave combat and try again.")
+            elseif EllesmereUI.EditModeOpen and EllesmereUI.EditModeOpen() then
+                msg = EllesmereUI.L("Close Edit Mode first, then try again.")
+            end
+            if not msg then return false end
+            EllesmereUI:ShowConfirmPopup({
+                title       = EllesmereUI.L("Uninstall EUI"),
+                message     = msg,
+                confirmText = EllesmereUI.L("OK"),
+                hideCancel  = true,
+            })
+            return true
+        end
+
+        -- Uninstall EUI: puts back the game settings EllesmereUI changed, turns its
+        -- addons off for this character and reloads (EllesmereUI_Uninstall_335.lua).
+        -- Profiles are kept.
+        local function ConfirmUninstall()
+            if UninstallRefused() then return end
+            local message = EllesmereUI.L("Puts back the game settings EUI changed, such as nameplate, minimap, chat and tooltip options, chat font sizes and the keys Quickdraw took, and turns EUI off for this character, then reloads the UI.") .. "\n\n"
+                .. EllesmereUI.L("Your profiles are kept, so you can turn EUI back on later in the AddOns list.")
+            EllesmereUI:ShowConfirmPopup({
+                title         = EllesmereUI.L("Uninstall EUI"),
+                message       = message,
+                disclaimer    = (EllesmereUI.UninstallKnowsOriginals and not EllesmereUI.UninstallKnowsOriginals())
+                    and EllesmereUI.L("EUI was installed before it kept a record of your original settings, so the settings it still manages go back to the game's defaults.")
+                    or nil,
+                confirmText   = EllesmereUI.L("Uninstall & Reload"),
+                cancelText    = EllesmereUI.L("Cancel"),
+                onConfirm     = function()
+                    if UninstallRefused() then return end
+                    EllesmereUI.RequestReload(EllesmereUI.L("Uninstall EUI"),
+                        EllesmereUI.L("Reload to finish uninstalling EUI."), EllesmereUI.Uninstall)
+                end,
+            })
+        end
+
+        local cards
+        y, cards = EllesmereUI.BuildActionCardRow(parent, y, {
+            { icon = MEDIA_ICONS .. "sync.tga", accent = WARN,
+              title = EllesmereUI.L("Reset ALL EUI Addon Settings"),
+              desc = EllesmereUI.L("Return every EUI addon to its defaults."),
+              onClick = ConfirmResetAll },
+            -- power's glyph fills its whole canvas: drawn smaller, it matches sync.
+            { icon = MEDIA_ICONS .. "power.tga", accent = WARN, iconSize = 22,
+              title = EllesmereUI.L("Uninstall EUI"), desc = EllesmereUI.L("Revert EUI's changes and disable."),
+              onClick = ConfirmUninstall },
+        }, { inline = true })
+        y = y - 6
+
 
         -------------------------------------------------------------------
         --  DISPLAY
@@ -2953,178 +3055,31 @@ initFrame:SetScript("OnEvent", function(self)
                     EllesmereUIDB.showSpellID = v
                     -- Engine-side combat aura-ID CVar rides this setting.
                     if EllesmereUI.SyncAuraSpellIDCVar then EllesmereUI.SyncAuraSpellIDCVar() end
+                    if _G.EUI_WOW_335 then EllesmereUI:RefreshPage() end
                   end });  y = y - h
 
+            if _G.EUI_WOW_335 then
+                local function idsOff() return not (EllesmereUIDB and EllesmereUIDB.showSpellID) end
+                _, h = W:DualRow(parent, y,
+                    { type="toggle", text="Show Item ID on Tooltip",
+                      tooltip="Adds the item ID to item tooltips in bags, bank, character sheet, chat links and vendors.",
+                      disabled=idsOff, disabledTooltip="Show Spell ID on Tooltip",
+                      getValue=function() return not EllesmereUIDB or EllesmereUIDB.showItemID ~= false end,
+                      setValue=function(v)
+                        if not EllesmereUIDB then EllesmereUIDB = {} end
+                        EllesmereUIDB.showItemID = v
+                      end },
+                    { type="toggle", text="Show Item Icon Name",
+                      tooltip="Adds the icon file name to item tooltips, for macros and addons that take an icon path.",
+                      disabled=idsOff, disabledTooltip="Show Spell ID on Tooltip",
+                      getValue=function() return not EllesmereUIDB or EllesmereUIDB.showIconID ~= false end,
+                      setValue=function(v)
+                        if not EllesmereUIDB then EllesmereUIDB = {} end
+                        EllesmereUIDB.showIconID = v
+                      end });  y = y - h
+            end
+
             _, h = W:Spacer(parent, y, 20);  y = y - h
-        end
-
-        -- Uninstall EUI: puts back the game settings EllesmereUI changed, turns its
-        -- addons off for this character and reloads (EllesmereUI_Uninstall_335.lua).
-        y = y - 30  -- spacer
-        if EllesmereUI.Uninstall then
-            local DARK_BG = EllesmereUI.DARK_BG or { r = 0.05, g = 0.07, b = 0.09 }
-            local btn = CreateFrame("Button", nil, parent)
-            btn:SetSize(300, 38)
-            btn:SetPoint("TOP", parent, "TOP", 0, y)
-            btn:SetFrameLevel(parent:GetFrameLevel() + 5)
-            btn:SetAlpha(0.85)
-            local brd = EllesmereUI.MakeBorder(btn, 0.8, 0.2, 0.2, 0.5, EllesmereUI.PanelPP)
-            local bg = EllesmereUI.SolidTex(btn, "BACKGROUND", DARK_BG.r, DARK_BG.g, DARK_BG.b, 0.92)
-            bg:SetAllPoints()
-            local lbl = EllesmereUI.MakeFont(btn, 13, nil, 0.9, 0.3, 0.3)
-            lbl:SetAlpha(0.7)
-            lbl:SetPoint("CENTER")
-            lbl:SetText(EllesmereUI.L("Uninstall EUI"))
-            btn:SetScript("OnEnter", function()
-                lbl:SetTextColor(1, 0.35, 0.35, 1); brd:SetColor(0.8, 0.2, 0.2, 0.8)
-                GameTooltip:SetOwner(btn, "ANCHOR_TOP")
-                GameTooltip:SetText(EllesmereUI.L("Puts back the game settings EUI changed, then turns EUI off and reloads."), 1, 1, 1, 1, true)
-                GameTooltip:Show()
-            end)
-            btn:SetScript("OnLeave", function()
-                lbl:SetTextColor(0.9, 0.3, 0.3, 0.7); brd:SetColor(0.8, 0.2, 0.2, 0.5)
-                GameTooltip:Hide()
-            end)
-            local function Refused()
-                if not InCombatLockdown() then return false end
-                EllesmereUI:ShowConfirmPopup({
-                    title       = EllesmereUI.L("Uninstall EUI"),
-                    message     = EllesmereUI.L("Uninstalling reloads the UI and cannot run in combat. Leave combat and try again."),
-                    confirmText = EllesmereUI.L("OK"),
-                    hideCancel  = true,
-                })
-                return true
-            end
-            btn:SetScript("OnClick", function()
-                if Refused() then return end
-                EllesmereUI:ShowConfirmPopup({
-                    title       = EllesmereUI.L("Uninstall EUI"),
-                    message     = EllesmereUI.L("Puts back the game settings EUI changed, such as nameplate, minimap, chat and tooltip options, chat font sizes and the keys Quickdraw took, and turns EUI off for this character, then reloads the UI.") .. "\n\n"
-                        .. EllesmereUI.L("Your profiles are kept, so you can turn EUI back on later in the AddOns list."),
-                    disclaimer  = (not EllesmereUI.UninstallKnowsOriginals())
-                        and EllesmereUI.L("EUI was installed before it kept a record of your original settings, so the settings it still manages go back to the game's defaults.")
-                        or nil,
-                    confirmText = EllesmereUI.L("Uninstall & Reload"),
-                    cancelText  = EllesmereUI.L("Cancel"),
-                    onConfirm   = function()
-                        if Refused() then return end
-                        EllesmereUI.RequestReload(EllesmereUI.L("Uninstall EUI"),
-                            EllesmereUI.L("Reload to finish uninstalling EUI."), EllesmereUI.Uninstall)
-                    end,
-                })
-            end)
-            y = y - 38 - 12
-        end
-
-        -- Reset ALL EUI Addon Settings (wide warning button)
-        do
-            local BTN_W, BTN_H = 300, 38
-            local lerp = EllesmereUI.lerp
-            local DARK_BG = EllesmereUI.DARK_BG or { r = 0.05, g = 0.07, b = 0.09 }
-            local btn = CreateFrame("Button", nil, parent)
-            btn:SetSize(BTN_W, BTN_H)
-            btn:SetPoint("TOP", parent, "TOP", 0, y)
-            btn:SetFrameLevel(parent:GetFrameLevel() + 5)
-            btn:SetAlpha(0.85)
-            local brd = EllesmereUI.MakeBorder(btn, 0.8, 0.2, 0.2, 0.5, EllesmereUI.PanelPP)
-            local bg = EllesmereUI.SolidTex(btn, "BACKGROUND", DARK_BG.r, DARK_BG.g, DARK_BG.b, 0.92)
-            bg:SetAllPoints()
-            local lbl = EllesmereUI.MakeFont(btn, 13, nil, 0.9, 0.3, 0.3)
-            lbl:SetAlpha(0.7)
-            lbl:SetPoint("CENTER")
-            lbl:SetText(EllesmereUI.L("Reset ALL EUI Addon Settings"))
-            do
-                local FADE_DUR = 0.1
-                local progress, target = 0, 0
-                local function Apply(t)
-                    lbl:SetTextColor(lerp(0.9, 1, t), lerp(0.3, 0.35, t), lerp(0.3, 0.35, t), lerp(0.7, 1, t))
-                    brd:SetColor(0.8, 0.2, 0.2, lerp(0.5, 0.8, t))
-                end
-                local function OnUpdate(self, elapsed)
-                    local dir = (target == 1) and 1 or -1
-                    progress = progress + dir * (elapsed / FADE_DUR)
-                    if (dir == 1 and progress >= 1) or (dir == -1 and progress <= 0) then
-                        progress = target; self:SetScript("OnUpdate", nil)
-                    end
-                    Apply(progress)
-                end
-                btn:SetScript("OnEnter", function(self) target = 1; self:SetScript("OnUpdate", OnUpdate) end)
-                btn:SetScript("OnLeave", function(self) target = 0; self:SetScript("OnUpdate", OnUpdate) end)
-            end
-            btn:SetScript("OnClick", function()
-                EllesmereUI:ShowConfirmPopup({
-                    title       = "Reset ALL Settings",
-                    message     = "Are you sure you want to reset ALL EUI addon settings to their defaults? This will reload your UI.",
-                    disclaimer  = "This resets every EUI addon, not just the current one.",
-                    confirmText = "Reset All & Reload",
-                    cancelText  = "Cancel",
-                    reload      = true,
-                    onConfirm   = function()
-                        -- Nuclear wipe: same logic as the beta-exit popup
-                        local svNames = {
-                            "EllesmereUIActionBarsDB",
-                            "EllesmereUIAuraBuffRemindersDB",
-                            "EllesmereUICooldownManagerDB",
-                            "EllesmereUINameplatesDB",
-                            "EllesmereUIResourceBarsDB",
-                            "EllesmereUIUnitFramesDB",
-                        }
-                        for _, name in ipairs(svNames) do
-                            _G[name] = {}
-                        end
-                        local oldScale = EllesmereUIDB and EllesmereUIDB.ppUIScale
-                        local oldScaleAuto = EllesmereUIDB and EllesmereUIDB.ppUIScaleAuto
-                        -- Preserve friend group data across reset
-                        local oldGlobal = EllesmereUIDB and EllesmereUIDB.global
-                        local savedFriends
-                        if oldGlobal then
-                            savedFriends = {
-                                friendGroups = oldGlobal.friendGroups,
-                                friendAssignments = oldGlobal.friendAssignments,
-                                friendGroupOrder = oldGlobal.friendGroupOrder,
-                                friendGroupColors = oldGlobal.friendGroupColors,
-                                friendNotes = oldGlobal.friendNotes,
-                                friendFavCollapsed = oldGlobal.friendFavCollapsed,
-                                friendPendingCollapsed = oldGlobal.friendPendingCollapsed,
-                                friendUngroupedCollapsed = oldGlobal.friendUngroupedCollapsed,
-                            }
-                        end
-                        -- Preserve QoL settings (stored on EllesmereUIDB root)
-                        local qolKeys = {
-                            "autoOpenContainers", "autoSellJunk", "autoRepair",
-                            "autoRepairGuild", "hideScreenshotStatus", "autoUnwrapCollections",
-                            "trainAllButton", "ahCurrentExpansion", "quickLoot",
-                            "autoFillDelete", "skipCinematics", "skipCinematicsAuto",
-                            "autoInsertKeystone", "quickSignup",
-                            "persistSignupNote", "signupNote", "hideBlizzardPartyFrame",
-                            "instanceResetAnnounce", "instanceResetAnnounceMsg",
-                            "macroFactory",
-                        }
-                        local savedQoL = {}
-                        for _, k in ipairs(qolKeys) do
-                            if EllesmereUIDB[k] ~= nil then
-                                savedQoL[k] = EllesmereUIDB[k]
-                            end
-                        end
-                        local restoreRecord = EllesmereUIDB.restoreOnUninstall
-                        _G["EllesmereUIDB"] = {}
-                        EllesmereUIDB = _G["EllesmereUIDB"]
-                        EllesmereUIDB.restoreOnUninstall = restoreRecord
-                        if oldScale then EllesmereUIDB.ppUIScale = oldScale end
-                        if oldScaleAuto ~= nil then EllesmereUIDB.ppUIScaleAuto = oldScaleAuto end
-                        if savedFriends then
-                            if not EllesmereUIDB.global then EllesmereUIDB.global = {} end
-                            for k, v in pairs(savedFriends) do
-                                EllesmereUIDB.global[k] = v
-                            end
-                        end
-                        for k, v in pairs(savedQoL) do
-                            EllesmereUIDB[k] = v
-                        end
-                    end,
-                })
-            end)
-            y = y - BTN_H
         end
 
         return math.abs(y)
@@ -4311,7 +4266,50 @@ initFrame:SetScript("OnEvent", function(self)
                 editBox:SetScript("OnEscapePressed", function(self) self:ClearFocus() end)
                 editBox:SetScript("OnEnterPressed", function(self) self:ClearFocus() end)
 
-                iy = iy - INPUT_H - 14
+                iy = iy - INPUT_H - 10
+
+                -- Target: a new profile (default) or the active profile, updated in place.
+                local CHK = 14
+                local intoRow = CreateFrame("Button", nil, importPage)
+                PP.Size(intoRow, INPUT_W + 160, 22)
+                PP.Point(intoRow, "TOPLEFT", importPage, "TOPLEFT", PAD, iy)
+                local intoBox = CreateFrame("Frame", nil, intoRow)
+                intoBox:SetSize(CHK, CHK)
+                intoBox:SetPoint("LEFT", intoRow, "LEFT", 0, 0)
+                local intoBg = intoBox:CreateTexture(nil, "BACKGROUND"); intoBg:SetAllPoints()
+                intoBg:SetColorTexture(0.12, 0.12, 0.14, 1)
+                EllesmereUI.MakeBorder(intoBox, 0.25, 0.25, 0.28, 0.6, PP)
+                local intoMark = intoBox:CreateTexture(nil, "ARTWORK")
+                intoMark:SetPoint("TOPLEFT", intoBox, "TOPLEFT", 3, -3)
+                intoMark:SetPoint("BOTTOMRIGHT", intoBox, "BOTTOMRIGHT", -3, 3)
+                intoMark:SetColorTexture(EG.r, EG.g, EG.b, 1)
+                intoMark:Hide()
+                local intoLbl = EllesmereUI.MakeFont(intoRow, 12, nil, 1, 1, 1, 0.7)
+                intoLbl:SetPoint("LEFT", intoBox, "RIGHT", 8, 0)
+                intoLbl:SetText(EllesmereUI.Lf("Import into current profile (%1$s)", EllesmereUI.GetActiveProfileName() or ""))
+                local newName = defaultName
+                local function SetInto(on)
+                    importPage._intoCurrent = on
+                    if on then intoMark:Show() else intoMark:Hide() end
+                    if on then
+                        newName = editBox:GetText()
+                        editBox:SetText(EllesmereUI.GetActiveProfileName() or "")
+                        editBox:ClearFocus()
+                    else
+                        editBox:SetText(newName or "")
+                    end
+                    editBox:EnableMouse(not on)
+                    editBox:SetTextColor(1, 1, 1, on and 0.45 or 0.9)
+                end
+                importPage._intoCurrent = false
+                intoRow:SetScript("OnClick", function() SetInto(not importPage._intoCurrent) end)
+                intoRow:SetScript("OnEnter", function(self)
+                    intoLbl:SetAlpha(1)
+                    EllesmereUI.ShowWidgetTooltip(self, EllesmereUI.L("Instead of making a new profile, the selected modules replace their settings in your current profile. Everything else in it stays as it is."))
+                end)
+                intoRow:SetScript("OnLeave", function() intoLbl:SetAlpha(0.7); EllesmereUI.HideWidgetTooltip() end)
+
+                iy = iy - 22 - 12
             end
 
             -- Import Addons section (mirrors per-addon export layout)
@@ -4807,10 +4805,15 @@ initFrame:SetScript("OnEvent", function(self)
                 local apiS = EllesmereUI._apiImportSession
                 local apiOverwrite = apiS and apiS.state ~= "done" and apiS.name == name
                 local _, existingProfiles = EllesmereUI.GetProfileList()
-                if existingProfiles and existingProfiles[name] and not apiOverwrite then
+                -- The active profile's own name updates it in place: ImportProfile builds on the
+                -- active profile, so modules left unselected keep their current settings.
+                if importPage._intoCurrent then name = EllesmereUI.GetActiveProfileName() or name end
+                local updateActive = existingProfiles and existingProfiles[name] and not apiOverwrite
+                    and name == EllesmereUI.GetActiveProfileName()
+                if existingProfiles and existingProfiles[name] and not apiOverwrite and not updateActive then
                     EllesmereUI:ShowConfirmPopup({
                         title = EllesmereUI.L("Name Taken"),
-                        message = EllesmereUI.Lf("A profile named \"%1$s\" already exists. Please choose a different name.", name),
+                        message = EllesmereUI.Lf("A profile named \"%1$s\" already exists. Please choose a different name, or switch to that profile first to import into it.", name),
                         confirmText = EllesmereUI.L("OK"),
                         hideCancel = true,
                         onConfirm = function() end,
@@ -4961,6 +4964,16 @@ initFrame:SetScript("OnEvent", function(self)
 
                 -- CDM spell layouts (gated above) import as-is, no spec picker: they are per-profile (spellAssignments.profiles[profileName]),
                 -- so only the NEW profile's store is populated (others untouched) and any spec not in the string falls back to default bars.
+                if updateActive then
+                    EllesmereUI:ShowConfirmPopup({
+                        title       = EllesmereUI.L("Import Into Active Profile?"),
+                        message     = EllesmereUI.Lf("The selected modules replace their settings in \"%1$s\". Everything else in this profile stays as it is.", name),
+                        confirmText = EllesmereUI.L("Import"),
+                        cancelText  = EllesmereUI.L("Cancel"),
+                        onConfirm   = commit,
+                    })
+                    return
+                end
                 commit()
             end)
             importBtn._flashError = BuildErrorFlash(importBtn, impBrd)
@@ -5367,7 +5380,7 @@ initFrame:SetScript("OnEvent", function(self)
                             local xIcon = xBtn:CreateTexture(nil, "OVERLAY")
                             xIcon:SetAllPoints()
                             if xIcon.SetSnapToPixelGrid then xIcon:SetSnapToPixelGrid(false); xIcon:SetTexelSnappingBias(0) end
-                            xIcon:SetTexture(MEDIA .. "icons\\eui-close.png")
+                            xIcon:SetTexture(MEDIA .. "icons_335\\eui-close.tga")
                             xBtn:SetAlpha(0.4)
                             itm._xBtn = xBtn
 
@@ -5378,7 +5391,7 @@ initFrame:SetScript("OnEvent", function(self)
                             local editIcon = editBtn:CreateTexture(nil, "OVERLAY")
                             editIcon:SetAllPoints()
                             if editIcon.SetSnapToPixelGrid then editIcon:SetSnapToPixelGrid(false); editIcon:SetTexelSnappingBias(0) end
-                            editIcon:SetTexture(MEDIA .. "icons\\eui-edit.png")
+                            editIcon:SetTexture(MEDIA .. "icons_335\\eui-edit.tga")
                             editBtn:SetAlpha(0.4)
                             itm._editBtn = editBtn
 
@@ -5389,7 +5402,7 @@ initFrame:SetScript("OnEvent", function(self)
                             local kbIconI = kbBtnI:CreateTexture(nil, "OVERLAY")
                             kbIconI:SetAllPoints()
                             if kbIconI.SetSnapToPixelGrid then kbIconI:SetSnapToPixelGrid(false); kbIconI:SetTexelSnappingBias(0) end
-                            kbIconI:SetTexture(MEDIA .. "icons\\eui-keybind-2.png")
+                            kbIconI:SetTexture(MEDIA .. "icons_335\\eui-keybind-2.tga")
                             kbBtnI:SetAlpha(0.4)
                             itm._kbBtn = kbBtnI
 
@@ -6675,7 +6688,103 @@ initFrame:SetScript("OnEvent", function(self)
             end,
         })
 
-        -- "Special thanks to: Ellesmere" beside the header's collapse button; a
+        -- Window Scale: the header's panel scale slider, left of the collapse box and
+        -- centred on the close X. 5% steps from 75% to 200%: a drag shows its value
+        -- live and applies on release, the mouse wheel steps one notch per tick, and
+        -- every change glides with the track pinned (SetPanelScale), so the slider
+        -- never slides out from under the cursor. Built on the first open.
+        local scaleCtl, ScaleCtlRefresh
+        local function BuildScaleControl()
+            local ca = EllesmereUI._clickArea
+            if scaleCtl or not ca or not EllesmereUI.BuildSliderCore then return end
+            local MIN = EllesmereUI.PANEL_SCALE_MIN * 100
+            local MAX = EllesmereUI.PANEL_SCALE_MAX * 100
+            local STEP, TRACK_W, PCT_W = 5, 110, 40
+            local ctl = CreateFrame("Frame", nil, ca)
+            scaleCtl = ctl
+            ctl:SetFrameLevel(ca:GetFrameLevel() + 20)
+            ctl:SetHeight(24)
+            ctl:SetPoint("RIGHT", ca, "TOPRIGHT", -110, -31)
+
+            local pctFs = EllesmereUI.MakeFont(ctl, 13, nil, 1, 1, 1, 0.9)
+            pctFs:SetWidth(PCT_W)
+            pctFs:SetJustifyH("RIGHT")
+            pctFs:SetPoint("RIGHT", ctl, "RIGHT", 0, 0)
+            local function ShowPct(v)
+                pctFs:SetText(string.format("%d%%", math.floor(v + 0.5)))
+            end
+            local function SavedPct()
+                return ((EllesmereUIDB and EllesmereUIDB.panelScale) or 1) * 100
+            end
+
+            local pending   -- the dragged value, shown until the release applies it
+            local track, valBox, refresh
+            local function Apply(v)
+                ShowPct(v)
+                if math.abs(v - SavedPct()) < 0.01 then return end
+                EllesmereUI:SetPanelScale(v / 100, track)
+            end
+            track, valBox, refresh = EllesmereUI.BuildSliderCore(ctl, TRACK_W, 4, 12, PCT_W, 20, 12, 0.5,
+                MIN, MAX, STEP,
+                function() return pending or SavedPct() end,
+                function(v)
+                    if EllesmereUI._sliderDragging then
+                        pending = v
+                        ShowPct(v)
+                        return
+                    end
+                    pending = nil
+                    Apply(v)
+                end, true)
+            valBox:Hide()   -- the plain readout replaces the input box
+            track:SetPoint("RIGHT", pctFs, "LEFT", -10, 0)
+
+            local label = EllesmereUI.MakeFont(ctl, 13, nil, 1, 1, 1, 0.6)
+            label:SetText(EllesmereUI.L("Window Scale"))
+            label:SetPoint("RIGHT", track, "LEFT", -16, 0)
+            -- The whole control takes the wheel; clicks off the track still reach the
+            -- click area below (the window drag).
+            ctl:SetWidth(PCT_W + 10 + TRACK_W + 16 + label:GetStringWidth())
+            ctl:EnableMouseWheel(true)
+            ctl:SetScript("OnMouseWheel", function(_, delta)
+                if EllesmereUI._sliderDragging then return end
+                if EllesmereUI:StepPanelScale(delta, track) then
+                    ShowPct(SavedPct())
+                    refresh()
+                end
+            end)
+
+            ScaleCtlRefresh = function()
+                pending = nil
+                ShowPct(SavedPct())
+                refresh()
+            end
+            ScaleCtlRefresh()
+            -- Shift + mouse wheel elsewhere on the panel steps the scale too: the
+            -- readout follows at once and an accent outline round the control lights
+            -- up and fades. Each step restarts the fade.
+            local glowHost = CreateFrame("Frame", nil, ctl)
+            glowHost:SetPoint("TOPLEFT", ctl, "TOPLEFT", -10, 6)
+            glowHost:SetPoint("BOTTOMRIGHT", ctl, "BOTTOMRIGHT", 8, -6)
+            local PlayGlow = EllesmereUI.MakeSettingGlow and EllesmereUI.MakeSettingGlow({ color = EllesmereUI.ELLESMERE_GREEN })
+            EllesmereUI._FlashWindowScale = function()
+                ScaleCtlRefresh()
+                if PlayGlow then PlayGlow(glowHost) end
+            end
+            EllesmereUI.RegAccent({ type = "callback", fn = function() refresh() end })
+            -- Any scale change (this slider, the General page dropdown) lands here once its glide ends.
+            if not EllesmereUI._onScaleChanged then EllesmereUI._onScaleChanged = {} end
+            EllesmereUI._onScaleChanged[#EllesmereUI._onScaleChanged + 1] = function()
+                if not EllesmereUI._sliderDragging then ScaleCtlRefresh() end
+            end
+        end
+        local function ScaleCtlOnShow()
+            if scaleCtl then ScaleCtlRefresh() else BuildScaleControl() end
+        end
+        EllesmereUI:RegisterOnShow(ScaleCtlOnShow)
+        if EllesmereUI._mainFrame and EllesmereUI._mainFrame:IsShown() then ScaleCtlOnShow() end
+
+        -- "Special thanks to: Ellesmere" right-aligned under the header's close X; a
         -- click opens the EUI Staff page. Built on the first open.
         local thanksBtn
         local function ShowThanks()
@@ -6685,7 +6794,8 @@ initFrame:SetScript("OnEvent", function(self)
                 thanksBtn = CreateFrame("Button", nil, ca)
                 thanksBtn:SetFrameLevel(ca:GetFrameLevel() + 20)
                 thanksBtn:SetHeight(20)
-                thanksBtn:SetPoint("RIGHT", ca, "TOPRIGHT", -110, -31)
+                -- Right edge on the painted close box's, just below it.
+                thanksBtn:SetPoint("TOPRIGHT", ca, "TOPRIGHT", -12, -54)
                 local EG = EllesmereUI.ELLESMERE_GREEN
                 local nameFs = EllesmereUI.MakeFont(thanksBtn, 13, nil, EG.r, EG.g, EG.b, 0.9)
                 nameFs:SetPoint("RIGHT", thanksBtn, "RIGHT", 0, 0)

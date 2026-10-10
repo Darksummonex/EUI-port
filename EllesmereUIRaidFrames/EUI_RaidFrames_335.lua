@@ -479,14 +479,31 @@ local function OnEvent(_,event,unit,duration)
     elseif event=="PLAYER_REGEN_ENABLED" then ns.inCombat=false; ns.UpdateAll(false)
     elseif event=="RAID_ROSTER_UPDATE" or event=="PARTY_MEMBERS_CHANGED" then if InCombatLockdown() then pending=true; ns.UpdateAll(true) else ns.Apply() end
     elseif event=="READY_CHECK" then
-        ns.readyResults={}; ns.readyFinished=false; ns.readyUntil=GetTime()+(tonumber(duration) or 35)+10; ns.UpdateAll(false)
+        ns.readyResults={}; ns.readyFinished=false; ns.readyInitiator=unit
+        ns.readyUntil=GetTime()+(tonumber(duration) or 35)+10; ns.UpdateAll(false)
     elseif event=="READY_CHECK_CONFIRM" then
-        local guid=unit and UnitGUID(unit)
-        if guid and ns.readyResults and not ns.readyFinished then ns.readyResults[guid]=(duration==true or duration==1) and "ready" or "notready" end
+        -- The client can fire FINISHED before the last CONFIRM, so late answers still count.
+        local guid=ns.ReadyGUID(unit)
+        local status=ns.ReadyConfirmStatus(unit,duration)
+        if guid and status and ns.readyResults and ns.readyUntil and GetTime()<ns.readyUntil then
+            ns.readyResults[guid]=status
+            if ns.readyFinished then ns.readyUntil=GetTime()+10 end
+        end
         ns.UpdateAll(false)
     elseif event=="READY_CHECK_FINISHED" then
+        local results=ns.readyResults or {}; ns.readyResults=results
+        for _,b in ipairs(ns.buttons) do
+            local token=b:GetAttribute("unit") or b.unit
+            local guid=token and UnitGUID(token)
+            if guid then
+                local live=GetReadyCheckStatus(token)
+                local known=results[guid]
+                if (live=="ready" or live=="notready") and (known==nil or known=="waiting") then results[guid]=live end
+                if ns.IsReadyInitiator(token) then results[guid]="ready" end
+            end
+        end
         ns.readyFinished=true; ns.readyUntil=GetTime()+10
-        for guid,status in pairs(ns.readyResults or {}) do if status=="waiting" then ns.readyResults[guid]="notready" end end
+        for guid,status in pairs(results) do if status=="waiting" then results[guid]="notready" end end
         ns.UpdateAll(false)
     elseif event:find("UNIT_",1,true)==1 then
         for _,b in ipairs(ns.buttons) do if b:IsShown() and (b:GetAttribute("unit")==unit or b.unit==unit) then ns.UpdateFrame(b,event=="UNIT_AURA" or event=="UNIT_PET" or event:find("VEHICLE",1,true)) end end
@@ -502,6 +519,17 @@ function addon:OnEnable()
     local events=CreateFrame("Frame"); ns.events=events
     for _,event in ipairs({"PLAYER_ENTERING_WORLD","ZONE_CHANGED_NEW_AREA","PLAYER_REGEN_ENABLED","PLAYER_REGEN_DISABLED","RAID_ROSTER_UPDATE","PARTY_MEMBERS_CHANGED","PARTY_LEADER_CHANGED","PLAYER_TARGET_CHANGED","RAID_TARGET_UPDATE","READY_CHECK","READY_CHECK_CONFIRM","READY_CHECK_FINISHED","UNIT_HEALTH","UNIT_MAXHEALTH","UNIT_MANA","UNIT_MAXMANA","UNIT_RAGE","UNIT_MAXRAGE","UNIT_ENERGY","UNIT_MAXENERGY","UNIT_FOCUS","UNIT_RUNIC_POWER","UNIT_MAXRUNIC_POWER","UNIT_DISPLAYPOWER","UNIT_AURA","UNIT_NAME_UPDATE","UNIT_FLAGS","UNIT_CONNECTION","UNIT_THREAT_SITUATION_UPDATE","UNIT_ENTERED_VEHICLE","UNIT_EXITED_VEHICLE","UNIT_PET","SPELLS_CHANGED","ADDON_LOADED","INSTANCE_ENCOUNTER_ENGAGE_UNIT","PLAYER_TALENT_UPDATE"}) do pcall(events.RegisterEvent,events,event) end
     events:SetScript("OnEvent",OnEvent)
+    -- The answering client may get no READY_CHECK_CONFIRM for itself; record the click.
+    if ConfirmReadyCheck and not ns.readyHooked then
+        ns.readyHooked=true
+        hooksecurefunc("ConfirmReadyCheck",function(isReady)
+            local guid=UnitGUID("player")
+            local status=(isReady and isReady~=0 and isReady~=false) and "ready" or "notready"
+            if guid and ns.readyResults and ns.readyUntil and GetTime()<ns.readyUntil then
+                ns.readyResults[guid]=status; ns.UpdateAll(false)
+            end
+        end)
+    end
     local elapsed,roleElapsed=0,0
     events:SetScript("OnUpdate",function(_,dt)
         if ns.UpdateTooltip then ns.UpdateTooltip() end

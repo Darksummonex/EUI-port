@@ -1,0 +1,49 @@
+5779	Qualitätsrahmen, Questmarkierungen, Gegenstandsstufe, BoE-Text, Setnamen und abgedunkelter Müll
+5780	Gruppiere die Bank nach Kategorie, mit einer Seitenleiste
+5781	Mit deaktiviertem Taschen aktivieren werden die Standard-Taschenfunktionen nicht mehr ersetzt, was Fehler durch blockierte Aktionen aus verseuchtem Taschencode vermeidet.
+5782	Das Öffnen der Liste Charaktere wirft keinen Fehler mehr.
+5783	Goldverkaufswerbung mit Webseiten oder Bargeldpreisen, einschließlich 5000G=20 bucks und getarnter W.W.W-Adressen, wird standardmäßig in deinen gewählten Chatbereichen gefiltert.
+5784	Nicht unterstützte Serverkanal-Hinweise wie NOT_IN_LFG lassen den nativen Chatformatierer keinen Fehler mehr werfen.
+5785	Optionale Spamfilterung mit Wiederholungsfenster, Absenderabgleich und Steuerung für öffentlich, Gruppe oder Flüstern.
+5786	Hintergrund, Trenner, Eingabeposition, Retail-Rahmen und Reiter über dem nativen Dock, dazu eine Seitenleiste mit Freunden, Gilde, Kopieren, Kanälen und Einstellungen.
+5787	Retail-Zeitstempel, kurze Kanalnamen, Namen in Klassenfarbe, Link-Tooltips, Flüstersounds, gespeicherter Chatverlauf sowie Retail-URL- und Kopierfenster.
+5788	Versteckte Nachrichten anzeigen listet die letzten 200 Zeilen, die der Spamfilter in dieser Sitzung ausgeblendet hat, mit Zeit, Grund, Kanal und Absender. Filterverlauf löschen heißt jetzt Wiederholungsspeicher zurücksetzen.
+5789	Die Voreinstellung für Handelswerbung blendet auch LFW-Handwerksangebote (looking for work) aus.
+5790	Rechtsklicke den Chat im Freigabemodus, um seine Anzeigeeinstellungen zu öffnen
+5791	Neu gestaltete Sprechblasen mit Schaltern pro Kanal und Ausblenden in Instanzen
+5792	Der Chat verblasst nach einer Verzögerung und kehrt beim Überfahren mit der Maus zurück
+5793	Chat kopieren kopiert den Chatreiter, den du gerade ansiehst, statt des zuletzt rechtsgeklickten Reiters, der \"(No chat history)\" zeigen konnte.
+5794	Ein Fehler \"SetPoint(): is dependent on this\" beim Gestalten mancher NPC-Sprechblasen wurde behoben.
+5795	Der Gildenrekrutierungsfilter blendet keine Schlachtzugsanzeigen mehr aus, die eine Gilde erwähnen, etwa \"<Frost> LF 1 heal ICC25\"; nur Phrasen zur Gildensuche zählen.
+5796	GM-Flüsternachrichten und -Nachrichten werden nie vom Spamfilter ausgeblendet.
+5797	Schlüsselwörter des Spamfilters ignorieren Groß- und Kleinschreibung auch bei Akzentbuchstaben, sodass promoção auch PROMOÇÃO ausblendet.
+5798	Die Filter für Handelswerbung und Gildenrekrutierung folgen der Einstellung Öffentlicher Chat, und der Spamfilter arbeitet nicht, solange alle Filter aus sind.
+5799	Die Seitenleiste erscheint beim ersten Laden, und Reiter und Schalter aktualisieren sich sofort.
+5800	Der Hauptchat behält seine Position aus dem Freigabemodus, statt vom Dock zurückgesetzt zu werden.
+5801	Eine gespeicherte Chat-Deckkraft von 0 wird einmalig auf den Retail-Standard zurückgesetzt.
+5802	Quadratische, rechteckige, runde und texturierte runde Karten, mit Rahmengröße, Deckkraft, texturierten Stilen und eigenen, Akzent- oder Klassenfarben.
+5803	Addon-Tasten sammeln sich im Retail-Ausklappmenü mit Raster, Wachstumsrichtung und freiem Bewegen per Umschalt-Ziehen.
+5804	Ein Vanilla-Ring und Zonenbanner mit nativen Zoomtasten
+5805	Uhr- und Zonenfelder in zehn Positionen, dazu Koordinaten, FPS und Latenz sowie Schwierigkeitstext
+5806	Gilde und Freunde auf einen Blick; Linksklick flüstert, Rechtsklick lädt ein
+5807	Menüaktionen öffnen Blizzard-Fenster über sichere Aufrufe und vermeiden so Fehler durch blockierte Aktionen.
+5808	Wähle Klassisches WoW UI für Schadensmeter auf der Seite Stil: jedes Fenster erhält den klassischen Tooltip-Rahmen, ein Tooltip-Kopfband und Vanilla-Kopfzeilensymbole und behält jede EllesmereUI Meterfunktion.
+5809	Der Aufschlüsselungstooltip eines Zaubers zeigt seine Zauber-ID, und jede Zauberzeile im Detailfenster endet mit ihrer ID.
+5810	Verbrauchte Schildabsorptionen zählen zu Heilung verursacht und HPS, wenn der Zaubernde ermittelt werden kann, mit einer Ansicht für verursachte Absorptionen.
+5811	Flacher Körper, Akzent-Kopfzeile, Atrocity-Leisten und Kopfzeilensymbole für Einstellungen, Segment, Messertyp und Zurücksetzen, mit bis zu fünf Fenstern.
+5812	Bis zu 15 Zauber und die drei häufigsten Ziele beim Überfahren, Todesrückblicke mit Gesundheit bei jedem Treffer und eine Fokusansicht pro Spieler.
+5813	SharedMedia-Leistentexturen werden geladen, egal ob ein Profil sie im Format von Schadensmeter oder EllesmereUI speichert
+5814	Eine Symbolleiste und ein Leistenfenster deiner Zauber, einschließlich fehlgeschlagener und unterbrochener
+5815	Ein freistehender Kampftimer mit eigenem Element im Freigabemodus
+5816	Fenster rasten aneinander ein; gesperrte Fenster können nicht bewegt, skaliert oder geschlossen werden
+5817	Tastenbelegungen für Daten zurücksetzen und Fenster anzeigen / ausblenden
+5818	Spezialisierungssymbole aus Talentdaten und dosiertes Betrachten der Gruppe
+5819	Lade ein Aktionsmenü nur in deiner primären oder sekundären Talentgruppe und lasse zwei Menüs eine Tastenbelegung über Spezialisierungen hinweg teilen.
+5820	Halte eine Taste, zeige oder scrolle zur Auswahl, lasse los zum Auslösen. Bis zu 16 Paletten mit 20 Einträgen in Ring-, Bogen-, Fächer- oder Rasterlayouts.
+5821	Ein Aktionsmenü-Eintrag fächert bis zu 8 Aktionen aus einer anderen Palette auf, eine Ebene außerhalb des Rings.
+5822	Akzent-, Klassen- oder eigene Farbe für den ausgewählten Eintrag, die Nadel und die verschachtelte Hervorhebung
+5823	Lege den Abstand zwischen einem verschachtelten Menü und seinem Eintrag sowie die Größe verschachtelter Symbole fest
+5824	Kehrt um, in welche Richtung ein Mausradschritt die Auswahl bewegt
+5825	Taste zuweisen erfasst die nächste Taste mit Modifikatoren und fragt vor dem Neubelegen nach
+5826	Hält das Menü beim Loslassen offen und löst mit einer Auswahltaste aus
+5827	Rot außer Reichweite, blau bei zu wenig Ressource, grau wenn unbenutzbar

@@ -9,11 +9,11 @@ local function Font(fs,cfg)
  if not fs:SetFont(path,cfg.textSize or 11,cfg.fontOutline or "OUTLINE") then fs:SetFont("Fonts\\FRIZQT__.TTF",11,"OUTLINE") end
  fs:SetShadowColor(0,0,0,1); fs:SetShadowOffset(1,-1)
 end
-local function Accent() if E.GetAccentColor then return E.GetAccentColor() end; return .047,.824,.616 end
 local function Tooltip(self)
  if not self.slot then return end
  GameTooltip:SetOwner(self,"ANCHOR_RIGHT"); local kind,id=self.slot.kind,self.slot.id
  if kind=="spell" and tonumber(id) then GameTooltip:SetHyperlink("spell:"..id) elseif kind=="item" then GameTooltip:SetHyperlink("item:"..id)
+ elseif kind=="worldmarker" and ns.worldMarkerItems[tonumber(id) or 0] then GameTooltip:SetHyperlink("item:"..ns.worldMarkerItems[tonumber(id)])
  else GameTooltip:AddLine(ns.Display(self.slot),1,1,1) end
  GameTooltip:Show()
 end
@@ -42,7 +42,8 @@ function ns.Layout(cfg,count,nests)
   else x=((j-1)%columns-(columns-1)/2)*(size+gap); y=(rows-1)/2*(size+gap+20)-math.floor((j-1)/columns)*(size+gap+20) end
   pos[j]={x,y}
  end
- local csize=math.floor(size*.8)
+ local csize=math.floor(size*ns.Clamp(cfg.nestScale or .8,.4,1))
+ local band=ns.Clamp(cfg.nestBand or 40,0,160)
  local geo={layout=layout,size=size,gap=gap,width=width,height=height,span=span,pos=pos,labelWidth=size+gap+(layout=="ARC" and labelRoom or 0),childSize=csize,childPos={},nestEdge=0}
  if not nests then return geo end
  local labelH=cfg.showLabels~=false and 14 or 0
@@ -52,7 +53,7 @@ function ns.Layout(cfg,count,nests)
   -- Children ring outward from their parent, kept inside the parent's own sector.
   local sector=count<=1 and math.min(spanRad,2*math.pi) or (spanRad>=2*math.pi and 2*math.pi/count or spanRad/(count-1))
   local maxSpan=math.min(sector*.92,math.pi/2)
-  local first=radius+size/2+labelRoom*.5+12+csize/2
+  local first=radius+size/2+band+csize/2
   geo.nestEdge=(radius+size/2+first-csize/2)/2
   for j=1,count do local n=nests[j] or 0
    if n>0 then local list,left,ring={},n,0
@@ -87,10 +88,10 @@ function ns.Layout(cfg,count,nests)
     used[edge][level]=used[edge][level] or {}; table.insert(used[edge][level],{low,high})
     local list={}
     for t=1,n do local along=center+((t-1)-(n-1)/2)*pitch
-     if edge=="top" then Place(list,along,top+gap+csize/2+level*(csize+gap+labelH))
-     elseif edge=="bottom" then Place(list,along,bottom-gap-csize/2-level*(csize+gap+labelH))
-     elseif edge=="right" then Place(list,right+gap+csize/2+level*(csize+gap),y-((t-1)-(n-1)/2)*pitch)
-     else Place(list,-right-gap-csize/2-level*(csize+gap),y-((t-1)-(n-1)/2)*pitch) end
+     if edge=="top" then Place(list,along,top+band+csize/2+level*(csize+gap+labelH))
+     elseif edge=="bottom" then Place(list,along,bottom-band-csize/2-level*(csize+gap+labelH))
+     elseif edge=="right" then Place(list,right+band+csize/2+level*(csize+gap),y-((t-1)-(n-1)/2)*pitch)
+     else Place(list,-right-band-csize/2-level*(csize+gap),y-((t-1)-(n-1)/2)*pitch) end
     end
     geo.childPos[j]=list
    end
@@ -166,14 +167,14 @@ function ns.BuildPalettes()
  for i,live in ipairs(ns.live) do local cfg=ns.Palette(i); local view,driver=live.view,live.driver; view:Hide(); ClearOverrideBindings(view)
   driver:SetAttribute("held",nil); driver:SetAttribute("latched",nil)
   local visible=cfg and ns.VisibleSlots(cfg) or {}
-  driver:SetAttribute("enabled",profile.enabled and cfg and cfg.enabled~=false and #visible>0 or false)
+  driver:SetAttribute("enabled",profile.enabled and cfg and cfg.enabled~=false and ns.PaletteActive(i) and #visible>0 or false)
   driver:SetAttribute("toggle",cfg and cfg.toggleMode==true and confirmKey~=nil or nil); driver:SetAttribute("confirmKey",confirmKey); driver:SetAttribute("cancelKey",cancelKey)
   if cfg then
    cfg.slots=cfg.slots or {}; local count=#visible
    live.config=ns.Copy(cfg)
    local nests,childLists={},{}
    for j,slot in ipairs(visible) do nests[j]=0
-    local target=slot.kind=="palette" and tonumber(slot.id)~=i and ns.Palette(tonumber(slot.id))
+    local target=slot.kind=="palette" and tonumber(slot.id)~=i and ns.PaletteActive(tonumber(slot.id)) and ns.Palette(tonumber(slot.id))
     if target then childLists[j]=ns.NestChildren(target); nests[j]=#childLists[j] end
    end
    local geo=ns.Layout(cfg,count,nests); local layout,size,gap=geo.layout,geo.size,geo.gap
@@ -200,6 +201,7 @@ function ns.BuildPalettes()
    view:SetAttribute("count",count); view:SetAttribute("layout",layout); view:SetAttribute("iconSize",size); view:SetAttribute("centerMode",cfg.centerMode or "CURSOR")
    view:SetAttribute("arcSpan",geo.span); view:SetAttribute("arcRotation",cfg.arcRotation or 0); view:SetAttribute("initialX",nil); view:SetAttribute("initialY",nil)
    view:SetAttribute("posX",(cfg.posX or 0)/view:GetScale()); view:SetAttribute("posY",(cfg.posY or 0)/view:GetScale()); view:SetAttribute("wheel",nil); view:SetAttribute("wheelX",nil); view:SetAttribute("wheelY",nil)
+   view:SetAttribute("invertScroll",cfg.invertScroll==true or nil)
    if layout=="ARC" then live.hub:Show() else live.hub:Hide() end
    Font(live.caption,cfg); live.caption:ClearAllPoints()
    if layout=="ARC" then live.caption:SetPoint("TOP",view,"CENTER",0,-24) else live.caption:SetPoint("TOP",view,"BOTTOM",0,-6) end
@@ -213,7 +215,7 @@ function ns.BuildPalettes()
      Font(b.label,cfg); Font(b.count,cfg); b.label:SetWidth(geo.labelWidth); b.label:SetText(cfg.showLabels~=false and name or "")
      local kind,value=ns.Action(slot,cfg); if kind=="nest" then kind,value=nil,nil end
      b:SetAttribute("actionKind",kind); b:SetAttribute("actionValue",value)
-     if slot.kind=="worldmarker" then b.spellName=ns.WorldMarkerName(tonumber(slot.id))
+     if slot.kind=="worldmarker" then b.itemID=ns.worldMarkerItems[tonumber(slot.id)]
      elseif kind=="spell" then b.spellName=value elseif kind=="item" then b.itemID=tonumber(value:match("item:(%d+)")) end
      local unit=(slot.unit=="player" or slot.unit=="target" or slot.unit=="focus" or slot.unit=="mouseover") and slot.unit or nil
      b.unit=unit; b:SetAttribute("actionUnit",unit); b:SetAttribute("unit",unit)
@@ -288,7 +290,7 @@ function ns.UpdateVisuals(index)
  if selected and live.children[selected] then focus=selected elseif selected then focus=nil end
  if focus~=live.focus then live.focus=focus; ns.ShowChildren(live,focus) end
  local refresh=not live.nextState or now>=live.nextState; if refresh then live.nextState=now+.1 end
- local r,g,blue=Accent()
+ local r,g,blue=ns.SelectColor(cfg)
  for j,b in ipairs(live.pool) do if b.slot then
   if j==selected then b:SetBackdropBorderColor(r,g,blue,1) else b:SetBackdropBorderColor(0,0,0,0) end
   local start,duration=0,0; local count=0

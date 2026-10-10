@@ -70,6 +70,7 @@ local function PrepareMenu()
     if dropdown then return end
     dropdown=CreateFrame("Frame","EUI335RaidUnitMenu",UIParent,"UIDropDownMenuTemplate"); dropdown:SetID(1)
     if UnitPopupFrames then table.insert(UnitPopupFrames,dropdown:GetName()) end
+    if E.UnitMenuWithoutFocus then E.UnitMenuWithoutFocus(dropdown) end
     UIDropDownMenu_Initialize(dropdown,function(self)
         local unit=self.unit; if not unit then return end
         local menu=UnitIsUnit(unit,"player") and "SELF" or UnitIsUnit(unit,"vehicle") and "VEHICLE" or UnitIsUnit(unit,"pet") and "PET" or UnitIsPlayer(unit) and (UnitInRaid(unit) and "RAID_PLAYER" or "PARTY") or "TARGET"
@@ -227,7 +228,7 @@ local function RaidDebuff(b,unit,c)
     rd:Show()
 end
 -- Sated / Exhaustion (Retail "Hide Bloodlust Debuff"; Wrath IDs).
-local lustDebuffs={[57724]=true,[57723]=true}
+local lustDebuffs={[57724]=true,[57723]=true,[81005]=true}
 function ns.UpdateAuras(b,unit,c)
     ClearAuras(b); b.dispelColorCandidates=nil
     if not unit or not UnitExists(unit) then return end
@@ -442,6 +443,46 @@ function ns.InitPrediction()
     end
 end
 local previewClasses={"WARRIOR","PRIEST","DRUID","PALADIN","MAGE","HUNTER","SHAMAN","ROGUE","WARLOCK","DEATHKNIGHT"}
+-- UnitIsPartyLeader(unit) can answer true for several party members on 3.3.5;
+-- Blizzard's party frames use GetPartyLeaderIndex (0 = player) instead.
+function ns.IsPartyLeaderUnit(unit)
+    if not unit then return false end
+    if not GetPartyLeaderIndex then return UnitIsPartyLeader(unit) and true or false end
+    if (GetNumPartyMembers() or 0)==0 then return false end
+    local index=GetPartyLeaderIndex() or 0
+    if UnitIsUnit(unit,"player") then
+        if IsPartyLeader then return IsPartyLeader() and true or false end
+        return index==0
+    end
+    local n=tonumber(tostring(unit):match("^party(%d+)$"))
+    if not n then for i=1,GetNumPartyMembers() do if UnitIsUnit(unit,"party"..i) then n=i; break end end end
+    return n~=nil and index==n
+end
+function ns.IsReadyInitiator(unit)
+    local who=ns.readyInitiator
+    if not (unit and who and who~="") then return false end
+    if UnitIsUnit(unit,who) then return true end
+    local name,realm=UnitName(unit)
+    return name~=nil and (name==who or realm and realm~="" and name.."-"..realm==who) or false
+end
+-- Blizzard's 3.3.5 frames read GetReadyCheckStatus on CONFIRM; the event's second
+-- argument is only trusted when it is an unambiguous yes/no.
+function ns.ReadyConfirmStatus(unit,arg)
+    local live=unit and UnitExists(unit) and GetReadyCheckStatus(unit)
+    if live=="ready" or live=="notready" then return live end
+    if arg==true or arg==1 or arg=="1" or arg=="ready" then return "ready" end
+    if arg==false or arg==0 or arg=="0" or arg=="notready" then return "notready" end
+end
+-- READY_CHECK_CONFIRM names a unit token; resolve a bare name through the group too.
+function ns.ReadyGUID(who)
+    if not who then return end
+    local guid=UnitGUID(who)
+    if guid then return guid end
+    local raid=GetNumRaidMembers() or 0
+    local prefix,count=raid>0 and "raid" or "party",raid>0 and raid or (GetNumPartyMembers() or 0)
+    if UnitName("player")==who then return UnitGUID("player") end
+    for i=1,count do if UnitName(prefix..i)==who then return UnitGUID(prefix..i) end end
+end
 local function Indicators(b,c,base,unit,connected,status)
     local preview=b._euiPreview; local combat=ns.InCombat()
     local role
@@ -450,7 +491,7 @@ local function Indicators(b,c,base,unit,connected,status)
     local showRole=c.showRole and role and not (c.roleIconHideInCombat and combat)
         and (role=="tank" and c.showRoleForTank~=false or role=="healer" and c.showRoleForHealer~=false or role=="dps" and not c.hideDpsRoleIcons)
     if showRole then ns.SetRoleTexture(b.role,role,c.roleIconStyle); b.role:Show() else b.role:Hide() end
-    local leader=preview and preview==1 or base and UnitIsPartyLeader(base)
+    local leader=preview and preview==1 or base and ns.IsPartyLeaderUnit(base)
     local raidIndex=base and tonumber(base:match("^raid(%d+)$"))
     if raidIndex then leader=select(2,GetRaidRosterInfo(raidIndex))==2 end
     if c.showLeader and leader and (c.showLeaderIconInCombat~=false or not combat) then b.leader:Show() else b.leader:Hide() end
@@ -465,10 +506,16 @@ local function Indicators(b,c,base,unit,connected,status)
             local live=GetReadyCheckStatus(token)
             if live=="ready" or live=="notready" then ready=live
             elseif not ready and (live=="waiting" or token=="player" or token:match("^party%d+$") or token:match("^raid%d+$")) then ready=connected and "waiting" or "notready" end
+            if ns.IsReadyInitiator(token) then ready="ready" end
             if guid and ready then results[guid]=ready end
         end
     end
-    if c.showReadyCheck and ready then b.ready:SetTexture("Interface\\RaidFrame\\UI-ReadyCheck-"..(ready=="ready" and "Ready" or ready=="notready" and "NotReady" or "Waiting")); b.ready:Show() else b.ready:Hide() end
+    if c.showReadyCheck and ready then
+        b.ready:SetTexture(ready=="ready" and (READY_CHECK_READY_TEXTURE or "Interface\\RaidFrame\\ReadyCheck-Ready")
+            or ready=="notready" and (READY_CHECK_NOT_READY_TEXTURE or "Interface\\RaidFrame\\ReadyCheck-NotReady")
+            or (READY_CHECK_WAITING_TEXTURE or "Interface\\RaidFrame\\ReadyCheck-Waiting"))
+        b.ready:Show()
+    else b.ready:Hide() end
     local inCombat=preview and preview%4==3 or not preview and UnitAffectingCombat and UnitAffectingCombat(base or unit)
     if c.showCombatIndicator and connected and inCombat then b.combat:Show() else b.combat:Hide() end
     local dead=not preview and (status=="Dead" or status=="Ghost")

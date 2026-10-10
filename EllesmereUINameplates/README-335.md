@@ -1,4 +1,18 @@
-# Nameplates 3.3.5 — 0.15
+# Nameplates 3.3.5 — 0.18
+
+0.18: as texturas de barra do EllesmereUI (Melli, Atrocity, Fade, Matte...,
+`EllesmereUI.BuildBarTextureTables(true)`) entram nos dropdowns de textura de
+vida e cast, como no Retail. Perfis do Retail com `healthBarTexture = "melli"`
+mostravam a barra Flat.
+
+0.17: Scale Target Nameplate (targetScale) é multiplicador no port (1-1.5), mas
+o Retail guarda porcentagem (100). Um perfil do Retail importado deixava a
+placa do alvo 100x maior, cobrindo a tela. Valores acima de 5 agora são lidos
+como porcentagem e a escala fica entre 0.5 e 2; o import do Core 0.66 converte.
+
+0.16: Debuff Filter (aba Aura Filters) ganhou "Raid Debuffs" e "Own and Raid
+Debuffs", com a mesma lista de debuffs de raid dos Unit Frames (Core,
+EUI_AuraFilters_335.lua).
 
 0.15: "Enemy Buff Filter" (Retail 9.4) na seção EXTRA AURA OPTIONS da aba
 General: Timed Buffs (padrão; Wrath não tem a flag "important" da Retail),

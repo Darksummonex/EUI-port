@@ -1,0 +1,300 @@
+5479	Jedes Modul läuft auf nativen Wrath-APIs. Retail-Aussehen und -Einstellungen wurden überall portiert, wo der 3.3.5a-Client sie unterstützt, und reine Retail-Systeme wurden weggelassen. Die Notizen sind nach Modul gruppiert, neueste zuerst, und jede Überschrift zeigt die Backport-Version des Moduls.
+5480	Symbole neben jedem Gegner für jede Kategorie von Kontrolleffekten, unter denen er steht oder von denen er sich erholt: grün bedeutet, der nächste hält halb so lange, gelb ein Viertel, rot immun. Ein Timer zeigt das Zurücksetzen nach 18 Sekunden.
+5481	Eine Gesundheitsleiste für jeden gegnerischen Begleiter unter dem Fenster seines Besitzers. Linksklick wählt den Begleiter als Ziel, Rechtsklick setzt den Fokus.
+5482	Gegnerfenster für arena1-5 mit Gesundheits-, Ressourcen- und Zauberleisten in Klassenfarbe sowie einer Hervorhebung deines Ziels. Linksklick wählt als Ziel, Rechtsklick setzt den Fokus. Es gibt kein Retail-Gegenstück.
+5483	Das Klassensymbol wechselt zum Kontrolleffekt oder zur Immunität mit der höchsten Priorität, mit Spirale und Timer, und das PvP-Schmuckstücksymbol verfolgt seine Abklingzeit von 2 Minuten aus dem Kampflog.
+5484	Leistentextur listet Texturen aus SharedMedia und anderen Addons auf, die LibSharedMedia verwenden
+5485	Gegner außerhalb der Zauberreichweite deiner Klasse von 30-40 Metern verblassen auf eine gewählte Deckkraft
+5486	Vorschau von 2 bis 5 Beispielfenstern im Freigabemodus, während die Optionsseite geöffnet ist, oder mit /earena test
+5487	Fenster bleiben sichtbar, während ein Gegner verstohlen oder außer Sicht ist, abgedunkelt und als Ungesehen markiert
+5488	Blendet optional die Arenafenster von Blizzard aus, solange diese verwendet werden
+5489	Der Schwächungszauber Filter erhält Schlachtzug Schwächungszauber sowie Eigene und Schlachtzug Schwächungszauber, mit derselben Liste von Schlachtzug-Schwächungszaubern wie die Einheitenfenster.
+5490	Wähle, welche Stärkungszauber gegnerische Namensplaketten zeigen: Zeitlich begrenzte Stärkungszauber, Nur bannbare oder Alle anzeigen, das jeden Stärkungszauber zeigt.
+5491	Jeder Namensplakettentext hat unter seiner Größe eine Konturauswahl: Keine, Kontur, Dicke Kontur oder Schatten, oder der Modulstandard bleibt. Betrifft Namen, Stufe, Gesundheit, Ziel des Ziels, Zaubertexte, Aurentext und freundliche Namen.
+5492	Zauberleisten füllen sich jetzt in jedem Frame, statt mit jeder Aktualisierung der Namensplakette zu springen. Funke und Timer bewegen sich ebenfalls flüssig, und die zusätzliche Arbeit stoppt, wenn kein Zauber sichtbar ist.
+5493	Kerntextpositionen bietet alle Retail-Texte: Gegnername, Stufe | Name, Ziel des Ziels, Gesundheit % und Gesundheit # mit ihren kombinierten Varianten. Das Zahnrad jedes Texts legt seine Größe fest.
+5494	Gesundheits- und Zauberleisten bieten die EllesmereUI Texturen (Melli, Atrocity, Fade, Matte und mehr), wie auf Retail
+5495	Gesundheits- und Zauberleistentexturen enthalten Texturen aus SharedMedia und anderen Addons
+5496	Anzeige und Farben zeigen eine Live-Vorschauplakette; klicke auf einen beliebigen Teil, um zu seiner Einstellung zu springen
+5497	Retail-Leistengröße, Farben, Bedrohungsmodi, Zauberfarben, Zielpfeile und Hinrichten Pulsieren
+5498	Jeder Platz enthält ein Element; Auren, Schlachtzugsmarkierung und Klassifizierung können auch unter der Zauberleiste sitzen
+5499	Gesundheit # nutzt Abkürzungen im Blizzard-Stil (1.2K, 12K, 1.2M) mit optionaler % Dezimalstelle
+5500	Ein aus Retail importiertes Profil bläst die Namensplakette des Ziels nicht mehr bildschirmfüllend auf.
+5501	Rahmen Keine blendet jetzt nur die Rahmen aus, nicht den Zauberleistentext, Timer, Schild und die Unterbrechungsmarkierung.
+5502	Die Vorschauplakette in den Optionen verschwindet nicht mehr nach dem Wechseln der Reiter oder dem Schließen des Fensters.
+5503	Die Zauberfarbe Unterbrechungszauber auf Abklingzeit wird jetzt angezeigt, während sich dein Unterbrechungszauber auflädt, wie auf Retail, statt umgekehrt.
+5504	Schlachtzugs- und Gruppennamen erhalten jeweils eine eigene Kontur: Keine, Kontur, Dicke Kontur, Schatten oder der Schriftstandard der Schlachtzugsfenster.
+5505	Ein neues Gruppenlayout stapelt zwei Schlachtzugsgruppen pro Spalte und beginnt dann die nächste Spalte rechts davon, sodass ein Schlachtzug mit 20 Spielern einen 2x2-Block bildet.
+5506	Symbole der Bereitschaftsabfrage erscheinen über den Schwächungszaubern und behalten das Ergebnis jedes Spielers zehn Sekunden nach Ende der Abfrage.
+5507	Der im zentralen Schlachtzug-Schwächungszaubersymbol angezeigte Schwächungszauber wird aus der normalen Schwächungszauberleiste ausgeschlossen und schafft Platz für andere Schwächungszauber.
+5508	Schlachtzugs- und Gruppenfenster werden auf Wrath außer Reichweite abgedunkelt, auch im Kampf. Außer Reichweite abdunkeln und Transparenz außer Reichweite steuern das Verblassen.
+5509	Ein großes Symbol in der Mitte jedes Fensters für wichtige Schwächungszauber in ICC, Rubinsanktum, Prüfung des Kreuzfahrers, Ulduar und Naxxramas, höchste Priorität zuerst, mit Timer, Stapeln und einem Rahmen in Bannfarbe. Ohne gelisteten Schwächungszauber kann es stattdessen einen bannbaren zeigen.
+5510	Stile der Bannüberlagerung mit Deckkraft, ein Fensterrahmen in Bannfarbe, Position des Typ Symbols, Bannfarben pro Typ und Nur bannbare anzeigen.
+5511	Überlagerung, Echt oder Keine Vorschau. Die Vorschau öffnet sich, während die Schlachtzugs- oder Gruppenseite geöffnet ist, und schließt sich, wenn du sie verlässt, das Fenster schließt oder in den Kampf gehst.
+5512	Gegnerische Zauber erscheinen als Symbole auf dem Gruppen- oder Schlachtzugsmitglied, auf das gezaubert wird, mit Zauber-Wischtextur und Rahmen für unterbrechbare Zauber. Gruppe ist standardmäßig auf Beim Heilen; jedes Schlachtzugslayout hat einen eigenen Modus. Wrath kennt kein Zauberziel, daher ist das Opfer das Ziel des Zaubernden, und es werden nur Gegner erkannt, die jemand in der Gruppe als Ziel hat
+5513	Schadensschilde erscheinen auf der Gesundheitsleiste wie auf Retail: Absorptions Stil, Deckkraft, Farbe, Platzierung und Überhangschild anzeigen. Wrath meldet keine Schildwerte, daher werden sie aus dem Kampflog geschätzt
+5514	Gesundheitsleistentextur listet Texturen aus SharedMedia und anderen Addons auf, auch in der Vorschau der Aurenindikatoren
+5515	Vorschau für 25 Spieler
+5516	Die Vorschauen im Freigabemodus und in den Optionen öffnen sich im Layout für 25 Spieler statt 40
+5517	Gesundheitsfarbmodi, Hintergründe, Bedrohung, Ziel- und Mouseover-Rahmen, Text- und Symbolplatzierung
+5518	Eingehende Heilungen und Wiederbelebungen von Spielern, die ein HealComm-Addon verwenden
+5519	Haupttank-, Begleiter- und freundliche Bossfenster sowie Heilermana-Text, jeweils mit einem Mover im Freigabemodus
+5520	Die Gruppenseite hat einen Bereich LAYOUT mit Horizontale Fenster
+5521	Symbole der Bereitschaftsabfrage zeigen einen grünen Haken für Spieler, die zugestimmt haben, und für den, der die Abfrage gestartet hat, statt eines roten X am Ende der Abfrage.
+5522	Das Symbol des Gruppenanführers erscheint nur beim Anführer statt bei mehreren Gruppenmitgliedern.
+5523	Fokus setzen und Fokus entfernen im Menü der Schlachtzugs- und Gruppenfenster funktionieren außerhalb des Kampfes ohne das Popup 'von einer Aktion blockiert'; im Kampf sind sie ausgeblendet, nutze dort eine Klickzauber-Belegung für den Fokus.
+5524	Symbole der Bereitschaftsabfrage erscheinen wieder auf Schlachtzugs- und Gruppenfenstern.
+5525	Gesättigt / Erschöpfung ausblenden blendet auch den Kampfrausch-Sperrschwächungszauber 81005 aus.
+5526	Begleiterfenster werfen beim ersten Erscheinen keinen SecureTemplates strupper Fehler mehr.
+5527	Das Menü Neu hinzufügen im Stärkungs-/Schwächungszauber-Editor schließt sich nicht mehr beim ersten Klick.
+5528	Element Optionen für Schlachtzugs- und Gruppenfenster öffnen jetzt die passenden Einstellungen.
+5529	Aus Retail EllesmereUI exportierte Profilstrings importieren alles, was dieser Client unterstützt: jedes Modul behält seine aktuellen Einstellungen und übernimmt die Retail-Werte, die es versteht. Reine Retail-Module, Spezialisierungs-Setups und Zauber des Abklingzeiten Managers werden übersprungen, und der Chat meldet, wie viele Einstellungen übernommen wurden.
+5530	Eine Taste in den Globalen Einstellungen stellt die Spieleinstellungen wieder her, die EUI geändert hat (Namensplaketten-, Minikarten-, Chat- und Tooltipoptionen, Chat-Schriftgrößen und von Schnellzugriff belegte Tasten), schaltet EUI dann für diesen Charakter ab und lädt neu. Deine Profile bleiben erhalten.
+5531	Eine gezeichnete Abklingzeit-Wischtextur für Module, die runde oder farbige Wischtexturen wollen; die eigene Wischtextur des Wrath-Clients ist immer ein dunkles Quadrat. Der Abklingzeiten Manager nutzt sie zuerst.
+5532	Wenn ein Gilden- oder Gruppenmitglied eine neuere EllesmereUI-Version nutzt, sagt dir der Chat das einmal pro Sitzung. Gib /euiupdate ein für den Downloadlink. Wrath hat keinen Internetzugang, daher kommt die Nachricht von anderen EUI-Nutzern.
+5533	Das Locales-Addon bietet Übersetzungen der Community für alle ursprünglichen Sprachen des Wrath-Clients, mit englischem Fallback und Lua 5.1-Formatierung.
+5534	Das eingeklappte Menü zeigt das originale Ellesmere-E-Logo in der Akzentfarbe des UI und ein funktionierendes Schließen-Symbol auf dem Wrath-Client.
+5535	Schriftarten, Leistentexturen und Sounds, die andere Addons bei LibSharedMedia registrieren, erscheinen in den EllesmereUI-Menüs, auch solche, die nach dem Einloggen registriert werden.
+5536	Eine gemeinsame Konturauswahl für einzelne Texte: Keine, Kontur, Dicke Kontur oder Schatten, wobei Modulstandard der Seite Schriftarten folgt. Der Text behält beim Wechseln seine Farbe.
+5537	Das Popup für inkompatible Addons kann das andere Addon oder das betroffene EllesmereUI-Modul deaktivieren und neu laden. OK und Nicht mehr anzeigen funktionieren wie bisher.
+5538	Einstellungsgruppen pro Spezialisierung mit automatischer Erfassung und eigenen Layouts im Freigabemodus, dazu bedingte Überschreibungen für Dungeons, Schlachtzüge, Arenen, Schlachtfelder, Solospiel und außerhalb des Kampfes.
+5539	Das Esc-Menü hat die Tasten EllesmereUI und EUI-Freigabemodus, standardmäßig angezeigt. Beide folgen der Einstellung EUI Tasten in den Globalen Einstellungen.
+5540	Mit aktivem Zauber-ID im Tooltip anzeigen zeigen Gegenstandstooltips die Gegenstands-ID und den Dateinamen des Symbols. Jede Zeile hat einen eigenen Schalter
+5541	Schlachtzugs- und Einheitenfenster lesen Absorptionsschilde aus einer gemeinsamen Schätzung: Grundwert des Rangs plus deine eigene Zaubermacht, abzüglich dessen, was jedes Schild laut Kampflog absorbiert. Clients mit nativer Absorptions-API nutzen diese direkt
+5542	Arenafenster kommt in die Seitenleiste, die Liste für die erste Nutzung, Profile, Spezialisierungs Überschreibungen, Modulschriftarten und die Suche
+5543	Profilstrings und geteilte Exporte funktionieren wieder
+5544	Ein eisblaues Optionsthema; Akzent an Thema anpassen folgt der Palette jedes Themas
+5545	Lichter, Strahlen, Musik und Drehung bei Bosskills, Arena- und Schlachtfeldsiegen, Kampfrausch/Heldentum und Stufenaufstiegen
+5546	Zauber-ID im Tooltip anzeigen deckt Zauber, Aktionstasten, Auren und Chatlinks ab (standardmäßig aus)
+5547	Die Seitenleiste der Optionen zeigt den gesamten Speicherverbrauch aller geladenen EllesmereUI-Addons
+5548	Die Synchronisationstaste der Seitenleiste öffnet wieder ihre Profilliste, statt einen Fehler zu werfen, wenn du mehr als ein Profil hast.
+5549	Retail-Profilstrings bringen ihre Elementpositionen mit: Aktions-, EP- und Menüleisten, CDM-Leisten, Schlachtzugs- und Gruppenfenster, Chat, Schadensmeterfenster, Komfortfunktionsanzeigen, Ressourcenleisten und der feste Tooltip landen dort, wo der Ersteller sie platziert hat.
+5550	Retail-Profilstrings nur für Namensplaketten werden als Retail erkannt; Leistenbreite und -höhe, Zauberleistenhöhe und -farbe, Namensgröße und Aurengrößen werden übernommen.
+5551	Freigabemodus: Die Umschaltsymbole und Beschriftungen der oberen Leiste sind heller, sodass sie auf dem Banner nicht mehr dunkelgrau wirken.
+5552	Fokus setzen und Fokus entfernen in Rechtsklickmenüs von EUI-Fenstern laufen außerhalb des Kampfes über eine sichere Taste, statt blockiert zu werden; im Kampf sind sie ausgeblendet.
+5553	Freigabemodus: Die Pfeiltasten bewegen das ausgewählte Element wieder um 1 Pixel (Umschalt halten für 100).
+5554	Funktioniert zusammen mit !!!ClassicAPI: dessen Clipping- und Maskenfunktionen werden auf EUI-Fenstern nicht mehr verwendet, sodass animierte Leuchteffekte und das Optionsfenster keine Fehler mehr werfen.
+5555	Das Öffnen der Optionen wirft keinen Fehler \"attempt to index local 'mask'\" mehr auf Clients, bei denen ein anderes Addon eine leere Maskenfunktion hinzufügt.
+5556	Die Felder für Profil-Import und -Export werfen keinen Fehler \"attempt to call method 'GetNumLines'\" mehr und scrollen, um lange Strings aufzunehmen.
+5557	Das eingeklappte Menü zeigt wieder das Ellesmere-E-Logo statt eines einfachen schwarzen Kreises.
+5558	Tooltips von Aktionstasten zeigen die echte Zauber-ID statt des Zauberbuchplatzes.
+5559	Ein Fehler \"attempt to call global 'issecretvalue'\" durch Leuchteffekte des Abklingzeiten Managers vor dem ersten Öffnen des Optionsfensters wurde behoben.
+5560	Tooltips der Widgets im Freigabemodus nutzen Wrath-kompatible Alpha-Überblendungen, was den SetFromAlpha-Fehler bei Grow Right behebt.
+5561	Die Ergebnisliste der Optionssuche hat einen vollständig deckenden Hintergrund mit den Ergebnissen darüber, sodass Text der Seitenleiste und Seite nicht mehr in die Ergebnisse durchscheint.
+5562	Der Freigabemodus wirft beim ersten Öffnen keinen Fehler bei SetMaxLines mehr, sodass die Element-Mover wieder erscheinen.
+5563	Der Erinnerungspunkt der Patchnotes leuchtet jetzt nach jedem Backport-Update auf.
+5564	Die Ergebnisse der Optionssuche werden jetzt über der Seitenleiste und der Seite gezeichnet statt dahinter.
+5565	Das Rechtsklickmenü des Freigabemodus schließt sich nicht mehr direkt nach dem Öffnen, wenn viele Elemente auf dem Bildschirm sind.
+5566	Das Öffnen der Optionen für Schlachtzugsfenster verursacht keinen Stapelüberlauf mehr in Einstellungs Überschreibungen.
+5567	Grafiken des Freigabemodus, Symbole der Optionsseiten und die obere Leiste des Freigabemodus sind jetzt sichtbar und lesbar.
+5568	Die Addonliste zeigt saubere Modulnamen, gruppiert unter EllesmereUI in Addon-Managern.
+5569	Funktionen suchen und Moduleinstellungen suchen nehmen wieder Eingaben an.
+5570	Clients, deren Atlas-Abfrage bei unbekannten Namen Fehler wirft (etwa angepasste 3.3.5-Clients mit Retail-UI-Ports), verhindern nicht mehr das Laden von EllesmereUI-Dateien.
+5571	Wie in Retail 9.4 öffnet sich die Seite Datenleisten mit einer Leistenauswahl oben: benenne eine Leiste direkt in ihrem Menü um oder lösche sie, oder wähle + Neue Datenleiste erstellen. + Neue Leiste zeigt die vier Startvorlagen als Karten, und ohne Leisten zeigt die Seite sie als Kartenraster.
+5572	Wie in Retail 9.4 hat das Optionsfenster oben in der Ecke einen Schieberegler Fensterskalierung, der es in sanften 5% Schritten skaliert; das Mausrad darüber oder Umschalt + Mausrad irgendwo im Fenster funktioniert auch. Der Dank an Ellesmere steht jetzt unter der Schließen-Taste.
+5573	Globale Einstellungen öffnet sich mit ALLE EUI Addon Einstellungen zurücksetzen und EUI deinstallieren nebeneinander, wie in Retail 9.4. ALLE zurücksetzen verlangt jetzt die Eingabe von Confirm. Meine FPS und Grafik optimieren ist entfernt: die geänderten Grafikeinstellungen existieren auf diesem Client nicht.
+5574	Wie in Retail 9.4 hat jede Aussehenskarte auf der Seite Stil ein Menü der Module, die sie nutzen: hake Module unter einem anderen Aussehen an und drücke dann Stile anwenden, um alle mit einem Neuladen umzustellen. Die Menüs listen nur Aussehen, die dieser Client darstellen kann: Abklingzeiten Manager, Minikarte und Schadensmeter bieten EllesmereUI und Klassisches WoW UI, Spieler Aurenleisten ist entfernt, und Auf alle anwenden überspringt Module ohne dieses Aussehen.
+5575	Die Importseite kann dein aktuelles Profil aktualisieren, statt ein neues zu erstellen: hake In aktuelles Profil importieren an, und die ausgewählten Module des Strings (zum Beispiel nur Namensplaketten) ersetzen dort ihre Einstellungen, während der Rest des Profils bleibt.
+5576	Die Seite EUI Staff öffnet sich mit einem Dank an Ellesmere und der Karte des Port-Teams mit einem GitHub-Link zu den Releases. Die Kopfzeile mit dem Dank an Ellesmere öffnet sie.
+5577	Eigene Zaubererinnerungen, Sichtbarkeit und Sounds werden für jeden Charakter separat gespeichert, unabhängig von geteilten Profilen.
+5578	Optionale Filter für Erfolge, Handel und Gildenrekrutierung, dazu deine eigenen gesperrten Wörter und Phrasen.
+5579	Konfiguriere Wiederholungszeit, Absenderabgleich und Chatbereiche auf der neuen Seite Spamfilter.
+5580	Konturmenüs in den Textzahnrädern von Namensplaketten und Einheitenfenstern sowie Zonentext-Kontur in Komfortfunktionen. Die Vorschau der Einheitenfenster zeigt die Kontur jedes Texts.
+5581	Neue Bereiche BEGLEITER und ABNEHMENDE WIRKUNG sowie Außer Reichweite verblassen und dessen Deckkraft unter Ziel und Sichtbarkeit.
+5582	Unterbrechungen ankündigen und Einladungen von Freunden & Gilde annehmen im Bereich GRUPPE sowie eine Taste Gruppe auflösen in den Schlachtzugswerkzeugen.
+5583	Leistenanzeige, Menü, Taschen & XP Leisten und Leistenanimationen, mit einer Live-Vorschau der ausgewählten Leiste. Klicke auf ein Symbol, eine Tastenbelegung oder eine Anzahl, um zu deren Einstellung zu springen.
+5584	Die Seiten Schlachtzug und Gruppe erhalten den Retail-Bereich BANNUNGEN und oben einen Vorschaumodus (Echt, Überlagerung oder Keine Vorschau).
+5585	Die Seiten Gruppe und Schlachtzug erhalten einen Bereich ANVISIERTE ZAUBER: Modus, Vorschau, Symbolgröße, maximale Symbole, Position, Wachstum, Versätze, Zauber-Wischtextur, Zaubertimer und Farben für unterbrechbare Zauber.
+5586	Schlachtzugsfenster (Gruppe und Schlachtzug) und Einheitenfenster (Spieler, Ziel, Fokus) erhalten einen Bereich ABSORPTIONEN für die geschätzten Schilde, mit einem Schild in der Vorschau der Einheitenfenster.
+5587	CDM Leisten öffnet sich jetzt mit dem Retail-Leisten-Dropdown (eigene Leisten umbenennen oder löschen, Leisten für Abklingzeiten, Nützliches, Stärkungszauber oder FocusKick hinzufügen) und den Symbolen der ausgewählten Leiste: ziehen zum Umsortieren, Klick auf ein Symbol zum Bearbeiten, Mittelklick zum Entfernen, und + zum Hinzufügen von Zaubern oder Stärkungszaubern.
+5588	Blendet Serverankündigungen wie \"Name the level 11 Gnome Warrior has been slain by ... in Westfall\" aus, wobei Tode ab einer gewählten Stufe optional sichtbar bleiben.
+5589	SharedMedia
+5590	Der FocusKick-Zaubersound und die Chatsounds listen EllesmereUI- und SharedMedia-Sounds, und die Seite Texturen verknüpft Schadensmeter mit seiner Leistentextur pro Fenster
+5591	Neues Dropdown oben bei Symbole, mit einem Link, um es auf jede Leiste anzuwenden. Die Vorschau zeigt die Form.
+5592	Boss-Schwächungszaubersymbol, Symbolgröße, Symbolversatz Y und Bannbare zeigen, wenn kein Boss-Schwächungszauber unter Bannungen
+5593	Bereiche Allgemein, Layout, Gesundheit und Ressource, Text, Symbole, Zauberleiste sowie Ziel und Sichtbarkeit
+5594	Einstellungen für Anzeige, Extras und Wrath-Inventar, einschließlich Gespeicherten Charakter löschen
+5595	Klassensymbol-Themen, Namen in Klassenfarbe, Rahmen, Akzentfarben, Fraktionsbanner und automatisches Annehmen von Einladungen
+5596	Anzeige, Farben, Allgemein und Aurenfilter mit eingebetteten Farbfeldern und Zahnradmenüs
+5597	Schnell Plündern, Bestätigung beim Löschen automatisch ausfüllen, Automatisch reparieren und Müll automatisch verkaufen im Retail-Layout
+5598	Bereiche Anzeige, Farben und Extras mit eingebetteten Farbfeldern und Zahnrädern für automatisches Annehmen und Abgeben
+5599	Wrath-Zaubersymbole, echte Zauberzeiten und dieselbe Fraktions- und Porträtgrafik wie die Live-Fenster
+5600	Das Dropdown Aktives Profil zeigt wieder die Symbole zum Umbenennen, Löschen und für die Tastenbelegung bei jedem Profil.
+5601	Dropdowns öffnen sich wieder mit installiertem !!!ClassicAPI; dessen Clipping-Funktion verschiebt die Menüs nicht mehr in einen leeren Scrollrahmen.
+5602	Das Zurücksetzen der Globalen Einstellungen bricht nicht mehr mittendrin mit einem Fehler ab und lädt das UI wieder neu.
+5603	Optionen, die auf dem Wrath-Client nichts bewirken, sind ausgeblendet: Bildschärfung, Latenztoleranz, Kampftext Größe, Rasche Heilung-Abdunkeln, Slug-Kontur, Dunkelmodus und Farben der Klassenressourcen, reine Retail-Klassen- und Ressourcenfarben sowie Mauszeigerring-Texturen.
+5604	Globale Einstellungen zeigt die Seite Gamepad nicht mehr, da es auf dem Wrath-Client dort nichts zu steuern gibt.
+5605	Maximale Kameradistanz speichert und behält ihren Wert, statt auf 1.0 zurückzuspringen, und geht bis 4, wie es der Wrath-Client erlaubt.
+5606	CDM Leisten und Verfolgungsleisten öffnen sich ohne den Fehler \"attempt to call field 'disabled'\", und neun Schalter zeigen wieder ihre Tooltips.
+5607	Chat > Spamfilter: Die Einstellungen für Chattypen bleiben nutzbar, wenn nur der Handels- oder Rekrutierungsfilter aktiv ist, und die Tooltips erklären, was jeder abdeckt.
+5608	Das Öffnen der Optionen lässt spätere Blizzard-Aktionen nicht mehr Gefahr laufen, im Namen von EllesmereUI blockiert zu werden.
+5609	Checklistenmenüs wie Sichtbarkeit haken ihre Kästchen sofort beim Klicken an und ab, auch wenn die Live-Aktualisierung des Moduls auf ein Problem stößt, statt erst nach dem Schließen und erneuten Öffnen des Menüs.
+5610	Dropdownlisten, Checklisten und andere Options-Popups zeichnen ihre Einträge über ihrem eigenen Hintergrund, auf einem deckenden Hintergrund, statt verblasste Einträge mit durchscheinender Seite zu zeigen.
+5611	Die Seite Stil behält jetzt die Gesundheitsfarben der Einheitenfenster pro Aussehen, sodass beim Wechsel zwischen Klassisches WoW UI und dem EllesmereUI-Aussehen jedes seine Farben behält.
+5612	Die Vorschau der Einheitenfenster und die Farbfelder der Ressourcenfarben zeigen unter Klassisches WoW UI die originalen Ressourcenfarben des Spiels.
+5613	Jede Zeile von Kerntextposition, Zaubername, Zaubertimer und Freundliche Namen hat jetzt ein eigenes Zahnrad für die Kontur, statt sie im Größen-Popup zu verstecken.
+5614	Das Schließen von Blizzard-Fenstern mit Esc zeigt nicht mehr \"EllesmereUIOptions has been blocked from an action\".
+5615	Die Schalter für Kampfschaden, Heilung, periodischen und Begleiterschaden nutzen die eigenen Kampftext-Einstellungen von Wrath.
+5616	Ausgeblendete Options-Widgets übernehmen nicht mehr den Tastaturfokus, nachdem andere Fenster mit Escape geschlossen wurden.
+5617	Ziehen oder Tippen in einem Schieberegler wirft keinen Fehler mehr.
+5618	Das Einstellungsfenster öffnet sich auf Clients, deren Atlas-Abfrage bei unbekannten Namen Fehler wirft, statt mit einem 'NS'-Fehler zu scheitern.
+5619	Anzeigen hat einen Bereich ZONENTEXT mit Zonentext bewegen.
+5620	Schlachtzugswerkzeuge hat keinen Bereich BOSS MOD BARS mehr: die Quellen-Optionen von AbilityTimeline blenden DBM- und BigWigs-Leisten aus.
+5621	Das Retail-Schlachtzugsfeld: zeige es nie, in Schlachtzügen, in jeder Gruppe oder immer, als skalierbares Kompaktes Band, ein oder zwei Fenster oder nur einen Teil. Es kann als kleines Symbol starten, öffnet und schließt sich per Tastenbelegung auch im Kampf und hat drei Pull-Timer, Umwandeln und Auflösen. Neu einladen entfernt alle und lädt sie erneut in dieselbe Gruppenart ein, und In Gruppe umwandeln baut einen Schlachtzug mit fünf oder weniger Spielern auf dieselbe Weise als Gruppe neu auf. Umschalt + Linksklick auf eine Markierung setzt ihren Weltmarker, wenn der Markierungsgegenstand in deinen Taschen ist, oder Umschalt + Linksklick auf das Entfernen-Symbol setzt die Weltmarker zurück. Im Schlachtzug wird es nur für Anführer und Assistenten angezeigt.
+5622	Eine Taste wirkt Irreführung oder Schurkenhandel auf deinen Fokus, den Tank (eingegebener Name, Haupttank oder Tankrolle), dein freundliches Ziel oder deinen Begleiter. Ein Symbol zeigt, auf wen es geht, den Timer des Stärkungszaubers und die Abklingzeit. Belege es unter Tastaturbelegung.
+5623	Erlittener Schaden, Heilung, Vermeidungen und Kampfbeginn oder -ende scrollen über dem Spielerfenster statt des Blizzard-Kampftexts, mit den Animationen Gerade, Fontäne oder Statisch, Farben pro Typ und einem Mover im Freigabemodus.
+5624	Wählt die einzige Dialogoption eines NPCs für dich. Halte Umschalt, um es zu überspringen; Instanzen und NPCs mit anzunehmenden oder abzugebenden Quests bleiben unberührt. Sein Zahnrad kann auch niedrigstufige Quests überspringen.
+5625	Ein Pfeil neben dem Feld An listet deine Twinks auf diesem Realm und dieser Fraktion, Gildenmitglieder und die zuletzt angeschriebenen Namen. Klicke auf einen Namen, um ihn einzutragen.
+5626	Wähle Keine, Kontur, Dicke Kontur oder Schatten für den Zonen-, Unterzonen- und PvP-Text beim Betreten eines Gebiets. Blizzard Standard behält die eigene Schriftart des Spiels.
+5627	Postet den Zauber, den du oder dein Begleiter unterbrochen habt, mit Zauberlink in Sagen, Emote, Gruppe oder Schlachtzug. Gruppe und Schlachtzug wechseln in Schlachtfeldern zum Schlachtfeldkanal.
+5628	Gruppeneinladungen von deiner Freundesliste und Gildenmitgliedern werden automatisch angenommen, außer du bist bereits in einer Gruppe oder im Dungeonbrowser angemeldet.
+5629	Eine Taste Auflösen in den Schlachtzugswerkzeugen entfernt nach einer Bestätigung alle aus deinem Schlachtzug oder deiner Gruppe. Nur für Anführer, nie im Kampf.
+5630	Plündert alles sofort, auch wenn das automatische Plündern von Blizzard aus ist; halte Umschalt, um das Beutefenster zu sehen. Gesperrte Plätze wie Gruppenwürfe und Plündermeister werden übersprungen.
+5631	FPS und Latenz, Sekundärwerte, Haltbarkeitswarnung, Kampf- und Todeswarnungen, ein Fadenkreuz und ein neuer Text für die Zielentfernung, alles im Freigabemodus bewegbar.
+5632	Die neue Standard-Textfarbe des FPS-Zählers, Qualität, färbt FPS und jeden Latenzwert grün, gelb oder rot (60/30 fps, 100/250 ms). Eigene und Klassenfarbe bleiben verfügbar.
+5633	Warnsounds aus SharedMedia-Paketen, die nach Komfortfunktionen geladen werden, werden ebenfalls abgespielt
+5634	Eine Taste Alle öffnen nimmt Gegenstände und Gold Brief für Brief, wobei Nachnahme- und GM-Post übersprungen wird
+5635	Bei geöffnetem Post verschicken Umschalt-Klick auf einen Taschengegenstand, um ihn und passende Gegenstände anzuhängen
+5636	Öffnet plünderbare Behälter einzeln außerhalb des Kampfes (standardmäßig aus)
+5637	Eine Taste Alles erlernen neben Erlernen zeigt, wie viele Zauber verfügbar sind und die Gesamtkosten
+5638	Pull-Timer-Dauer, DBM/BigWigs-Übertragung und ein Chat-Countdown
+5639	Schlachtzugswerkzeuge behält seine Größe nach dem Import eines Retail-Profils.
+5640	Umschalt-Klick zum Anhängen an Post ersetzt nicht mehr den Klick-Handler der Taschengegenstände, sodass Taschenklicks frei von Taint bleiben.
+5641	Das Ausblenden von DBM- und BigWigs-Leisten bei aktivem AbilityTimeline ist zu AbilityTimeline selbst gewandert, wie auf Retail: Hide DBM bars und Hide BigWigs bars auf dessen Seite Sources. Die Option der Schlachtzugswerkzeuge ist entfernt.
+5642	Ausloggen, Beenden, Geist freilassen und andere Blizzard-Bestätigungspopups lösen nicht mehr die Meldung \"EllesmereUIQoL has been blocked from an action only available to the Blizzard UI\" aus.
+5643	Der Zonenname erscheint bei kleinen UI-Skalierungen nicht mehr in der Bildschirmmitte. Er sitzt jetzt fest oben (X 9 / Y 322 von der Bildschirmmitte), ohne Mover im Freigabemodus.
+5644	Stärkungszauber des Spielers anzeigen setzt die Stärkungszauber des überfahrenen Spielers als Symbole neben den Tooltip, mit Position, Größe, Symbolen pro Reihe und Versätzen.
+5645	Beim Überfahren eines Werts in der Seitenleiste des Charakterfensters leuchten die angelegten Gegenstände, die ihn gewähren.
+5646	Verzauberungen beim Betrachten und fehlende Verbesserungen
+5647	Verzauberungen beim Betrachten erscheinen als Symbol mit dem Namen beim Überfahren oder als nach Gegenstandsqualität getönte Namen, in eigener Größe. Auf Höchststufe markieren rote Abzeichen fehlende Verzauberungen, leere Sockel und eine fehlende Gürtelschnalle, wie in deinem Charakterfenster.
+5648	Das Speichern eines Ausrüstungssets baut die native Symbolauswahl neu auf, auch wenn sie schon offen ist, und verhindert so den nil-Vergleichsfehler von PaperDollFrame.
+5649	Die Tasten Bedarf, Gier, Entzaubern und Passen bei Beutewürfen zählen, was der Rest der Gruppe gewählt hat. Fahre über eine Taste, um zu sehen wer, in Klassenfarben.
+5650	Spielertooltips zeigen GearScore in den Farben von GearScoreLite und nutzen dessen Formel, wenn es geladen ist. Die eigene Zeile von GearScoreLite bleibt erhalten, wenn dessen Option aktiv ist.
+5651	Verzauberungen und Edelsteine an jedem Platz, niedrigste Haltbarkeit, Modell drehen, verschieben und zoomen, umsortierbare Wertebereiche und eine Sockelleiste, die Sockel aus deinen Taschen füllt.
+5652	Namen und Gesundheitsleiste in Klassenfarbe, Gildenrang, Ziel, Gegenstandsstufe und ein Anker am Mauszeiger oder fest
+5653	Gegenstandsstufen beim Betrachten, Andocken neben dem Charakterfenster und ein Listenmodus beim Händler
+5654	Leuchten beim Annehmen einer Wiederbelebung und eine Countdownleiste für Dungeon bereit
+5655	Die Server-Fenster Sammlungen sowie Garderobe & Transmogrifikation werden in die Fenster Skins aufgenommen
+5656	Barbier, PvP und Kampfmeister, Arenaregistrator, Schlachtfeldpunktestand, Minikarte und Eroberungsleiste, Hilfe- und GM-Tickets, GM-Chatstatus, Atem- und Erschöpfungstimer, Stoppuhr, Schlachtzugsgruppenfenster, Debug-Werkzeuge und Ace3-Konfigurationsfenster
+5657	Bereitschaftsabfragen hinterlassen kein leeres schwarzes Feld mehr für den Anführer oder nach deiner Antwort.
+5658	Der Reiter Titel im Charakterfenster listet wieder deine bekannten Titel; klicke einen an, um ihn zu tragen.
+5659	Das Popup der Gildennachricht des Tages (und andere breite Text-Popups) verdeckt Titel und Tasten nicht mehr mit dem Eingabefeld.
+5660	Das Erfolgsfenster dunkelt die Erfolgsliste hinter seinem Rahmen nicht mehr ab.
+5661	Der Skin-Schalter für das Fenster AddOn-Liste erscheint nur, wenn der Client ein AddOn-Listenfenster hat.
+5662	Post verschicken zeigt wieder die Felder An, Betreff und Nachricht, und der Eingabecursor bleibt in gestalteten Eingabefeldern sichtbar.
+5663	Der feste Tooltip-Anker springt nicht mehr an seine gespeicherte Stelle zurück, während du ihn im Freigabemodus ziehst.
+5664	Auktionshaus: Von Auctionator und anderen Auktions-Addons hinzugefügte Felder und Reiter behalten ihr eigenes Aussehen und Layout, und die Schließen-Tasten in der Fußzeile bekommen kein \"x\" mehr über ihren Text.
+5665	Talente: Die Schließen-Taste und die Punkte-Fußzeile enden an der Bildlaufleiste statt über den Fensterrand hinaus.
+5666	Fensterreiter behalten ihren dunklen Hintergrund, statt durchsichtig zu werden.
+5667	Weltkarte: Spielerpfeil, Gruppen- und Schlachtzugspunkte, Leichnam- und Questmarkierungen bleiben nach einem Wechsel der Kartenansicht im Kampf auf der Kartengrafik, auch auf Instanzkarten.
+5668	Native Dropdownmenüs zeigen kein leeres Quadrat mehr rechts in jeder Zeile.
+5669	Dropdownfelder in Blizzard-Fenstern, etwa der Typ im Dungeonbrowser, enden an ihrem Pfeil statt über den Fensterrand hinaus.
+5670	Schlachtzugsinformationen: Der Hintergrund bedeckt das ganze Fenster, einschließlich Titel, Schließen-Taste, letzter Zeile und den Tasten Schlachtzugssperre verlängern und Schließen.
+5671	Der Hintergrund von Talenten und Glyphen endet jetzt über den Reitern und neben den Reitern der dualen Talentspezialisierung.
+5672	Der Reiter Glyphen zeigt wieder seinen nativen Pergamenthintergrund, ausgerichtet an den Glyphensockeln.
+5673	Schieberegler in Blizzard-Fenstern, etwa in den Kamera- und Mausoptionen, haben wieder ihre normale Größe.
+5674	Bis benutzbar ausblenden und Außerhalb von Gestalt/Haltung ausblenden
+5675	Neue Abklingzeitzustände: Bis benutzbar ausblenden zeigt einen Zauber nur, solange er gewirkt werden kann und nicht in Abklingzeit ist (Überwältigen, Rache, Siegesrausch, Hinrichten); zu wenig Ressourcen blendet ihn nicht aus. Außerhalb von Gestalt/Haltung ausblenden zeigt ihn nur in der benötigten Gestalt oder Haltung. Beide können die Lücke schließen oder den Platz behalten.
+5676	Das Menü + fügt einen Leeren Platz hinzu, der eine Position auf der Leiste freihält, um Symbole zu gruppieren.
+5677	Leisten können auf eine geformte Wischtextur wechseln, die runden Symbolen folgt und eine Wischfarbe übernimmt, statt der dunklen quadratischen Wischtextur des Clients.
+5678	Leisten für Abklingzeiten, Nützliches und Stärkungszauber sowie eigene Leisten und eine FocusKick-Leiste, verfolgt aus deinem Zauberbuch, Abklingzeiten und Auren. Listen werden pro Talentgruppe gespeichert.
+5679	Auren- oder Abklingzeitleisten für Spieler, Ziel, Fokus oder Begleiter mit Texturen, Farbverläufen, Stapelmarkierungen und Pandemie-Leuchten, in Gruppen angeordnet.
+5680	Die Tasten + über den Leistensymbolen öffnen das Retail-Hinzufügen-Menü: eigener Zauber, Gegenstand oder Platz, Schmuckstücke, Volksfähigkeit, Tränke und deine erlernten Zauber, oder Stärkungszauber und Stärkungszauber-Voreinstellungen über das goldene +
+5681	Passive Proc-Schmuckstücke in den Schmuckstückplätzen zeigen ihr Symbol und die interne Abklingzeit nach jedem Proc, mit dem Proc-Stärkungszauber, solange er anhält
+5682	Texturen der Verfolgungsleisten enthalten SharedMedia, und der FocusKick-Zaubersound ergänzt die Blizzard-Sounds um EllesmereUI- und SharedMedia-Sounds
+5683	Lässt EllesmereUI-, Blizzard- oder ElvUI-Aktionstasten leuchten, während eine Aura aktiv ist oder fehlt
+5684	Immer anzeigen, abdunkeln, bei Abklingzeit oder bei Bereitschaft ausblenden und bei Bereitschaft leuchten
+5685	Volksfähigkeiten, Gesundheitssteine, Wrath-Tränke und Stärkungszauber wie Heldentum und Kampfrausch
+5686	Zeigt einen Eintrag nur, wenn ein gewähltes Talent erlernt ist
+5687	Optionen der Leiste Nützliches wechseln nach einem Klick nicht mehr zu Stärkungszauber, und die Leiste Abklingzeiten wird nicht mehr durch eine zweite Stärkungszauberleiste ersetzt.
+5688	Volksfähigkeiten erscheinen nur einmal: die Leiste Nützliches listet Arkaner Strom (und andere Volksfähigkeiten mit Klassenvarianten) nicht mehr dreimal.
+5689	Ein passives Schmuckstück in einem Schmuckstückplatz zeigt in den Optionen sein eigenes Symbol statt eines Fragezeichens.
+5690	Doppelt oder unter dem Namen einer anderen Leiste gespeicherte Leisten (zwei Stärkungszauberleisten und keine Abklingzeiten) werden repariert, sodass jede eingebaute Leiste ihre eigenen Symbole und Optionen behält.
+5691	Leisten mit Automatische Größe und Gleichmäßige Aufteilung mit Retail-Hintergründen, Rahmen und Einrasten am Bildschirmrand, dazu Abstände, Ausrichtung, Skalierung und Farben pro Block.
+5692	20 Wrath-Blöcke
+5693	Uhr, FPS, Latenz, Ort, Goldverlauf, Taschen, Haltbarkeit, EP und Ruf, duale Talentspezialisierung, Berufe, Reisen, Mikromenü, Währungen und mehr.
+5694	Der Latenztext ist standardmäßig je nach Verbindungsqualität grün, gelb oder rot. Ein Latenz-Farbfeld in Textfarbe schaltet nach Wahl einer anderen Farbe dorthin zurück.
+5695	Spalten-Tooltips mit anklickbaren Zeilen und sicheren Zauber-, Gegenstands- und Makrozeilen
+5696	Jede Leiste hat einen Mover, dessen Element Optionen die Einstellungen dieser Leiste öffnet
+5697	Profile aus 0.2 werden automatisch konvertiert
+5698	Am Bildschirmrand eingerastete oder auf volle Länge gesetzte Leisten starten nach dem Einloggen an ihrem Platz, statt dass der Freigabemodus geöffnet und geschlossen werden muss.
+5699	Die Latenzzone der Zauberleiste funktioniert für vorgemerkte Zauber und bleibt bei kanalisierten Zaubern sichtbar, mit einstellbarer Farbe und Millisekundentext.
+5700	Klassen-, Ressourcen- und Gesundheitsleisten, Zauberleiste, GCD Leiste, Schlagtimer und Totemleiste, jedes Element mit eigenem Mover im Freigabemodus. Ältere Profile werden einmalig migriert.
+5701	Schwünge von Waffenhand, Schildhand und Fernkampf aus dem Kampflog, mit vorgemerktem Heldenhafter Stoß, Spalten und Zermalmen, Parierbeschleunigung und Tempowechseln.
+5702	Leistentexturen enthalten Texturen aus SharedMedia und anderen Addons
+5703	Vertikale Leisten, Retail-Texte, Farbverläufe, Schwellenwerte, Markierungsstriche und Glättung
+5704	Runenreihenfolge und Countdowns für Todesritter, Combopunkte oder die eigene Grafik von Blizzard
+5705	Kanalisierungsticks, Latenz, Gesamtdauer und Farben für nicht unterbrechbare Zauber
+5706	Totemsymbole und -timer sowie eine bewegbare Totemrufleiste
+5707	Die Totemrufleiste ändert im Kampf nicht mehr Größe oder Position; Änderungen gelten nach Kampfende.
+5708	Die Zauberleiste des Spielers zeigt den Namen des kanalisierten Zaubers statt \"Channeling\".
+5709	Klassensymbole in den EUI-Themen, Statuskugeln, Notizen in der Detailzeile, Fraktionsbanner und Mouseover-Hervorhebung, mit Rahmen und Akzentfarben.
+5710	Nimmt Gruppeneinladungen von Freunden und optional von Gildenmitgliedern an und schließt das Popup.
+5711	Das Fenster bleibt nativ, aber Zeilen erhalten trotzdem Klassensymbole und farbige Namen
+5712	Automatisch annehmen nimmt Quests aus NPC-Dialogen an, mit Mehrfaches Annehmen von Quests verhindern, und Automatisch abgeben schließt Quests mit nur einer Belohnung ab. Halte Umschalt zum Überspringen.
+5713	Benutzt den Gegenstand deiner verfolgten Quest, im Questlog gefunden, und belegt die Taste nur, solange es einen Gegenstand zu benutzen gibt.
+5714	Die oberste Linie nutzt die Akzentfarbe, und Linienfarbe tönt den Trenner der Kopfzeile
+5715	/eqt show, /eqt hide und /eqt toggle
+5716	Entferne deinen Fokus durch Klicken auf das Fokusfenster (standardmäßig Umschalt + Rechtsklick, oder Strg/Alt + Rechtsklick, Mittelklick, Umschalt + Linksklick). Einstellbar auf der Seite des Fokusfensters. Funktioniert im Kampf.
+5717	Zwei neue Filtermodi für Schwächungszauber: Schlachtzug Schwächungszauber zeigt die üblichen Schlachtzug-Schwächungszauber von allen (Rüstung, erlittener Zauber- und körperlicher Schaden, erlittene kritische Treffer, Angriffskraft, Angriffs- und Zaubertempo, erhaltene Heilung, Richturteile und Mal des Jägers), und Eigene und Schlachtzug Schwächungszauber fügt deine hinzu.
+5718	Position des Typ Symbols setzt das Symbol des höchsten bannbaren Schwächungszaubertyps des Spielers auf einen Punkt der Gesundheitsleiste, mit Größe und Versätzen im Zahnrad. Nur von Dir bannbar steht jetzt daneben und schränkt Überlagerung, Symbol und Rahmenfarben gleichermaßen ein.
+5719	Das Fokusfenster erhält die Einstellungen für Aurenrahmenstil, Größe und Farbe, wie Spieler und Ziel.
+5720	Spieler, Ziel und Fokus zeigen eingehende Heilungen hinter der Gesundheitsfüllung: deine und die anderer Spieler in eigenen Farben, aus LibHealComm-4.0 (nur Heiler mit einem HealComm-Addon werden erkannt).
+5721	Die Schwächungszauberfilter können jetzt Gesättigt, Erschöpfung und die anderen Kampfrausch-Sperrschwächungszauber anzeigen oder ausblenden. Standardmäßig bleiben sie ausgeblendet.
+5722	Linker, Rechter, Zentrierter und Zusatztext, die Texte der unteren Textleiste und Ressourcenprozent haben je eine Konturauswahl unter Größe: Keine, Kontur, Dicke Kontur oder Schatten, oder der Modulstandard.
+5723	Anker, Wachstum, Symbole pro Reihe, Dauer- und Stapeltext, texturierte Rahmen und Bannringe. Ziel und Fokus erhalten Leuchten für reinigbare Stärkungszauber.
+5724	Jeder Stil des Kampfindikators wird jetzt angezeigt, und hervorgehobene Porträts passen in ihre Form, statt überzulaufen.
+5725	Gesundheitsleisten von Spieler, Ziel, Fokus und Boss zeigen geschätzte Schadensschilde mit Absorptions Stil, Deckkraft, Farbe, Platzierung, Überhangschild anzeigen und Auf Bossfenstern anzeigen aus Retail
+5726	Mana oder Mana + Gestaltressource, mit einer separaten Gestaltleiste
+5727	Bedrohung %, eine Ressourcenleiste für den Begleiter und das Glückssymbol des Begleiters
+5728	Gebündelte Aurenindikatoren auf der Gesundheitsleiste mit Indikator-Layout verwenden
+5729	Füllung, Voll, Farbverlauf und scharfer Farbverlauf als Überlagerungen in der Bannfarbe
+5730	Unter Klassisches WoW UI und Blizzard Stil sitzt die Anführerkrone an der oberen Ecke des Porträts, wie bei den Originalfenstern, statt in der Gesundheitsleiste.
+5731	Das Symbol des Gruppenanführers auf Einheitenfenstern erscheint nur beim Anführer statt bei mehreren Gruppenmitgliedern.
+5732	Fokus setzen und Fokus entfernen im Rechtsklickmenü der Einheitenfenster funktionieren außerhalb des Kampfes ohne das Popup 'von einer Aktion blockiert'; im Kampf sind sie ausgeblendet.
+5733	Leisten und Porträts der Einheitenfenster werden nicht mehr in Scrollrahmen verschoben, wenn !!!ClassicAPI installiert ist.
+5734	Leuchten wichtiger Zauber ist für die Zauberleisten von Ziel und Fokus ausgeblendet; der Wrath-Client kann nicht erkennen, welche Zauber wichtig sind.
+5735	Kanalisierte Zauberleisten zeigen den Namen des Zaubers statt \"Channeling\".
+5736	Bossfenster aktualisieren jetzt Gesundheit, Ressource und Text, während der Boss nicht dein Ziel oder Fokus ist.
+5737	Sichtbarkeitsbedingungen (Kampf, Gruppe und Ausblenden ohne Ziel) gelten jetzt für die Fenster, statt mit einem Fehler abzubrechen, sodass die Kästchen im Sichtbarkeitsmenü auch sofort angehakt werden.
+5738	Ressourcenleisten von Klassisches WoW UI bleiben jetzt innerhalb der Fenstergrafik: der Rand der Grafik wird über die Ressourcenleiste gezeichnet, wie über die Gesundheitsleiste.
+5739	Klassisches WoW UI gibt jetzt jedem Einheitenfenster die originale grüne Gesundheitsleiste statt Klassenfarben. Die Rückkehr zum EllesmereUI-Aussehen stellt deine Farben wieder her.
+5740	Ressourcenleisten von Klassisches WoW UI nutzen die originalen Spielfarben (tiefblaues Mana, rote Wut, gelbe Energie) statt der EllesmereUI-Palette. Andere Aussehen behalten die Palette.
+5741	Textkonturen gelten jetzt für die Live-Fenster, nicht nur für die Vorschau in den Optionen.
+5742	Einheitenfenster scheitern nicht mehr beim Laden auf Setups, deren Maskentexturen leer zurückkommen (Absorptionsleistenfehler beim Einloggen).
+5743	Per Zauber-ID angezeigte Symbole zeigen jetzt das richtige Symbol oder ein Fragezeichen, nie ein leeres Quadrat.
+5744	Der Fraktionsindikator wirft im Söldnermodus keinen Fehler mehr, und reine Retail-PvP-Stile nutzen das PvP-Symbol von Wrath.
+5745	Der Stufentext wirft beim ersten Erstellen der Fenster keinen Fehler Font not set mehr.
+5746	Wie in Retail 9.4 öffnet sich der Bereich Erfahrungsleiste mit EP-Leistenstil: EllesmereUI für die EUI-Leiste, Luxthos für die EUI-Leiste im Luxthos-WeakAura-Layout oder Blizz Standard für die eigenen EP- und Rufleisten von Blizzard. Er ersetzt Erfahrungsleiste aktivieren und die Taste Luxthos-Layout anwenden.
+5747	Wie in Retail 9.4 kann jede horizontale Leiste die klassischen Greifen am linken Ende, rechten Ende oder an beiden zeigen, über das Menü Endkappen am Ende von LAYOUT. Das Zahnrad legt ihre Größe und Versätze fest, und Auf alle anwenden kopiert sie auf jede Leiste. Die Live-Vorschau zeigt sie ebenfalls.
+5748	Die EP-Leiste erhält die Retail-Quest-EP-Überlagerung (abgeschlossene Quests grün, unvollständige golden), Trennlinien mit Intelligente Markierungen, Farbverlaufsfüllungen, Hintergrund- und Erholungsfarben sowie sieben Textpositionen mit Werten, EP aus abgeschlossenen Quests, EP pro Stunde, Zeit bis zum Stufenaufstieg und gespielter Zeit. Luxthos-Layout anwenden bildet die beliebte Luxthos-EP-Leisten-WeakAura nach, mit Auf Höchststufe anzeigen, einem Funken und erholten EP nach Quest-EP.
+5749	Tasten mit einem angelegten Gegenstand, etwa einem Schmuckstück, können einen Rahmen in dessen Seltenheitsfarbe zeigen. Standardmäßig aus.
+5750	Vier zusätzliche Leisten, standardmäßig aus, jede mit eigenen Tastenbelegungen, Mover im Freigabemodus und den vollständigen Einstellungen der Leistenanzeige. Krieger, Druiden, Schurken und Priester sehen, welche Haltung oder Gestalt die Plätze einer Leiste teilt.
+5751	Kreis und Porträt zeichnen runde Symbole, Diamant, Sechseck und Schild schneiden das Symbol auf die Form zu, und Quadratisch und Abgerundetes Quadrat fügen eine geformte Kontur hinzu. Pro Leiste einstellbar, einschließlich Begleiter und Haltung.
+5752	Gib /kb ein, fahre über eine Taste und drücke eine Taste, um sie zu belegen, einschließlich Modifikatoren, Maustasten und Mausrad. Rechtsklick löscht; Abbrechen oder Esc macht rückgängig.
+5753	Text, Rahmen, Hintergründe, Ausrichtung und Wachstum pro Leiste, die Retail-Tastenanimationen und die Sichtbarkeitsengine sowie Modifikator-Seitenwechsel für Leiste 1.
+5754	Shift+1 wird als S1 angezeigt, Control+1 als C1, Maustasten als M4 und das Mausrad als MwU/MwD
+5755	Verkleinere die Taschenleiste auf eine einzelne Rucksacktaste
+5756	Quadratisches Mikromenü und Taschenleiste, flache EP- und Rufleisten und bewegbare Stärkungs- und Schwächungszauber
+5757	Die Seitenpfeile von Leiste 1 wechseln die Seite ohne die Meldung \"blocked from an action only available to the Blizzard UI\".
+5758	Ein Haltungswechsel zeigt keine doppelte Blizzard-Haltungs- und Begleiterleiste mehr.
+5759	Zauber können auf Leiste 1 abgelegt werden, während die Blizzard-Leistengrafik ausgeblendet ist.
+5760	Stärkungszauber des Spielers wachsen weiter nach unten, wenn Reihen hinzukommen.
+5761	Die EP- und Rufleisten werfen bei ihrer ersten Aktualisierung keinen Fehler mehr.
+5762	Erinnerungen für Seelenstein herstellen, einschließlich eigener Zaubererinnerungen, erscheinen nur für Hexenmeister.
+5763	Eine Erinnerung nur für Heilig an dein Siegel der Weisheit, auch wenn ein anderes Siegel aktiv ist.
+5764	Ein Klick wirkt deinen Gruppenstärkungszauber, etwa Seelenstärke, Gabe der Wildnis oder Arkane Brillanz, im höchsten Rang auf das erste Mitglied, dem er fehlt.
+5765	Auren, Präsenzen, Aspekte, Schilde, Waffenverzauberungen, Gifte, Begleiter, Seelenstein und Gesundheitsstein sowie Fläschchen, Elixier und Essen mit Taschenanzahl.
+5766	Erinnerungssounds enthalten SharedMedia-Sounds, auch aus Paketen, die später geladen werden
+5767	Welt, normale und heroische Dungeons und Schlachtzüge oder im Kampf, mit Timern für Darunter anzeigen
+5768	Talenterinnerungen für Wrath-Zonen und deine aktuelle Instanz
+5769	Deine eigenen Erinnerungen per Auren-ID und eine Manawarnung bei Bereitschaftsabfrage für Heiler
+5770	Mittelklick blendet eine Erinnerung bis zum nächsten Ladebildschirm aus
+5771	Das Ausschalten von Runenschmieden blendet jetzt die Runenerinnerung des Todesritters aus.
+5772	Das Hinzufügen von Zonen zu einer älteren Talenterinnerung wirft keinen Fehler mehr, und die neuen Zonen gelten sofort.
+5773	Eine Münze in der Taschenkopfzeile markiert Gegenstände als Müll: klicke sie an und dann auf Gegenstände. Graue und markierte Gegenstände kommen in eine Kategorie Müll, und bei Händlern erscheint neben der Münze eine Taste Müll verkaufen. Ihr Zahnrad fügt markierten Gegenständen ein Münzabzeichen hinzu.
+5774	Tastenbelegungen für Taschen öffnen und schließen das bestehende Layout im Kampf. Layoutaktualisierungen warten bis zum Kampfende.
+5775	Eine Seitenleiste mit den Ansichten Alle Gegenstände, Einzeltasche und Mehrfachtasche, angehefteten und neuen Gegenständen, Retail-Kategorien für Wrath-Gegenstände und deinen eigenen Kategorien.
+5776	Einzeltasche führt Stapel zusammen und sortiert nach Taschentyp, Mehrfachtasche sortiert jede Tasche, mit Nach unten sortieren und Zufällig anordnen.
+5777	Ein Zahnrad neben der Suche öffnet die Taschenoptionen oder bei der Bank die Seite Bank
+5778	Jeder gespeicherte Charakter in der Liste Charaktere hat ein x, um seine Daten zu löschen

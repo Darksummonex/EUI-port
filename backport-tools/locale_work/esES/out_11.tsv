@@ -1,0 +1,220 @@
+5259	Una barra vacía para crear desde cero.
+5260	Una chispa brillante en el borde del relleno.
+5261	Un foco amistoso tiene prioridad sobre el tanque. El foco se comprueba en el momento de pulsarlo, también en combate.
+5262	Un miembro del grupo para usar como tanque. Vacío usa el tanque principal de la banda y luego el rol de tanque del Buscador de mazmorras. Se actualiza fuera de combate.
+5263	Una línea cada 10% y una marca cada 5% a lo largo de la barra.
+5264	Un panel de control de banda con comprobación de disponibilidad, temporizador de pull y marcadores de objetivo. En una banda solo se muestra si eres el líder o un ayudante, ya que ninguno de sus botones funciona sin eso; en un grupo siempre se muestra.
+5265	Abreviar números
+5266	Animación
+5267	Aplicar estilos
+5268	Ajustes de diálogo automático
+5269	Seleccionar automáticamente diálogo único
+5270	Color de evitación
+5271	Color de fondo
+5272	Predeterminado de Blizz
+5273	Predeterminado de Blizz también cambia la barra de reputación a la de Blizzard.
+5274	Ambas especializaciones
+5275	Línea brillante en el borde del barrido (requiere un cliente con Cooldown:SetDrawEdge; solo barrido nativo).
+5276	Tamaño de icono de beneficio
+5277	Desplazamiento X de beneficios
+5278	Desplazamiento Y de beneficios
+5279	Beneficios por fila
+5280	Interfaz de WoW clásico
+5281	Clic para quitar foco
+5282	Borrar marcadores
+5283	Borrar marcadores de mundo
+5284	Quita tu foco al hacer clic de esta forma en el marco de foco. Funciona en combate, donde el menú del clic derecho no puede quitar el foco.
+5285	Cierra primero el Modo edición e inténtalo de nuevo.
+5286	Color de combate
+5287	Banda compacta
+5288	Banda compacta pone los marcadores, la comprobación de disponibilidad y el temporizador de pull en una fila que puedes redimensionar en el Modo desbloqueo. Las demás opciones mantienen los diseños de ventana.
+5289	Reloj compacto e indicador de FPS.
+5290	La PX de misiones completadas se muestra delante del relleno en verde, y la de misiones incompletas detrás en dorado. No se cuentan las misiones bajo encabezados contraídos del registro de misiones.
+5291	Misiones completadas
+5292	Solo misiones completadas
+5293	Duración de la cuenta atrás en segundos. Banda compacta usa el primero con Ctrl + Clic izquierdo, el segundo con Shift + Clic izquierdo, el tercero con Clic izquierdo, y Clic derecho detiene el temporizador. Pon un temporizador a 0 para desactivar ese atajo.
+5294	Crear nueva DataBar
+5295	Multiplicador de tamaño de críticos
+5296	Solo zona actual
+5297	Color de daño
+5298	Aspecto de la página DataBars
+5299	Predeterminado para todos los iconos de esta barra; los iconos pueden anularlo. 
+5300	Contraído por defecto al mostrarse
+5301	Dirección
+5302	Desactivar en estancias
+5303	Icono de tipo de disipación
+5304	Muestra los objetos basura (calidad gris y objetos que marcaste como basura) con un estilo atenuado en gris.
+5305	Texto del divisor
+5306	Divisores
+5307	Abajo y luego a la derecha
+5308	Abajo a la izquierda
+5309	Abajo a la derecha
+5310	Duración (segundos)
+5311	Texturas de barra de EllesmereUI
+5312	Fuente de EllesmereUI
+5313	Vacío = tanque principal de la banda, luego rol de tanque
+5314	Hueco vacío
+5315	Hueco vacío añadido.
+5316	Hueco vacío: mantiene libre esta posición en la barra.
+5317	Ajustes de remates
+5318	Remates
+5319	Filtro de beneficios enemigos
+5320	Entrar / salir de combate
+5321	Los objetos equipados reciben un borde del color de su rareza.
+5322	Renovación de la barra de experiencia
+5323	TEXTO DE LA BARRA DE EXPERIENCIA
+5324	Estilo de relleno
+5325	Primer temporizador
+5326	Plano pinta el color de PX. Los degradados van del color de PX al color final.
+5327	Bordes de auras del foco
+5328	Foco primero
+5329	Surtidor
+5330	Barra de ancho completo con los bloques de información clásicos.
+5331	Solo modos de ventana completa. Empieza mostrándose como un icono pequeño, y el atajo alterna entre el icono y las ventanas completas.
+5332	Solo modos de ventana completa. Hacia dónde se extienden las ventanas desde el icono contraído al abrirse.
+5333	GitHub (port 3.3.5)
+5334	Fila de acciones de ajustes globales
+5335	Color final del degradado
+5336	BOTONES DE GRUPO
+5337	Color de sanación
+5338	Sanación recibida
+5339	Tamaño del icono auxiliar
+5340	Ocultar fuera de forma/actitud
+5341	Ocultar fuera de forma/actitud (mantener posición)
+5342	Ocultar Saciado / Agotamiento
+5343	Ocultar hasta que sea usable
+5344	Ocultar hasta que sea usable (mantener posición)
+5345	Ocultar hasta que sea usable: solo se muestra mientras se pueda usar y no esté en reutilización, como Abrumar o Ataque victorioso tras un proc; la falta de recursos no lo oculta. Ocultar fuera de forma/actitud: solo se muestra en la forma o actitud que necesita el hechizo, incluso en reutilización. Mantener posición deja el hueco; los demás lo cierran.
+5346	Oculta los perjuicios de bloqueo de Ansia de sangre y Heroísmo.
+5347	Resaltar objetos al pasar sobre estadísticas
+5348	Al pasar el ratón sobre una estadística de la barra lateral, brillan los objetos equipados que la otorgan (Golpe, Crítico, Celeridad, Defensa, Fuerza...).
+5349	Cazadores y pícaros: un icono en el que haces clic (o asignas en Asignación de teclas > EllesmereUI Quality of Life) que lanza Redirección o Secretos del oficio sobre tu foco, si no sobre el tanque, si no sobre un objetivo amistoso
+5350	Ignorar misiones de nivel bajo
+5351	¿Importar en el perfil activo?
+5352	Importar en el perfil actual (%1$s)
+5353	Importar en tu perfil actual
+5354	Importar perfiles de Retail
+5355	En cualquier grupo
+5356	Misiones incompletas
+5357	Tamaño del nombre de encantamiento en inspección
+5358	Iconos de encantamiento, gema y hebilla faltantes en inspección
+5359	Invertir rueda del ratón
+5360	ID de objeto en la descripción
+5361	Marcador de basura
+5362	Opciones del marcador de basura
+5363	Solo los botones del micromenú.
+5364	Mantener sesión al recargar
+5365	Mantiene la barra al nivel máximo, llena, con el nivel y los tiempos. Tiempo en este nivel muestra el tiempo total jugado en él.
+5366	Remate izquierdo
+5367	Remate izquierdo o remate derecho
+5368	Luxthos
+5369	Alternativa con macro: /click EUI335QoLRedirect
+5370	Dirección de expansión del menú
+5371	AYUDANTE DE REDIRECCIÓN / SECRETOS
+5372	Ayudante de Redirección / Secretos
+5373	Fallos, esquivas y paradas
+5374	Predeterminado del módulo sigue el contorno de fuente de los marcos de banda de la página Fuentes.
+5375	Contorno del nombre
+5376	Nativo
+5377	Nativo: el barrido cuadrado oscuro del cliente. Con forma: un barrido dibujado que sigue los iconos redondos y usa el Color del barrido.
+5378	Distancia de anidado
+5379	Distancia y tamaño de anidado
+5380	Tamaño de icono anidado
+5381	No hay DataBars
+5382	Una ventana
+5383	Solo disipables
+5384	Solo grupo y pull
+5385	Solo marcadores
+5386	Perjuicios propios y de banda
+5387	Atajo propio
+5388	Porcentaje del tamaño normal de los remates.
+5389	Elige por ti la única opción de diálogo de un PNJ.
+5390	Beneficios del jugador en descripciones
+5391	Los valores positivos alejan ambos remates de la barra.
+5392	Especialización principal
+5393	TEMPORIZADOR DE PULL
+5394	Desplaza los mensajes anteriores para que uno nuevo nunca se solape con ellos.
+5395	Superposición de PX de misiones
+5396	Filtro de perjuicios de banda
+5397	Perjuicios de banda muestra los perjuicios de banda comunes (armadura, daño de hechizos y físico recibido, críticos recibidos, poder de ataque, velocidad de ataque y lanzamiento, sanación recibida, Sentencias, Marca del cazador) de cualquiera.
+5398	Lee las estadísticas propias del objeto; no se cuentan encantamientos ni gemas.
+5399	Recarga para terminar de restablecer EUI.
+5400	Recarga para terminar de desinstalar EUI.
+5401	Renombrar DataBar
+5402	Descanso tras PX de misiones
+5403	Color de descanso
+5404	Devuelve todos los addons de EUI a sus valores predeterminados.
+5405	Revierte los cambios de EUI y lo desactiva.
+5406	Remate derecho
+5407	Distancia de desplazamiento
+5408	Segundo temporizador
+5409	Especialización secundaria
+5410	Color de selección
+5411	Color de selección: color personalizado
+5412	TEXTO DE COMBATE PROPIO
+5413	Texto de combate propio
+5414	Vender basura omite los objetos sin precio de venta, el equipo de conjuntos de equipamiento y los objetos fijados.
+5415	Con forma
+5416	Barrido de reutilización con forma
+5417	Compartir atajo con
+5418	Shift + Clic en marcadores de mundo
+5419	Shift + Clic izquierdo en un icono de marcador usa su objeto de marcador de mundo; luego haz clic en el suelo. Solo lo obtienen los marcadores cuyo objeto está en tus bolsas; el resto mantiene Shift + Clic para borrar el marcador de objetivo. Shift + Clic izquierdo en el icono de borrar pulsa el botón Restablecer marcadores del servidor.
+5420	Muestra una pequeña moneda en la esquina de los objetos marcados como basura.
+5421	Mostrar como
+5422	Mostrar al nivel máximo
+5423	Mostrar moneda en la basura
+5424	Mostrar Convertir en banda
+5425	Mostrar Disolver
+5426	Mostrar divisores
+5427	Mostrar color del objeto equipado
+5428	Mostrar nombres de encantamientos en inspección en lugar de iconos
+5429	Mostrar nombre del icono del objeto
+5430	Mostrar ID de objeto en la descripción
+5431	Mostrar beneficios del jugador
+5432	Mostrar Reinvitar
+5433	Mostrar PX de descanso
+5434	Mostrar nombre del objetivo
+5435	Muestra el botón de la moneda en el encabezado de las bolsas. Haz clic en él y luego en los objetos para marcarlos o desmarcarlos como basura. La basura va a su propia categoría Basura, y aparece un botón Vender basura junto a la moneda mientras hay un vendedor abierto.
+5436	Se muestra al nivel máximo. Las bonificaciones de profesión solo se comprueban en tu propia hoja.
+5437	Muestra los perjuicios de banda comunes de cualquiera: armadura, daño de hechizos y físico recibido, críticos recibidos, poder de ataque, velocidad de ataque y lanzamiento, sanación recibida, Sentencias y Marca del cazador.
+5438	Muestra el botón Convertir en banda. En una banda de cinco o menos se lee Convertir en grupo: se expulsa a todos y se les vuelve a invitar a un grupo nuevo.
+5439	Muestra los perjuicios que aplicas más los perjuicios de banda comunes de cualquiera.
+5440	Muestra el botón Disolver. Siempre pregunta antes de disolver, pero ocultarlo lo pone definitivamente fuera del alcance de clics accidentales.
+5441	Muestra los beneficios del jugador señalado como iconos junto a la descripción (hasta 16).
+5442	Muestra la superposición, el icono de tipo y los colores de borde solo para los perjuicios que puedes disipar en ese momento.
+5443	Muestra el botón Reinvitar. Pregunta primero, luego expulsa a todos y los vuelve a invitar al mismo tipo de grupo. Los jugadores tienen que aceptar la nueva invitación.
+5444	Muestra tu daño recibido, sanación, evitaciones y entrada/salida de combate sobre el marco del jugador en lugar del texto de combate de Blizzard, cuyos demás mensajes se ocultan mientras esto está activo. Muévelo en el Modo desbloqueo.
+5445	Marcas inteligentes
+5446	ID de hechizo en el desglose
+5447	Poder con hechizos
+5448	Escalonar golpes
+5449	Resaltado al pasar sobre estadísticas
+5450	Estático
+5451	Recto
+5452	Menús de aspecto de la página Estilo
+5453	Color del barrido
+5454	Estilo del barrido
+5455	Nombre del tanque
+5456	Sombra del texto
+5457	La WeakAura [Merfin] Experience Bar (Luxthos): degradado de azul a morado, superposición de PX de misiones, chispa, descanso tras PX de misiones y siete textos con nivel, tiempos y tiempo hasta subir de nivel.
+5458	El recuadro clásico de descripción alrededor de la ventana del medidor, con botones de encabezado vanilla y todas las funciones del medidor de EllesmereUI.
+5459	La separación entre los iconos de un menú anidado y la entrada que lo abre.
+5460	El segmento de descanso empieza donde termina la superposición de PX de misiones en lugar de en tu PX actual.
+5461	El grupo de talentos en el que funciona este menú de acciones. Fuera de él, el atajo no hace nada y el menú se oculta donde esté anidado.
+5462	Tercer temporizador
+5463	Esta opción requiere un marco de foco de EllesmereUI.
+5464	Esta opción requiere el estilo de barra de PX EllesmereUI o Luxthos
+5465	Tiempo en esta sesión y PX por hora continúan tras un /reload (una carga en menos de cinco minutos) en lugar de empezar de cero.
+5466	Beneficios con duración
+5467	Alternar herramientas de banda
+5468	Alterna los paneles de herramientas de banda, dentro o fuera de combate.\n\nClic izquierdo para asignar un atajo.\nClic derecho para quitarlo.
+5469	Dos ventanas
+5470	Desinstalar y recargar
+5471	Desinstalar EUI
+5472	Arriba a la izquierda
+5473	Arriba a la derecha
+5474	Usa el atajo de otro menú de acciones mientras ese menú no está cargado. Ambos menús deben estar asignados a especializaciones distintas.
+5475	Qué beneficios muestran las placas de nombre enemigas. Ajústalo con detalle en la página Filtros de auras.
+5476	En qué extremos de la barra se muestran los grifos.
+5477	Estilo de barra de PX
+5478	Color de PX

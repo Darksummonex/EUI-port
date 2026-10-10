@@ -1889,7 +1889,11 @@ local EXPORT_PREFIX = "!EUI_"
 --- "forever" on WoW Forever, nothing on retail, so every older string reads
 --- as retail. Transport only: no import ever stores it in a profile.
 function EllesmereUI.StampPayloadClient(payload)
-    if EllesmereUI.IS_FOREVER then payload.client = "forever" end
+    if EllesmereUI.IS_FOREVER then
+        payload.client = "forever"
+    elseif EllesmereUI.WRATH_PAYLOAD_CLIENT then
+        payload.client = EllesmereUI.WRATH_PAYLOAD_CLIENT
+    end
     return payload
 end
 
@@ -1897,6 +1901,7 @@ end
 --- Forever). Cooldown Manager spell data from the other client is never
 --- imported: the import runs exactly as for a string that carries none.
 function EllesmereUI.PayloadFromOtherClient(payload)
+    if EllesmereUI.WrathPayloadIsForeign then return EllesmereUI.WrathPayloadIsForeign(payload) end
     local from = type(payload) == "table" and payload.client or nil
     return (from or "retail") ~= (EllesmereUI.IS_FOREVER and "forever" or "retail")
 end
@@ -3211,6 +3216,8 @@ function EllesmereUI.ImportProfile(importStr, profileName)
     if payload.data and payload.data.addons then
         payload.data.addons = CanonToLocal(payload.data.addons)
     end
+    -- Retail / WoW Forever strings keep only what the port supports.
+    if EllesmereUI.WrathAdaptForeignPayload then EllesmereUI.WrathAdaptForeignPayload(payload) end
 
     -- Reconcile media references against locally installed SharedMedia before
     -- the payload is merged or stored (see Imported media reconciliation above).
@@ -3438,6 +3445,7 @@ function EllesmereUI.ImportProfile(importStr, profileName)
         -- Snap all positions to the physical pixel grid (imported profiles
         -- may come from a different version without pixel snapping)
         EllesmereUI.SnapProfilePositions(merged)
+        local updatingExisting = db.profiles[profileName] ~= nil
         db.profiles[profileName] = merged
         -- Add to order if not present
         local found = false
@@ -3486,8 +3494,9 @@ function EllesmereUI.ImportProfile(importStr, profileName)
         end
         -- Remove the new profile from all sync targets so the pre-logout
         -- sync doesn't overwrite it. Other profiles' sync relationships
-        -- are preserved (per-profile sync system).
-        if EllesmereUIDB and EllesmereUIDB.syncedModules then
+        -- are preserved (per-profile sync system). Importing into the active
+        -- profile itself keeps its own sync choices.
+        if EllesmereUIDB and EllesmereUIDB.syncedModules and not updatingExisting then
             for folder, targets in pairs(EllesmereUIDB.syncedModules) do
                 if type(targets) == "table" then
                     targets[profileName] = nil

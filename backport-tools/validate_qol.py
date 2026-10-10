@@ -10,7 +10,46 @@ for source in ['backport-tools/wrath_mock.lua','backport-tools/inventory_resourc
     lua.execute((root/source).read_text(encoding='utf-8-sig'))
 ns=lua.table()
 lua.execute("ERR_INV_FULL='Inventory is full.'")
-for name in ['EUI_QoL_335.lua','EUI_QoL_335_Displays.lua','EUI_QoL_335_Panels.lua','EUI_QoL_335_Mail.lua','EUI_QoL_335_Extras.lua']:
+# Restricted-environment stand-in: snippets run as plain Lua with the same
+# (self, button/stateid, down/newstate) arguments the secure handlers pass.
+lua.execute('''
+local m=getmetatable(UIParent).__index
+if not m.SetClampedToScreen then function m:SetClampedToScreen() end end
+function m:GetFrameRef(label) return self._refs and self._refs[label] end
+function SecureHandlerSetFrameRef(f,label,ref) f._refs=f._refs or {}; f._refs[label]=ref end
+-- Wrath frame handles have no Run* methods; only the control handle does (SecureHandlers.lua LOCAL_CTRL).
+function RunSnippet(f,body,a,b)
+    assert(body,'missing snippet')
+    local fn=assert(loadstring('local self,stateid,newstate=...; local button,down=stateid,newstate\\n'..body))
+    local control={}
+    function control:RunAttribute(name,...) return RunSnippet(f,f:GetAttribute(name),...) end
+    function control:RunFor(other,code,...) return RunSnippet(other,code,...) end
+    setfenv(fn,setmetatable({control=control},{__index=_G}))
+    return fn(f,a,b)
+end
+assert(m.RunAttribute==nil and m.RunFor==nil)
+bagItems={}
+function GetItemCount(id) return bagItems[id] or 0 end
+function SecureHandlerExecute(f,body) return RunSnippet(f,body) end
+function SecureClick(f) return RunSnippet(f,f:GetAttribute('_onclick'),'LeftButton',false) end
+function FireState(f,state,value) return RunSnippet(f,f:GetAttribute('_onstate-'..state),state,value) end
+raidMembers,partyMembers,officer=0,0,false
+function UseRaidRoster(on)
+    if on then
+        savedRoster={GetNumRaidMembers,GetNumPartyMembers,UnitIsRaidOfficer}
+        GetNumRaidMembers=function() return raidMembers end
+        GetNumPartyMembers=function() return partyMembers end
+        UnitIsRaidOfficer=function() return officer end
+    else
+        GetNumRaidMembers,GetNumPartyMembers,UnitIsRaidOfficer=savedRoster[1],savedRoster[2],savedRoster[3]
+    end
+end
+marks={}; currentMark=nil
+function SetRaidTarget(_,i) marks[#marks+1]=i; currentMark=i~=0 and i or nil end
+function GetRaidTargetIndex() return currentMark end
+converted=0; function ConvertToRaid() converted=converted+1 end
+''')
+for name in ['EUI_QoL_335.lua','EUI_QoL_335_Displays.lua','EUI_QoL_335_Panels.lua','EUI_QoL_335_RaidTools.lua','EUI_QoL_335_Mail.lua','EUI_QoL_335_Extras.lua']:
     lua.execute((root/'EllesmereUIQoL'/name).read_text(encoding='utf-8-sig'),'EllesmereUIQoL',ns)
 lua.globals().Q=ns
 core=(root/'EllesmereUI/EllesmereUI_Lite.lua').read_text(encoding='utf-8-sig')
@@ -20,7 +59,7 @@ safe(ns.addon.OnEnable,ns.addon)
 lua.execute('''
 local p=Q.GetSettings(); local e=Q.events
 assert(p and p.enabled and not p.autoRepair and not p.cursor.enabled and not p.raidTools.enabled)
-assert(#unlockByFolder.EllesmereUIQoL==12 and not Q.frames.fps:IsShown())
+assert(#unlockByFolder.EllesmereUIQoL==14 and not Q.frames.fps:IsShown())
 e:RunScript('OnEvent','MERCHANT_SHOW'); assert(#repairs==0 and #sales==0)
 p.autoRepair=true; p.guildRepair=true; p.autoSellJunk=true; Q.Apply()
 e:RunScript('OnEvent','MERCHANT_SHOW'); assert(#repairs==1 and repairs[1]==false and sales[1][2]==1)
@@ -85,11 +124,89 @@ shift=false; ctrl=true; mouseDown=true; CharacterFrame:RunScript('OnMouseDown','
 CharacterFrame:Hide(); assert(select(3,CharacterFrame:GetPoint(1))=='BOTTOMLEFT'); CharacterFrame:Show(); ctrl=false
 combat=true; p.shifter.enabled=false; Q.Apply(); assert(CharacterFrame:IsMouseEnabled()); CharacterFrame:RunScript('OnMouseDown','LeftButton'); assert(not CharacterFrame.moving)
 combat=false; e:RunScript('OnEvent','PLAYER_REGEN_ENABLED'); assert(not CharacterFrame:IsMouseEnabled() and select(3,CharacterFrame:GetPoint(1))=='TOPLEFT')
-p.raidTools.enabled=true; p.raidTools.groupOnly=false; Q.Apply(); assert(Q.raidFrame:IsShown())
-for i,b in ipairs(Q.markers) do assert(b:GetAttribute('type')=='macro' and b:GetAttribute('macrotext')=='/run SetRaidTarget("target",'..i..')') end
-Q.readyButton:RunScript('OnClick'); assert(not readyChecks); leader=true; Q.readyButton:RunScript('OnClick'); assert(readyChecks==1)
-Q.pullButton:RunScript('OnClick'); Q.UpdatePull(); assert(Q.pullFrame.text:GetText()=='Pull in 10')
-now=now+12; Q.UpdatePull(); assert(not Q.pullFrame:IsShown())
+-- Raid Tools: Never builds nothing; the legacy enabled/groupOnly pair still maps to a mode.
+assert(not Q.raidFrame and Q.RaidToolsMode(p)=='never')
+p.raidTools.enabled=true; p.raidTools.groupOnly=false; assert(Q.RaidToolsMode(p)=='always')
+p.raidTools.groupOnly=true; assert(Q.RaidToolsMode(p)=='group'); p.raidTools.enabled=false
+UseRaidRoster(true)
+p.raidTools.mode='always'; p.raidTools.collapsedIcon=false; Q.Apply()
+local G,M,I,B=Q.raidSections.Group,Q.raidSections.Markers,Q.raidIcon,Q.raidButtons
+assert(G:IsShown() and not M:IsShown() and not I:IsShown() and Q.raidFrame==G,'One Window shows the Group shell only')
+assert(B.markers[1].icon.marker==1 and B.markers[9].index==0 and #B.markers==9)
+B.markers[1]:RunScript('PostClick','LeftButton'); assert(marks[1]==1)
+B.markers[1]:RunScript('PostClick','LeftButton'); assert(marks[2]==0,'Second click toggles the marker off')
+B.markers[2]:RunScript('PostClick','RightButton'); B.markers[9]:RunScript('PostClick','LeftButton'); assert(marks[3]==0 and marks[4]==0)
+-- Shift + Left Click uses a world marker item from the bags; markers without one keep Shift to clear.
+assert(B.markers[1]:GetAttribute('shift-type1')==nil and not B.markers[1].world)
+local oldShift=IsShiftKeyDown
+bagItems[131084]=1; Q.raidEvents:RunScript('OnEvent','BAG_UPDATE')
+assert(B.markers[1].world=='item:131084' and B.markers[1]:GetAttribute('shift-type1')=='item' and B.markers[1]:GetAttribute('shift-item1')=='item:131084')
+assert(not B.markers[8].world and B.markers[8]:GetAttribute('shift-type1')==nil and B.markers[9]:GetAttribute('shift-type1')==nil)
+local shift=true; IsShiftKeyDown=function() return shift end
+local n=#marks; B.markers[1]:RunScript('PostClick','LeftButton'); assert(#marks==n,'world marker leaves the target marker alone')
+B.markers[8]:RunScript('PostClick','LeftButton'); assert(#marks==n+1 and marks[#marks]==0,'missing item: Shift clears')
+shift=false
+p.raidTools.worldMarkers=false; Q.Apply(); assert(not B.markers[1].world and B.markers[1]:GetAttribute('shift-type1')==nil)
+p.raidTools.worldMarkers=true
+bagItems[131084]=nil; IsShiftKeyDown=oldShift; Q.raidEvents:RunScript('OnEvent','BAG_UPDATE'); assert(not B.markers[1].world)
+-- The clear icon presses the server's Reset Markers button on Shift + Left Click.
+assert(B.markers[9].index==0 and B.markers[9]:GetAttribute('shift-type1')==nil)
+rmarkbtn=CreateFrame('Button','rmarkbtn',RaidFrame or UIParent); Q.Apply()
+assert(B.markers[9].world=='/click rmarkbtn' and B.markers[9]:GetAttribute('shift-type1')=='macro' and B.markers[9]:GetAttribute('shift-macrotext1')=='/click rmarkbtn')
+shift=true; IsShiftKeyDown=function() return shift end; n=#marks; B.markers[9]:RunScript('PostClick','LeftButton'); assert(#marks==n,'reset leaves the target marker alone'); IsShiftKeyDown=oldShift
+p.raidTools.worldMarkers=false; Q.Apply(); assert(B.markers[9]:GetAttribute('shift-type1')==nil); p.raidTools.worldMarkers=true
+rmarkbtn=nil; Q.Apply(); assert(not B.markers[9].world)
+B.ready:RunScript('OnClick'); assert(readyChecks==1,'Solo counts as permitted')
+assert(B.pull[1].label:GetText()=='3' and B.pull[3].label:GetText()=='10' and B.pull[3]:IsShown() and B.stop:IsShown())
+B.pull[3]:RunScript('OnClick'); Q.UpdatePull(); assert(Q.pullFrame.text:GetText()=='Pull in 10')
+B.stop:RunScript('OnClick'); assert(not Q.pullFrame:IsShown())
+assert(B.reinvite:IsShown())
+local tall=G:GetHeight(); p.raidTools.pullTimes[2]=0; p.raidTools.showConvert=false; p.raidTools.showReinvite=false; Q.Apply()
+assert(not B.convert:IsShown() and not B.reinvite:IsShown() and B.pull[2].label:GetText()=='10' and not B.pull[3]:IsShown() and G:GetHeight()<tall)
+p.raidTools.pullTimes[2]=5; p.raidTools.showConvert=true; p.raidTools.showReinvite=true; Q.Apply(); assert(B.convert:IsShown() and B.reinvite:IsShown() and B.pull[3]:IsShown())
+-- Party member without lead: markers stay usable, leader-only buttons dim.
+partyMembers=4; leader=false; Q.raidEvents:RunScript('OnEvent','PARTY_MEMBERS_CHANGED')
+assert(B.disband.alpha==.35 and B.markers[1].icon.alpha==.8 and G:IsShown())
+leader=true; Q.raidEvents:RunScript('OnEvent','PARTY_LEADER_CHANGED'); assert(B.disband.alpha==1)
+B.convert:RunScript('OnClick'); assert(converted==1)
+-- Raid without assist: the whole feature leaves the screen and the key unbinds.
+p.raidTools.toggleKey='CTRL-R'; Q.Apply(); assert(overrideBindings[#overrideBindings][2]=='CTRL-R' and overrideBindings[#overrideBindings][3]=='EUI335QoLRaidToolsToggle')
+raidMembers=10; leader=false; officer=false; Q.raidEvents:RunScript('OnEvent','RAID_ROSTER_UPDATE')
+assert(not G:IsShown() and not G:GetAttribute('enabled'))
+for _,b in ipairs(overrideBindings) do assert(b[3]~='EUI335QoLRaidToolsToggle') end
+officer=1; Q.raidEvents:RunScript('OnEvent','RAID_ROSTER_UPDATE'); assert(G:IsShown() and B.convert.label:GetText()=='Convert to Party' and B.convert.alpha==.35)
+raidMembers=0; partyMembers=0; officer=false; leader=false; Q.raidEvents:RunScript('OnEvent','RAID_ROSTER_UPDATE')
+-- Keybind toggle (plain show/hide) and the group state driver.
+SecureClick(Q.raidToggle); assert(not G:IsShown()); SecureClick(Q.raidToggle); assert(G:IsShown())
+p.raidTools.mode='group'; Q.Apply(); assert(G.drivers.euirt_vis=='[group] show; hide' and not G:IsShown())
+FireState(G,'euirt_vis','show'); assert(G:IsShown()); FireState(G,'euirt_vis','hide'); assert(not G:IsShown())
+p.raidTools.mode='raid'; Q.Apply(); assert(G.drivers.euirt_vis=='[group:raid] show; hide')
+-- Default to Collapsed: shows start as the icon; expand, collapse and the key rock between them.
+p.raidTools.mode='always'; p.raidTools.collapsedIcon=true; Q.Apply(); assert(I:IsShown() and not G:IsShown() and G.collapse:IsShown())
+SecureClick(I); assert(G:IsShown() and not I:IsShown())
+SecureClick(G.collapse); assert(I:IsShown() and not G:IsShown())
+SecureClick(Q.raidToggle); assert(G:IsShown() and not I:IsShown()); SecureClick(Q.raidToggle); assert(I:IsShown() and not G:IsShown())
+-- Re-applying settings with nothing changed keeps the player's current state.
+SecureClick(I); Q.Apply(); assert(G:IsShown(),'An unrelated settings pass collapsed the panel')
+-- Two Windows / Only Markers / Compact Band.
+p.raidTools.showAs='two'; Q.Apply(); assert(I:IsShown() and not M:IsShown())
+SecureClick(I); assert(M:IsShown() and G:IsShown() and not M.collapse:IsShown() and G.collapse:IsShown())
+SecureClick(G.collapse); assert(not M:IsShown() and not G:IsShown() and I:IsShown(),'One collapse folds both windows')
+p.raidTools.showAs='markers'; Q.Apply(); assert(not G:GetAttribute('enabled') and M:GetAttribute('enabled'))
+p.raidTools.collapsedIcon=false; p.raidTools.showAs='compact'; Q.Apply()
+assert(G:IsShown() and G:GetWidth()==400 and G:GetHeight()==40 and #B.compact==9 and not I:GetAttribute('enabled'))
+local PT=B.compactPull; ctrl=true; PT:RunScript('OnClick','LeftButton'); ctrl=false; Q.UpdatePull(); assert(Q.pullFrame.text:GetText()=='Pull in 3')
+PT:RunScript('OnClick','RightButton'); assert(not Q.pullFrame:IsShown())
+local el=unlockByFolder.EllesmereUIQoL; local byKey={}; for _,e2 in ipairs(el) do byKey[e2.key]=e2 end
+assert(byKey.EUI_RaidTools_Compact.getFrame()==G and byKey.EUI_RaidTools.getFrame()==nil and byKey.EUI_RaidTools_Markers.getFrame()==nil)
+byKey.EUI_RaidTools_Compact.setWidth(nil,500); assert(p.raidTools.compactWidth==500 and G:GetWidth()==500)
+byKey.EUI_RaidTools_Compact.savePos(nil,'CENTER','CENTER',10,20); assert(p.positions.raidToolsCompact.x==10)
+p.raidTools.showAs='one'; p.raidTools.compactWidth=400; Q.Apply(); assert(byKey.EUI_RaidTools.getFrame()==G)
+-- Never tears everything down; the settings page previews it anyway.
+p.raidTools.mode='never'; Q.Apply(); assert(not G:IsShown() and not I:IsShown())
+for _,b in ipairs(overrideBindings) do assert(b[3]~='EUI335QoLRaidToolsToggle') end
+Q.RaidToolsPreview(true); assert(G:IsShown()); Q.RaidToolsPreview(false); assert(not G:IsShown())
+p.raidTools.toggleKey=false; UseRaidRoster(false)
 local mover=unlockByFolder.EllesmereUIQoL[1]; mover.savePos(nil,'CENTER','BOTTOMLEFT',500,0); Q.Apply(); assert(select(5,Q.frames.fps:GetPoint(1))==0)
 local originalProfile=Q.addon.db.profile
 EllesmereUIDB.activeProfile='Other'; Q.addon.db.profile=EllesmereUI.Lite.NewDB('EllesmereUIQoLDB',Q.defaults).profile
@@ -272,7 +389,7 @@ p.cursor.enabled=true; p.cursor.combatOnly=false; p.cursor.classColor=false; p.c
 assert(Q.cursor.frame:IsShown() and Q.cursor.ring.vertexColor[1]==1 and Q.cursor.ring.vertexColor[2]==0 and Q.cursor.ring.vertexColor[4]==.5 and Q.cursor.reticle:IsShown())
 p.cursor.instancesOnly=true; Q.UpdateCursor(.01); assert(not Q.cursor.frame:IsShown()); inside=true; Q.UpdateCursor(.01); assert(Q.cursor.frame:IsShown()); inside=false
 p.cursor.enabled=false; p.cursor.instancesOnly=false
-p.raidTools.scale=150; Q.Apply(); assert(Q.raidFrame.scale==1.5); p.raidTools.scale=100; p.raidTools.enabled=false; Q.Apply()
+p.raidTools.mode='always'; p.raidTools.scale=150; Q.Apply(); assert(Q.raidFrame.scale==1.5 and Q.raidIcon.scale==1.5); p.raidTools.scale=100; p.raidTools.mode='never'; Q.Apply()
 for _,key in ipairs({'fps','stats','coordinates','durability','combatAlert','deathAlert','bloodlust','battleRes','movement'}) do p[key]=false end; Q.Apply()
 ''')
 lua.execute('''
@@ -429,7 +546,7 @@ for _,el in ipairs(unlockByFolder.EllesmereUIQoL) do
     local found=false; for _,row in ipairs(page.rows) do if row.text==entry.highlightText then found=true end end
     assert(found,el.key..' row '..tostring(entry.highlightText)); mapped=mapped+1
 end
-assert(mapped==12 and map.EUI_TargetDistance.page=='Displays' and map.EUI_FPS.page=='Displays' and map.EUI_ZoneText==nil)
+assert(mapped==14 and map.EUI_RaidTools_Compact.page=='Raid Tools' and map.EUI_TargetDistance.page=='Displays' and map.EUI_FPS.page=='Displays' and map.EUI_ZoneText==nil)
 rows={}; module.buildPage('QoL',UIParent,0); FindRow('Auto Repair').setValue(false); assert(not Q.GetSettings().autoRepair)
 local gossipRow=FindRow('Auto Select Single Gossip'); gossipRow.setValue(true); assert(Q.GetSettings().autoGossip); gossipRow.setValue(false)
 -- Retail layout: Quick Loot | Auto-Fill Delete, then Auto Repair (guild funds in its cog) | Auto Sell Junk.
@@ -457,6 +574,12 @@ rows={}; module.buildPage('Cursor',UIParent,0); FindRow('Cursor Size').setValue(
 FindRow('Circle Opacity').setValue(40); assert(Q.GetSettings().cursor.opacity==40)
 FindRow('Custom Color').setValue(0,0,1); assert(Q.GetSettings().cursor.color.b==1)
 rows={}; module.buildPage('Raid Tools',UIParent,0); FindRow('Window Scale %').setValue(120); assert(Q.GetSettings().raidTools.scale==120)
+assert(FindRow('Show Raid Tools').getValue()=='never' and FindRow('Show as').disabled() and Q.raidFrame:IsShown(),'Settings page previews Raid Tools')
+FindRow('Show Raid Tools').setValue('group'); assert(Q.GetSettings().raidTools.mode=='group' and Q.GetSettings().raidTools.enabled)
+FindRow('Show as').setValue('compact'); assert(FindRow('Default to Collapsed When Shown').disabled() and FindRow('Show Disband').disabled())
+FindRow('First Timer').setValue(7); assert(Q.GetSettings().raidTools.pullTimes[1]==7 and Q.RaidToolsPullTime(1)==7)
+FindRow('Show as').setValue('one'); FindRow('Show Raid Tools').setValue('never')
+rows={}; module.buildPage('Cursor',UIParent,0); assert(not Q.raidFrame:IsShown(),'Leaving the page ends the preview')
 ''')
 font=(root/'EllesmereUIOptions/EUI_Fonts_Options.lua').read_text(encoding='utf-8-sig')
 body='local function TileQoL'+font.split('local function TileQoL',1)[1].split('\nlocal function ',1)[0]
@@ -472,9 +595,9 @@ for original in retail.rglob('*'):
 toc=(root/'EllesmereUIQoL/EllesmereUIQoL.toc').read_text(encoding='utf-8-sig')
 assert '## Interface: 30300' in toc and '\nEllesmereUIQoL.lua' not in toc and '## SavedVariables:' not in toc
 native_textures=list((root/'EllesmereUIQoL/Media/Textures_335').glob('*.tga'))
-assert len(native_textures)==6
+assert len(native_textures)==8 and {'modern_blizz.tga','raid-tools.tga'}<={t.name for t in native_textures}
 for texture in native_textures:
     data=texture.read_bytes(); width,height,depth,flags=struct.unpack('<HHBB',data[12:18])
     assert width&(width-1)==0 and height&(height-1)==0 and depth==32 and data[2]==2 and flags==8,texture
     assert len(data)==18+width*height*4,texture
-print('PASS: QoL Lua51 lifecycle, merchant safety/repair/loot/trainer/delete with chat reports, error whitelist, mail Open All/category attach, logging ownership, screenshot/auto-open/reset announce/role check/world map coords/right-click guard/rested/transforms/flyout ilvl/FPS key, Retail display looks (FPS, stats, durability, alerts, crosshair, target range, trackers, cursor), secure raid controls and scale, combat-safe window dragging, profile swaps, 12 movers with Element Options, options and global fonts; Retail references unchanged.')
+print('PASS: QoL Lua51 lifecycle, merchant safety/repair/loot/trainer/delete with chat reports, error whitelist, mail Open All/category attach, logging ownership, screenshot/auto-open/reset announce/role check/world map coords/right-click guard/rested/transforms/flyout ilvl/FPS key, Retail display looks (FPS, stats, durability, alerts, crosshair, target range, trackers, cursor), Retail Raid Tools (show modes, Show as layouts, Compact Band, collapsed icon, secure keybind/collapse/expand snippets, assist gate, pull timers, settings preview) and scale, combat-safe window dragging, profile swaps, 14 movers with Element Options, options and global fonts; Retail references unchanged.')

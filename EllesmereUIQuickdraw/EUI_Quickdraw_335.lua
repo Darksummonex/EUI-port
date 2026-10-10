@@ -9,16 +9,17 @@ ns.panels={character="CharacterMicroButton",spellbook="SpellbookMicroButton",tal
 ns.panelMacros={reputation='/run ToggleCharacter("ReputationFrame")',skills='/run ToggleCharacter("SkillFrame")',currency='/run ToggleCharacter("TokenFrame")',pet='/run ToggleCharacter("PetPaperDollFrame")',macros="/macro",bags="/run if ToggleAllBags then ToggleAllBags() else OpenAllBags() end",worldmap="/run ToggleFrame(WorldMapFrame)"}
 ns.panelNames={character="Character",spellbook="Spellbook",talents="Talents",achievements="Achievements",quests="Quest Log",friends="Friends",guild="Guild",pvp="PvP",lfg="Dungeon Finder",reputation="Reputation",skills="Skills",currency="Currency",pet="Pets & Mounts",calendar="Calendar",macros="Macros",bags="Bags",worldmap="World Map",help="Help",menu="Game Menu"}
 ns.panelIcons={character="INV_Chest_Cloth_17",spellbook="INV_Misc_Book_09",talents="Ability_Marksmanship",achievements="Achievement_Quests_Completed_08",quests="INV_Misc_Note_01",friends="INV_Misc_GroupNeedMore",guild="INV_Shirt_GuildTabard_01",pvp="INV_BannerPVP_02",lfg="INV_Misc_GroupLooking",reputation="Achievement_Reputation_01",skills="Trade_BlackSmithing",currency="INV_Misc_Coin_01",pet="Ability_Hunter_BeastTaming",calendar="INV_Misc_PocketWatch_01",macros="INV_Scroll_03",bags="INV_Misc_Bag_08",worldmap="INV_Misc_Map_01",help="INV_Misc_Note_05",menu="INV_Misc_Gear_01"}
--- Raid target icon order. The server's world marker spells are named by colour.
+-- Raid target icon order. The server's world markers are items, named by colour.
 ns.markerNames={"Star","Circle","Diamond","Triangle","Moon","Square","Cross","Skull"}
 ns.markerColors={"Yellow","Orange","Purple","Green","Silver","Blue","Red","White"}
-ns.worldMarkerSpells={80952,80947,80948,80946,80950,80945,80949,80951}
+ns.worldMarkerItems={131084,131079,131080,131078,131082,131077,131081,131083}
 ns.rezSpells={PRIEST={2006},PALADIN={7328},SHAMAN={2008},DRUID={50769,20484},DEATHKNIGHT={61999}}
 ns.specSpells={63645,63644}
 ns.professions={{key="alchemy",spell=2259},{key="blacksmithing",spell=2018},{key="enchanting",spell=7411},{key="engineering",spell=4036},{key="inscription",spell=45357},{key="jewelcrafting",spell=25229},{key="leatherworking",spell=2108},{key="tailoring",spell=3908},{key="mining",spell=2656},
  {key="cooking",spell=2550,secondary=true},{key="firstaid",spell=3273,secondary=true},{key="fishing",spell=7620,secondary=true},{key="runeforging",spell=53428,secondary=true},{key="disenchant",spell=13262,secondary=true},{key="prospecting",spell=31252,secondary=true},{key="milling",spell=51005,secondary=true}}
 ns.defaults={profile={enabled=true,confirmKey="",cancelKey="",palettes={{name="Utilities",enabled=true,layout="ARC",fanOrientation="HORIZONTAL",arcSpan=360,arcRotation=0,centerMode="CURSOR",posX=0,posY=0,radius=100,iconSize=40,spacing=8,scale=1,columns=4,autoColumns=false,opacity=.95,
- showLabels=true,showCooldowns=true,showCounts=true,showUsability=true,hideUnusable=true,showActionText=false,showNeedle=true,openAnimation=true,toggleMode=false,worldMarkerCursor=true,textSize=11,fontOutline="OUTLINE",slots={}}}}}
+ showLabels=true,showCooldowns=true,showCounts=true,showUsability=true,hideUnusable=true,showActionText=false,showNeedle=true,openAnimation=true,toggleMode=false,worldMarkerCursor=true,textSize=11,fontOutline="OUTLINE",
+ nestBand=40,nestScale=.8,invertScroll=false,selectColorCustom=false,selectColor={.047,.824,.624},useClassColor=false,slots={}}}}}
 -- Saved palette-1 entries were stored as diffs against these old sample defaults.
 local LEGACY_SLOTS={{kind="item",id=6948},{kind="panel",id="character"},{kind="panel",id="spellbook"},{kind="panel",id="talents"},{kind="panel",id="quests"}}
 function ns.Copy(value) if type(value)~="table" then return value end; local t={}; for k,v in pairs(value) do t[k]=ns.Copy(v) end; return t end
@@ -52,6 +53,34 @@ function ns.Profile()
  return p
 end
 function ns.Palette(index) local p=ns.Profile(); return p and p.palettes[index] end
+-- specs is a set of talent groups ({[1]=true,[2]=true}); nil or empty loads in both.
+function ns.PaletteSpecs(index)
+ local cfg=ns.Palette(index); local specs=cfg and cfg.specs
+ if type(specs)~="table" or next(specs)==nil then return nil end
+ return specs
+end
+function ns.PaletteActive(index)
+ local specs=ns.PaletteSpecs(index); if not specs then return true end
+ return specs[GetActiveTalentGroup and GetActiveTalentGroup() or 1]==true
+end
+function ns.PalettesExclusive(a,b)
+ local sa,sb=ns.PaletteSpecs(a),ns.PaletteSpecs(b); if not sa or not sb then return false end
+ for group in pairs(sa) do if sb[group] then return false end end
+ return true
+end
+-- A shared key stays on its holder's binding; the override sends it to whichever of the two loads.
+function ns.ShareOwner(index)
+ local p=ns.Profile(); local cfg=p and p.palettes[index]; local owner=cfg and tonumber(cfg.keyShare)
+ if not owner or owner==index or not p.palettes[owner] or p.palettes[owner].keyShare~=nil then return nil end
+ if not ns.PalettesExclusive(index,owner) then return nil end
+ return owner
+end
+function ns.SelectColor(cfg)
+ if cfg and cfg.useClassColor then local c=RAID_CLASS_COLORS and RAID_CLASS_COLORS[select(2,UnitClass("player"))]; if c then return c.r,c.g,c.b end end
+ if not (cfg and cfg.selectColorCustom) then if E.GetAccentColor then return E.GetAccentColor() end; return .047,.824,.624 end
+ local c=cfg.selectColor or {}
+ return c[1] or .047,c[2] or .824,c[3] or .624
+end
 function ns.Selected() return ns.Palette(ns.selectedPalette) end
 function ns.NewPalette(name,slots)
  local p=ns.Profile(); if #p.palettes>=16 then return end
@@ -61,7 +90,7 @@ function ns.NewPalette(name,slots)
 end
 function ns.RemovePalette(index)
  -- Stable palette numbers preserve existing keybinding assignments.
- local cfg=ns.Palette(index); if cfg then cfg.enabled=false; cfg.slots={}; cfg.name="Empty Palette "..index; ns.Apply() end
+ local cfg=ns.Palette(index); if cfg then cfg.enabled=false; cfg.slots={}; cfg.name="Empty Palette "..index; cfg.specs=nil; cfg.keyShare=nil; ns.Apply() end
 end
 local SKIP_COPY={name=true,enabled=true,slots=true}
 function ns.CopySettings(from,to)
@@ -106,7 +135,9 @@ function ns.SpecInfo(group)
  return name,icon
 end
 local function MarkerIcon(id) return tonumber(id)==0 and "Interface\\Buttons\\UI-GroupLoot-Pass-Up" or "Interface\\TargetingFrame\\UI-RaidTargetingIcon_"..tostring(id) end
-local function WorldMarkerName(index) return SpellName(ns.worldMarkerSpells[index]) or "Raid Marker: "..ns.markerColors[index] end
+-- The server's "Reset Markers" button on the Raid tab.
+ns.worldMarkerResetButton="rmarkbtn"
+local function WorldMarkerName(index) local item=ns.worldMarkerItems[index]; return item and GetItemInfo(item) or "World Marker: "..(ns.markerColors[index] or tostring(index)) end
 ns.WorldMarkerName=WorldMarkerName
 local RANDOM_MOUNT='/dismount [mounted]\n/run if not IsMounted() then local n=GetNumCompanions("MOUNT") if n>0 then CallCompanion("MOUNT",random(n)) end end'
 function ns.Display(slot)
@@ -120,6 +151,7 @@ function ns.Display(slot)
  elseif kind=="worldmarker" then local index=tonumber(id); return slot.label or (index and WorldMarkerName(index).." ("..ns.markerNames[index]..")" or "World Marker"),MarkerIcon(index or 0)
  elseif kind=="cycleraidtarget" then return slot.label or "Cycle Target Markers",MarkerIcon(1)
  elseif kind=="cycleworldmarker" then return slot.label or "Cycle World Markers",MarkerIcon(8)
+ elseif kind=="clearworldmarkers" then return slot.label or "Clear World Markers",MarkerIcon(0)
  elseif kind=="equipmentset" then local icon=GetEquipmentSetInfoByName and GetEquipmentSetInfoByName(id); return slot.label or tostring(id),Icon(icon) or ICONS.."INV_Chest_Cloth_17"
  elseif kind=="rez" then local list=ns.RezSpells(); local name,_,icon; if list then name,_,icon=SpellName(list[1]) end; return slot.label or name or "Resurrect",icon or ICONS.."Spell_Holy_Resurrection"
  elseif kind=="randommount" then return slot.label or "Random Mount",ICONS.."Ability_Mount_RidingHorse"
@@ -145,11 +177,13 @@ function ns.Action(slot,cfg)
  elseif kind=="panel" and ns.panels[id] then return "macrotext","/click "..ns.panels[id]..(id=="guild" and "\n/click FriendsFrameTab3" or "")
  elseif kind=="panel" and ns.panelMacros[id] then return "macrotext",ns.panelMacros[id]
  elseif kind=="raidtarget" and tonumber(id) and tonumber(id)>=0 and tonumber(id)<=8 and tonumber(id)%1==0 then return "macrotext",'/run SetRaidTarget("target",'..tonumber(id)..')'
- elseif kind=="worldmarker" and ns.worldMarkerSpells[tonumber(id) or 0] then
-  if atCursor then return "macrotext","/cast [@cursor] "..WorldMarkerName(tonumber(id)) end
-  return "spell",WorldMarkerName(tonumber(id))
+ elseif kind=="worldmarker" and ns.worldMarkerItems[tonumber(id) or 0] then
+  local item="item:"..ns.worldMarkerItems[tonumber(id)]
+  if atCursor then return "macrotext","/use [@cursor] "..item end
+  return "item",item
  elseif kind=="cycleraidtarget" then return "macrotext",'/run local i=(EUIQuickdrawMarker or 0)%8+1 EUIQuickdrawMarker=i SetRaidTarget("target",i)'
- elseif kind=="cycleworldmarker" then local names={}; for i=1,8 do names[i]=WorldMarkerName(i) end; return "macrotext","/castsequence "..(atCursor and "[@cursor] " or "").."reset=60 "..table.concat(names,", ")
+ elseif kind=="cycleworldmarker" then local items={}; for i=1,8 do items[i]="item:"..ns.worldMarkerItems[i] end; return "macrotext","/castsequence "..(atCursor and "[@cursor] " or "").."reset=60 "..table.concat(items,", ")
+ elseif kind=="clearworldmarkers" then return "macrotext","/click "..ns.worldMarkerResetButton
  elseif kind=="equipmentset" and type(id)=="string" and not id:find("[\r\n]") then return "macrotext","/equipset "..id
  elseif kind=="companion" then local index=ns.CompanionIndex(slot); if index then local _,_,spell=GetCompanionInfo(slot.companionType or "MOUNT",index); local name=spell and GetSpellInfo(spell); if name then return "spell",name end end
  elseif kind=="rez" then local list=ns.RezSpells(); if list then
@@ -169,11 +203,14 @@ function ns.Unavailable(slot)
  if kind=="spell" then return not ns.KnownSpell(SpellName(id))
  elseif kind=="macro" then return not GetMacroInfo(tonumber(id) or id)
  elseif kind=="companion" then return ns.CompanionIndex(slot)==nil
+ elseif kind=="worldmarker" then local item=ns.worldMarkerItems[tonumber(id) or 0]; return not item or (GetItemCount(item) or 0)==0
+ elseif kind=="cycleworldmarker" then for _,item in ipairs(ns.worldMarkerItems) do if (GetItemCount(item) or 0)>0 then return false end end; return true
+ elseif kind=="clearworldmarkers" then return not _G[ns.worldMarkerResetButton]
  elseif kind=="equipmentset" then return GetEquipmentSetInfoByName and not GetEquipmentSetInfoByName(id) or false
  elseif kind=="rez" then return ns.RezSpells()==nil
  elseif kind=="spec" then return GetNumTalentGroups and GetNumTalentGroups()<(tonumber(id) or 1) or false
  elseif kind=="profession" then local spell=ns.ProfessionSpell(slot); return not spell or not ns.KnownSpell(SpellName(spell))
- elseif kind=="palette" then local target=ns.Palette(tonumber(id)); return not target or not ns.NestChildren or #ns.NestChildren(target)==0
+ elseif kind=="palette" then local target=ns.Palette(tonumber(id)); return not target or not ns.PaletteActive(tonumber(id)) or not ns.NestChildren or #ns.NestChildren(target)==0
  end
  return false
 end
@@ -231,8 +268,14 @@ function ns.TrackMount()
 end
 function ns.addon:OnInitialize() ns.addon.db=E.Lite.NewDB("EllesmereUIQuickdrawDB",ns.defaults); ns.db=ns.addon.db end
 function ns.addon:OnEnable()
- for _,event in ipairs({"UPDATE_BINDINGS","PLAYER_REGEN_ENABLED","SPELLS_CHANGED","LEARNED_SPELL_IN_TAB","PLAYER_ENTERING_WORLD","COMPANION_UPDATE","COMPANION_LEARNED","UPDATE_MACROS","EQUIPMENT_SETS_CHANGED","ACTIVE_TALENT_GROUP_CHANGED","UPDATE_SHAPESHIFT_FORMS"}) do ns.events:RegisterEvent(event) end
+ for _,event in ipairs({"UPDATE_BINDINGS","PLAYER_REGEN_ENABLED","SPELLS_CHANGED","LEARNED_SPELL_IN_TAB","PLAYER_ENTERING_WORLD","COMPANION_UPDATE","COMPANION_LEARNED","UPDATE_MACROS","EQUIPMENT_SETS_CHANGED","ACTIVE_TALENT_GROUP_CHANGED","UPDATE_SHAPESHIFT_FORMS","BAG_UPDATE"}) do ns.events:RegisterEvent(event) end
  ns.events:SetScript("OnEvent",function(_,event,arg1)
+  if event=="BAG_UPDATE" then
+   -- Only world marker items gate entries; other loot churn is ignored.
+   local sig=""; for _,item in ipairs(ns.worldMarkerItems) do sig=sig..((GetItemCount(item) or 0)>0 and "1" or "0") end
+   if sig==ns.markerBagSig then return end
+   ns.markerBagSig=sig
+  end
   if event=="SPELLS_CHANGED" or event=="LEARNED_SPELL_IN_TAB" then ns.spellCache=nil end
   if event=="COMPANION_UPDATE" and not ns.TrackMount() and arg1==nil then return end
   if not ns.header and not InCombatLockdown() then ns.CreatePalettes() end

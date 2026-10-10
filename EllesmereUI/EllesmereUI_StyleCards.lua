@@ -333,6 +333,9 @@ end
 --                      hover, DISPLAY_CARD_H tall (onPick/buttonText unused)
 --    defaultKey        the pick card tagged DEFAULT, placed first (nil or
 --                      "eui" = the EllesmereUI card, in the usual order)
+--    inUseAlpha        the card's opacity while it is IN USE (1); its
+--                      badge stays whole
+--    badgeSize         the IN USE badge's font size (11)
 --  Returns a table keyed by style; handle:SetState(inUse, pickable, label)
 --  keeps a card lit with an IN USE badge, and dims its button (picks then do
 --  nothing) with an optional label while it has nothing to apply.
@@ -362,6 +365,7 @@ function EllesmereUI.BuildStyleCards(parent, topY, opts)
     }
 
     local display = opts.display == true
+    local inUseAlpha = opts.inUseAlpha or 1
     -- WoW Forever: its own pick card on that client, second in the row (the
     -- announcement cards never show there).
     if IS_FOREVER and not display then
@@ -417,9 +421,10 @@ function EllesmereUI.BuildStyleCards(parent, topY, opts)
         tagFS:SetText(L(def.tag))
 
         -- IN USE badge just above the card (clear of the centred title),
-        -- shown by SetState.
-        local badge = card:CreateFontString(nil, "OVERLAY")
-        badge:SetFont(FONT, 11, "")
+        -- shown by SetState. Drawn on the parent, so the card's IN USE
+        -- alpha leaves it whole.
+        local badge = parent:CreateFontString(nil, "OVERLAY")
+        badge:SetFont(FONT, opts.badgeSize or 11, "")
         badge:SetTextColor(accentR, accentG, accentB, 1)
         PP.Point(badge, "BOTTOM", card, "TOP", 0, 6)
         badge:SetText(L("IN USE"))
@@ -455,6 +460,7 @@ function EllesmereUI.BuildStyleCards(parent, topY, opts)
                 SetState = function(_, isInUse)
                     local on = isInUse and true or false
                     badge:SetShown(on)
+                    card:SetAlpha(on and inUseAlpha or 1)
                     if on then
                         brd:SetColor(accentR, accentG, accentB, 0.9)
                     else
@@ -517,6 +523,7 @@ function EllesmereUI.BuildStyleCards(parent, topY, opts)
                 SetState = function(_, isInUse, canPick, label)
                     inUse, pickable = isInUse and true or false, canPick ~= false
                     badge:SetShown(inUse)
+                    card:SetAlpha(inUse and inUseAlpha or 1)
                     lbl:SetText(L(label or btnText))
                     Paint()
                 end,

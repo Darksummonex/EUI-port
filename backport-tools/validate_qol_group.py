@@ -11,7 +11,8 @@ lua=LuaRuntime(unpack_returned_tuples=True)
 for source in ['backport-tools/wrath_mock.lua','backport-tools/inventory_resources_mock.lua','backport-tools/qol_mock.lua','EllesmereUI/EllesmereUI_Lite.lua']:
     lua.execute((root/source).read_text(encoding='utf-8-sig'))
 ns=lua.table()
-for name in ['EUI_QoL_335.lua','EUI_QoL_335_Displays.lua','EUI_QoL_335_Panels.lua','EUI_QoL_335_Mail.lua','EUI_QoL_335_Extras.lua','EUI_QoL_335_Group.lua']:
+lua.execute("function SecureHandlerSetFrameRef(f,label,ref) f['ref_'..label]=ref end; function SecureHandlerExecute() end")
+for name in ['EUI_QoL_335.lua','EUI_QoL_335_Displays.lua','EUI_QoL_335_Panels.lua','EUI_QoL_335_RaidTools.lua','EUI_QoL_335_Mail.lua','EUI_QoL_335_Extras.lua','EUI_QoL_335_Group.lua']:
     lua.execute((root/'EllesmereUIQoL'/name).read_text(encoding='utf-8-sig'),'EllesmereUIQoL',ns)
 lua.globals().Q=ns
 core=(root/'EllesmereUI/EllesmereUI_Lite.lua').read_text(encoding='utf-8-sig')
@@ -75,14 +76,41 @@ function GetRaidRosterInfo(i) return ({'Me','R2','R3'})[i],0,1,80,'Mage','MAGE',
 function StaticPopup_Show(which) popup=which end
 leader=false; raidLeader=false; function IsRaidLeader() return raidLeader end
 Q.ConfirmDisband(); assert(popup==nil,'nothing to disband solo')
-partyCount=2; Q.disbandButton:RunScript('OnClick'); assert(popup=='EUI335_DISBAND_GROUP' and StaticPopupDialogs.EUI335_DISBAND_GROUP.OnAccept)
+partyCount=2; Q.ConfirmDisband(); assert(popup=='EUI335_DISBAND_GROUP' and StaticPopupDialogs.EUI335_DISBAND_GROUP.OnAccept)
 StaticPopupDialogs.EUI335_DISBAND_GROUP.OnAccept(); assert(#removed==0 and left==0,'non-leader cannot disband')
 leader=true; StaticPopupDialogs.EUI335_DISBAND_GROUP.OnAccept(); assert(removed[1]=='B' and removed[2]=='A' and left==1)
 removed,left={},0; partyCount=2; raidCount=3; leader=false; raidLeader=true; Q.DisbandGroup()
 assert(#removed==2 and removed[1]=='R2' and removed[2]=='R3' and left==1,'raid: offline members removed too')
 removed,left={},0; combat=true; function InCombatLockdown() return combat end; Q.DisbandGroup(); assert(#removed==0 and left==0,'combat guard'); combat=false
+-- Rebuild as party: a raid of five or fewer is emptied, then invited back once the old group is gone.
+local rb=Q.rebuildEvents; invited={}; function InviteUnit(n) invited[#invited+1]=n end; now=100; function GetTime() return now end
+raidCount=6; popup=nil; Q.ConfirmRebuildParty(); assert(popup==nil,'over five')
+raidCount=3; raidLeader=false; leader=false; Q.ConfirmRebuildParty(); assert(popup==nil,'leader only')
+raidLeader=true; combat=true; Q.ConfirmRebuildParty(); assert(popup==nil,'combat'); combat=false
+Q.ConfirmRebuildParty(); assert(popup=='EUI335_REBUILD_PARTY')
+removed,left={},0; StaticPopupDialogs.EUI335_REBUILD_PARTY.OnAccept(); assert(#removed==2 and left==1 and #invited==0)
+rb:RunScript('OnEvent','RAID_ROSTER_UPDATE'); assert(#invited==0,'still grouped')
+raidCount,partyCount=0,0; rb:RunScript('OnEvent','RAID_ROSTER_UPDATE'); assert(invited[1]=='R2' and invited[2]=='R3' and not rb:IsEventRegistered('RAID_ROSTER_UPDATE'))
+rb:RunScript('OnEvent','PARTY_MEMBERS_CHANGED'); assert(#invited==2,'invites once')
+raidCount=3; Q.RebuildAsParty(); now=200; raidCount=0; rb:RunScript('OnEvent','RAID_ROSTER_UPDATE'); assert(#invited==2,'stale rebuild expires')
+-- Reinvite: a party comes back as a party.
+invited,removed,left,popup={},{},0,nil; raidCount,partyCount=0,2; Q.ConfirmReinvite(); assert(popup=='EUI335_REINVITE_GROUP')
+StaticPopupDialogs.EUI335_REINVITE_GROUP.OnAccept(); assert(#removed==2 and left==1)
+partyCount=0; rb:RunScript('OnEvent','PARTY_MEMBERS_CHANGED'); assert(invited[1]=='A' and invited[2]=='B' and not rb:IsEventRegistered('PARTY_MEMBERS_CHANGED'))
+-- A raid of seven: four invites, convert once someone joins, then the rest.
+local big={'Me','R2','R3','R4','R5','R6','R7'}; function GetRaidRosterInfo(i) return big[i] end
+converted=0; function ConvertToRaid() converted=converted+1 end
+invited,removed,left={},{},0; raidCount,partyCount=7,0; Q.ReinviteGroup(); assert(#removed==6 and left==1)
+raidCount=0; rb:RunScript('OnEvent','RAID_ROSTER_UPDATE'); assert(#invited==4 and invited[4]=='R5' and converted==0)
+rb:RunScript('OnEvent','PARTY_MEMBERS_CHANGED'); assert(#invited==4 and converted==0,'nobody joined yet')
+partyCount=1; rb:RunScript('OnEvent','PARTY_MEMBERS_CHANGED'); assert(converted==1 and #invited==4)
+raidCount,partyCount=2,0; rb:RunScript('OnEvent','RAID_ROSTER_UPDATE'); assert(#invited==6 and invited[6]=='R7' and not rb:IsEventRegistered('RAID_ROSTER_UPDATE'))
+-- A raid of three stays a raid.
+big={'Me','R2','R3'}; invited,converted={},0; raidCount=3; Q.ReinviteGroup(); raidCount=0; rb:RunScript('OnEvent','RAID_ROSTER_UPDATE'); assert(#invited==2 and rb:IsEventRegistered('PARTY_MEMBERS_CHANGED'))
+partyCount=1; rb:RunScript('OnEvent','PARTY_MEMBERS_CHANGED'); assert(converted==1); raidCount,partyCount=2,0; rb:RunScript('OnEvent','RAID_ROSTER_UPDATE'); assert(not rb:IsEventRegistered('RAID_ROSTER_UPDATE'))
+raidCount,partyCount=0,0; popup=nil; Q.ConfirmReinvite(); assert(popup==nil,'solo')
 raidCount,partyCount=0,0
-assert(Q.readyButton and Q.pullButton and Q.cancelPullButton and Q.disbandButton:GetText()=='Disband')
+assert(Q.StartPull and Q.StopPull and Q.ApplyRaidTools and not Q.raidFrame,'Raid Tools on Never builds no frames')
 ''')
 lua.execute((root/'EllesmereUIOptions/EUI_QoL_335_Options.lua').read_text(encoding='utf-8-sig'))
 lua.execute("allFrames[#allFrames]:RunScript('OnEvent','PLAYER_LOGIN')")
@@ -93,6 +121,7 @@ local announce=FindRow('Announce Interrupts'); assert(announce.values.RAID_ONLY=
 announce.setValue('RAID'); assert(Q.GetSettings().interruptAnnounce=='RAID' and Q.groupEvents:IsEventRegistered('COMBAT_LOG_EVENT_UNFILTERED'))
 FindRow('Accept Invites from Friends & Guild').setValue(true); assert(Q.GetSettings().autoAcceptInvites and Q.groupEvents:IsEventRegistered('PARTY_INVITE_REQUEST'))
 assert(FindRow('Accept Invites from Friends & Guild').tooltip:find('Dungeon Finder',1,true))
-rows={}; buttons={}; module.buildPage('Raid Tools',UIParent,0); assert(buttons['Disband Group'])
+rows={}; buttons={}; module.buildPage('Raid Tools',UIParent,0); assert(buttons['Move Raid Tools'] and not buttons['Disband Group'])
+FindRow('Show Reinvite').setValue(false); assert(Q.GetSettings().raidTools.showReinvite==false); FindRow('Show Reinvite').setValue(true)
 ''')
 print('PASS: QoL interrupt announce (self/pet only, party/raid/battleground/say channels, off when disabled), friend and guild invite auto-accept (realm suffix, grouped/LFG guards, popup closed), leader-only Disband with confirmation and combat guard, options rows.')

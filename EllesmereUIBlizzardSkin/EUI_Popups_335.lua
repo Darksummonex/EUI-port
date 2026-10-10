@@ -82,6 +82,15 @@ function P.StartTimer()
     timer.expires=GetTime()+PROPOSAL_TIME; timer:Show()
 end
 function P.StopTimer() if timer then timer:Hide() end end
+-- The initiator also gets ReadyCheckFrame, with its question and buttons
+-- (ReadyCheckListenerFrame) hidden: an empty frame left on screen.
+function P.HideOwnReadyCheck(initiator,settled)
+    local frame=_G.ReadyCheckFrame
+    if not frame or not frame:IsShown() then return end
+    initiator=initiator or frame.initiator
+    local listener=settled and _G.ReadyCheckListenerFrame
+    if initiator and UnitIsUnit("player",initiator) or listener and not listener:IsShown() then frame:Hide() end
+end
 function P.Apply()
     P.UpdateGlows()
     if timer then
@@ -95,6 +104,8 @@ function P.Enable()
         local popup=_G["StaticPopup"..i]
         if popup then popup:HookScript("OnHide",P.UpdateGlows) end
     end
+    if type(_G.ShowReadyCheck)=="function" then hooksecurefunc("ShowReadyCheck",function(initiator) P.HideOwnReadyCheck(initiator,true) end)
+    elseif _G.ReadyCheckFrame then ReadyCheckFrame:HookScript("OnShow",function() P.HideOwnReadyCheck() end) end
     local f=CreateFrame("Frame"); P.events=f
     for _,event in ipairs({"LFG_PROPOSAL_SHOW","LFG_PROPOSAL_FAILED","LFG_PROPOSAL_SUCCEEDED"}) do pcall(f.RegisterEvent,f,event) end
     f:SetScript("OnEvent",function(_,event)

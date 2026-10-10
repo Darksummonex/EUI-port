@@ -1,4 +1,46 @@
-# Unit Frames 3.3.5 — 0.21
+# Unit Frames 3.3.5 — 0.25
+
+0.25: com Classic WoW UI ou Blizzard Style, o ícone de líder em Top Left (padrão)
+fica no canto de cima do retrato, como no PlayerFrame do 3.3.5 (coroa de 16px a
+6,-8 de um retrato de 64px, escalado pelo tamanho do retrato do kit; espelhado no
+retrato do lado direito, como o do target), em vez de dentro da barra de vida.
+`ns.UF_PlaceStockLeader` é usado pelo quadro e pela prévia das opções; X/Y somam
+ao ponto. As outras posições e o estilo EllesmereUI não mudam (o Retail também
+põe a coroa na barra de vida nos estilos de stock).
+
+0.25: o ícone de líder dos quadros (player, target, focus) usa
+GetPartyLeaderIndex / IsPartyLeader em grupo em vez de UnitIsPartyLeader(unit),
+que no 3.3.5 pode marcar mais de um membro. Em raide continua o rank da raide.
+Ignora UnitIsGroupLeader global de addons de compatibilidade (!!!ClassicAPI), que
+marcava o alvo como líder; o rank de raide procura raid1..N por UnitIsUnit.
+
+0.24: opção Clear Focus Click na página do Focus (Shift/Ctrl/Alt + Right Click,
+Middle Click, Shift + Left Click ou None; padrão Shift + Right Click). Grava
+atributos seguros no quadro do focus (<mod>type<n>=macro, macrotext=/clearfocus),
+então funciona em combate, onde o Clear Focus do menu fica escondido. Mudanças em
+combate esperam PLAYER_REGEN_ENABLED; ReloadFrames reaplica (troca de perfil).
+
+0.23: o menu de clique direito dos unit frames oferecia Set Focus / Clear Focus,
+bloqueados pelo cliente quando vêm de addon. O menu agora se registra em
+EllesmereUI.UnitMenuWithoutFocus (Core 0.65): fora de combate os dois itens
+funcionam por um botão seguro sobre o item; em combate somem.
+
+Sem bump: "Hide Sated / Exhaustion" também esconde o 81005 (lockout de Bloodlust do servidor).
+
+0.22: dois modos novos no Debuff Filter (Aura Filters e o menu de debuffs de cada
+frame): "Raid Debuffs" mostra só os debuffs de raid comuns de qualquer um, e "Own
+and Raid Debuffs" junta os seus. A lista (Core, EUI_AuraFilters_335.lua) cobre
+armadura (Sunder, Expose, Acid Spit, Faerie Fire, Curse of Weakness), dano mágico
+(Curse of the Elements, Earth and Moon, Ebon Plague), crítico mágico (Improved
+Scorch, Winter's Chill, Shadow Mastery), acerto (Misery), crítico recebido (Heart
+of the Crusader, Totem of Wrath), dano físico (Blood Frenzy, Savage Combat), bleed
+(Mangle, Trauma), AP (Demoralizing Shout/Roar, Vindication), velocidade de ataque
+(Thunder Clap, Frost Fever, Infected Wounds, Judgements of the Just), cura recebida
+(Mortal Strike, Wound Poison, Aimed Shot, Furious Attacks), conjuração (Curse of
+Tongues, Slow, Mind-numbing Poison, Lava Breath), Judgements of Light/Wisdom e
+Hunter's Mark. Compara pelo nome da magia, então vale qualquer rank. Tracked IDs
+continuam somando e Excluded continua escondendo. O Retail usa a flag "important"
+da Blizzard, que o Wrath não tem.
 
 0.21: "Type Icon Position" no Dispel Overlay do player (como no Retail e no
 Raid Frames): o ícone do tipo de debuff dispelável de maior prioridade num

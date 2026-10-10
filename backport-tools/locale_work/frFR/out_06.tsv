@@ -1,0 +1,217 @@
+5259	Une barre vierge à construire de zéro.
+5260	Une étincelle brillante au bord du remplissage.
+5261	Une focalisation amicale passe avant le tank. La focalisation est vérifiée au moment où vous appuyez, y compris en combat.
+5262	Un membre du groupe à utiliser comme tank. Vide utilise le tank principal du raid, puis le rôle de tank de l'Outil Donjons. Mis à jour hors combat.
+5263	Une ligne tous les 10 % et un repère tous les 5 % le long de la barre.
+5264	Un panneau de contrôle du raid avec appel, compte à rebours de pull et marqueurs de cible. En raid, il ne s'affiche que si vous êtes chef ou assistant, car aucun de ses boutons ne fonctionne sans cela ; en groupe, il s'affiche toujours.
+5265	Abréger les nombres
+5266	Animation
+5267	Appliquer les styles
+5268	Réglages de dialogue auto
+5269	Choisir auto le dialogue unique
+5270	Couleur d'évitement
+5271	Couleur de fond
+5273	Défaut Blizz remplace aussi la barre de réputation par celle de Blizzard.
+5274	Les deux spés
+5275	Ligne brillante au bord du balayage (nécessite un client avec Cooldown:SetDrawEdge ; balayage natif uniquement).
+5276	Taille des icônes d'amélioration
+5277	Décalage X des améliorations
+5278	Décalage Y des améliorations
+5279	Améliorations par ligne
+5280	Style d'interface WoW Classic
+5281	Clic pour effacer la focalisation
+5282	Effacer les marqueurs
+5283	Effacer les marqueurs au sol
+5284	Efface votre focalisation quand vous cliquez ainsi sur le cadre de focalisation. Fonctionne en combat, où le menu du clic droit ne peut pas effacer la focalisation.
+5285	Fermez d'abord le mode Édition, puis réessayez.
+5286	Couleur de combat
+5287	Bande compacte
+5288	Bande compacte place les marqueurs, l'appel et le compte à rebours de pull sur une seule ligne redimensionnable en mode Déverrouillage. Les autres choix conservent les dispositions en fenêtres.
+5289	Horloge et affichage des IPS compacts.
+5290	L'EXP des quêtes terminées s'affiche devant le remplissage en vert, celle des quêtes inachevées après en doré. Les quêtes sous des en-têtes repliés du journal de quêtes ne sont pas comptées.
+5291	Quêtes terminées
+5292	Quêtes terminées uniquement
+5293	Durée du compte à rebours en secondes. Bande compacte utilise le premier avec Ctrl + Clic gauche, le deuxième avec Maj + Clic gauche, le troisième avec Clic gauche, et Clic droit arrête le compte à rebours. Réglez un compte à rebours sur 0 pour désactiver ce raccourci.
+5295	Multiplicateur de taille des critiques
+5296	Zone actuelle uniquement
+5297	Couleur des dégâts
+5298	Apparence de la page DataBars
+5299	Valeur par défaut pour chaque icône de cette barre ; les icônes peuvent la remplacer. 
+5300	Replié par défaut à l'affichage
+5301	Direction
+5302	Désactiver en instance
+5303	Icône du type de dissipation
+5304	Affiche les objets de camelote (qualité grise et objets marqués comme camelote) dans un style grisé.
+5305	Texte des séparateurs
+5306	Séparateurs
+5307	Vers le bas puis la droite
+5308	Bas gauche
+5309	Bas droite
+5310	Durée (secondes)
+5311	Textures de barre EllesmereUI
+5312	Police EllesmereUI
+5313	Vide = tank principal du raid, puis rôle de tank
+5314	Emplacement vide
+5315	Emplacement vide ajouté.
+5316	Emplacement vide : garde cette position libre sur la barre.
+5317	Réglages des embouts
+5318	Embouts
+5319	Filtre des améliorations ennemies
+5320	Entrée / sortie de combat
+5321	Les objets équipés ont une bordure de la couleur de leur rareté.
+5322	Refonte de la barre d'expérience
+5323	TEXTE DE LA BARRE D'EXPÉRIENCE
+5324	Style de remplissage
+5325	Premier compte à rebours
+5326	Uni applique la couleur d'EXP. Les dégradés vont de la couleur d'EXP à la couleur de fin.
+5327	Bordures d'aura de focalisation
+5328	Focalisation d'abord
+5329	Fontaine
+5330	Barre pleine largeur avec les blocs d'infos classiques.
+5331	Modes plein écran uniquement. S'affiche d'abord sous forme de petite icône, et le raccourci bascule entre l'icône et les fenêtres complètes.
+5332	Modes plein écran uniquement. Direction dans laquelle les fenêtres s'étendent depuis l'icône repliée à l'ouverture.
+5333	GitHub (portage 3.3.5)
+5334	Ligne d'actions des réglages globaux
+5335	Couleur de fin du dégradé
+5336	BOUTONS DE GROUPE
+5337	Couleur des soins
+5338	Soins reçus
+5339	Taille de l'icône d'aide
+5340	Masquer hors forme/posture
+5341	Masquer hors forme/posture (garder la place)
+5342	Masquer Rassasié / Épuisement
+5343	Masquer jusqu'à utilisable
+5344	Masquer jusqu'à utilisable (garder la place)
+5345	Masquer jusqu'à utilisable : affiché seulement s'il est utilisable et hors recharge, comme Fulgurance ou Ivresse de la victoire après un effet déclenché ; le manque de ressources ne le masque pas. Masquer hors forme/posture : affiché seulement dans la forme ou posture requise par le sort, même en recharge. Garder la place laisse l'espace ; les autres le referment.
+5346	Masque les affaiblissements de blocage de Furie sanguinaire et Héroïsme.
+5347	Surligner les objets au survol des stats
+5348	Survoler une stat dans la barre latérale fait briller les objets équipés qui la donnent (Toucher, Critique, Hâte, Défense, Force...).
+5349	Chasseurs et voleurs : une icône à cliquer (ou à lier dans Raccourcis > EllesmereUI Confort de jeu) qui lance Détournement ou Ficelles du métier sur votre focalisation, sinon le tank, sinon une cible amicale
+5350	Ignorer les quêtes de bas niveau
+5351	Importer dans le profil actif ?
+5352	Importer dans le profil actuel (%1$s)
+5353	Importer dans votre profil actuel
+5354	Importer des profils Retail
+5355	Dans n'importe quel groupe
+5356	Quêtes inachevées
+5357	Taille du nom d'enchantement à l'inspection
+5358	Icônes d'enchantement, de gemme et de boucle manquants à l'inspection
+5359	Inverser la molette
+5360	ID d'objet dans l'infobulle
+5361	Marqueur de camelote
+5362	Options du marqueur de camelote
+5363	Seulement les boutons du micro-menu.
+5364	Garder la session au rechargement
+5365	Garde la barre au niveau maximum, pleine, avec le niveau et les temps. Temps à ce niveau affiche le temps de jeu total à ce niveau.
+5366	Embout gauche
+5367	Embout gauche ou embout droit
+5368	Luxthos
+5369	Alternative en macro : /click EUI335QoLRedirect
+5370	Direction d'ouverture du menu
+5371	AIDE DÉTOURNEMENT / FICELLES
+5372	Aide Détournement / Ficelles
+5373	Échecs, esquives et parades
+5374	Défaut du module suit le contour de police des cadres de raid de la page Polices.
+5375	Contour du nom
+5376	Natif
+5377	Natif : le balayage carré sombre du client. Façonné : un balayage dessiné qui suit les icônes rondes et prend la couleur de balayage.
+5378	Distance d'imbrication
+5379	Distance et taille d'imbrication
+5380	Taille des icônes imbriquées
+5381	Aucune DataBar
+5382	Une fenêtre
+5383	Dissipables uniquement
+5384	Groupe et pull uniquement
+5385	Marqueurs uniquement
+5386	Affaiblissements personnels et de raid
+5387	Raccourci propre
+5388	Pourcentage de la taille normale des embouts.
+5389	Choisit pour vous l'unique option de dialogue d'un PNJ.
+5390	Améliorations du joueur dans les infobulles
+5391	Les valeurs positives éloignent les deux embouts de la barre.
+5392	Spécialisation principale
+5393	COMPTE À REBOURS DE PULL
+5394	Pousse les anciens messages pour qu'un nouveau ne les chevauche jamais.
+5395	Superposition de l'EXP de quête
+5396	Filtre des affaiblissements de raid
+5397	Affaiblissements de raid affiche les affaiblissements de raid courants (armure, dégâts des sorts et physiques subis, critiques subis, puissance d'attaque, vitesse d'attaque et d'incantation, soins reçus, Jugements, Marque du chasseur) de n'importe qui.
+5398	Lit les caractéristiques propres de l'objet ; les enchantements et gemmes ne sont pas comptés.
+5399	Rechargez pour terminer la réinitialisation d'EUI.
+5400	Rechargez pour terminer la désinstallation d'EUI.
+5401	Renommer la DataBar
+5402	Repos après l'EXP de quête
+5403	Couleur de repos
+5404	Remet chaque addon EUI à ses valeurs par défaut.
+5405	Annule les modifications d'EUI et le désactive.
+5406	Embout droit
+5407	Distance de défilement
+5408	Deuxième compte à rebours
+5409	Spécialisation secondaire
+5410	Couleur de sélection
+5411	Couleur de sélection : couleur personnalisée
+5412	TEXTE DE COMBAT PERSONNEL
+5413	Texte de combat personnel
+5414	Vendre la camelote ignore les objets sans prix de vente, les objets d'ensembles d'équipement et les objets épinglés.
+5415	Façonné
+5416	Balayage de recharge façonné
+5417	Partager le raccourci avec
+5418	Maj + Clic sur les marqueurs au sol
+5419	Maj + Clic gauche sur une icône de marqueur utilise son objet de marqueur au sol, puis cliquez au sol. Seuls les marqueurs dont l'objet est dans vos sacs en profitent ; les autres gardent Maj + Clic pour effacer le marqueur de cible. Maj + Clic gauche sur l'icône d'effacement appuie sur le bouton Réinitialiser les marqueurs du serveur.
+5420	Affiche une petite pièce dans le coin des objets marqués comme camelote.
+5421	Afficher comme
+5422	Afficher au niveau maximum
+5423	Afficher une pièce sur la camelote
+5424	Afficher Convertir en raid
+5425	Afficher Dissoudre
+5426	Afficher les séparateurs
+5427	Afficher la couleur des objets équipés
+5428	Afficher les noms d'enchantement à l'inspection au lieu des icônes
+5429	Afficher le nom de l'icône d'objet
+5430	Afficher l'ID d'objet dans l'infobulle
+5431	Afficher les améliorations du joueur
+5432	Afficher Réinviter
+5433	Afficher l'EXP de repos
+5434	Afficher le nom de la cible
+5435	Affiche le bouton pièce dans l'en-tête du sac. Cliquez dessus, puis cliquez sur des objets pour les marquer ou démarquer comme camelote. La camelote va dans sa propre catégorie Camelote, et un bouton Vendre la camelote apparaît à côté de la pièce quand un marchand est ouvert.
+5436	Affiché au niveau maximum. Les bonus de métier ne sont vérifiés que sur votre propre fiche.
+5437	Affiche les affaiblissements de raid courants de n'importe qui : armure, dégâts des sorts et physiques subis, critiques subis, puissance d'attaque, vitesse d'attaque et d'incantation, soins reçus, Jugements et Marque du chasseur.
+5438	Affiche le bouton Convertir en raid. Dans un raid de cinq joueurs ou moins, il indique Convertir en groupe : tout le monde est retiré puis réinvité dans un nouveau groupe.
+5439	Affiche les affaiblissements que vous appliquez plus les affaiblissements de raid courants de n'importe qui.
+5440	Affiche le bouton Dissoudre. Il demande toujours confirmation avant de dissoudre, mais le masquer le met définitivement hors de portée des clics accidentels.
+5441	Affiche les améliorations du joueur survolé sous forme d'icônes à côté de l'infobulle (jusqu'à 16).
+5442	Affiche la superposition, l'icône de type et les couleurs de bordure uniquement pour les affaiblissements que vous pouvez dissiper actuellement.
+5443	Affiche le bouton Réinviter. Il demande d'abord, puis retire tout le monde et le réinvite dans le même type de groupe. Les joueurs doivent accepter la nouvelle invitation.
+5444	Affiche vos dégâts subis, soins, évitements et entrées/sorties de combat au-dessus du cadre du joueur au lieu du texte de combat de Blizzard, dont les autres messages sont masqués tant que ceci est actif. Déplacez-le en mode Déverrouillage.
+5445	Repères intelligents
+5446	ID des sorts dans le détail
+5448	Échelonner les messages
+5449	Surbrillance au survol des stats
+5450	Statique
+5451	Droit
+5452	Menus d'apparence de la page Style
+5453	Couleur de balayage
+5454	Style de balayage
+5455	Nom du tank
+5456	Ombre du texte
+5457	La WeakAura Barre d'expérience [Merfin] (Luxthos) : dégradé bleu à violet, superposition de l'EXP de quête, étincelle, repos après l'EXP de quête et sept textes avec niveau, temps et temps avant le niveau suivant.
+5458	Le cadre d'infobulle classique autour de la fenêtre du compteur, avec les boutons d'en-tête d'origine et toutes les fonctions de compteur d'EllesmereUI.
+5459	L'écart entre les icônes d'un menu imbriqué et l'entrée qui l'ouvre.
+5460	Le segment de repos commence là où finit la superposition de l'EXP de quête au lieu de votre EXP actuelle.
+5461	Le groupe de talents dans lequel ce menu d'actions fonctionne. En dehors, le raccourci ne fait rien et le menu est masqué là où il est imbriqué.
+5462	Troisième compte à rebours
+5463	Cette option nécessite un cadre de focalisation EllesmereUI.
+5464	Cette option nécessite le style de barre d'EXP EllesmereUI ou Luxthos
+5465	Temps de cette session et EXP par heure continuent après un /reload (un chargement dans les cinq minutes) au lieu de repartir de zéro.
+5466	Améliorations temporaires
+5467	Afficher/masquer les outils raid
+5468	Affiche ou masque les panneaux des outils raid, en combat ou hors combat.\n\nClic gauche pour définir un raccourci.\nClic droit pour le supprimer.
+5469	Deux fenêtres
+5470	Désinstaller et recharger
+5471	Désinstaller EUI
+5472	Haut gauche
+5473	Haut droite
+5474	Utilise le raccourci d'un autre menu d'actions tant que ce menu n'est pas chargé. Les deux menus doivent être assignés à des spés différentes.
+5475	Les améliorations affichées par les barres d'info ennemies. Affinez ce réglage dans la page Filtres d'aura.
+5476	Les extrémités de la barre qui affichent les griffons.
+5477	Style de barre d'EXP
+5478	Couleur d'EXP

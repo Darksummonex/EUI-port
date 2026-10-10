@@ -512,7 +512,7 @@ IsAddonLoaded=function(name) return name~='EllesmereUIDisabled' end
 ''')
 lua.execute('function EllesmereUI.GetCombinedAddonMemoryUsage()'+helper+'\nend')
 lua.execute('assert(EllesmereUI.GetCombinedAddonMemoryUsage()==1792 and memoryUpdated==1); GetAddOnMemoryUsage=nil; assert(EllesmereUI.GetCombinedAddonMemoryUsage()==nil)')
-assert 'resCpuLabel:SetText("Memory Usage:")' in panel and 'memory / 1024' in panel
+assert 'resCpuLabel:SetText(EllesmereUI.L("Memory Usage:"))' in panel and 'memory / 1024' in panel
 original=Path('D:/World of Warcraft/_retail_/Interface/AddOns/EllesmereUICooldownManager')
 for p in original.rglob('*.lua'):
     assert p.read_bytes()==(module/p.name).read_bytes(),p

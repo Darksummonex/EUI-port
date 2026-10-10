@@ -1,0 +1,49 @@
+5779	Bordes de calidad, marcas de misión, nivel de objeto, texto de BoE, nombres de conjunto y basura atenuada
+5780	Agrupa el banco por categoría, con una barra lateral
+5781	Con Activar bolsas desactivado, las funciones de bolsa predeterminadas ya no se sustituyen, lo que evita errores de acción bloqueada por código de bolsas contaminado.
+5782	Abrir la lista Personajes ya no da error.
+5783	Los anuncios de venta de oro con sitios web o precios en dinero, incluidos 5000G=20 bucks y direcciones W.W.W disfrazadas, se filtran por defecto en los ámbitos de chat seleccionados.
+5784	Los avisos de canal del servidor no admitidos, como NOT_IN_LFG, ya no provocan errores en el formateador de chat nativo.
+5785	Filtrado de spam opcional con una ventana de repetición, coincidencia de remitente y controles para chat público, de grupo o susurros.
+5786	Fondo, divisor, posición del cuadro de entrada, borde y pestañas de Retail sobre el acoplamiento nativo, además de una barra lateral con amigos, hermandad, copiar, canales y ajustes.
+5787	Marcas de hora de Retail, nombres de canal cortos, nombres con color de clase, descripciones de enlaces, sonidos de susurro, historial de chat guardado y ventanas de URL y copia de Retail.
+5788	Mostrar mensajes ocultos muestra las últimas 200 líneas que el filtro de spam ocultó en esta sesión, con hora, motivo, canal y remitente. Borrar historial del filtro ahora es Restablecer memoria de repeticiones.
+5789	El preajuste de anuncios de comercio también oculta los anuncios de artesanía LFW (busco trabajo).
+5790	Haz clic derecho en el chat en el Modo desbloqueo para abrir sus ajustes de Visualización
+5791	Bocadillos de chat rediseñados con interruptores por canal y ocultación en estancias
+5792	El chat se desvanece tras un retraso y vuelve al pasar el ratón
+5793	Copiar chat copia la pestaña de chat que estás viendo en lugar de la última pestaña en la que hiciste clic derecho, que podía mostrar \"(No chat history)\".
+5794	Corregido un error \"SetPoint(): is dependent on this\" al dar estilo a algunos bocadillos de chat de PNJ.
+5795	El filtro de reclutamiento de hermandad ya no oculta anuncios de banda que mencionan una hermandad, como \"<Frost> LF 1 heal ICC25\"; solo cuentan las frases de búsqueda de hermandad.
+5796	Los susurros y mensajes de MJ nunca se ocultan con el filtro de spam.
+5797	Las palabras clave del filtro de spam ignoran mayúsculas y minúsculas también en letras acentuadas, así que promoção también oculta PROMOÇÃO.
+5798	Los filtros de anuncios de comercio y de reclutamiento de hermandad siguen el ajuste Chat público, y el filtro de spam no trabaja mientras todos los filtros estén desactivados.
+5799	La barra lateral se muestra en la primera carga, y las pestañas e interruptores se actualizan al instante.
+5800	El chat principal mantiene su posición del Modo desbloqueo en lugar de que el acoplamiento la restablezca.
+5801	Una opacidad de chat guardada de 0 se restablece una vez al valor predeterminado de Retail.
+5802	Mapas cuadrados, rectangulares, circulares y circulares con textura, con tamaño de borde, opacidad, estilos con textura y colores personalizados, de acento o de clase.
+5803	Los botones de addons se reúnen en el menú desplegable de Retail con cuadrícula, dirección de crecimiento y Movimiento libre con Shift + arrastrar.
+5804	Un anillo vanilla y un letrero de zona con botones de zoom nativos
+5805	Cuadros de reloj y zona en diez posiciones, además de coordenadas, FPS y latencia, y texto de dificultad
+5806	Hermandad y amigos de un vistazo; clic izquierdo susurra, clic derecho invita
+5807	Las acciones del menú abren ventanas de Blizzard mediante llamadas seguras, evitando errores de acción bloqueada.
+5808	Elige Interfaz de WoW clásico para el Medidor de daño en la página Estilo: cada ventana recibe el borde clásico de descripción, una franja de encabezado de descripción e iconos de encabezado vanilla, y conserva todas las funciones del medidor de EllesmereUI.
+5809	La descripción del desglose de un hechizo muestra su ID de hechizo, y cada fila de hechizo de la ventana detallada termina con su ID.
+5810	Las absorciones de escudos consumidas cuentan para Sanación realizada y SPS cuando se puede identificar al lanzador, con una vista de Absorciones realizadas.
+5811	Cuerpo plano, encabezado de acento, barras Atrocity e iconos de encabezado para Ajustes, Segmento, Tipo de medidor y Restablecer, con hasta cinco ventanas.
+5812	Hasta 15 hechizos y los tres objetivos principales al pasar el ratón, resúmenes de muerte con la vida en cada golpe y una vista de foco por jugador.
+5813	Las texturas de barra de SharedMedia se cargan tanto si un perfil las guarda en formato de Medidor de daño como de EllesmereUI
+5814	Una franja de iconos y una ventana de barras con tus lanzamientos, incluidos los fallidos e interrumpidos
+5815	Un temporizador de combate independiente con su propio elemento del Modo desbloqueo
+5816	Las ventanas se ajustan entre sí; las ventanas bloqueadas no se pueden mover, redimensionar ni cerrar
+5817	Atajos para Restablecer datos y Mostrar / ocultar ventanas
+5818	Iconos de especialización a partir de los datos de talentos e inspección del grupo pausada
+5819	Carga un menú de acciones solo en tu grupo de talentos principal o secundario, y deja que dos menús compartan un atajo entre especializaciones.
+5820	Mantén una tecla, apunta o desplaza para elegir y suelta para activar. Hasta 16 paletas de 20 entradas en diseños de anillo, arco, abanico o cuadrícula.
+5821	Una entrada de Menú de acciones despliega hasta 8 acciones de otra paleta, un nivel hacia fuera del anillo.
+5822	Color de acento, de clase o personalizado para la entrada seleccionada, la aguja y el resaltado anidado
+5823	Ajusta la separación entre un menú anidado y su entrada, y el tamaño de los iconos anidados
+5824	Invierte el sentido en que un paso de la rueda mueve la selección
+5825	Asignar tecla captura la siguiente tecla con modificadores y pregunta antes de reasignar
+5826	Mantén el menú abierto al soltar y activa con una tecla Seleccionar
+5827	Rojo fuera de alcance, azul con recurso insuficiente, gris cuando no se puede usar

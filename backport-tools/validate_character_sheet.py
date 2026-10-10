@@ -64,8 +64,24 @@ c.sections[1].header:RunScript('OnClick'); assert(c.child:GetHeight()==expanded)
 c.scroll:RunScript('OnMouseWheel',-1); assert(c.scroll:GetVerticalScroll()==42)
 c.scroll:RunScript('OnMouseWheel',100); assert(c.scroll:GetVerticalScroll()==0)
 -- Native title picker and equipment manager actions, no copied inventory.
-c.tabs.titles:RunScript('OnClick'); assert(PlayerTitlePickerFrame:IsShown() and PlayerTitlePickerFrame:GetParent()==CharacterFrame)
-c.tabs.titles:RunScript('OnClick'); assert(not PlayerTitlePickerFrame:IsShown())
+-- Titles tab: own list of known titles (None first, sorted), click sets the title.
+local titleNames={[1]='Private %s ',[2]=' %s the Explorer',[3]='Unknown %s',[4]='Champion of the Frozen Wastes %s'}
+local currentTitle,setTitle=2,nil
+function GetNumTitles() return 4 end
+function IsTitleKnown(i) return i~=3 and 1 or 0 end
+function GetTitleName(i) return titleNames[i] end
+function GetCurrentTitle() return currentTitle end
+function SetCurrentTitle(i) setTitle=i end
+c.tabs.titles:RunScript('OnClick')
+local t=c.titles; assert(t:IsShown() and not c.scroll:IsShown() and not c.summary:IsShown(),'titles list not shown')
+assert(t.rows[1].text:GetText()==NONE or t.rows[1].text:GetText()=='None')
+assert(t.rows[2].text:GetText()=='%s the Explorer' and t.rows[2].titleID==2,'titles not trimmed and sorted')
+assert(t.rows[4].text:GetText()=='Private %s' and not (t.rows[5] and t.rows[5]:IsShown()),'unknown title listed')
+assert(t.rows[2].bar:IsShown() and not t.rows[1].bar:IsShown(),'current title not highlighted')
+t.rows[1]:RunScript('OnClick'); assert(setTitle==-1 and t.rows[1].bar:IsShown() and not t.rows[2].bar:IsShown())
+currentTitle=-1; t:RunScript('OnEvent','UNIT_NAME_UPDATE','player'); assert(t.pending==nil and t.rows[1].bar:IsShown())
+c.tabs.titles:RunScript('OnClick'); assert(not t:IsShown() and c.scroll:IsShown(),'titles tab did not toggle back')
+c.tabs.titles:RunScript('OnClick'); CharacterFrame:Hide(); assert(not t:IsShown() and c.mode=='stats'); CharacterFrame:Show()
 local sets={{'Raid','Interface\\Icons\\raid'},{'PvP','Interface\\Icons\\pvp'}}
 function GetNumEquipmentSets() return #sets end
 function GetEquipmentSetInfo(i) return sets[i][1],sets[i][2] end
@@ -134,7 +150,7 @@ assert(CharacterModelFrame:GetWidth()==nativeModelWidth and CharacterModelFrame:
 assert(CharacterFrame:GetAttribute('UIPanelLayout-width')==nativeAttribute)
 assert(CharacterAttributesFrame:IsShown() and CharacterNameText:GetAlpha()==1)
 assert(CharacterHeadSlot:GetPoint()==headPoint[1] and CharacterHeadSlot:GetWidth()==36)
-assert(PlayerTitlePickerFrame:GetParent()==titleParent)
+assert(PlayerTitlePickerFrame:GetParent()==titleParent,'native title picker moved')
 assert(GearManagerDialogPopup:GetParent()==popupParent and not c.popupBg:IsShown(),'icon picker not restored')
 assert(CharacterHeadSlot:GetScript('OnClick')==headClick)
 BS.SetValue('enhancedCharacterSheet',true); assert(c.enhanced and c.host:IsShown())

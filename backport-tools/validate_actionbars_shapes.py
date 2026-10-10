@@ -50,6 +50,7 @@ lua.execute('local k=LibStub:NewLibrary("LibKeyBound-1.0",999); function k:Set()
 lua.execute((root/'EllesmereUIActionBars/Libs/LibActionButton-1.0-335.lua').read_text())
 ns=lua.table()
 lua.execute((root/'EllesmereUIActionBars/EUI_ActionBars_335.lua').read_text(),'EllesmereUIActionBars',ns)
+lua.execute((root/'EllesmereUIActionBars/EUI_ActionBars_335_EndCaps.lua').read_text(),'EllesmereUIActionBars',ns)
 lua.execute((root/'EllesmereUIActionBars/EUI_NativeHUD_335.lua').read_text(),'EllesmereUIActionBars',ns)
 lua.globals().AB=ns
 lua.execute('''

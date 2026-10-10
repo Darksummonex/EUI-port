@@ -83,6 +83,64 @@ function ns.ConfirmDisband()
     if StaticPopup_Show then StaticPopup_Show("EUI335_DISBAND_GROUP") else ns.DisbandGroup() end
 end
 
+-- Disband and reinvite -------------------------------------------------------
+-- Everyone is removed, then invited back once the old group is gone. A party
+-- holds five, so a raid gets four invites, converts once the first one joins,
+-- then gets the rest. Wrath has no ConvertToParty: a raid of five or fewer is
+-- turned into a party the same way, without the conversion.
+local rebuild=CreateFrame("Frame"); ns.rebuildEvents=rebuild
+local pending,asRaid,phase,deadline
+local function Roster()
+    local me=UnitName("player"); local names={}
+    if GetNumRaidMembers()>0 then
+        for i=1,GetNumRaidMembers() do local name=GetRaidRosterInfo(i); if name and name~=me then names[#names+1]=name end end
+    else
+        for i=1,GetNumPartyMembers() do local name=UnitName("party"..i); if name then names[#names+1]=name end end
+    end
+    return names
+end
+local function Stop() pending,phase=nil,nil; rebuild:UnregisterAllEvents() end
+local function InviteNext(limit)
+    local n=0
+    while pending[1] and (not limit or n<limit) do InviteUnit(table.remove(pending,1)); n=n+1 end
+    if not pending[1] and not (asRaid and GetNumRaidMembers()==0) then Stop() end
+end
+function ns.CanReinvite()
+    return (GetNumRaidMembers()>1 or GetNumPartyMembers()>0) and ns.IsGroupLeader() and not InCombatLockdown()
+end
+function ns.CanRebuildParty() return GetNumRaidMembers()<=5 and GetNumRaidMembers()>1 and ns.CanReinvite() end
+local function Rebuild(raid)
+    local names=Roster(); if #names==0 then return end
+    pending,asRaid,phase,deadline=names,raid,"leaving",GetTime()+15
+    rebuild:RegisterEvent("RAID_ROSTER_UPDATE"); rebuild:RegisterEvent("PARTY_MEMBERS_CHANGED")
+    for _,name in ipairs(names) do UninviteUnit(name) end
+    LeaveParty()
+end
+function ns.ReinviteGroup() if ns.CanReinvite() then Rebuild(GetNumRaidMembers()>0) end end
+function ns.RebuildAsParty() if ns.CanRebuildParty() then Rebuild(false) end end
+rebuild:SetScript("OnEvent",function()
+    if not pending or GetTime()>deadline then Stop(); return end
+    local raid,party=GetNumRaidMembers(),GetNumPartyMembers()
+    if phase=="leaving" then
+        if raid>0 or party>0 then return end
+        phase="inviting"; deadline=GetTime()+120
+        InviteNext((asRaid or #pending>4) and 4 or nil)
+    elseif raid==0 and party>0 and asRaid then ConvertToRaid()
+    elseif raid>0 then InviteNext() end
+end)
+StaticPopupDialogs.EUI335_REBUILD_PARTY={text="Convert the raid to a party? Everyone is removed and invited back to a new party.",button1=YES or "Yes",button2=NO or "No",
+    OnAccept=function() ns.RebuildAsParty() end,timeout=0,whileDead=1,hideOnEscape=1}
+StaticPopupDialogs.EUI335_REINVITE_GROUP={text="Disband and reinvite? Everyone is removed and invited back to the same kind of group.",button1=YES or "Yes",button2=NO or "No",
+    OnAccept=function() ns.ReinviteGroup() end,timeout=0,whileDead=1,hideOnEscape=1}
+function ns.ConfirmReinvite()
+    if not ns.CanReinvite() then return end
+    if StaticPopup_Show then StaticPopup_Show("EUI335_REINVITE_GROUP") else ns.ReinviteGroup() end
+end
+function ns.ConfirmRebuildParty()
+    if not ns.CanRebuildParty() then return end
+    if StaticPopup_Show then StaticPopup_Show("EUI335_REBUILD_PARTY") else ns.RebuildAsParty() end
+end
+
 events:SetScript("OnEvent",function(_,event,...)
     if event=="COMBAT_LOG_EVENT_UNFILTERED" then
         local _,sub,srcGUID,_,_,_,dstName,_,_,_,_,extraId,extraName=...

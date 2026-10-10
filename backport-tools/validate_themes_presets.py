@@ -232,8 +232,15 @@ _EMM_DB={profile={minimap=mm}}
 E.SolidTex=function(parent) return parent:CreateTexture() end
 E.CONTENT_PAD=45
 E.ShowConfirmPopup=function(self,opts) pending=opts end
-E.Widgets={SectionHeader=function() return {},30 end,DualRow=function(self,parent,y,left,right)
- styleRows=styleRows or {}; styleRows[#styleRows+1]=left; styleRows[#styleRows+1]=right; return {},50 end}
+-- Retail 9.4 look dropdowns: capture each card's checklist and Apply Styles.
+styleMenus={}
+E.BuildVisOptsCBDropdown=function(parent,w,lvl,items,getFn,setFn,onChanged,maxVis,s,c,closed,opts)
+ assert(opts and opts.dimLocked)
+ local dd=CreateFrame("Button",nil,parent)
+ styleMenus[#styleMenus+1]={items=items,get=getFn,set=setFn,changed=onChanged,dd=dd}
+ return dd,function() end
+end
+E.MakeStyledButton=function(btn,text,size,colours,fn) if text=="Apply Styles" then applyStyles=fn; applyBtn=btn end end
 ''')
 lua.execute((root / 'EllesmereUI/EllesmereUI_StyleCards.lua').read_text(encoding='utf-8-sig'))
 lua.execute((root / 'EllesmereUIOptions/EUI_Style_Options.lua').read_text(encoding='utf-8-sig'))
@@ -250,10 +257,42 @@ cards.blizzard.card:GetScript("OnClick")(cards.blizzard.card)
 assert(pending and pending.reload and pending.confirmText=="Reload Now")
 assert(uf.useBlizzardStyle==false and mm.useBlizzardStyle==false)
 -- Cancelling/closing writes nothing. Confirming changes supported modules.
-pending.onConfirm(); assert(uf.useBlizzardStyle and mm.useBlizzardStyle)
-for _,row in ipairs(styleRows or {}) do
- assert(row.text~="Resource Bars" and row.text~="Player Cast Bar" and row.text~="Raid Frames", "unimplemented Retail styles exposed on Wrath")
+-- Minimap draws no Blizzard Style on Wrath: Apply to All leaves it alone.
+pending.onConfirm(); assert(uf.useBlizzardStyle and not mm.useBlizzardStyle)
+for _,fn in ipairs(widgetRefreshes) do fn() end
+-- One checklist per look card; a look a module cannot draw leaves it out.
+assert(#styleMenus==3 and applyStyles and applyBtn)
+for _,menu in ipairs(styleMenus) do
+ local labels={}
+ for _,it in ipairs(menu.items) do
+  assert(it.label~="Resource Bars" and it.label~="Player Cast Bar" and it.label~="Raid Frames"
+   and it.label~="Player Aura Bars", "unimplemented Retail styles exposed on Wrath")
+  labels[it.label]=it
+ end
+ menu.labels=labels
 end
+for _,menu in ipairs(styleMenus) do
+ if menu.get("unitframes") then assert(menu.labels["Unit Frames"].lockedFn(), "a module's current look is locked") end
+end
+local classic
+for _,menu in ipairs(styleMenus) do
+ if menu.labels["Damage Meters"] and not menu.get("damagemeters") and menu.labels["Minimap"] and not menu.get("minimap") then classic=menu end
+end
+assert(classic, "Classic list offers Minimap and Damage Meters")
+local blizz
+for _,menu in ipairs(styleMenus) do
+ if not menu.labels["Minimap"] and not menu.labels["Damage Meters"] then blizz=menu end
+end
+assert(blizz and blizz.labels["Unit Frames"], "Blizzard list leaves out looks Wrath cannot draw")
+-- Picks write nothing until Apply Styles; its prompt moves only the picks.
+pending=nil
+classic.set("minimap",true); classic.changed()
+assert(classic.get("minimap") and not mm.useClassicStyle and applyBtn:GetAlpha()==1)
+applyStyles(); assert(pending and pending.reload); pending.onConfirm()
+assert(mm.useClassicStyle and uf.useBlizzardStyle, "Apply Styles moved Minimap only")
+for _,fn in ipairs(widgetRefreshes) do fn() end
+assert(applyBtn:GetAlpha()==.3, "no picks left after the switch")
+mm.useClassicStyle=false
 for _,fn in ipairs(widgetRefreshes) do fn() end
 cards.classic.card:GetScript("OnClick")(cards.classic.card); pending.onConfirm()
 assert(uf.useClassicStyle and not uf.useBlizzardStyle and mm.useClassicStyle)

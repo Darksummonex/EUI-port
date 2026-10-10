@@ -99,7 +99,7 @@ wiring={
     'EllesmereUIQoL/EUI_QoL_335.lua':['ns.SetCVar("showTutorials","0")'],
     'EllesmereUIBlizzardSkin/EUI_Tooltips_335.lua':['E.SetCVar("UberTooltips",v,"EllesmereUIBlizzardSkin")'],
     'EllesmereUIQuickdraw/EUI_Quickdraw_335.lua':['E.NoteBinding(key,current)'],
-    'EllesmereUIOptions/EUI__General_Options.lua':['EllesmereUI.L("Uninstall EUI")','EllesmereUI.UninstallKnowsOriginals()','EllesmereUI.RequestReload(EllesmereUI.L("Uninstall EUI")','EllesmereUIDB.restoreOnUninstall = restoreRecord'],
+    'EllesmereUIOptions/EUI__General_Options.lua':['EllesmereUI.L("Uninstall EUI")','EllesmereUI.UninstallKnowsOriginals()','EllesmereUI.RequestReload(EllesmereUI.L("Uninstall EUI")','EllesmereUIDB.restoreOnUninstall = oldRestore','EllesmereUI.BuildActionCardRow(parent, y, {','typeToConfirm = "Confirm"'],
 }
 for rel,needles in wiring.items():
     text=read(rel)
@@ -108,4 +108,7 @@ import re
 for rel in ['EllesmereUIMinimap/EUI_Minimap_335.lua','EllesmereUINameplates/EUI_Nameplates_335.lua','EllesmereUIQoL/EUI_QoL_335.lua']:
     bare=[l for l in read(rel).splitlines() if re.search(r'(?<![.\w])SetCVar\(',l) and 'else SetCVar(' not in l]
     assert not bare,(rel,bare)
+# The General page's action cards must come from a file the Options TOC loads.
+toc=[l.strip().replace('\\','/') for l in read('EllesmereUIOptions/EllesmereUIOptions.toc').splitlines() if l.strip().endswith('.lua')]
+assert any('function EllesmereUI.BuildActionCardRow(' in read('EllesmereUIOptions/'+f) for f in toc),'BuildActionCardRow not in a loaded Options file'
 print('PASS: Uninstall EUI puts back tracked CVars, chat font sizes and taken keys only while they hold EllesmereUI values, runs module steps, refuses in combat, turns off EllesmereUI addons only, drops records; pre-record accounts use game defaults; Minimap, Nameplates, Chat, QoL, Tooltips and Quickdraw wired; Reset ALL keeps the record; General button.')

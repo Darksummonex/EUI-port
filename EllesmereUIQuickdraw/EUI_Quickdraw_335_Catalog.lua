@@ -105,7 +105,7 @@ function builders.panels()
 end
 function builders.dynamic()
  local list={}
- for _,slot in ipairs({{kind="rez"},{kind="randommount"},{kind="lastmount"},{kind="cycleraidtarget"},{kind="cycleworldmarker"},{kind="cancelform"}}) do Entry(list,slot) end
+ for _,slot in ipairs({{kind="rez"},{kind="randommount"},{kind="lastmount"},{kind="cycleraidtarget"},{kind="cycleworldmarker"},{kind="clearworldmarkers"},{kind="cancelform"}}) do Entry(list,slot) end
  return list
 end
 function builders.menus()

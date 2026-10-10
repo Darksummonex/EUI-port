@@ -1,4 +1,32 @@
-# Raid Frames 3.3.5 — 0.20
+# Raid Frames 3.3.5 — 0.24
+
+0.24: ready check no grupo marcava X (não pronto) em quem aceitou e no próprio
+iniciador. O cliente pode disparar READY_CHECK_FINISHED antes do último
+READY_CHECK_CONFIRM; respostas que chegam depois do fim (dentro dos 10 s) agora
+contam, o FINISHED lê GetReadyCheckStatus de cada quadro antes de virar "waiting"
+em "notready", e quem iniciou o ready check aparece sempre como pronto. CONFIRM
+com nome em vez de unit token é resolvido pelo grupo. No CONFIRM vale primeiro
+GetReadyCheckStatus(unit) (como os quadros da Blizzard); o 2º argumento só conta
+se for sim/não claro. A própria resposta (Yes/No) vem de hooksecurefunc em
+ConfirmReadyCheck, pois o cliente que responde pode não receber CONFIRM de si
+mesmo (confirmado em jogo com dois clientes).
+
+0.23: o ícone de líder aparecia em mais de um membro do grupo. No 3.3.5
+UnitIsPartyLeader(unit) pode responder sim para vários; agora o ícone segue
+GetPartyLeaderIndex (0 = você, N = partyN) e IsPartyLeader para o jogador, como
+os quadros de grupo da Blizzard. Em raide continua o rank de GetRaidRosterInfo.
+
+0.22: o menu de clique direito dos quadros de raide/grupo oferecia Set Focus, que
+o cliente bloqueia vindo de addon (popup "EllesmereUIRaidFrames has been
+blocked"). O menu agora se registra em EllesmereUI.UnitMenuWithoutFocus (Core
+0.65): fora de combate Set Focus / Clear Focus funcionam por um botão seguro sobre
+o item; em combate os dois itens somem (use Click Casting, ação Focus, ou /focus).
+
+0.21: o ícone de ready check não aparecia: usava Interface\RaidFrame\UI-ReadyCheck-*,
+que não existe no 3.3.5. Agora usa READY_CHECK_READY/NOT_READY/WAITING_TEXTURE
+(Interface\RaidFrame\ReadyCheck-Ready, -NotReady, -Waiting).
+
+Sem bump: "Hide Sated / Exhaustion" também esconde o 81005 (lockout de Bloodlust do servidor).
 
 0.20: nova opção "Name Outline" em TEXT DISPLAY, separada para Raid e Party:
 Module Default (segue o contorno da fonte de Raid Frames na página Fonts), None,

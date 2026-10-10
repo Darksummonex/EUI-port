@@ -1,0 +1,300 @@
+5479	Every module runs on native Wrath APIs. Retail looks and settings were ported wherever the 3.3.5a client supports them, and Retail-only systems were left out. Notes are grouped by module, newest first, and each header shows that module's backport version.
+5480	Icons beside each enemy for every crowd control category they are under or recovering from: green means the next one lasts half as long, yellow a quarter, red immune. A timer shows the 18 second reset.
+5481	A health bar for each enemy pet under its owner's frame. Left-click targets the pet, right-click sets focus.
+5482	Enemy frames for arena1-5 with class colored health, power and cast bars plus a highlight on your target. Left-click targets, right-click sets focus. There is no Retail equivalent.
+5483	The class icon swaps to the highest priority crowd control or immunity with a spiral and timer, and the PvP trinket icon tracks its 2 minute cooldown from the combat log.
+5484	Bar Texture lists textures from SharedMedia and other addons using LibSharedMedia
+5485	Enemies beyond your class's 30-40 yard spell range fade to a chosen opacity
+5486	Preview 2 to 5 sample frames in Unlock Mode, while the options page is open, or with /earena test
+5487	Frames stay up while an enemy is stealthed or out of sight, dimmed and marked Unseen
+5488	Optionally hides Blizzard's arena frames while these are in use
+5489	The Debuff Filter gets Raid Debuffs and Own and Raid Debuffs, with the same raid debuff list as the Unit Frames.
+5490	Choose which buffs enemy nameplates show: Timed Buffs, Only Dispellable or Show All, which shows every buff.
+5491	Every nameplate text has an Outline choice under its Size: None, Outline, Thick Outline or Shadow, or keep the module default. Covers names, level, health, Target of Target, cast texts, aura text and friendly names.
+5492	Cast bars now fill every frame instead of stepping with each nameplate refresh. The spark and timer move smoothly too, and the extra work stops when no cast is visible.
+5493	Core Text Positions offers all Retail texts: Enemy Name, Level | Name, Target of Target, Health % and Health # with their combined variants. Each text's cog sets its size.
+5494	Health and cast bars offer the EllesmereUI textures (Melli, Atrocity, Fade, Matte and more), as on Retail
+5495	Health and cast bar textures include textures from SharedMedia and other addons
+5496	Display and Colors show a live preview plate; click any part of it to jump to its setting
+5497	Retail bar size, colors, threat modes, cast colors, target arrows and Execute Pulse Glow
+5498	Each slot holds one element; auras, raid marker and classification can also sit below the cast bar
+5499	Health # uses Blizzard style abbreviations (1.2K, 12K, 1.2M) with an optional % decimal
+5500	A profile imported from Retail no longer blows the target nameplate up to fill the screen.
+5501	Border None now hides only the borders, not the cast bar text, timer, shield and kick mark.
+5502	The options preview plate no longer disappears after switching tabs or closing the panel.
+5503	The Interrupt on CD cast color now shows while your interrupt recharges, as on Retail, instead of the reverse.
+5504	Raid and party names each get their own outline: None, Outline, Thick Outline, Shadow, or the Raid Frames font default.
+5505	A new Group Layout stacks two raid groups per column, then starts the next column to the right, so a 20-player raid forms a 2x2 block.
+5506	Ready check icons appear above debuffs and keep each player result for ten seconds after the check finishes.
+5507	The debuff displayed in the central Raid Debuff icon is excluded from the regular debuff bar, leaving room for other debuffs.
+5508	Raid and party frames dim outside range on Wrath, including in combat. Dim Out of Range and Out of Range Alpha control the fade.
+5509	A large icon in the middle of each frame for important ICC, Ruby Sanctum, Trial of the Crusader, Ulduar and Naxxramas debuffs, highest priority first, with timer, stacks and a dispel colored border. Without a listed debuff it can show a dispellable one instead.
+5510	Dispel Overlay styles with opacity, a dispel colored Frame Border, Type Icon Position, per-type Dispel Colors and Only Show Dispellable.
+5511	Overlay, Real or No Preview. The preview opens while the Raid or Party page is open and closes when you leave it, close the panel or enter combat.
+5512	Enemy casts show as icons on the party or raid member being cast at, with a cast sweep and interruptible border. Party defaults to When Healing; each raid layout has its own mode. Wrath has no spell target, so the victim is the caster's target, and only enemies someone in the group targets are seen
+5513	Damage shields show on the health bar as on Retail: Absorb Style, Opacity, Color, Placement and Show Overshield. Wrath does not report shield amounts, so they are estimated from the combat log
+5514	Health Bar Texture lists textures from SharedMedia and other addons, also in the aura indicator preview
+5515	25-Player Preview
+5516	The Unlock Mode and options previews open on the 25-player layout instead of 40
+5517	Health color modes, backgrounds, threat, target and hover borders, text and icon placement
+5518	Incoming heals and resurrections from players who use a HealComm addon
+5519	Main Tank, Pet and Friendly Boss frames plus Healer Mana text, each with an Unlock Mode mover
+5520	The Party page has a LAYOUT section with Horizontal Frames
+5521	Ready check icons show a green check for players who accepted and for the one who started the check, instead of a red X when the check ended.
+5522	The party leader icon shows on the leader only instead of on several party members.
+5523	Set Focus and Clear Focus in the raid and party frame menu work out of combat without the 'blocked from an action' popup; in combat they are hidden, use a Click Casting Focus binding there.
+5524	Ready check icons show on raid and party frames again.
+5525	Hide Sated / Exhaustion also hides the 81005 Bloodlust lockout debuff.
+5526	Pet frames no longer throw a SecureTemplates strupper error when they first appear.
+5527	The Buffs/Debuffs editor's Add New menu no longer closes on the first click.
+5528	Element Options for raid and party frames now open the matching settings.
+5529	Profile strings exported from Retail EllesmereUI import everything this client supports: each module keeps its current settings and takes the Retail values it understands. Retail-only modules, spec setups and Cooldown Manager spells are skipped, and chat reports how many settings came in.
+5530	A button on Global Settings puts back the game settings EUI changed (nameplate, minimap, chat and tooltip options, chat font sizes and keys Quickdraw took), then turns EUI off for this character and reloads. Your profiles are kept.
+5531	A drawn cooldown sweep for modules that want round or colored swipes; the Wrath client's own swipe is always a dark square. Cooldown Manager uses it first.
+5532	When a guild or group member runs a newer EllesmereUI release, chat tells you once per session. Type /euiupdate for the download link. Wrath has no internet access, so the news comes from other EUI users.
+5533	The Locales addon provides community translations for all original Wrath client languages, with English fallback and Lua 5.1 formatting.
+5534	The collapsed menu displays the original Ellesmere E logo with the UI accent color and a working close icon on the Wrath client.
+5535	Fonts, bar textures and sounds that other addons register with LibSharedMedia appear in the EllesmereUI menus, including ones registered after login.
+5536	A shared outline picker for individual texts: None, Outline, Thick Outline or Shadow, with Module Default following the Fonts page. Text keeps its color when you switch.
+5537	The Incompatible Addon popup can disable the other addon or the affected EllesmereUI module and reload. Okay and Don't show again work as before.
+5538	Per-spec setting groups with automatic capture and their own Unlock Mode layouts, plus conditional overrides for dungeons, raids, arenas, battlegrounds, solo play and out of combat.
+5539	The Esc menu has EllesmereUI and EUI Unlock Mode buttons, shown by default. Both follow the EUI Buttons setting in Global Settings.
+5540	With Show Spell ID on Tooltip on, item tooltips add the item ID and icon file name. Each line has its own toggle
+5541	Raid and Unit Frames read absorb shields from a shared estimate: rank base value plus your own spell power, minus what each shield absorbs in the combat log. Clients with a native absorb API use it directly
+5542	Arena Frames joins the sidebar, first-use list, profiles, spec overrides, module fonts and search
+5543	Profile strings and shared exports work again
+5544	An ice blue options theme; Match Accent to Theme follows each theme's palette
+5545	Lights, beams, music and spin on boss kills, arena and battleground wins, Bloodlust/Heroism and level ups
+5546	Show Spell ID on Tooltip covers spells, action buttons, auras and chat links (off by default)
+5547	The options sidebar shows the combined memory used by all loaded EllesmereUI addons
+5548	The sidebar sync button opens its profile list again instead of erroring when you have more than one profile.
+5549	Retail profile strings bring their element positions: action, XP and menu bars, CDM bars, raid and party frames, chat, damage meter windows, QoL displays, resource bars and the fixed tooltip land where the creator placed them.
+5550	Nameplates-only Retail profile strings are recognised as Retail; bar width and height, cast bar height and color, name size and aura sizes carry over.
+5551	Unlock Mode: the top bar toggle icons and labels are brighter, so they no longer read dark grey on the banner.
+5552	Set Focus and Clear Focus in right-click menus from EUI frames go through a secure button out of combat instead of being blocked; in combat they are hidden.
+5553	Unlock Mode: the arrow keys move the selected element 1 pixel again (hold Shift for 100).
+5554	Works alongside !!!ClassicAPI: its clipping and mask functions are no longer used on EUI frames, so animated glows and the options panel stop erroring.
+5555	Opening the options no longer errors with \"attempt to index local 'mask'\" on clients where another addon adds an empty mask function.
+5556	The profile Import and Export boxes no longer error with \"attempt to call method 'GetNumLines'\" and scroll to fit long strings.
+5557	The collapsed menu shows the Ellesmere E logo again instead of a plain black circle.
+5558	Action button tooltips show the real spell ID instead of the spellbook slot.
+5559	Fixed an \"attempt to call global 'issecretvalue'\" error from Cooldown Manager glows before the options panel was first opened.
+5560	Unlock Mode widget tooltips use Wrath-compatible alpha fades, fixing the SetFromAlpha error on Grow Right.
+5561	The options search results list has a fully opaque background with its results drawn above it, so sidebar and page text no longer bleeds into the results.
+5562	Unlock Mode no longer errors on SetMaxLines when it first opens, so element movers appear again.
+5563	The Patch Notes reminder dot now lights after each backport update.
+5564	The options search results now draw above the sidebar and page instead of behind them.
+5565	The Unlock Mode right-click menu no longer closes right after opening when many elements are on screen.
+5566	Opening the Raid Frames options no longer causes a stack overflow in Settings Overrides.
+5567	Unlock Mode art, options page icons and the Unlock Mode top bar are now visible and readable.
+5568	The addon list shows clean module names, grouped under EllesmereUI in addon managers.
+5569	Search Features and Search Module Settings accept typing again.
+5570	Clients whose atlas lookup errors on unknown names (such as custom 3.3.5 clients with Retail UI ports) no longer stop EllesmereUI files from loading.
+5571	Like Retail 9.4, the DataBars page opens with a bar selector at the top: rename or delete a bar right in its menu, or pick + Create New DataBar. + New Bar shows the four starter templates as cards, and with no bars yet the page shows them as a card grid.
+5572	Like Retail 9.4, the options window has a Window Scale slider in its top corner that resizes it in smooth 5% steps; the mouse wheel over it, or Shift + mouse wheel anywhere on the window, works too. The credit to Ellesmere now sits under the close button.
+5573	Global Settings opens with Reset ALL EUI Addon Settings and Uninstall EUI side by side, like Retail 9.4. Reset ALL now asks you to type Confirm. Optimize My FPS and Graphics is gone: the graphics settings it changed do not exist on this client.
+5574	Like Retail 9.4, each look card on the Style page has a menu of the modules using it: tick modules under another look, then press Apply Styles to switch them all with one reload. The menus list only looks this client can draw: Cooldown Manager, Minimap and Damage Meters offer EllesmereUI and Classic WoW UI, Player Aura Bars is gone, and Apply to All skips modules without that look.
+5575	The import page can update your current profile instead of making a new one: tick Import into current profile and the string's selected modules (for example only Nameplates) replace their settings there while the rest of the profile stays.
+5576	The EUI Staff page opens with thanks to Ellesmere and the port staff card with a GitHub link to the releases. The header line crediting Ellesmere opens it.
+5577	Custom spell reminders, visibility and sounds are saved separately for each character, independently of shared profiles.
+5578	Optional achievement, trade and guild recruitment filters, plus your own blocked words and phrases.
+5579	Configure repeat timing, sender matching and chat scopes from the new Spam Filter page.
+5580	Outline menus in the Nameplates and Unit Frames text cogs, and Zone Text Outline in Quality of Life. The Unit Frames preview shows each text's outline.
+5581	New PETS and DIMINISHING RETURNS sections, plus Fade Out of Range and its opacity under Target and Visibility.
+5582	Announce Interrupts and Accept Invites from Friends & Guild in the GROUP section, and a Disband Group button on Raid Tools.
+5583	Bar Display, Menu, Bags & XP Bars and Bar Animations, with a live preview of the selected bar. Click an icon, keybind or count to jump to its setting.
+5584	The Raid and Party pages gain the Retail DISPELS section and a Preview Mode (Real, Overlay or No Preview) at the top.
+5585	Party and Raid pages gain a TARGETED SPELLS section: mode, preview, icon size, maximum icons, position, growth, offsets, cast swipe, cast timer and interruptible colors.
+5586	Raid Frames (Party and Raid) and Unit Frames (player, target, focus) gain an ABSORBS section for the estimated shields, with a shield in the Unit Frames preview.
+5587	CDM Bars now opens with Retail's bar dropdown (rename or delete custom bars, add Cooldowns, Utility, Buff or FocusKick bars) and the selected bar's icons: drag to reorder, click an icon to edit it, middle-click to remove it, and use + to add spells or buffs.
+5588	Hide server announcements such as \"Name the level 11 Gnome Warrior has been slain by ... in Westfall\", optionally keeping deaths from a chosen level up visible.
+5589	SharedMedia
+5590	The FocusKick Cast Sound and the Chat sounds list EllesmereUI and SharedMedia sounds, and the Textures page links Damage Meters to its per-window Bar Texture
+5591	New dropdown at the top of Icons, with a link to apply it to every bar. The preview shows the shape.
+5592	Boss Debuff Icon, Icon Size, Icon Offset Y and Show Dispellable When No Boss Debuff under Dispels
+5593	General, Layout, Health and Power, Text, Icons, Cast Bar and Target and Visibility sections
+5594	Display, Extras and Wrath Inventory settings, including Delete Saved Character
+5595	Class icon themes, class colored names, borders, accent colors, faction banners and invite auto-accept
+5596	Display, Colors, General and Aura Filters with inline color swatches and cog menus
+5597	Quick Loot, Auto-Fill Delete Confirmation, Auto Repair and Auto Sell Junk in the Retail layout
+5598	Display, Colors and Extras sections with inline swatches and auto accept and turn-in cogs
+5599	Wrath spell icons, real cast times and the same faction and portrait art as the live frames
+5600	The Active Profile dropdown shows the rename, delete and keybind icons on each profile again.
+5601	Dropdowns open again with !!!ClassicAPI installed; its clipping function no longer moves the menus into an empty scroll frame.
+5602	Resetting Global Settings no longer stops partway with an error and reloads the UI again.
+5603	Options that do nothing on the Wrath client are hidden: image sharpening, Lag Tolerance, Combat Text Size, Swiftmend dim, Slug outline, class resource dark mode and colors, Retail-only class and power colors, and cursor ring textures.
+5604	Global Settings no longer shows the Gamepad page, which has nothing to control on the Wrath client.
+5605	Max Camera Distance saves and keeps its value instead of resetting to 1.0, and goes up to 4 like the Wrath client allows.
+5606	CDM Bars and Tracking Bars open without an \"attempt to call field 'disabled'\" error, and nine toggles show their tooltips again.
+5607	Chat > Spam Filter: the chat type settings stay usable when only the trade or recruitment filter is on, and the tooltips explain what each one covers.
+5608	Opening the options no longer makes later Blizzard actions risk being blocked in EllesmereUI's name.
+5609	Checklist menus such as Visibility tick and untick their boxes as soon as they are clicked, even when the module's live update runs into a problem, instead of only after closing and reopening the menu.
+5610	Dropdown lists, checklists and other option popups draw their items above their own background, on a solid background, instead of showing faded items with the page bleeding through.
+5611	The Style page now keeps the Unit Frames health colors per look, so switching between Classic WoW UI and the EllesmereUI look keeps each one's colors.
+5612	The Unit Frames preview and power color swatches show the original game power colors under Classic WoW UI.
+5613	Each Core Text Position row, Spell Name, Cast Timer and Friendly Names now has its own gear for the outline instead of hiding it in the size popup.
+5614	Pressing Esc to close Blizzard windows no longer shows \"EllesmereUIOptions has been blocked from an action\".
+5615	Combat damage, healing, periodic and pet damage toggles use Wrath's own combat text settings.
+5616	Hidden option widgets no longer take keyboard focus after other windows close with Escape.
+5617	Dragging or typing in a slider no longer errors.
+5618	The settings panel opens on clients whose atlas lookup errors on unknown names, instead of failing with an 'NS' error.
+5619	Displays has a ZONE TEXT section with Move Zone Text.
+5620	Raid Tools no longer has a BOSS MOD BARS section: AbilityTimeline's Sources options hide DBM and BigWigs bars.
+5621	The Retail raid panel: show it never, in raids, in any group or always, as a resizable Compact Band, one or two windows, or only one part. It can start as a small icon, opens and closes with a keybind even in combat, and has three pull timers, Convert and Disband. Reinvite removes everyone and invites them back to the same kind of group, and Convert to Party rebuilds a raid of five or fewer as a party the same way. Shift + Left Click a marker to place its world marker when the marker item is in your bags, or Shift + Left Click the clear icon to reset world markers. In a raid it only shows for the leader and assistants.
+5622	One key casts Misdirection or Tricks of the Trade on your focus, the tank (typed name, Main Tank or tank role), your friendly target or your pet. An icon shows who it will go to, the buff timer and the cooldown. Bind it in Key Bindings.
+5623	Damage taken, healing, avoids and entering or leaving combat scroll above the player frame instead of Blizzard's combat text, with Straight, Fountain or Static animations, colors per type and a mover in Unlock Mode.
+5624	Picks an NPC's only dialog option for you. Hold Shift to skip it; instances and NPCs with quests to take or turn in are left alone. Its cog can also skip past low level quests.
+5625	An arrow next to the To box lists your alts on this realm and faction, guild members and the last names you mailed. Click a name to fill it in.
+5626	Pick None, Outline, Thick Outline or Shadow for the zone, sub-zone and PvP text shown when entering an area. Blizzard Default keeps the game's own font.
+5627	Posts the spell you or your pet interrupted, with a spell link, to Say, Emote, Party or Raid. Party and Raid switch to the battleground channel inside battlegrounds.
+5628	Group invites from your friends list and guildmates are accepted automatically, unless you are already grouped or queued in the Dungeon Finder.
+5629	A Disband button on Raid Tools removes everyone from your raid or party after a confirmation. Leader only, never in combat.
+5630	Loots everything instantly even with Blizzard's Auto Loot off; hold Shift to see the loot window. Locked slots such as group rolls and master loot are skipped.
+5631	FPS and latency, secondary stats, durability warning, combat and death alerts, a crosshair and a new target distance text, all movable in Unlock Mode.
+5632	The FPS counter's new default Text Color, Quality, turns FPS and each latency value green, yellow or red (60/30 fps, 100/250 ms). Custom and Class Color remain available.
+5633	Alert sounds from SharedMedia packs that load after Quality of Life play too
+5634	An Open All button takes items and gold one letter at a time, skipping COD and GM mail
+5635	With Send Mail open, Shift-click a bag item to attach it and matching items
+5636	Opens lootable containers one at a time out of combat (off by default)
+5637	A Train All button beside Train shows how many spells are available and the total cost
+5638	Pull timer length, DBM/BigWigs broadcast and a chat countdown
+5639	Raid Tools keeps its size after importing a Retail profile.
+5640	Shift-click mail attach no longer replaces the bag item click handler, so bag clicks stay free of taint.
+5641	Hiding DBM and BigWigs bars while AbilityTimeline is active moved to AbilityTimeline itself, as on Retail: Hide DBM bars and Hide BigWigs bars on its Sources page. The Raid Tools option is gone.
+5642	Logging out, exiting, releasing spirit and other Blizzard confirmation popups no longer trigger the \"EllesmereUIQoL has been blocked from an action only available to the Blizzard UI\" message.
+5643	The zone name no longer appears in the middle of the screen at small UI scales. It now sits fixed at the top (X 9 / Y 322 from screen center), with no Unlock Mode mover.
+5644	Show Player Buffs puts the hovered player's buffs as icons beside the tooltip, with position, size, icons per row and offsets.
+5645	Hovering a stat in the character sheet sidebar glows the equipped items that give it.
+5646	Inspect Enchants and Missing Enhancements
+5647	Inspect enchants show as an icon with the name on hover, or as names tinted by item quality, in their own size. At max level, red badges flag missing enchants, empty sockets and a missing belt buckle, as on your character sheet.
+5648	Saving an equipment set rebuilds the native icon picker even when already open, preventing the PaperDollFrame nil comparison error.
+5649	Need, Greed, Disenchant and Pass buttons on loot rolls count what the rest of the group picked. Hover a button to see who, in class colors.
+5650	Player tooltips show GearScore in the GearScoreLite colors, using its formula when it is loaded. GearScoreLite's own line is kept when its option is on.
+5651	Enchants and gems on every slot, lowest durability, model rotate, pan and zoom, reorderable stat sections and a socket strip that fills sockets from your bags.
+5652	Class colored names and health bar, guild rank, target, item level and a cursor or fixed anchor
+5653	Item levels on inspect, docking beside the character window and a merchant list mode
+5654	Resurrect accept glow and a Dungeon Ready countdown bar
+5655	The server's Collections and Wardrobe & Transmog windows join the window skins
+5656	Barber Shop, PvP and battlemasters, Arena Registrar, battleground score, minimap and capture bar, Help and GM tickets, GM chat status, breath and fatigue timers, stopwatch, raid pullouts, debug tools and Ace3 config windows
+5657	Ready checks no longer leave an empty black panel for the leader or after you answer.
+5658	The character sheet Titles tab lists your known titles again; click one to wear it.
+5659	The Guild Message Of The Day popup (and other wide text popups) no longer covers its title and buttons with the input box.
+5660	The Achievements window no longer darkens the achievement list behind its border.
+5661	The AddOn List window skin toggle only shows when the client has an AddOn List window.
+5662	Send Mail shows the To, Subject and message boxes again, and the typing cursor stays visible in skinned edit boxes.
+5663	The fixed tooltip anchor no longer snaps back to its saved spot while you drag it in Unlock Mode.
+5664	Auction House: panels and tabs added by Auctionator and other auction addons keep their own look and layout, and the footer Close buttons no longer get an \"x\" over their text.
+5665	Talents: the close button and the points footer end at the scroll bar instead of past the window edge.
+5666	Window tabs keep their dark background instead of showing through.
+5667	World map: the player arrow, party and raid dots, corpse and quest markers stay on the map art after a map view change during combat, including instance maps.
+5668	Native dropdown menus no longer show an empty square at the right of each row.
+5669	Dropdown boxes in Blizzard windows, such as the Dungeon Finder type, end at their arrow instead of past the window edge.
+5670	Raid Information: the background covers the whole window, including the title, close button, last row and the Extend Raid Lock and Close buttons.
+5671	The Talents and Glyphs background now ends above the tabs and beside the dual spec tabs.
+5672	The Glyphs tab shows its native parchment background again, aligned with the glyph sockets.
+5673	Sliders in Blizzard windows, such as the Camera and Mouse options, are back to their normal size.
+5674	Hide Until Usable and Hide Outside Form/Stance
+5675	New Cooldown States: Hide Until Usable shows a spell only while it can be cast and is off cooldown (Overpower, Revenge, Victory Rush, Execute); low resources do not hide it. Hide Outside Form/Stance shows it only in the form or stance it needs. Both can close the gap or keep the place.
+5676	The + menu adds an Empty Slot that keeps a position free on the bar, to group icons.
+5677	Bars can switch to a Shaped swipe that follows round icons and takes a Swipe Color, instead of the client's dark square sweep.
+5678	Cooldowns, Utility and Buffs bars plus custom bars and a FocusKick bar, tracked from your spellbook, cooldowns and auras. Lists are saved per talent group.
+5679	Aura or cooldown bars for player, target, focus or pet with textures, gradients, stack ticks and pandemic glow, arranged in groups.
+5680	The + buttons above the bar icons open Retail's add menu: custom spell, item or slot, trinkets, racial, potions and your learned spells, or buffs and buff presets from the gold +
+5681	Passive proc trinkets in the trinket slots show their icon and the internal cooldown after each proc, with the proc buff while it lasts
+5682	Tracking bar textures include SharedMedia, and the FocusKick Cast Sound adds EllesmereUI and SharedMedia sounds to the Blizzard ones
+5683	Light up EllesmereUI, Blizzard or ElvUI action buttons while an aura is active or missing
+5684	Always show, dim, hide on cooldown or when ready, and glow when ready
+5685	Racials, healthstones, Wrath potions and buffs such as Heroism and Bloodlust
+5686	Show an entry only when a chosen talent is learned
+5687	Utility bar options no longer switch to Buffs after a click, and the Cooldowns bar is no longer replaced by a second Buffs bar.
+5688	Racials show once: the Utility bar no longer lists Arcane Torrent (and other racials with class variants) three times.
+5689	A passive trinket in a trinket slot shows its own icon in the options instead of a question mark.
+5690	Bars saved twice or under another bar's name (two Buffs bars and no Cooldowns) are repaired, so each built-in bar keeps its own icons and options.
+5691	Auto Sized and Even Split bars with Retail backgrounds, borders and screen edge snapping, plus per-block margins, alignment, scale and colors.
+5692	20 Wrath Blocks
+5693	Clock, FPS, latency, location, gold history, bags, durability, XP and reputation, dual spec, professions, travel, micro menu, currency and more.
+5694	Latency text is green, yellow or red by connection quality by default. A Latency swatch in Text Color switches back to it after picking another color.
+5695	Column tooltips with clickable rows and secure spell, item and macro lines
+5696	Every bar has a mover whose Element Options opens that bar's settings
+5697	Profiles from 0.2 are converted automatically
+5698	Bars snapped to a screen edge or set to full length start in their place after login instead of needing Unlock Mode opened and closed.
+5699	The cast bar latency zone works for queued spells and remains visible during channels, with configurable color and millisecond text.
+5700	Class, Power and Health Bars, Cast Bar, GCD Bar, Swing Timer and Totem Bar, each element with its own Unlock Mode mover. Older profiles migrate once.
+5701	Main hand, off hand and ranged swings from the combat log, with queued Heroic Strike, Cleave and Maul, parry haste and speed changes.
+5702	Bar textures include textures from SharedMedia and other addons
+5703	Vertical bars, Retail texts, gradients, thresholds, tick marks and smoothing
+5704	Death Knight rune order and countdowns, combo points, or Blizzard's own art
+5705	Channel ticks, latency, total duration and uninterruptible colors
+5706	Totem icons and timers, and a movable Call Totem Bar
+5707	The Call Totem Bar no longer resizes or moves during combat; changes apply when combat ends.
+5708	The player cast bar shows the channeled spell's name instead of \"Channeling\".
+5709	Class icons in the EUI themes, status orbs, notes in the details line, faction banners and hover highlight, with borders and accent colors.
+5710	Accepts group invites from friends, and optionally from guild members, and closes the popup.
+5711	The window stays native but rows still get class icons and colored names
+5712	Auto Accept picks quests from NPC dialogs, with Prevent Multi Quest Accept, and Auto Turn In completes single-reward quests. Hold Shift to skip.
+5713	Uses the item of your tracked quest, found in the quest log, and only holds the key while there is an item to use.
+5714	The top line uses the accent color and Line Color tints the header divider
+5715	/eqt show, /eqt hide and /eqt toggle
+5716	Clear your focus by clicking the focus frame (Shift + Right Click by default, or Ctrl/Alt + Right Click, Middle Click, Shift + Left Click). Set it on the Focus frame page. Works in combat.
+5717	Two new debuff filter modes: Raid Debuffs shows the common raid debuffs from anyone (armor, spell and physical damage taken, crit taken, attack power, attack and cast speed, healing taken, Judgements and Hunter's Mark), and Own and Raid Debuffs adds yours.
+5718	Type Icon Position puts the icon of the player's highest dispellable debuff type on a point of the health bar, with its size and offsets in the cog. Only Dispellable by You now sits beside it and narrows the overlay, icon and border colors alike.
+5719	The focus frame gets the aura Border Style, size and color settings, as player and target have.
+5720	Player, target and focus show incoming heals past the health fill: yours and other players' in their own colors, from LibHealComm-4.0 (only healers running a HealComm addon are seen).
+5721	The debuff filters can now show or hide Sated, Exhaustion and the other Bloodlust lockout debuffs. They stay hidden by default.
+5722	Left, Right, Center and Extra Text, the Bottom Text Bar texts and Power Percent each have an Outline choice under Size: None, Outline, Thick Outline or Shadow, or the module default.
+5723	Anchor, growth, icons per row, duration and stack text, textured borders and dispel rings. Target and focus get Purgeable Buff Glow.
+5724	Every combat indicator style now shows, and highlighted portraits fit their shape instead of overflowing it.
+5725	Player, target, focus and boss health bars show estimated damage shields with Retail's Absorb Style, Opacity, Color, Placement, Show Overshield and Show on Boss Frames
+5726	Mana or Mana + Form Power, with a separate form bar
+5727	Threat %, a pet power bar and the pet happiness icon
+5728	Pooled aura indicators on the health bar with Use Indicator Layout
+5729	Fill, full, gradient and sharp gradient overlays in the dispel color
+5730	Under Classic WoW UI and Blizzard Style, the leader crown sits on the portrait's top corner, as on the original frames, instead of inside the health bar.
+5731	The party leader icon on unit frames shows on the leader only instead of on several party members.
+5732	Set Focus and Clear Focus in the unit frame right-click menu work out of combat without the 'blocked from an action' popup; in combat they are hidden.
+5733	Unit frame bars and portraits no longer get moved into scroll frames when !!!ClassicAPI is installed.
+5734	Important Cast Glow is hidden for target and focus cast bars; the Wrath client cannot tell which spells are important.
+5735	Channel cast bars show the spell's name instead of \"Channeling\".
+5736	Boss frames now update health, power and text while the boss is not your target or focus.
+5737	Visibility conditions (combat, group, and hiding without a target) now apply to the frames instead of stopping with an error, so the Visibility menu's boxes also tick right away.
+5738	Classic WoW UI power bars now stay inside the frame art: the art's rim draws over the power bar as it does over the health bar.
+5739	Classic WoW UI now gives every unit frame the original green health bar instead of class colors. Returning to the EllesmereUI look restores your colors.
+5740	Classic WoW UI power bars use the original game colors (deep blue mana, red rage, yellow energy) instead of the EllesmereUI palette. Other looks keep the palette.
+5741	Text outlines now apply to the live frames, not only the options preview.
+5742	Unit frames no longer fail to load on setups whose mask textures come back empty (absorb bar error at login).
+5743	Icons shown by spell ID now show the right icon or a question mark, never an empty square.
+5744	The faction indicator no longer errors in mercenary mode, and Retail-only PvP styles use the Wrath PvP icon.
+5745	Level text no longer errors with Font not set when frames are first created.
+5746	Like Retail 9.4, the Experience Bar section opens with XP Bar Style: EllesmereUI for the EUI bar, Luxthos for the EUI bar in the Luxthos WeakAura layout, or Blizz Default for Blizzard's own XP and reputation bars. It replaces Enable Experience Bar and the Apply Luxthos Layout button.
+5747	Like Retail 9.4, any horizontal bar can show the classic gryphons at its left end, right end or both, from the End Caps menu at the end of LAYOUT. The cog sets their size and offsets, and Apply to All copies them to every bar. The live preview shows them too.
+5748	The XP bar gets Retail's Quest XP Overlay (completed quests in green, incomplete in gold), dividers with Smart Ticks, gradient fills, background and rested colors, and seven text positions showing values, completed quest XP, XP per hour, time to level and time played. Apply Luxthos Layout recreates the popular Luxthos XP bar WeakAura, with Show at Max Level, a spark and rested XP after quest XP.
+5749	Buttons holding an equipped item, such as a trinket, can show a border in its rarity color. Off by default.
+5750	Four extra bars, off by default, each with its own keybinds, Unlock Mode mover and the full Bar Display settings. Warriors, Druids, Rogues and Priests see which stance or form shares a bar's slots.
+5751	Circle and Portrait draw round icons, Diamond, Hexagon and Shield crop the icon to the shape, and Square and Curved Square add a shaped outline. Set per bar, including pet and stance.
+5752	Type /kb, hover a button and press a key to bind it, including modifiers, mouse buttons and the wheel. Right-click clears; Cancel or Esc undoes.
+5753	Per-bar text, borders, backgrounds, orientation and growth, the Retail button animations and visibility engine, and Bar 1 modifier paging.
+5754	Shift+1 shows as S1, Control+1 as C1, mouse buttons as M4 and the wheel as MwU/MwD
+5755	Shrink the bag bar to a single backpack button
+5756	Square micro menu and bag bar, flat XP and reputation bars and movable buffs and debuffs
+5757	Bar 1 paging arrows change the page without the \"blocked from an action only available to the Blizzard UI\" message.
+5758	Changing stance no longer reveals a duplicate Blizzard stance and pet bar.
+5759	Spells can be dropped on Bar 1 while the Blizzard bar art is hidden.
+5760	Player Buffs keep growing downward as rows are added.
+5761	The XP and reputation bars no longer error on their first update.
+5762	Create Soulstone reminders, including custom spell reminders, only appear for Warlocks.
+5763	A Holy-only reminder for your Seal of Wisdom, including when another seal is active.
+5764	One click casts your group buff, such as Fortitude, Gift of the Wild or Arcane Brilliance, at its highest rank on the first member missing it.
+5765	Auras, presences, aspects, shields, weapon imbues, poisons, pets, Soulstone and Healthstone, plus flask, elixir and food with bag counts.
+5766	Reminder sounds include SharedMedia sounds, even from packs that load later
+5767	World, normal and heroic dungeons and raids, or in combat, with Show Below timers
+5768	Talent reminders for Wrath zones and your current instance
+5769	Your own aura ID reminders and a healer mana Ready Check Warning
+5770	Middle-click hides a reminder until the next loading screen
+5771	Turning off Runeforging now hides the Death Knight rune reminder.
+5772	Adding zones to an older talent reminder no longer errors, and the new zones apply right away.
+5773	A coin in the bag header marks items as junk: click it, then click items. Grey and marked items go to a Junk category, and a Sell Junk button appears next to the coin at merchants. Its cog adds a coin badge on marked items.
+5774	Bag keybinds open and close the existing layout during combat. Layout refreshes wait until combat ends.
+5775	A sidebar with All Items, OneBag and MultiBag views, pinned and recent items, Retail categories for Wrath items and your own categories.
+5776	OneBag merges stacks and sorts by bag type, MultiBag sorts each bag, with Sort to Bottom and Randomize.
+5777	A cog beside the search opens the Bags options, or the Bank page at the bank
+5778	Each saved character in the Characters list has an x to delete its data

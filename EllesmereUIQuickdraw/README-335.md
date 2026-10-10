@@ -1,4 +1,21 @@
-# EllesmereUI Quickdraw — Wrath 3.3.5a — 0.3
+# EllesmereUI Quickdraw — Wrath 3.3.5a — 0.4
+
+0.4: Assign to Spec do Retail portado para os dois grupos de talentos do 3.3.5
+(Both / Primary / Secondary). Fora do grupo, a tecla do menu não faz nada e o
+menu some de onde está aninhado. Share Keybind With deixa dois menus de specs
+diferentes usarem a mesma tecla: o binding fica no dono e o override vai para
+o menu carregado. Novos ajustes por menu: Nest Distance (0–160) e Nest Icon
+Size (0.4–1.0) para os menus aninhados, Invert Scroll Wheel e Selection Color
+(Accent / Class / Custom), aplicada à borda, à agulha, ao destaque aninhado e
+ao preview. Não portado: o coverflow do fan (Visible Icons, Select Action with
+Mouse), Arc Nest Shape / Grid Nest Style (Halo) e Toggle World Markers com os
+pips de marcador colocado, porque o 3.3.5 não informa quais marcadores de
+chão estão ativos.
+Marcadores de chão agora usam os itens do servidor (131077–131084) em vez dos
+feitiços 80945–80952: entrada sem o item na bolsa conta como indisponível, e
+BAG_UPDATE só reaplica quando muda o conjunto de itens presentes. Nova
+entrada Clear World Markers (Dynamic Actions): /click rmarkbtn, o botão Reset
+Markers do servidor; indisponível se o botão não existir.
 
 Only the four EUI_Quickdraw_335 files execute. Original Retail Lua remains
 unchanged and unloaded; original XML is stored in Bindings_Retail.xml. The
@@ -40,10 +57,11 @@ Retail coverflow remains unported.
 
 Action types: spells (ID or name), items, macros, macro text, micro-menu and
 interface panels, raid target markers 0–8, cycling target markers, the
-server's world marker spells "Raid Marker: <Color>" (80945–80952: Yellow Star,
-Orange Circle, Purple Diamond, Green Triangle, Silver Moon, Blue Square, Red
-Cross, White Skull) and a /castsequence cycle, cast with [@cursor] so they
-drop at the pointer (World Markers at Cursor off asks for a ground click),
+server's world marker items (131084 Yellow Star, 131079 Orange Circle, 131080
+Purple Diamond, 131078 Green Triangle, 131082 Silver Moon, 131077 Blue Square,
+131081 Red Cross, 131083 White Skull; hidden/unusable when not in the bags)
+and a /castsequence cycle, used with /use [@cursor] so they drop at the
+pointer (World Markers at Cursor off asks for a ground click),
 equipment sets, mounts and
 companions (tracked by spell), random/last mount, class resurrection
 (druids: Rebirth in combat, Revive outside), dual-spec activation,

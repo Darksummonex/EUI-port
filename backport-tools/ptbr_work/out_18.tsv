@@ -1,0 +1,49 @@
+5779	Bordas de qualidade, marcas de missão, nível de item, texto VaE, nomes de conjuntos e lixo escurecido
+5780	Agrupe o banco por categoria, com uma barra lateral
+5781	Com Ativar Bolsas desligado, as funções padrão das bolsas não são mais substituídas, evitando erros de ação bloqueada causados por código de bolsa com taint.
+5782	Abrir a lista Personagens não dá mais erro.
+5783	Anúncios de venda de ouro com sites ou preços em dinheiro, incluindo 5000G=20 bucks e endereços W.W.W disfarçados, são filtrados por padrão nos escopos de bate-papo selecionados.
+5784	Avisos de canais do servidor não suportados, como NOT_IN_LFG, não fazem mais o formatador nativo do bate-papo dar erro.
+5785	Filtro de spam opcional com janela de repetição, correspondência de remetente e controles para público, grupo ou sussurro.
+5786	Fundo, divisor, posição da entrada, borda e abas do Retail sobre a doca nativa, além de uma barra lateral com amigos, guilda, copiar, canais e configurações.
+5787	Carimbos de hora do Retail, nomes curtos de canais, nomes na cor da classe, dicas de links, sons de sussurro, histórico do bate-papo salvo e janelas de URL e de copiar do Retail.
+5788	Mostrar Mensagens Ocultas lista as últimas 200 linhas que o filtro de spam ocultou nesta sessão, com hora, motivo, canal e remetente. Limpar Histórico do Filtro agora é Redefinir Memória de Repetições.
+5789	A predefinição de anúncios de comércio também oculta anúncios de criação LFW (procurando trabalho).
+5790	Clique direito no bate-papo no Modo de Desbloqueio para abrir suas configurações de Exibição
+5791	Balões de fala reestilizados com opções por canal e ocultação em instâncias
+5792	O bate-papo esmaece após um tempo e volta ao passar o mouse
+5793	Copiar Bate-papo copia a aba de bate-papo que você está vendo em vez da última aba em que você clicou com o botão direito, que podia mostrar \"(No chat history)\".
+5794	Corrigido um erro \"SetPoint(): is dependent on this\" ao estilizar alguns balões de fala de PNJs.
+5795	O filtro de recrutamento de guilda não oculta mais anúncios de raide que mencionam uma guilda, como \"<Frost> LF 1 heal ICC25\"; só frases de LF guild contam.
+5796	Sussurros e mensagens de GMs nunca são ocultados pelo filtro de spam.
+5797	As palavras-chave do filtro de spam também ignoram maiúsculas e minúsculas em letras acentuadas, então promoção também oculta PROMOÇÃO.
+5798	Os filtros de anúncios de comércio e de recrutamento de guilda seguem a configuração Bate-papo Público, e o filtro de spam não faz nenhum trabalho enquanto todos os filtros estão desligados.
+5799	A barra lateral aparece no primeiro carregamento, e as abas e opções são atualizadas na hora.
+5800	O bate-papo principal mantém sua posição do Modo de Desbloqueio em vez de ser redefinido pela doca.
+5801	Uma opacidade do bate-papo salva como 0 é redefinida uma vez para o padrão do Retail.
+5802	Mapas quadrados, retangulares, circulares e circulares texturizados, com tamanho e opacidade da borda, estilos texturizados e cores personalizadas, de destaque ou da classe.
+5803	Os botões de addons se reúnem no menu suspenso do Retail com grade, direção de crescimento e Movimento Livre com Shift + arrastar.
+5804	Um anel vanilla e uma faixa de zona com botões de zoom nativos
+5805	Caixas de relógio e zona em dez posições, além de coordenadas, FPS e latência, e texto de dificuldade
+5806	Guilda e amigos num relance; clique esquerdo sussurra, clique direito convida
+5807	As ações do menu abrem janelas da Blizzard por chamadas seguras, evitando erros de ação bloqueada.
+5808	Escolha Classic WoW UI para os Medidores de Dano na página Estilo: cada janela ganha a borda de dica clássica, uma faixa de cabeçalho de dica e ícones de cabeçalho vanilla, e mantém todos os recursos de medidor do EllesmereUI.
+5809	A dica de detalhamento de um feitiço mostra seu ID de Feitiço, e cada linha de feitiço na janela detalhada termina com seu ID.
+5810	Absorções consumidas de escudos contam para Cura Realizada e HPS quando quem lançou pode ser identificado, com uma visão de Absorções Realizadas.
+5811	Corpo plano, cabeçalho de destaque, barras Atrocity e ícones de cabeçalho para Configurações, Segmento, Tipo de Medidor e Redefinir, com até cinco janelas.
+5812	Até 15 feitiços e os três principais alvos ao passar o mouse, resumos de morte com a vida em cada golpe e uma visão de foco por jogador.
+5813	As texturas de barra do SharedMedia carregam quer o perfil as guarde no formato dos Medidores de Dano ou do EllesmereUI
+5814	Uma faixa de ícones e uma janela de barras dos seus lançamentos, incluindo os que falharam e os interrompidos
+5815	Um temporizador de combate independente com seu próprio elemento no Modo de Desbloqueio
+5816	As janelas se encaixam umas nas outras; janelas travadas não podem ser movidas, redimensionadas nem fechadas
+5817	Atalhos para Redefinir Dados e Mostrar / Ocultar Janelas
+5818	Ícones de especialização a partir dos dados de talentos e inspeção do grupo de forma espaçada
+5819	Carregue um menu de ações só no seu grupo de talentos primário ou secundário, e deixe dois menus compartilharem um atalho entre especializações.
+5820	Segure uma tecla, aponte ou role para escolher, solte para disparar. Até 16 paletas de 20 entradas em layouts de anel, arco, leque ou grade.
+5821	Uma entrada de Menu de Ações abre em leque até 8 ações de outra paleta, um nível para fora do anel.
+5822	Cor de destaque, da classe ou personalizada para a entrada selecionada, o ponteiro e o destaque aninhado
+5823	Defina o espaço entre um menu aninhado e sua entrada, e o tamanho do ícone aninhado
+5824	Inverte para que lado um giro da roda move a seleção
+5825	Definir Tecla captura a próxima tecla com modificadores e pergunta antes de reassociar
+5826	Mantém o menu aberto ao soltar e dispara com uma tecla de Seleção
+5827	Vermelho quando fora de alcance, azul quando falta poder, cinza quando inutilizável

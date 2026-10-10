@@ -134,7 +134,7 @@ init:SetScript("OnEvent",function(self)
    local button=CreateFrame("Button",nil,box); local size=geo.size*scale
    button:SetWidth(size); button:SetHeight(size); button:SetPoint("CENTER",box,"CENTER",geo.pos[j][1]*scale,geo.pos[j][2]*scale+10)
    button:SetBackdrop({edgeFile=white,edgeSize=1})
-   if j==selectedSlot then button:SetBackdropBorderColor(r,g,b,1) else button:SetBackdropBorderColor(0,0,0,0) end
+   if j==selectedSlot then button:SetBackdropBorderColor(ns.SelectColor(cfg)) else button:SetBackdropBorderColor(0,0,0,0) end
    local name,iconPath=ns.Display(slot)
    local icon=button:CreateTexture(nil,"ARTWORK"); icon:SetPoint("TOPLEFT",button,"TOPLEFT",1,-1); icon:SetPoint("BOTTOMRIGHT",button,"BOTTOMRIGHT",-1,1); icon:SetTexCoord(.08,.92,.08,.92)
    icon:SetTexture(iconPath or "Interface\\Icons\\INV_Misc_QuestionMark")
@@ -205,6 +205,22 @@ init:SetScript("OnEvent",function(self)
   Button("Set Cancel Key",function() StartCapture(parent,"cancelKey") end)
   Button("Clear Select And Cancel Keys",function() profile.confirmKey=""; profile.cancelKey=""; ns.Apply(); Refresh() end)
   Row(Label("Hold the key to open, release to fire. Toggle mode keeps the menu open: the Select key fires, the menu key or Escape closes."))
+  local shareValues,shareOrder={none="Own Keybind"},{"none"}
+  for i,other in ipairs(profile.palettes) do
+   if i~=ns.selectedPalette and other.keyShare==nil and ns.PalettesExclusive(i,ns.selectedPalette) then shareValues[i]=i..". "..other.name; shareOrder[#shareOrder+1]=i end
+  end
+  Row({type="dropdown",text="Assign to Spec",values={both="Both Specs",["1"]="Primary Spec",["2"]="Secondary Spec"},order={"both","1","2"},
+   tooltip="The talent group this action menu works in. Outside it the keybind does nothing and the menu is hidden where it is nested.",
+   getValue=function() local specs=ns.PaletteSpecs(ns.selectedPalette); if not specs then return "both" end; return specs[1] and "1" or "2" end,
+   setValue=function(v) local c=ns.Selected(); if not c then return end
+    c.specs=v~="both" and {[tonumber(v)]=true} or nil
+    if c.keyShare and not ns.ShareOwner(ns.selectedPalette) then c.keyShare=nil end
+    ns.Apply(); Refresh() end},
+   {type="dropdown",text="Share Keybind With",values=shareValues,order=shareOrder,
+    disabled=function() return #shareOrder<2 and cfg.keyShare==nil end,disabledTooltip="another action menu assigned to the other spec",
+    tooltip="Use another action menu's keybind while that menu is not loaded. Both menus must be assigned to different specs.",
+    getValue=function() return ns.ShareOwner(ns.selectedPalette) or "none" end,
+    setValue=function(v) local c=ns.Selected(); if c then c.keyShare=v~="none" and v or nil; ns.Apply(); Refresh() end end})
   Section("PREVIEW")
   y=y-BuildPreview(parent,y)-10
   Section("ACTIONS")
@@ -248,12 +264,22 @@ init:SetScript("OnEvent",function(self)
   Row(Field(ns.Selected,"iconSize","Icon Size","slider",24,80),Field(ns.Selected,"spacing","Spacing","slider",0,30))
   Row(Field(ns.Selected,"scale","Scale","slider",.5,2,.05),Field(ns.Selected,"opacity","Opacity","slider",.1,1,.05))
   Row(Field(ns.Selected,"posX","Screen X Offset","slider",-800,800,5),Field(ns.Selected,"posY","Screen Y Offset","slider",-500,500,5))
+  local nestDistance=Field(ns.Selected,"nestBand","Nest Distance","slider",0,160); nestDistance.tooltip="The gap between a nested menu's icons and the entry that opens it."
+  Row(nestDistance,Field(ns.Selected,"nestScale","Nest Icon Size","slider",.4,1,.05))
+  Row(Field(ns.Selected,"invertScroll","Invert Scroll Wheel","toggle"),Label(""))
   Section("APPEARANCE")
   Row(OnField(ns.Selected,"showLabels","Show Labels"),OnField(ns.Selected,"showCounts","Item Counts"))
   Row(OnField(ns.Selected,"showCooldowns","Cooldown Swipes"),OnField(ns.Selected,"showUsability","Dim Unusable Entries"))
   Row(OnField(ns.Selected,"hideUnusable","Hide Unusable Entries"),Field(ns.Selected,"showActionText","Show Action Text Label","toggle"))
   Row(OnField(ns.Selected,"showNeedle","Selection Needle"),OnField(ns.Selected,"openAnimation","Open Animation"))
   Row(OnField(ns.Selected,"worldMarkerCursor","World Markers at Cursor"),Label("Off: world markers ask for a ground click."))
+  Row({type="dropdown",text="Selection Color",values={accent="Accent Color",class="Class Color",custom="Custom Color"},order={"accent","class","custom"},
+   getValue=function() local c=ns.Selected(); if not c then return "accent" end; return c.useClassColor and "class" or c.selectColorCustom and "custom" or "accent" end,
+   setValue=function(v) local c=ns.Selected(); if not c then return end; c.useClassColor=v=="class"; c.selectColorCustom=v=="custom"; ns.Apply(); Refresh() end},
+   {type="colorpicker",text="Custom Color",hasAlpha=false,
+    disabled=function() local c=ns.Selected(); return not c or c.useClassColor or not c.selectColorCustom end,disabledTooltip="Selection Color: Custom Color",
+    getValue=function() local c=ns.Selected(); local sc=c and c.selectColor or {}; return sc[1] or .047,sc[2] or .824,sc[3] or .624 end,
+    setValue=function(r2,g2,b2) local c=ns.Selected(); if c then c.selectColor={r2,g2,b2}; ns.Apply() end end})
   Row(Field(ns.Selected,"textSize","Text Size","slider",8,20),DD(ns.Selected,"fontOutline","Font Outline",{OUTLINE="Outline",THICKOUTLINE="Thick Outline"},{"OUTLINE","THICKOUTLINE"}))
   Button("Clear And Disable This Palette",function() ns.RemovePalette(ns.selectedPalette); selectedSlot=1; Refresh() end)
   return math.abs(y)

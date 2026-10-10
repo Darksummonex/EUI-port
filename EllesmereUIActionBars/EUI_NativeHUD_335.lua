@@ -202,6 +202,29 @@ function XP.ApplyLuxthos(p)
         if type(v)=="table" then p[k]={r=v.r,g=v.g,b=v.b,a=v.a} else p[k]=v end
     end
 end
+function XP.IsLuxthos(p)
+    if type(p)~="table" then return false end
+    for k,v in pairs(XP.LUXTHOS) do
+        local c=p[k]
+        if type(v)=="table" then
+            if type(c)~="table" then return false end
+            for _,f in ipairs({"r","g","b","a"}) do
+                if math.abs((c[f] or 1)-(v[f] or 1))>.001 then return false end
+            end
+        elseif type(v)=="boolean" then
+            if (c and true or false)~=v then return false end
+        elseif c~=v then return false end
+    end
+    return true
+end
+-- Puts the keys Luxthos sets back to the EllesmereUI defaults.
+function XP.ApplyEllesmere(p)
+    local d=ns.defaults and ns.defaults.profile and ns.defaults.profile.nativeHUD or {}
+    for k in pairs(XP.LUXTHOS) do
+        local v=d[k]
+        if type(v)=="table" then p[k]={r=v.r,g=v.g,b=v.b,a=v.a} else p[k]=v end
+    end
+end
 -- Items with nothing to show at max level (the bar there carries the level and times).
 local XP_MAX_HIDDEN={pct=true,pctProjected=true,restVal=true,restPct=true,questVal=true,questPct=true,
     completedRested=true,xpPerHour=true,levelingIn=true}

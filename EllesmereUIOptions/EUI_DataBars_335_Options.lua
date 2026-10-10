@@ -3,10 +3,11 @@
 --  The "DataBars" options page for the Wrath multi-bar engine (port of Retail
 --  EllesmereUIDataBars_Options.lua, kept as an unloaded reference).
 --
---  Layout (body only; the Retail content header is folded into the page):
---    * DATABARS: bar selector, rename, new bar from template, delete, Unlock
---      Mode. Then a click-to-scroll preview of the selected bar and the
---      Auto Sized / Even Split toggle.
+--  Layout:
+--    * Content header (Retail): bar selector with inline rename/delete and
+--      "+ Create New DataBar...", "+ New Bar" opening the template card strip.
+--    * DATABARS: delete, Unlock Mode. Then a click-to-scroll preview of the
+--      selected bar and the Auto Sized / Even Split toggle.
 --    * BAR SETTINGS (topped by the Visibility row the Unlock Mode "Element
 --      Options" link highlights), BLOCKS (add a block), then one section per
 --      block in bar order. Zero bars renders a create-only state instead.
@@ -29,7 +30,7 @@ init:SetScript("OnEvent", function(self)
     ---------------------------------------------------------------------------
     --  Module state (survives page rebuilds; closures re-target each build)
     ---------------------------------------------------------------------------
-    local O = { template = "bottom", blockType = "clock" }
+    local O = { blockType = "clock" }
     local OPT_FONT = E.EXPRESSWAY or "Fonts\\FRIZQT__.TTF"
     local function noop() end
     local function L(s) if E.L then return E.L(s) end; return s end
@@ -47,15 +48,6 @@ init:SetScript("OnEvent", function(self)
         durability = 70, combat = 105, profession2 = 120, location = 140, coords = 70,
         ilvl = 70, bags = 50, audio = 110, ldb = 90,
     }
-
-    local TEMPLATE_LABELS = {
-        empty = "Start Empty", bottom = "Top/Bottom Info Bar",
-        minimapc = "Minimap Companion", microstrip = "Micro Menu Strip",
-    }
-    local TEMPLATE_ORDER = {}
-    for _, k in ipairs({ "empty", "bottom", "minimapc", "microstrip" }) do
-        if ns.TEMPLATES and ns.TEMPLATES[k] then TEMPLATE_ORDER[#TEMPLATE_ORDER + 1] = k end
-    end
 
     local STRATA_LABELS = E.FRAME_STRATA_LABELS or { BACKGROUND = "Background", LOW = "Low", MEDIUM = "Medium", HIGH = "High", DIALOG = "Dialog" }
     local STRATA_ORDER = E.FRAME_STRATA_ORDER_BASE or { "BACKGROUND", "LOW", "MEDIUM", "HIGH", "DIALOG" }
@@ -90,7 +82,19 @@ init:SetScript("OnEvent", function(self)
         return cfg.length or 400
     end
 
+    -- Content header (bar selector + template cards); built further down.
+    local HeaderBuilder
+    local function SetHeader()
+        if E._prebuilding then return end
+        if E.InvalidateContentHeaderCache then E:InvalidateContentHeaderCache() end
+        if SelectedBar() and HeaderBuilder and E.SetContentHeader then
+            E:SetContentHeader(HeaderBuilder)
+        elseif E.ClearContentHeader then
+            E:ClearContentHeader()
+        end
+    end
     local function HardRefresh()
+        SetHeader()
         if E.InvalidatePageCache then E:InvalidatePageCache() end
         if E.RefreshPage then E:RefreshPage(true) end
     end
@@ -700,19 +704,27 @@ init:SetScript("OnEvent", function(self)
     end
 
     ---------------------------------------------------------------------------
-    --  DATABARS: selector, rename, templates, delete
+    --  Shared popup flows (header menu + body buttons)
     ---------------------------------------------------------------------------
-    local function TemplateRow(B, buttonText)
-        local values = {}
-        for _, k in ipairs(TEMPLATE_ORDER) do values[k] = TEMPLATE_LABELS[k] end
-        Row(B,
-            { type = "dropdown", text = "New Bar Template",
-              tooltip = "Starter layout for the next bar you create.",
-              values = values, order = TEMPLATE_ORDER,
-              getValue = function() return O.template end,
-              setValue = function(v) O.template = v end },
-            { type = "button", text = buttonText, width = 180,
-              onClick = function() Restructure(function() ns.CreateBar(O.template) end) end })
+    local function PromptRenameBar(barId)
+        local cfg = ns.GetBar(barId)
+        if not cfg then return end
+        local oldName = cfg.name or ""
+        local function Rename(newName)
+            newName = type(newName) == "string" and newName:gsub("^%s+", ""):gsub("%s+$", "") or ""
+            if newName == "" or newName == oldName then return end
+            ns.RenameBar(barId, newName)
+            HardRefresh()
+        end
+        if E.ShowInputPopup then
+            E:ShowInputPopup({
+                title = "Rename DataBar",
+                message = format(L("Enter a new name for \"%s\":"), oldName),
+                placeholder = oldName,
+                confirmText = "Rename", cancelText = "Cancel",
+                onConfirm = Rename,
+            })
+        end
     end
 
     local function PromptDeleteBar(barId)
@@ -738,42 +750,292 @@ init:SetScript("OnEvent", function(self)
         end
     end
 
+    local function CreateBarFromTemplate(key)
+        if CombatBlocked() then return end
+        local cfg = ns.CreateBar(key)
+        if cfg and cfg.id then SelectBar(cfg.id) end
+        O.cardsExpanded = false
+        HardRefresh()
+    end
+
+    ---------------------------------------------------------------------------
+    --  Template cards (header strip + zero-bars empty state), Retail look
+    ---------------------------------------------------------------------------
+    local MEDIA_ICONS = "Interface\\AddOns\\EllesmereUI\\media\\icons_335\\"
+    local TEMPLATE_CARDS = {}
+    for _, def in ipairs({
+        { key = "empty",      icon = "eui-edit.tga",    title = "Start Empty",
+          desc = "A blank bar to build from scratch." },
+        { key = "bottom",     icon = "grid.tga",        title = "Top/Bottom Info Bar",
+          desc = "Full-width bar with the classic info blocks." },
+        { key = "minimapc",   icon = "coordinates.tga", title = "Minimap Companion",
+          desc = "Compact clock and FPS readout." },
+        { key = "microstrip", icon = "cogs-3.tga",      title = "Micro Menu Strip",
+          desc = "Just the micro menu buttons." },
+    }) do
+        if ns.TEMPLATES and ns.TEMPLATES[def.key] then TEMPLATE_CARDS[#TEMPLATE_CARDS + 1] = def end
+    end
+    O.templateCards = TEMPLATE_CARDS
+
+    local function MakeTemplateCard(host, x, y, w, cardH, def)
+        local EGc = E.ELLESMERE_GREEN or { r = 0.05, g = 0.82, b = 0.62 }
+        local card = CreateFrame("Button", nil, host)
+        card:SetWidth(w); card:SetHeight(cardH)
+        card:SetPoint("TOPLEFT", host, "TOPLEFT", x, y)
+        card:SetFrameLevel(host:GetFrameLevel() + 2)
+
+        local cbg = card:CreateTexture(nil, "BACKGROUND")
+        cbg:SetAllPoints(card)
+        cbg:SetTexture(0.077, 0.068, 0.058, 0.50)
+        local cbrd = E.MakeBorder and E.MakeBorder(card, 1, 1, 1, 0.12, E.PanelPP)
+
+        local accentLine = card:CreateTexture(nil, "ARTWORK")
+        accentLine:SetTexture(EGc.r, EGc.g, EGc.b, 0.6)
+        accentLine:SetPoint("TOPLEFT", card, "TOPLEFT", 1, -1)
+        accentLine:SetPoint("TOPRIGHT", card, "TOPRIGHT", -1, -1)
+        accentLine:SetHeight(2)
+
+        local cIcon = card:CreateTexture(nil, "ARTWORK")
+        cIcon:SetWidth(24); cIcon:SetHeight(24)
+        cIcon:SetPoint("LEFT", card, "LEFT", 14, 0)
+        cIcon:SetTexture(MEDIA_ICONS .. def.icon)
+        cIcon:SetVertexColor(EGc.r, EGc.g, EGc.b)
+        cIcon:SetAlpha(0.6)
+
+        local titleFs = E.MakeFont(card, 12, nil, 1, 1, 1, 0.9)
+        titleFs:SetPoint("TOPLEFT", cIcon, "TOPRIGHT", 12, 1)
+        titleFs:SetPoint("RIGHT", card, "RIGHT", -8, 0)
+        titleFs:SetJustifyH("LEFT")
+        titleFs:SetWordWrap(false)
+        titleFs:SetText(L(def.title))
+
+        local descFs = E.MakeFont(card, 10, nil, 1, 1, 1, 0.35)
+        descFs:SetPoint("TOPLEFT", titleFs, "BOTTOMLEFT", 0, -4)
+        descFs:SetPoint("RIGHT", card, "RIGHT", -8, 0)
+        descFs:SetJustifyH("LEFT")
+        descFs:SetWordWrap(false)
+        descFs:SetText(L(def.desc))
+
+        card:SetScript("OnEnter", function()
+            cbg:SetTexture(0.119, 0.111, 0.104, 0.50)
+            if cbrd then cbrd:SetColor(1, 1, 1, 0.22) end
+            titleFs:SetAlpha(1)
+            cIcon:SetAlpha(0.85)
+        end)
+        card:SetScript("OnLeave", function()
+            cbg:SetTexture(0.077, 0.068, 0.058, 0.50)
+            if cbrd then cbrd:SetColor(1, 1, 1, 0.12) end
+            titleFs:SetAlpha(0.9)
+            cIcon:SetAlpha(0.6)
+        end)
+        card:SetScript("OnClick", function() CreateBarFromTemplate(def.key) end)
+        card._templateKey = def.key
+        return card
+    end
+
+    ---------------------------------------------------------------------------
+    --  Content header: bar selector (inline rename/delete) | + New Bar, and the
+    --  template card strip it opens. The preview strip stays in the page body.
+    ---------------------------------------------------------------------------
+    HeaderBuilder = function(hdr, hdrW)
+        local PAD = E.CONTENT_PAD or 10
+        local DDS = E.DD_STYLE or {}
+        local BG_R, BG_G, BG_B = DDS.BG_R or 0.075, DDS.BG_G or 0.113, DDS.BG_B or 0.141
+        local BG_A, BG_HA = DDS.BG_A or 0.9, DDS.BG_HA or 0.98
+        local BRD_A, BRD_HA = DDS.BRD_A or 0.20, DDS.BRD_HA or 0.30
+        local TXT_A = DDS.TXT_A or 0.5
+        local hlA, selA = DDS.ITEM_HL_A or 0.08, DDS.ITEM_SEL_A or 0.04
+        local tDimR, tDimG, tDimB, tDimA = E.TEXT_DIM_R or 0.7, E.TEXT_DIM_G or 0.7, E.TEXT_DIM_B or 0.7, E.TEXT_DIM_A or 0.85
+        local PanelPP = E.PanelPP
+        local fy = -8
+        local cfg = SelectedBar()
+        hdrW = hdrW or hdr:GetWidth() or 700
+
+        local DD_H, ddW, NEWBTN_W = 30, 280, 110
+        local ddBtn = CreateFrame("Button", nil, hdr)
+        ddBtn:SetWidth(ddW); ddBtn:SetHeight(DD_H)
+        ddBtn:SetPoint("TOPLEFT", hdr, "TOPLEFT", floor((hdrW - (ddW + 10 + NEWBTN_W)) / 2), fy)
+        ddBtn:SetFrameLevel(hdr:GetFrameLevel() + 5)
+        local ddBg = ddBtn:CreateTexture(nil, "BACKGROUND")
+        ddBg:SetAllPoints(ddBtn)
+        ddBg:SetTexture(BG_R, BG_G, BG_B, BG_A)
+        local ddBrd = E.MakeBorder and E.MakeBorder(ddBtn, 1, 1, 1, BRD_A, PanelPP)
+        local ddLbl = E.MakeFont(ddBtn, 13, nil, 1, 1, 1, TXT_A)
+        ddLbl:SetJustifyH("LEFT")
+        ddLbl:SetWordWrap(false)
+        ddLbl:SetPoint("LEFT", ddBtn, "LEFT", 12, 0)
+        local arrow = E.MakeDropdownArrow and E.MakeDropdownArrow(ddBtn, 12, PanelPP)
+        if arrow then ddLbl:SetPoint("RIGHT", arrow, "LEFT", -5, 0) end
+        ddLbl:SetText(cfg and (cfg.name or "") or L("No DataBars"))
+        O.headerDropdown = ddBtn
+
+        local ddMenu
+        local function BuildBarMenu()
+            if ddMenu then ddMenu:Hide(); ddMenu = nil end
+            local menu = CreateFrame("Frame", nil, UIParent)
+            menu:SetFrameStrata("FULLSCREEN_DIALOG")
+            menu:SetFrameLevel(100)
+            menu:SetClampedToScreen(true)
+            menu:SetPoint("TOPLEFT", ddBtn, "BOTTOMLEFT", 0, -2)
+            menu:SetPoint("TOPRIGHT", ddBtn, "BOTTOMRIGHT", 0, -2)
+            local bg = menu:CreateTexture(nil, "BACKGROUND")
+            bg:SetAllPoints(menu)
+            bg:SetTexture(BG_R, BG_G, BG_B, BG_HA)
+            if E.MakeBorder then E.MakeBorder(menu, 1, 1, 1, BRD_A, PanelPP) end
+
+            local ITEM_H, ICON_SZ, mH = 26, 14, 4
+            local function IconButton(item, file, tip, onClick)
+                local btn = CreateFrame("Button", nil, item)
+                btn:SetWidth(ICON_SZ); btn:SetHeight(ICON_SZ)
+                btn:SetFrameLevel(item:GetFrameLevel() + 2)
+                local ic = btn:CreateTexture(nil, "OVERLAY")
+                ic:SetAllPoints(btn)
+                ic:SetTexture(MEDIA_ICONS .. file)
+                btn:SetAlpha(0.75)
+                btn:SetScript("OnEnter", function(self)
+                    self:SetAlpha(1)
+                    if E.ShowWidgetTooltip then E.ShowWidgetTooltip(self, L(tip)) end
+                end)
+                btn:SetScript("OnLeave", function(self)
+                    self:SetAlpha(0.75)
+                    if E.HideWidgetTooltip then E.HideWidgetTooltip() end
+                end)
+                btn:SetScript("OnClick", function() menu:Hide(); onClick() end)
+                return btn
+            end
+
+            for _, b in ipairs(ns.BarsInOrder()) do
+                local isSel = cfg ~= nil and b.id == cfg.id
+                local item = CreateFrame("Button", nil, menu)
+                item:SetHeight(ITEM_H)
+                item:SetPoint("TOPLEFT", menu, "TOPLEFT", 1, -mH)
+                item:SetPoint("TOPRIGHT", menu, "TOPRIGHT", -1, -mH)
+                item:SetFrameLevel(menu:GetFrameLevel() + 2)
+                local iHl = item:CreateTexture(nil, "ARTWORK")
+                iHl:SetAllPoints(item)
+                iHl:SetTexture(1, 1, 1, 1)
+                iHl:SetAlpha(isSel and selA or 0)
+                local barId = b.id
+                local delBtn = IconButton(item, "eui-close.tga", "Delete", function() PromptDeleteBar(barId) end)
+                delBtn:SetPoint("RIGHT", item, "RIGHT", -8, 0)
+                local editBtn = IconButton(item, "eui-edit.tga", "Rename", function() PromptRenameBar(barId) end)
+                editBtn:SetPoint("RIGHT", delBtn, "LEFT", -4, 0)
+                local iLbl = E.MakeFont(item, 11, nil, tDimR, tDimG, tDimB, tDimA)
+                iLbl:SetJustifyH("LEFT")
+                iLbl:SetWordWrap(false)
+                iLbl:SetPoint("LEFT", item, "LEFT", 10, 0)
+                iLbl:SetPoint("RIGHT", editBtn, "LEFT", -4, 0)
+                iLbl:SetText(b.name or "")
+                item:SetScript("OnEnter", function() iLbl:SetTextColor(1, 1, 1, 1); iHl:SetAlpha(hlA) end)
+                item:SetScript("OnLeave", function()
+                    iLbl:SetTextColor(tDimR, tDimG, tDimB, tDimA)
+                    iHl:SetAlpha(isSel and selA or 0)
+                end)
+                item:SetScript("OnClick", function()
+                    menu:Hide()
+                    SelectBar(barId)
+                    HardRefresh()
+                end)
+                mH = mH + ITEM_H
+            end
+
+            local div = menu:CreateTexture(nil, "ARTWORK")
+            div:SetHeight(1)
+            div:SetTexture(1, 1, 1, 0.10)
+            div:SetPoint("TOPLEFT", menu, "TOPLEFT", 1, -mH - 4)
+            div:SetPoint("TOPRIGHT", menu, "TOPRIGHT", -1, -mH - 4)
+            mH = mH + 9
+
+            local addItem = CreateFrame("Button", nil, menu)
+            addItem:SetHeight(ITEM_H)
+            addItem:SetPoint("TOPLEFT", menu, "TOPLEFT", 1, -mH)
+            addItem:SetPoint("TOPRIGHT", menu, "TOPRIGHT", -1, -mH)
+            addItem:SetFrameLevel(menu:GetFrameLevel() + 2)
+            local addLbl = E.MakeFont(addItem, 11, nil, tDimR, tDimG, tDimB, tDimA)
+            addLbl:SetPoint("LEFT", addItem, "LEFT", 10, 0)
+            addLbl:SetJustifyH("LEFT")
+            addLbl:SetText(L("+ Create New DataBar..."))
+            local addHl = addItem:CreateTexture(nil, "ARTWORK")
+            addHl:SetAllPoints(addItem)
+            addHl:SetTexture(1, 1, 1, 1)
+            addHl:SetAlpha(0)
+            addItem:SetScript("OnEnter", function() addLbl:SetTextColor(1, 1, 1, 1); addHl:SetAlpha(hlA) end)
+            addItem:SetScript("OnLeave", function() addLbl:SetTextColor(tDimR, tDimG, tDimB, tDimA); addHl:SetAlpha(0) end)
+            addItem:SetScript("OnClick", function()
+                menu:Hide()
+                O.cardsExpanded = true
+                SetHeader()
+            end)
+            mH = mH + ITEM_H
+            menu:SetHeight(mH + 4)
+
+            -- Close on a left click outside (non-blocking).
+            menu:SetScript("OnUpdate", function(m)
+                if IsMouseButtonDown and IsMouseButtonDown("LeftButton")
+                    and not ns.MouseOver(m) and not ns.MouseOver(ddBtn) then
+                    m:Hide()
+                end
+            end)
+            menu:SetScript("OnHide", function(m) m:SetScript("OnUpdate", nil) end)
+            menu:Show()
+            ddMenu = menu
+            O.headerMenu = menu
+        end
+
+        ddBtn:SetScript("OnEnter", function()
+            ddLbl:SetAlpha(1)
+            if ddBrd then ddBrd:SetColor(1, 1, 1, BRD_HA) end
+            ddBg:SetTexture(BG_R, BG_G, BG_B, BG_HA)
+        end)
+        ddBtn:SetScript("OnLeave", function()
+            if ddMenu and ddMenu:IsShown() then return end
+            ddLbl:SetAlpha(TXT_A)
+            if ddBrd then ddBrd:SetColor(1, 1, 1, BRD_A) end
+            ddBg:SetTexture(BG_R, BG_G, BG_B, BG_A)
+        end)
+        ddBtn:SetScript("OnClick", function()
+            if ddMenu and ddMenu:IsShown() then ddMenu:Hide() else BuildBarMenu() end
+        end)
+        ddBtn:HookScript("OnHide", function() if ddMenu then ddMenu:Hide() end end)
+
+        local newBtn = CreateFrame("Button", nil, hdr)
+        newBtn:SetWidth(NEWBTN_W); newBtn:SetHeight(DD_H)
+        newBtn:SetPoint("LEFT", ddBtn, "RIGHT", 10, 0)
+        newBtn:SetFrameLevel(hdr:GetFrameLevel() + 5)
+        local function ToggleCards()
+            O.cardsExpanded = not O.cardsExpanded
+            SetHeader()
+        end
+        if E.MakeStyledButton and E.WB_COLOURS then
+            E.MakeStyledButton(newBtn, "+ New Bar", 12, E.WB_COLOURS, ToggleCards)
+        else
+            newBtn:SetScript("OnClick", ToggleCards)
+        end
+        O.headerNewButton = newBtn
+        fy = fy - DD_H - 10
+
+        O.headerCards = nil
+        if O.cardsExpanded and #TEMPLATE_CARDS > 0 then
+            local stripW = hdrW - PAD * 2
+            local gap, ch = 10, 64
+            local n = #TEMPLATE_CARDS
+            local cw = floor((stripW - gap * (n - 1)) / n)
+            local host = CreateFrame("Frame", nil, hdr)
+            host:SetWidth(stripW); host:SetHeight(ch)
+            host:SetPoint("TOPLEFT", hdr, "TOPLEFT", PAD, fy)
+            host:SetFrameLevel(hdr:GetFrameLevel() + 2)
+            O.headerCards = {}
+            for i = 1, n do
+                O.headerCards[i] = MakeTemplateCard(host, (i - 1) * (cw + gap), 0, cw, ch, TEMPLATE_CARDS[i])
+            end
+            fy = fy - ch - 12
+        end
+        return abs(fy) + 6
+    end
+
     local function BuildManage(B, cfg)
         local barId = cfg.id
         Section(B, "DATABARS")
-        local values, order = { _noLoc = true }, {}
-        for _, bar in ipairs(ns.BarsInOrder()) do
-            values[bar.id] = bar.name or ("DataBar " .. bar.id)
-            order[#order + 1] = bar.id
-        end
-        local nameBox
-        local row = Row(B,
-            { type = "dropdown", text = "Select Bar",
-              tooltip = "The bar this page edits.",
-              values = values, order = order,
-              getValue = function() local c = SelectedBar(); return c and c.id end,
-              setValue = function(v) SelectBar(v); HardRefresh() end },
-            { type = "input", text = "Bar Name", inputWidth = 170,
-              tooltip = "Rename this bar. Press Enter to apply.",
-              getValue = function() local c = ns.GetBar(barId); return c and c.name or "" end,
-              setValue = function(v)
-                  local c = ns.GetBar(barId)
-                  if not c or type(v) ~= "string" then return end
-                  v = v:gsub("^%s+", ""):gsub("%s+$", "")
-                  if v == "" or v == c.name then return end
-                  ns.RenameBar(barId, v)
-                  if nameBox and nameBox:IsVisible() then HardRefresh()
-                  elseif E.InvalidatePageCache then E:InvalidatePageCache() end
-              end })
-        -- The rename box must never keep keyboard focus once the page hides or rebuilds.
-        if B.live and row and row._rightRegion then
-            nameBox = row._rightRegion._control
-            if nameBox and nameBox.HookScript and nameBox.ClearFocus then
-                nameBox:SetAutoFocus(false)
-                nameBox:HookScript("OnHide", function(box) box:ClearFocus() end)
-            end
-        end
-        TemplateRow(B, "Create Bar")
         Row(B,
             { type = "labeledButton", text = "Delete Bar", buttonText = "Delete", width = 110,
               tooltip = "Deletes the selected bar and all of its blocks.",
@@ -1343,16 +1605,35 @@ init:SetScript("OnEvent", function(self)
     ---------------------------------------------------------------------------
     local function BuildPage(_, parent, yOffset)
         local B = { W = E.Widgets, parent = parent, y = yOffset, live = not E._prebuilding, sections = {}, hover = {} }
-        if B.live and E.ClearContentHeader then E:ClearContentHeader() end
         parent._showRowDivider = true
         O.previewHost, O.previewRelayout = nil, nil
 
         if not Profile() then return abs(B.y) end
         local cfg = SelectedBar()
+        -- A bar selected: the selector header; zero bars: no header, the cards below.
+        if B.live then SetHeader() end
         if not cfg then
-            Section(B, "CREATE NEW DATABAR")
-            Row(B, { type = "label", text = "Create your first DataBar from a starter template, or start empty." }, BLANK())
-            TemplateRow(B, "Create Bar")
+            local PADC = E.CONTENT_PAD or 10
+            local hostW = (parent:GetWidth() or 700) - PADC * 2
+            local gap, ch = 12, 76
+            local cw = floor((hostW - gap) / 2)
+            local rowsN = math.ceil(#TEMPLATE_CARDS / 2)
+            local hostH = 40 + ch * rowsN + gap * max(0, rowsN - 1) + 10
+            -- Explicit size + single TOPLEFT anchor; the host doubles as a search pseudo-section.
+            local host = CreateFrame("Frame", nil, parent)
+            host:SetWidth(hostW); host:SetHeight(hostH)
+            host:SetPoint("TOPLEFT", parent, "TOPLEFT", PADC, B.y)
+            host._isSectionHeader = true
+            host._sectionName = "Create New DataBar"
+            local hint = E.MakeFont(host, 13, nil, 1, 1, 1, 0.55)
+            hint:SetPoint("TOPLEFT", host, "TOPLEFT", 4, -8)
+            hint:SetText(L("Create your first DataBar from a starter template, or start empty."))
+            O.emptyCards = {}
+            for i = 1, #TEMPLATE_CARDS do
+                local col, rowI = (i - 1) % 2, floor((i - 1) / 2)
+                O.emptyCards[i] = MakeTemplateCard(host, col * (cw + gap), -40 - rowI * (ch + gap), cw, ch, TEMPLATE_CARDS[i])
+            end
+            B.y = B.y - hostH - 10
             return abs(B.y)
         end
 

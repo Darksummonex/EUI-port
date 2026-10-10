@@ -36,8 +36,58 @@ local function ShowTip(owner,text)
     GameTooltip:SetOwner(owner,"ANCHOR_TOP"); GameTooltip:SetText(text); GameTooltip:Show()
 end
 ns.ShowTip=ShowTip
-local function PaintIcon(b) b.icon:SetAlpha(b.disabled and ICON_DISABLED_ALPHA or b.hover and ICON_HOVER_ALPHA or ICON_ALPHA) end
+local function PaintIcon(b)
+    if b.classic then
+        -- Coloured vanilla art: hover is a brightness step, not an alpha fade.
+        local k=b.hover and 1 or .85
+        b.icon:SetVertexColor(k,k,k); b.icon:SetAlpha(b.disabled and .5 or 1); return
+    end
+    b.icon:SetVertexColor(1,1,1)
+    b.icon:SetAlpha(b.disabled and ICON_DISABLED_ALPHA or b.hover and ICON_HOVER_ALPHA or ICON_ALPHA)
+end
 ns.PaintHeaderIcon=PaintIcon
+-- Classic WoW UI header art (Retail's set): vanilla buttons and spell icons,
+-- each cropped to its visible art; `scale` insets full-bleed icons a little.
+local CLASSIC_ART={
+    settings={file="Interface\\Icons\\Trade_Engineering",crop=.08,scale=.9},
+    segment={file="Interface\\QuestFrame\\UI-QuestLog-BookIcon",l=.015625,r=.96875,t=.03125,b=.96875},
+    reset={file="Interface\\Buttons\\UI-RefreshButton",scale=.9},
+    open={file="Interface\\Buttons\\UI-PlusButton-Up"},
+    close={file="Interface\\Buttons\\UI-Panel-MinimizeButton-Up",l=.1875,r=.78125,t=.21875,b=.78125},
+}
+local CLASSIC_METRIC={damage="INV_Sword_04",dps="INV_Sword_04",healing="Spell_Holy_Heal",hps="Spell_Holy_Heal",
+    overheal="Spell_Holy_Heal",healingReceived="Spell_Holy_Heal",taken="Ability_Warrior_ShieldWall",
+    blocked="Ability_Warrior_ShieldWall",enemyTaken="INV_Sword_27",friendlyFire="Spell_Fire_Fire",
+    interrupts="Ability_Kick",dispels="Spell_Holy_DispelMagic",deaths="INV_Misc_Bone_HumanSkull_01",
+    shielding="Spell_Holy_PowerWordShield"}
+-- Paints `art` on a header button sized `size`; nil art puts the EUI glyph
+-- `glyph` back (a metric with no vanilla icon).
+local function ClassicIcon(b,art,size,glyph)
+    local key=art and art.file or glyph
+    if b.classicKey==key and b.classicSize==size then return end
+    b.classicKey,b.classicSize=key,size
+    local t=b.icon; t:ClearAllPoints()
+    if not art then
+        b.classic=false; t:SetTexture(glyph); t:SetDesaturated(true); t:SetTexCoord(0,1,0,1); t:SetAllPoints(b)
+        PaintIcon(b); return
+    end
+    b.classic=true; t:SetDesaturated(false); t:SetTexture(art.file)
+    if art.crop then t:SetTexCoord(art.crop,1-art.crop,art.crop,1-art.crop)
+    else t:SetTexCoord(art.l or 0,art.r or 1,art.t or 0,art.b or 1) end
+    local inset=art.scale and size*(1-art.scale)/2 or 0
+    t:SetPoint("TOPLEFT",b,"TOPLEFT",inset,-inset); t:SetPoint("BOTTOMRIGHT",b,"BOTTOMRIGHT",-inset,inset)
+    PaintIcon(b)
+end
+function ns.PaintClassicHeader(index,cfg)
+    local r=ns.windows[index]; local hh=cfg.headerHeight
+    ClassicIcon(r.settings,CLASSIC_ART.settings,hh)
+    ClassicIcon(r.segment,CLASSIC_ART.segment,hh)
+    ClassicIcon(r.reset,CLASSIC_ART.reset,hh)
+    ClassicIcon(r.action,index==1 and CLASSIC_ART.open or CLASSIC_ART.close,hh)
+    local metric=CLASSIC_METRIC[cfg.metric]
+    ClassicIcon(r.mode,metric and {file="Interface\\Icons\\"..metric,crop=.08,scale=.85},hh,
+        ns.MetricIcon and ns.MetricIcon(cfg.metric) or ns.MEDIA.."dm_home_damage.tga")
+end
 -- Bare desaturated header glyph, brightened while hovered.
 function ns.HeaderIcon(parent,file,tip,fn)
     local b=nativeCreateFrame("Button",nil,parent); ns.Size(b,22,22)
@@ -196,7 +246,14 @@ function ns.SegmentChoices()
     end
     return values,order
 end
-local function Border(cfg) return ns.Clamp(cfg.borderSize,0,4) end
+-- Classic WoW UI: the vanilla tooltip box (tiled background, tooltip edge)
+-- as the window, its tile again as the header band. The header and rows
+-- sit CLASSIC_INSET inside the box.
+local CLASSIC_INSET=5
+local CLASSIC_BOX={bgFile="Interface\\Tooltips\\UI-Tooltip-Background",edgeFile="Interface\\Tooltips\\UI-Tooltip-Border",
+    tile=true,tileSize=16,edgeSize=12,insets={left=3,right=3,top=3,bottom=3}}
+local CLASSIC_BAND={bgFile="Interface\\Tooltips\\UI-Tooltip-Background",tile=true,tileSize=16}
+local function Border(cfg) if ns.DMClassic() then return CLASSIC_INSET end; return ns.Clamp(cfg.borderSize,0,4) end
 function ns.WindowHeight(cfg) return Border(cfg)*2+cfg.headerHeight+cfg.rows*(cfg.rowHeight+cfg.barSpacing) end
 function ns.RowsForHeight(cfg,h) return ns.Clamp(math.floor((h-Border(cfg)*2-cfg.headerHeight)/(cfg.rowHeight+cfg.barSpacing)+.5),1,40) end
 function ns.SelectSegment(index,key)
@@ -584,7 +641,8 @@ function ns.RefreshWindow(index)
     local actorRow
     if r.focusGUID then rows,actorRow=ns.FocusRows(index,cfg,rows,s) end
     local b,hh=Border(cfg),cfg.headerHeight
-    r.mode.icon:SetTexture(ns.MetricIcon and ns.MetricIcon(cfg.metric) or ns.MEDIA.."dm_home_damage.tga")
+    if ns.DMClassic() then ns.PaintClassicHeader(index,cfg)
+    else r.mode.icon:SetTexture(ns.MetricIcon and ns.MetricIcon(cfg.metric) or ns.MEDIA.."dm_home_damage.tga") end
     if index==1 then r.action.disabled=#p.windows>=ns.MAX_WINDOWS; PaintIcon(r.action) end
     ns.LayoutHeader(index,cfg)
     local titleX=6
@@ -710,6 +768,7 @@ function ns.Apply()
     while #p.windows>math.max(1,math.min(p.windowCount,ns.MAX_WINDOWS)) do table.remove(p.windows) end
     p.windowCount=#p.windows
     if (p.styleVersion or 1)<2 then ns.MigrateStyle(p) end
+    if ns.DMClassic() then ns.DMSeedClassic(p) end
     for index,cfg in ipairs(p.windows) do
         -- Added windows are outside the default array entries.
         -- Fill their new fields as well, preserving explicit zero/false values.
@@ -725,17 +784,28 @@ function ns.Apply()
         local r=ns.windows[index] or ns.CreateWindow(index)
         ns.Size(r.frame,cfg.width,ns.WindowHeight(cfg))
         r.frame:SetScale(ns.Clamp(cfg.scale,.5,2)); Position(cfg,r.frame)
-        local border=Border(cfg); local bg=cfg.bgColor
-        r.frame:SetBackdrop(border>0 and {bgFile=white,edgeFile=white,edgeSize=border} or {bgFile=white})
+        local border=Border(cfg); local bg=cfg.bgColor; local classic=ns.DMClassic()
+        if classic then
+            r.frame:SetBackdrop(CLASSIC_BOX)
+            r.frame:SetBackdropBorderColor(1,1,1,1)
+        else
+            r.frame:SetBackdrop(border>0 and {bgFile=white,edgeFile=white,edgeSize=border} or {bgFile=white})
+        end
         r.frame:SetBackdropColor(bg.r or 0,bg.g or 0,bg.b or 0,ns.Clamp(cfg.alpha,0,1))
-        if border>0 then
+        if border>0 and not classic then
             if cfg.borderUseAccent~=false then r.frame:SetBackdropBorderColor(Accent())
             else r.frame:SetBackdropBorderColor(cfg.borderColor.r,cfg.borderColor.g,cfg.borderColor.b,1) end
         end
         r.header:ClearAllPoints(); r.header:SetPoint("TOPLEFT",r.frame,"TOPLEFT",border,-border); r.header:SetPoint("TOPRIGHT",r.frame,"TOPRIGHT",-border,-border)
         r.header:SetHeight(hh)
         local chrome=ns.Clamp(cfg.chromeAlpha==nil and 1 or cfg.chromeAlpha,0,1); local hc=cfg.headerColor
-        r.header.bg:SetVertexColor(hc.r or .106,hc.g or .106,hc.b or .106,chrome)
+        if classic then
+            -- A lighter band of the window's own tile, the way the stock meter's header stands off its body.
+            r.header.bg:Hide(); r.header:SetBackdrop(CLASSIC_BAND)
+            r.header:SetBackdropColor(math.min(1,(bg.r or 0)*1.6+.05),math.min(1,(bg.g or 0)*1.6+.05),math.min(1,(bg.b or 0)*1.6+.05),chrome)
+        else
+            r.header.bg:SetVertexColor(hc.r or .106,hc.g or .106,hc.b or .106,chrome)
+        end
         ns.Font(r.title.text,cfg.titleFontSize,cfg.fontOutline); ns.Font(r.timer,cfg.titleFontSize,cfg.fontOutline)
         r.title.text:SetHeight(hh); r.timer:SetHeight(hh)
         if cfg.titleUseAccent~=false then r.title.text:SetTextColor(Accent())
@@ -743,9 +813,14 @@ function ns.Apply()
         local lineSize=ns.Clamp(cfg.headerBorderSize,0,4)
         r.headerLine:ClearAllPoints()
         r.headerLine:SetPoint("TOPLEFT",r.header,"BOTTOMLEFT",0,0); r.headerLine:SetPoint("TOPRIGHT",r.header,"BOTTOMRIGHT",0,0)
-        r.headerLine:SetHeight(math.max(1,lineSize))
-        r.headerLine:SetVertexColor(cfg.headerBorderColor.r,cfg.headerBorderColor.g,cfg.headerBorderColor.b,1)
-        if lineSize>0 then r.headerLine:Show() else r.headerLine:Hide() end
+        if classic then
+            -- One rim-grey hairline, whatever the header border setting says.
+            r.headerLine:SetHeight(1); r.headerLine:SetVertexColor(.41,.41,.41,1); r.headerLine:Show()
+        else
+            r.headerLine:SetHeight(math.max(1,lineSize))
+            r.headerLine:SetVertexColor(cfg.headerBorderColor.r,cfg.headerBorderColor.g,cfg.headerBorderColor.b,1)
+            if lineSize>0 then r.headerLine:Show() else r.headerLine:Hide() end
+        end
         ns.Font(r.empty,cfg.fontSize,cfg.fontOutline)
         ns.UpdateLock(index); ns.PaintGrip(index)
         Register(index,cfg)
@@ -838,6 +913,7 @@ function ns.PaintDetail()
                 if entry.hits and f.metric~="buffUptime" and f.metric~="debuffUptime" then
                     text=text.."  "..entry.hits.." hits / "..entry.crit.." crits  ["..ns.Format(entry.min).."-"..ns.Format(entry.max).."]"
                 elseif f.metric=="buffUptime" or f.metric=="debuffUptime" then text=text.." seconds" end
+                if f.mode~="targets" and (tonumber(entry.id) or 0)>0 then text=text.."  |cff808080ID "..entry.id.."|r" end
             end
             b.text:SetText(text); b:Show()
         else b:Hide() end

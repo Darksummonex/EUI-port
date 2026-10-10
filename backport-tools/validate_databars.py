@@ -479,8 +479,9 @@ function EllesmereUI.BuildVisibilityRow(W,parent,y,opts,right)
     return row,h
 end
 function EllesmereUI.RegisterWidgetRefresh() end
-function EllesmereUI:SetContentHeader() end
-function EllesmereUI:ClearContentHeader() end
+function EllesmereUI:SetContentHeader(fn) headerBuilder=fn end
+function EllesmereUI:ClearContentHeader() headerBuilder=nil end
+function EllesmereUI.MakeFont(p,size,flags) local fs=p:CreateFontString(nil,'OVERLAY'); fs:SetFont('Fonts\\\\FRIZQT__.TTF',size or 12,flags or ''); return fs end
 function EllesmereUI:ShowConfirmPopup(opts) confirmPopup=opts end
 function EllesmereUI.GetAccentColor() return 0,.8,.6 end
 function EllesmereUI.GetFontsDir() return 'Fonts\\\\' end
@@ -494,9 +495,54 @@ rows={}; sections={}
 local h=cfg.buildPage('DataBars',UIParent,0); assert(type(h)=='number' and h>0)
 assert(#lifecycleErrors==0,lifecycleErrors[1])
 local hasBar=false; for _,s in ipairs(sections) do if s=='BAR SETTINGS' then hasBar=true end end; assert(hasBar,'BAR SETTINGS section')
-assert(FindRow('Visibility') and FindRow('Select Bar') and FindRow('Text Scale') and FindRow('Block To Add'))
+assert(FindRow('Visibility') and FindRow('Text Scale') and FindRow('Block To Add'))
+-- Retail content header: the bar selector menu lists every bar, then "+ Create New DataBar...".
+local function HeaderMenu()
+    assert(headerBuilder,'DataBars content header')
+    local hdr=CreateFrame('Frame',nil,UIParent); local before=#allFrames
+    assert(headerBuilder(hdr,700)>0)
+    local dd=allFrames[before+1]; local n=#allFrames
+    dd:RunScript('OnClick')
+    local menu=allFrames[n+1]; local items={}
+    for _,c in ipairs(menu.children) do if c.kind=='Button' then items[#items+1]=c end end
+    return items
+end
+function SelectViaHeader(id)
+    local items=HeaderMenu()
+    assert(#items==#D.BarsInOrder()+1,'one menu item per bar plus Create New')
+    for i,b in ipairs(D.BarsInOrder()) do
+        if b.id==id then items[i]:RunScript('OnClick'); rows={}; sections={}; cfg.buildPage('DataBars',UIParent,0); return end
+    end
+    error('bar missing from the header menu')
+end
+local function TemplateCards()
+    local out={}
+    for _,f in ipairs(allFrames) do if f._templateKey and f:IsShown() then out[#out+1]=f end end
+    return out
+end
 local target=D.BarsInOrder()[#D.BarsInOrder()]
-FindRow('Select Bar').setValue(target.id); rows={}; sections={}; cfg.buildPage('DataBars',UIParent,0)
+SelectViaHeader(target.id)
+assert(D.GetProfile().selectedBarId==target.id,'header menu selects the bar')
+-- "+ Create New DataBar..." opens the template strip in the header; a card creates and selects a bar.
+local items=HeaderMenu(); local barCount=#D.BarsInOrder()
+for _,f in ipairs(allFrames) do f._templateKey=nil end
+items[#items]:RunScript('OnClick')
+local hdr=CreateFrame('Frame',nil,UIParent); headerBuilder(hdr,700)
+local strip=TemplateCards(); assert(#strip==4,'four template cards in the header strip')
+local card; for _,c in ipairs(strip) do if c._templateKey=='empty' then card=c end end
+card:RunScript('OnClick')
+assert(#D.BarsInOrder()==barCount+1,'template card creates a bar')
+local made=D.GetBar(D.GetProfile().selectedBarId); assert(made and #made.blocks==0,'Start Empty selected')
+D.DeleteBar(made.id)
+-- Zero bars: no header, the 2x2 template cards in the body.
+local p=D.GetProfile(); local savedBars,savedSel=p.bars,p.selectedBarId
+p.bars={}; p.selectedBarId=nil
+for _,f in ipairs(allFrames) do f._templateKey=nil end
+rows={}; sections={}; cfg.buildPage('DataBars',UIParent,0)
+assert(headerBuilder==nil and #TemplateCards()==4,'empty state shows the template cards')
+p.bars,p.selectedBarId=savedBars,savedSel
+rows={}; sections={}; cfg.buildPage('DataBars',UIParent,0)
+SelectViaHeader(target.id)
 FindRow('Text Scale').setValue(120); assert(D.GetBar(target.id).fontScale==120)
 local n=#target.blocks
 FindRow('Block To Add').setValue('currency')
@@ -512,7 +558,7 @@ local msBar, msBlock
 for _,bar in ipairs(D.BarsInOrder()) do for _,b in ipairs(bar.blocks) do if b.type=='ms' and not msBlock then msBar,msBlock=bar,b end end end
 assert(msBlock,'a bar with a latency block')
 msBlock.color,msBlock.useClassColor,msBlock.useAccentColor,msBlock.useDynamicColor=nil,nil,nil,nil
-FindRow('Select Bar').setValue(msBar.id); rows={}; sections={}; cfg.buildPage('DataBars',UIParent,0)
+SelectViaHeader(msBar.id)
 local lat, custom
 for _,r in ipairs(rows) do
     if r and r.type=='multiSwatch' then
@@ -527,7 +573,7 @@ msBlock.color,msBlock.useDynamicColor=nil,nil
 assert(#lifecycleErrors==0,lifecycleErrors[1])
 SlashCmdList.EUI335DATABARS(); assert(shownModule=='EllesmereUIDataBars')
 ''')
-print('PASS: options page (BAR SETTINGS/Visibility, Select Bar, Text Scale, Add Block, Currency, visibility driver, no EditBox autofocus) and /edb')
+print('PASS: options page (Retail header bar selector and template cards, zero-bar card grid, BAR SETTINGS/Visibility, Text Scale, Add Block, Currency, visibility driver, no EditBox autofocus) and /edb')
 
 # Preserved Retail source, native TOC, Wrath-only media and API surface.
 original = Path('D:/World of Warcraft/_retail_/Interface/AddOns/EllesmereUIDataBars')

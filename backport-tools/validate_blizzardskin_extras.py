@@ -151,6 +151,14 @@ function StaticPopup_Show(which)
     if which=='EUI335_REPLACE_GEM' then lastDialog={}; return lastDialog end
     StaticPopup1:Hide(); StaticPopup1.which=which; StaticPopup1:Show(); return StaticPopup1
 end
+-- Wrath ready check: the initiator gets the frame with the listener hidden.
+ReadyCheckFrame=NativeWindow('ReadyCheckFrame'); ReadyCheckFrame:Hide()
+ReadyCheckListenerFrame=CreateFrame('Frame','ReadyCheckListenerFrame',ReadyCheckFrame)
+function ShowReadyCheck(initiator)
+    ReadyCheckFrame.initiator=initiator
+    if initiator=='player' then ReadyCheckListenerFrame:Hide() else ReadyCheckListenerFrame:Show() end
+    ReadyCheckFrame:Show()
+end
 -- Server windows: Collections/Wardrobe and the Dungeon Finder popups.
 CollectionsJournal=NativeWindow('CollectionsJournal'); WardrobeFrame=NativeWindow('WardrobeFrame')
 LFDRoleCheckPopup=NativeWindow('LFDRoleCheckPopup'); LFDDungeonReadyStatus=NativeWindow('LFDDungeonReadyStatus')
@@ -400,6 +408,11 @@ StaticPopup_Show('RESURRECT'); assert(not Glow() or not Glow():IsShown(),'glow o
 BS.SetValue('resurrectAcceptGlow',true); StaticPopup_Show('RESURRECT'); assert(Glow() and Glow():IsShown(),'resurrect glow')
 StaticPopup_Show('PARTY_INVITE'); assert(not Glow():IsShown())
 StaticPopup_Show('RESURRECT_NO_SICKNESS'); assert(Glow():IsShown()); StaticPopup1:Hide(); assert(not Glow():IsShown())
+ShowReadyCheck('Leader'); assert(ReadyCheckFrame:IsShown(),'ready check hidden from a member who must answer')
+local function Painted(f) for _,ch in ipairs(f.children or {}) do if ch~=ReadyCheckListenerFrame and ch.backdrop and ch:IsShown() then return true end end end
+assert(Painted(ReadyCheckListenerFrame) and not Painted(ReadyCheckFrame),'ready check skin must sit on the Yes/No frame, not the empty outer one')
+ReadyCheckListenerFrame:Hide(); assert(not Painted(ReadyCheckFrame),'answered ready check leaves a black panel')
+ReadyCheckFrame:Hide(); ShowReadyCheck('player'); assert(not ReadyCheckFrame:IsShown(),'empty ready check frame shown to its initiator')
 BS.Popups.events:RunScript('OnEvent','LFG_PROPOSAL_SHOW')
 local bar; for _,ch in ipairs(LFDDungeonReadyDialog.children) do if ch.kind=='StatusBar' then bar=ch end end
 assert(bar and bar:IsShown() and bar.maximum==40 and bar.point[3]:find('^BOTTOM'),'queue countdown')

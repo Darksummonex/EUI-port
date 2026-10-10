@@ -23,10 +23,10 @@ function AssertPackets(seconds,channel)
     assert(packets[3][1]=='BigWigs' and packets[3][2]=='BWCustomBar '..seconds..' Pull')
     for _,packet in ipairs(packets) do assert(packet[3]==channel) end
 end
-local p=Q.GetSettings(); p.enabled=true; p.raidTools.enabled=true
-p.raidTools.pullSync=true; p.raidTools.pullChat=true; p.raidTools.pullSeconds=10
-Q.Apply(); assert(Q.pullButton:GetText()=='Pull 10s')
-now=100; leader=true; ResetTraffic(); assert(Q.StartPull()); AssertPackets(10,'PARTY')
+local p=Q.GetSettings(); p.enabled=true; p.raidTools.mode='always'; p.raidTools.collapsedIcon=false
+p.raidTools.pullSync=true; p.raidTools.pullChat=true
+Q.Apply(); assert(Q.raidButtons.pull[3].label:GetText()=='10')
+now=100; leader=true; ResetTraffic(); Q.raidButtons.pull[3]:RunScript('OnClick'); AssertPackets(10,'PARTY')
 assert(#chat==1 and chat[1][1]=='Pull in 10 seconds' and chat[1][2]=='PARTY')
 for i=1,20 do Q.UpdatePull() end; assert(#chat==1)
 for i=1,4 do now=100+i; Q.UpdatePull() end; assert(#chat==1)
@@ -36,8 +36,8 @@ for i=2,6 do assert(chat[i][1]=='Pull in '..(7-i)..' seconds') end
 now=110; Q.UpdatePull(); assert(chat[7][1]=='Pull!' and Q.pullFrame.text:GetText()=='Pull!')
 now=112; Q.UpdatePull(); assert(#chat==7 and not Q.pullFrame:IsShown() and #packets==3)
 -- Long timer announces its start, then only 10 and 5..1; no 9..6 spam.
-raidCount=10; partyCount=0; officer=1; leader=false; p.raidTools.pullSeconds=20
-Q.Apply(); now=200; ResetTraffic(); Q.StartPull(); AssertPackets(20,'RAID')
+raidCount=10; partyCount=0; officer=1; leader=false
+Q.Apply(); now=200; ResetTraffic(); Q.StartPull(20); AssertPackets(20,'RAID')
 assert(chat[1][2]=='RAID_WARNING')
 now=210; Q.UpdatePull(); assert(chat[2][1]=='Pull in 10 seconds')
 for i=211,214 do now=i; Q.UpdatePull() end; assert(#chat==2)
@@ -45,37 +45,37 @@ now=216; Q.UpdatePull(); assert(chat[3][1]=='Pull in 4 seconds','Lag emitted sta
 -- Rank changes immediately lower the channel; numeric zero is false.
 officer=0; leader=0; now=217; Q.UpdatePull(); assert(chat[4][2]=='RAID')
 officer=true; now=218; Q.UpdatePull(); assert(chat[5][2]=='RAID_WARNING')
-ResetTraffic(); Q.cancelPullButton:RunScript('OnClick'); AssertPackets(0,'RAID')
+ResetTraffic(); Q.raidButtons.stop:RunScript('OnClick'); AssertPackets(0,'RAID')
 assert(chat[1][1]=='Pull canceled' and not Q.pullFrame:IsShown())
 Q.CancelPull(); assert(#packets==3 and #chat==1)
 now=219; Q.UpdatePull(); assert(#chat==1)
+-- Stop with no local pull still cancels a synced timer someone else started.
+ResetTraffic(); Q.StopPull(); AssertPackets(0,'RAID'); assert(#chat==0)
 -- Non-officers still have raid chat and the local timer, no unauthorized sync.
-officer=false; leader=false; ResetTraffic(); Q.StartPull()
+officer=false; leader=false; ResetTraffic(); Q.StartPull(10)
 assert(#packets==0 and chat[1][2]=='RAID'); Q.CancelPull()
-raidCount=0; partyCount=1; ResetTraffic(); Q.StartPull()
+raidCount=0; partyCount=1; ResetTraffic(); Q.StartPull(10)
 assert(#packets==0 and chat[1][2]=='PARTY'); Q.CancelPull()
-partyCount=0; ResetTraffic(); Q.StartPull(); assert(#chat==0 and #packets==0 and Q.pullFrame:IsShown()); Q.CancelPull()
--- Independent opt-outs, clamped persisted values and UI callbacks.
-partyCount=1; leader=true; p.raidTools.pullSeconds=-9; Q.Apply(); assert(Q.GetPullSeconds()==3)
-p.raidTools.pullSeconds=90; Q.Apply(); assert(Q.GetPullSeconds()==60)
-p.raidTools.pullSeconds='bad'; assert(Q.GetPullSeconds()==10)
-p.raidTools.pullSeconds=3.9; assert(Q.GetPullSeconds()==3)
-p.raidTools.pullSeconds=5; p.raidTools.pullSync=false; ResetTraffic(); Q.StartPull()
+partyCount=0; ResetTraffic(); Q.StartPull(10); assert(#chat==0 and #packets==0 and Q.pullFrame:IsShown()); Q.CancelPull()
+-- Independent opt-outs, clamped values and UI callbacks.
+partyCount=1; leader=true
+assert(Q.GetPullSeconds(-9)==1 and Q.GetPullSeconds(90)==60 and Q.GetPullSeconds('bad')==10 and Q.GetPullSeconds(3.9)==3)
+p.raidTools.pullSync=false; ResetTraffic(); Q.StartPull(5)
 assert(#packets==0 and chat[1][1]=='Pull in 5 seconds'); Q.CancelPull()
-p.raidTools.pullSync=true; p.raidTools.pullChat=false; ResetTraffic(); Q.StartPull(); AssertPackets(5,'PARTY')
+p.raidTools.pullSync=true; p.raidTools.pullChat=false; ResetTraffic(); Q.StartPull(5); AssertPackets(5,'PARTY')
 assert(#chat==0); ResetTraffic(); Q.CancelPull(); AssertPackets(0,'PARTY'); assert(#chat==0)
-p.raidTools.pullChat=true; ResetTraffic(); Q.StartPull()
+p.raidTools.pullChat=true; ResetTraffic(); Q.StartPull(5)
 now=now+2; ResetTraffic(); Q.events:RunScript('OnEvent','PLAYER_REGEN_DISABLED')
 AssertPackets(0,'PARTY'); assert(not Q.pullFrame:IsShown()); Q.UpdatePull(); assert(#chat==1)
-combat=true; ResetTraffic(); assert(not Q.StartPull() and #packets==0 and #chat==0); combat=false
-ResetTraffic(); Q.StartPull(); p.raidTools.enabled=false; ResetTraffic(); Q.UpdatePull()
+combat=true; ResetTraffic(); assert(not Q.StartPull(5) and #packets==0 and #chat==0); combat=false
+ResetTraffic(); Q.StartPull(5); p.raidTools.mode='never'; ResetTraffic(); Q.UpdatePull()
 AssertPackets(0,'PARTY'); assert(not Q.pullFrame:IsShown() and #chat==0)
-p.raidTools.enabled=true; ResetTraffic(); Q.StartPull(); partyCount=0; ResetTraffic(); Q.UpdatePull()
+p.raidTools.mode='always'; ResetTraffic(); Q.StartPull(5); partyCount=0; ResetTraffic(); Q.UpdatePull()
 assert(not Q.pullFrame:IsShown() and #packets==0 and #chat==0)
-partyCount=1; ResetTraffic(); Q.StartPull(); Q.addon.db.profile={}; ResetTraffic(); Q.UpdatePull()
+partyCount=1; ResetTraffic(); Q.StartPull(5); Q.addon.db.profile={}; ResetTraffic(); Q.UpdatePull()
 AssertPackets(0,'PARTY'); assert(#chat==0 and not Q.pullFrame:IsShown()); Q.addon.db.profile=p
 rows={}; modules.EllesmereUIQoL.buildPage('Raid Tools',UIParent,0)
-FindRow('Pull Timer Length (seconds)').setValue(25); assert(Q.GetPullSeconds()==25 and Q.pullButton:GetText()=='Pull 25s')
+FindRow('Third Timer').setValue(25); assert(Q.RaidToolsPullTime(3)==25 and Q.raidButtons.pull[3].label:GetText()=='25')
 FindRow('Send to DBM / BigWigs').setValue(false); assert(not p.raidTools.pullSync)
 FindRow('Chat Countdown').setValue(false); assert(not p.raidTools.pullChat)
 ''')

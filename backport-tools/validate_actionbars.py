@@ -26,6 +26,7 @@ lua.execute('local k=LibStub:NewLibrary("LibKeyBound-1.0",999); function k:Set()
 lua.execute((root/'EllesmereUIActionBars/Libs/LibActionButton-1.0-335.lua').read_text())
 ns=lua.table()
 lua.execute((root/'EllesmereUIActionBars/EUI_ActionBars_335.lua').read_text(),'EllesmereUIActionBars',ns)
+lua.execute((root/'EllesmereUIActionBars/EUI_ActionBars_335_EndCaps.lua').read_text(),'EllesmereUIActionBars',ns)
 lua.execute((root/'EllesmereUIActionBars/EUI_NativeHUD_335.lua').read_text(),'EllesmereUIActionBars',ns)
 lua.execute('''
 local m=getmetatable(UIParent).__index
@@ -499,6 +500,19 @@ assert(keybindHit.el:GetParent():GetParent().icon:GetTexture()=='icon-1','Previe
 keybindHit.nav('keybind'); assert(scrolledTo==math.max(0,math.abs(select(5,sections.TEXT:GetPoint(1)))-40))
 -- Menu, Bags & XP Bars page keeps every native HUD control.
 Build('Menu, Bags & XP Bars')
+-- XP Bar Style (Retail 9.4): Blizz Default hands XP and reputation back to Blizzard's bars.
+local style=Find('XP Bar Style'); assert(style and style.order[1]=='eui' and style.order[2]=='luxthos' and style.order[3]=='default' and style.getValue()=='eui')
+assert(style.values._menuOpts.onItemHover and Find('Width',1).disabled()==false)
+-- Luxthos is a preset of the EllesmereUI bar; EllesmereUI puts the default look back.
+style.setValue('luxthos'); local nh=AB.GetSettings().nativeHUD
+assert(style.getValue()=='luxthos' and nh.xpFillStyle=='HORIZONTAL' and nh.xpTextLeft=='level' and nh.xp==true and Find('Width',1).disabled()==false)
+nh.xpSpark=false; assert(style.getValue()=='eui'); nh.xpSpark=true; assert(style.getValue()=='luxthos')
+style.setValue('eui')
+assert(style.getValue()=='eui' and nh.xpFillStyle=='flat' and nh.xpTextLeft==nil and nh.xpTextCenter=='classic' and nh.xpSpark==false and nh.xpColor.r==0)
+style.setValue('default')
+assert(style.getValue()=='default' and MainMenuExpBar:GetAlpha()==.8 and ReputationWatchBar:GetAlpha()==.75)
+assert(Find('Width',1).disabled()==true and Find('Width',1).rawTooltip and Find('Fill Style').disabled()==true)
+style.setValue('eui'); assert(MainMenuExpBar:GetAlpha()==0 and ReputationWatchBar:GetAlpha()==0 and AB.GetSettings().nativeHUD.reputation)
 Find('Micro Menu Skin').setValue(false); assert(CharacterMicroButton:GetParent()==nativeParent)
 assert(MainMenuBarArtFrame:IsShown() and MainMenuBarArtFrame.functionalChild:IsShown() and MainMenuBarTexture0:GetTexture()==nil)
 Find('Micro Menu Skin').setValue(true); assert(CharacterMicroButton:GetParent()==AB.NativeHUD.holders.micro)
@@ -550,6 +564,25 @@ p.barPositions.hud_buffs={point='CENTER',relPoint='CENTER',x=3,y=4}
 optionButtons['Reset All Bar Positions']()
 for key in pairs(p.barPositions) do assert(key:sub(1,4)=='hud_','Bar position survived reset') end
 assert(p.barPositions.hud_buffs,'Bar reset cleared a HUD mover')
+-- End Caps (Retail 9.4, Classic art only): per side, sized and offset, horizontal bars only.
+assert(Find('End Caps') and Find('End Caps').disabled()==false,'End Caps row')
+local s=AB.GetSettings('bar1'); local bar=AB.bars.bar1
+assert(not bar._euiCaps or not bar._euiCaps.capHost:IsShown(),'caps off by default')
+s.endCapLeft=true; AB.Apply()
+local st=bar._euiCaps; local host=st.capHost
+assert(host:IsShown() and host:GetParent()==bar and st.capL:IsShown() and not st.capR:IsShown())
+assert(st.capL:GetTexture()=='Interface\\\\MainMenuBar\\\\UI-MainMenuBar-EndCap-Dwarf' and host:GetFrameLevel()==bar:GetFrameLevel()+17)
+assert(host:GetScale()==1,'48px buttons keep the art at full size')
+s.endCapRight=true; s.endCapScale=50; AB.Apply(); assert(st.capR:IsShown() and host:GetScale()==.5)
+local l,r,t,b=AB.AB_CapsReach('bar1',36,36,false,nil,true,true)
+assert(l==50 and r==49.5 and t==31.5 and b==0,'reach at 50% '..l..' '..r..' '..t..' '..b)
+Build('Bar Display','bar1'); local hdr=CreateFrame('Frame',nil,UIParent); hdr:SetWidth(900); hdr:Show()
+hits={}; headerBuilder(hdr,900)
+local pv=hits[1].el; while pv and not pv._caps do pv=pv:GetParent() end
+assert(pv and pv._caps.capHost:IsShown(),'preview shows the caps')
+s.orientation='vertical'; AB.Apply(); assert(not host:IsShown(),'vertical bars show no caps')
+assert(Find('End Caps').disabled()==true)
+s.orientation='horizontal'; s.endCapLeft,s.endCapRight,s.endCapScale=nil,nil,nil; AB.Apply(); assert(not host:IsShown())
 ''')
 bindings=ET.parse(root/'EllesmereUIActionBars/Bindings.xml').getroot()
 assert len(bindings)==60

@@ -150,8 +150,15 @@ def span(first, last):
 
 
 # SetPropagateKeyboardInput only runs on keyboard frames Wrath never enables.
+# Wrath nudges through arrow-key override bindings and returns before the
+# keyboard-capture frame is built.
 arrow = span('local function SetupArrowKeyFrame()', 'local function GetActionBarVisualSize')
-assert 'if _G.EUI_WOW_335 then return end' in '\n'.join(lines[arrow[0]:arrow[0] + 6])
+setup = '\n'.join(lines[arrow[0]:arrow[1]])
+wrath_at = setup.index('    if _G.EUI_WOW_335 then\n')
+wrath = setup[wrath_at:setup.index('\n        return\n    end\n', wrath_at)]
+assert 'SetOverrideBindingClick(self, true, key, name, key)' in wrath and 'ClearOverrideBindings(self)' in wrath
+assert 'EnableKeyboard' not in wrath and 'SetPropagateKeyboardInput' not in setup[:wrath_at]
+arrow = (arrow[0] + setup.count('\n', 0, wrath_at) + wrath.count('\n'), arrow[1])
 keydown = span('unlockFrame:SetScript("OnKeyDown"', '\n    end)\n')
 assert 'unlockFrame:EnableKeyboard(not _G.EUI_WOW_335)' in unlock
 unreachable = {'SetPropagateKeyboardInput': [arrow, keydown]}

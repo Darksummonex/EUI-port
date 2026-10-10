@@ -36,7 +36,9 @@ local windows={
     {id="worldmap",key="reskinWorldMap",label="World Map",frames={"WorldMapFrame"}},
     {id="loot",key="reskinLoot",label="Loot",frames={"LootFrame"}},
     {id="lootroll",key="reskinLootRoll",label="Loot Rolls",frames={"GroupLootFrame1","GroupLootFrame2","GroupLootFrame3","GroupLootFrame4"}},
-    {id="readycheck",key="reskinReadyCheck",label="Ready Check",frames={"ReadyCheckFrame"}},
+    -- ReadyCheckFrame is an empty shell: art, text and Yes/No live on the listener,
+    -- which Blizzard hides for the initiator and after answering.
+    {id="readycheck",key="reskinReadyCheck",label="Ready Check",frames={"ReadyCheckListenerFrame"}},
     -- Frostmourne Rebuffed ships these as part of its own FrameXML.
     {id="collections",key="reskinCollections",label="Collections",frames={"CollectionsJournal"}},
     {id="transmog",key="reskinTransmog",label="Wardrobe & Transmog",frames={"WardrobeFrame"}},
@@ -258,6 +260,12 @@ local function InnerPanel(s,frame)
         if arrow and arrow.GetParent and arrow:GetParent()==frame then
             d.panel:ClearAllPoints(); d.panel:SetPoint("TOPLEFT",frame,"TOPLEFT",17,-1)
             d.panel:SetPoint("BOTTOMRIGHT",arrow,"BOTTOMRIGHT",0,0)
+        end
+        -- The wide popup box (Guild MOTD, URLs) is taller than its text line;
+        -- a full-frame panel covers the popup title and buttons.
+        if name and name:find("^StaticPopup%d+WideEditBox$") then
+            d.panel:ClearAllPoints(); d.panel:SetPoint("LEFT",frame,"LEFT",-6,0)
+            d.panel:SetPoint("RIGHT",frame,"RIGHT",6,0); d.panel:SetHeight(24)
         end
         frame:HookScript("OnShow",function() dirty=true end)
         frame:HookScript("OnHide",function() dirty=true end)

@@ -1,0 +1,49 @@
+5779	Bordures de qualité, marques de quête, niveau d'objet, texte LqE, noms d'ensembles et camelote atténuée
+5780	Regroupe la banque par catégorie, avec une barre latérale
+5781	Avec Activer les sacs désactivé, les fonctions de sac par défaut ne sont plus remplacées, ce qui évite les erreurs d'action bloquée dues à du code de sac corrompu.
+5782	L'ouverture de la liste Personnages ne provoque plus d'erreur.
+5783	Les annonces de vente d'or avec sites web ou prix en argent réel, y compris 5000G=20 bucks et les adresses W.W.W déguisées, sont filtrées par défaut dans les canaux de discussion sélectionnés.
+5784	Les avis de canal serveur non pris en charge comme NOT_IN_LFG ne provoquent plus d'erreur du formateur de discussion natif.
+5785	Filtrage anti-spam optionnel avec fenêtre de répétition, correspondance des expéditeurs et contrôles public, groupe ou chuchotement.
+5786	Fond, séparateur, position de la saisie, bordure et onglets Retail sur le dock natif, plus une barre latérale avec amis, guilde, copie, canaux et réglages.
+5787	Horodatages Retail, noms de canaux courts, noms aux couleurs de classe, infobulles des liens, sons des chuchotements, historique de discussion enregistré et fenêtres d'URL et de copie Retail.
+5788	Afficher les messages masqués liste les 200 dernières lignes masquées par le filtre anti-spam pendant cette session, avec l'heure, la raison, le canal et l'expéditeur. Effacer l'historique du filtre s'appelle maintenant Réinitialiser la mémoire des répétitions.
+5789	Le préréglage d'annonces commerciales masque aussi les annonces d'artisanat LFW (recherche de travail).
+5790	Clic droit sur la discussion en mode Déverrouillage pour ouvrir ses réglages d'Affichage
+5791	Bulles de discussion restylées avec options par canal et masquage en instance
+5792	La discussion s'estompe après un délai et revient au survol de la souris
+5793	Copier le chat copie l'onglet de discussion que vous regardez au lieu du dernier onglet sur lequel vous avez fait un clic droit, qui pouvait afficher \"(No chat history)\".
+5794	Correction d'une erreur \"SetPoint(): is dependent on this\" lors du style de certaines bulles de discussion de PNJ.
+5795	Le filtre de recrutement de guilde ne masque plus les annonces de raid qui mentionnent une guilde, comme \"<Frost> LF 1 heal ICC25\" ; seules les phrases de recherche de guilde comptent.
+5796	Les chuchotements et messages des MJ ne sont jamais masqués par le filtre anti-spam.
+5797	Les mots-clés du filtre anti-spam ignorent aussi la casse des lettres accentuées, donc promoção masque aussi PROMOÇÃO.
+5798	Les filtres d'annonces commerciales et de recrutement de guilde suivent le réglage Chat public, et le filtre anti-spam ne travaille pas tant que tous les filtres sont désactivés.
+5799	La barre latérale s'affiche au premier chargement, et les onglets et options se mettent à jour immédiatement.
+5800	La discussion principale garde sa position du mode Déverrouillage au lieu d'être réinitialisée par le dock.
+5801	Une opacité de discussion enregistrée à 0 est réinitialisée une fois à la valeur par défaut de Retail.
+5802	Cartes carrées, rectangulaires, rondes et rondes texturées, avec taille et opacité de bordure, styles texturés et couleurs personnalisées, d'accent ou de classe.
+5803	Les boutons d'addons sont regroupés dans le menu volant Retail avec une grille, une direction de croissance et le Déplacement libre par Maj-glisser.
+5804	Un anneau vanilla et une bannière de zone avec les boutons de zoom natifs
+5805	Cases d'horloge et de zone dans dix positions, plus coordonnées, IPS et latence, et texte de difficulté
+5806	Guilde et amis en un coup d'œil ; le clic gauche chuchote, le clic droit invite
+5807	Les actions du menu ouvrent les fenêtres Blizzard par des appels sécurisés, évitant les erreurs d'action bloquée.
+5808	Choisissez Interface WoW Classic pour les Compteurs de dégâts sur la page Style : chaque fenêtre reçoit la bordure d'infobulle classique, une bande d'en-tête d'infobulle et des icônes d'en-tête vanilla, et conserve toutes les fonctions de compteur d'EllesmereUI.
+5809	L'infobulle de détail d'un sort affiche son ID de sort, et chaque ligne de sort de la fenêtre détaillée se termine par son ID.
+5810	Les absorptions de bouclier consommées comptent dans Soins prodigués et SPS quand le lanceur peut être identifié, avec une vue Absorptions effectuées.
+5811	Corps uni, en-tête d'accent, barres Atrocity et icônes d'en-tête pour Réglages, Segment, Type de compteur et Réinitialiser, avec jusqu'à cinq fenêtres.
+5812	Jusqu'à 15 sorts et les trois principales cibles au survol, récapitulatifs de mort avec la vie à chaque coup, et une vue de focalisation par joueur.
+5813	Les textures de barre SharedMedia se chargent qu'un profil les enregistre au format Compteurs de dégâts ou EllesmereUI
+5814	Une bande d'icônes et une fenêtre de barres de vos incantations, y compris celles ratées et interrompues
+5815	Un chrono de combat autonome avec son propre élément en mode Déverrouillage
+5816	Les fenêtres s'aimantent entre elles ; les fenêtres verrouillées ne peuvent pas bouger, être redimensionnées ni fermées
+5817	Raccourcis pour Réinitialiser les données et Afficher / masquer les fenêtres
+5818	Icônes de spécialisation tirées des données de talents et inspection du groupe espacée
+5819	Charge un menu d'actions uniquement dans votre groupe de talents principal ou secondaire, et permet à deux menus de partager un raccourci entre les spés.
+5820	Maintenez une touche, pointez ou faites défiler pour choisir, relâchez pour lancer. Jusqu'à 16 palettes de 20 entrées en disposition anneau, arc, éventail ou grille.
+5821	Une entrée Menu d'actions déploie jusqu'à 8 actions d'une autre palette, un niveau au-delà de l'anneau.
+5822	Couleur d'accent, de classe ou personnalisée pour l'entrée sélectionnée, l'aiguille et la surbrillance imbriquée
+5823	Réglez l'écart entre un menu imbriqué et son entrée, ainsi que la taille des icônes imbriquées
+5824	Inverse le sens dans lequel un cran de molette déplace la sélection
+5825	Assigner une touche capture la touche suivante avec ses modificateurs et demande confirmation avant de la réassigner
+5826	Garde le menu ouvert au relâchement et lance avec une touche Sélection
+5827	Rouge hors de portée, bleu en manque de ressource, gris si inutilisable

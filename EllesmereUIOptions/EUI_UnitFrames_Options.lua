@@ -692,11 +692,13 @@ local DEBUFF_MODE_ORDER = {
     "__editTracked", "---",
     "all", "tracked", "own", "important", "importantOwn", "importantOrOwn",
 }
-if EUI_WOW_335 then DEBUFF_MODE_ORDER = { "__editTracked", "---", "all", "tracked", "own" } end
+if EUI_WOW_335 then DEBUFF_MODE_ORDER = { "__editTracked", "---", "all", "tracked", "own", "raid", "raidOwn" } end
 local DEBUFF_MODE_TIPS = {
     all            = "Shows every debuff on this frame.",
     tracked        = "Shows only this frame's Tracked Auras; add them with Edit Tracked Auras at the top of this menu.",
     own            = "Shows only the debuffs you apply.",
+    raid           = "Shows the common raid debuffs from anyone: armor, spell and physical damage taken, crit taken, attack power, attack and cast speed, healing taken, Judgements and Hunter's Mark.",
+    raidOwn        = "Shows the debuffs you apply plus the common raid debuffs from anyone.",
     important      = "Shows only debuffs Blizzard flags as important.",
     importantOwn   = "Shows only the debuffs you apply that Blizzard also flags as important.",
     importantOrOwn = "Shows the debuffs you apply plus important debuffs from anyone.",
@@ -710,6 +712,8 @@ local function DebuffModeDropdownCfg(text, unitKey, getS, onChanged, extra)
         important      = "Important Only",
         importantOwn   = "Important and Own",
         importantOrOwn = "Important or Own",
+        raid           = "Raid Debuffs",
+        raidOwn        = "Own and Raid Debuffs",
         _menuOpts = {
             onItemHover = function(key, item)
                 local tip = DEBUFF_MODE_TIPS[key]
@@ -758,8 +762,10 @@ function ns.UFOpt_WrathFilterRow(W, parent, y, unitKey, getS, apply, buffOff, de
     local function ModeCfg(prefix, text, off)
         return { type="dropdown", text=text,
             values = { __editFilters = { text = "Edit in Aura Filters", action = function() Edit(prefix) end },
-                all = "Show All", own = "Own Only", tracked = "Only Tracked Auras" },
-            order = { "__editFilters", "---", "all", "own", "tracked" },
+                all = "Show All", own = "Own Only", tracked = "Only Tracked Auras",
+                raid = "Raid Debuffs", raidOwn = "Own and Raid Debuffs" },
+            order = prefix == "debuff" and { "__editFilters", "---", "all", "own", "tracked", "raid", "raidOwn" }
+                or { "__editFilters", "---", "all", "own", "tracked" },
             disabled = off, disabledTooltip = (prefix == "buff") and "Buffs" or "Debuffs", requireState = "displayed",
             getValue = function() local s = getS(); return (F and s) and F.Mode(s, prefix) or "all" end,
             setValue = function(v)
@@ -5697,8 +5703,13 @@ initFrame:SetScript("OnEvent", function(self)
                         local sz = s.leaderIndicatorSize or 16
                         lt:SetTexture((ns.UF_LEADER_ART[s.leaderIndicatorStyle] or ns.UF_LEADER_ART.blizzard).leader)
                         lt:SetSize(sz, sz)
-                        PlaceCorner(lt, s.leaderIndicatorPosition or "topleft",
-                            s.leaderIndicatorX or 0, s.leaderIndicatorY or 0)
+                        local lpos = s.leaderIndicatorPosition or "topleft"
+                        lt:ClearAllPoints()
+                        if not (lpos == "topleft" and blizzG and portraitFrame and ns.UF_PlaceStockLeader
+                            and ns.UF_PlaceStockLeader(lt, blizzG, blizzMirror, portraitFrame,
+                                s.leaderIndicatorX or 0, s.leaderIndicatorY or 0)) then
+                            PlaceCorner(lt, lpos, s.leaderIndicatorX or 0, s.leaderIndicatorY or 0)
+                        end
                         lt:Show()
                     else
                         lt:Hide()
@@ -7275,6 +7286,21 @@ initFrame:SetScript("OnEvent", function(self)
                           UNIT_DB_MAP.target().blizzColoredHeader = false
                       end
                       ReloadAndUpdate(); UpdatePreview()
+                  end },
+                { type="label", text="" });  y = y - h
+        end
+
+        if EUI_WOW_335 and selectedUnit == "focus" and ns.Wrath and ns.Wrath.CLEAR_FOCUS_LABELS then
+            _, h = W:DualRow(parent, y,
+                { type="dropdown", text="Clear Focus Click",
+                  tooltip="Clears your focus when you click the focus frame this way. Works in combat, where the right-click menu cannot clear focus.",
+                  values=ns.Wrath.CLEAR_FOCUS_LABELS, order=ns.Wrath.CLEAR_FOCUS_ORDER,
+                  disabled=function() return not (frames and frames.focus) end,
+                  disabledTooltip="This option requires an EllesmereUI Focus frame.",
+                  getValue=function() return UNIT_DB_MAP.focus().clearFocusClick or "shift2" end,
+                  setValue=function(v)
+                      UNIT_DB_MAP.focus().clearFocusClick = v
+                      ns.Wrath.ApplyClearFocusClick()
                   end },
                 { type="label", text="" });  y = y - h
         end

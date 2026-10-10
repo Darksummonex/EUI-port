@@ -1,0 +1,300 @@
+5479	Todos los módulos funcionan con las API nativas de Wrath. El aspecto y los ajustes de Retail se han portado allí donde el cliente 3.3.5a los admite, y los sistemas exclusivos de Retail se han dejado fuera. Las notas están agrupadas por módulo, de más reciente a más antigua, y cada encabezado muestra la versión del backport de ese módulo.
+5480	Iconos junto a cada enemigo por cada categoría de control de masas que sufre o de la que se está recuperando: verde significa que el siguiente dura la mitad, amarillo una cuarta parte, rojo inmune. Un temporizador muestra el reinicio de 18 segundos.
+5481	Una barra de vida para cada mascota enemiga bajo el marco de su dueño. Clic izquierdo selecciona la mascota, clic derecho la pone como foco.
+5482	Marcos enemigos para arena1-5 con barras de vida, recurso y lanzamiento con color de clase y un resaltado en tu objetivo. Clic izquierdo selecciona, clic derecho pone foco. No hay equivalente en Retail.
+5483	El icono de clase cambia al control de masas o inmunidad de mayor prioridad con una espiral y un temporizador, y el icono del abalorio JcJ sigue su reutilización de 2 minutos desde el registro de combate.
+5484	Textura de barra muestra texturas de SharedMedia y de otros addons que usan LibSharedMedia
+5485	Los enemigos fuera del alcance de hechizos de 30-40 metros de tu clase se atenúan a una opacidad elegida
+5486	Previsualiza de 2 a 5 marcos de muestra en el Modo desbloqueo, mientras la página de opciones está abierta o con /earena test
+5487	Los marcos siguen visibles mientras un enemigo está en sigilo o fuera de vista, atenuados y marcados como No visto
+5488	Opcionalmente oculta los marcos de arena de Blizzard mientras se usan estos
+5489	El Filtro de perjuicios obtiene Perjuicios de banda y Perjuicios propios y de banda, con la misma lista de perjuicios de banda que los Marcos de unidad.
+5490	Elige qué beneficios muestran las placas de nombre enemigas: Beneficios con duración, Solo disipables o Mostrar todo, que muestra todos los beneficios.
+5491	Cada texto de las placas de nombre tiene una opción de Contorno bajo su Tamaño: Ninguno, Contorno, Contorno grueso o Sombras, o mantener el predeterminado del módulo. Abarca nombres, nivel, vida, Objetivo del objetivo, textos de lanzamiento, texto de auras y nombres amistosos.
+5492	Las barras de lanzamiento ahora se rellenan en cada fotograma en lugar de avanzar a saltos con cada actualización de la placa. La chispa y el temporizador también se mueven con suavidad, y el trabajo extra se detiene cuando no hay ningún lanzamiento visible.
+5493	Posiciones de textos principales ofrece todos los textos de Retail: Nombre del enemigo, Nivel | Nombre, Objetivo del objetivo, Vida % y Vida # con sus variantes combinadas. El engranaje de cada texto ajusta su tamaño.
+5494	Las barras de vida y lanzamiento ofrecen las texturas de EllesmereUI (Melli, Atrocity, Fade, Matte y más), como en Retail
+5495	Las texturas de las barras de vida y lanzamiento incluyen texturas de SharedMedia y de otros addons
+5496	Visualización y Colores muestran una placa de vista previa en vivo; haz clic en cualquier parte de ella para saltar a su ajuste
+5497	Tamaño de barra, colores, modos de amenaza, colores de lanzamiento, flechas de objetivo y Resplandor pulsante de ejecución de Retail
+5498	Cada casilla contiene un elemento; las auras, el marcador de banda y la clasificación también pueden ir debajo de la barra de lanzamiento
+5499	Vida # usa abreviaturas al estilo de Blizzard (1.2K, 12K, 1.2M) con un decimal de % opcional
+5500	Un perfil importado de Retail ya no agranda la placa de nombre del objetivo hasta llenar la pantalla.
+5501	Borde Ninguno ahora oculta solo los bordes, no el texto de la barra de lanzamiento, el temporizador, el escudo ni la marca de interrupción.
+5502	La placa de vista previa de las opciones ya no desaparece al cambiar de pestaña o cerrar el panel.
+5503	El color de lanzamiento Interrupción en reutilización ahora se muestra mientras tu interrupción se recarga, como en Retail, en lugar de al revés.
+5504	Los nombres de banda y de grupo tienen cada uno su propio contorno: Ninguno, Contorno, Contorno grueso, Sombras o el predeterminado de la fuente de los Marcos de banda.
+5505	Una nueva Disposición del grupo apila dos grupos de banda por columna y luego empieza la siguiente columna a la derecha, de modo que una banda de 20 jugadores forma un bloque de 2x2.
+5506	Los iconos de comprobación de disponibilidad aparecen sobre los perjuicios y mantienen el resultado de cada jugador durante diez segundos tras terminar la comprobación.
+5507	El perjuicio mostrado en el icono central de Perjuicio de banda se excluye de la barra de perjuicios normal, dejando espacio para otros perjuicios.
+5508	Los marcos de banda y de grupo se atenúan fuera de alcance en Wrath, también en combate. Atenuar fuera de alcance y Alfa fuera de alcance controlan el desvanecimiento.
+5509	Un icono grande en el centro de cada marco para los perjuicios importantes de ICC, el Sagrario Rubí, la Prueba del Cruzado, Ulduar y Naxxramas, primero el de mayor prioridad, con temporizador, acumulaciones y un borde del color de disipación. Sin un perjuicio de la lista puede mostrar uno disipable en su lugar.
+5510	Estilos de Superposición de disipación con opacidad, un Borde del marco del color de disipación, Posición del icono de tipo, Colores de disipación por tipo y Mostrar solo disipables.
+5511	Superposición, Real o Sin vista previa. La vista previa se abre mientras la página Banda o Grupo está abierta y se cierra al salir de ella, cerrar el panel o entrar en combate.
+5512	Los lanzamientos enemigos se muestran como iconos en el miembro del grupo o banda al que se dirigen, con un barrido de lanzamiento y un borde de interrumpible. Grupo usa por defecto Al sanar; cada diseño de banda tiene su propio modo. Wrath no tiene objetivo de hechizo, así que la víctima es el objetivo del lanzador, y solo se ven los enemigos que alguien del grupo tiene como objetivo
+5513	Los escudos de daño se muestran en la barra de vida como en Retail: Estilo de absorción, Opacidad, Color, Ubicación y Mostrar sobreescudo. Wrath no informa de la cantidad de los escudos, así que se estiman a partir del registro de combate
+5514	Textura de barra de vida muestra texturas de SharedMedia y de otros addons, también en la vista previa de indicadores de aura
+5515	Vista previa de 25 jugadores
+5516	Las vistas previas del Modo desbloqueo y de las opciones se abren con el diseño de 25 jugadores en lugar del de 40
+5517	Modos de color de vida, fondos, amenaza, bordes de objetivo y al pasar el ratón, y ubicación de textos e iconos
+5518	Sanaciones entrantes y resurrecciones de jugadores que usan un addon HealComm
+5519	Marcos de tanque principal, de mascota y de jefe amistoso más el texto de maná de sanadores, cada uno con un movedor del Modo desbloqueo
+5520	La página Grupo tiene una sección DISEÑO con Marcos horizontales
+5521	Los iconos de comprobación de disponibilidad muestran un tic verde para los jugadores que aceptaron y para quien inició la comprobación, en lugar de una X roja al terminar la comprobación.
+5522	El icono de líder del grupo se muestra solo en el líder en lugar de en varios miembros del grupo.
+5523	Establecer foco y Quitar foco en el menú de los marcos de banda y grupo funcionan fuera de combate sin la ventana de 'acción bloqueada'; en combate se ocultan, usa allí una asignación de foco de Click Casting.
+5524	Los iconos de comprobación de disponibilidad vuelven a mostrarse en los marcos de banda y grupo.
+5525	Ocultar Saciado / Agotamiento también oculta el perjuicio de bloqueo de Ansia de sangre 81005.
+5526	Los marcos de mascota ya no provocan un error de strupper de SecureTemplates al aparecer por primera vez.
+5527	El menú Añadir nuevo del editor de Beneficios/Perjuicios ya no se cierra al primer clic.
+5528	Opciones de elementos para los marcos de banda y grupo ahora abre los ajustes correspondientes.
+5529	Las cadenas de perfil exportadas desde EllesmereUI de Retail importan todo lo que este cliente admite: cada módulo conserva sus ajustes actuales y toma los valores de Retail que entiende. Se omiten los módulos exclusivos de Retail, las configuraciones por especialización y los hechizos del Gestor de reutilización, y el chat indica cuántos ajustes se importaron.
+5530	Un botón en Ajustes globales restaura los ajustes del juego que EUI cambió (opciones de placas de nombre, minimapa, chat y descripciones, tamaños de fuente del chat y teclas que tomó Quickdraw), luego desactiva EUI para este personaje y recarga. Tus perfiles se conservan.
+5531	Un barrido de reutilización dibujado para los módulos que quieren barridos redondos o de color; el barrido propio del cliente de Wrath siempre es un cuadrado oscuro. El Gestor de reutilización lo usa primero.
+5532	Cuando un miembro de la hermandad o del grupo usa una versión más reciente de EllesmereUI, el chat te avisa una vez por sesión. Escribe /euiupdate para obtener el enlace de descarga. Wrath no tiene acceso a internet, así que el aviso llega de otros usuarios de EUI.
+5533	El addon Locales ofrece traducciones de la comunidad para todos los idiomas originales del cliente de Wrath, con inglés como respaldo y formato de Lua 5.1.
+5534	El menú contraído muestra el logotipo E original de Ellesmere con el color de acento de la interfaz y un icono de cierre funcional en el cliente de Wrath.
+5535	Las fuentes, texturas de barra y sonidos que otros addons registran con LibSharedMedia aparecen en los menús de EllesmereUI, incluidos los registrados después de iniciar sesión.
+5536	Un selector de contorno compartido para textos individuales: Ninguno, Contorno, Contorno grueso o Sombras, con Predeterminado del módulo siguiendo la página Fuentes. El texto mantiene su color al cambiar.
+5537	La ventana de Addon incompatible puede desactivar el otro addon o el módulo de EllesmereUI afectado y recargar. Aceptar y No volver a mostrar funcionan como antes.
+5538	Grupos de ajustes por especialización con captura automática y sus propios diseños del Modo desbloqueo, además de anulaciones condicionales para mazmorras, bandas, arenas, campos de batalla, juego en solitario y fuera de combate.
+5539	El menú de Esc tiene botones de EllesmereUI y Modo de desbloqueo de EUI, visibles por defecto. Ambos siguen el ajuste Botones EUI de Ajustes globales.
+5540	Con Mostrar ID de hechizo en el tooltip activado, las descripciones de objetos añaden el ID del objeto y el nombre del archivo del icono. Cada línea tiene su propia opción
+5541	Los Marcos de banda y de unidad leen los escudos de absorción de una estimación compartida: valor base del rango más tu propio poder con hechizos, menos lo que absorbe cada escudo en el registro de combate. Los clientes con una API de absorción nativa la usan directamente
+5542	Marcos de arena se une a la barra lateral, la lista de primer uso, los perfiles, las anulaciones por especialización, las fuentes de módulo y la búsqueda
+5543	Las cadenas de perfil y las exportaciones compartidas vuelven a funcionar
+5544	Un tema de opciones azul hielo; Ajustar acento al tema sigue la paleta de cada tema
+5545	Luces, rayos, música y giros al derrotar jefes, al ganar arenas y campos de batalla, con Ansia de sangre/Heroísmo y al subir de nivel
+5546	Mostrar ID de hechizo en el tooltip abarca hechizos, botones de acción, auras y enlaces de chat (desactivado por defecto)
+5547	La barra lateral de opciones muestra la memoria combinada usada por todos los addons de EllesmereUI cargados
+5548	El botón de sincronización de la barra lateral vuelve a abrir su lista de perfiles en lugar de dar error cuando tienes más de un perfil.
+5549	Las cadenas de perfil de Retail traen las posiciones de sus elementos: barras de acción, de PX y de menú, barras de CDM, marcos de banda y grupo, chat, ventanas del medidor de daño, pantallas de Calidad de vida, barras de recursos y la descripción fija quedan donde las colocó su creador.
+5550	Las cadenas de perfil de Retail solo de placas de nombre se reconocen como de Retail; se transfieren el ancho y alto de la barra, el alto y color de la barra de lanzamiento, el tamaño del nombre y los tamaños de las auras.
+5551	Modo desbloqueo: los iconos y etiquetas de los interruptores de la barra superior son más brillantes, así que ya no se ven gris oscuro sobre el letrero.
+5552	Establecer foco y Quitar foco en los menús de clic derecho de los marcos de EUI pasan por un botón seguro fuera de combate en lugar de quedar bloqueados; en combate se ocultan.
+5553	Modo desbloqueo: las flechas vuelven a mover el elemento seleccionado 1 píxel (mantén Shift para 100).
+5554	Funciona junto a !!!ClassicAPI: sus funciones de recorte y máscara ya no se usan en los marcos de EUI, así que los resplandores animados y el panel de opciones dejan de dar errores.
+5555	Abrir las opciones ya no da el error \"attempt to index local 'mask'\" en clientes donde otro addon añade una función de máscara vacía.
+5556	Los cuadros de Importar y Exportar perfil ya no dan el error \"attempt to call method 'GetNumLines'\" y se desplazan para ajustarse a cadenas largas.
+5557	El menú contraído vuelve a mostrar el logotipo E de Ellesmere en lugar de un círculo negro liso.
+5558	Las descripciones de los botones de acción muestran el ID de hechizo real en lugar de la casilla del libro de hechizos.
+5559	Corregido un error \"attempt to call global 'issecretvalue'\" de los resplandores del Gestor de reutilización antes de abrir por primera vez el panel de opciones.
+5560	Las descripciones de los widgets del Modo desbloqueo usan desvanecimientos de alfa compatibles con Wrath, lo que corrige el error de SetFromAlpha en Crecer a la derecha.
+5561	La lista de resultados de búsqueda de las opciones tiene un fondo totalmente opaco con los resultados dibujados encima, así que el texto de la barra lateral y de la página ya no se transparenta en los resultados.
+5562	El Modo desbloqueo ya no da error en SetMaxLines al abrirse por primera vez, así que los movedores de elementos vuelven a aparecer.
+5563	El punto de aviso de Notas del parche ahora se enciende tras cada actualización del backport.
+5564	Los resultados de búsqueda de las opciones ahora se dibujan sobre la barra lateral y la página en lugar de detrás.
+5565	El menú de clic derecho del Modo desbloqueo ya no se cierra justo después de abrirse cuando hay muchos elementos en pantalla.
+5566	Abrir las opciones de Marcos de banda ya no provoca un desbordamiento de pila en Ajustes específicos.
+5567	El arte del Modo desbloqueo, los iconos de las páginas de opciones y la barra superior del Modo desbloqueo ahora son visibles y legibles.
+5568	La lista de addons muestra nombres de módulo limpios, agrupados bajo EllesmereUI en los gestores de addons.
+5569	Buscar funciones y Buscar ajustes de módulo vuelven a aceptar texto.
+5570	Los clientes cuya búsqueda de atlas da error con nombres desconocidos (como clientes 3.3.5 personalizados con ports de la interfaz de Retail) ya no impiden que se carguen los archivos de EllesmereUI.
+5571	Como en Retail 9.4, la página DataBars se abre con un selector de barra arriba: renombra o borra una barra desde su propio menú, o elige + Crear nueva DataBar. + Nueva barra muestra las cuatro plantillas iniciales como tarjetas, y sin barras todavía la página las muestra como una cuadrícula de tarjetas.
+5572	Como en Retail 9.4, la ventana de opciones tiene un control deslizante de Escala de la ventana en su esquina superior que la redimensiona en pasos suaves del 5%; también funciona la rueda del ratón sobre él, o Shift + rueda del ratón en cualquier parte de la ventana. El crédito a Ellesmere ahora está bajo el botón de cerrar.
+5573	Ajustes globales se abre con Restablecer TODOS los ajustes de EUI y Desinstalar EUI uno al lado del otro, como en Retail 9.4. Restablecer TODO ahora te pide escribir Confirm. Optimizar mis FPS y gráficos ya no está: los ajustes gráficos que cambiaba no existen en este cliente.
+5574	Como en Retail 9.4, cada tarjeta de aspecto de la página Estilo tiene un menú con los módulos que lo usan: marca módulos que estén en otro aspecto y pulsa Aplicar estilos para cambiarlos todos con una sola recarga. Los menús solo muestran los aspectos que este cliente puede dibujar: Gestor de reutilización, Minimapa y Medidor de daño ofrecen EllesmereUI e Interfaz de WoW clásico, Barras de auras del jugador ya no está, y Aplicar a todo omite los módulos sin ese aspecto.
+5575	La página de importación puede actualizar tu perfil actual en lugar de crear uno nuevo: marca Importar en el perfil actual y los módulos seleccionados de la cadena (por ejemplo, solo Placas de nombre) sustituyen allí sus ajustes mientras el resto del perfil se mantiene.
+5576	La página EUI Staff se abre con un agradecimiento a Ellesmere y la tarjeta del equipo del port con un enlace de GitHub a las versiones. La línea del encabezado que acredita a Ellesmere la abre.
+5577	Los recordatorios de hechizos personalizados, la visibilidad y los sonidos se guardan por separado para cada personaje, independientemente de los perfiles compartidos.
+5578	Filtros opcionales de logros, comercio y reclutamiento de hermandad, además de tus propias palabras y frases bloqueadas.
+5579	Configura el tiempo de repetición, la coincidencia de remitente y los ámbitos de chat en la nueva página Filtro de spam.
+5580	Menús de contorno en los engranajes de texto de Placas de nombre y Marcos de unidad, y Contorno del texto de zona en Calidad de vida. La vista previa de Marcos de unidad muestra el contorno de cada texto.
+5581	Nuevas secciones MASCOTAS y RENDIMIENTOS DECRECIENTES, además de Desvanecer fuera de alcance y su opacidad en Objetivo y visibilidad.
+5582	Anunciar interrupciones y Aceptar invitaciones de amigos y hermandad en la sección GRUPO, y un botón Disolver grupo en Herramientas de banda.
+5583	Visualización de barra, Menú, Bolsas y barras de PX y Animaciones de barra, con una vista previa en vivo de la barra seleccionada. Haz clic en un icono, atajo o cantidad para saltar a su ajuste.
+5584	Las páginas Banda y Grupo obtienen la sección DISIPACIONES de Retail y un Modo de vista previa (Real, Superposición o Sin vista previa) arriba.
+5585	Las páginas Grupo y Banda obtienen una sección HECHIZOS DIRIGIDOS: modo, vista previa, tamaño de icono, máximo de iconos, posición, crecimiento, desplazamientos, barrido de lanzamiento, temporizador de lanzamiento y colores de interrumpible.
+5586	Marcos de banda (Grupo y Banda) y Marcos de unidad (jugador, objetivo, foco) obtienen una sección ABSORCIONES para los escudos estimados, con un escudo en la vista previa de Marcos de unidad.
+5587	Barras de CDM ahora se abre con el desplegable de barras de Retail (renombra o borra barras personalizadas, añade barras de Reutilizaciones, Utilidad, Beneficios o FocusKick) y los iconos de la barra seleccionada: arrastra para reordenar, haz clic en un icono para editarlo, clic central para quitarlo, y usa + para añadir hechizos o beneficios.
+5588	Oculta los anuncios del servidor como \"Nombre, el Guerrero gnomo de nivel 11, ha sido asesinado por ... en Páramos de Poniente\", con la opción de mantener visibles las muertes a partir de un nivel elegido.
+5589	SharedMedia
+5590	El sonido de lanzamiento de FocusKick y los sonidos del chat muestran sonidos de EllesmereUI y SharedMedia, y la página Texturas enlaza el Medidor de daño con su Textura de barra por ventana
+5591	Nuevo desplegable arriba en Iconos, con un enlace para aplicarlo a todas las barras. La vista previa muestra la forma.
+5592	Icono de perjuicio de jefe, Tamaño del icono, Desplazamiento Y del icono y Mostrar disipables si no hay perjuicio de jefe en Disipaciones
+5593	Secciones General, Diseño, Vida y recurso, Texto, Iconos, Barra de lanzamiento y Objetivo y visibilidad
+5594	Ajustes de Visualización, Extras e Inventario de Wrath, incluido Borrar personaje guardado
+5595	Temas de iconos de clase, nombres con color de clase, bordes, colores de acento, estandartes de facción y aceptación automática de invitaciones
+5596	Visualización, Colores, General y Filtros de auras con muestras de color integradas y menús de engranaje
+5597	Despojo rápido, Rellenar confirmación de eliminación automáticamente, Reparación automática y Vender chatarra automáticamente con el diseño de Retail
+5598	Secciones Visualización, Colores y Extras con muestras integradas y engranajes de aceptación y entrega automáticas
+5599	Iconos de hechizos de Wrath, tiempos de lanzamiento reales y el mismo arte de facción y retrato que los marcos reales
+5600	El desplegable Perfil activo vuelve a mostrar los iconos de renombrar, borrar y atajo en cada perfil.
+5601	Los desplegables vuelven a abrirse con !!!ClassicAPI instalado; su función de recorte ya no mueve los menús a un marco de desplazamiento vacío.
+5602	Restablecer los Ajustes globales ya no se detiene a medias con un error ni vuelve a recargar la interfaz.
+5603	Las opciones que no hacen nada en el cliente de Wrath están ocultas: nitidez de imagen, Tolerancia de latencia, Tamaño del texto de combate, atenuación de Alivio presto, contorno Slug, modo oscuro y colores de recursos de clase, colores de clase y de recurso exclusivos de Retail, y texturas del anillo del cursor.
+5604	Ajustes globales ya no muestra la página Mando, que no tiene nada que controlar en el cliente de Wrath.
+5605	Distancia máxima de cámara guarda y mantiene su valor en lugar de volver a 1.0, y llega hasta 4 como permite el cliente de Wrath.
+5606	Barras de CDM y Barras de seguimiento se abren sin el error \"attempt to call field 'disabled'\", y nueve interruptores vuelven a mostrar sus descripciones.
+5607	Chat > Filtro de spam: los ajustes de tipo de chat siguen siendo usables cuando solo está activo el filtro de comercio o de reclutamiento, y las descripciones explican qué abarca cada uno.
+5608	Abrir las opciones ya no hace que acciones posteriores de Blizzard corran el riesgo de quedar bloqueadas en nombre de EllesmereUI.
+5609	Los menús de lista de verificación como Visibilidad marcan y desmarcan sus casillas en cuanto se hace clic, incluso cuando la actualización en vivo del módulo encuentra un problema, en lugar de solo tras cerrar y volver a abrir el menú.
+5610	Las listas desplegables, listas de verificación y otras ventanas de opciones dibujan sus elementos sobre su propio fondo, sobre un fondo sólido, en lugar de mostrar elementos desvaídos con la página transparentándose.
+5611	La página Estilo ahora guarda los colores de vida de los Marcos de unidad por aspecto, así que al cambiar entre Interfaz de WoW clásico y el aspecto EllesmereUI cada uno conserva sus colores.
+5612	La vista previa de Marcos de unidad y las muestras de color de recurso muestran los colores de recurso originales del juego con Interfaz de WoW clásico.
+5613	Cada fila de Posiciones de textos principales, Nombre de hechizo, Temporizador de lanzamiento y Nombres amistosos tiene ahora su propio engranaje para el contorno en lugar de esconderlo en la ventana de tamaño.
+5614	Pulsar Esc para cerrar ventanas de Blizzard ya no muestra \"EllesmereUIOptions has been blocked from an action\".
+5615	Los interruptores de daño de combate, sanación, periódicos y daño de mascota usan los ajustes de texto de combate propios de Wrath.
+5616	Los widgets de opciones ocultos ya no toman el foco del teclado después de que otras ventanas se cierren con Escape.
+5617	Arrastrar o escribir en un control deslizante ya no da error.
+5618	El panel de ajustes se abre en clientes cuya búsqueda de atlas da error con nombres desconocidos, en lugar de fallar con un error 'NS'.
+5619	Pantallas tiene una sección TEXTO DE ZONA con Mover texto de zona.
+5620	Herramientas de banda ya no tiene una sección BARRAS DE BOSS MODS: las opciones de Fuentes de AbilityTimeline ocultan las barras de DBM y BigWigs.
+5621	El panel de banda de Retail: muéstralo nunca, en bandas, en cualquier grupo o siempre, como una Banda compacta redimensionable, una o dos ventanas, o solo una parte. Puede empezar como un icono pequeño, se abre y se cierra con un atajo incluso en combate, y tiene tres temporizadores de pull, Convertir y Disolver. Reinvitar expulsa a todos y los vuelve a invitar al mismo tipo de grupo, y Convertir en grupo reconstruye del mismo modo una banda de cinco o menos como grupo. Shift + Clic izquierdo en un marcador coloca su marcador de mundo cuando el objeto del marcador está en tus bolsas, o Shift + Clic izquierdo en el icono de borrar restablece los marcadores de mundo. En una banda solo se muestra al líder y a los ayudantes.
+5622	Una tecla lanza Redirección o Secretos del oficio sobre tu foco, el tanque (nombre escrito, tanque principal o rol de tanque), tu objetivo amistoso o tu mascota. Un icono muestra a quién irá, el temporizador del beneficio y la reutilización. Asígnalo en Asignación de teclas.
+5623	El daño recibido, la sanación, las evitaciones y la entrada o salida de combate se desplazan sobre el marco del jugador en lugar del texto de combate de Blizzard, con animaciones Recto, Surtidor o Estático, colores por tipo y un movedor en el Modo desbloqueo.
+5624	Elige por ti la única opción de diálogo de un PNJ. Mantén Shift para omitirlo; las estancias y los PNJ con misiones para aceptar o entregar no se tocan. Su engranaje también puede saltarse las misiones de nivel bajo.
+5625	Una flecha junto al cuadro Para muestra tus alters de este reino y facción, los miembros de la hermandad y los últimos nombres a los que enviaste correo. Haz clic en un nombre para rellenarlo.
+5626	Elige Ninguno, Contorno, Contorno grueso o Sombras para el texto de zona, subzona y JcJ que se muestra al entrar en un área. Predeterminado de Blizzard mantiene la fuente propia del juego.
+5627	Publica el hechizo que tú o tu mascota interrumpisteis, con un enlace al hechizo, en Decir, Emoción, Grupo o Banda. Grupo y Banda cambian al canal de campo de batalla dentro de los campos de batalla.
+5628	Las invitaciones de grupo de tu lista de amigos y de compañeros de hermandad se aceptan automáticamente, salvo que ya estés en grupo o en cola en el Buscador de mazmorras.
+5629	Un botón Disolver en Herramientas de banda expulsa a todos de tu banda o grupo tras una confirmación. Solo para el líder, nunca en combate.
+5630	Despoja todo al instante incluso con el Despojo automático de Blizzard desactivado; mantén Shift para ver la ventana de botín. Se omiten las casillas bloqueadas, como las tiradas de grupo y el maestro despojador.
+5631	FPS y latencia, estadísticas secundarias, aviso de durabilidad, alertas de combate y muerte, un punto de mira y un nuevo texto de distancia al objetivo, todo movible en el Modo desbloqueo.
+5632	El nuevo Color del texto predeterminado del contador de FPS, Calidad, pone los FPS y cada valor de latencia en verde, amarillo o rojo (60/30 fps, 100/250 ms). Personalizado y Color de clase siguen disponibles.
+5633	También suenan los sonidos de alerta de paquetes de SharedMedia que se cargan después de Calidad de vida
+5634	Un botón Abrir todo recoge objetos y oro carta a carta, omitiendo el correo contra reembolso y de MJ
+5635	Con Enviar correo abierto, Shift + clic en un objeto de la bolsa lo adjunta junto con los objetos coincidentes
+5636	Abre los contenedores despojables de uno en uno fuera de combate (desactivado por defecto)
+5637	Un botón Entrenar todo junto a Entrenar muestra cuántos hechizos hay disponibles y el coste total
+5638	Duración del temporizador de pull, difusión a DBM/BigWigs y una cuenta atrás en el chat
+5639	Herramientas de banda mantiene su tamaño tras importar un perfil de Retail.
+5640	Adjuntar correo con Shift + clic ya no sustituye el controlador de clics de los objetos de la bolsa, así que los clics en las bolsas quedan libres de contaminación.
+5641	Ocultar las barras de DBM y BigWigs mientras AbilityTimeline está activo pasó al propio AbilityTimeline, como en Retail: Hide DBM bars y Hide BigWigs bars en su página Sources. La opción de Herramientas de banda ya no está.
+5642	Cerrar sesión, salir del juego, liberar el espíritu y otras ventanas de confirmación de Blizzard ya no provocan el mensaje \"EllesmereUIQoL has been blocked from an action only available to the Blizzard UI\".
+5643	El nombre de la zona ya no aparece en el centro de la pantalla con escalas de interfaz pequeñas. Ahora queda fijo arriba (X 9 / Y 322 desde el centro de la pantalla), sin movedor del Modo desbloqueo.
+5644	Mostrar beneficios del jugador pone los beneficios del jugador señalado como iconos junto a la descripción, con posición, tamaño, iconos por fila y desplazamientos.
+5645	Al pasar el ratón sobre una estadística de la barra lateral de la hoja de personaje, brillan los objetos equipados que la otorgan.
+5646	Encantamientos en inspección y mejoras faltantes
+5647	Los encantamientos en inspección se muestran como un icono con el nombre al pasar el ratón, o como nombres teñidos según la calidad del objeto, con su propio tamaño. Al nivel máximo, unas insignias rojas señalan encantamientos faltantes, ranuras vacías y una hebilla de cinturón faltante, como en tu hoja de personaje.
+5648	Guardar un equipamiento reconstruye el selector de iconos nativo aunque ya esté abierto, evitando el error de comparación con nil de PaperDollFrame.
+5649	Los botones Necesidad, Codicia, Desencantar y Pasar de las tiradas de botín cuentan lo que eligió el resto del grupo. Pasa el ratón sobre un botón para ver quién, con colores de clase.
+5650	Las descripciones de jugadores muestran el GearScore con los colores de GearScoreLite, usando su fórmula cuando está cargado. La línea propia de GearScoreLite se mantiene cuando su opción está activa.
+5651	Encantamientos y gemas en cada casilla, durabilidad más baja, rotación, desplazamiento y zoom del modelo, secciones de estadísticas reordenables y una franja de ranuras que rellena las ranuras desde tus bolsas.
+5652	Nombres y barra de vida con color de clase, rango de hermandad, objetivo, nivel de objeto y un anclaje al cursor o fijo
+5653	Niveles de objeto al inspeccionar, acoplamiento junto a la ventana de personaje y un modo de lista para el vendedor
+5654	Resplandor al aceptar resurrección y una barra de cuenta atrás de Mazmorra lista
+5655	Las ventanas de Colecciones y de Guardarropa y transfiguración del servidor se unen a los aspectos de ventanas
+5656	Barbería, JcJ y maestros de batalla, Registrador de arena, puntuación de campo de batalla, minimapa y barra de captura, Ayuda y tickets de MJ, estado del chat de MJ, temporizadores de respiración y fatiga, cronómetro, marcos desplegables de banda, herramientas de depuración y ventanas de configuración de Ace3
+5657	Las comprobaciones de disponibilidad ya no dejan un panel negro vacío para el líder o después de responder.
+5658	La pestaña Títulos de la hoja de personaje vuelve a mostrar tus títulos conocidos; haz clic en uno para llevarlo.
+5659	La ventana del Mensaje del día de la hermandad (y otras ventanas de texto anchas) ya no tapa su título y sus botones con el cuadro de texto.
+5660	La ventana de Logros ya no oscurece la lista de logros detrás de su borde.
+5661	La opción de aspecto de la ventana Lista de addons solo se muestra cuando el cliente tiene una ventana Lista de addons.
+5662	Enviar correo vuelve a mostrar los cuadros Para, Asunto y mensaje, y el cursor de escritura sigue visible en los cuadros de texto con aspecto.
+5663	El anclaje de la descripción fija ya no vuelve a su posición guardada mientras lo arrastras en el Modo desbloqueo.
+5664	Casa de subastas: los paneles y pestañas añadidos por Auctionator y otros addons de subastas mantienen su propio aspecto y diseño, y los botones Cerrar del pie ya no reciben una \"x\" sobre su texto.
+5665	Talentos: el botón de cerrar y el pie de puntos terminan en la barra de desplazamiento en lugar de pasar del borde de la ventana.
+5666	Las pestañas de las ventanas mantienen su fondo oscuro en lugar de transparentarse.
+5667	Mapa del mundo: la flecha del jugador, los puntos de grupo y banda, el cadáver y los marcadores de misión permanecen sobre el arte del mapa tras un cambio de vista del mapa en combate, incluidos los mapas de estancias.
+5668	Los menús desplegables nativos ya no muestran un cuadrado vacío a la derecha de cada fila.
+5669	Los cuadros desplegables de las ventanas de Blizzard, como el tipo del Buscador de mazmorras, terminan en su flecha en lugar de pasar del borde de la ventana.
+5670	Información de banda: el fondo cubre toda la ventana, incluidos el título, el botón de cerrar, la última fila y los botones Extender bloqueo de banda y Cerrar.
+5671	El fondo de Talentos y Glifos ahora termina por encima de las pestañas y junto a las pestañas de especialización doble.
+5672	La pestaña Glifos vuelve a mostrar su fondo de pergamino nativo, alineado con las ranuras de glifos.
+5673	Los controles deslizantes de las ventanas de Blizzard, como las opciones de Cámara y Ratón, vuelven a su tamaño normal.
+5674	Ocultar hasta que sea usable y Ocultar fuera de forma/actitud
+5675	Nuevos Estados de reutilización: Ocultar hasta que sea usable muestra un hechizo solo mientras se puede lanzar y no está en reutilización (Abrumar, Revancha, Ataque victorioso, Ejecutar); la falta de recursos no lo oculta. Ocultar fuera de forma/actitud lo muestra solo en la forma o actitud que necesita. Ambos pueden cerrar el hueco o mantener la posición.
+5676	El menú + añade un Hueco vacío que mantiene libre una posición en la barra, para agrupar iconos.
+5677	Las barras pueden cambiar a un barrido Con forma que sigue los iconos redondos y usa un Color del barrido, en lugar del barrido cuadrado oscuro del cliente.
+5678	Barras de Reutilizaciones, Utilidad y Beneficios más barras personalizadas y una barra FocusKick, seguidas desde tu libro de hechizos, reutilizaciones y auras. Las listas se guardan por grupo de talentos.
+5679	Barras de auras o reutilizaciones para jugador, objetivo, foco o mascota con texturas, degradados, marcas de acumulación y resplandor de pandemia, organizadas en grupos.
+5680	Los botones + sobre los iconos de la barra abren el menú de añadir de Retail: hechizo, objeto o casilla personalizados, abalorios, racial, pociones y tus hechizos aprendidos, o beneficios y preajustes de beneficios desde el + dorado
+5681	Los abalorios pasivos con proc en las casillas de abalorio muestran su icono y la reutilización interna tras cada proc, con el beneficio del proc mientras dura
+5682	Las texturas de las barras de seguimiento incluyen SharedMedia, y el sonido de lanzamiento de FocusKick añade sonidos de EllesmereUI y SharedMedia a los de Blizzard
+5683	Ilumina los botones de acción de EllesmereUI, Blizzard o ElvUI mientras un aura está activa o ausente
+5684	Mostrar siempre, atenuar, ocultar en reutilización o cuando está listo, y resplandor cuando está listo
+5685	Raciales, piedras de salud, pociones de Wrath y beneficios como Heroísmo y Ansia de sangre
+5686	Muestra una entrada solo cuando se ha aprendido un talento elegido
+5687	Las opciones de la barra Utilidad ya no cambian a Beneficios tras un clic, y la barra Reutilizaciones ya no se sustituye por una segunda barra Beneficios.
+5688	Las raciales se muestran una vez: la barra Utilidad ya no muestra Torrente Arcano (ni otras raciales con variantes de clase) tres veces.
+5689	Un abalorio pasivo en una casilla de abalorio muestra su propio icono en las opciones en lugar de un signo de interrogación.
+5690	Las barras guardadas dos veces o con el nombre de otra barra (dos barras Beneficios y ninguna Reutilizaciones) se reparan, así que cada barra integrada conserva sus propios iconos y opciones.
+5691	Barras de Tamaño automático y División equitativa con fondos, bordes y ajuste a los bordes de pantalla de Retail, además de márgenes, alineación, escala y colores por bloque.
+5692	20 bloques de Wrath
+5693	Reloj, FPS, latencia, ubicación, historial de oro, bolsas, durabilidad, PX y reputación, especialización doble, profesiones, viaje, micromenú, monedas y más.
+5694	El texto de latencia es verde, amarillo o rojo según la calidad de la conexión por defecto. Una muestra de Latencia en Color del texto vuelve a ello después de elegir otro color.
+5695	Descripciones de columna con filas en las que se puede hacer clic y líneas seguras de hechizos, objetos y macros
+5696	Cada barra tiene un movedor cuyas Opciones de elementos abren los ajustes de esa barra
+5697	Los perfiles de la 0.2 se convierten automáticamente
+5698	Las barras ajustadas a un borde de la pantalla o con longitud completa empiezan en su sitio tras iniciar sesión en lugar de necesitar abrir y cerrar el Modo desbloqueo.
+5699	La zona de latencia de la barra de lanzamiento funciona con hechizos en cola y sigue visible durante las canalizaciones, con color y texto en milisegundos configurables.
+5700	Barras de clase, recurso y vida, Barra de lanzamiento, Barra de TGR, Temporizador de golpe y Barra de tótems, cada elemento con su propio movedor del Modo desbloqueo. Los perfiles antiguos se migran una vez.
+5701	Golpes de mano principal, mano secundaria y a distancia desde el registro de combate, con Golpe heroico, Rajar y Magullar en cola, aceleración por parada y cambios de velocidad.
+5702	Las texturas de barra incluyen texturas de SharedMedia y de otros addons
+5703	Barras verticales, textos de Retail, degradados, umbrales, marcas y suavizado
+5704	Orden y cuentas atrás de las runas de Caballero de la Muerte, puntos de combo o el arte propio de Blizzard
+5705	Tics de canalización, latencia, duración total y colores de no interrumpible
+5706	Iconos y temporizadores de tótems, y una Barra de invocación de tótems movible
+5707	La Barra de invocación de tótems ya no se redimensiona ni se mueve en combate; los cambios se aplican al terminar el combate.
+5708	La barra de lanzamiento del jugador muestra el nombre del hechizo canalizado en lugar de \"Canalizando\".
+5709	Iconos de clase en los temas de EUI, orbes de estado, notas en la línea de detalles, estandartes de facción y resaltado al pasar el ratón, con bordes y colores de acento.
+5710	Acepta invitaciones de grupo de amigos, y opcionalmente de miembros de la hermandad, y cierra la ventana.
+5711	La ventana sigue siendo nativa, pero las filas reciben iconos de clase y nombres con color
+5712	Aceptar automáticamente toma misiones de los diálogos de PNJ, con Evitar aceptar varias misiones, y Entregar automáticamente completa misiones de una sola recompensa. Mantén Shift para omitirlo.
+5713	Usa el objeto de tu misión seguida, encontrado en el registro de misiones, y solo ocupa la tecla mientras haya un objeto que usar.
+5714	La línea superior usa el color de acento y Color de línea tiñe el divisor del encabezado
+5715	/eqt show, /eqt hide y /eqt toggle
+5716	Quita tu foco haciendo clic en el marco de foco (Shift + Clic derecho por defecto, o Ctrl/Alt + Clic derecho, Clic central, Shift + Clic izquierdo). Configúralo en la página del marco de Foco. Funciona en combate.
+5717	Dos nuevos modos de filtro de perjuicios: Perjuicios de banda muestra los perjuicios de banda comunes de cualquiera (armadura, daño de hechizos y físico recibido, críticos recibidos, poder de ataque, velocidad de ataque y lanzamiento, sanación recibida, Sentencias y Marca del cazador), y Perjuicios propios y de banda añade los tuyos.
+5718	Posición del icono de tipo pone el icono del tipo de perjuicio disipable más alto del jugador en un punto de la barra de vida, con su tamaño y desplazamientos en el engranaje. Solo disipables por ti ahora está a su lado y limita por igual la superposición, el icono y los colores del borde.
+5719	El marco de foco obtiene los ajustes de Estilo del borde, tamaño y color de las auras, como el jugador y el objetivo.
+5720	Jugador, objetivo y foco muestran las sanaciones entrantes más allá del relleno de vida: las tuyas y las de otros jugadores con sus propios colores, desde LibHealComm-4.0 (solo se ven los sanadores que usan un addon HealComm).
+5721	Los filtros de perjuicios ahora pueden mostrar u ocultar Saciado, Agotamiento y los demás perjuicios de bloqueo de Ansia de sangre. Siguen ocultos por defecto.
+5722	Texto izquierdo, derecho, central y extra, los textos de la Barra de texto inferior y Porcentaje de recurso tienen cada uno una opción de Contorno bajo Tamaño: Ninguno, Contorno, Contorno grueso o Sombras, o el predeterminado del módulo.
+5723	Anclaje, crecimiento, iconos por fila, texto de duración y acumulaciones, bordes con textura y anillos de disipación. Objetivo y foco obtienen Resplandor de beneficios purgables.
+5724	Ahora se muestran todos los estilos de indicador de combate, y los retratos resaltados se ajustan a su forma en lugar de desbordarla.
+5725	Las barras de vida de jugador, objetivo, foco y jefes muestran los escudos de daño estimados con Estilo de absorción, Opacidad, Color, Ubicación, Mostrar sobreescudo y Mostrar en marcos de jefe de Retail
+5726	Maná o Maná + poder de forma, con una barra de forma separada
+5727	Amenaza %, una barra de recurso de la mascota y el icono de felicidad de la mascota
+5728	Indicadores de aura agrupados en la barra de vida con Usar diseño de indicadores
+5729	Superposiciones de relleno, completa, degradado y degradado nítido en el color de disipación
+5730	Con Interfaz de WoW clásico y Estilo Blizzard, la corona de líder queda en la esquina superior del retrato, como en los marcos originales, en lugar de dentro de la barra de vida.
+5731	El icono de líder del grupo en los marcos de unidad se muestra solo en el líder en lugar de en varios miembros del grupo.
+5732	Establecer foco y Quitar foco en el menú de clic derecho de los marcos de unidad funcionan fuera de combate sin la ventana de 'acción bloqueada'; en combate se ocultan.
+5733	Las barras y retratos de los marcos de unidad ya no se mueven a marcos de desplazamiento cuando !!!ClassicAPI está instalado.
+5734	Resplandor de lanzamiento importante se oculta en las barras de lanzamiento del objetivo y del foco; el cliente de Wrath no puede saber qué hechizos son importantes.
+5735	Las barras de lanzamiento canalizado muestran el nombre del hechizo en lugar de \"Canalizando\".
+5736	Los marcos de jefe ahora actualizan la vida, el recurso y el texto mientras el jefe no es tu objetivo ni tu foco.
+5737	Las condiciones de visibilidad (combate, grupo y ocultar sin objetivo) ahora se aplican a los marcos en lugar de detenerse con un error, así que las casillas del menú Visibilidad también se marcan al instante.
+5738	Las barras de recurso de Interfaz de WoW clásico ahora quedan dentro del arte del marco: el borde del arte se dibuja sobre la barra de recurso igual que sobre la barra de vida.
+5739	Interfaz de WoW clásico ahora da a todos los marcos de unidad la barra de vida verde original en lugar de los colores de clase. Volver al aspecto EllesmereUI restaura tus colores.
+5740	Las barras de recurso de Interfaz de WoW clásico usan los colores originales del juego (maná azul oscuro, ira roja, energía amarilla) en lugar de la paleta de EllesmereUI. Los demás aspectos mantienen la paleta.
+5741	Los contornos de texto ahora se aplican a los marcos reales, no solo a la vista previa de las opciones.
+5742	Los marcos de unidad ya no fallan al cargar en configuraciones cuyas texturas de máscara vuelven vacías (error de la barra de absorción al iniciar sesión).
+5743	Los iconos mostrados por ID de hechizo ahora muestran el icono correcto o un signo de interrogación, nunca un cuadrado vacío.
+5744	El indicador de facción ya no da error en modo mercenario, y los estilos de JcJ exclusivos de Retail usan el icono JcJ de Wrath.
+5745	El texto de nivel ya no da el error Font not set cuando se crean los marcos por primera vez.
+5746	Como en Retail 9.4, la sección Barra de experiencia se abre con Estilo de barra de PX: EllesmereUI para la barra de EUI, Luxthos para la barra de EUI con el diseño de la WeakAura de Luxthos, o Predeterminado de Blizz para las barras de PX y reputación propias de Blizzard. Sustituye a Activar barra de experiencia y al botón Aplicar diseño Luxthos.
+5747	Como en Retail 9.4, cualquier barra horizontal puede mostrar los grifos clásicos en su extremo izquierdo, derecho o en ambos, desde el menú Remates al final de DISEÑO. El engranaje ajusta su tamaño y desplazamientos, y Aplicar a todo los copia a todas las barras. La vista previa en vivo también los muestra.
+5748	La barra de PX obtiene la Superposición de PX de misiones de Retail (misiones completadas en verde, incompletas en dorado), divisores con Marcas inteligentes, rellenos con degradado, colores de fondo y de descanso, y siete posiciones de texto que muestran valores, PX de misiones completadas, PX por hora, tiempo hasta subir de nivel y tiempo jugado. Aplicar diseño Luxthos recrea la popular WeakAura de barra de PX de Luxthos, con Mostrar al nivel máximo, una chispa y PX de descanso tras la PX de misiones.
+5749	Los botones que contienen un objeto equipado, como un abalorio, pueden mostrar un borde del color de su rareza. Desactivado por defecto.
+5750	Cuatro barras extra, desactivadas por defecto, cada una con sus propios atajos, movedor del Modo desbloqueo y todos los ajustes de Visualización de barra. Guerreros, druidas, pícaros y sacerdotes ven qué actitud o forma comparte las casillas de una barra.
+5751	Círculo y Retrato dibujan iconos redondos, Rombo, Hexágono y Escudo recortan el icono con la forma, y Cuadrado y Cuadrado curvado añaden un contorno con forma. Se ajusta por barra, incluidas la de mascota y la de actitud.
+5752	Escribe /kb, pasa el ratón sobre un botón y pulsa una tecla para asignarla, incluidos modificadores, botones del ratón y la rueda. Clic derecho la borra; Cancelar o Esc deshace.
+5753	Texto, bordes, fondos, orientación y crecimiento por barra, las animaciones de botones y el motor de visibilidad de Retail, y el cambio de página con modificadores de la Barra 1.
+5754	Shift+1 se muestra como S1, Control+1 como C1, los botones del ratón como M4 y la rueda como MwU/MwD
+5755	Reduce la barra de bolsas a un único botón de mochila
+5756	Micromenú y barra de bolsas cuadrados, barras de PX y reputación planas y beneficios y perjuicios movibles
+5757	Las flechas de página de la Barra 1 cambian la página sin el mensaje \"blocked from an action only available to the Blizzard UI\".
+5758	Cambiar de actitud ya no revela una barra de actitud y de mascota de Blizzard duplicada.
+5759	Se pueden soltar hechizos en la Barra 1 mientras el arte de la barra de Blizzard está oculto.
+5760	Los beneficios del jugador siguen creciendo hacia abajo a medida que se añaden filas.
+5761	Las barras de PX y reputación ya no dan error en su primera actualización.
+5762	Los recordatorios de Crear piedra de alma, incluidos los recordatorios de hechizos personalizados, solo aparecen para brujos.
+5763	Un recordatorio solo para Sagrado de tu Sello de sabiduría, también cuando hay otro sello activo.
+5764	Un clic lanza el beneficio de tu grupo, como Entereza, Don de lo Salvaje o Luminosidad Arcana, con su rango más alto sobre el primer miembro al que le falte.
+5765	Auras, presencias, aspectos, escudos, mejoras de arma, venenos, mascotas, Piedra de alma y Piedra de salud, además de frasco, elixir y comida con recuento en las bolsas.
+5766	Los sonidos de los recordatorios incluyen sonidos de SharedMedia, incluso de paquetes que se cargan más tarde
+5767	Mundo, mazmorras y bandas normales y heroicas, o en combate, con temporizadores de Mostrar debajo
+5768	Recordatorios de talentos para las zonas de Wrath y tu estancia actual
+5769	Tus propios recordatorios por ID de aura y un aviso de maná de sanador en la comprobación de disponibilidad
+5770	Clic central oculta un recordatorio hasta la siguiente pantalla de carga
+5771	Desactivar Forja de runas ahora oculta el recordatorio de runa de Caballero de la Muerte.
+5772	Añadir zonas a un recordatorio de talento antiguo ya no da error, y las nuevas zonas se aplican al instante.
+5773	Una moneda en el encabezado de las bolsas marca objetos como basura: haz clic en ella y luego en los objetos. Los objetos grises y marcados van a una categoría Basura, y aparece un botón Vender basura junto a la moneda en los vendedores. Su engranaje añade una insignia de moneda en los objetos marcados.
+5774	Los atajos de bolsas abren y cierran el diseño existente durante el combate. Las actualizaciones del diseño esperan al final del combate.
+5775	Una barra lateral con las vistas Todos los objetos, OneBag y MultiBag, objetos fijados y recientes, categorías de Retail para objetos de Wrath y tus propias categorías.
+5776	OneBag combina montones y ordena por tipo de bolsa, MultiBag ordena cada bolsa, con Ordenar al final y Aleatorizar.
+5777	Un engranaje junto a la búsqueda abre las opciones de Bolsas, o la página Banco en el banco
+5778	Cada personaje guardado de la lista Personajes tiene una x para borrar sus datos

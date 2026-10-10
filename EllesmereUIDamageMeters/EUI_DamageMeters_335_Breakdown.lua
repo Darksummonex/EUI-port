@@ -186,6 +186,7 @@ function ns.UpdateWindowBreakdown(index)
         if entry.hits and owner.metric~="buffUptime" and owner.metric~="debuffUptime" then Heading(entry.hits.." hits / "..entry.crit.." critical")
             Heading("Min / Max: "..ns.Format(entry.min).." / "..ns.Format(entry.max)) end
         if owner.data.recap then Heading("Source: "..(entry.source or "Environment")) end
+        if (tonumber(entry.id) or 0)>0 and owner.focusMode~="targets" then Heading("Spell ID: "..entry.id) end
     elseif owner.metric=="threat" then
         f.title:SetText(actor.name.." - "..m.label); Heading(ns.Format(actor.value)..string.format(" (%.1f%%)",actor.percent or 0))
     elseif owner.metric=="deaths" then

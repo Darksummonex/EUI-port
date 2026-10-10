@@ -313,7 +313,7 @@ local function CollectAuras(s,p)
             if not name then break end
             local prefix=filter=="HARMFUL" and "debuff" or "buff"
             local include=filter~="HARMFUL" or not p.onlyPlayerDebuffs or mine
-            if E.WrathAuraFilters then include=E.WrathAuraFilters.Allow(p,prefix,spellID,mine,duration,stealable) end
+            if E.WrathAuraFilters then include=E.WrathAuraFilters.Allow(p,prefix,spellID,mine,duration,stealable,name) end
             if include then list[#list+1]={icon=icon,stacks=stacks,expires=expires} end
         end
     end

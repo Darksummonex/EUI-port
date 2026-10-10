@@ -193,16 +193,22 @@ init:SetScript("OnEvent",function(self)
         local size,spacing=Clamp(s.size,16,120),Clamp(s.spacing,-10,20)
         local pad=(s.bgEnabled and Clamp(s.bgPadding,0,30) or 0)+Clamp(s.borderSize,0,5)+10
         local w,h=cols*(size+spacing)-spacing,rows*(size+spacing)-spacing
+        local sideL,sideR=false,false
+        if not vertical then sideL,sideR=ns.AB_CapsSides(d.key) end
+        local cl,cr,ct,cb=ns.AB_CapsReach(d.key,size,h,rows>1,nil,sideL,sideR)
+        local padX,padY=pad+math.max(cl,cr),pad+math.max(ct,cb)
         local hdr=pf:GetParent()
         local avail=math.max(100,(hdr:GetWidth() or 600)-2*(E.CONTENT_PAD or 20))
-        local scale=math.min(1,avail/(w+2*pad))
-        pf:SetScale(scale); pf:SetWidth(w+2*pad); pf:SetHeight(h+2*pad)
+        local scale=math.min(1,avail/(w+2*padX))
+        pf:SetScale(scale); pf:SetWidth(w+2*padX); pf:SetHeight(h+2*padY)
+        pf._caps=pf._caps or {}
+        ns.AB_PaintCaps(pf._caps,pf,padX,-padY,w,h,size,rows>1,nil,d.key,sideL,sideR)
         pf:SetAlpha(math.max(.25,Clamp(s.opacity,0,100)/100))
         local bg=pf.bg
         if s.bgEnabled then
             local bp=Clamp(s.bgPadding,0,30); local c,bc=s.bgColor or {},s.bgBorderColor or {}
             local edge=Clamp(s.bgBorderSize,0,8)
-            bg:ClearAllPoints(); bg:SetPoint("TOPLEFT",pf,"TOPLEFT",pad-bp,-(pad-bp)); bg:SetPoint("BOTTOMRIGHT",pf,"BOTTOMRIGHT",-(pad-bp),pad-bp)
+            bg:ClearAllPoints(); bg:SetPoint("TOPLEFT",pf,"TOPLEFT",padX-bp,-(padY-bp)); bg:SetPoint("BOTTOMRIGHT",pf,"BOTTOMRIGHT",-(padX-bp),padY-bp)
             bg:SetBackdrop({bgFile="Interface\\Buttons\\WHITE8X8",edgeFile="Interface\\Buttons\\WHITE8X8",edgeSize=math.max(1,edge)})
             bg:SetBackdropColor(c.r or 0,c.g or 0,c.b or 0,c.a or .5)
             bg:SetBackdropBorderColor(bc.r or 0,bc.g or 0,bc.b or 0,edge>0 and (bc.a or 1) or 0)
@@ -219,7 +225,7 @@ init:SetScript("OnEvent",function(self)
             if i<=count then
                 local col,row=ns.GridPos(i-1,count,stride,vertical,s.iconOrder,s.growDirection)
                 b:SetWidth(size); b:SetHeight(size); b:ClearAllPoints()
-                b:SetPoint("TOPLEFT",pf,"TOPLEFT",pad+col*(size+spacing),-(pad+row*(size+spacing)))
+                b:SetPoint("TOPLEFT",pf,"TOPLEFT",padX+col*(size+spacing),-(padY+row*(size+spacing)))
                 b.border:ClearAllPoints(); b.border:SetPoint("TOPLEFT",b,"TOPLEFT",-edge,edge); b.border:SetPoint("BOTTOMRIGHT",b,"BOTTOMRIGHT",edge,-edge)
                 b.border:SetFrameLevel(math.max(0,b:GetFrameLevel()-1))
                 b.border:SetBackdrop({bgFile="Interface\\Buttons\\WHITE8X8",edgeFile="Interface\\Buttons\\WHITE8X8",edgeSize=math.max(1,edge)})
@@ -251,7 +257,7 @@ init:SetScript("OnEvent",function(self)
                 b:Show()
             else b:Hide() end
         end
-        return (h+2*pad)*scale
+        return (h+2*padY)*scale
     end
     local function SyncOverlays()
         for _,o in ipairs(overlays) do
@@ -455,6 +461,47 @@ init:SetScript("OnEvent",function(self)
                 setValue=function(v) local s=SB(); s.orientation=v and "vertical" or "horizontal"; s.growDirection=nil; Changed(); if E.RefreshPage then E:RefreshPage(true) end end},
             Dropdown("iconOrder","Icon Order",ORDER_VALUES,ORDER_KEYS,{tooltip="Order of the buttons on this bar; corner options place the first button in that corner."}))
         Sync(Inline(row and row._leftRegion),"Orientation",{"orientation","growDirection"})
+        -- End Caps close the section (Retail): the Left/Right checklist takes the
+        -- row's control slot, then its cog (size, offsets) and Apply to All link.
+        -- Horizontal bars only: the art sits at the bar's two ends.
+        local capStore=BarStore()
+        local function CapsVertical() return capStore().orientation=="vertical" end
+        local function CapsOff() local l,r=ns.AB_CapsSides(key); return not (l or r) end
+        row=Row({type="dropdown",text="End Caps",tooltip="Which ends of the bar show the gryphons.",
+                values={__placeholder="..."},order={"__placeholder"},
+                disabled=CapsVertical,disabledTooltip="Vertical Orientation",requireState="disabled",
+                getValue=function() return "__placeholder" end,setValue=function() end},Blank())
+        refs.capsRow=row
+        local capsRgn=Inline(row and row._leftRegion)
+        if capsRgn and E.BuildVisOptsCBDropdown then
+            if capsRgn._control then capsRgn._control:Hide() end
+            local dd,ddRefresh=E.BuildVisOptsCBDropdown(capsRgn,170,capsRgn:GetFrameLevel()+2,
+                {{key="L",label="Left Endcap"},{key="R",label="Right Endcap"}},
+                function(k) local l,r=ns.AB_CapsSides(key); if k=="L" then return l end; return r end,
+                function(k,v)
+                    local s=capStore()
+                    if k=="L" then s.endCapLeft=v and true or false else s.endCapRight=v and true or false end
+                    Changed()
+                end)
+            dd:SetPoint("RIGHT",capsRgn,"RIGHT",-20,0)
+            capsRgn._control=dd; capsRgn._lastInline=nil
+            E.RegisterWidgetRefresh(ddRefresh)
+            local function CapsState() local off=CapsVertical(); dd:SetAlpha(off and .3 or 1); dd:EnableMouse(not off) end
+            CapsState(); E.RegisterWidgetRefresh(CapsState)
+            Cog(capsRgn,"End Cap Settings",{
+                {type="slider",label="Size",min=50,max=200,step=5,tooltip="Percent of the end caps' normal size.",
+                    get=function() return capStore().endCapScale or 100 end,set=function(v) capStore().endCapScale=v; Changed() end},
+                {type="slider",label="X Offset",min=-100,max=100,step=1,tooltip="Positive values move both end caps away from the bar.",
+                    get=function() return capStore().endCapOffsetX or 0 end,set=function(v) capStore().endCapOffsetX=v; Changed() end},
+                {type="slider",label="Y Offset",min=-100,max=100,step=1,
+                    get=function() return capStore().endCapOffsetY or 5 end,set=function(v) capStore().endCapOffsetY=v; Changed() end},
+            },{disabled=function() return CapsVertical() or CapsOff() end,rawTooltip=true,
+                disabledTooltip=function()
+                    if CapsVertical() then return E.DisabledTooltip("Vertical Orientation","disabled") end
+                    return E.DisabledTooltip("Left Endcap or Right Endcap")
+                end})
+            Sync(capsRgn,"End Caps",{"endCapLeft","endCapRight","endCapScale","endCapOffsetX","endCapOffsetY"})
+        end
 
         refs.bgHeader=Section("BAR BACKGROUND")
         local bgOff=Off("bgEnabled","Enable Bar Background")
@@ -546,16 +593,47 @@ init:SetScript("OnEvent",function(self)
             {tooltip="One backpack button; opens the unified inventory.",disabled=bagOff.disabled,disabledTooltip=bagOff.disabledTooltip}),Blank())
 
         Section("EXPERIENCE BAR")
-        local xpOff=HUDOff("xp","Enable Experience Bar")
-        Row(HUDToggle("xp","Enable Experience Bar"),RootSlider("fontSize","Text Size",8,20,1,{tooltip="Experience and reputation bar text."}))
-        Row(HUDCfg("slider","xpWidth","Width",120,1000,1,"barWidth",xpOff),HUDCfg("slider","xpHeight","Height",8,32,1,"barHeight",xpOff))
+        -- XP Bar Style (Retail 9.4): the EllesmereUI bar or Blizzard's own. Blizz
+        -- Default is one switch for the XP and reputation bars, as on Retail; the
+        -- Professions and Forever arts are Retail atlases this client lacks.
+        local xpOff={disabled=function() return HUD().xp==false end,
+            disabledTooltip="This option requires XP Bar Style EllesmereUI or Luxthos",rawTooltip=true}
         local XPB=ns.NativeHUD and ns.NativeHUD.XP
+        local styleValues={eui="EllesmereUI",default="Blizz Default"}
+        local styleOrder={"eui","default"}
+        local styleTips={default="Blizz Default also switches the reputation bar to Blizzard's."}
+        if XPB and XPB.ApplyLuxthos then
+            styleValues.luxthos="Luxthos"
+            styleOrder={"eui","luxthos","default"}
+            styleTips.luxthos="The [Merfin] Experience Bar (Luxthos) WeakAura: blue to purple gradient, Quest XP Overlay, spark, rested after quest XP and seven texts with level, times and time to level."
+        end
+        styleValues._menuOpts={
+            onItemHover=function(k,item) if styleTips[k] and item then E.ShowWidgetTooltip(item,styleTips[k]) end end,
+            onItemLeave=function(k) if styleTips[k] then E.HideWidgetTooltip() end end,
+        }
+        Row({type="dropdown",text="XP Bar Style",values=styleValues,order=styleOrder,
+                getValue=function()
+                    local p=HUD()
+                    if p.xp==false then return "default" end
+                    if XPB and XPB.IsLuxthos and XPB.IsLuxthos(p) then return "luxthos" end
+                    return "eui"
+                end,
+                setValue=function(v)
+                    local p=HUD(); local on=v~="default"
+                    if v=="luxthos" then XPB.ApplyLuxthos(p)
+                    elseif v=="eui" and XPB and XPB.IsLuxthos and XPB.IsLuxthos(p) then XPB.ApplyEllesmere(p) end
+                    p.xp,p.reputation=on,on; ns.Apply()
+                    if E.InvalidatePageCache then E:InvalidatePageCache() end
+                    if E.RefreshPage then E:RefreshPage(true) end
+                end},
+            RootSlider("fontSize","Text Size",8,20,1,{tooltip="Experience and reputation bar text."}))
+        Row(HUDCfg("slider","xpWidth","Width",120,1000,1,"barWidth",xpOff),HUDCfg("slider","xpHeight","Height",8,32,1,"barHeight",xpOff))
         if XPB then
             local function XOff(extra)
                 extra=extra or {}
                 local inner=extra.disabled
                 extra.disabled=function() return xpOff.disabled() or (inner and inner() or false) end
-                if not extra.disabledTooltip then extra.disabledTooltip=xpOff.disabledTooltip end
+                if not extra.disabledTooltip then extra.disabledTooltip,extra.rawTooltip=xpOff.disabledTooltip,xpOff.rawTooltip end
                 return extra
             end
             local function XDD(key,label,values,order,extra)
@@ -600,11 +678,6 @@ init:SetScript("OnEvent",function(self)
             end
             local list=XPB.POSITIONS
             for i=1,#list,2 do Row(TextDD(list[i]),list[i+1] and TextDD(list[i+1]) or Blank()) end
-            Button("Apply Luxthos Layout",function()
-                XPB.ApplyLuxthos(HUD()); ns.Apply()
-                if E.InvalidatePageCache then E:InvalidatePageCache() end
-                if E.RefreshPage then E:RefreshPage(true) end
-            end)
         end
         Section("REPUTATION BAR")
         local repOff=HUDOff("reputation","Enable Reputation Bar")

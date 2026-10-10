@@ -196,6 +196,8 @@ assert(D.windows[1].rows[1].icon.texture=='spell-icon' and D.windows[1].title.te
 local focusReport=D.ReportLines(1); assert(focusReport[1]:find('Player') and focusReport[2]:find('Fireball'))
 assert(not hover:IsShown() and #allFrames==beforeHover)
 D.windows[1].rows[1]:RunScript('OnEnter'); assert(hover.lines[2].name=='1 hits / 1 critical')
+local fireballID=D.windows[1].rows[1].data.entry.id
+assert(fireballID and fireballID>0 and hover.lines[#hover.lines].name=='Spell ID: '..fireballID,'spell ID missing from the spell breakdown')
 D.windows[1].title:RunScript('OnClick','LeftButton'); assert(D.menu.items[2].text=='Targets')
 D.menu.items[2].fn(); D.CloseMenu()
 assert(D.windows[1].rows[1].label:GetText()=='Boss' and not D.windows[1].rows[1].icon:IsShown())
@@ -282,6 +284,8 @@ assert(D.RecapAmount({kind='damage',amount=1200,overkill=300,hp=0},true)=='-1.2k
 assert(D.RecapAmount({kind='damage',amount=1200,overkill=300},false)=='-1.2k')
 D.BackToGroup(1); D.Profile().windows[1].metric='damage'; D.RefreshWindow(1)
 D.ShowDetail(rows[1],'damage',s,'spells'); assert(D.detail.rows[1].text:GetText():find('Fireball'))
+assert(D.detail.rows[1].text:GetText():find('|cff808080ID '..D.detail.rows[1].entry.id..'|r',1,true),'spell ID missing from the detail window')
+D.ShowDetail(rows[1],'damage',s,'targets'); assert(not D.detail.rows[1].text:GetText():find('ID ',1,true))
 D.ShowDetail(rows[1],'deaths',s,'spells'); assert(#D.detail.deathList==1 and D.detail.rows[1].text:GetText():find('Flash Heal'))
 assert(#allFrames>frameCount) -- explicit user detail opening is allowed to allocate
 frameCount=#allFrames; combat=true; fighting=true
@@ -425,6 +429,24 @@ assert(r.focusGUID=='P' and not r.rows[1]:IsShown() and r.back:IsShown())
 r.back:RunScript('OnClick'); assert(not r.focusGUID)
 r.rows[1]:RunScript('OnEnter'); cfg.enabled=false; D.Apply(); assert(not hover:IsShown())
 cfg.enabled=true; D.history=saved; cfg.metric, cfg.segment=originalMetric,originalSegment; D.Apply()
+''')
+lua.execute('''
+-- Classic WoW UI (Style page): seeded once, the tooltip box, vanilla header art.
+local p=D.Profile(); local r=D.windows[1]; local w=p.windows[1]
+local oldBg,oldTex,oldTrack=w.bgColor,w.barTexture,w.barBgColor
+local boxes={}; r.frame.SetBackdrop=function(_,b) boxes[#boxes+1]=b end
+p.useClassicStyle=true; p.classicSeeded=nil; D._dmStyle=nil
+D.Apply()
+assert(D.DMClassic() and p.classicSeeded and w.barTexture=='blizzard' and w.barBgColor.a==.25 and w.bgColor.r==16/255)
+assert(w.bgColor~=oldBg and w.barBgColor~=oldTrack, 'seed writes new tables so the Style slot keeps the old ones')
+assert(boxes[#boxes].edgeFile=='Interface\\\\Tooltips\\\\UI-Tooltip-Border')
+assert(r.header:GetPoint() and select(4,r.header:GetPoint())==5, 'header sits inside the box')
+assert(r.settings.classic and r.settings.icon:GetTexture()=='Interface\\\\Icons\\\\Trade_Engineering' and not r.settings.icon.desaturated)
+assert(r.mode.icon:GetTexture():find('INV_Sword_04') or r.mode.icon:GetTexture():find('Spell_Holy_Heal'))
+w.bgColor.r=.5; p.classicSeeded=true; D.Apply(); assert(w.bgColor.r==.5, 'seed runs once per profile')
+p.useClassicStyle=nil; p.classicSeeded=nil; D._dmStyle=nil
+w.bgColor,w.barTexture,w.barBgColor=oldBg,oldTex,oldTrack
+r.frame.SetBackdrop=nil; D.Apply()
 ''')
 lua.execute('''
 rows={}; buttons={}; EllesmereUI.Widgets={}

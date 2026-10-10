@@ -1,4 +1,52 @@
-# Quality of Life 3.3.5 — 0.17
+# Quality of Life 3.3.5 — 0.19
+
+0.19 (Raid Tools no layout do Retail): EUI_QoL_335_RaidTools.lua substitui a janela
+única. Página com GENERAL (Show Raid Tools Never/In Raid Group/In Any Group/Always,
+atalho Toggle Raid Tools, Default to Collapsed When Shown, Show as Compact Band/One
+Window/Two Windows/Only Group & Pull/Only Markers, Window Scale, Menu Grow
+Direction), GROUP BUTTONS (Convert, Disband) e PULL TIMER (três tempos 0-60, sync
+DBM/BigWigs e contagem no chat). Janelas com a arte modern_blizz, faixa de título,
+botões planos e ícone recolhido (Media/Textures_335, gerados por
+prepare_raidtools_media.py). Visibilidade é a máquina de estados segura do Retail:
+driver [group]/[group:raid], atalho, recolher e expandir funcionam em combate. Em
+raide sem líder/assistente tudo some. Perfis antigos (enabled/groupOnly) viram
+modo Always/In Any Group até mexer no menu. Unlock: Raid Tools, Raid Markers e
+Raid Tools Compact Band (redimensionável). Página aberta mostra uma prévia.
+Correção: no 3.3.5 só o handle `control` tem Run/RunFor/RunAttribute; os
+snippets usam control:RunAttribute("apply") e control:RunFor(f, ...) em vez
+de f:RunAttribute (erro "attempt to call method 'RunAttribute'").
+Convert to Party: o 3.3.5 não tem ConvertToParty, então numa raide de até 5
+o líder confirma, todos são removidos (UninviteUnit + LeaveParty) e, quando o
+grupo antigo some, recebem InviteUnit de novo (desiste após 15 s).
+Botão Reinvite (GROUP BUTTONS > Show Reinvite, só líder, com confirmação):
+desfaz e reconvida todos para o mesmo tipo de grupo. Raide: 4 convites,
+ConvertToRaid quando o primeiro entra, depois o resto (prazo 120 s).
+Marcadores de chão: os ícones de marcador viraram SecureActionButtonTemplate.
+Clique normal continua marcando o alvo (PostClick); Shift + clique esquerdo
+usa o item de marcador de chão do servidor (131084 amarelo, 131079 laranja,
+131080 roxo, 131078 verde, 131082 prata, 131077 azul, 131081 vermelho,
+131083 caveira; os mesmos do Quickdraw) se ele estiver na bolsa, e depois
+clica-se no chão. Sem o item, Shift + clique limpa o marcador como antes.
+BAG_UPDATE só reaplica quando muda o conjunto de itens presentes. Shift +
+clique esquerdo no ícone de limpar aperta o botão Reset Markers do servidor
+(/click rmarkbtn, aba Raid) e limpa os marcadores de chão. Opção
+Shift + Click World Markers em GROUP BUTTONS. Atributos e EnableMouse dos
+ícones só mudam fora de combate.
+Não portado (Wrath não tem): marcadores de chão e Quick Fire, Role Check,
+contagem nativa da Blizzard. Compact Band sublinha o símbolo do seu alvo.
+
+0.19: a escala do Raid Tools é porcentagem no port (100), mas o Retail guarda
+multiplicador (1), que virava 1% e era travado em 0.5. Valores até 5 agora são
+lidos como multiplicador; o import do Core 0.66 converte.
+
+0.18: Misdirection / Tricks helper (Displays > MISDIRECTION / TRICKS HELPER,
+desligado por padrão). Botão seguro EUI335QoLRedirect com macro
+/cast [target=focus,help,nodead] > tank > alvo amigo > pet (hunter). Tank: nome
+digitado, depois Main Tank da raide, depois papel de tank. Atalho em Key Bindings
+(EllesmereUI Quality of Life) ou /click EUI335QoLRedirect. Ícone mostra para quem vai, o
+tempo do buff e o cooldown; mover no Unlock Mode. Macro só muda fora de combate.
+
+Sem bump: o timer Sated / Exhaustion também conta o 81005 (lockout de Bloodlust do servidor).
 
 0.17: Self Combat Text do Retail (Displays > SELF COMBAT TEXT). Dano recebido,
 cura recebida, esquivas/aparos/erros e entrar/sair de combate sobem acima do

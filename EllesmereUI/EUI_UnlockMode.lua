@@ -510,9 +510,9 @@ local GRID_ALPHA_DIMMED = 0.15
 local GRID_ALPHA_BRIGHT = 0.30
 local GRID_CENTER_DIMMED = 0.25
 local GRID_CENTER_BRIGHT = 0.50
-local GRID_HUD_BRIGHT = 0.90   -- matches HUD_ON_ALPHA
-local GRID_HUD_DIMMED = 0.75
-local GRID_HUD_OFF    = 0.60   -- matches HUD_OFF_ALPHA
+local GRID_HUD_BRIGHT = 1.00   -- matches HUD_ON_ALPHA
+local GRID_HUD_DIMMED = 0.90
+local GRID_HUD_OFF    = 0.80   -- matches HUD_OFF_ALPHA
 
 local function GridBaseAlpha()
     return gridMode == "bright" and GRID_ALPHA_BRIGHT or GRID_ALPHA_DIMMED
@@ -6511,16 +6511,7 @@ end
 
 -- Arrow key nudge: single press only, no hold-to-repeat
 local function SetupArrowKeyFrame()
-    -- WoW 3.3.5 has no reliable keyboard propagation API. A fullscreen keyboard-enabled
-    -- frame can swallow normal movement/action bindings, so arrow-key nudging is disabled.
-    if _G.EUI_WOW_335 then return end
     if arrowKeyFrame then return end
-    arrowKeyFrame = CreateFrame("Frame", nil, UIParent)
-    arrowKeyFrame:SetFrameStrata("FULLSCREEN_DIALOG")
-    arrowKeyFrame:SetFrameLevel(500)
-    arrowKeyFrame:EnableKeyboard(true)
-    arrowKeyFrame:SetPropagateKeyboardInput(true)
-    arrowKeyFrame:Hide()
 
     local ARROW_DIRS = {
         UP    = { 0,  1 },
@@ -6529,10 +6520,11 @@ local function SetupArrowKeyFrame()
         RIGHT = { 1,  0 },
     }
 
-    arrowKeyFrame:SetScript("OnKeyDown", function(self, key)
-        if not isUnlocked then return end
+    -- Returns true when the key moved something (the key is then consumed).
+    local function Nudge(key)
+        if not isUnlocked then return false end
         local dir = ARROW_DIRS[key]
-        if not dir then return end
+        if not dir then return false end
         -- A selected fallback ghost answers the arrow keys with the exact
         -- same step math as movers (1 physical pixel; shift = 100).
         if not selectedMover and EllesmereUI._NudgeSelectedFallbackGhost then
@@ -6540,8 +6532,7 @@ local function SetupArrowKeyFrame()
             local gStep = PPg and PPg.mult or 1
             local gs = IsShiftKeyDown() and (100 * gStep) or gStep
             if EllesmereUI._NudgeSelectedFallbackGhost(dir[1] * gs, dir[2] * gs) then
-                self:SetPropagateKeyboardInput(false)
-                return
+                return true
             end
         end
         -- A selected override-anchor ghost answers the same way.
@@ -6550,12 +6541,10 @@ local function SetupArrowKeyFrame()
             local oStep = PPo and PPo.mult or 1
             local os = IsShiftKeyDown() and (100 * oStep) or oStep
             if EllesmereUI._NudgeSelectedOverrideGhost(dir[1] * os, dir[2] * os) then
-                self:SetPropagateKeyboardInput(false)
-                return
+                return true
             end
         end
-        if not selectedMover then return end
-        self:SetPropagateKeyboardInput(false)
+        if not selectedMover then return false end
         -- Scale by physical pixel size so each press moves exactly 1px
         local PPn = EllesmereUI and EllesmereUI.PP
         local pxStep = PPn and PPn.mult or 1
@@ -6570,6 +6559,43 @@ local function SetupArrowKeyFrame()
             if m.ReanchorToBar then m:ReanchorToBar() end
             if m._syncCogPos then m._syncCogPos() end
         end
+        return true
+    end
+
+    if _G.EUI_WOW_335 then
+        -- 3.3.5 cannot propagate keyboard input, so a keyboard-enabled frame
+        -- would swallow movement and action keys. Override bindings take only
+        -- the arrow keys, and only while Unlock Mode is shown; they are not
+        -- allowed in combat, and SuspendForCombat hides this before lockdown.
+        local name = "EUI335UnlockNudgeButton"
+        arrowKeyFrame = CreateFrame("Button", name, UIParent)
+        arrowKeyFrame:Hide()
+        arrowKeyFrame:SetScript("OnClick", function(_, key) Nudge(key) end)
+        arrowKeyFrame:SetScript("OnShow", function(self)
+            if InCombatLockdown() or not SetOverrideBindingClick then return end
+            for key in pairs(ARROW_DIRS) do
+                SetOverrideBindingClick(self, true, key, name, key)
+                SetOverrideBindingClick(self, true, "SHIFT-" .. key, name, key)
+            end
+        end)
+        local function Release(self)
+            if not InCombatLockdown() and ClearOverrideBindings then ClearOverrideBindings(self) end
+        end
+        arrowKeyFrame:SetScript("OnHide", Release)
+        arrowKeyFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+        arrowKeyFrame:SetScript("OnEvent", function(self) if not self:IsShown() then Release(self) end end)
+        return
+    end
+
+    arrowKeyFrame = CreateFrame("Frame", nil, UIParent)
+    arrowKeyFrame:SetFrameStrata("FULLSCREEN_DIALOG")
+    arrowKeyFrame:SetFrameLevel(500)
+    arrowKeyFrame:EnableKeyboard(true)
+    arrowKeyFrame:SetPropagateKeyboardInput(true)
+    arrowKeyFrame:Hide()
+
+    arrowKeyFrame:SetScript("OnKeyDown", function(self, key)
+        if Nudge(key) then self:SetPropagateKeyboardInput(false) end
     end)
 
     arrowKeyFrame:SetScript("OnKeyUp", function(self, key)
@@ -11275,10 +11301,10 @@ local DARK_OVERLAY_ICON = "Interface\\AddOns\\EllesmereUI\\media\\icons_335\\dar
 local COORD_ICON      = "Interface\\AddOns\\EllesmereUI\\media\\icons_335\\coordinates.tga"
 local BANNER_TEX      = "Interface\\AddOns\\EllesmereUI\\media\\unlock_335\\eui-unlocked-banner-2.tga"
 
--- Wrath's 10px outlined text loses most of its fill below ~0.6 alpha (no Slug
--- renderer), so the banner runs brighter than Retail's 0.60 / 0.30.
-local HUD_ON_ALPHA  = 0.90
-local HUD_OFF_ALPHA = 0.60
+-- Wrath's 10px outlined text and icons read dark grey on the banner below ~0.8
+-- alpha (no Slug renderer), so the banner runs brighter than Retail's 0.60 / 0.30.
+local HUD_ON_ALPHA  = 1.00
+local HUD_OFF_ALPHA = 0.80
 local HUD_ICON_SZ   = 20
 
 -- Banner native pixel dimensions

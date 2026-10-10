@@ -146,17 +146,21 @@ ns.cancelSnippet=[[
 ]]
 ns.wheelSnippet=[[
  local n=self:GetAttribute("count") or 0
- if n>0 then local index=self:GetAttribute("wheel") or (delta>0 and 1 or 0)
-  index=((index+(delta>0 and -1 or 1)-1)%n)+1; self:SetAttribute("wheel",index)
+ if n>0 then local up=delta>0; if self:GetAttribute("invertScroll") then up=not up end
+  local index=self:GetAttribute("wheel") or (up and 1 or 0)
+  index=((index+(up and -1 or 1)-1)%n)+1; self:SetAttribute("wheel",index)
   local wheelX,wheelY=self:GetMousePosition(); self:SetAttribute("wheelX",wheelX); self:SetAttribute("wheelY",wheelY)
  end
 ]]
 function ns.UpdateBindings()
  if InCombatLockdown() then ns.pending=true; return end
  ClearOverrideBindings(ns.header)
- for i=1,16 do local cfg=ns.Palette(i); local live=ns.live[i]
-  if ns.Profile().enabled and cfg and cfg.enabled~=false then
+ local function Loads(i) local cfg=ns.Palette(i); return cfg and cfg.enabled~=false and ns.PaletteActive(i) end
+ for i=1,16 do local live=ns.live[i]
+  if ns.Profile().enabled and Loads(i) then
    local keys={GetBindingKey("EUI_RADIAL"..i)}
+   local owner=ns.ShareOwner(i)
+   if owner and not Loads(owner) then for _,key in ipairs({GetBindingKey("EUI_RADIAL"..owner)}) do keys[#keys+1]=key end end
    for _,key in ipairs(keys) do SetOverrideBindingClick(ns.header,false,key,live.driver:GetName(),"LeftButton")
     -- Preserve a held key's release when an unbound modifier is pressed.
     local base=key:gsub("ALT%-",""):gsub("CTRL%-",""):gsub("SHIFT%-","")

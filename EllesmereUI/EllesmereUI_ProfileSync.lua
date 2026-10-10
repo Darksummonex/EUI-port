@@ -517,6 +517,18 @@ EllesmereUI.RegisterSyncExclusions("EllesmereUIBags", {
 do
     local _syncPopup = nil
 
+    -- 3.3.5 rejects SetParent(nil) on textures and font strings: park them in a hidden frame.
+    local _discard
+    local function DiscardRegion(r)
+        r:Hide()
+        if _G.EUI_WOW_335 then
+            if not _discard then _discard = CreateFrame("Frame"); _discard:Hide() end
+            r:SetParent(_discard)
+        else
+            r:SetParent(nil)
+        end
+    end
+
     function EllesmereUI.CloseSyncPopup()
         if _syncPopup then _syncPopup:Hide() end
         if EllesmereUI._syncConfirmFrame then EllesmereUI._syncConfirmFrame:Hide() end
@@ -565,7 +577,7 @@ do
         -- Clean old children/regions (recycled frame)
         for _, c in ipairs({f:GetChildren()}) do c:Hide(); c:SetParent(nil) end
         for _, r in ipairs({f:GetRegions()}) do
-            if r ~= f._bg then r:Hide(); r:SetParent(nil) end
+            if r ~= f._bg then DiscardRegion(r) end
         end
 
         local function MakeFont(parent, size, r, g, b, a)
@@ -756,7 +768,7 @@ do
         -- Clean old children
         for _, c in ipairs({popup:GetChildren()}) do c:Hide(); c:SetParent(nil) end
         for _, r in ipairs({popup:GetRegions()}) do
-            if r ~= popup._bg then r:Hide(); r:SetParent(nil) end
+            if r ~= popup._bg then DiscardRegion(r) end
         end
 
         popup:SetSize(POPUP_W, popupH)

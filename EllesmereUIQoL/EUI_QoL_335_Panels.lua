@@ -17,11 +17,12 @@ function ns.GetPullChatChannel()
     if channel=="RAID" and CanLead() then return "RAID_WARNING" end
     return channel
 end
-function ns.GetPullSeconds()
-    local p=ns.GetSettings(); local value=tonumber(p and p.raidTools.pullSeconds) or 10
+function ns.GetPullSeconds(value)
+    value=tonumber(value) or 10
     if value~=value then value=10 end
-    return math.floor(math.max(3,math.min(60,value)))
+    return math.floor(math.max(1,math.min(60,value)))
 end
+local function RaidToolsOn(p) return ns.RaidToolsMode and ns.RaidToolsMode(p)~="never" end
 local function SyncPull(seconds,channel)
     if not channel or not CanLead() or not SendAddonMessage then return false end
     -- Native Wrath DBM, newer DBM-compatible BigWigs Pull plugins, and the
@@ -48,10 +49,16 @@ end
 function ns.CancelEarlyPull()
     if pullState and GetTime()<pullState.ends then ns.CancelPull() end
 end
-function ns.StartPull()
+-- Stop also clears a timer someone else synced, as Retail's boss mod "0" does.
+function ns.StopPull()
+    if pullState then ns.CancelPull(); return end
+    local p=ns.GetSettings(); local channel=GroupChannel()
+    if p and p.raidTools.pullSync and channel then SyncPull(0,channel) end
+end
+function ns.StartPull(secs)
     local p=ns.GetSettings()
-    if not p or not p.enabled or not p.raidTools.enabled or InCombatLockdown() or not ns.pullFrame then return false end
-    local seconds=ns.GetPullSeconds()
+    if not RaidToolsOn(p) or InCombatLockdown() or not ns.pullFrame then return false end
+    local seconds=ns.GetPullSeconds(secs)
     pullState={profile=p,ends=GetTime()+seconds,last=seconds,channel=GroupChannel()}
     if p.raidTools.pullSync then pullState.synced=SyncPull(seconds,pullState.channel) end
     ChatPull(pullState,"Pull in "..seconds.." seconds")
@@ -87,33 +94,14 @@ local function InstallPanel(name,f)
         if Allowed() and pos then self:ClearAllPoints(); self:SetPoint("CENTER",UIParent,"BOTTOMLEFT",pos.x,pos.y) end
     end)
 end
-local function Button(parent,text,x,width,fn)
-    local b=CreateFrame("Button",nil,parent,"UIPanelButtonTemplate"); ns.Size(b,width,22); b:SetPoint("BOTTOMLEFT",parent,"BOTTOMLEFT",x,0); b:SetText(text); b:SetScript("OnClick",fn); return b
-end
-local function CreateRaid()
-    local f=CreateFrame("Frame","EUI335QoLRaidTools",UIParent,"SecureHandlerStateTemplate"); ns.raidFrame=f; ns.Size(f,232,54)
-    f:SetFrameStrata("MEDIUM"); f:SetBackdrop({bgFile="Interface\\Buttons\\WHITE8X8",edgeFile="Interface\\Buttons\\WHITE8X8",edgeSize=1}); f:SetBackdropColor(.035,.045,.05,.95); f:SetBackdropBorderColor(0,0,0,1)
-    ns.markers={}
-    for i=1,8 do
-        local b=CreateFrame("Button",nil,f,"SecureActionButtonTemplate"); ns.Size(b,26,26); b:SetPoint("TOPLEFT",f,"TOPLEFT",(i-1)*29,-1)
-        b:RegisterForClicks("AnyUp"); b:SetAttribute("type","macro"); b:SetAttribute("macrotext","/run SetRaidTarget(\"target\","..i..")")
-        local t=b:CreateTexture(nil,"ARTWORK"); t:SetAllPoints(b); t:SetTexture("Interface\\TargetingFrame\\UI-RaidTargetingIcons")
-        SetRaidTargetIconTexture(t,i); ns.markers[i]=b
-        b:SetHighlightTexture("Interface\\Buttons\\ButtonHilight-Square","ADD")
-    end
-    ns.readyButton=Button(f,"Ready",2,54,function()
-        if not InCombatLockdown() and (UnitIsPartyLeader("player") or (UnitIsRaidOfficer and UnitIsRaidOfficer("player"))) then DoReadyCheck() end
-    end)
-    ns.pullButton=Button(f,"Pull 10s",59,54,ns.StartPull)
-    ns.cancelPullButton=Button(f,"Cancel",116,54,function() ns.CancelPull() end)
-    ns.disbandButton=Button(f,"Disband",173,57,function() if ns.ConfirmDisband then ns.ConfirmDisband() end end)
+local function CreatePullFrame()
     local timer=CreateFrame("Frame",nil,UIParent); ns.pullFrame=timer; ns.Size(timer,240,32); timer:SetPoint("CENTER",UIParent,"CENTER",0,85); timer:EnableMouse(false)
     timer.text=timer:CreateFontString(nil,"OVERLAY"); ns.Font(timer.text,24); timer.text:SetPoint("CENTER",timer,"CENTER",0,0); timer:Hide()
 end
 function ns.UpdatePull()
     local p=ns.GetSettings(); local f=ns.pullFrame; if not f then return end
     local state=pullState
-    if state and (not p or p~=state.profile or not p.enabled or not p.raidTools.enabled or GroupChannel()~=state.channel) then ns.CancelPull(true); return end
+    if state and (not p or p~=state.profile or not RaidToolsOn(p) or GroupChannel()~=state.channel) then ns.CancelPull(true); return end
     if not state then f:Hide(); return end
     if state.synced and not p.raidTools.pullSync then SyncPull(0,state.channel); state.synced=false end
     local now=GetTime(); local remaining=math.max(0,math.ceil(state.ends-now))
@@ -149,11 +137,7 @@ function ns.ApplyPanels()
             if temp[f] and not f:IsShown() then Restore(f,temp[f]); temp[f]=nil end
         end
     end
-    if not ns.raidFrame then CreateRaid() end
-    local f=ns.raidFrame; local pos=p.positions.raidTools; f:ClearAllPoints()
-    if pos then f:SetPoint(pos.point,UIParent,pos.relPoint,pos.x,pos.y) else f:SetPoint("CENTER",UIParent,"CENTER",0,270) end
-    if f.SetScale then f:SetScale(math.max(.5,math.min(2,(tonumber(p.raidTools.scale) or 100)/100))) end
-    RegisterStateDriver(f,"visibility",not (p.enabled and p.raidTools.enabled) and "hide" or (p.raidTools.groupOnly and not ns.preview and "[group] show; hide" or "show"))
-    ns.pullButton:SetText("Pull "..ns.GetPullSeconds().."s")
+    if not ns.pullFrame then CreatePullFrame() end
+    if ns.ApplyRaidTools then ns.ApplyRaidTools() end
     ns.Font(ns.pullFrame.text,p.combatAlertTextSize); ns.UpdatePull()
 end

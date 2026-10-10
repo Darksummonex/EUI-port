@@ -433,7 +433,7 @@ end
 -- Bloodlust celebration trigger: the player's Sated (Bloodlust) or Exhaustion
 -- (Heroism) debuff appears the instant lust goes out. Hardcoded 40s
 -- celebration -- it deliberately ignores the Auto Celebration Duration slider.
-local PM_SATED_DEBUFFS = { [57723] = true, [57724] = true }
+local PM_SATED_DEBUFFS = { [57723] = true, [57724] = true, [81005] = true }
 local _pmSatedPresent = false
 local function _pmPlayerHasSated()
     for i = 1, 40 do

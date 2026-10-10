@@ -105,12 +105,19 @@ Click(driver,'LeftButton',true); view:SetAttribute('initialX',.8); view:SetAttri
 -- Repeated Escape cycles leave no temporary bindings or stale actions.
 Combat(true); for i=1,10 do Click(driver,'LeftButton',true); Click(D.cancel,'LeftButton',false); Click(driver,'LeftButton',false); assert(not view:IsShown() and not overrides[view].ESCAPE) end; assert(#secureActions==count); Combat(false)
 D.UpdateVisuals(1)
--- Server world marker spells, dynamic entries and presets.
-local wk,wv=D.Action({kind='worldmarker',id=8}); assert(wk=='macrotext' and wv=='/cast [@cursor] Spell 80951')
-assert(select(2,D.Action({kind='worldmarker',id=5}))=='/cast [@cursor] Spell 80950' and select(2,D.Action({kind='worldmarker',id=7}))=='/cast [@cursor] Spell 80949' and not D.Action({kind='worldmarker',id=9}))
-wk,wv=D.Action({kind='worldmarker',id=8},{worldMarkerCursor=false}); assert(wk=='spell' and wv=='Spell 80951')
-local ck,cv=D.Action({kind='cycleworldmarker'}); assert(ck=='macrotext' and cv:find('^/castsequence %[@cursor%] reset=60 Spell 80952, Spell 80947'))
-ck,cv=D.Action({kind='cycleworldmarker'},{worldMarkerCursor=false}); assert(cv:find('^/castsequence reset=60 Spell 80952'))
+-- Server world marker items, dynamic entries and presets.
+local wk,wv=D.Action({kind='worldmarker',id=8}); assert(wk=='macrotext' and wv=='/use [@cursor] item:131083')
+assert(select(2,D.Action({kind='worldmarker',id=5}))=='/use [@cursor] item:131082' and select(2,D.Action({kind='worldmarker',id=7}))=='/use [@cursor] item:131081' and not D.Action({kind='worldmarker',id=9}))
+wk,wv=D.Action({kind='worldmarker',id=8},{worldMarkerCursor=false}); assert(wk=='item' and wv=='item:131083')
+local ck,cv=D.Action({kind='cycleworldmarker'}); assert(ck=='macrotext' and cv:find('^/castsequence %[@cursor%] reset=60 item:131084, item:131079'))
+ck,cv=D.Action({kind='cycleworldmarker'},{worldMarkerCursor=false}); assert(cv:find('^/castsequence reset=60 item:131084'))
+assert(not D.Unavailable({kind='worldmarker',id=1}) and D.Unavailable({kind='worldmarker',id=9}))
+local oldCount=GetItemCount; GetItemCount=function(id) if id==131084 then return 0 end; return oldCount(id) end
+assert(D.Unavailable({kind='worldmarker',id=1}) and not D.Unavailable({kind='worldmarker',id=2}) and not D.Unavailable({kind='cycleworldmarker'}))
+GetItemCount=function() return 0 end; assert(D.Unavailable({kind='cycleworldmarker'})); GetItemCount=oldCount
+assert(select(2,D.Action({kind='clearworldmarkers'}))=='/click rmarkbtn' and D.Display({kind='clearworldmarkers'})=='Clear World Markers' and D.Unavailable({kind='clearworldmarkers'}))
+rmarkbtn={}; assert(not D.Unavailable({kind='clearworldmarkers'})); rmarkbtn=nil
+local hasClear=false; for _,entry in ipairs(D.Catalog('dynamic')) do if entry.slot.kind=='clearworldmarkers' then hasClear=true end end; assert(hasClear)
 assert(D.Action({kind='cycleraidtarget'})=='macrotext' and D.Action({kind='randommount'})=='macrotext' and D.Action({kind='lastmount'})=='macrotext' and D.Action({kind='cancelform'})=='macrotext')
 assert(select(2,D.Action({kind='panel',id='reputation'}))=='/run ToggleCharacter("ReputationFrame")')
 assert(#D.PresetSlots('targetmarkers')==10 and #D.PresetSlots('worldmarkers')==8 and #D.PresetSlots('panels')==19)
@@ -135,10 +142,10 @@ usableSpell=false; live.nextState=nil; D.UpdateVisuals(1); assert(live.pool[1].i
 D.Selected().showActionText=true; D.Apply(); view:SetAttribute('wheel',2); D.UpdateVisuals(1)
 assert(live.caption:IsShown() and live.caption:GetText()=='Item 6948' and live.needle[1]:IsShown() and live.hub:IsShown())
 view:SetAttribute('wheel',nil); D.Selected().showActionText=false; D.Apply()
--- A world marker entry fires the cursor cast from a live menu and keeps spell tracking.
-D.Selected().slots={{kind='worldmarker',id=7},{kind='spell',id=100}}; D.Apply(); assert(live.pool[1].spellName=='Spell 80949')
-Click(driver,'LeftButton',true); PointSlot(1); count=#secureActions; Click(driver,'LeftButton',false); assert(secureActions[#secureActions].macrotext=='/cast [@cursor] Spell 80949')
-D.Selected().worldMarkerCursor=false; D.Apply(); Click(driver,'LeftButton',true); PointSlot(1); Click(driver,'LeftButton',false); assert(secureActions[#secureActions].kind=='spell' and secureActions[#secureActions].value=='Spell 80949'); D.Selected().worldMarkerCursor=true
+-- A world marker entry uses its item at the cursor from a live menu and keeps item tracking.
+D.Selected().slots={{kind='worldmarker',id=7},{kind='spell',id=100}}; D.Apply(); assert(live.pool[1].itemID==131081 and not live.pool[1].spellName)
+Click(driver,'LeftButton',true); PointSlot(1); count=#secureActions; Click(driver,'LeftButton',false); assert(secureActions[#secureActions].macrotext=='/use [@cursor] item:131081')
+D.Selected().worldMarkerCursor=false; D.Apply(); Click(driver,'LeftButton',true); PointSlot(1); Click(driver,'LeftButton',false); assert(secureActions[#secureActions].kind=='item' and secureActions[#secureActions].value=='item:131081'); D.Selected().worldMarkerCursor=true
 -- Pointing moves the selection off a wheel-chosen entry.
 D.Selected().slots={{kind='spell',id=100},{kind='macro',id=1},{kind='raidtarget',id=8},{kind='spell',id=200}}; D.Apply()
 Click(driver,'LeftButton',true); view:RunScript('OnMouseWheel',-1); assert(view:GetAttribute('wheel')==1)
@@ -178,6 +185,12 @@ Click(driver,'LeftButton',true); PointSlot(1); Click(driver,'LeftButton',false);
 -- The ring draws the nest under the selection; a plain entry closes it again.
 view:SetAttribute('wheel',2); D.UpdateVisuals(1); assert(live.focus==2 and live.childPool[1].parent==2 and live.childPool[1].icon:IsShown() and not live.childPool[3].icon:IsShown())
 view:SetAttribute('wheel',1); D.UpdateVisuals(1); assert(live.focus==nil and not live.childPool[1].icon:IsShown()); view:SetAttribute('wheel',nil)
+-- Nest Distance and Nest Icon Size push the nested ring out and shrink it; release still picks the child.
+local function ChildRadius() local x,y=view:GetAttribute('cx2_1'),view:GetAttribute('cy2_1'); return math.sqrt(x*x+y*y) end
+local near=ChildRadius(); assert(view:GetAttribute('childSize')==32)
+D.Selected().nestBand=100; D.Selected().nestScale=.5; D.Apply(); assert(view:GetAttribute('childSize')==20 and math.abs(ChildRadius()-near-54)<.01)
+Click(driver,'LeftButton',true); PointChild(2,1); count=#secureActions; Click(driver,'LeftButton',false); assert(#secureActions==count+1 and secureActions[#secureActions].value=='Spell 200')
+D.Selected().nestBand=40; D.Selected().nestScale=.8; D.Apply()
 -- Grid lanes sit outside the block and pick by position.
 D.Selected().layout='GRID'; D.Selected().autoColumns=false; D.Selected().columns=3; D.Apply(); assert(view:GetAttribute('cy2_1')>0)
 Click(driver,'LeftButton',true); assert(live.childPool[1].icon:IsShown() and live.childPool[2].icon:IsShown()); PointChild(2,2); count=#secureActions; Click(driver,'LeftButton',false); assert(#secureActions==count+1 and secureActions[#secureActions].value=='Test Macro')
@@ -186,6 +199,26 @@ Click(driver,'LeftButton',true); view.mouseX,view.mouseY=.5,.5+(view:GetAttribut
 -- A nested menu with nothing usable is hidden.
 sub.slots={{kind='spell',id=101}}; D.Apply(); assert(view:GetAttribute('count')==2 and view:GetAttribute('nest2')==nil)
 D.Selected().layout='ARC'; D.Selected().slots=savedSlots; profile.palettes[subIndex]=nil; D.Apply()
+-- Invert Scroll reverses the wheel step.
+D.Selected().slots={{kind='spell',id=100},{kind='macro',id=1},{kind='spell',id=200}}; D.Selected().invertScroll=true; D.Apply()
+Click(driver,'LeftButton',true); view:RunScript('OnMouseWheel',1); assert(view:GetAttribute('wheel')==1); Click(D.cancel,'LeftButton',false)
+D.Selected().invertScroll=false; D.Apply()
+-- Selection Color: accent by default, class colour outranks custom.
+local ar,ag,ab=EllesmereUI.GetAccentColor(); local sr,sg,sb=D.SelectColor(D.Selected()); assert(sr==ar and sg==ag and sb==ab)
+D.Selected().selectColorCustom=true; D.Selected().selectColor={.1,.2,.3}; sr,sg,sb=D.SelectColor(D.Selected()); assert(sr==.1 and sg==.2 and sb==.3)
+D.Selected().useClassColor=true; sr,sg,sb=D.SelectColor(D.Selected()); assert(sr==1 and sg==.5 and sb==.2)
+D.Selected().useClassColor=false; D.Selected().selectColorCustom=false
+-- Assign to Spec loads a menu in one talent group; a shared key goes to whichever menu loads.
+activeGroup=1; function GetActiveTalentGroup() return activeGroup end
+local other=D.NewPalette('Other',{{kind='spell',id=200}}); local oi=#profile.palettes; D.selectedPalette=1
+D.Selected().specs={[1]=true}; other.specs={[2]=true}; other.keyShare=1; D.Apply()
+assert(D.ShareOwner(oi)==1 and overrides[D.header]['ALT-Q'].name=='EUI335QuickdrawDriver1' and driver:GetAttribute('enabled') and not D.live[oi].driver:GetAttribute('enabled'))
+activeGroup=2; D.Apply()
+assert(overrides[D.header]['ALT-Q'].name=='EUI335QuickdrawDriver'..oi and not driver:GetAttribute('enabled') and D.live[oi].driver:GetAttribute('enabled'))
+D.Selected().slots={{kind='spell',id=100},{kind='palette',id=1}}; other.slots={{kind='spell',id=200},{kind='palette',id=1}}; D.Apply(); assert(D.live[oi].view:GetAttribute('count')==1)
+other.specs={[1]=true}; D.Apply(); assert(D.ShareOwner(oi)==nil and not overrides[D.header]['ALT-Q'])
+activeGroup=1; D.Selected().specs=nil; D.RemovePalette(oi); assert(other.keyShare==nil and other.specs==nil); D.Apply(); assert(overrides[D.header]['ALT-Q'].name=='EUI335QuickdrawDriver1')
+D.Selected().slots=savedSlots; D.Apply()
 ''')
 lua.execute('''
 local methods=getmetatable(UIParent).__index
@@ -232,8 +265,11 @@ buttons['Assign Key'](); keyCtrl=true; capture:RunScript('OnKeyDown','T'); captu
 buttons['Clear Palette Keybinds'](); assert(not GetBindingKey('EUI_RADIAL1'))
 SlashCmdList.EQD(); assert(shownModule=='EllesmereUIQuickdraw')
 rows={}; buttons={}; cfg.buildPage('Palettes',UIParent,0)
-for _,label in ipairs({'Toggle Menu Open','Copy Settings From','Add Action Menu','Fan Direction','Auto Grid Columns','Hide Unusable Entries','Dim Unusable Entries','Show Action Text Label','Selection Needle','Open Animation','World Markers at Cursor'}) do FindRow(label) end
--- Category picker adds the server's world marker spells.
+for _,label in ipairs({'Toggle Menu Open','Copy Settings From','Add Action Menu','Fan Direction','Auto Grid Columns','Hide Unusable Entries','Dim Unusable Entries','Show Action Text Label','Selection Needle','Open Animation','World Markers at Cursor','Assign to Spec','Share Keybind With','Nest Distance','Nest Icon Size','Invert Scroll Wheel','Selection Color','Custom Color'}) do FindRow(label) end
+FindRow('Assign to Spec').setValue('2'); assert(D.Selected().specs[2] and not D.Selected().specs[1]); FindRow('Assign to Spec').setValue('both'); assert(D.Selected().specs==nil)
+FindRow('Selection Color').setValue('custom'); assert(D.Selected().selectColorCustom and not D.Selected().useClassColor); FindRow('Selection Color').setValue('accent'); assert(not D.Selected().selectColorCustom)
+rows={}; buttons={}; cfg.buildPage('Palettes',UIParent,0)
+-- Category picker adds the server's world marker items.
 FindRow('Category').setValue('worldmarkers'); rows={}; buttons={}; cfg.buildPage('Palettes',UIParent,0)
 local count=#D.Selected().slots; FindRow('Action').setValue(8); buttons['Add Selected Action']()
 assert(#D.Selected().slots==count+1 and D.Selected().slots[count+1].kind=='worldmarker' and D.Selected().slots[count+1].id==8)
@@ -268,4 +304,4 @@ assert (original/'Bindings.xml').read_bytes()==(root/'EllesmereUIQuickdraw/Bindi
 bindings=ET.parse(root/'EllesmereUIQuickdraw/Bindings.xml').getroot()
 assert [b.attrib['name'] for b in bindings]==[f'EUI_RADIAL{i}' for i in range(1,17)]
 assert 'Bindings.xml' not in [line.strip() for line in (root/'EllesmereUIQuickdraw/EllesmereUIQuickdraw.toc').read_text().splitlines() if not line.startswith('#')]
-print('PASS: actual native Quickdraw lifecycle and restricted hold/release/wheel/cancel snippets; arc/grid/fan selection and deadzone, combat actions without insecure mutations/allocation, modifier release routing, deferred combat edits, secure micro-menu macros, spells/items/macros/markers/companions/equipment sets, cursor actions; press/release hotkey capture with modifier snapshots and keyboard cleanup on Escape/hide/page/options/combat/timeout/focus/cancel/failure; keybind persistence, settings, unchanged Retail source and single 16-binding registration; empty shipped palette with legacy-slot migration, server world marker spells, presets/catalog, pointer-over-wheel takeover, toggle mode with Select/Cancel keys, hide/dim unusable, caption/needle/hub, vertical fan, key conflict prompt, preview drag/remove and copy settings; nested action menus on ring and grid with secure child release, one-level filtering, self-nest rejection and the Action Menus picker.')
+print('PASS: actual native Quickdraw lifecycle and restricted hold/release/wheel/cancel snippets; arc/grid/fan selection and deadzone, combat actions without insecure mutations/allocation, modifier release routing, deferred combat edits, secure micro-menu macros, spells/items/macros/markers/companions/equipment sets, cursor actions; press/release hotkey capture with modifier snapshots and keyboard cleanup on Escape/hide/page/options/combat/timeout/focus/cancel/failure; keybind persistence, settings, unchanged Retail source and single 16-binding registration; empty shipped palette with legacy-slot migration, server world marker items, presets/catalog, pointer-over-wheel takeover, toggle mode with Select/Cancel keys, hide/dim unusable, caption/needle/hub, vertical fan, key conflict prompt, preview drag/remove and copy settings; nested action menus on ring and grid with secure child release, one-level filtering, self-nest rejection and the Action Menus picker; nest distance/icon size, inverted wheel, accent/custom/class selection color, Assign to Spec talent-group gating with shared keybinds.')

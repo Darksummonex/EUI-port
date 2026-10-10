@@ -1,4 +1,20 @@
-# EllesmereUI Damage Meters — Wrath 3.3.5a — 0.8
+# EllesmereUI Damage Meters — Wrath 3.3.5a — 0.9
+
+0.9 (Classic WoW UI): estilo Classic na página Style (`useClassicStyle`, igual ao
+Retail). Cada janela usa a borda e o fundo de tooltip (`UI-Tooltip-Border`, inset
+de 5), o header vira uma faixa de tooltip mais clara com linha fina embaixo, e os
+botões do header usam a arte vanilla do Retail (engrenagem de Engineering, livro
+de quest, refresh, plus/minimize) com ícone de magia por métrica. Na primeira vez
+(`classicSeeded`) fundo 16/16/16, textura "blizzard" e trilha preta a 25%; o slot
+de estilo guarda e devolve os valores ao voltar para EllesmereUI. Não portado: a
+borda de aba de chat do Retail (usa a borda de tooltip) e o bloqueio dos controles
+de borda/header nas opções enquanto o Classic está ativo. Trocar de estilo pede
+/reload.
+
+0.9: ID da magia no breakdown. O tooltip de uma magia (passar o mouse numa magia
+com o jogador focado) ganhou a linha "Spell ID: <id>", e cada linha da janela
+detalhada (Shift-clique) termina com "ID <id>" em cinza. Não aparece em Targets
+nem no ataque corpo a corpo (sem ID). Vale também para a versão standalone.
 
 Versão standalone (sem bump): `backport-tools/build_standalone.py --zip` gera a
 pasta `EUIStandaloneDamageMeters`, só o Damage Meters (1.6 MB): sem Core, sem

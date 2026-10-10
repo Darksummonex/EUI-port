@@ -68,6 +68,29 @@ ns.defaults={profile={enabled=true,historyLimit=15,saveHistory=true,mergePets=tr
 function ns.Copy(t) if type(t)~="table" then return t end; local n={}; for k,v in pairs(t) do n[k]=ns.Copy(v) end; return n end
 function ns.Clamp(v,a,b) return math.max(a,math.min(b,tonumber(v) or a)) end
 function ns.Profile() return addon.db and addon.db.profile end
+-- Global Settings > Style: Classic WoW UI or the EllesmereUI look, read once
+-- per session (the Style page reloads on a switch).
+function ns.DMStyle()
+    local v=ns._dmStyle
+    if v==nil then
+        local p=ns.Profile(); if not p then return "eui" end
+        v=p.useClassicStyle and "classic" or "eui"; ns._dmStyle=v
+    end
+    return v
+end
+function ns.DMClassic() return ns.DMStyle()=="classic" end
+-- Classic's one-time seed per profile: near-black windows, the game's own bar
+-- fill and a quarter-black track (new tables, so the Style page's saved slot
+-- keeps the previous ones).
+function ns.DMSeedClassic(p)
+    if p.classicSeeded then return end
+    p.classicSeeded=true
+    for _,cfg in ipairs(p.windows or {}) do
+        cfg.bgColor={r=16/255,g=16/255,b=16/255}
+        cfg.barTexture="blizzard"
+        cfg.barBgColor={r=0,g=0,b=0,a=.25}
+    end
+end
 function ns.Size(f,w,h) f:SetWidth(w); f:SetHeight(h) end
 function ns.NewSegment(id,label)
     return {id=id,label=label or "Combat",duration=0,actors={},totals={},deaths={},timestamp=time()}

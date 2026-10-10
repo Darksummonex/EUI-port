@@ -236,6 +236,14 @@ assert(not frame._blizzLevel:IsShown() and not frame._blizzLevelSkull:IsShown())
 settings.blizzLevelSize=nil; settings.blizzShowLevel=nil
 UnitLevel,UnitEffectiveLevel,UnitExists=level,effectiveLevel,exists
 UF.UF_BlizzGeom=geom
+-- Stock styles: the leader crown on the portrait's outer top corner, mirrored on the right.
+local portrait={}; local crown={SetPoint=function(self,...) self.pt={...} end}
+assert(UF.UF_PlaceStockLeader(crown,{portrait={point="TOPLEFT",size=64}},nil,portrait,1,2))
+local pt=crown.pt; assert(pt[1]=="CENTER" and pt[2]==portrait and pt[3]=="TOPLEFT" and pt[4]==7 and pt[5]==-6)
+UF.UF_PlaceStockLeader(crown,{portrait={point="TOPRIGHT",size=32}},nil,portrait,0,0)
+pt=crown.pt; assert(pt[3]=="TOPRIGHT" and pt[4]==-3 and pt[5]==-4)
+UF.UF_PlaceStockLeader(crown,{portrait={point="TOPLEFT",size=64}},true,portrait,0,0)
+assert(crown.pt[3]=="TOPRIGHT" and not UF.UF_PlaceStockLeader(crown,{},nil,portrait,0,0))
 ''')
 lua.execute('InitializeFrames(); SetupOptionsPanel()')
 lua.globals().UF = ns
@@ -378,6 +386,38 @@ assert(rotationCalls == 0, "reload entered native rotation")
 player:EnableElement("Castbar"); UF.Engine.RepaintAll(player,"Test")
 assert(player and player.Health and player.Power and player.Castbar and player.Castbar.casting)
 assert(player:GetAttribute("*type2")=="menu" and type(player.menu)=="function")
+do
+    local fo=UF.frames.focus; local fs=UF.db.profile.focus
+    assert(fo:GetAttribute("*type2")=="menu" and fo:GetAttribute("shift-type2")=="macro" and fo:GetAttribute("shift-macrotext2")=="/clearfocus","default Shift + Right Click clears focus")
+    fs.clearFocusClick="middle"; UF.Wrath.ApplyClearFocusClick()
+    assert(fo:GetAttribute("shift-type2")==nil and fo:GetAttribute("type3")=="macro" and fo:GetAttribute("macrotext3")=="/clearfocus")
+    local inCombat=InCombatLockdown; InCombatLockdown=function() return true end
+    fs.clearFocusClick="none"; UF.Wrath.ApplyClearFocusClick()
+    assert(fo:GetAttribute("type3")=="macro","secure attributes changed in combat")
+    InCombatLockdown=inCombat; UF.Wrath.ApplyClearFocusClick()
+    assert(fo:GetAttribute("type3")==nil and fo:GetAttribute("*type2")=="menu","None keeps only the menu")
+    fs.clearFocusClick=nil; UF.Wrath.ApplyClearFocusClick()
+end
+do
+    local saved={UnitIsPartyLeader,GetPartyLeaderIndex,IsPartyLeader,GetNumPartyMembers,GetNumRaidMembers,UnitIsUnit,UnitIsGroupLeader}
+    UnitIsGroupLeader=function() return true end
+    assert(UF.Wrath.UnitIsGroupLeader~=UnitIsGroupLeader,"a compat UnitIsGroupLeader global is not used")
+    UnitIsPartyLeader=function() return 1 end; GetNumPartyMembers=function() return 2 end; GetNumRaidMembers=function() return 0 end
+    local targetIs="party2"
+    UnitIsUnit=function(a,b) if a=="target" then a=targetIs end; return a==b end
+    GetPartyLeaderIndex=function() return 2 end; IsPartyLeader=function() return nil end
+    local L=UF.Wrath.UnitIsGroupLeader
+    assert(L("party2") and not L("party1") and not L("player"),"only the GetPartyLeaderIndex member leads")
+    assert(L("target"),"targeting the leader shows the crown"); targetIs="party1"; assert(not L("target"),"targeting a member shows none")
+    GetPartyLeaderIndex=function() return 0 end; IsPartyLeader=function() return 1 end
+    assert(L("player") and not L("party1") and not L("party2"),"player leads alone")
+    targetIs="player"; assert(L("target"),"targeting yourself as leader shows the crown")
+    GetNumRaidMembers=function() return 2 end; GetNumPartyMembers=function() return 1 end; targetIs="raid2"
+    local roster=GetRaidRosterInfo; GetRaidRosterInfo=function(i) return "R"..i,i==2 and 2 or 0 end
+    assert(L("target") and not L("raid1") and L("raid2"),"raid leader comes from the roster rank")
+    GetRaidRosterInfo=roster
+    UnitIsPartyLeader,GetPartyLeaderIndex,IsPartyLeader,GetNumPartyMembers,GetNumRaidMembers,UnitIsUnit,UnitIsGroupLeader=unpack(saved,1,7)
+end
 Dispatch("UNIT_SPELLCAST_STOP","player","Fireball","Rank 1",19)
 assert(not player.Castbar.casting)
 castingMock=false

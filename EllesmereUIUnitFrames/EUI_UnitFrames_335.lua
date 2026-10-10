@@ -430,6 +430,7 @@ local function OpenUnitMenu(button, unit)
         dropdown = W.CreateFrame("Frame", "EllesmereUIUnitFrames335Dropdown", UIParent, "UIDropDownMenuTemplate")
         dropdown:SetID(1)
         table.insert(UnitPopupFrames, "EllesmereUIUnitFrames335Dropdown")
+        if EllesmereUI.UnitMenuWithoutFocus then EllesmereUI.UnitMenuWithoutFocus(dropdown) end
         UIDropDownMenu_Initialize(dropdown, function(self)
             local u = self.unit
             if not u then return end
@@ -452,6 +453,44 @@ function W.AttachUnitMenu(frame)
     frame.menu = OpenUnitMenu
     frame:SetAttribute("*type2", "menu")
 end
+-- Focus frame "Clear Focus Click": a secure /clearfocus macro on one click, so it
+-- also works in combat, where the menu's Clear Focus is hidden.
+W.CLEAR_FOCUS_CLICKS = {
+    shift2 = { "shift-", "2" }, ctrl2 = { "ctrl-", "2" }, alt2 = { "alt-", "2" },
+    middle = { "", "3" }, shift1 = { "shift-", "1" },
+}
+W.CLEAR_FOCUS_LABELS = {
+    none = "None", shift2 = "Shift + Right Click", ctrl2 = "Ctrl + Right Click",
+    alt2 = "Alt + Right Click", middle = "Middle Click", shift1 = "Shift + Left Click",
+}
+W.CLEAR_FOCUS_ORDER = { "none", "shift2", "ctrl2", "alt2", "middle", "shift1" }
+local clearFocusWait, clearFocusSettings
+function W.ApplyClearFocusClick(settings)
+    if settings then clearFocusSettings = settings end
+    local frame = ns.frames and ns.frames.focus
+    if not frame or not frame.SetAttribute then return end
+    if InCombatLockdown() then
+        if not clearFocusWait then
+            clearFocusWait = CreateFrame("Frame")
+            clearFocusWait:SetScript("OnEvent", function(self)
+                self:UnregisterEvent("PLAYER_REGEN_ENABLED"); W.ApplyClearFocusClick()
+            end)
+        end
+        clearFocusWait:RegisterEvent("PLAYER_REGEN_ENABLED")
+        return
+    end
+    for key, value in pairs(frame._euiClearFocusAttrs or {}) do
+        if frame:GetAttribute(key) == value then frame:SetAttribute(key, nil) end
+    end
+    frame._euiClearFocusAttrs = {}
+    local s = ns.db and ns.db.profile and ns.db.profile.focus or clearFocusSettings
+    local click = s and W.CLEAR_FOCUS_CLICKS[s.clearFocusClick or "shift2"]
+    if not click then return end
+    local mod, button = click[1], click[2]
+    for key, value in pairs({ [mod .. "type" .. button] = "macro", [mod .. "macrotext" .. button] = "/clearfocus" }) do
+        frame:SetAttribute(key, value); frame._euiClearFocusAttrs[key] = value
+    end
+end
 function W.ContinueOnAddOnLoaded(name, callback)
     if IsAddOnLoaded(name) then callback(); return end
     local f = W.CreateFrame("Frame")
@@ -466,13 +505,39 @@ function W.UnitPowerMax(unit, kind, ...)
     return UnitPowerMax(unit, kind, ...)
 end
 local function RaidRank(unit)
-    local index = UnitInRaid(unit)
+    if not unit then return end
+    local count = GetNumRaidMembers() or 0
+    if count == 0 then return end
+    local index = tonumber(tostring(unit):match("^raid(%d+)$"))
+    if not index then
+        for i = 1, count do
+            if UnitIsUnit(unit, "raid" .. i) then index = i; break end
+        end
+    end
     if index then local _, rank = GetRaidRosterInfo(index); return rank end
 end
-W.UnitIsGroupLeader = UnitIsGroupLeader or function(unit)
-    return RaidRank(unit) == 2 or UnitIsPartyLeader(unit)
+-- UnitIsPartyLeader(unit) can answer true for several party members on 3.3.5;
+-- Blizzard's party frames use GetPartyLeaderIndex (0 = player) instead.
+local function PartyLeader(unit)
+    if not unit then return false end
+    if not GetPartyLeaderIndex then return UnitIsPartyLeader(unit) and true or false end
+    if (GetNumRaidMembers() or 0) > 0 or (GetNumPartyMembers() or 0) == 0 then return false end
+    local index = GetPartyLeaderIndex() or 0
+    if UnitIsUnit(unit, "player") then
+        if IsPartyLeader then return IsPartyLeader() and true or false end
+        return index == 0
+    end
+    for i = 1, GetNumPartyMembers() do
+        if UnitIsUnit(unit, "party" .. i) then return index == i end
+    end
+    return false
 end
-W.UnitIsGroupAssistant = UnitIsGroupAssistant or function(unit) return RaidRank(unit) == 1 end
+-- Always ours: compat addons (!!!ClassicAPI) define UnitIsGroupLeader on top of
+-- UnitIsPartyLeader and crown several party members.
+W.UnitIsGroupLeader = function(unit)
+    return RaidRank(unit) == 2 or PartyLeader(unit)
+end
+W.UnitIsGroupAssistant = function(unit) return RaidRank(unit) == 1 end
 -- Wrath IsSpellInRange takes a spellbook name and answers 1/0/nil; the core
 -- C_Spell shim forwards numeric IDs, which the 3.3.5 client rejects.
 function W.IsSpellInRange(spell, unit)

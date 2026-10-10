@@ -1,5 +1,33 @@
 # EllesmereUI 3.3.5a — Handoff — 2026-10-06
 
+## Latest (2026-10-10) — locale catch-up (no bump)
+
+- `backport-tools/find_new_locale_keys.py` (read only) lists UI keys `export_ptbr_keys.py` would export that are not in `ptbr_work/keys.tsv`, plus stale keys. Never rerun `export_ptbr_keys.py` itself: it renumbers keys.tsv and breaks every `out_*.tsv`. `append_locale_keys.py [--check]` appends new keys with fresh ids and writes the next `ptbr_work/in_NN.tsv` and `locale_work/<code>/in_NN.tsv`; translate into the matching `out_NN.tsv`, then run `build_ptbr_catalog.py` and `build_locale_additions.py`.
+- Patch notes: every `_WHATSNEW_PATCHES` eyebrow/title/desc/text/module already goes through `EllesmereUI.L`. `patch_note_strings.py` lists them; `append_locale_keys.py --patch-notes` adds the missing ones (ids 5479-5827: ptBR in_17-18, deDE 06-07, frFR 07-08, ruRU 09-10, koKR/zhCN/zhTW 05-06, esES 12-13). New patch-note items stay English until the next `--patch-notes` pass.
+- This pass: ids 5259-5478 (ptBR in_16/out_16, deDE 05, frFR 06, ruRU 08, koKR/zhCN/zhTW 04, esES 11). "Português (Brasil)" is skipped on purpose. 38 stale keys stay in the catalogs (harmless).
+- World markers are server items 131077-131084 (Quickdraw `ns.worldMarkerItems`, Raid Tools `WORLD_ITEMS`, raid target order); the server's Raid tab "Reset Markers" button is `rmarkbtn` (`/click rmarkbtn`: Quickdraw `clearworldmarkers`, Raid Tools Shift + Left Click on the clear icon).
+
+## Latest (2026-10-10) — Quickdraw 0.4: Assign to Spec, nest geometry, selection color
+
+- Per-palette `specs` ({[talentGroup]=true}, nil = both) gates the driver `enabled` attribute, the override bindings and nesting (`ns.PaletteActive`, `GetActiveTalentGroup`; `ACTIVE_TALENT_GROUP_CHANGED` already re-applies). `keyShare` = owner index: `ns.ShareOwner` only honours it when both palettes name disjoint groups; `UpdateBindings` sends the owner's keys to the sharer while the owner does not load. `RemovePalette` clears both.
+- New palette defaults `nestBand` 40 / `nestScale` .8 (ring: first child radius = radius + size/2 + band + child/2; grid/fan lanes start `band` past the block edge), `invertScroll` (view attribute read by the wheel snippet), `selectColorCustom` / `selectColor` / `useClassColor` via `ns.SelectColor(cfg)` (class outranks custom, accent default).
+- Not ported: fan coverflow (Visible Icons, Select Action with Mouse), Arc Nest Shape / Grid Nest Style Halo, Toggle World Markers and placed-marker pips (no 3.3.5 API for active ground markers).
+
+## Latest (2026-10-10) — QoL Raid Tools in the Retail layout (QoL 0.19, no extra bump)
+
+- New `EllesmereUIQoL/EUI_QoL_335_RaidTools.lua` (TOC after Panels) replaces the single `EUI335QoLRaidTools` window. Retail's secure state machine: shells `EUI335QoLRaidTools` / `EUI335QoLRaidToolsMarkers` (SecureHandlerStateTemplate, `apply` + `_onstate-euirt_vis`), icon `EUI335QoLRaidToolsIcon` and key target `EUI335QoLRaidToolsToggle` (SecureHandlerClickTemplate, `AnyUp`), refs via `SecureHandlerSetFrameRef`. `ApplyVisibility` only resets attributes when its signature changes, since QoL re-applies on every ADDON_LOADED.
+- Settings `raidTools.mode` (unset = legacy enabled/groupOnly via `ns.RaidToolsMode`), `showAs`, `collapsedIcon`, `growDir`, `toggleKey`, `compactWidth/Height`, `pullTimes` {3,5,10}, `showConvert`, `showDisband`; scale stays percent. Pulls stay in Panels: `ns.StartPull(secs)`, `ns.StopPull()` (sync 0 with no local pull). Markers are plain buttons (SetRaidTarget is unprotected); target markers only.
+- Unlock keys `EUI_RaidTools` (positions.raidTools), `EUI_RaidTools_Markers`, `EUI_RaidTools_Compact` (resizable). Options preview through `ns.RaidToolsPreview`. Media from `prepare_raidtools_media.py` (strips PIL's TGA footer). Not portable: world markers/Quick Fire, Role Check, `C_PartyInfo.DoCountdown`.
+
+## Latest (2026-10-10) — Style page on Wrath, Damage Meters Classic (DM 0.9, Options 0.114, no extra bumps)
+
+- Style page is Retail 9.4's: no per-module rows (`StyleRowCfg`, `SECTION_STYLES` gone); a `BuildVisOptsCBDropdown` checklist under each look card (`dimLocked` ported into `EllesmereUI_Widgets.lua`) holds pending picks, Apply Styles writes them with one reload prompt; cards use `inUseAlpha = 0.5`, `badgeSize = 13` (ported into `EllesmereUI_StyleCards.lua`). A look a module can't draw (`Supports`) leaves it out of that card's list. Builder written by `backport-tools/port_style_page_dropdowns.py` (one-off).
+- `EUI_Style_Options.lua`: on `EUI_WOW_335` the Cooldown Manager icons/bars, Minimap and Damage Meters offer only `{"eui","classic"}` (`m.styles`); Player Aura Bars is not registered. `Supports(m, key)` makes Apply to All, `StyleChangesFor` and the card count skip modules without that look. `DMProfile` returns the port's root profile; DM slot keys are `windows.<1..5>.bgColor/barTexture/barBgColor` (stamp `classicSeeded`); `PathGet`/`PathSet` index numeric segments.
+- Damage Meters: `ns.DMStyle/DMClassic` (latched per session from `useClassicStyle`), `ns.DMSeedClassic` once per profile. Display: tooltip box (`CLASSIC_BOX`, inset 5), tooltip header band and 1px line, Retail vanilla header art (`CLASSIC_ART`) and per-metric spell icons (`CLASSIC_METRIC`). Not ported: Retail's chat-tab rim, Blizzard Style for CDM/Minimap/DM, options gating under Classic. Checked in `validate_damagemeters.py` and `validate_themes_presets.py`.
+- Action Bars 0.22 End Caps: new `EllesmereUIActionBars/EUI_ActionBars_335_EndCaps.lua` (TOC after the main file; validators load it explicitly). Per-bar `endCapLeft/Right`, `endCapScale/OffsetX/OffsetY`; Classic art only (Retail `AB_CAPS.classic` geometry); host is a child of the bar; called from `Layout` via `ns.AB_ApplyCaps`. Options: "End Caps" row closes LAYOUT (checklist swapped into the row, cog, Sync); the preview pads by `ns.AB_CapsReach`. Not ported: Modern/Forever art, Micro/Bag bar caps, first-install span.
+- Action Bars 0.22 XP Bar Style (Menu, Bags & XP Bars > EXPERIENCE BAR): dropdown EllesmereUI / Blizz Default replaces Enable Experience Bar; reads `nativeHUD.xp`, writes `xp` and `reputation` together (Retail's single useBlizzardDataBars switch). Professions/Forever not ported (Retail atlases).
+- Also this session: Global Settings action row (Reset ALL | Uninstall, Optimize removed), import into current profile, sync popup `SetParent(nil)` fix (Core 0.66).
+
 ## Latest (2026-10-09) — other locales filled (no bump)
 
 - `backport-tools/export_locale_batches.py` exported the port keys missing from each Retail catalog to `backport-tools/locale_work/<code>/in_NN.tsv`; translations are in `out_NN.tsv`. `build_locale_additions.py` (`--check` for a dry run) appends them after the MARKER line `-- == 3.3.5 port additions (backport-tools/build_locale_additions.py) ==` at the end of each Retail catalog, so everything above the marker stays the (unused-key-trimmed) Retail text (`validate_locales.py` checks only that part against Retail). esMX reuses the esES batches. `FIXES` overrides the broken deDE "Learn %d skill%s for %s". esES uses "vida" for Health, like Retail (`normalize_esES_terms.py`). Coverage: `check_locale_catalogs.py`. Edit `out_*.tsv` and rerun the build; it rewrites the block after the marker.
@@ -24,7 +52,7 @@
 
 ## Latest (2026-10-09) — Update notices (Core 0.61) and EUI Staff page (Options 0.113)
 
-- `EllesmereUI/EllesmereUI_UpdateCheck_335.lua` (last in the Core TOC): release stamp = Core TOC `## X-EUI-Release: YYYYMMDDNN` (now `2026100904`, release v0.3). **Raise it for every GitHub release/RC**, or clients never see a newer one.
+- `EllesmereUI/EllesmereUI_UpdateCheck_335.lua` (last in the Core TOC): release stamp = Core TOC `## X-EUI-Release: YYYYMMDDNN` (now `2026101001`, release v0.4). **Raise it for every GitHub release/RC**, or clients never see a newer one.
 - Prefix `EUIVER`, payload = stamp. Sends to GUILD 15 s after login and to BATTLEGROUND/RAID/PARTY on roster changes; 60 s throttle per channel/target. A lower stamp gets ours back on the same channel (WHISPER to the sender); a higher one prints one chat notice per session unless `EllesmereUIDB.updateCheckDisabled` (toggle "Update Notices", Global Settings > General). `/euiupdate` opens `ShowCopyPopup` with the releases URL. No clickable chat link: unknown hyperlink types error in Blizzard `SetItemRef` without EUI Chat.
 - Patch Notes: tab `PAGE_STAFF = "EUI Staff"` (Alex wants the EUI Staff name kept); page title "Special thanks to Ellesmere", cards PORT STAFF (`EllesmereUI._PORT_STAFF`, Laraystiri + GitHub icon -> `EllesmereUI.ShowLinkPopup`, exposed from the Panel footer) and ORIGINAL STAFF (`_STAFF`). Header line "Special thanks to: Ellesmere" restored (opens that page). Icon `EllesmereUI/media/icons/github.png` from `backport-tools/make_github_icon.py` (Octicons mark).
 - Validators: new `validate_update_check.py`; `validate_patch_notes.py` updated.
@@ -307,11 +335,11 @@ Working-tree backups: `backport-tools/backup_project.py` writes
 
 ## Current versions
 
-Core 0.63; Action Bars 0.21; Arena 0.3; AuraBuff Reminders 0.7; Bags 0.12;
-Blizz UI Enhanced (BlizzardSkin) 0.30; Chat 0.49; Cooldown Manager 0.9;
-Damage Meters 0.8; Data Bars 0.5; Friends 0.3; Minimap 0.4; Nameplates 0.15;
-Options 0.113; Locales 0.1; QoL 0.17; Quest Tracker 0.3; Quickdraw 0.3; Raid Frames 0.20;
-Resource Bars 0.5; Unit Frames 0.21.
+Core 0.66; Action Bars 0.22; Arena 0.3; AuraBuff Reminders 0.7; Bags 0.12;
+Blizz UI Enhanced (BlizzardSkin) 0.33; Chat 0.49; Cooldown Manager 0.9;
+Damage Meters 0.9; Data Bars 0.5; Friends 0.3; Minimap 0.4; Nameplates 0.18;
+Options 0.114; Locales 0.1; QoL 0.19; Quest Tracker 0.3; Quickdraw 0.4; Raid Frames 0.24;
+Resource Bars 0.5; Unit Frames 0.25.
 
 Retail reference is EUI 9.4 (2026-10-09). `backport-tools/sync_retail_references.py`
 (dry run; `--apply` backs up first) refreshes unloaded Retail copies and adds new

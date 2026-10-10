@@ -1,0 +1,49 @@
+5779	Quality borders, quest marks, item level, BoE text, set names and dimmed junk
+5780	Group the bank by category, with a sidebar
+5781	With Enable Bags off, the default bag functions are no longer replaced, avoiding blocked action errors from tainted bag code.
+5782	Opening the Characters list no longer errors.
+5783	Gold sale ads with websites or cash prices, including 5000G=20 bucks and disguised W.W.W addresses, are filtered by default in your selected chat scopes.
+5784	Unsupported server channel notices such as NOT_IN_LFG no longer cause the native chat formatter to error.
+5785	Optional spam filtering with a repeat window, sender matching and public, group or whisper controls.
+5786	Background, divider, input position, Retail border and tabs over the native dock, plus a sidebar with friends, guild, copy, channels and settings.
+5787	Retail timestamps, short channel names, class colored names, link tooltips, whisper sounds, saved chat history and Retail URL and copy windows.
+5788	Show Hidden Messages lists the last 200 lines the spam filter hid this session, with time, reason, channel and sender. Clear Filter History is now Reset Repeat Memory.
+5789	The trade ad preset also hides LFW (looking for work) crafting ads.
+5790	Right-click the chat in Unlock Mode to open its Display settings
+5791	Restyled chat bubbles with per-channel toggles and hiding in instances
+5792	The chat fades after a delay and comes back on mouseover
+5793	Copy Chat copies the chat tab you are looking at instead of the last tab you right-clicked, which could show \"(No chat history)\".
+5794	Fixed a \"SetPoint(): is dependent on this\" error when styling some NPC chat bubbles.
+5795	The guild recruitment filter no longer hides raid ads that mention a guild, such as \"<Frost> LF 1 heal ICC25\"; only LF guild phrases count.
+5796	GM whispers and messages are never hidden by the spam filter.
+5797	Spam filter keywords ignore case for accented letters too, so promoção also hides PROMOÇÃO.
+5798	The trade ad and guild recruitment filters follow the Public Chat setting, and the spam filter does no work while every filter is off.
+5799	The sidebar shows on first load, and tabs and toggles update right away.
+5800	The main chat keeps its Unlock Mode position instead of being reset by the dock.
+5801	A saved chat opacity of 0 resets once to the Retail default.
+5802	Square, rectangular, circle and textured circle maps, with border size, opacity, textured styles and custom, accent or class colors.
+5803	Addon buttons collect into the Retail flyout with a grid, grow direction and Shift-drag Free Move.
+5804	A vanilla ring and zone banner with native zoom buttons
+5805	Clock and zone boxes in ten positions, plus coordinates, FPS and latency, and difficulty text
+5806	Guild and friends at a glance; left-click whispers, right-click invites
+5807	Menu actions open Blizzard windows through secure calls, avoiding blocked action errors.
+5808	Pick Classic WoW UI for Damage Meters on the Style page: each window gets the classic tooltip border, a tooltip header band and vanilla header icons, and keeps every EllesmereUI meter feature.
+5809	A spell's breakdown tooltip shows its Spell ID, and each spell row in the detailed window ends with its ID.
+5810	Consumed shield absorbs count toward Healing Done and HPS when the caster can be identified, with an Absorbs Done view.
+5811	Flat body, accent header, Atrocity bars and header icons for Settings, Segment, Meter Type and Reset, with up to five windows.
+5812	Up to 15 spells and the top three targets on hover, death recaps with health at each hit, and a per-player focus view.
+5813	SharedMedia bar textures load whether a profile stores them in Damage Meters or EllesmereUI format
+5814	An icon strip and bar window of your casts, including failed and interrupted ones
+5815	A standalone combat timer with its own Unlock Mode element
+5816	Windows snap to each other; locked windows cannot move, resize or close
+5817	Keybinds for Reset Data and Show / Hide Windows
+5818	Specialization icons from talent data and paced group inspection
+5819	Load an action menu only in your primary or secondary talent group, and let two menus share one keybind across specs.
+5820	Hold a key, point or scroll to choose, release to fire. Up to 16 palettes of 20 entries in ring, arc, fan or grid layouts.
+5821	An Action Menu entry fans out up to 8 actions from another palette, one level out from the ring.
+5822	Accent, class or custom color for the selected entry, needle and nested highlight
+5823	Set the gap between a nested menu and its entry, and the nested icon size
+5824	Reverse which way a wheel tick moves the selection
+5825	Assign Key captures the next key with modifiers and asks before rebinding
+5826	Keep the menu open on release and fire with a Select key
+5827	Red when out of range, blue when short of power, grey when unusable

@@ -1,4 +1,89 @@
-# EllesmereUI Wrath Core — 0.63
+# EllesmereUI Wrath Core — 0.66
+
+0.66 (sem bump extra): rodapé do painel mostra a base Retail `v9.4.0`
+(`EllesmereUI.VERSION`, antes 9.3.4) e, embaixo, "3.3.5 build <X-EUI-Release>"
+lido do TOC do Core. "All EUI Addons" e "Memory Usage:" agora passam por
+`EllesmereUI.L` (já tinham tradução). A troca de VERSION muda o carimbo do
+último login, então o ponto de Patch Notes acende uma vez.
+
+0.66 (Item ID no tooltip, sem bump extra): `EUI_TooltipIDs_335.lua` adiciona o
+OnTooltipSetItem do Retail. Com Show Spell ID on Tooltip ligado (e o mesmo
+modificador), tooltips de item ganham "Item ID" e "Icon" (nome do arquivo do
+ícone, já que o 3.3.5 devolve caminho e não fileID). `showItemID` e `showIconID`
+(chaves do Retail, padrão ligado) desligam cada linha; toggles em Global
+Settings > DEVELOPER. Também registra ShoppingTooltip1/2 e não duplica a linha
+ItemID de outro addon.
+
+0.66 (Window Scale): `EllesmereUI_Panel.lua` ganha do Retail 9.4
+`PANEL_SCALE_MIN/MAX` (75%-200%), `SetPanelScale(scale, pin)` (o painel desliza
+mantendo o pin, a trilha do slider ou o cursor, no lugar), `StepPanelScale` (passos de
+5%) e `_ShiftWheelScale`: Shift + roda do mouse sobre o painel (área de clique, barra
+lateral e página) muda a escala. Não portado: o resnap de bordas depois da animação
+(`PP.ResnapBordersUnderRoots`).
+
+0.66 (cards de estilo): `EllesmereUI.BuildStyleCards` aceita `inUseAlpha` e
+`badgeSize` como no Retail 9.4; o selo IN USE é desenhado no pai, então fica
+inteiro com o card a 50%. Usado pela página Style (ver Options 0.114).
+
+0.66 (sync): o botão de sync da barra lateral dava erro ao abrir (SetParent(nil) em
+texturas/textos não existe no 3.3.5). As regiões antigas do popup e da confirmação
+agora vão para um frame escondido; o mesmo no cabeçalho do painel e no ClearContent.
+
+0.66: strings de perfil do Retail importam o que existe no port. Novo
+EllesmereUI_ProfileImport_335.lua: cada módulo parte das configurações atuais do
+port e recebe só valores com a mesma chave e o mesmo tipo (Action Bars renomeia
+MainBar/Bar2/PetBar para bar1/bar2/petBar). Módulos só do Retail (Dragon Riding,
+Mythic+), specs atribuídas, overrides de spec e feitiços do Cooldown Manager ficam
+de fora; âncoras só entre elementos registrados aqui. Exportações do port agora
+levam client = "wrath"; strings antigas do port são reconhecidas (bar1/_abRetail,
+IDs de spec 33xxx) e importam como antes. O chat mostra quantas opções entraram.
+Valores com unidade diferente são convertidos no import: Nameplates targetScale
+(porcentagem no Retail, multiplicador aqui) e QoL raidTools.scale (o contrário).
+Strings só de Nameplates do Retail (sem client) agora são detectadas como Retail
+(healthBarHeight/castBarHeight/enemyNameTextSize sem `width`) e as chaves com outro
+nome no port são convertidas: healthBarWidth (extra sobre 150) vira width = 150 + v,
+healthBarHeight/castBarHeight/enemyNameTextSize/castBar/maxDebuffs/debuffIconSize etc.
+viram height/castHeight/nameSize/castBarColor/maxAuras/auraSize; showCastIcon e
+castIconOnRight viram castIconPosition. Sem bump.
+Posições do Retail: o port só guarda posição de elemento já movido, então o Overlay
+perdia quase todas. Registros válidos {point, x, y} agora entram inteiros em
+unlockPos/position/savedPos e dentro de positions/barPositions; chaves com outro nome
+são movidas: CDM cdmBarPositions -> positions (só barras do perfil), Raid Frames
+unlockPos/partyUnlockPos/healerMana.unlockPos -> positions.raid10/25/40/party/healerMana,
+QoL fpsPos/secondaryStatsPos -> positions.fps/stats, Chat chatPosition -> position,
+Damage Meters dm.windows[i].position -> windows[i].savedPos, Action Bars
+XPBar/RepBar/MicroBar/BagBar -> hud_xp/hud_reputation/hud_micro/hud_bags e tooltip
+{centerX, centerY} -> {point = "CENTER", x, y}. O uiScale do criador continua sendo
+aplicado como no Retail, então as posições ficam no mesmo lugar da tela. Sem bump.
+ImportProfile num perfil que já existe (o ativo, pelo Options 0.114) mantém os
+alvos de sync desse perfil (syncedModules); só um perfil novo sai deles. Sem bump.
+Unlock Mode: ícones e textos da barra do topo mais claros (ligado 1.0, desligado
+0.8, grade Dimmed 0.9; Retail usa 0.6/0.3), sem bump.
+
+0.65: novo EUI_UnitMenu_335.lua com EllesmereUI.UnitMenuWithoutFocus(dropdown).
+Menus de unidade abertos por addon rodam com taint no 3.3.5, e Set Focus /
+Clear Focus chamam FocusUnit/ClearFocus protegidos ("blocked from an action
+only available to the Blizzard UI"). Fora de combate, um hooksecurefunc em
+ToggleDropDownMenu cobre cada item com um SecureActionButtonTemplate (type focus /
+macro /clearfocus, unit do menu), posicionado em coordenadas do UIParent, sem
+ancorar no menu; o clique do jogador foca pelo template seguro e fecha o menu.
+Em combate um hooksecurefunc em UnitPopup_HideButtons zera os itens em
+UnitPopupShown só nos menus registrados, e PLAYER_REGEN_DISABLED esconde os
+botões e fecha um menu aberto. Os menus da Blizzard ficam iguais.
+
+Sem bump: o Party Mode também dispara com o 81005 (lockout de Bloodlust do servidor).
+
+0.64: setas do teclado no Unlock Mode (1 px; Shift = 100 px), como no Retail. O
+3.3.5 não propaga teclado (sem SetPropagateKeyboardInput), então em vez de um frame
+com EnableKeyboard o EUI335UnlockNudgeButton usa SetOverrideBindingClick só para
+UP/DOWN/LEFT/RIGHT e SHIFT-<seta> enquanto o Unlock Mode está aberto, e
+ClearOverrideBindings ao fechar ou ao entrar em combate (SuspendForCombat esconde
+antes do lockdown; PLAYER_REGEN_ENABLED limpa se sobrou). Com o Unlock Mode aberto
+as setas não giram o personagem. Caixas de texto com foco recebem as setas antes.
+
+Sem bump: EUI_AuraFilters_335.lua ganhou F.RAID_DEBUFFS e F.IsRaidDebuff(id,
+nome) e os modos de debuff "raid"/"raidOwn" (Unit Frames 0.22, Nameplates 0.16).
+F.Allow recebe o nome da aura como 7º argumento para casar qualquer rank.
 
 0.63: botão "Uninstall EUI" em Global Settings > General, como no Retail: devolve
 as configurações do jogo que o EUI mudou (CVars de nameplates, minimapa, chat,

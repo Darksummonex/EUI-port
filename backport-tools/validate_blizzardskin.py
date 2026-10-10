@@ -155,6 +155,11 @@ assert(EllesmereUI.GetBlizzWindowStyle('charsheet')=='off')
 BS.SetWindowsEnabled(true); assert(c.active and EllesmereUI.GetBlizzWindowStyle('charsheet')=='eui')
 BS.SetValue('reskinPopupsMenus',false); assert(not BS.states[StaticPopup1].active and not BS.states[DropDownList1].active)
 BS.SetValue('reskinPopupsMenus',true); assert(BS.states[StaticPopup1].active)
+-- Guild MOTD's wide box is taller than its text line; frame only the line.
+StaticPopup1WideEditBox=CreateFrame('EditBox','StaticPopup1WideEditBox',StaticPopup1)
+StaticPopup1WideEditBox:SetFont('Fonts\\\\FRIZQT__.TTF',12,''); StaticPopup1WideEditBox:SetWidth(350); StaticPopup1WideEditBox:SetHeight(64)
+BS.Apply(); local wide=BS.states[StaticPopup1].insets[StaticPopup1WideEditBox]
+assert(wide and wide.panel:GetHeight()==24 and wide.panel.point[1]=='RIGHT' and wide.panel.point[4]==6,'wide popup box panel covers the popup title and buttons')
 -- Native dropdown rows carry a hidden right-side Icon; no empty frame for it.
 DropDownList1Button1=CreateFrame('Button','DropDownList1Button1',DropDownList1)
 DropDownList1Button1Icon=DropDownList1Button1:CreateTexture(); DropDownList1Button1Icon:Hide()

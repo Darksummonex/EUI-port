@@ -870,6 +870,7 @@ local function Layout(d,bar)
         if nativeFrame then Snapshot(nativeFrame); nativeFrame:SetParent(hidden); nativeFrame:SetAlpha(0) end
     end
     Background(bar,p)
+    if ns.AB_ApplyCaps then ns.AB_ApplyCaps(d.key,bar,size,vertical,rows>1) end
     if not d.native then
         RegisterStateDriver(bar,"page",d.key=="bar1" and ns.GetPageDriver() or tostring(d.page))
         if d.key=="bar1" then PagingArrows(bar,p,size) end
@@ -958,7 +959,7 @@ function ns.AB_Style() return "eui" end
 -- Unlock mover "Element Options" targets, shared with the options page.
 local HUD_TARGETS={
     micro={"MICRO MENU & BAGS","Micro Menu Skin"},bags={"MICRO MENU & BAGS","Bag Bar Skin"},
-    xp={"EXPERIENCE BAR","Enable Experience Bar"},reputation={"REPUTATION BAR","Enable Reputation Bar"},
+    xp={"EXPERIENCE BAR","XP Bar Style"},reputation={"REPUTATION BAR","Enable Reputation Bar"},
     buffs={"PLAYER AURAS","Buff Mover"},debuffs={"PLAYER AURAS","Debuff Mover"},
 }
 function ns.RegisterSettingsTargets()

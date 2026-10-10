@@ -19,6 +19,14 @@ core=(root/'EllesmereUI/EllesmereUI_Lite.lua').read_text(encoding='utf-8-sig')
 safe=lua.execute('local function errorhandler('+core.split('local function errorhandler(',1)[1].split('\n-------------------------------------------------------------------------------',1)[0]+'\nreturn safecall')
 assert safe(ns.addon.OnInitialize,ns.addon) is True
 lua.execute("R.GetSettings().raidLayoutMode='40'")
+lua.execute('''
+function ConfirmReadyCheck() end
+local baseHook=hooksecurefunc
+function hooksecurefunc(a,b,c)
+    if a=='ConfirmReadyCheck' then local orig=_G[a]; _G[a]=function(...) local r=orig(...); b(...); return r end; return end
+    return baseHook(a,b,c)
+end
+''')
 assert safe(ns.addon.OnEnable,ns.addon) is True
 lua.execute('''
 assert(#R.buttons==74 and #headers==11 and #unlockByFolder.EllesmereUIRaidFrames==6,#R.buttons..' '..#headers..' '..#unlockByFolder.EllesmereUIRaidFrames)
@@ -95,6 +103,7 @@ units.party1.connected=true; units.party1.dead=true; R.UpdateAll(false); assert(
 units.party1.dead=false; units.party1.ghost=true; R.UpdateAll(false); assert(member.status:GetText()=='Ghost')
 units.party1.ghost=false; units.party1.afk=true; R.UpdateAll(false); assert(member.status:GetText()=='AFK'); units.party1.afk=false
 units.party1.ready='ready'; event:RunScript('OnEvent','READY_CHECK','Player',20); assert(member.ready:IsShown())
+assert(member.ready:GetTexture()=='Interface\\\\RaidFrame\\\\ReadyCheck-Ready','ready check art must use the Wrath file names: '..tostring(member.ready:GetTexture()))
 event:RunScript('OnEvent','READY_CHECK_FINISHED'); now=13; R.UpdateAll(false); assert(not member.ready:IsShown())
 units.raid1={name='Raid one',guid='R1',group=1,rank=2,class='DRUID',health=100,maxHealth=100,power=100,maxPower=100}
 units.raid2={name='Raid two',guid='R2',group=1,class='PRIEST',health=75,maxHealth=100,power=50,maxPower=100,debuffs={{name='Mine',id=172,caster='player',dispel='Magic',duration=5,expires=18}}}
@@ -560,6 +569,18 @@ for role in ['tank','healer','dps']:
 retail=Path('D:/World of Warcraft/_retail_/Interface/AddOns/EllesmereUIRaidFrames')
 for original in retail.rglob('*'):
     if original.is_file() and original.suffix.lower()!='.toc': assert original.read_bytes()==(root/'EllesmereUIRaidFrames'/original.relative_to(retail)).read_bytes(),original
+lua.execute('''
+-- 3.3.5 UnitIsPartyLeader can say yes for several members: only GetPartyLeaderIndex counts.
+local oldUIPL,oldCount=UnitIsPartyLeader,partyCount
+UnitIsPartyLeader=function() return true end; partyCount=2
+units.player=units.player or {name='Me',guid='g-me'}; units.party1={name='Lylinne',guid='g-p1'}; units.party2={name='Aimstiri',guid='g-p2'}
+GetPartyLeaderIndex=function() return 1 end; IsPartyLeader=function() return nil end
+assert(R.IsPartyLeaderUnit('party1') and not R.IsPartyLeaderUnit('party2') and not R.IsPartyLeaderUnit('player'),'party1 leads alone')
+GetPartyLeaderIndex=function() return 0 end; IsPartyLeader=function() return 1 end
+assert(R.IsPartyLeaderUnit('player') and not R.IsPartyLeaderUnit('party1') and not R.IsPartyLeaderUnit('party2'),'player leads alone')
+partyCount=0; assert(not R.IsPartyLeaderUnit('player'),'solo has no leader')
+UnitIsPartyLeader,partyCount=oldUIPL,oldCount; GetPartyLeaderIndex=nil; IsPartyLeader=nil; units.party1=nil; units.party2=nil
+''')
 toc=(root/'EllesmereUIRaidFrames/EllesmereUIRaidFrames.toc').read_text(encoding='utf-8-sig')
 assert '## Interface: 30300' in toc and '\nEllesmereUIRaidFrames.lua' not in toc and '## SavedVariables:' not in toc
 for directory in ['Icons_335','Textures_335']:

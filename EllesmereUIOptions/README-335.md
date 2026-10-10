@@ -1,4 +1,62 @@
-# Options 3.3.5 — 0.113
+# Options 3.3.5 — 0.114
+
+0.114 (DataBars, visual do Retail 9.4): `EUI_DataBars_335_Options.lua` ganha o
+cabeçalho de conteúdo do Retail: dropdown de barra (280px, estilo `DD_STYLE`) com
+renomear (popup de texto) e apagar em cada item e "+ Create New DataBar..." no fim;
+botão "+ New Bar" abre a faixa de 4 cards de modelo (ícone, título, descrição, linha
+de destaque; ícones `.tga` de `media/icons_335`). Sem barras, a página mostra o texto
+"Create your first DataBar..." e os cards em grade 2x2 (sem cabeçalho). As linhas
+Select Bar, Bar Name e New Bar Template saíram; DATABARS fica com Delete e Unlock
+Mode. Não portado: a faixa de prévia arrastável dentro do cabeçalho e o popout
+vertical (a prévia clicável continua no corpo da página).
+
+0.114 (Window Scale, Retail 9.4): o cabeçalho do painel ganha o slider Window Scale
+à esquerda dos botões de recolher e fechar (75%-200% em passos de 5%; arrastar mostra
+o valor e aplica ao soltar, a roda do mouse anda um passo, Shift + roda em qualquer
+parte do painel também, e o controle brilha). "Special thanks to: Ellesmere" foi para
+baixo do X de fechar, como no Retail. O dropdown EUI Options Panel Scale da página
+General continua.
+
+0.114 (Style, menus do Retail 9.4): as linhas por módulo (seção MODULE STYLES)
+saíram. Como no Retail, cada card de estilo tem embaixo um dropdown de checkbox
+(`BuildVisOptsCBDropdown`, com `dimLocked` portado para `EllesmereUI_Widgets.lua`)
+com os módulos que usam aquele estilo; marcar um módulo em outro card só guarda a
+escolha, e o botão Apply Styles grava todas de uma vez com um único reload. Sair
+da página descarta as escolhas. O card em uso fica a 50% com o selo IN USE maior
+(`inUseAlpha`/`badgeSize` em `EllesmereUI_StyleCards.lua`). "Open Style" nas
+páginas dos módulos só abre a página Style.
+
+0.114 (Style): a página Style só mostra estilos que funcionam no 3.3.5. Cooldown
+Manager (ícones e barras), Minimap e Damage Meters oferecem só EllesmereUI e
+Classic WoW UI (`m.styles`); Player Aura Bars saiu (não tem estilo no port). Apply
+to All e a contagem dos cards pulam módulos sem aquele estilo (`Supports`).
+`DMProfile` lê o perfil raiz do Damage Meters do port (não existe `.dm`), e
+`PathGet`/`PathSet` aceitam índices numéricos (`windows.1.bgColor`). Blizzard
+Style não foi portado para Cooldown Manager, Minimap e Damage Meters.
+
+0.114 (Global Settings): topo da página General no estilo do Retail 9.4. Uma
+linha com Reset ALL EUI Addon Settings | Uninstall EUI, via
+`EllesmereUI.BuildActionCardRow` inline (ícones `sync.tga` e `power.tga` em
+`media/icons_335`). Os botões antigos de Uninstall e Reset ALL no fim da página
+saíram. Reset ALL agora pede digitar "Confirm" e recarrega por `RequestReload`.
+Optimize My FPS and Graphics (card do meio no Retail) foi removido: as CVars dele
+(graphics*, RAIDsettingsEnabled, ResampleAlwaysSharpen, Contrast) não existem no
+3.3.5, então não mudava nada. Um `gfxBackup` antigo fica no SavedVariables sem uso.
+Correção: `BuildActionCardRow` (e o `BuildInlineRow` dele) vivia só em
+`EllesmereUI_Widgets_PageParts.lua`, que o TOC não carrega, e Global Settings dava
+erro na linha 2383. Copiado para `EllesmereUI_Widgets.lua` por
+`backport-tools/port_action_card_row.py`; `validate_uninstall.py` agora exige a
+função num arquivo carregado pelo TOC.
+
+0.114: o dropdown Active Profile (página Profiles) mostra de novo os ícones
+de renomear, apagar e keybind em cada perfil. Eles apontavam para PNG, que o
+3.3.5 não lê; agora usam `media/icons_335/*.tga` (`eui-keybind-2.tga` gerado
+por `backport-tools/prepare_profile_menu_icons.py`).
+Import em perfil existente: na página de import, a caixa "Import into current
+profile" trava o nome no perfil ativo; o import pede confirmação e atualiza o
+perfil no lugar (só os módulos marcados mudam, o resto fica). Digitar o nome do
+perfil ativo faz o mesmo. Outros nomes já usados
+continuam bloqueados, com aviso para trocar de perfil antes.
 
 Sem bump: com o !!!ClassicAPI instalado nenhum dropdown abria (o
 SetClipsChildren dele prendia o menu num ScrollFrame vazio). Todo frame

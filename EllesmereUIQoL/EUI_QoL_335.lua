@@ -24,7 +24,9 @@ local defaults={profile={enabled=true,autoRepair=false,guildRepair=false,autoSel
     trackerIconSize=30,movementCombatOnly=false,movementSound="none",
     cursor={enabled=false,size=36,combatOnly=false,classColor=false,trail=false,gcd=false,cast=false,texture="ring_normal",
         color={r=.05,g=.82,b=.62},opacity=100,instancesOnly=false,reticle=false},
-    shifter={enabled=false,positions={}},raidTools={enabled=false,groupOnly=true,pullSeconds=10,pullSync=true,pullChat=true,scale=100},
+    shifter={enabled=false,positions={}},raidTools={enabled=false,groupOnly=true,pullSync=true,pullChat=true,scale=100,
+        toggleKey=false,collapsedIcon=true,showAs="one",growDir="downright",compactWidth=400,compactHeight=40,
+        pullTimes={3,5,10},showConvert=true,showDisband=true,showReinvite=true,worldMarkers=true},
     logging={enabled=false,raids=true,dungeons=false},
     selfCombatText={enabled=false,size=16,critScale=1.5,rise=80,duration=1.9,stagger=true,anim="straight",direction="up",
         font="__combat",outline="OUTLINE",shadow=false,abbreviate=false,damage=true,heal=true,avoid=true,combat=true,
@@ -263,6 +265,7 @@ function ns.Apply()
     if ns.ApplyExtras then ns.ApplyExtras() end
     if ns.ApplyGroup then ns.ApplyGroup() end
     if ns.ApplySelfCombatText then ns.ApplySelfCombatText() end
+    if ns.ApplyRedirect then ns.ApplyRedirect() end
     ns.UpdateLogging()
 end
 function addon:OnInitialize()

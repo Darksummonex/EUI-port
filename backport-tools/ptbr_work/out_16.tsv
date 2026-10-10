@@ -1,0 +1,220 @@
+5259	Uma barra vazia para montar do zero.
+5260	Uma faísca brilhante na borda do preenchimento.
+5261	Um foco aliado tem prioridade sobre o tanque. O foco é verificado no momento em que você aperta, também em combate.
+5262	Um membro do grupo para usar como tanque. Vazio usa o Tanque Principal da raide e depois o tanque do Localizador de Masmorras. Atualiza fora de combate.
+5263	Uma linha a cada 10% e uma marca a cada 5% ao longo da barra.
+5264	Um painel de controle de raide com verificação de prontidão, contagem de pull e marcadores de alvo. Em raide só aparece enquanto você é o líder ou assistente, já que nenhum dos botões funciona sem isso; em grupo aparece sempre.
+5265	Abreviar Números
+5266	Animação
+5267	Aplicar Estilos
+5268	Configurações de Diálogo Automático
+5269	Selecionar Automaticamente Diálogo Único
+5270	Cor de Evasão
+5271	Cor de fundo
+5272	Padrão da Blizz
+5273	Padrão da Blizz também troca a barra de reputação pela da Blizzard.
+5274	Ambas as Especializações
+5275	Linha brilhante na borda da varredura (requer um cliente com Cooldown:SetDrawEdge; só varredura nativa).
+5276	Tamanho do Ícone de Bônus
+5277	Deslocamento X dos Bônus
+5278	Deslocamento Y dos Bônus
+5279	Bônus por Linha
+5280	Estilo Classic WoW UI
+5281	Clique para Limpar Foco
+5282	Limpar Marcadores
+5283	Limpar Marcadores de Chão
+5284	Limpa seu foco quando você clica no quadro de foco dessa forma. Funciona em combate, onde o menu do clique direito não consegue limpar o foco.
+5285	Feche o Modo de Edição primeiro e tente novamente.
+5286	Cor de Combate
+5287	Faixa Compacta
+5288	A Faixa Compacta coloca marcadores, verificação de prontidão e contagem de pull em uma linha que pode ser redimensionada no Modo de Desbloqueio. As outras opções mantêm os layouts em janelas.
+5289	Relógio compacto e leitura de FPS.
+5290	O XP de missões concluídas aparece à frente do preenchimento em verde, e o de missões incompletas depois dele em dourado. Missões sob cabeçalhos recolhidos do registro de missões não são contadas.
+5291	Missões concluídas
+5292	Só Missões Concluídas
+5293	Duração da contagem em segundos. A Faixa Compacta usa a Primeira com Ctrl + Clique esquerdo, a Segunda com Shift + Clique esquerdo, a Terceira com Clique esquerdo, e o Clique direito para a contagem. Defina uma contagem como 0 para desativar esse atalho.
+5294	Criar Nova Barra de Dados
+5295	Multiplicador de Tamanho do Crítico
+5296	Só a Zona Atual
+5297	Cor de Dano
+5298	Visual da Página de Barras de Dados
+5299	Padrão para todos os ícones desta barra; os ícones podem substituí-lo. 
+5300	Começar Recolhido ao Mostrar
+5301	Direção
+5302	Desativar em Instâncias
+5303	Ícone do Tipo de Dissipação
+5304	Exibe itens inúteis (qualidade cinza e itens que você marcou como lixo) em estilo acinzentado.
+5305	Texto do Divisor
+5306	Divisores
+5307	Para Baixo e Depois à Direita
+5308	Baixo Esquerda
+5309	Baixo Direita
+5310	Duração (segundos)
+5311	Texturas de Barra do EllesmereUI
+5312	Fonte do EllesmereUI
+5313	Vazio = Tanque Principal da raide, depois função de tanque
+5314	Espaço Vazio
+5315	Espaço Vazio adicionado.
+5316	Espaço Vazio: mantém esta posição livre na barra.
+5317	Configurações das Pontas
+5318	Pontas
+5319	Filtro de Bônus Inimigos
+5320	Entrando / Saindo de Combate
+5321	Itens equipados ganham uma borda com a cor da raridade.
+5322	Reformulação da Barra de Experiência
+5323	TEXTO DA BARRA DE EXPERIÊNCIA
+5324	Estilo do Preenchimento
+5325	Primeira Contagem
+5326	Plano pinta com a cor de XP. Os gradientes vão da cor de XP até a cor final.
+5327	Bordas de Aura do Foco
+5328	Foco Primeiro
+5329	Fonte
+5330	Barra de largura total com os blocos de informação clássicos.
+5331	Só nos modos de janela inteira. Começa como um pequeno ícone, e o atalho alterna entre o ícone e as janelas inteiras.
+5332	Só nos modos de janela inteira. Para qual lado as janelas se estendem a partir do ícone recolhido quando abrem.
+5333	GitHub (port 3.3.5)
+5334	Linha de Ações das Configurações Globais
+5335	Cor final do gradiente
+5336	BOTÕES DE GRUPO
+5337	Cor de Cura
+5338	Cura Recebida
+5339	Tamanho do Ícone Auxiliar
+5340	Ocultar Fora da Forma/Postura
+5341	Ocultar Fora da Forma/Postura (Manter Lugar)
+5342	Ocultar Saciado / Exaustão
+5343	Ocultar Até Ser Utilizável
+5344	Ocultar Até Ser Utilizável (Manter Lugar)
+5345	Ocultar Até Ser Utilizável: só aparece enquanto pode ser usado e fora de recarga, como Sobrepujar ou Investida Vitoriosa após um proc; recursos baixos não o ocultam. Ocultar Fora da Forma/Postura: só aparece na forma ou postura que o feitiço exige, mesmo em recarga. Manter Lugar deixa o espaço; os outros o fecham.
+5346	Oculta as penalidades de bloqueio de Sede de Sangue e Heroísmo.
+5347	Destacar Itens ao Passar sobre Atributo
+5348	Passar o mouse sobre um atributo na barra lateral faz brilhar os itens equipados que o concedem (Acerto, Crítico, Aceleração, Defesa, Força...).
+5349	Caçadores e Ladinos: um ícone que você clica (ou associa em Teclas de Atalho > EllesmereUI Quality of Life) que lança Redirecionar ou Truques do Ofício no seu foco, senão no tanque, senão em um alvo aliado
+5350	Ignorar Missões de Nível Baixo
+5351	Importar no Perfil Ativo?
+5352	Importar no perfil atual (%1$s)
+5353	Importar no Seu Perfil Atual
+5354	Importar Perfis do Retail
+5355	Em Qualquer Grupo
+5356	Missões incompletas
+5357	Tamanho do Nome do Encantamento na Inspeção
+5358	Ícones de Encantamento, Gema e Fivela Faltando na Inspeção
+5359	Inverter Roda do Mouse
+5360	ID do Item na Dica
+5361	Marcador de Lixo
+5362	Opções do Marcador de Lixo
+5363	Só os botões do micromenu.
+5364	Manter Sessão ao Recarregar
+5365	Mantém a barra no nível máximo, cheia, com o nível e os tempos. Tempo Neste Nível mostra o tempo total jogado nele.
+5366	Ponta Esquerda
+5367	Ponta Esquerda ou Ponta Direita
+5368	Luxthos
+5369	Alternativa por macro: /click EUI335QoLRedirect
+5370	Direção de Crescimento do Menu
+5371	AJUDANTE DE REDIRECIONAR / TRUQUES
+5372	Ajudante de Redirecionar / Truques
+5373	Erros, Esquivas e Aparos
+5374	Padrão do Módulo segue o contorno da fonte dos Quadros de Raide da página Fontes.
+5375	Contorno do Nome
+5376	Nativo
+5377	Nativo: a varredura quadrada escura do cliente. Moldado: uma varredura desenhada que segue ícones redondos e usa a Cor da Varredura.
+5378	Distância do Aninhamento
+5379	Distância e Tamanho do Aninhamento
+5380	Tamanho do Ícone Aninhado
+5381	Nenhuma Barra de Dados
+5382	Uma Janela
+5383	Só Dissipáveis
+5384	Só Grupo e Pull
+5385	Só Marcadores
+5386	Próprias e Penalidades de Raide
+5387	Atalho Próprio
+5388	Porcentagem do tamanho normal das pontas.
+5389	Escolhe para você a única opção de diálogo de um PNJ.
+5390	Bônus do Jogador nas Dicas
+5391	Valores positivos afastam as duas pontas da barra.
+5392	Especialização Primária
+5393	CONTAGEM DE PULL
+5394	Empurra as mensagens mais antigas para que uma nova nunca se sobreponha a elas.
+5395	Sobreposição de XP de Missões
+5396	Filtro de Penalidades de Raide
+5397	Penalidades de Raide mostra as penalidades comuns de raide (armadura, dano mágico e físico recebido, crítico recebido, poder de ataque, velocidade de ataque e de lançamento, cura recebida, Julgamentos, Marca do Caçador) de qualquer um.
+5398	Lê os atributos do próprio item; encantamentos e gemas não são contados.
+5399	Recarregue para terminar de redefinir o EUI.
+5400	Recarregue para terminar de desinstalar o EUI.
+5401	Renomear Barra de Dados
+5402	Descanso Após XP de Missões
+5403	Cor de descanso
+5404	Retorna todos os addons do EUI aos padrões.
+5405	Reverte as alterações do EUI e desativa.
+5406	Ponta Direita
+5407	Distância de Rolagem
+5408	Segunda Contagem
+5409	Especialização Secundária
+5410	Cor de Seleção
+5411	Cor de Seleção: Cor Personalizada
+5412	TEXTO DE COMBATE PRÓPRIO
+5413	Texto de Combate Próprio
+5414	Vender Lixo ignora itens sem preço de venda, equipamentos de conjuntos e itens fixados.
+5415	Moldado
+5416	Varredura de Recarga Moldada
+5417	Compartilhar Atalho Com
+5418	Shift + Clique nos Marcadores de Chão
+5419	Shift + Clique esquerdo em um ícone de marcador usa o item de marcador de chão dele; depois clique no chão. Só os marcadores cujo item está nas suas bolsas ganham isso; os demais mantêm Shift + Clique para limpar o marcador de alvo. Shift + Clique esquerdo no ícone de limpar aperta o botão Reset Markers do servidor.
+5420	Mostra uma pequena moeda no canto dos itens marcados como lixo.
+5421	Mostrar como
+5422	Mostrar no Nível Máximo
+5423	Mostrar Moeda no Lixo
+5424	Mostrar Converter em Raide
+5425	Mostrar Desfazer
+5426	Mostrar Divisores
+5427	Mostrar Cor do Item Equipado
+5428	Mostrar Nomes dos Encantamentos na Inspeção em Vez de Ícones
+5429	Mostrar Nome do Ícone do Item
+5430	Mostrar ID do Item na Dica
+5431	Mostrar Bônus do Jogador
+5432	Mostrar Reconvidar
+5433	Mostrar XP de Descanso
+5434	Mostrar Nome do Alvo
+5435	Mostra o botão de moeda no cabeçalho da bolsa. Clique nele e depois clique nos itens para marcá-los ou desmarcá-los como lixo. O lixo vai para sua própria categoria Lixo, e um botão Vender Lixo aparece ao lado da moeda enquanto um vendedor está aberto.
+5436	Mostrado no nível máximo. Bônus de profissão só são verificados na sua própria ficha.
+5437	Mostra as penalidades comuns de raide de qualquer um: armadura, dano mágico e físico recebido, crítico recebido, poder de ataque, velocidade de ataque e de lançamento, cura recebida, Julgamentos e Marca do Caçador.
+5438	Mostra o botão Converter em Raide. Em uma raide de cinco ou menos ele vira Converter em Grupo: todos são removidos e convidados de volta para um novo grupo.
+5439	Mostra as penalidades que você aplica mais as penalidades comuns de raide de qualquer um.
+5440	Mostra o botão Desfazer. Ele sempre pergunta antes de desfazer, mas ocultá-lo o tira de vez do alcance de cliques acidentais.
+5441	Mostra os bônus do jogador sob o mouse como ícones ao lado da dica (até 16).
+5442	Mostra a sobreposição, o ícone de tipo e as cores de borda só para penalidades que você pode dissipar no momento.
+5443	Mostra o botão Reconvidar. Ele pergunta primeiro, depois remove todos e os convida de volta para o mesmo tipo de grupo. Os jogadores precisam aceitar o novo convite.
+5444	Mostra seu dano recebido, cura, evasões e entrada/saída de combate acima do quadro do jogador em vez do texto de combate da Blizzard, cujas outras mensagens ficam ocultas enquanto isto está ativo. Mova-o no Modo de Desbloqueio.
+5445	Marcas Inteligentes
+5446	IDs de Feitiço no Detalhamento
+5447	Poder Mágico
+5448	Escalonar Acertos
+5449	Destaque ao Passar sobre Atributo
+5450	Estático
+5451	Reto
+5452	Menus de Visual da Página de Estilo
+5453	Cor da Varredura
+5454	Estilo da Varredura
+5455	Nome do Tanque
+5456	Sombra do Texto
+5457	A WeakAura [Merfin] Experience Bar (Luxthos): gradiente de azul para roxo, Sobreposição de XP de Missões, faísca, descanso após XP de missões e sete textos com nível, tempos e tempo até o próximo nível.
+5458	A caixa de dica clássica em volta da janela do medidor, com botões de cabeçalho vanilla e todos os recursos de medidor do EllesmereUI.
+5459	O espaço entre os ícones de um menu aninhado e a entrada que o abre.
+5460	O segmento de descanso começa onde a Sobreposição de XP de Missões termina em vez de no seu XP atual.
+5461	O grupo de talentos em que este menu de ações funciona. Fora dele o atalho não faz nada e o menu fica oculto onde está aninhado.
+5462	Terceira Contagem
+5463	Esta opção requer um quadro de Foco do EllesmereUI.
+5464	Esta opção requer o Estilo da Barra de XP EllesmereUI ou Luxthos
+5465	Tempo Nesta Sessão e XP por Hora continuam após um /reload (um carregamento em até cinco minutos) em vez de recomeçar.
+5466	Bônus Temporizados
+5467	Alternar Ferramentas de Raide
+5468	Alterna os painéis das Ferramentas de Raide, dentro ou fora de combate.\n\nClique esquerdo para definir um atalho.\nClique direito para remover o atalho.
+5469	Duas Janelas
+5470	Desinstalar e Recarregar
+5471	Desinstalar EUI
+5472	Cima Esquerda
+5473	Cima Direita
+5474	Usa o atalho de outro menu de ações enquanto esse menu não está carregado. Os dois menus devem estar atribuídos a especializações diferentes.
+5475	Quais bônus as placas de identificação inimigas mostram. Ajuste na página Filtros de Aura.
+5476	Quais pontas da barra mostram os grifos.
+5477	Estilo da Barra de XP
+5478	Cor de XP

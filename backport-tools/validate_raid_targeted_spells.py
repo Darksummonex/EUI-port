@@ -10,7 +10,7 @@ for file in ['backport-tools/wrath_mock.lua','backport-tools/inventory_resources
 toc=(root/'EllesmereUIRaidFrames/EllesmereUIRaidFrames.toc').read_text(encoding='utf-8-sig')
 order=[l.strip() for l in toc.splitlines() if l.strip().endswith('.lua') and not l.startswith('#') and not l.strip().startswith('Libs')]
 assert order.index('EUI_RaidFrames_335_Extras.lua')<order.index('EUI_RaidFrames_335_TargetedSpells.lua'),order
-assert '## Version: 9.3.4-335-0.20' in toc
+assert '## Version: 9.3.4-335-0.24' in toc
 ns=lua.table()
 for file in order:
     lua.execute((root/'EllesmereUIRaidFrames'/file).read_text(encoding='utf-8-sig'),'EllesmereUIRaidFrames',ns)

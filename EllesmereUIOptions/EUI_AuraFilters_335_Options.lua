@@ -38,7 +38,11 @@ function E.BuildWrathAuraFilters(folder,parent,y,selectedPrefix)
     for _,prefix in ipairs(selectedPrefix and {selectedPrefix} or {"debuff","buff"}) do
         local pre=prefix
         Section(pre=="debuff" and "DEBUFF FILTERS" or "BUFF FILTERS")
-        Row({type="dropdown",text=pre=="debuff" and "Debuff Filter" or "Buff Filter",values={all="Show All",own="Own Only",tracked="Only Tracked"},order={"all","own","tracked"},
+        local raidModes=pre=="debuff" and not rf
+        Row({type="dropdown",text=pre=="debuff" and "Debuff Filter" or "Buff Filter",
+            values={all="Show All",own="Own Only",tracked="Only Tracked",raid="Raid Debuffs",raidOwn="Own and Raid Debuffs"},
+            order=raidModes and {"all","own","tracked","raid","raidOwn"} or {"all","own","tracked"},
+            tooltip=raidModes and "Raid Debuffs shows the common raid debuffs (armor, spell and physical damage taken, crit taken, attack power, attack and cast speed, healing taken, Judgements, Hunter's Mark) from anyone." or nil,
             getValue=function() local s=Settings(); return s and F.Mode(s,pre) or "all" end,
             setValue=function(v) local s=Settings(); if s then s[pre.."FilterMode"]=v; if pre=="debuff" then s.onlyPlayerDebuffs=v=="own" else s.onlyPlayerBuffs=v=="own" end; Apply() end end},
             {type="label",text="Tracked IDs are added; excluded IDs always hide"})

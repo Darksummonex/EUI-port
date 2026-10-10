@@ -65,6 +65,15 @@ s.debuffExclude={}; s.debuffIncludeMine={[172]=true}; assert(not F.Allow(s,'debu
 s.debuffHasDuration=true; assert(not F.Allow(s,'debuff',172,true,0))
 assert(F.Allow({buffFilterMode='all',buffStealable=true},'buff',17,false,10,true))
 assert(not F.Allow({buffFilterMode='all',buffStealable=true},'buff',17,false,10,false))
+-- Raid debuff modes: built-in list by ID or by the spell's name (any rank).
+assert(F.IsRaidDebuff(58567) and F.IsRaidDebuff(7386,'58567') and not F.IsRaidDebuff(172,'Corruption'))
+local r={debuffFilterMode='raid'}
+assert(F.Mode(r,'debuff')=='raid' and F.Allow(r,'debuff',8647,false,10) and not F.Allow(r,'debuff',172,true,10))
+r.debuffInclude={[172]=true}; assert(F.Allow(r,'debuff',172,false,10))
+r.debuffExclude={[8647]=true}; assert(not F.Allow(r,'debuff',8647,false,10))
+r={debuffFilterMode='raidOwn'}
+assert(F.Allow(r,'debuff',172,true,10) and not F.Allow(r,'debuff',172,false,10) and F.Allow(r,'debuff',1,false,10,nil,'1130'))
+assert(F.Mode({buffFilterMode='raid'},'buff')=='all')
 ''')
 
 # The vendored library and its Wrath spell catalogue stay byte-for-byte intact.
@@ -183,6 +192,10 @@ Find('Select Frame').setValue('target'); assert(UF.selectedWrathAuraUnit=='targe
 Find('Tracked Spell IDs',1).setValue('172'); assert(settings.target.debuffInclude[172] and settings.player.debuffInclude==nil and ufReloaded)
 Find('Select Frame').setValue('boss1'); Find('Debuff Filter').setValue('own')
 assert(settings.boss1.debuffFilterMode=='own' and settings.target.debuffFilterMode==nil)
+local order=table.concat(Find('Debuff Filter').order,','); assert(order:find('raid,raidOwn'),order)
+Find('Debuff Filter').setValue('raidOwn'); assert(settings.boss1.debuffFilterMode=='raidOwn' and Find('Debuff Filter').getValue()=='raidOwn')
+assert(not table.concat(Find('Buff Filter').order,','):find('raid'))
+Find('Debuff Filter').setValue('own')
 assert(Find('Hide Sated / Exhaustion').getValue()==true); Find('Hide Sated / Exhaustion').setValue(false); assert(settings.boss1.debuffHideExhaustion==false)
 -- All UF frames can be disabled before the aura-container getter is exported.
 UF.UF_GetSettings=nil; UF.db={profile={boss={}}}

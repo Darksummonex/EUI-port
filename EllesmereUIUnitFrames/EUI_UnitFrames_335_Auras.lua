@@ -8,7 +8,7 @@ local entries = {}
 ns.WrathAuraEntries=entries
 
 local AURA_ZOOM, CROP_H = 0.07, 0.80
-local SATED_DEBUFFS = { [57723] = true, [57724] = true }
+local SATED_DEBUFFS = { [57723] = true, [57724] = true, [81005] = true }
 local ANCHOR_IA = {
     topleft = "BOTTOMLEFT", topright = "BOTTOMRIGHT",
     bottomleft = "TOPLEFT", bottomright = "TOPRIGHT",
@@ -69,7 +69,7 @@ end
 function ns.UF_DebuffFilterMode(s)
     local mode = s.debuffFilterMode or (s.onlyPlayerDebuffs and "own" or "all")
     -- Wrath exposes no Blizzard "important" classification.
-    if mode ~= "tracked" and mode ~= "own" then return "all" end
+    if mode ~= "tracked" and mode ~= "own" and mode ~= "raid" and mode ~= "raidOwn" then return "all" end
     return mode
 end
 function ns.UF_DebuffHasIncludes(s)
@@ -537,7 +537,7 @@ local function PaintLane(entry, isBuff, s)
         local mine = caster == "player" or caster == "pet" or caster == "vehicle"
         local include, excluded
         if Filters then
-            include = Filters.Allow(s, prefix, spellID, mine, duration, stealable)
+            include = Filters.Allow(s, prefix, spellID, mine, duration, stealable, name)
         else
             local tracked = not isBuff and s.debuffInclude and (s.debuffInclude[spellID] or s.debuffInclude[tostring(spellID)])
             excluded = not isBuff and s.debuffExclude and (s.debuffExclude[spellID] or s.debuffExclude[tostring(spellID)])

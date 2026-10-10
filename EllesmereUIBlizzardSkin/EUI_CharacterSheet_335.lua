@@ -385,7 +385,6 @@ function ns.RestoreCharacter(s)
     if c.host then c.host:Hide(); c.header:Hide() end
     RestoreGeometry(c)
     if c.widthSaved then s.frame:SetAttribute("UIPanelLayout-width",c.nativePanelWidth); c.widthSaved=nil end
-    if c.titleParent then PlayerTitlePickerFrame:SetParent(c.titleParent); c.titleParent=nil end
     if c.popupParent then
         local popup=GearManagerDialogPopup
         popup:Hide(); popup:SetParent(c.popupParent); popup:SetFrameLevel(c.popupLevel)
@@ -736,26 +735,87 @@ local function TabColor(c,kind)
     local button=c.tabs[kind]; if not button then return end
     if c.mode==kind then button.label:SetTextColor(1,.8,.2,1) else button.label:SetTextColor(.7,.7,.7,1) end
 end
+-- Known titles, "None" first, then by name as the native picker sorts them.
+local TITLE_ROW=20
+local function KnownTitles()
+    local list={}
+    for i=1,(GetNumTitles and GetNumTitles() or 0) do
+        local known=IsTitleKnown and IsTitleKnown(i)
+        local name=known and known~=0 and GetTitleName and GetTitleName(i)
+        if name then
+            name=name:gsub("^%s+",""):gsub("%s+$","")
+            if name~="" then list[#list+1]={id=i,name=name} end
+        end
+    end
+    table.sort(list,function(a,b) return a.name<b.name end)
+    table.insert(list,1,{id=-1,name=NONE or "None"})
+    return list
+end
+local function UpdateTitles(c)
+    local t=c.titles; if not t or not t:IsShown() then return end
+    local list=KnownTitles()
+    local current=t.pending or (GetCurrentTitle and GetCurrentTitle()) or -1
+    for i,entry in ipairs(list) do
+        local row=t.rows[i]
+        if not row then
+            row=Own(CreateFrame("Button",nil,t.child)); row:SetSize(198,TITLE_ROW)
+            row:SetPoint("TOPLEFT",t.child,"TOPLEFT",0,-(i-1)*TITLE_ROW)
+            row.bar=Own(row:CreateTexture(nil,"BACKGROUND")); row.bar:SetTexture(flat); row.bar:SetAllPoints(row)
+            row.bar:SetVertexColor(1,.8,.2,.14)
+            local hl=Own(row:CreateTexture(nil,"HIGHLIGHT")); hl:SetTexture(flat); hl:SetAllPoints(row); hl:SetVertexColor(1,1,1,.08)
+            row.text=Text(row,11); row.text:SetPoint("LEFT",row,"LEFT",8,0); row.text:SetWidth(186); row.text:SetJustifyH("LEFT")
+            row:SetScript("OnClick",function(self)
+                if SetCurrentTitle then SetCurrentTitle(self.titleID) end
+                t.pending=self.titleID; UpdateTitles(c)
+            end)
+            t.rows[i]=row
+        end
+        row.titleID=entry.id
+        Font(row.text,11); row.text:SetText(entry.name)
+        local selected=entry.id==current or entry.id==-1 and (current or 0)<=0
+        if selected then row.bar:Show(); row.text:SetTextColor(1,.8,.2,1) else row.bar:Hide(); row.text:SetTextColor(.9,.9,.9,1) end
+        row:Show()
+    end
+    for i=#list+1,#t.rows do t.rows[i]:Hide() end
+    t.child:SetHeight(math.max(1,#list*TITLE_ROW))
+    t.maxScroll=math.max(0,#list*TITLE_ROW-t.scroll:GetHeight())
+    t.scrollbar:SetMinMaxValues(0,math.max(1,t.maxScroll))
+    if t.maxScroll>0 then t.scrollbar:Show() else t.scrollbar:Hide() end
+    if t.scroll:GetVerticalScroll()>t.maxScroll then t.scrollbar:SetValue(t.maxScroll) end
+end
+local function BuildTitles(c)
+    local t=Own(CreateFrame("Frame",nil,c.sidebar)); c.titles=t; t.rows={}
+    t:SetPoint("TOPLEFT",c.sidebar,"TOPLEFT",7,-32); t:SetPoint("BOTTOMRIGHT",c.sidebar,"BOTTOMRIGHT",-11,8)
+    t:Hide()
+    local scroll=Own(CreateFrame("ScrollFrame",nil,t)); t.scroll=scroll; scroll:SetAllPoints(t)
+    local child=Own(CreateFrame("Frame",nil,scroll)); t.child=child; child:SetSize(204,1); scroll:SetScrollChild(child)
+    local bar=Own(CreateFrame("Slider",nil,t)); t.scrollbar=bar
+    bar:SetWidth(6); bar:SetPoint("TOPLEFT",t,"TOPRIGHT",4,0); bar:SetPoint("BOTTOMLEFT",t,"BOTTOMRIGHT",4,0)
+    bar:SetOrientation("VERTICAL"); bar:SetMinMaxValues(0,1); bar:SetValueStep(1)
+    bar:SetThumbTexture(flat)
+    local thumb=bar:GetThumbTexture(); thumb:SetSize(6,28); thumb:SetVertexColor(.3,.3,.3,1)
+    bar:SetScript("OnValueChanged",function(_,value) scroll:SetVerticalScroll(value) end)
+    scroll:EnableMouseWheel(true)
+    scroll:SetScript("OnMouseWheel",function(_,delta) bar:SetValue(math.max(0,math.min(t.maxScroll or 0,scroll:GetVerticalScroll()-delta*TITLE_ROW*3))) end)
+    for _,event in ipairs({"KNOWN_TITLES_UPDATE","NEW_TITLE_EARNED","OLD_TITLE_LOST","UNIT_NAME_UPDATE"}) do pcall(t.RegisterEvent,t,event) end
+    t:SetScript("OnEvent",function(_,event,unit)
+        if event=="UNIT_NAME_UPDATE" and unit~="player" then return end
+        t.pending=nil; UpdateTitles(c)
+    end)
+    t:SetScript("OnShow",function() t.pending=nil; UpdateTitles(c) end)
+end
 local function SetSidebarMode(c,kind)
     if InCombatLockdown() then return end
-    local picker=_G.PlayerTitlePickerFrame
-    if kind=="titles" and picker and picker:IsShown() then kind="stats" end
+    if kind=="titles" and c.mode=="titles" then kind="stats" end
     c.mode=kind
-    local stats=kind~="equipment"
+    local stats=kind=="stats"
     for _,obj in ipairs({c.summary,c.summaryLabel,c.health,c.scroll,c.scrollbar,c.better}) do
         if stats then obj:Show() else obj:Hide() end
     end
     if c.updateExtras then c.updateExtras(c) end
     if _G.GearManagerDialog then GearManagerDialog:Hide() end
     if kind=="equipment" then c.equipment:Show() else c.equipment:Hide() end
-    if picker then
-        if kind=="titles" then
-            if not c.titleParent then c.titleParent=picker:GetParent() end
-            picker:SetParent(c.frame)
-            Place(c,picker,"TOPLEFT",c.sidebar,"TOPLEFT",0,-30)
-            picker:Show()
-        else picker:Hide() end
-    end
+    if kind=="titles" then c.titles:Show() else c.titles:Hide() end
     for tab in pairs(c.tabs) do TabColor(c,tab) end
 end
 local function Build(s,c)
@@ -860,9 +920,9 @@ local function Build(s,c)
     eye:SetScript("OnLeave",function() GameTooltip:Hide() end)
     c.mode="stats"
     BuildEquipment(c)
+    BuildTitles(c)
     c.frame:HookScript("OnHide",function()
-        if _G.PlayerTitlePickerFrame and c.titleParent then PlayerTitlePickerFrame:Hide() end
-        if c.mode=="titles" then c.mode="stats"; for tab in pairs(c.tabs) do TabColor(c,tab) end end
+        if c.mode=="titles" then SetSidebarMode(c,"stats") end
     end)
     c.frame:HookScript("OnShow",function() c.cacheRetries=75 end)
 end
@@ -929,7 +989,7 @@ local function Refresh(c)
     Flow(c)
 end
 local function UpdateExtras(c)
-    local stats=c.mode~="equipment"
+    local stats=c.mode=="stats"
     local text=ns.GetValue("showCharSheetDurability") and DurabilityText()
     local location=ns.GetValue("charSheetDurabilityLocation")
     local fs=c.durability

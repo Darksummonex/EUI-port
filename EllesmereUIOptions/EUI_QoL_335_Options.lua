@@ -46,6 +46,7 @@ init:SetScript("OnEvent",function(self)
             local function Row(a,b) local row,h=W:DualRow(parent,y,a,b or Label("")); y=y-h; return row end
             local function Section(label) local _,h=W:SectionHeader(parent,label,y); y=y-h end
             local function Button(label,fn) local _,h=W:WideButton(parent,label,y,fn); y=y-h end
+            if not E._prebuilding and ns.RaidToolsPreview then ns.RaidToolsPreview(page=="Raid Tools") end
             if page=="QoL" then
                 Section("QUALITY OF LIFE"); Row(Toggle(nil,"enabled","Enable Quality of Life"),Label("Automation and displays start disabled"))
                 Section("AUTOMATION")
@@ -170,6 +171,16 @@ init:SetScript("OnEvent",function(self)
                 Row(Sounds("movementSound","Movement Ready Sound"),Label("Rebirth uses your cooldown; no shared raid charges"))
                 Row({type="input",text="Movement Spell ID",placeholder="0 = class default",getValue=function() return tostring(ns.GetSettings().movementSpellID) end,
                     setValue=function(value) local id=tonumber(value); if id and id>=0 and id==math.floor(id) and (id==0 or GetSpellInfo(id)) then ns.GetSettings().movementSpellID=id; ns.Apply() end end},Label("Only learned spells appear"))
+                Section("MISDIRECTION / TRICKS HELPER")
+                local redirect=Toggle("redirect","enabled","Misdirection / Tricks Helper")
+                redirect.tooltip="Hunters and Rogues: an icon you click (or bind in Key Bindings > EllesmereUI Quality of Life) that casts Misdirection or Tricks of the Trade on your focus, else the tank, else a friendly target"..", else your pet (Hunter). It shows who it will land on, the cooldown and the buff timer."
+                local focus=Toggle("redirect","useFocus","Focus First")
+                focus.tooltip="A friendly focus wins over the tank. The focus is checked at the moment you press it, also in combat."
+                Row(redirect,focus)
+                local tank=Text("redirect","tankName","Tank Name","Empty = raid Main Tank, then tank role")
+                tank.tooltip="A group member to use as the tank. Empty uses the raid Main Tank, then the Dungeon Finder tank role. Updates out of combat."
+                Row(tank,Slider("redirect","size","Helper Icon Size",20,64))
+                Row(Toggle("redirect","showName","Show Target Name"),Label("Macro alternative: /click EUI335QoLRedirect"))
                 Button("Unlock Display Positions",unlock)
             elseif page=="Cursor" then
                 Section("CURSOR")
@@ -185,14 +196,69 @@ init:SetScript("OnEvent",function(self)
                 Row(Label("Ctrl + left drag: move until window closes"),Label("Drag empty window backgrounds outside combat"))
                 Button("Reset Window Positions",function() ns.GetSettings().shifter.positions={}; ns.GetSettings().shifter.enabled=false; ns.Apply(); E:InvalidatePageCache(); E:RefreshPage(true) end)
             elseif page=="Raid Tools" then
-                Section("RAID TOOLS")
-                Row(Toggle("raidTools","enabled","Show Raid Tools"),Toggle("raidTools","groupOnly","Only in a Group"))
-                Row(Slider("raidTools","scale","Window Scale %",50,200),Label("Eight target markers, Ready Check, Pull and Disband"))
-                Row(Slider("raidTools","pullSeconds","Pull Timer Length (seconds)",3,60),Toggle("raidTools","pullSync","Send to DBM / BigWigs"))
-                Row(Toggle("raidTools","pullChat","Chat Countdown"),Label("Raid Warning > Raid > Party; 10s and final 5s"))
+                local function RT() return Store("raidTools") or {} end
+                local function Off() return ns.RaidToolsMode(Store())=="never" end
+                local function ShowAs() return ns.RaidToolsShowAs() end
+                local function WindowsOff() return Off() or ShowAs()=="compact" end
+                local function PanelOff() return Off() or ShowAs()=="compact" or ShowAs()=="markers" end
+                local function PullOff() return Off() or ShowAs()=="markers" end
+                local function Gate(row,fn) row.disabled=fn; row.disabledTooltip="Show Raid Tools"; return row end
+                Section("GENERAL")
+                local mode=Dropdown("raidTools","mode","Show Raid Tools",{never="Never",raid="In Raid Group",group="In Any Group",always="Always"},{"never","raid","group","always"})
+                mode.tooltip="A raid control panel with ready check, pull timer and target markers. In a raid it only shows while you are the leader or an assistant, since none of its buttons work without that; in a party it always shows."
+                mode.getValue=function() return ns.RaidToolsMode(Store()) end
+                mode.setValue=function(v) local r=RT(); r.mode=v; r.enabled=v~="never"; ns.Apply(); E:RefreshPage() end
+                local kbRow=Row(mode,Label("Toggle Raid Tools"))
+                local rgn=kbRow and kbRow._rightRegion
+                if rgn and E.BuildKeybindButton and not E._prebuilding then
+                    local kb,refresh=E.BuildKeybindButton(rgn,{w=126,h=29,level=4,
+                        get=function() return RT().toggleKey end,
+                        set=function(v) RT().toggleKey=v or false; ns.Apply() end,
+                        disabled=Off,disabledTip="Show Raid Tools",
+                        tooltip="Toggles the Raid Tools panels, in or out of combat.\n\nLeft-click to set a keybind.\nRight-click to unbind."})
+                    kb:SetPoint("RIGHT",rgn,"RIGHT",-20,0)
+                    if E.RegisterWidgetRefresh then E.RegisterWidgetRefresh(refresh) end
+                end
+                local collapsed=Gate(Toggle("raidTools","collapsedIcon","Default to Collapsed When Shown"),WindowsOff)
+                collapsed.tooltip="Full-window modes only. Shows start as a small icon, and the keybind switches between the icon and the full windows."
+                collapsed.getValue=function() return RT().collapsedIcon~=false end
+                local showAs=Gate(Dropdown("raidTools","showAs","Show as",{compact="Compact Band",one="One Window",two="Two Windows",group="Only Group & Pull",markers="Only Markers"},{"compact","one","two","group","markers"}),Off)
+                showAs.tooltip="Compact Band puts markers, ready check and pull timer in one row you can resize in Unlock Mode. The other choices keep the window layouts."
+                showAs.getValue=ShowAs
+                showAs.setValue=function(v) RT().showAs=v; ns.Apply(); E:RefreshPage() end
+                Row(collapsed,showAs)
+                local grow=Gate(Dropdown("raidTools","growDir","Menu Grow Direction",{downright="Down Right",upright="Up Right",downleft="Down Left",upleft="Up Left"},{"downright","upright","downleft","upleft"}),WindowsOff)
+                grow.tooltip="Full-window modes only. Which way the windows extend from the collapsed icon when they open."
+                grow.getValue=function() return RT().growDir or "downright" end
+                Row(Gate(Slider("raidTools","scale","Window Scale %",50,200),Off),grow)
+                Section("GROUP BUTTONS")
+                local convert=Gate(Toggle("raidTools","showConvert","Show Convert to Raid"),PanelOff)
+                convert.tooltip="Shows the Convert to Raid button. In a raid of five or fewer it reads Convert to Party: everyone is removed and invited back to a new party."
+                convert.getValue=function() return RT().showConvert~=false end
+                local disband=Gate(Toggle("raidTools","showDisband","Show Disband"),PanelOff)
+                disband.tooltip="Shows the Disband button. It always asks before disbanding, but hiding it puts it out of misclick range for good."
+                disband.getValue=function() return RT().showDisband~=false end
+                Row(convert,disband)
+                local reinvite=Gate(Toggle("raidTools","showReinvite","Show Reinvite"),PanelOff)
+                reinvite.tooltip="Shows the Reinvite button. It asks first, then removes everyone and invites them back to the same kind of group. Players have to accept the new invite."
+                reinvite.getValue=function() return RT().showReinvite~=false end
+                local world=Gate(Toggle("raidTools","worldMarkers","Shift + Click World Markers"),PanelOff)
+                world.tooltip="Shift + Left Click a marker icon to use its world marker item, then click the ground. Only markers whose item is in your bags get it; the rest keep Shift + Click to clear the target marker. Shift + Left Click the clear icon presses the server's Reset Markers button."
+                world.getValue=function() return RT().worldMarkers~=false end
+                Row(reinvite,world)
+                Section("PULL TIMER")
+                local PULL_TIP="Countdown length in seconds. Compact Band uses First with Ctrl + Left Click, Second with Shift + Left Click, Third with Left Click, and Right Click stops the timer. Set a timer to 0 to disable that shortcut."
+                local function Pull(i,label)
+                    local row=Gate({type="slider",text=label,min=0,max=60,step=1,tooltip=PULL_TIP,
+                        getValue=function() local t=RT().pullTimes; local v=t and t[i]; if v==nil then v=ns.PULL_DEFAULTS[i] end; return v end,
+                        setValue=function(v) local r=RT(); if type(r.pullTimes)~="table" then r.pullTimes={} end; r.pullTimes[i]=v; ns.Apply() end},PullOff)
+                    return row
+                end
+                Row(Pull(1,"First Timer"),Pull(2,"Second Timer"))
+                Row(Pull(3,"Third Timer"),Gate(Toggle("raidTools","pullSync","Send to DBM / BigWigs"),PullOff))
+                Row(Gate(Toggle("raidTools","pullChat","Chat Countdown"),PullOff),Label("Raid Warning > Raid > Party; 10s and final 5s"))
                 Row(Label("Boss mod sync: raid leader / assistant or party leader"),Label(""))
                 Button("Move Raid Tools",unlock)
-                Button("Disband Group",function() if ns.ConfirmDisband then ns.ConfirmDisband() end end)
             elseif page=="Logging" then
                 Section("COMBAT LOGGING")
                 Row(Toggle("logging","enabled","Automatic Combat Logging"),Toggle("logging","raids","Log Raids"))
@@ -202,5 +268,13 @@ init:SetScript("OnEvent",function(self)
             return math.abs(y)
         end,
         onReset=function() ns.addon.db:ResetProfile(); ns.Apply(); E:InvalidatePageCache() end})
+    local function Preview(on) if ns.RaidToolsPreview then ns.RaidToolsPreview(on) end end
+    if E.RegisterOnHide then E:RegisterOnHide(function() Preview(false) end) end
+    if E.RegisterOnShow then E:RegisterOnShow(function()
+        if E.GetActiveModule and E:GetActiveModule()=="EllesmereUIQoL" and E:GetActivePage()=="Raid Tools" then Preview(true) end
+    end) end
+    if E.SelectModule and hooksecurefunc then
+        hooksecurefunc(E,"SelectModule",function(_,folder) if folder~="EllesmereUIQoL" then Preview(false) end end)
+    end
 end)
 if IsLoggedIn() then init:GetScript("OnEvent")(init) end

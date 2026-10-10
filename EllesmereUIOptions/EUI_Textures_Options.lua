@@ -107,7 +107,7 @@ local function TileActionBars(parent, y, W, tile)
     if not ns then return DisabledTile(parent, y, W, tile) end
     if ns.IsWrath then
         y = NoteRow(parent, y, "XP and reputation bars use the ElvUI Norm texture.")
-        return LinkRow(parent, y, "Experience & Reputation Bars", tile.folder, "Menu, Bags & XP Bars", "EXPERIENCE BAR", "Enable Experience Bar")
+        return LinkRow(parent, y, "Experience & Reputation Bars", tile.folder, "Menu, Bags & XP Bars", "EXPERIENCE BAR", "XP Bar Style")
     end
     local EAB = ns.EAB
     EllesmereUI.AppendSharedMediaTextures(ns.dataBarTextureNames or {}, ns.dataBarTextureOrder or {}, nil, ns.dataBarTextures)

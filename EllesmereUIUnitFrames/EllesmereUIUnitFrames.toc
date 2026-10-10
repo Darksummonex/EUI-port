@@ -4,7 +4,7 @@
 ## Group: EllesmereUI
 ## Notes: Simple unit frames with a modern visual style.
 ## Author: Ellesmere
-## Version: 9.3.4-335-0.21
+## Version: 9.3.4-335-0.25
 ## Dependencies: EllesmereUI
 ## X-Part-Of: EllesmereUI
 ## SavedVariables: EllesmereUIUnitFramesDB
