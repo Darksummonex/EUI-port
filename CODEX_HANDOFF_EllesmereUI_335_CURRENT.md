@@ -24,7 +24,7 @@
 
 ## Latest (2026-10-09) — Update notices (Core 0.61) and EUI Staff page (Options 0.113)
 
-- `EllesmereUI/EllesmereUI_UpdateCheck_335.lua` (last in the Core TOC): release stamp = Core TOC `## X-EUI-Release: YYYYMMDDNN` (now `2026100903`, release v0.2). **Raise it for every GitHub release/RC**, or clients never see a newer one.
+- `EllesmereUI/EllesmereUI_UpdateCheck_335.lua` (last in the Core TOC): release stamp = Core TOC `## X-EUI-Release: YYYYMMDDNN` (now `2026100904`, release v0.3). **Raise it for every GitHub release/RC**, or clients never see a newer one.
 - Prefix `EUIVER`, payload = stamp. Sends to GUILD 15 s after login and to BATTLEGROUND/RAID/PARTY on roster changes; 60 s throttle per channel/target. A lower stamp gets ours back on the same channel (WHISPER to the sender); a higher one prints one chat notice per session unless `EllesmereUIDB.updateCheckDisabled` (toggle "Update Notices", Global Settings > General). `/euiupdate` opens `ShowCopyPopup` with the releases URL. No clickable chat link: unknown hyperlink types error in Blizzard `SetItemRef` without EUI Chat.
 - Patch Notes: tab `PAGE_STAFF = "EUI Staff"` (Alex wants the EUI Staff name kept); page title "Special thanks to Ellesmere", cards PORT STAFF (`EllesmereUI._PORT_STAFF`, Laraystiri + GitHub icon -> `EllesmereUI.ShowLinkPopup`, exposed from the Panel footer) and ORIGINAL STAFF (`_STAFF`). Header line "Special thanks to: Ellesmere" restored (opens that page). Icon `EllesmereUI/media/icons/github.png` from `backport-tools/make_github_icon.py` (Octicons mark).
 - Validators: new `validate_update_check.py`; `validate_patch_notes.py` updated.
