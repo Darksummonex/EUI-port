@@ -924,7 +924,7 @@ do
         },
     },
     {
-        version = "Nameplates 0.19",
+        version = "Nameplates 0.20",
         heroes = {
             {
                 title = "Rare and Quest Indicators",
@@ -990,6 +990,7 @@ do
             },
         },
         fixes = {
+            { text = "Smoother frame rate with many nameplates: aura changes from raid members no longer repaint every plate, plates only update what changed, and the tank check is cached." },
             { text = "A profile imported from Retail no longer blows the target nameplate up to fill the screen." },
             { text = "Border None now hides only the borders, not the cast bar text, timer, shield and kick mark." },
             { text = "The options preview plate no longer disappears after switching tabs or closing the panel." },
@@ -1460,7 +1461,7 @@ do
         },
     },
     {
-        version = "Blizz UI Enhanced 0.33",
+        version = "Blizz UI Enhanced 0.34",
         heroes = {
             {
                 title = "Player Buffs on Tooltips",
@@ -1517,6 +1518,7 @@ do
             },
         },
         fixes = {
+            { text = "Fixed stutters out of combat in groups and cities: other players' aura and stat changes, and hovering things with a tooltip, no longer re-skin every open window several times a second." },
             { text = "Ready checks no longer leave an empty black panel for the leader or after you answer." },
             { text = "The character sheet Titles tab lists your known titles again; click one to wear it." },
             { text = "The Guild Message Of The Day popup (and other wide text popups) no longer covers its title and buttons with the input box." },

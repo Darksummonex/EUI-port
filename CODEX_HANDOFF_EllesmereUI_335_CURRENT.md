@@ -1,5 +1,16 @@
 # EllesmereUI 3.3.5a — Handoff — 2026-10-06
 
+## Personal-use side project: NaowhUI_EUI (not part of EUI)
+
+- `NaowhUI_EUI/` is Alex's personal 3.3.5 port of Naowh's EUI companion (Retail 1.1.7). It stays out of git through `.git/info/exclude` (with `validate_naowhui_eui.py`, `prepare_naowhui_media.py`, `scan_naowhui_qol_keys.py`, `scan_naowhui_eui_api.py`), and `zip_addons.ps1` only packs `EllesmereUI*` folders. Never commit, zip, or list it in patch notes or READMEs. The validator prints SKIP when the folder is absent. It needed no EllesmereUI changes.
+- Same rules for `NaowhUI/` + `NaowhUI_Data/` (Retail installer 20261007.02, `/nui install`; excluded with `validate_naowhui.py`, `scan_naowhui_data_strings.py`). Private Ace3 subset in `NaowhUI/Compat_335.lua` (no LibStub libs). Steps: EllesmereUI (Retail strings through `ImportProfileInteractive`) and TBC WeakAuras from LoD `NaowhUI_Data` (only with a WeakAuras that has LibSerialize). Dropped: BigWigs, Details, ElvUI, Plater, MRT, EXBoss, NSRT, Naowh addons, Edit Mode, Cooldown Manager layouts.
+
+## Latest (2026-10-10) — performance pass: Nameplates 0.20, Blizz UI Enhanced 0.34
+
+- BlizzardSkin: `OnEvent` drops UNIT_* from other units (UNIT_INVENTORY_CHANGED also from the inspected unit while InspectFrame shows); stat/aura events only set `dirty` while CharacterFrame shows. Tooltip OnShow/OnTooltipSet* call `RefreshTooltip` (Paint of that tooltip only, no `dirty`); tooltip `SetBackdrop` only when `s.tooltipEdge` changes (cleared in `Restore`).
+- Nameplates: UNIT_AURA only flags plates bound to target/mouseover/focus; player UNIT_AURA clears `ns.tankState` (`IsTank` cache, names resolved once). Other events set `ns.updatePending` (one `ns.Update` per frame); interrupts and roster stay immediate (validator expects it). Plate OnShow runs `ns.UpdatePlate(s)` (BindUnits + ResolveFriendlyClasses + paint of that plate). Paint caches root scale/alpha and aura icon/stack/time; layout/aura keys are numbers.
+- Audit backlog (not done, ranked): Damage Meters `ns.Refresh()` after every CLEU (`EUI_DamageMeters_335.lua` ~311; add `return` after `ns.Parse`) and `GroupInCombat` per CLEU; Unit Frames `PLAYER_MOUNT_DISPLAY_CHANGED`→UNIT_AURA alias on `_visFrame` with no unit filter, uncoalesced `C_Timer.After(0)`; UF event wrapper allocates before the unit check (`EUI_UnitFrames_335.lua` ~399); Raid Frames 0.2 s full `UpdateAll`, per-unit-event button scan + full repaint, `Apply` on every roster event; Cooldown Manager full aura scan + `ns.Bars()` normalisation per event, hunter recompile on BAG_UPDATE; Chat `Remember` on ChatFrame2 with `table.remove(…,1)`; Bags capture on most events + 5 s capture; Quest Tracker `WatchFrame_Update` hook → full Apply; Minimap text on player UNIT_AURA (and `SetMapToCurrentZone` with coords); Friends 0.5 s Apply when `ns.panel` is nil; ActionBars shaped-icon strip mirroring without change checks.
+
 ## Latest (2026-10-10) — locale catch-up (no bump)
 
 - `backport-tools/find_new_locale_keys.py` (read only) lists UI keys `export_ptbr_keys.py` would export that are not in `ptbr_work/keys.tsv`, plus stale keys. Never rerun `export_ptbr_keys.py` itself: it renumbers keys.tsv and breaks every `out_*.tsv`. `append_locale_keys.py [--check]` appends new keys with fresh ids and writes the next `ptbr_work/in_NN.tsv` and `locale_work/<code>/in_NN.tsv`; translate into the matching `out_NN.tsv`, then run `build_ptbr_catalog.py` and `build_locale_additions.py`.
@@ -52,7 +63,7 @@
 
 ## Latest (2026-10-09) — Update notices (Core 0.61) and EUI Staff page (Options 0.113)
 
-- `EllesmereUI/EllesmereUI_UpdateCheck_335.lua` (last in the Core TOC): release stamp = Core TOC `## X-EUI-Release: YYYYMMDDNN` (now `2026101002`, release v0.5). **Raise it for every GitHub release/RC**, or clients never see a newer one.
+- `EllesmereUI/EllesmereUI_UpdateCheck_335.lua` (last in the Core TOC): release stamp = Core TOC `## X-EUI-Release: YYYYMMDDNN` (now `2026101003`, release v0.6). **Raise it for every GitHub release/RC**, or clients never see a newer one.
 - Prefix `EUIVER`, payload = stamp. Sends to GUILD 15 s after login and to BATTLEGROUND/RAID/PARTY on roster changes; 60 s throttle per channel/target. A lower stamp gets ours back on the same channel (WHISPER to the sender); a higher one prints one chat notice per session unless `EllesmereUIDB.updateCheckDisabled` (toggle "Update Notices", Global Settings > General). `/euiupdate` opens `ShowCopyPopup` with the releases URL. No clickable chat link: unknown hyperlink types error in Blizzard `SetItemRef` without EUI Chat.
 - Patch Notes: tab `PAGE_STAFF = "EUI Staff"` (Alex wants the EUI Staff name kept); page title "Special thanks to Ellesmere", cards PORT STAFF (`EllesmereUI._PORT_STAFF`, Laraystiri + GitHub icon -> `EllesmereUI.ShowLinkPopup`, exposed from the Panel footer) and ORIGINAL STAFF (`_STAFF`). Header line "Special thanks to: Ellesmere" restored (opens that page). Icon `EllesmereUI/media/icons/github.png` from `backport-tools/make_github_icon.py` (Octicons mark).
 - Validators: new `validate_update_check.py`; `validate_patch_notes.py` updated.
@@ -336,8 +347,8 @@ Working-tree backups: `backport-tools/backup_project.py` writes
 ## Current versions
 
 Core 0.66; Action Bars 0.22; Arena 0.3; AuraBuff Reminders 0.7; Bags 0.12;
-Blizz UI Enhanced (BlizzardSkin) 0.33; Chat 0.49; Cooldown Manager 0.9;
-Damage Meters 0.9; Data Bars 0.5; Friends 0.3; Minimap 0.4; Nameplates 0.19;
+Blizz UI Enhanced (BlizzardSkin) 0.34; Chat 0.49; Cooldown Manager 0.9;
+Damage Meters 0.9; Data Bars 0.5; Friends 0.3; Minimap 0.4; Nameplates 0.20;
 Options 0.114; Locales 0.1; QoL 0.19; Quest Tracker 0.3; Quickdraw 0.4; Raid Frames 0.24;
 Resource Bars 0.5; Unit Frames 0.26.
 

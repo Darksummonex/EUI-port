@@ -7,7 +7,7 @@ sys.path.insert(0,str(root/'.codex-tools'))
 from lupa.lua51 import LuaRuntime
 skin=root/'EllesmereUIBlizzardSkin'
 toc=(skin/'EllesmereUIBlizzardSkin.toc').read_text(encoding='utf-8-sig')
-assert '## Version: 9.3.4-335-0.33' in toc and 'EUI_SkinExtras_335.lua' in toc and 'EUI_LootRolls_335.lua' in toc
+assert '## Version: 9.3.4-335-0.34' in toc and 'EUI_SkinExtras_335.lua' in toc and 'EUI_LootRolls_335.lua' in toc
 lua=LuaRuntime()
 for name in ['backport-tools/wrath_mock.lua','backport-tools/blizzardskin_mock.lua','backport-tools/character_mock.lua','EllesmereUI/EllesmereUI_Lite.lua']:
     lua.execute((root/name).read_text(encoding='utf-8-sig'))

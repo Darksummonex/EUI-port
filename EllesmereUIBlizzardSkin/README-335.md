@@ -1,4 +1,14 @@
-# Blizz UI Enhanced 3.3.5 — 0.33
+# Blizz UI Enhanced 3.3.5 — 0.34
+
+0.34: desempenho. No 3.3.5 os eventos UNIT_* chegam para todas as unidades, e
+qualquer UNIT_AURA/UNIT_STATS/UNIT_MAXHEALTH de raid ou nameplate marcava
+`dirty`, refazendo a skin de todas as janelas 5 vezes por segundo fora de
+combate. Agora só contam os do player (UNIT_INVENTORY_CHANGED também do
+inspecionado com o Inspect aberto), e os eventos de atributos/auras só marcam
+`dirty` com a ficha do personagem aberta. Tooltips (OnShow e
+OnTooltipSetItem/Unit/Spell) repintam só o próprio tooltip, sem `dirty`, e o
+SetBackdrop do tooltip só roda quando a borda muda (`s.tooltipEdge`, limpo no
+Restore).
 
 0.33: quem iniciava o ready check via um painel preto vazio: no 3.3.5 o
 ReadyCheckFrame abre para o iniciador com o ReadyCheckListenerFrame (Yes/No)

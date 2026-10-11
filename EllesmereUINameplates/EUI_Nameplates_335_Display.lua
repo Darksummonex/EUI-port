@@ -190,7 +190,7 @@ function ns.Capture(plate,native)
     plate:HookScript("OnHide",function() if s.isPreview then return end; ns.ClearUnit(s); s.root:Hide() end)
     plate:HookScript("OnShow",function()
         if s.isPreview then if ns.onPreviewShown then ns.onPreviewShown() else ns.PaintPreview() end; return end
-        ns.ClearUnit(s); if ns.IsActive() then ns.Update() end
+        ns.ClearUnit(s); if ns.IsActive() then ns.UpdatePlate(s) end
     end)
     native.health:HookScript("OnValueChanged",function() if plate:IsShown() then ns.UpdateHealth(s) end end)
     return s
@@ -330,7 +330,7 @@ local function PlaceSlot(tex,s,slot,size)
     return true
 end
 local function Layout(s,p,nameOnly)
-    local key=ns.layoutVersion..(nameOnly and "N" or "")
+    local key=ns.layoutVersion*2+(nameOnly and 1 or 0)
     if s.layoutKey==key then return end
     s.layoutKey,s.auraKey,s.pipKey=key,nil,nil
     local root=s.root
@@ -514,8 +514,11 @@ local function PaintTarget(s,p,leftExtent,rightExtent)
     -- Retail stores this as a percent (100); a stray Retail value must not blow the plate up.
     local targetScale=tonumber(p.targetScale) or 1
     if targetScale>5 then targetScale=targetScale/100 end
-    s.root:SetScale(s.isTarget and math.max(.5,math.min(2,targetScale)) or 1)
-    s.root:SetAlpha(p.opacity/100*(UnitExists("target") and not s.isTarget and p.nonTargetAlpha/100 or 1))
+    -- SetScale relayouts the whole plate on 3.3.5; only touch it when the value changes.
+    local scale=s.isTarget and math.max(.5,math.min(2,targetScale)) or 1
+    if s.rootScale~=scale then s.rootScale=scale; s.root:SetScale(scale) end
+    local alpha=p.opacity/100*(UnitExists("target") and not s.isTarget and p.nonTargetAlpha/100 or 1)
+    if s.rootAlpha~=alpha then s.rootAlpha=alpha; s.root:SetAlpha(alpha) end
 end
 
 -- Rare/Quest Indicator. Plates carry no unit, so rares are learned by name while a plate is bound
@@ -561,10 +564,16 @@ local function FillAuras(pool,list,now)
         local data=list[i]
         if data then
             shown=i
-            a.icon:SetTexture(data.icon)
-            a.count:SetText(data.stacks and data.stacks>1 and data.stacks or "")
+            if a.iconPath~=data.icon then a.iconPath=data.icon; a.icon:SetTexture(data.icon) end
+            local stacks=data.stacks and data.stacks>1 and data.stacks or 0
+            if a.stacks~=stacks then a.stacks=stacks; a.count:SetText(stacks>0 and stacks or "") end
             local left=data.expires and data.expires>0 and data.expires-now
-            a.time:SetText(left and left>0 and (left>=60 and math.ceil(left/60).."m" or tostring(math.ceil(left))) or "")
+            -- Minutes are stored negative so 2m and 2s stay distinct.
+            local shown=left and left>0 and (left>=60 and -math.ceil(left/60) or math.ceil(left)) or 0
+            if a.shownTime~=shown then
+                a.shownTime=shown
+                a.time:SetText(shown==0 and "" or shown<0 and (-shown).."m" or tostring(shown))
+            end
             a:Show()
         else a:Hide() end
     end
@@ -596,7 +605,7 @@ local function PaintAuras(s,p)
     local debuffs=FillAuras(s.auras,s.debuffList or {},now)
     local buffs=FillAuras(s.buffs,s.buffList or {},now)
     local ccs=FillAuras(s.ccs,s.ccList or {},now)
-    local key=debuffs..":"..buffs..":"..ccs..":"..(s.topText and s.topText:GetText() and "t" or "")
+    local key=debuffs*1000000+buffs*10000+ccs*100+(s.topText and s.topText:GetText() and 1 or 0)
     if s.auraKey~=key then
         s.auraKey=key
         local l1,r1=PlaceAuras(s.auras,debuffs,s,p,p.debuffSlot,p.auraSize,p.debuffYOffset or 2)

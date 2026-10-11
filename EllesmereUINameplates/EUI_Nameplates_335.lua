@@ -189,13 +189,23 @@ function ns.ThreatStatus(s)
     return status,status~=nil
 end
 local TANK_AURAS={71,5487,9634,25780,48263} -- Defensive Stance, Bear, Dire Bear, Righteous Fury, Frost Presence
+local tankNames
+-- Runs per plate on every health change; the result is cached until the player's auras change.
 function ns.IsTank(p)
     if p.threatRole=="tank" then return true elseif p.threatRole=="dps" then return false end
-    for _,id in ipairs(TANK_AURAS) do
-        local name=GetSpellInfo and GetSpellInfo(id)
-        if name and UnitAura("player",name) then return true end
+    if ns.tankState==nil then
+        if not tankNames then
+            tankNames={}
+            for _,id in ipairs(TANK_AURAS) do
+                local name=GetSpellInfo and GetSpellInfo(id)
+                if name then tankNames[#tankNames+1]=name end
+            end
+        end
+        local tank=false
+        for _,name in ipairs(tankNames) do if UnitAura("player",name) then tank=true; break end end
+        ns.tankState=tank
     end
-    return false
+    return ns.tankState
 end
 function ns.InGroup()
     return (GetNumRaidMembers and GetNumRaidMembers() or 0)>0 or (GetNumPartyMembers and GetNumPartyMembers() or 0)>0
@@ -400,6 +410,14 @@ function ns.Update()
         else s.root:Hide() end
     end
 end
+-- A newly shown plate binds and paints only itself now; the other plates follow on the next frame.
+function ns.UpdatePlate(s)
+    local p=ns.GetSettings(); if not active or not p then return end
+    BindUnits()
+    ResolveFriendlyClasses()
+    s.auraDirty=false; s.auraTime=GetTime(); CollectAuras(s,p)
+    ns.Paint(s,p); ns.updatePending=true
+end
 -- Quest Indicator: Wrath plates carry no unit and unit tooltips list no objectives, so a quest
 -- mob is a plate whose name matches an unfinished kill objective in the quest log.
 local function QuestKillPattern()
@@ -522,17 +540,25 @@ function addon:OnEnable()
             if pending then ns.Apply() end
             ApplyCombatVisibility(false)
         elseif event=="PLAYER_REGEN_DISABLED" then ApplyCombatVisibility(true)
-        elseif event=="PLAYER_ENTERING_WORLD" then observedClasses={}; ns.RefreshFriendlyRoster(); ns.RefreshExecute(); ns.RefreshQuestMobs(); ns.Apply()
+        elseif event=="PLAYER_ENTERING_WORLD" then ns.tankState=nil; observedClasses={}; ns.RefreshFriendlyRoster(); ns.RefreshExecute(); ns.RefreshQuestMobs(); ns.Apply()
         elseif event=="QUEST_LOG_UPDATE" then ns.RefreshQuestMobs()
         elseif event=="PARTY_MEMBERS_CHANGED" or event=="RAID_ROSTER_UPDATE" then ns.RefreshFriendlyRoster(); ns.Update()
         elseif event=="SPELLS_CHANGED" or event=="LEARNED_SPELL_IN_TAB" then ns.RefreshExecute()
         elseif event=="UNIT_SPELLCAST_INTERRUPTED" then if unit then FlashInterrupted(unit) end; ns.Update()
-        else ns.Update() end
+        elseif event=="UNIT_AURA" then
+            -- 3.3.5 sends UNIT_AURA for every unit; only plate-bound tokens and the player's tank state matter.
+            if unit=="player" then ns.tankState=nil
+            elseif unit=="target" or unit=="mouseover" or unit=="focus" then
+                for _,s in pairs(states) do if s.unit==unit then s.auraDirty=true end end
+                ns.updatePending=true
+            end
+        else ns.updatePending=true end
     end)
+    -- Events only flag an update; one pass per frame at most, plus the 20 Hz refresh.
     f:SetScript("OnUpdate",function(_,dt)
         if not active then return end
         elapsed,scanElapsed=elapsed+dt,scanElapsed+dt
         if scanElapsed>=.25 then scanElapsed=0; ns.Scan() end
-        if elapsed>=.05 then elapsed=0; ns.Update() end
+        if elapsed>=.05 or ns.updatePending then elapsed=0; ns.updatePending=false; ns.Update() end
     end)
 end

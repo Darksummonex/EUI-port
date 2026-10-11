@@ -1,4 +1,16 @@
-# Nameplates 3.3.5 — 0.19
+# Nameplates 3.3.5 — 0.20
+
+0.20: desempenho. UNIT_AURA de qualquer unidade não roda mais o update completo
+de todas as placas: só target/mouseover/focus marcam a placa (auraDirty) e o
+player só invalida o cache de tank. Os demais eventos só marcam
+`ns.updatePending`; o OnUpdate faz no máximo um `ns.Update` por frame (além do
+ciclo de 0,05 s). Interrupção e roster continuam imediatos. Uma placa que
+aparece faz bind/classe e pinta só ela (`ns.UpdatePlate`), não todas. `IsTank`
+guarda o resultado (`ns.tankState`) e os nomes das auras de tank, em vez de 5
+GetSpellInfo + 5 UnitAura por placa a cada mudança de vida. O paint só chama
+SetScale/SetAlpha do root e SetTexture/SetText dos ícones de aura quando o
+valor muda; as chaves de layout e de auras viraram números (sem concatenar
+strings a cada paint).
 
 0.19: o elemento "Boss Icon" das Core Positions vira o Rare/Quest Indicator do
 Retail. O dropdown oferece "Rare/Quest Indicator", "Rare Indicator" e "Quest

@@ -632,7 +632,7 @@ local function Restore(s)
         if #d.points==0 and d.parent then obj:SetAllPoints(d.parent) end
         for _,point in ipairs(d.points) do obj:SetPoint(unpack(point)) end; obj:SetWidth(d.width); obj:SetHeight(d.height)
     end
-    s.frame:SetBackdrop(s.backdrop)
+    s.frame:SetBackdrop(s.backdrop); s.tooltipEdge=nil
     if #s.bg>=3 then s.frame:SetBackdropColor(unpack(s.bg)) end
     if #s.border>=3 then s.frame:SetBackdropBorderColor(unpack(s.border)) end
 end
@@ -704,7 +704,9 @@ local function Capture(frame,spec)
         s.accent:Hide()
     end
     local function RefreshShown() dirty=true; if not InCombatLockdown() then Paint(s) end end
-    frame:HookScript("OnShow",RefreshShown)
+    -- Tooltips show and refill constantly; repaint only the tooltip, never the full pass.
+    local function RefreshTooltip() if not InCombatLockdown() then Paint(s) end end
+    frame:HookScript("OnShow",spec.tooltip and RefreshTooltip or RefreshShown)
     if frame==_G.GlyphFrame then
         frame:HookScript("OnHide",function()
             dirty=true
@@ -712,7 +714,7 @@ local function Capture(frame,spec)
         end)
     end
     if spec.tooltip and Kind(frame,"GameTooltip") then
-        for _,event in ipairs({"OnTooltipSetItem","OnTooltipSetUnit","OnTooltipSetSpell"}) do frame:HookScript(event,RefreshShown) end
+        for _,event in ipairs({"OnTooltipSetItem","OnTooltipSetUnit","OnTooltipSetSpell"}) do frame:HookScript(event,RefreshTooltip) end
     end
     return s
 end
@@ -723,7 +725,10 @@ Paint=function(s)
     s.active=true
     if s.spec.tooltip then
         local n=math.max(0,math.min(4,tonumber(ns.GetValue("tooltipBorderSize")) or 1))
-        s.frame:SetBackdrop({bgFile=flat,edgeFile=n>0 and flat or nil,edgeSize=math.max(1,n),insets={left=2,right=2,top=2,bottom=2}})
+        if s.tooltipEdge~=n then
+            s.frame:SetBackdrop({bgFile=flat,edgeFile=n>0 and flat or nil,edgeSize=math.max(1,n),insets={left=2,right=2,top=2,bottom=2}})
+            s.tooltipEdge=n
+        end
         local c=ns.GetSettings().tooltipBgColor or {}
         s.frame:SetBackdropColor(c.r or .04,c.g or .04,c.b or .04,ns.GetValue("tooltipBgOpacity"))
         s.frame:SetBackdropBorderColor(.25,.25,.25,1)
@@ -824,7 +829,18 @@ function addon:OnEnable()
     for _,event in ipairs({"ADDON_LOADED","PLAYER_ENTERING_WORLD","PLAYER_REGEN_ENABLED","PLAYER_EQUIPMENT_CHANGED","UNIT_INVENTORY_CHANGED",
         "UNIT_STATS","UNIT_AURA","UNIT_DAMAGE","UNIT_ATTACK_POWER","UNIT_RANGED_ATTACK_POWER","UNIT_MAXHEALTH",
         "COMBAT_RATING_UPDATE","PLAYER_LEVEL_UP","PLAYER_TALENT_UPDATE","UPDATE_SHAPESHIFT_FORM","UNIT_NAME_UPDATE","KNOWN_TITLES_UPDATE"}) do f:RegisterEvent(event) end
-    f:SetScript("OnEvent",function(_,event) if event=="PLAYER_REGEN_ENABLED" then ns.Apply() else dirty=true end end)
+    -- 3.3.5 delivers UNIT_* for every unit; only the player's (or the inspected
+    -- unit's gear) matter, and stat/aura changes only while the character sheet is open.
+    local unitEvents={UNIT_INVENTORY_CHANGED=true,UNIT_STATS=true,UNIT_AURA=true,UNIT_DAMAGE=true,UNIT_ATTACK_POWER=true,
+        UNIT_RANGED_ATTACK_POWER=true,UNIT_MAXHEALTH=true,UNIT_NAME_UPDATE=true}
+    local sheetEvents={UNIT_STATS=true,UNIT_AURA=true,UNIT_DAMAGE=true,UNIT_ATTACK_POWER=true,UNIT_RANGED_ATTACK_POWER=true,
+        UNIT_MAXHEALTH=true,COMBAT_RATING_UPDATE=true,UPDATE_SHAPESHIFT_FORM=true}
+    f:SetScript("OnEvent",function(_,event,unit)
+        if event=="PLAYER_REGEN_ENABLED" then ns.Apply(); return end
+        if unitEvents[event] and unit~="player" and not (event=="UNIT_INVENTORY_CHANGED" and _G.InspectFrame and InspectFrame:IsShown()) then return end
+        if sheetEvents[event] and not (_G.CharacterFrame and CharacterFrame:IsShown()) then return end
+        dirty=true
+    end)
     local elapsed=0
     f:SetScript("OnUpdate",function(_,dt)
         elapsed=elapsed+dt
