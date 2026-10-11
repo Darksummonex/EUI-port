@@ -124,6 +124,12 @@ Every module runs on native Wrath APIs (Lua 5.1). Retail looks and settings were
 | `/euiupdate` | Show your installed release and the download link |
 | `/earena test` | Show arena test frames |
 
+## Plugins
+
+| Plugin | Description |
+|---|---|
+| [NaowhUI 3.3.5a](https://github.com/Darksummonex/NaowhUI-335) | Naowh's profile installer and NaowhUI_EUI skin for this port, with Merfin's class WeakAuras. Original NaowhUI by Naowh / NWH Gaming AB, all rights reserved. |
+
 ## Reporting bugs
 
 Open an [issue](https://github.com/Darksummonex/EUI-port/issues) with the error text (BugSack/BugGrabber output helps) and the module you were using.
