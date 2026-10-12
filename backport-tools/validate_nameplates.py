@@ -120,6 +120,17 @@ p.ccSlot='none'; p.debuffIncludeCC=true; NP.Apply()
 assert(not a.ccs[1]:IsShown() and a.auras[3]:IsShown() and a.auras[1].icon.texture=='poly-icon','Debuffs + CC lists CC first')
 p.maxAuras=1; NP.Apply(); assert(a.auras[1].icon.texture=='poly-icon' and not a.auras[2]:IsShown()); p.maxAuras=5
 p.debuffIncludeCC=false; NP.Apply(); assert(not a.auras[3]:IsShown(),'no CC element: own-debuff filter as before')
+-- Aura Sort Order: mine first and/or shortest time left; the maximum applies after sorting.
+do local own,mode,slot=p.onlyPlayerDebuffs,p.debuffFilterMode,p.ccSlot
+    units.target.auras={HARMFUL={{name='o1',caster='party1',icon='o1',expires=40},{name='o2',caster='party1',icon='o2',expires=15},
+        {name='m1',caster='player',icon='m1',expires=30},{name='m2',caster='pet',icon='m2',expires=20}}}
+    p.ccSlot='none'; p.onlyPlayerDebuffs=false; p.debuffFilterMode='all'; p.maxAuras=2
+    local function row() return tostring(a.auras[1].icon.texture)..','..tostring(a.auras[2].icon.texture) end
+    NP.Apply(); assert(row()=='o1,o2',row())
+    p.debuffSortMode='mine'; NP.Apply(); assert(row()=='m1,m2',row())
+    p.debuffSortMode='time'; NP.Apply(); assert(row()=='o2,m2',row())
+    p.debuffSortMode='mineTime'; NP.Apply(); assert(row()=='m2,m1',row())
+    p.debuffSortMode=nil; p.maxAuras=5; p.onlyPlayerDebuffs,p.debuffFilterMode,p.ccSlot=own,mode,slot end
 p.ccSlot='right'; NP.auraLib=oldLib; units.target.auras=savedAuras; NP.Apply()
 units.mouseover={name='Other',guid='GUID-B',auras={HARMFUL={{name='hover',caster='player'}}}}
 b.native.highlight:Show(); NP.Update(); assert(b.unit=='mouseover' and b.auras[1]:IsShown() and b.hover:IsShown())

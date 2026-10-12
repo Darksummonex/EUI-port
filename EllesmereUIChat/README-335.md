@@ -1,4 +1,18 @@
-# EllesmereUI Chat — 3.3.5 — 0.49
+# EllesmereUI Chat — 3.3.5 — 0.50
+
+0.50: opção "Whispers in New Window" (Chat > Chat > EXTRAS). Ligada, abre uma
+janela livre (3 a 10) como aba "Whispers" encaixada sem selecioná-la, adiciona os
+grupos WHISPER e BN_WHISPER nela e tira esses grupos das outras janelas,
+lembrando de quais saíram (`whisperMoved`). Desligada, devolve os grupos e fecha a
+aba só se foi o addon que a criou. Espera 2 s após o login e adia em combate. Uma
+janela por pessoa não foi portada: o 3.3.5 só tem janelas temporárias para
+conversas BN e criar janelas por nome mexeria nos comandos do edit box (taint).
+Correções: o nome original das abas (GameFontNormalSmall) voltava a aparecer sob o
+nome do skin porque `FCFTab_UpdateColors` chama `SetTextColor` com 3 valores e
+reseta o alpha; agora o texto nativo também é escondido, com hooks em
+`SetTextColor`/`Show`, e volta ao desligar o chat. O quadrado preto ao lado de
+"Background" no menu da aba é o seletor de cor nativo: agora mostra e altera a cor
+e a opacidade do fundo do EUI (Cancelar restaura).
 
 0.49: Copy Chat copia a aba que está aberta. No 3.3.5 o `FCF_GetCurrentChatFrame`
 devolve a última aba clicada com o botão direito (`CURRENT_CHAT_FRAME_ID`), então

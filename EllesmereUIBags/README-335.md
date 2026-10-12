@@ -1,4 +1,9 @@
-# Bags 3.3.5a — 0.12
+# Bags 3.3.5a — 0.13
+
+0.13: o ouro dos personagens não é mais zerado ao deslogar. Fora do mundo
+(login, telas de carregamento, logout) o cliente pode ler 0 de GetMoney; esse 0
+não substitui mais o saldo salvo. Alts que já aparecem com 0 voltam ao valor
+certo ao logar neles uma vez.
 
 0.12: Junk Marker do Retail. A moeda no cabeçalho das bolsas entra no modo de
 marcar: clique nos itens para marcar ou desmarcar como lixo (com um item no

@@ -317,9 +317,11 @@ local function Button(s,button)
     local nativeTextButton=label and label:GetText() and type(path)=="string" and
         (path:lower():find("ui-panel-button",1,true) or path:lower():find("ui-dialogbox-button",1,true))
     local tab=name and (name:find("FrameTab%d+$") or name:find("FrameTabButton%d+$") or name:find("TabHeaderTab%d+$"))
+    -- DropDownListNButtonMInvisibleButton is the click blocker over disabled
+    -- and title rows (Display, Filters), not an arrow.
     local arrow=name and (name:find("ScrollUpButton$") and "^" or name:find("ScrollDownButton$") and "v"
         or name:find("PrevPageButton$") and "<" or name:find("NextPageButton$") and ">"
-        or name:find("DropDown.*Button$") and "v")
+        or name:find("DropDown.*Button$") and not name:find("InvisibleButton$") and "v")
     local check=Kind(button,"CheckButton") and type(path)=="string" and path:lower():find("ui-checkbox",1,true)
     local icon=button.icon or button.Icon or button.iconTexture or button.IconTexture or name and (_G[name.."IconTexture"] or _G[name.."Icon"])
     if not icon and normal and type(path)=="string" and path:lower():find("interface\\icons\\",1,true) then icon=normal end

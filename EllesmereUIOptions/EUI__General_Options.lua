@@ -924,7 +924,7 @@ do
         },
     },
     {
-        version = "Nameplates 0.20",
+        version = "Nameplates 0.21",
         heroes = {
             {
                 title = "Rare and Quest Indicators",
@@ -962,6 +962,11 @@ do
             },
         },
         features = {
+            {
+                title = "Aura Sort Order",
+                desc  = "Sort plate buffs and debuffs by Mine First, Time Left, or Mine First then Time Left. Hide Buffs/Debuffs Without Duration hides auras with no timer.",
+                nav   = Nav("EllesmereUINameplates", "Aura Filters"),
+            },
             {
                 title = "EllesmereUI Bar Textures",
                 desc  = "Health and cast bars offer the EllesmereUI textures (Melli, Atrocity, Fade, Matte and more), as on Retail",
@@ -1461,7 +1466,7 @@ do
         },
     },
     {
-        version = "Blizz UI Enhanced 0.34",
+        version = "Blizz UI Enhanced 0.35",
         heroes = {
             {
                 title = "Player Buffs on Tooltips",
@@ -1518,6 +1523,7 @@ do
             },
         },
         fixes = {
+            { text = "Dropdown menus no longer show a \"V\" box over title rows such as Display and Filters in the chat tab menu." },
             { text = "Fixed stutters out of combat in groups and cities: other players' aura and stat changes, and hovering things with a tooltip, no longer re-skin every open window several times a second." },
             { text = "Ready checks no longer leave an empty black panel for the leader or after you answer." },
             { text = "The character sheet Titles tab lists your known titles again; click one to wear it." },
@@ -1733,7 +1739,7 @@ do
         },
     },
     {
-        version = "Unit Frames 0.26",
+        version = "Unit Frames 0.27",
         heroes = {
             { title = "Clear Focus Click", desc = "Clear your focus by clicking the focus frame (Shift + Right Click by default, or Ctrl/Alt + Right Click, Middle Click, Shift + Left Click). Set it on the Focus frame page. Works in combat.", nav = Nav("EllesmereUIUnitFrames", "Main Frames") },
             {
@@ -1778,6 +1784,11 @@ do
             },
         },
         features = {
+            {
+                title = "Aura Sort Order",
+                desc  = "Per frame, sort buffs and debuffs by Mine First, Time Left, or Mine First then Time Left. Hide Buffs/Debuffs Without Duration hides auras with no timer.",
+                nav   = Nav("EllesmereUIUnitFrames", "Aura Filters"),
+            },
             {
                 title = "Absorb Shields",
                 desc  = "Player, target, focus and boss health bars show estimated damage shields with Retail's Absorb Style, Opacity, Color, Placement, Show Overshield and Show on Boss Frames",
@@ -1940,7 +1951,7 @@ do
         },
     },
     {
-        version = "Bags 0.12",
+        version = "Bags 0.13",
         heroes = {
             {
                 title = "Junk Marker",
@@ -1978,12 +1989,13 @@ do
             },
         },
         fixes = {
+            { text = "Alt gold in the Gold Summary is no longer reset to 0 when a character logs out." },
             { text = "With Enable Bags off, the default bag functions are no longer replaced, avoiding blocked action errors from tainted bag code." },
             { text = "Opening the Characters list no longer errors." },
         },
     },
     {
-        version = "Chat 0.49",
+        version = "Chat 0.50",
         heroes = {
             { title = "Gold Seller Filter", desc = "Gold sale ads with websites or cash prices, including 5000G=20 bucks and disguised W.W.W addresses, are filtered by default in your selected chat scopes." },
             { title = "Server Channel Notices", desc = "Unsupported server channel notices such as NOT_IN_LFG no longer cause the native chat formatter to error." },
@@ -2008,6 +2020,11 @@ do
             },
         },
         features = {
+            {
+                title = "Whispers in New Window",
+                desc  = "Moves whispers and Real ID whispers into their own docked Whispers tab. Turning it off gives them back to your other windows.",
+                nav   = Nav("EllesmereUIChat", "Chat"),
+            },
             {
                 title = "Hardcore Death Filter",
                 desc  = "Hide server announcements such as \"Name the level 11 Gnome Warrior has been slain by ... in Westfall\", optionally keeping deaths from a chosen level up visible.",
@@ -2038,6 +2055,8 @@ do
             },
         },
         fixes = {
+            { text = "Chat tabs no longer show their name twice (the skinned name over the original one, for example on General or Combat Log)." },
+            { text = "The Background color box in the chat tab menu shows and changes the skinned chat background instead of an unused black box." },
             { text = "Copy Chat copies the chat tab you are looking at instead of the last tab you right-clicked, which could show \"(No chat history)\"." },
             { text = "Fixed a \"SetPoint(): is dependent on this\" error when styling some NPC chat bubbles." },
             { text = "The guild recruitment filter no longer hides raid ads that mention a guild, such as \"<Frost> LF 1 heal ICC25\"; only LF guild phrases count." },

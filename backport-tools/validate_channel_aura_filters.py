@@ -182,7 +182,13 @@ local list=p.debuffInclude; Find('Tracked Spell IDs',1).setValue('bad input'); a
 Find('Excluded Spell IDs',1).setValue('172'); assert(p.debuffExclude[172])
 Find('Buff Filter').setValue('own'); Find('Tracked Spell IDs',2).setValue('17'); assert(p.buffInclude[17])
 Find('Only Stealable Buffs').setValue(true); assert(p.buffStealable)
+Find('Hide Debuffs Without Duration').setValue(true); assert(p.debuffHasDuration)
+Find('Hide Buffs Without Duration').setValue(true); assert(p.buffHasDuration and Find('Hide Buffs Without Duration').getValue())
+assert(Find('Debuff Sort Order').getValue()=='default' and table.concat(Find('Buff Sort Order').order,',')=='default,mine,time,mineTime')
+Find('Buff Sort Order').setValue('mineTime'); Find('Debuff Sort Order').setValue('time'); assert(p.buffSortMode=='mineTime' and p.debuffSortMode=='time')
+Find('Debuff Sort Order').setValue('default'); assert(p.debuffSortMode==nil and Find('Debuff Sort Order').getValue()=='default')
 buttons['Reset Selected Aura Filters'](); assert(p.debuffFilterMode=='all' and p.buffFilterMode=='all' and not next(p.debuffInclude))
+assert(p.buffSortMode==nil and not p.buffHasDuration and not p.debuffHasDuration)
 -- Use the same actual page builder to check UnitFrames per-frame isolation.
 local settings={player={},target={},focus={},boss1={}}
 local UF={UF_GetSettings=function(unit) return settings[unit] end,UF_ReloadAllAuraContainers=function() ufReloaded=true end}
@@ -190,6 +196,7 @@ EllesmereUI._ModuleNS.EllesmereUIUnitFrames=UF
 rows={}; assert(EllesmereUI.BuildWrathAuraFilters('EllesmereUIUnitFrames',UIParent,0)>0)
 Find('Select Frame').setValue('target'); assert(UF.selectedWrathAuraUnit=='target' and refreshed)
 Find('Tracked Spell IDs',1).setValue('172'); assert(settings.target.debuffInclude[172] and settings.player.debuffInclude==nil and ufReloaded)
+Find('Debuff Sort Order').setValue('mine'); assert(settings.target.debuffSortMode=='mine' and settings.player.debuffSortMode==nil)
 Find('Select Frame').setValue('boss1'); Find('Debuff Filter').setValue('own')
 assert(settings.boss1.debuffFilterMode=='own' and settings.target.debuffFilterMode==nil)
 local order=table.concat(Find('Debuff Filter').order,','); assert(order:find('raid,raidOwn'),order)

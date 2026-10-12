@@ -1,4 +1,10 @@
-# Nameplates 3.3.5 — 0.20
+# Nameplates 3.3.5 — 0.21
+
+0.21: Aura Filters ganhou "Debuff Sort Order" e "Buff Sort Order" (Default, Mine
+First, Time Left, Mine First then Time Left; chaves `debuffSortMode` e
+`buffSortMode`). Com ordenação a varredura não para no máximo: ordena e depois
+corta. Os CC listados junto dos debuffs continuam na frente. "Only Timed Auras"
+virou "Hide Debuffs/Buffs Without Duration" (mesma chave `HasDuration`).
 
 0.20: desempenho. UNIT_AURA de qualquer unidade não roda mais o update completo
 de todas as placas: só target/mouseover/focus marcam a placa (auraDirty) e o

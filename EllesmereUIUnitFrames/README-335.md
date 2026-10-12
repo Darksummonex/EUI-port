@@ -1,4 +1,11 @@
-# Unit Frames 3.3.5 — 0.26
+# Unit Frames 3.3.5 — 0.27
+
+0.27: Aura Filters ganhou "Debuff Sort Order" e "Buff Sort Order" por frame
+(player/target/focus/boss): Default (ordem do jogo), Mine First, Time Left (menor
+tempo primeiro, sem duração por último) e Mine First then Time Left. Chave
+`<prefix>SortMode`; nil mantém o comportamento antigo. O limite de ícones vale
+depois de ordenar. "Only Timed Auras" virou "Hide Debuffs/Buffs Without Duration"
+(mesma chave `<prefix>HasDuration`). Raid Frames não tem ordenação.
 
 0.26: um bloco escuro aparecia à esquerda da barra de vida e crescia com a vida
 perdida. Era o fundo (`healAbsorbBar._bg`) da barra de heal absorb do Retail: o

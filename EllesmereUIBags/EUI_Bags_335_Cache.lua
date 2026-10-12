@@ -54,6 +54,8 @@ function ns.CaptureMoney()
     if realm=="Unknown Realm" or name=="Unknown Character" then return end
     local money=GetMoney(); if type(money)~="number" or money<0 then return end
     local record=ns.CharacterRecord(realm,name,true)
+    -- Outside the world (login, loading screens, logout) GetMoney can read 0; keep the saved balance.
+    if money==0 and not ns.inWorld and (record.money or 0)>0 then return record end
     local _,class=UnitClass("player"); record.class=class
     record.money,record.moneyUpdated=money,time()
     return record

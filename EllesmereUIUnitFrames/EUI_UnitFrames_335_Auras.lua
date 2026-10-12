@@ -77,6 +77,25 @@ function ns.UF_DebuffHasIncludes(s)
     return false
 end
 
+-- Port-only <prefix>SortMode (Aura Filters page): Mine First, Time Left
+-- (shortest first, untimed last) or both; unset keeps the native index order.
+local function TimeLeft(e) return (e.expires and e.expires > 0) and e.expires or math.huge end
+local AURA_SORTERS = {
+    mine = function(a, b) if a.mine ~= b.mine then return a.mine end; return a.order < b.order end,
+    time = function(a, b)
+        local x, y = TimeLeft(a), TimeLeft(b)
+        if x ~= y then return x < y end
+        return a.order < b.order
+    end,
+    mineTime = function(a, b)
+        if a.mine ~= b.mine then return a.mine end
+        local x, y = TimeLeft(a), TimeLeft(b)
+        if x ~= y then return x < y end
+        return a.order < b.order
+    end,
+}
+ns.UF_AuraSorters = AURA_SORTERS
+
 -- Explicit either/or: a falsy setting must not fall through to the other key.
 local function Pick(isBuff, a, b)
     if isBuff then return a end
@@ -530,6 +549,9 @@ local function PaintLane(entry, isBuff, s)
     else
         for _, b in ipairs(lane.enchants) do b:Hide(); timed[b] = nil end
     end
+    local sorter = AURA_SORTERS[s[prefix .. "SortMode"]]
+    local sorted = sorter and lane.sorted
+    if sorted then for i = #sorted, 1, -1 do sorted[i] = nil end end
     local shownCount = 0
     for index = 1, 40 do
         local name, _, icon, count, dtype, duration, expires, caster, stealable, _, spellID = UnitAura(unit, index, filter)
@@ -548,7 +570,15 @@ local function PaintLane(entry, isBuff, s)
         end
         if not isBuff and s.debuffHideExhaustion ~= false and SATED_DEBUFFS[spellID] then include = false end
         if isBuff and unit ~= "player" and s.buffDurOnly == true and (not duration or duration <= 0) then include = false end
-        if include and not excluded and shownCount < cap then
+        if include and not excluded and sorted then
+            local n = #sorted + 1
+            local e = lane.pool[n]
+            if not e then e = {}; lane.pool[n] = e end
+            e.order, e.icon, e.count, e.dtype, e.duration, e.expires = index, icon, count, dtype, duration, expires
+            e.mine = mine and true or false
+            e.purge = canPurge and (stealable or (purgeClass and dtype == "Magic"))
+            sorted[n] = e
+        elseif include and not excluded and shownCount < cap then
             shownCount = shownCount + 1
             local b = lane.buttons[shownCount]
             if not b then b = NewButton(lane); lane.buttons[shownCount] = b end
@@ -556,6 +586,18 @@ local function PaintLane(entry, isBuff, s)
             StyleButton(b, st)
             FillButton(b, st, icon, count, dtype, duration, expires,
                 canPurge and (stealable or (purgeClass and dtype == "Magic")))
+        end
+    end
+    if sorted then
+        table.sort(sorted, sorter)
+        for i = 1, math.min(cap, #sorted) do
+            local e = sorted[i]
+            shownCount = i
+            local b = lane.buttons[i]
+            if not b then b = NewButton(lane); lane.buttons[i] = b end
+            b.unit, b.index, b.filter, b.slot = unit, e.order, filter, nil
+            StyleButton(b, st)
+            FillButton(b, st, e.icon, e.count, e.dtype, e.duration, e.expires, e.purge)
         end
     end
     for i = shownCount + 1, #lane.buttons do lane.buttons[i]:Hide(); timed[lane.buttons[i]] = nil end
@@ -744,6 +786,7 @@ function ns.UF_CreateAuraContainers(frame, unit)
     local buffs, debuffs = CreateFrame("Frame", nil, frame), CreateFrame("Frame", nil, frame)
     buffs.buttons, debuffs.buttons = {}, {}
     buffs.enchants, debuffs.enchants = {}, {}
+    buffs.pool, debuffs.pool, buffs.sorted, debuffs.sorted = {}, {}, {}, {}
     local indicators={buff={},debuff={}}
     for _,pool in pairs(indicators) do for i=1,8 do pool[i]=EllesmereUI.WrathAuraIndicators.NewIcon(frame) end end
     entries[frame] = { frame=frame, unit=unit, buffs=buffs, debuffs=debuffs,indicators=indicators }

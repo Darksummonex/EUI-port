@@ -86,7 +86,7 @@ init:SetScript("OnEvent",function(self)
     E:RegisterModule("EllesmereUIChat",{
         title="Chat",description="Wrath chat windows with the EllesmereUI panel, tabs, sidebar and chat bubbles.",
         pages={"Chat","Tabs","Sidebar","Chat Bubbles","Spam Filter"},
-        searchTerms="chat copy url timestamp font tabs edit input scroll wheel background border position sidebar friends guild durability idle fade whisper sound history channel abbreviate class color bubbles spam filter repeated duplicate messages hardcore deaths slain hidden messages log",
+        searchTerms="chat copy url timestamp font tabs edit input scroll wheel background border position sidebar friends guild durability idle fade whisper sound whispers window tab history channel abbreviate class color bubbles spam filter repeated duplicate messages hardcore deaths slain hidden messages log",
         buildPage=function(page,parent,y)
             local W=E.Widgets
             local PP=E.PP or E.PanelPP
@@ -153,6 +153,7 @@ init:SetScript("OnEvent",function(self)
                 Row(Toggle("hideTooltipOnHover","Hide Tooltip on Hover",true,"Off: hovering an item, spell, quest or achievement link shows its tooltip."),
                     Dropdown("whisperSoundKey","Whisper Sound",soundValues,soundOrder,"none",
                         "Plays with each incoming whisper, alongside the game's own whisper sound."))
+                Row(Toggle("whisperWindow","Whispers in New Window",false,"Moves incoming and outgoing whispers (and Real ID whispers) into a docked Whispers tab and removes them from the other windows. Off gives them back and closes the tab it created."),spacer)
                 local bordersRow=Row(Toggle("hideBorders","Hide Borders",false,"Hides the thin dividers between the messages, input field and sidebar."),
                     Dropdown("innerBorderColorMode","Divider Color Source",twoSources,twoOrder,"custom",nil,function() return Get("hideBorders",false) end))
                 Swatch(bordersRow,"_leftRegion",function() local c=Get("innerBorderColor",{}); return c.r or 1,c.g or 1,c.b or 1,c.a or .06 end,

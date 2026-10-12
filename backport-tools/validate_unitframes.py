@@ -478,6 +478,20 @@ do local ua=UnitAura; settings.debuffHasDuration=false; settings.debuffFilterMod
 settings.buffFilterMode="tracked"; settings.buffInclude={[100]=true}; UF.UF_ReloadAuraContainers(frame,"target"); assert(buffs.shown)
 settings.buffExclude={[100]=true}; UF.UF_ReloadAuraContainers(frame,"target"); assert(not buffs.shown)
 settings.showBuffs=false; UF.UF_ReloadAuraContainers(frame,"target"); assert(not buffs.shown)
+-- Aura Sort Order: mine first, then the shortest time left; untimed last; the cap applies after sorting.
+do local ua=UnitAura
+    local list={{"A","a-icon",0,0,"other",1},{"B","b-icon",10,50,"other",2},{"C","c-icon",10,30,"player",3},
+        {"D","d-icon",0,0,"player",4},{"E","e-icon",10,20,"other",5}}
+    UnitAura=function(u,i,f) if f=="HARMFUL" then local a=list[i]; if a then return a[1],nil,a[2],1,nil,a[3],a[4],a[5],nil,nil,a[6] end; return nil end; return ua(u,i,f) end
+    settings.debuffFilterMode="all"; settings.debuffInclude={}; settings.debuffExclude={}; settings.debuffHasDuration=false; settings.maxDebuffs=4
+    local function icons() local t={}; for i=1,4 do local b=debuffs.buttons[i]; t[i]=b and b.shown and b.icon.texture or "-" end; return table.concat(t,",") end
+    UF.UF_ReloadAuraContainers(frame,"target"); assert(icons()=="a-icon,b-icon,c-icon,d-icon",icons())
+    settings.debuffSortMode="mine"; UF.UF_ReloadAuraContainers(frame,"target"); assert(icons()=="c-icon,d-icon,a-icon,b-icon",icons())
+    settings.debuffSortMode="time"; UF.UF_ReloadAuraContainers(frame,"target"); assert(icons()=="e-icon,c-icon,b-icon,a-icon",icons())
+    assert(debuffs.buttons[1].index==5,"tooltip index follows the sorted aura")
+    settings.debuffSortMode="mineTime"; UF.UF_ReloadAuraContainers(frame,"target"); assert(icons()=="c-icon,d-icon,e-icon,b-icon",icons())
+    settings.debuffHasDuration=true; UF.UF_ReloadAuraContainers(frame,"target"); assert(icons()=="c-icon,e-icon,b-icon,-",icons())
+    settings.debuffSortMode=nil; settings.debuffHasDuration=nil; UnitAura=ua end
 UF.UF_HideAuraContainers(frame); assert(not debuffs.shown)
 ''')
 lua.execute('''

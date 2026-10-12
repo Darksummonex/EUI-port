@@ -47,7 +47,9 @@ function E.BuildWrathAuraFilters(folder,parent,y,selectedPrefix)
             setValue=function(v) local s=Settings(); if s then s[pre.."FilterMode"]=v; if pre=="debuff" then s.onlyPlayerDebuffs=v=="own" else s.onlyPlayerBuffs=v=="own" end; Apply() end end},
             {type="label",text="Tracked IDs are added; excluded IDs always hide"})
         Row(List(pre,"Include","Tracked Spell IDs"),List(pre,"Exclude","Excluded Spell IDs"))
-        Row({type="toggle",text="Only Timed Auras",getValue=function() local s=Settings(); return s and s[pre.."HasDuration"] or false end,
+        Row({type="toggle",text=pre=="debuff" and "Hide Debuffs Without Duration" or "Hide Buffs Without Duration",
+            tooltip="Hides auras with no timer (permanent buffs, auras, passives); only timed ones stay. Formerly Only Timed Auras.",
+            getValue=function() local s=Settings(); return s and s[pre.."HasDuration"] or false end,
             setValue=function(v) local s=Settings(); if s then s[pre.."HasDuration"]=v; Apply() end end},
             pre=="buff" and {type="toggle",text="Only Stealable Buffs",getValue=function() local s=Settings(); return s and s.buffStealable or false end,
             setValue=function(v) local s=Settings(); if s then s.buffStealable=v; Apply() end end}
@@ -55,11 +57,20 @@ function E.BuildWrathAuraFilters(folder,parent,y,selectedPrefix)
             getValue=function() local s=Settings(); return not s or s.debuffHideExhaustion~=false end,
             setValue=function(v) local s=Settings(); if s then s.debuffHideExhaustion=v; Apply() end end}
             or {type="label",text="Own includes your pet and vehicle"})
+        if not rf then
+            Row({type="dropdown",text=pre=="debuff" and "Debuff Sort Order" or "Buff Sort Order",
+                values={default="Default",mine="Mine First",time="Time Left",mineTime="Mine First, then Time Left"},
+                order={"default","mine","time","mineTime"},
+                tooltip="Order of the shown auras. Time Left puts the shortest first and auras without a timer last. Mine includes your pet and vehicle.",
+                getValue=function() local s=Settings(); return s and s[pre.."SortMode"] or "default" end,
+                setValue=function(v) local s=Settings(); if s then s[pre.."SortMode"]=v~="default" and v or nil; Apply() end end},
+                {type="label",text="Sorting runs before the maximum aura count"})
+        end
     end
     local _,h=W:WideButton(parent,"Reset Selected Aura Filters",y,function()
         local s=Settings(); if not s then return end
         for _,prefix in ipairs(selectedPrefix and {selectedPrefix} or {"buff","debuff"}) do
-            s[prefix.."Include"]={}; s[prefix.."Exclude"]={}; s[prefix.."IncludeMine"]={}; s[prefix.."HasDuration"]=false; s[prefix.."FilterMode"]="all"
+            s[prefix.."Include"]={}; s[prefix.."Exclude"]={}; s[prefix.."IncludeMine"]={}; s[prefix.."HasDuration"]=false; s[prefix.."FilterMode"]="all"; s[prefix.."SortMode"]=nil
             if prefix=="buff" then s.onlyPlayerBuffs=false; s.buffStealable=false else s.onlyPlayerDebuffs=false end
         end
         Apply(); E:RefreshPage(true)

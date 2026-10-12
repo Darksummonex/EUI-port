@@ -18,6 +18,10 @@ bagSlots[0]=0; B.events:RunScript('OnEvent','PLAYER_MONEY'); assert(B.CharacterR
 money=200000; bagSlots[0]=4; B.events:RunScript('OnEvent','PLAYER_MONEY')
 UnitName=original; money=50000; B.events:RunScript('OnEvent','PLAYER_MONEY')
 local total,realmTotal=B.GoldTotals(); assert(total==250000 and realmTotal==250000)
+money=0; B.events:RunScript('OnEvent','PLAYER_LEAVING_WORLD'); B.events:RunScript('OnEvent','PLAYER_LOGOUT')
+assert(B.CharacterRecord('Test Realm','player').money==50000,'Logout zero overwrote saved gold')
+B.events:RunScript('OnEvent','PLAYER_ENTERING_WORLD'); assert(B.CharacterRecord('Test Realm','player').money==0,'In-world zero gold not recorded')
+money=50000; B.events:RunScript('OnEvent','PLAYER_MONEY')
 B.SelectCharacter('bags','Test Realm','Alt'); local f=B.views.bags
 assert(f.money:GetText()==B.MoneyString(200000) and f.footer:GetText():find('Saved',1,true))
 f.moneyHit:RunScript('OnEnter'); local tip=B.goldTip; assert(tip:IsShown() and tip.totalR:GetText()==B.MoneyString(250000))

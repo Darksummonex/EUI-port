@@ -51,7 +51,7 @@ local defaults = {profile={
         useBlizzardStyle=false, useClassicStyle=false, lockChatSize=false,
         abbreviateChannels=true, abbreviateChannelLetters=false, classColorNames=true,
         persistChatHistory=true, persistChatHistoryMaxLines=100,
-        whisperSoundKey="none",
+        whisperSoundKey="none", whisperWindow=false,
         spamFilterEnabled=false, spamFilterWindow=15, spamFilterAnySender=false,
         spamFilterPublic=true, spamFilterGroup=false, spamFilterWhispers=false,
         spamFilterGoldSellers=true, spamFilterAchievements=false, spamFilterTrade=false, spamFilterRecruitment=false,
@@ -480,14 +480,25 @@ local function NewTabVisual(s)
     s.tab:HookScript("OnShow",function() s.selected=IsSelected(s); PaintTab(s) end)
     s.tab:HookScript("OnHide",function() v:Hide() end)
 end
+-- Wrath's three-value SetTextColor (FCFTab_UpdateColors) and the tab's
+-- NormalFont reset the native label's alpha, so it is also hidden.
+local function HideTabText(s)
+    local fs=s.tabText; if not fs then return end
+    HideTexture(s,fs); s.tabTextHidden=true; fs:Hide()
+    if s.tabTextHooked then return end
+    s.tabTextHooked=true
+    local function Again(self) if s.tabTextHidden and active and Skinned() then self:SetAlpha(0); self:Hide() end end
+    hooksecurefunc(fs,"SetTextColor",Again); hooksecurefunc(fs,"Show",Again)
+end
 local function SkinTab(s)
     local tab=s.tab; if not tab then return end
     for _,key in ipairs(tabChrome) do HideTexture(s,tab[key]) end
-    if s.tabText then HideTexture(s,s.tabText) end
+    HideTabText(s)
     if tab.glow and s.glowTexture==nil then s.glowTexture=tab.glow:GetTexture() or false; tab.glow:SetTexture(nil) end
 end
 local function UnskinTab(s)
     if s.tab and s.tab.glow and s.glowTexture~=nil then s.tab.glow:SetTexture(s.glowTexture or nil); s.glowTexture=nil end
+    if s.tabTextHidden then s.tabTextHidden=false; s.tabText:Show() end
     if s.visual then s.visual:Hide() end
 end
 
@@ -923,6 +934,8 @@ local function Evaluate(p)
         local glow=s.tab and s.tab.glow and s.tab.glow:IsShown() and true or false
         if glow~=s.alert then s.alert=glow; PaintTab(s) end
         if s.visual and s.visual:IsShown() and s.visual.label:GetText()~=TabText(s) then PaintTab(s) end
+        local fs=s.tabTextHidden and s.tabText
+        if fs and (fs:IsShown() or fs:GetAlpha()>0) then fs:SetAlpha(0); fs:Hide() end
     end
 end
 local function Step(current,goal,elapsed,inTime,outTime)
@@ -1130,6 +1143,137 @@ function ns.ApplyBubbles()
     ns.ScanBubbles(true)
 end
 
+-- Whispers in New Window: a docked "Whispers" tab takes the WHISPER and
+-- BN_WHISPER groups from the other windows; turning it off hands them back.
+-- The tab docks unselected, so the dock's selected window is never written here.
+local WHISPER_TAB, WHISPER_GROUPS = "Whispers", {"WHISPER","BN_WHISPER"}
+local whisperBusy, whisperReady, whisperWarned = false, false, false
+local function HasGroup(cf,group)
+    for _,value in pairs(cf.messageTypeList or {}) do if value==group then return true end end
+    return false
+end
+function ns.FindWhisperWindow()
+    for i=1,NUM_CHAT_WINDOWS or 10 do
+        local cf=_G["ChatFrame"..i]; local name,_,_,_,_,_,shown=GetChatWindowInfo(i)
+        if cf and name==WHISPER_TAB and (shown or cf.isDocked) then return cf end
+    end
+end
+local function OpenWhisperWindow()
+    for i=3,NUM_CHAT_WINDOWS or 10 do
+        local cf,tab=_G["ChatFrame"..i],_G["ChatFrame"..i.."Tab"]
+        local _,_,_,_,_,_,shown=GetChatWindowInfo(i)
+        if cf and tab and not shown and not cf.isDocked then
+            FCF_SetWindowName(cf,WHISPER_TAB)
+            local c=DEFAULT_CHATFRAME_COLOR
+            if c then FCF_SetWindowColor(cf,c.r,c.g,c.b) end
+            FCF_SetWindowAlpha(cf,DEFAULT_CHATFRAME_ALPHA or .25)
+            cf:Clear(); ChatFrame_RemoveAllMessageGroups(cf)
+            if ChatFrame_RemoveAllChannels then ChatFrame_RemoveAllChannels(cf) end
+            cf:Show(); tab:Show(); SetChatWindowShown(i,1)
+            FCF_DockFrame(cf,#(GENERAL_CHAT_DOCK.DOCKED_CHAT_FRAMES or {})+1)
+            return cf
+        end
+    end
+end
+function ns.ApplyWhisperWindow()
+    local p=ns.GetSettings()
+    if not p or whisperBusy or not whisperReady then return end
+    if not (ChatFrame_AddMessageGroup and ChatFrame_RemoveMessageGroup and ChatTypeGroup) then return end
+    local want=p.enabled and p.whisperWindow
+    if not want and not p.whisperMoved then return end
+    if InCombatLockdown() then pending=true; return end
+    whisperBusy=true
+    local target=ns.FindWhisperWindow()
+    if want then
+        if not target then target=OpenWhisperWindow(); if target then p.whisperCreated=true end end
+        if target then
+            local moved=p.whisperMoved or {}
+            for _,group in ipairs(WHISPER_GROUPS) do
+                if ChatTypeGroup[group] then
+                    if not HasGroup(target,group) then ChatFrame_AddMessageGroup(target,group) end
+                    for i=1,NUM_CHAT_WINDOWS or 10 do
+                        local cf=_G["ChatFrame"..i]
+                        if cf and cf~=target and HasGroup(cf,group) then ChatFrame_RemoveMessageGroup(cf,group); moved[cf:GetName()]=true end
+                    end
+                end
+            end
+            p.whisperMoved=moved
+        elseif not whisperWarned then
+            whisperWarned=true
+            DEFAULT_CHAT_FRAME:AddMessage("EllesmereUI Chat: no free chat window for the Whispers tab; close one and reload.")
+        end
+    else
+        for name in pairs(p.whisperMoved) do
+            local cf=_G[name]
+            if cf and cf~=target then
+                for _,group in ipairs(WHISPER_GROUPS) do
+                    if ChatTypeGroup[group] and not HasGroup(cf,group) then ChatFrame_AddMessageGroup(cf,group) end
+                end
+            end
+        end
+        if target and p.whisperCreated and FCF_Close then FCF_Close(target) end
+        p.whisperMoved,p.whisperCreated=nil,nil
+    end
+    whisperBusy=false
+end
+-- Chat-cache message groups load after login; wait before comparing them.
+local whisperTimer, whisperWait = CreateFrame("Frame"), 0
+whisperTimer:Hide(); ns.whisperTimer=whisperTimer
+whisperTimer:SetScript("OnUpdate",function(self,elapsed)
+    whisperWait=whisperWait+elapsed; if whisperWait<2 then return end
+    self:Hide(); whisperReady=true; ns.ApplyWhisperWindow()
+end)
+
+-- While skinned, the tab menu's Background swatch edits the EUI panel color:
+-- the native window color it normally sets sits hidden under the panel.
+local bgPush = CreateFrame("Frame"); bgPush:Hide(); ns.bgPush=bgPush
+local function BgPickerActive()
+    return ns.bgPick and ColorPickerFrame:IsShown() and ColorPickerFrame.func==FCF_SetChatWindowBackGroundColor
+end
+bgPush:SetScript("OnUpdate",function(self)
+    self:Hide()
+    local p,old=ns.GetSettings(),ns.bgPick
+    if not (p and old and BgPickerActive()) then return end
+    ColorPickerFrame:SetColorRGB(old[1],old[2],old[3])
+    if ColorPickerFrame.hasOpacity and OpacitySliderFrame then OpacitySliderFrame:SetValue(1-old[4]) end
+end)
+function ns.HookBackgroundPicker()
+    if ns.bgPickerHooked or not ColorPickerFrame or type(FCF_SetChatWindowBackGroundColor)~="function" then return end
+    ns.bgPickerHooked=true
+    -- Pushed a frame later, outside the panel manager's show.
+    ColorPickerFrame:HookScript("OnShow",function(self)
+        local p=ns.GetSettings(); ns.bgPick=nil
+        if not (active and Skinned() and p and self.func==FCF_SetChatWindowBackGroundColor) then return end
+        ns.bgPick={p.bgR or .03,p.bgG or .045,p.bgB or .05,p.bgAlpha or .65}; bgPush:Show()
+    end)
+    hooksecurefunc("FCF_SetChatWindowBackGroundColor",function()
+        local p=ns.GetSettings(); if not (p and BgPickerActive()) then return end
+        p.bgR,p.bgG,p.bgB=ColorPickerFrame:GetColorRGB(); ns.Apply()
+    end)
+    if type(FCF_SetChatWindowOpacity)=="function" then
+        hooksecurefunc("FCF_SetChatWindowOpacity",function()
+            local p=ns.GetSettings(); if not (p and OpacitySliderFrame and BgPickerActive()) then return end
+            p.bgAlpha=1-OpacitySliderFrame:GetValue(); ns.Apply()
+        end)
+    end
+    if type(FCF_CancelWindowColorSettings)=="function" then
+        hooksecurefunc("FCF_CancelWindowColorSettings",function()
+            local p,old=ns.GetSettings(),ns.bgPick; ns.bgPick=nil
+            if p and old then p.bgR,p.bgG,p.bgB,p.bgAlpha=old[1],old[2],old[3],old[4]; ns.Apply() end
+        end)
+    end
+    if type(UIDropDownMenu_AddButton)=="function" then
+        hooksecurefunc("UIDropDownMenu_AddButton",function(info,level)
+            if not (type(info)=="table" and info.swatchFunc==FCF_SetChatWindowBackGroundColor and active and Skinned()) then return end
+            local p=ns.GetSettings(); local list=_G["DropDownList"..(level or 1)]
+            local index=list and list.numButtons; if not (p and index) then return end
+            local swatch=_G[list:GetName().."Button"..index.."ColorSwatch"]
+            local tex=swatch and (_G[swatch:GetName().."NormalTexture"] or (swatch.GetNormalTexture and swatch:GetNormalTexture()))
+            if tex then tex:SetVertexColor(p.bgR or .03,p.bgG or .045,p.bgB or .05) end
+        end)
+    end
+end
+
 function ns.Restore()
     active=false; driver:Hide()
     if copyWindow then copyWindow:Hide() end
@@ -1182,7 +1326,7 @@ function ns.Apply()
     ns.ApplyBubbles()
     if ns.SyncSpamFilter then ns.SyncSpamFilter() end
     if InCombatLockdown() then pending=true; return end
-    pending=false; if not p.enabled then ns.Restore(); return end
+    pending=false; if not p.enabled then ns.Restore(); ns.ApplyWhisperWindow(); return end
     ns.Migrate(p)
     local wasActive=active; active=true
     local frames={}
@@ -1221,6 +1365,7 @@ function ns.Apply()
     if not wasActive then ns.RebuildRoster(); ns.ResetIdle() end
     if not historyReplayed then ReplayHistory() end
     ApplyAlpha(); driver:Show(); tick=1
+    ns.ApplyWhisperWindow()
 end
 function ns.ResetPosition()
     local p=ns.GetSettings(); if not p then return end
@@ -1258,6 +1403,7 @@ function addon:OnEnable()
         for _,kind in ipairs(NAME_EVENTS) do ChatFrame_AddMessageEventFilter("CHAT_MSG_"..kind,NameFilter) end
     end
     ns.Apply()
+    ns.HookBackgroundPicker()
     if type(FCFTab_UpdateColors)=="function" then
         hooksecurefunc("FCFTab_UpdateColors",function(tab,selected)
             local cf=_G["ChatFrame"..tab:GetID()]; local s=cf and states[cf]
@@ -1316,7 +1462,7 @@ function addon:OnEnable()
     for event in pairs(BUBBLE_EVENTS) do events:RegisterEvent(event) end
     local lastWhisper=0
     events:SetScript("OnEvent",function(_,event,msg)
-        if event=="PLAYER_ENTERING_WORLD" then ns.Apply()
+        if event=="PLAYER_ENTERING_WORLD" then ns.Apply(); if not whisperReady then whisperTimer:Show() end
         elseif event=="PLAYER_REGEN_ENABLED" then if pending then ns.Apply() end
         elseif event=="PLAYER_LOGOUT" then ns.SaveHistory()
         elseif event=="PARTY_MEMBERS_CHANGED" or event=="RAID_ROSTER_UPDATE" then ns.RebuildRoster()

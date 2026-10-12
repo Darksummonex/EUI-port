@@ -1,4 +1,9 @@
-# Blizz UI Enhanced 3.3.5 — 0.34
+# Blizz UI Enhanced 3.3.5 — 0.35
+
+0.35: menus dropdown mostravam um "V" sobre as linhas de título (Display,
+Filters no menu da aba do chat). Linhas de título e desativadas mostram
+`DropDownListNButtonMInvisibleButton`, que o padrão de seta `DropDown.*Button$`
+pegava; nomes terminados em `InvisibleButton` não recebem mais o skin de seta.
 
 0.34: desempenho. No 3.3.5 os eventos UNIT_* chegam para todas as unidades, e
 qualquer UNIT_AURA/UNIT_STATS/UNIT_MAXHEALTH de raid ou nameplate marcava

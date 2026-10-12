@@ -167,6 +167,11 @@ BS.Apply(); local dd=BS.states[DropDownList1]
 assert(dd.icons[DropDownList1Button1Icon] and not dd.icons[DropDownList1Button1Icon].border:IsShown(),'empty dropdown icon box shown')
 DropDownList1Button1Icon:SetTexture('Interface\\\\Icons\\\\Spell_Fire_Fire'); DropDownList1Button1Icon:Show(); BS.Apply()
 assert(dd.icons[DropDownList1Button1Icon].border:IsShown())
+-- Title rows (chat tab menu Display/Filters) show a click blocker; no "v" box over the title.
+DropDownList1Button2InvisibleButton=CreateFrame('Button','DropDownList1Button2InvisibleButton',DropDownList1Button1)
+WorldMapLevelDropDownButton=CreateFrame('Button','WorldMapLevelDropDownButton',DropDownList1)
+BS.Apply(); assert(not dd.buttons[DropDownList1Button2InvisibleButton],'title row painted as a dropdown arrow')
+assert(dd.buttons[WorldMapLevelDropDownButton] and dd.buttons[WorldMapLevelDropDownButton].label:GetText()=='v')
 SlashCmdList.EUI335BLIZZARDSKIN(); assert(optionsLoaded and shownModule=='EllesmereUIBlizzardSkin')
 ''')
 loader((root/'EllesmereUIOptions/EUI_BlizzardSkin_335_Options.lua').read_text(),'EUI_BlizzardSkin_335_Options.lua')()

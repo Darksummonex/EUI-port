@@ -310,6 +310,21 @@ function ns.IsCrowdControl(spellID,name)
     end
     return name~=nil and ccNames[name]==true
 end
+-- Port-only <prefix>SortMode (Aura Filters page): Mine First, Time Left
+-- (shortest first, untimed last) or both; unset keeps the scan order.
+do
+    local function TimeLeft(e) return (e.expires and e.expires>0) and e.expires or math.huge end
+    local function ByTime(a,b)
+        local x,y=TimeLeft(a),TimeLeft(b)
+        if x~=y then return x<y end
+        return a.order<b.order
+    end
+    ns.AURA_SORTERS={
+        mine=function(a,b) if a.mine~=b.mine then return a.mine end; return a.order<b.order end,
+        time=ByTime,
+        mineTime=function(a,b) if a.mine~=b.mine then return a.mine end; return ByTime(a,b) end,
+    }
+end
 local function CollectAuras(s,p)
     local debuffs,buffs,ccs={},{},{}
     s.debuffList,s.buffList,s.ccList=debuffs,buffs,ccs
@@ -353,30 +368,39 @@ local function CollectAuras(s,p)
     local debuffsOn=p.showDebuffs and p.debuffSlot~="none"
     local ccOwn=p.ccSlot~=nil and p.ccSlot~="none"
     local ccMerged=not ccOwn and debuffsOn and p.debuffIncludeCC
+    -- A sort reads every match before the row is cut to its maximum.
+    local sortDebuffs,sortBuffs=ns.AURA_SORTERS[p.debuffSortMode],ns.AURA_SORTERS[p.buffSortMode]
+    local order=0
     -- With a CC element placed, CC (any caster) leaves the debuff row as on Retail; Debuffs + CC
     -- lists it first in the debuff row.
     if debuffsOn or ccOwn then
         local merged={}
         Scan("HARMFUL",function(name,icon,stacks,duration,expires,stealable,spellID,mine)
-            local entry={icon=icon,stacks=stacks,expires=expires}
+            order=order+1
+            local entry={icon=icon,stacks=stacks,expires=expires,mine=mine and true or false,order=order}
             if (ccOwn or ccMerged) and ns.IsCrowdControl(spellID,name) then
                 if ccOwn then if #ccs<ns.MAX_CC then ccs[#ccs+1]=entry end
                 elseif #merged<maxDebuffs then merged[#merged+1]=entry end
-            elseif debuffsOn and #debuffs<maxDebuffs and Allowed("debuff",name,duration,stealable,spellID,mine) then
+            elseif debuffsOn and (sortDebuffs or #debuffs<maxDebuffs) and Allowed("debuff",name,duration,stealable,spellID,mine) then
                 debuffs[#debuffs+1]=entry
             end
             if ccMerged then return #merged>=maxDebuffs end
-            return (not debuffsOn or #debuffs>=maxDebuffs) and (not ccOwn or #ccs>=ns.MAX_CC)
+            return (not debuffsOn or not sortDebuffs and #debuffs>=maxDebuffs) and (not ccOwn or #ccs>=ns.MAX_CC)
         end)
+        if sortDebuffs then table.sort(debuffs,sortDebuffs) end
         for i=#merged,1,-1 do table.insert(debuffs,1,merged[i]) end
         for i=#debuffs,maxDebuffs+1,-1 do debuffs[i]=nil end
     end
     -- Buffs are only interesting on enemies.
     if p.showBuffs and p.buffSlot~="none" and not ns.Friendly(s) then
         Scan("HELPFUL",function(name,icon,stacks,duration,expires,stealable,spellID,mine)
-            if Allowed("buff",name,duration,stealable,spellID,mine) then buffs[#buffs+1]={icon=icon,stacks=stacks,expires=expires} end
-            return #buffs>=maxBuffs
+            order=order+1
+            if Allowed("buff",name,duration,stealable,spellID,mine) then
+                buffs[#buffs+1]={icon=icon,stacks=stacks,expires=expires,mine=mine and true or false,order=order}
+            end
+            return not sortBuffs and #buffs>=maxBuffs
         end)
+        if sortBuffs then table.sort(buffs,sortBuffs); for i=#buffs,maxBuffs+1,-1 do buffs[i]=nil end end
     end
 end
 -- Execute-range spells known by the player (rank-independent name lookup).

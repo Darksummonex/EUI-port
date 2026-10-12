@@ -136,6 +136,92 @@ local temp=FCF_OpenTemporaryWindow(); assert(CHAT.states[temp] and CHAT.states[t
 assert(select(4,temp:GetClampRectInsets())==0 and select(3,temp:GetClampRectInsets())==26)
 temp:AddMessage("private"); assert(temp.messages[1][1]=="private")
 ''')
+# Native tab label stays hidden; Whispers in New Window; tab menu Background swatch.
+lua.execute('''
+local function near(a,b) return math.abs(a-b)<1e-6 end
+local p=CHAT.GetSettings()
+-- Wrath's three-value SetTextColor and the tab NormalFont reset the label alpha.
+local fs=ChatFrame1TabText; assert(not fs:IsShown() and fs:GetAlpha()==0)
+fs:SetAlpha(1); fs:SetTextColor(1,.8,0); assert(fs:GetAlpha()==0 and not fs:IsShown(),"native tab label shown after SetTextColor")
+fs:Show(); assert(not fs:IsShown())
+fs:SetAlpha(1); CHAT.driver:RunScript("OnUpdate",.2); assert(fs:GetAlpha()==0)
+-- Native message groups and window info, as FloatingChatFrame keeps them.
+ChatTypeGroup={WHISPER={"CHAT_MSG_WHISPER","CHAT_MSG_WHISPER_INFORM"},BN_WHISPER={"CHAT_MSG_BN_WHISPER","CHAT_MSG_BN_WHISPER_INFORM"},SAY={"CHAT_MSG_SAY"}}
+windowInfo={}
+for i=1,10 do
+    local cf=_G["ChatFrame"..i]; cf.messageTypeList={}
+    if i>2 then cf.isDocked=nil end
+    windowInfo[i]={name=i==1 and "General" or i==2 and "Combat Log" or "",shown=i<=2}
+end
+ChatFrame1.messageTypeList={"SAY","WHISPER","BN_WHISPER"}
+function GetChatWindowInfo(i) local w=windowInfo[i]; return w.name,12,0,0,0,.25,w.shown,false,_G["ChatFrame"..i].isDocked end
+function ChatFrame_AddMessageGroup(cf,g) table.insert(cf.messageTypeList,g) end
+function ChatFrame_RemoveMessageGroup(cf,g) for k,v in pairs(cf.messageTypeList) do if v==g then cf.messageTypeList[k]=nil end end end
+function ChatFrame_RemoveAllMessageGroups(cf) cf.messageTypeList={} end
+function FCF_SetWindowName(cf,name) windowInfo[cf:GetID()].name=name; _G[cf:GetName().."TabText"]:SetText(name) end
+function SetChatWindowShown(i,v) windowInfo[i].shown=v and true or false end
+docked={}
+function FCF_DockFrame(cf,index,selected) cf.isDocked=1; docked[#docked+1]={cf,index,selected} end
+function FCF_Close(cf) closed=cf; cf.isDocked=nil; windowInfo[cf:GetID()].shown=false; cf:Hide() end
+DEFAULT_CHATFRAME_COLOR={r=0,g=0,b=0}; DEFAULT_CHATFRAME_ALPHA=.25
+local function count(cf,g) local n=0; for _,v in pairs(cf.messageTypeList) do if v==g then n=n+1 end end; return n end
+-- Nothing changes before the native chat-cache groups have loaded.
+p.whisperWindow=true; CHAT.Apply(); assert(CHAT.FindWhisperWindow()==nil and count(ChatFrame1,"WHISPER")==1)
+CHAT.whisperTimer:Show(); CHAT.whisperTimer:RunScript("OnUpdate",3)
+local w=CHAT.FindWhisperWindow()
+assert(w==ChatFrame3 and windowInfo[3].shown and docked[1][1]==ChatFrame3 and not docked[1][3],"Whispers tab docked unselected")
+assert(count(w,"WHISPER")==1 and count(w,"BN_WHISPER")==1 and count(w,"SAY")==0)
+assert(count(ChatFrame1,"WHISPER")==0 and count(ChatFrame1,"BN_WHISPER")==0 and count(ChatFrame1,"SAY")==1)
+assert(p.whisperCreated and p.whisperMoved.ChatFrame1 and CHAT.states[w])
+local n=#docked; CHAT.Apply(); assert(#docked==n and count(w,"WHISPER")==1,"reapply is idempotent")
+-- Off waits for combat to end, then gives the groups back and closes the created tab.
+p.whisperWindow=false; combat=true; CHAT.ApplyWhisperWindow(); assert(count(ChatFrame1,"WHISPER")==0); combat=false
+CHAT.events:RunScript("OnEvent","PLAYER_REGEN_ENABLED")
+assert(count(ChatFrame1,"WHISPER")==1 and count(ChatFrame1,"BN_WHISPER")==1 and closed==ChatFrame3 and p.whisperMoved==nil and p.whisperCreated==nil)
+-- A window the user already named Whispers is reused and left open when turned off.
+windowInfo[4].name="Whispers"; windowInfo[4].shown=true; closed=nil
+p.whisperWindow=true; CHAT.Apply(); assert(CHAT.FindWhisperWindow()==ChatFrame4 and count(ChatFrame4,"WHISPER")==1 and not p.whisperCreated)
+assert(count(ChatFrame1,"WHISPER")==0)
+p.whisperWindow=false; CHAT.Apply(); assert(closed==nil and count(ChatFrame1,"WHISPER")==1 and p.whisperMoved==nil)
+-- Tab menu Background swatch: shows and edits the EUI panel color while skinned.
+ColorPickerFrame=CreateFrame("Frame","ColorPickerFrame",UIParent); ColorPickerFrame:Hide()
+function ColorPickerFrame:SetColorRGB(r,g,b) self.rgb={r,g,b}; if self.func then self.func() end end
+function ColorPickerFrame:GetColorRGB() return unpack(self.rgb) end
+OpacitySliderFrame=CreateFrame("Frame","OpacitySliderFrame",ColorPickerFrame)
+function OpacitySliderFrame:SetValue(v) self.value=v; if ColorPickerFrame.opacityFunc then ColorPickerFrame.opacityFunc() end end
+function OpacitySliderFrame:GetValue() return self.value end
+function FCF_SetChatWindowBackGroundColor() nativeBg={ColorPickerFrame:GetColorRGB()} end
+function FCF_SetChatWindowOpacity() nativeAlpha=1-OpacitySliderFrame:GetValue() end
+function FCF_CancelWindowColorSettings(prev) nativeCancel=prev end
+DropDownList1=CreateFrame("Frame","DropDownList1",UIParent); DropDownList1.numButtons=0
+for i=1,2 do
+    local b=CreateFrame("Button","DropDownList1Button"..i,DropDownList1)
+    local sw=CreateFrame("Button","DropDownList1Button"..i.."ColorSwatch",b)
+    _G[sw:GetName().."NormalTexture"]=CreateFrame("Texture",sw:GetName().."NormalTexture",sw)
+end
+function UIDropDownMenu_AddButton(info,level)
+    local list=_G["DropDownList"..(level or 1)]; list.numButtons=list.numButtons+1
+    if info.hasColorSwatch then _G["DropDownList1Button"..list.numButtons.."ColorSwatchNormalTexture"]:SetVertexColor(info.r,info.g,info.b) end
+end
+CHAT.HookBackgroundPicker()
+p.bgR,p.bgG,p.bgB,p.bgAlpha=.1,.2,.3,.6
+UIDropDownMenu_AddButton({text="Title",isTitle=1},1)
+UIDropDownMenu_AddButton({text="Background",hasColorSwatch=1,r=0,g=0,b=0,swatchFunc=FCF_SetChatWindowBackGroundColor},1)
+local sv=DropDownList1Button2ColorSwatchNormalTexture.vertex; assert(sv[1]==.1 and sv[2]==.2 and sv[3]==.3,"swatch shows the EUI color")
+assert(DropDownList1Button1ColorSwatchNormalTexture.vertex==nil)
+-- The native open pushes the hidden native color before showing; that is ignored.
+ColorPickerFrame.func=FCF_SetChatWindowBackGroundColor; ColorPickerFrame.hasOpacity=1; ColorPickerFrame.opacityFunc=FCF_SetChatWindowOpacity
+ColorPickerFrame:SetColorRGB(0,0,0); assert(p.bgR==.1)
+ColorPickerFrame:Show(); assert(CHAT.bgPick and CHAT.bgPush:IsShown())
+CHAT.bgPush:RunScript("OnUpdate",0)
+assert(ColorPickerFrame.rgb[1]==.1 and near(OpacitySliderFrame.value,.4) and p.bgR==.1 and near(p.bgAlpha,.6))
+ColorPickerFrame:SetColorRGB(.5,.4,.3); assert(p.bgR==.5 and p.bgB==.3 and CHAT.states[ChatFrame1].bg.vertex[1]==.5)
+OpacitySliderFrame:SetValue(.2); assert(near(p.bgAlpha,.8) and near(CHAT.states[ChatFrame1].bg.vertex[4],.8))
+ColorPickerFrame:Hide(); FCF_CancelWindowColorSettings({r=0,g=0,b=0,opacity=.75})
+assert(p.bgR==.1 and p.bgB==.3 and near(p.bgAlpha,.6) and CHAT.bgPick==nil,"cancel restores the EUI color")
+ColorPickerFrame.func=function() end; ColorPickerFrame:Show(); assert(CHAT.bgPick==nil); ColorPickerFrame:Hide()
+p.bgR,p.bgG,p.bgB,p.bgAlpha=.03,.045,.05,.65; CHAT.Apply()
+''')
 # Tabs, dock, sidebar, border, idle fade and the stock sidebar data.
 lua.execute('''
 local function near(a,b) return math.abs(a-b)<1e-6 end
@@ -324,6 +410,7 @@ assert(ChatFrame1:GetScript("OnMouseWheel")==FloatingChatFrame_OnMouseScroll)
 assert(not s1.panel:IsShown() and not CHAT.sidebar:IsShown() and not CHAT.icons.showScroll:IsShown() and not s1.visual:IsShown())
 assert(ChatFrameMenuButton:IsShown() and FriendsMicroButton:IsShown() and ChatFrame1.buttonFrame:IsShown() and not ChatFrame1:IsUserPlaced())
 assert(ChatFrame1Tab.leftTexture:GetAlpha()==.7 and ChatFrame1TabText:GetAlpha()==.7 and ChatFrame1Tab.glow:GetTexture():find("NewMessage"))
+assert(ChatFrame1TabText:IsShown()); ChatFrame1TabText:SetTextColor(1,1,1); assert(ChatFrame1TabText:IsShown() and ChatFrame1TabText:GetAlpha()==.7)
 local a,rel,b,x,y=GENERAL_CHAT_DOCK:GetPoint(1); assert(rel==ChatFrame1 and x==0 and y==6 and ChatFrame1Tab:GetWidth()==50)
 assert(ChatFrame1EditBox:GetHeight()==40 and select(4,ChatFrame1EditBox:GetPoint(1))==-5)
 ChatFrame1:AddMessage("disabled https://example.com"); assert(ChatFrame1.messages[#ChatFrame1.messages][1]=="disabled https://example.com")
@@ -371,6 +458,7 @@ cfg("Background Opacity").setValue(.4); assert(s1.bg.vertex[4]==.4 and CHAT.side
 cfg("Font").setValue("native"); cfg("Font Size").setValue(16)
 assert(select(1,ChatFrame1:GetFont())=="native.ttf" and select(2,ChatFrame1:GetFont())==16 and savedFontSize[2]==16)
 assert(cfg("Timestamps").values["%I:%M "] and cfg("Whisper Sound").values.airhorn and cfg("Visibility"))
+assert(cfg("Whispers in New Window").getValue()==false)
 cfg("Edit Box Height").setValue(30); assert(ChatFrame1EditBox:GetHeight()==30)
 cfg("Border Size").setValue("normal"); assert(borderCalls[s1.border][1]==2); cfg("Border Size").setValue("none")
 assert(cfg("Border Opacity").disabled())

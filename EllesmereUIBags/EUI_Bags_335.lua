@@ -211,12 +211,13 @@ function addon:OnEnable()
         E:RegisterUnlockElements(elements,ADDON_NAME)
     end
     local events=CreateFrame("Frame"); ns.events=events
-    for _,event in ipairs({"ADDON_LOADED","PLAYER_ENTERING_WORLD","PLAYER_LOGOUT","PLAYER_REGEN_ENABLED","BAG_UPDATE","BAG_UPDATE_COOLDOWN",
+    for _,event in ipairs({"ADDON_LOADED","PLAYER_ENTERING_WORLD","PLAYER_LEAVING_WORLD","PLAYER_LOGOUT","PLAYER_REGEN_ENABLED","BAG_UPDATE","BAG_UPDATE_COOLDOWN",
         "ITEM_LOCK_CHANGED","PLAYER_MONEY","BANKFRAME_OPENED","BANKFRAME_CLOSED","PLAYERBANKSLOTS_CHANGED","PLAYERBANKBAGSLOTS_CHANGED",
         "EQUIPMENT_SETS_CHANGED","CURRENCY_DISPLAY_UPDATE","PLAYER_LEVEL_UP","SKILL_LINES_CHANGED","MAIL_SHOW","MAIL_CLOSED","TRADE_SHOW",
         "TRADE_CLOSED","AUCTION_HOUSE_SHOW","AUCTION_HOUSE_CLOSED","GUILDBANKFRAME_OPENED","GUILDBANKFRAME_CLOSED","MERCHANT_SHOW","MERCHANT_CLOSED"}) do events:RegisterEvent(event) end
     events:SetScript("OnEvent",function(_,event)
         if event=="ADDON_LOADED" then ns.InitializeBroker(); return end
+        if event=="PLAYER_ENTERING_WORLD" then ns.inWorld=true elseif event=="PLAYER_LEAVING_WORLD" or event=="PLAYER_LOGOUT" then ns.inWorld=false end
         if event=="MERCHANT_SHOW" then ns.merchantOpen=true elseif event=="MERCHANT_CLOSED" then ns.merchantOpen=false end
         local panel=PANEL_EVENTS[event]
         if panel then ns.panels[panel[1]]=panel[2] end
